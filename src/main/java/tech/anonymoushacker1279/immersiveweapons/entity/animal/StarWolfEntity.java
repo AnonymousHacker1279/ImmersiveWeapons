@@ -28,17 +28,18 @@ public class StarWolfEntity extends Wolf implements GrantAdvancementOnDiscovery 
 	}
 
 	@Override
-	public void setTame(boolean pTamed) {
-		super.setTame(pTamed);
+	public void setTame(boolean tamed, boolean applySideEffects) {
+		super.setTame(tamed, applySideEffects);
 
-		if (pTamed) {
+		// TODO: re-evaluate attributes with the new wolf changes
+		/*if (pTamed) {
 			getAttribute(Attributes.MAX_HEALTH).setBaseValue(30.0D);
 			setHealth(30.0F);
 		} else {
 			getAttribute(Attributes.MAX_HEALTH).setBaseValue(12.0D);
 		}
 
-		getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(5.0D);
+		getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(5.0D);*/
 	}
 
 	@Override
@@ -75,7 +76,7 @@ public class StarWolfEntity extends Wolf implements GrantAdvancementOnDiscovery 
 			UUID ownerUUID = getOwnerUUID();
 			if (ownerUUID != null) {
 				wolf.setOwnerUUID(ownerUUID);
-				wolf.setTame(true);
+				wolf.setTame(true, true);
 			}
 		}
 

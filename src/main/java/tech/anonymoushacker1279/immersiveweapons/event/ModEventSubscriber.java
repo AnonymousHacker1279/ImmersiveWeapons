@@ -1,11 +1,15 @@
 package tech.anonymoushacker1279.immersiveweapons.event;
 
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod.EventBusSubscriber;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModList;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
-import net.neoforged.neoforge.network.event.OnGameConfigurationEvent;
-import net.neoforged.neoforge.network.event.RegisterPayloadHandlerEvent;
-import net.neoforged.neoforge.network.registration.IPayloadRegistrar;
+import net.neoforged.neoforge.network.event.RegisterConfigurationTasksEvent;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
+import net.neoforged.neoforgespi.language.IModInfo;
+import org.apache.maven.artifact.versioning.ArtifactVersion;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.entity.ambient.FireflyEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.animal.StarWolfEntity;
@@ -56,48 +60,39 @@ public class ModEventSubscriber {
 	}
 
 	@SubscribeEvent
-	public static void registerPayloadHandlerEvent(RegisterPayloadHandlerEvent event) {
+	public static void registerPayloadHandlerEvent(RegisterPayloadHandlersEvent event) {
 		ImmersiveWeapons.LOGGER.info("Registering packet payload handlers");
 
-		final IPayloadRegistrar registrar = event.registrar(ImmersiveWeapons.MOD_ID);
+		// TODO: check and make sure version is correct
+		String version = ModList.get()
+				.getModContainerById(ImmersiveWeapons.MOD_ID)
+				.map(ModContainer::getModInfo)
+				.map(IModInfo::getVersion)
+				.map(ArtifactVersion::toString)
+				.orElse("[UNKNOWN]");
 
-		registrar.play(SmokeGrenadePayload.ID, SmokeGrenadePayload::new, handler -> handler
-				.client(SmokeGrenadePayloadHandler.getInstance()::handleData));
-		registrar.play(CobaltArmorPayload.ID, CobaltArmorPayload::new, handler -> handler
-				.server(CobaltArmorPayloadHandler.getInstance()::handleData));
-		registrar.play(TeslaArmorPayload.ID, TeslaArmorPayload::new, handler -> handler
-				.server(TeslaArmorPayloadHandler.getInstance()::handleData));
-		registrar.play(VentusArmorPayload.ID, VentusArmorPayload::new, handler -> handler
-				.server(VentusArmorPayloadHandler.getInstance()::handleData));
-		registrar.play(AstralArmorPayload.ID, AstralArmorPayload::new, handler -> handler
-				.server(AstralArmorPayloadHandler.getInstance()::handleData));
-		registrar.play(AstralCrystalPayload.ID, AstralCrystalPayload::new, handler -> handler
-				.client(AstralCrystalPayloadHandler.getInstance()::handleData));
-		registrar.play(BulletEntityDebugPayload.ID, BulletEntityDebugPayload::new, handler -> handler
-				.client(BulletEntityDebugPayloadHandler.getInstance()::handleData));
-		registrar.play(SyncPlayerDataPayload.ID, SyncPlayerDataPayload::new, handler -> handler
-				.client(SyncPlayerDataPayloadHandler.getInstance()::handleData));
-		registrar.play(DebugDataPayload.ID, DebugDataPayload::new, handler -> handler
-				.client(DebugDataPayloadHandler.getInstance()::handleData));
-		registrar.play(GunScopePayload.ID, GunScopePayload::new, handler -> handler
-				.client(GunScopePayloadHandler.getInstance()::handleData));
-		registrar.play(AmmunitionTablePayload.ID, AmmunitionTablePayload::new, handler -> handler
-				.server(AmmunitionTablePayloadHandler.getInstance()::handleData));
-		registrar.play(StarForgeMenuPayload.ID, StarForgeMenuPayload::new, handler -> handler
-				.client(StarForgeMenuPayloadHandler.getInstance()::handleData)
-				.server(StarForgeMenuPayloadHandler.getInstance()::handleData));
-		registrar.play(StarForgeUpdateRecipesPayload.ID, StarForgeUpdateRecipesPayload::new, handler -> handler
-				.client(StarForgeUpdateRecipesPayloadHandler.getInstance()::handleData));
-		registrar.play(LocalSoundPayload.ID, LocalSoundPayload::new, handler -> handler
-				.client(LocalSoundPayloadHandler.getInstance()::handleData));
-		registrar.play(PlayerSoundPayload.ID, PlayerSoundPayload::new, handler -> handler
-				.client(PlayerSoundPayloadHandler.getInstance()::handleData));
-		registrar.common(SyncMerchantTradesPayload.ID, SyncMerchantTradesPayload::new, handler -> handler
-				.client(SyncMerchantTradesPayloadHandler.getInstance()::handleData));
+		PayloadRegistrar registrar = event.registrar(version);
+
+		registrar.playToClient(SmokeGrenadePayload.TYPE, SmokeGrenadePayload.STREAM_CODEC, SmokeGrenadePayloadHandler.getInstance()::handleData);
+		registrar.playToServer(CobaltArmorPayload.TYPE, CobaltArmorPayload.STREAM_CODEC, CobaltArmorPayloadHandler.getInstance()::handleData);
+		registrar.playToServer(TeslaArmorPayload.TYPE, TeslaArmorPayload.STREAM_CODEC, TeslaArmorPayloadHandler.getInstance()::handleData);
+		registrar.playToServer(VentusArmorPayload.TYPE, VentusArmorPayload.STREAM_CODEC, VentusArmorPayloadHandler.getInstance()::handleData);
+		registrar.playToServer(AstralArmorPayload.TYPE, AstralArmorPayload.STREAM_CODEC, AstralArmorPayloadHandler.getInstance()::handleData);
+		registrar.playToClient(AstralCrystalPayload.TYPE, AstralCrystalPayload.STREAM_CODEC, AstralCrystalPayloadHandler.getInstance()::handleData);
+		registrar.playToClient(BulletEntityDebugPayload.TYPE, BulletEntityDebugPayload.STREAM_CODEC, BulletEntityDebugPayloadHandler.getInstance()::handleData);
+		registrar.playToClient(SyncPlayerDataPayload.TYPE, SyncPlayerDataPayload.STREAM_CODEC, SyncPlayerDataPayloadHandler.getInstance()::handleData);
+		registrar.playToClient(DebugDataPayload.TYPE, DebugDataPayload.STREAM_CODEC, DebugDataPayloadHandler.getInstance()::handleData);
+		registrar.playToClient(GunScopePayload.TYPE, GunScopePayload.STREAM_CODEC, GunScopePayloadHandler.getInstance()::handleData);
+		registrar.playToServer(AmmunitionTablePayload.TYPE, AmmunitionTablePayload.STREAM_CODEC, AmmunitionTablePayloadHandler.getInstance()::handleData);
+		registrar.playBidirectional(StarForgeMenuPayload.TYPE, StarForgeMenuPayload.STREAM_CODEC, StarForgeMenuPayloadHandler.getInstance()::handleData);
+		registrar.playToClient(StarForgeUpdateRecipesPayload.TYPE, StarForgeUpdateRecipesPayload.STREAM_CODEC, StarForgeUpdateRecipesPayloadHandler.getInstance()::handleData);
+		registrar.playToClient(LocalSoundPayload.TYPE, LocalSoundPayload.STREAM_CODEC, LocalSoundPayloadHandler.getInstance()::handleData);
+		registrar.playToClient(PlayerSoundPayload.TYPE, PlayerSoundPayload.STREAM_CODEC, PlayerSoundPayloadHandler.getInstance()::handleData);
+		registrar.playBidirectional(SyncMerchantTradesPayload.TYPE, SyncMerchantTradesPayload.STREAM_CODEC, SyncMerchantTradesPayloadHandler.getInstance()::handleData);
 	}
 
 	@SubscribeEvent
-	public static void registerGameConfigurationEvent(final OnGameConfigurationEvent event) {
+	public static void registerGameConfigurationEvent(final RegisterConfigurationTasksEvent event) {
 		ImmersiveWeapons.LOGGER.info("Registering game configuration tasks");
 
 		event.register(new SyncMerchantTradesConfigurationTask(event.getListener()));

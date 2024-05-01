@@ -1,7 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.blockentity;
 
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.NonNullList;
+import net.minecraft.core.*;
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -18,8 +18,7 @@ import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.init.BlockEntityRegistry;
-import tech.anonymoushacker1279.immersiveweapons.init.RecipeTypeRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.AmmunitionTableRecipe;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.AmmunitionTableRecipe.MaterialGroup;
 import tech.anonymoushacker1279.immersiveweapons.menu.AmmunitionTableMenu;
@@ -32,6 +31,8 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 	protected final NonNullList<ItemStack> inventory = NonNullList.withSize(7, ItemStack.EMPTY);
 	protected float densityModifier = 0.0f;
 	protected final NonNullList<Integer> slotCosts = NonNullList.withSize(7, 0);
+
+	DataComponentType<Float> DENSITY_MODIFIER = DataComponentTypeRegistry.DENSITY_MODIFIER.get();
 
 	public final ContainerData containerData = new ContainerData() {
 		@Override
@@ -60,6 +61,18 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 	}
 
 	@Override
+	protected NonNullList<ItemStack> getItems() {
+		return inventory;
+	}
+
+	@Override
+	protected void setItems(NonNullList<ItemStack> stacks) {
+		for (int i = 0; i < Math.min(stacks.size(), inventory.size()); i++) {
+			inventory.set(i, stacks.get(i));
+		}
+	}
+
+	@Override
 	protected AbstractContainerMenu createMenu(int id, Inventory inventory) {
 		return new AmmunitionTableMenu(id, inventory, this, containerData);
 	}
@@ -70,29 +83,19 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 		return new AmmunitionTableBlockEntity(blockPos, blockState);
 	}
 
-	/**
-	 * Load NBT data.
-	 *
-	 * @param nbt the <code>CompoundNBT</code> to load
-	 */
 	@Override
-	public void load(CompoundTag nbt) {
-		super.load(nbt);
+	public void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+		super.loadAdditional(tag, provider);
 		inventory.clear();
-		ContainerHelper.loadAllItems(nbt, inventory);
-		densityModifier = nbt.getFloat("densityModifier");
+		ContainerHelper.loadAllItems(tag, inventory, provider);
+		densityModifier = tag.getFloat("densityModifier");
 	}
 
-	/**
-	 * Save NBT data.
-	 *
-	 * @param pTag the <code>CompoundNBT</code> to save
-	 */
 	@Override
-	protected void saveAdditional(CompoundTag pTag) {
-		super.saveAdditional(pTag);
-		ContainerHelper.saveAllItems(pTag, inventory);
-		pTag.putFloat("densityModifier", densityModifier);
+	protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+		super.saveAdditional(tag, provider);
+		ContainerHelper.saveAllItems(tag, inventory, provider);
+		tag.putFloat("densityModifier", densityModifier);
 	}
 
 	/**
@@ -175,10 +178,10 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 	}
 
 	@Override
-	public CompoundTag getUpdateTag() {
+	public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
 		CompoundTag tag = new CompoundTag();
-		super.saveAdditional(tag);
-		ContainerHelper.saveAllItems(tag, inventory, true);
+		super.saveAdditional(tag, provider);
+		ContainerHelper.saveAllItems(tag, inventory, provider);
 		tag.putFloat("densityModifier", densityModifier);
 		return tag;
 	}
@@ -310,7 +313,7 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 				inventoryIndex++;
 			}
 
-			result.getOrCreateTag().putFloat("densityModifier", densityModifier);
+			result.set(DENSITY_MODIFIER, densityModifier);
 		}
 
 		result.setCount(Mth.floor(Mth.clamp(outputSize, 0, 64)));

@@ -2,8 +2,8 @@ package tech.anonymoushacker1279.immersiveweapons.client.gui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.LayeredDraw;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.client.gui.overlay.IGuiOverlay;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.*;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.data.GunData;
@@ -15,19 +15,15 @@ public class IWOverlays {
 	private static final Minecraft MINECRAFT = Minecraft.getInstance();
 	private static final Font FONT_RENDERER = MINECRAFT.font;
 
-	public static final IGuiOverlay SCOPE_ELEMENT = (gui, guiGraphics, partialTick, screenWidth, screenHeight) -> {
-		gui.setupOverlayRenderState(true, false);
-
+	public static final LayeredDraw.Layer SCOPE_ELEMENT = (gui, partialTick) -> {
 		if (GunData.changingPlayerFOV != -1 && MINECRAFT.options.getCameraType().isFirstPerson()) {
-			ScopeOverlay.renderOverlay(screenWidth, screenHeight, GunData.scopeScale);
+			ScopeOverlay.renderOverlay(gui.guiWidth(), gui.guiHeight(), GunData.scopeScale);
 		}
 	};
 
-	public static final IGuiOverlay DEBUG_TRACING_ELEMENT = (gui, guiGraphics, partialTick, screenWidth, screenHeight) -> {
-		gui.setupOverlayRenderState(true, false);
-
+	public static final LayeredDraw.Layer DEBUG_TRACING_ELEMENT = (gui, partialTick) -> {
 		if (DebugTracingData.isDebugTracingEnabled) {
-			DebugTracingOverlay.renderOverlay(guiGraphics, FONT_RENDERER, screenHeight);
+			DebugTracingOverlay.renderOverlay(gui, FONT_RENDERER, gui.guiHeight());
 		}
 	};
 }

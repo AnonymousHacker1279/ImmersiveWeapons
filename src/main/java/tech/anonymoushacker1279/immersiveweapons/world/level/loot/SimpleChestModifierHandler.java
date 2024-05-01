@@ -3,10 +3,12 @@ package tech.anonymoushacker1279.immersiveweapons.world.level.loot;
 import com.google.common.base.Suppliers;
 import com.google.gson.JsonParseException;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -19,8 +21,8 @@ import java.util.function.Supplier;
 
 public class SimpleChestModifierHandler extends LootModifier {
 
-	public static final Supplier<Codec<SimpleChestModifierHandler>> CODEC = Suppliers.memoize(() ->
-			RecordCodecBuilder.create(inst -> codecStart(inst).and(
+	public static final Supplier<MapCodec<SimpleChestModifierHandler>> CODEC = Suppliers.memoize(() ->
+			RecordCodecBuilder.mapCodec(inst -> codecStart(inst).and(
 							inst.group(
 									Codec.INT.fieldOf("min_quantity").forGetter(m -> m.minQuantity),
 									Codec.INT.fieldOf("max_quantity").forGetter(m -> m.maxQuantity),
@@ -107,7 +109,7 @@ public class SimpleChestModifierHandler extends LootModifier {
 			ItemStack stack = itemStack.copyWithCount(lootQuantity);
 
 			if (maxEnchantLevels > 0) {
-				EnchantmentHelper.enchantItem(RandomSource.create(), stack, maxEnchantLevels, allowTreasure);
+				EnchantmentHelper.enchantItem(FeatureFlagSet.of(), RandomSource.create(), stack, maxEnchantLevels, allowTreasure);
 			}
 
 			generatedLoot.add(stack);
@@ -117,7 +119,7 @@ public class SimpleChestModifierHandler extends LootModifier {
 	}
 
 	@Override
-	public Codec<? extends IGlobalLootModifier> codec() {
+	public MapCodec<? extends IGlobalLootModifier> codec() {
 		return CODEC.get();
 	}
 }

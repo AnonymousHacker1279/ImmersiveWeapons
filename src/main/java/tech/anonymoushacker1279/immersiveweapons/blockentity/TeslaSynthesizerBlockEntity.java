@@ -84,6 +84,18 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	}
 
 	@Override
+	protected NonNullList<ItemStack> getItems() {
+		return items;
+	}
+
+	@Override
+	protected void setItems(NonNullList<ItemStack> stacks) {
+		for (int i = 0; i < Math.min(stacks.size(), items.size()); i++) {
+			items.set(i, stacks.get(i));
+		}
+	}
+
+	@Override
 	protected AbstractContainerMenu createMenu(int id, Inventory inventory) {
 		return new TeslaSynthesizerMenu(id, inventory, this, containerData);
 	}
@@ -166,7 +178,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 			}
 
 			if (isBurning() && canSmelt(synthesizerRecipe)) {
-				++cookTime;
+				cookTime++;
 				if (cookTime == cookTimeTotal) {
 					cookTime = 0;
 					cookTimeTotal = getCookTime();
@@ -236,21 +248,16 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 		return burnTime > 0;
 	}
 
-	/**
-	 * Load NBT data.
-	 *
-	 * @param nbt the <code>CompoundNBT</code> to load
-	 */
 	@Override
-	public void load(CompoundTag nbt) {
-		super.load(nbt);
+	public void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+		super.loadAdditional(tag, provider);
 		items = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
-		ContainerHelper.loadAllItems(nbt, items);
-		burnTime = nbt.getInt("BurnTime");
-		cookTime = nbt.getInt("CookTime");
-		cookTimeTotal = nbt.getInt("CookTimeTotal");
+		ContainerHelper.loadAllItems(tag, items, provider);
+		burnTime = tag.getInt("BurnTime");
+		cookTime = tag.getInt("CookTime");
+		cookTimeTotal = tag.getInt("CookTimeTotal");
 		burnTimeTotal = getBurnTime(items.get(3));
-		CompoundTag compoundTag = nbt.getCompound("RecipesUsed");
+		CompoundTag compoundTag = tag.getCompound("RecipesUsed");
 
 		for (String string : compoundTag.getAllKeys()) {
 			recipes.put(new ResourceLocation(string), compoundTag.getInt(string));
@@ -258,21 +265,16 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 
 	}
 
-	/**
-	 * Save NBT data.
-	 *
-	 * @param pTag the <code>CompoundNBT</code> to save
-	 */
 	@Override
-	protected void saveAdditional(CompoundTag pTag) {
-		super.saveAdditional(pTag);
-		pTag.putInt("BurnTime", burnTime);
-		pTag.putInt("CookTime", cookTime);
-		pTag.putInt("CookTimeTotal", cookTimeTotal);
-		ContainerHelper.saveAllItems(pTag, items);
+	protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+		super.saveAdditional(tag, provider);
+		tag.putInt("BurnTime", burnTime);
+		tag.putInt("CookTime", cookTime);
+		tag.putInt("CookTimeTotal", cookTimeTotal);
+		ContainerHelper.saveAllItems(tag, items, provider);
 		CompoundTag compoundTag = new CompoundTag();
 		recipes.forEach((recipeId, craftedAmount) -> compoundTag.putInt(recipeId.toString(), craftedAmount));
-		pTag.put("RecipesUsed", compoundTag);
+		tag.put("RecipesUsed", compoundTag);
 	}
 
 	/**

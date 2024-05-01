@@ -3,8 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.block;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.*;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -46,19 +45,23 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 	}
 
 	@Override
-	public InteractionResult use(BlockState state, Level level, BlockPos pos,
-	                             Player player, InteractionHand hand,
-	                             BlockHitResult hitResult) {
-
-		if (!level.isClientSide && hand.equals(InteractionHand.MAIN_HAND) && level.getBlockEntity(pos) instanceof BearTrapBlockEntity blockEntity) {
-			ItemStack mainHandItem = player.getMainHandItem();
-
+	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
+		if (!level.isClientSide && level.getBlockEntity(pos) instanceof BearTrapBlockEntity blockEntity) {
 			if (state.getValue(TRIGGERED) && !blockEntity.hasTrappedEntity()) {
 				level.setBlock(pos, state.setValue(TRIGGERED, false).setValue(VINES, false), 3);
 				level.gameEvent(GameEvent.BLOCK_DEACTIVATE, pos, GameEvent.Context.of(state));
 
 				return InteractionResult.SUCCESS;
 			}
+		}
+
+		return InteractionResult.PASS;
+	}
+
+	@Override
+	protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
+		if (!level.isClientSide && hand.equals(InteractionHand.MAIN_HAND)) {
+			ItemStack mainHandItem = player.getMainHandItem();
 
 			if (!state.getValue(VINES) && mainHandItem.getItem() == Items.VINE) {
 				level.setBlock(pos, state.setValue(VINES, true), 3);
@@ -67,10 +70,11 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 				}
 
 				level.gameEvent(GameEvent.BLOCK_ACTIVATE, pos, GameEvent.Context.of(state));
+				return ItemInteractionResult.CONSUME;
 			}
 		}
 
-		return InteractionResult.PASS;
+		return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 	}
 
 	@Override

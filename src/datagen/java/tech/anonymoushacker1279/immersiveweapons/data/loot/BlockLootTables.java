@@ -1,8 +1,9 @@
 package tech.anonymoushacker1279.immersiveweapons.data.loot;
 
 import net.minecraft.advancements.critereon.*;
+import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.loot.LootTableSubProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -37,17 +38,23 @@ import java.util.function.*;
 public class BlockLootTables implements LootTableSubProvider {
 
 	@Nullable
-	private BiConsumer<ResourceLocation, LootTable.Builder> out;
+	private BiConsumer<ResourceKey<LootTable>, Builder> consumer;
 
-	private static final LootItemCondition.Builder HAS_SILK_TOUCH = MatchTool.toolMatches(ItemPredicate.Builder.item().hasEnchantment(new EnchantmentPredicate(Enchantments.SILK_TOUCH, MinMaxBounds.Ints.atLeast(1))));
+	protected static final LootItemCondition.Builder HAS_SILK_TOUCH = MatchTool.toolMatches(
+			ItemPredicate.Builder.item()
+					.withSubPredicate(
+							ItemSubPredicates.ENCHANTMENTS,
+							ItemEnchantmentsPredicate.enchantments(List.of(new EnchantmentPredicate(Enchantments.SILK_TOUCH, MinMaxBounds.Ints.atLeast(1))))
+					)
+	);
 	private static final LootItemCondition.Builder HAS_SHEARS = MatchTool.toolMatches(ItemPredicate.Builder.item().of(Items.SHEARS));
 	private static final LootItemCondition.Builder HAS_SHEARS_OR_SILK_TOUCH = HAS_SHEARS.or(HAS_SILK_TOUCH);
 	private static final LootItemCondition.Builder HAS_NO_SHEARS_OR_SILK_TOUCH = HAS_SHEARS_OR_SILK_TOUCH.invert();
 	private static final float[] NORMAL_LEAVES_SAPLING_CHANCES = new float[]{0.05F, 0.0625F, 0.083333336F, 0.1F};
 
 	@Override
-	public void generate(BiConsumer<ResourceLocation, Builder> out) {
-		this.out = out;
+	public void generate(Provider provider, BiConsumer<ResourceKey<LootTable>, Builder> consumer) {
+		this.consumer = consumer;
 
 		List<Block> blocks = new ArrayList<>(250);
 		BlockRegistry.BLOCKS.getEntries().stream().map(Supplier::get).forEach(blocks::add);
@@ -215,7 +222,7 @@ public class BlockLootTables implements LootTableSubProvider {
 
 	protected static LootTable.Builder createLeafLikeDrop(Block block, Item altDrop, float... pChances) {
 		return createSilkTouchOrShearsDispatchTable(block, applyExplosionCondition(LootItem.lootTableItem(altDrop))
-				.when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, pChances)))
+				.when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.FORTUNE, pChances)))
 				.withPool(LootPool.lootPool()
 						.name("main")
 						.setRolls(ConstantValue.exactly(1.0F))
@@ -223,7 +230,7 @@ public class BlockLootTables implements LootTableSubProvider {
 						.add(applyExplosionDecay(LootItem.lootTableItem(Items.STICK)
 								.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
 								.when(BonusLevelTableCondition
-										.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F))));
+										.bonusLevelFlatChance(Enchantments.FORTUNE, 0.02F, 0.022222223F, 0.025F, 0.033333335F, 0.1F))));
 	}
 
 	protected static LootTable.Builder createSilkTouchOrShearsDispatchTable(Block pBlock, LootPoolEntryContainer.Builder<?> pAlternativeEntryBuilder) {
@@ -242,13 +249,13 @@ public class BlockLootTables implements LootTableSubProvider {
 
 	protected static LootTable.Builder createOreDrop(Block pBlock, Item pItem) {
 		return createSilkTouchDispatchTable(pBlock, applyExplosionDecay(LootItem.lootTableItem(pItem)
-				.apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))));
+				.apply(ApplyBonusCount.addOreBonusCount(Enchantments.FORTUNE))));
 	}
 
 	protected static LootTable.Builder createOreDrop(Block pBlock, Item pItem, int baseCount, int maxCount) {
 		return createSilkTouchDispatchTable(pBlock, applyExplosionDecay(LootItem.lootTableItem(pItem)
 				.apply(SetItemCountFunction.setCount(UniformGenerator.between(baseCount, maxCount)))
-				.apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))));
+				.apply(ApplyBonusCount.addOreBonusCount(Enchantments.FORTUNE))));
 	}
 
 	protected static LootTable.Builder createSilkTouchDispatchTable(Block pBlock, LootPoolEntryContainer.Builder<?> pAlternativeEntryBuilder) {
@@ -278,8 +285,8 @@ public class BlockLootTables implements LootTableSubProvider {
 	}
 
 	protected void add(Block pBlock, LootTable.Builder pLootTableBuilder) {
-		if (out != null) {
-			out.accept(pBlock.getLootTable(), pLootTableBuilder.setParamSet(LootContextParamSets.BLOCK));
+		if (consumer != null) {
+			consumer.accept(pBlock.getLootTable(), pLootTableBuilder.setParamSet(LootContextParamSets.BLOCK));
 		}
 	}
 

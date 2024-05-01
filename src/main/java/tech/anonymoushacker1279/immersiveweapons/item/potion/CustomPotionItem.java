@@ -47,8 +47,8 @@ public abstract class CustomPotionItem extends Item {
 
 		if (!pLevel.isClientSide) {
 			for (MobEffectInstance effectInstance : getEffects()) {
-				if (effectInstance.getEffect().isInstantenous()) {
-					effectInstance.getEffect().applyInstantenousEffect(player, player, pEntityLiving, effectInstance.getAmplifier(), 1.0D);
+				if (effectInstance.getEffect().value().isInstantenous()) {
+					effectInstance.getEffect().value().applyInstantenousEffect(player, player, pEntityLiving, effectInstance.getAmplifier(), 1.0D);
 				} else {
 					pEntityLiving.addEffect(new MobEffectInstance(effectInstance));
 				}

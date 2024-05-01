@@ -1,6 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.monster;
 
 import net.minecraft.commands.arguments.EntityAnchorArgument;
+import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.*;
 import net.minecraft.server.level.ServerLevel;
@@ -33,8 +34,8 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 	private static final EntityDataAccessor<Boolean> SUMMONED_BY_STAFF = SynchedEntityData.defineId(EvilEyeEntity.class,
 			EntityDataSerializers.BOOLEAN);
 
-	private final List<MobEffect> lowTierDebuffs = new ArrayList<>(5);
-	private final List<MobEffect> highTierDebuffs = new ArrayList<>(5);
+	private final List<Holder<MobEffect>> lowTierDebuffs = new ArrayList<>(5);
+	private final List<Holder<MobEffect>> highTierDebuffs = new ArrayList<>(5);
 
 	private final FlyRandomlyGoal flyRandomlyGoal = new FlyRandomlyGoal(this);
 
@@ -75,7 +76,7 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 
 		if (!level.isClientSide) {
 			entity.finalizeSpawn((ServerLevelAccessor) level, level.getCurrentDifficultyAt(entity.blockPosition()),
-					MobSpawnType.EVENT, null, null);
+					MobSpawnType.EVENT, null);
 		}
 
 		level.addFreshEntity(entity);
@@ -102,10 +103,10 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 	}
 
 	@Override
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-		entityData.define(ID_SIZE, 0);
-		entityData.define(SUMMONED_BY_STAFF, false);
+	protected void defineSynchedData(SynchedEntityData.Builder builder) {
+		super.defineSynchedData(builder);
+		builder.define(ID_SIZE, 0);
+		builder.define(SUMMONED_BY_STAFF, false);
 	}
 
 	@Override
@@ -192,10 +193,10 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 					if (tickCount % 20 == 0 && random.nextFloat() < effectChance) {
 						// If there are at least 3 entities within an 8 block radius, inflict a high tier debuff
 						if (level().getEntitiesOfClass(EvilEyeEntity.class, getBoundingBox().inflate(8), (entity) -> true).size() >= 3) {
-							MobEffect effect = highTierDebuffs.get(getRandom().nextIntBetweenInclusive(0, highTierDebuffs.size() - 1));
+							Holder<MobEffect> effect = highTierDebuffs.get(getRandom().nextIntBetweenInclusive(0, highTierDebuffs.size() - 1));
 							targetedEntity.addEffect(new MobEffectInstance(effect, effectDuration, effectLevel));
 						} else {
-							MobEffect effect = lowTierDebuffs.get(getRandom().nextIntBetweenInclusive(0, lowTierDebuffs.size() - 1));
+							Holder<MobEffect> effect = lowTierDebuffs.get(getRandom().nextIntBetweenInclusive(0, lowTierDebuffs.size() - 1));
 							targetedEntity.addEffect(new MobEffectInstance(effect, effectDuration, effectLevel));
 						}
 					}
@@ -213,12 +214,11 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 
 	@Override
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty,
-	                                    MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData,
-	                                    @Nullable CompoundTag pDataTag) {
+	                                    MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData) {
 		setSize(getRandom().nextIntBetweenInclusive(1, 3));
 		setHealth(getMaxHealth());
 		xpReward = summonedByStaff() ? 0 : 3 * getSize();
-		return super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
+		return super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData);
 	}
 
 	@Override
@@ -272,10 +272,10 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 	}
 
 	@Override
-	public EntityDimensions getDimensions(Pose pPose) {
+	protected EntityDimensions getDefaultDimensions(Pose pPose) {
 		int size = getSize();
 		EntityDimensions dimensions = super.getDimensions(pPose);
-		float scaleFactor = (dimensions.width + 0.3F * (float) size) / dimensions.width;
+		float scaleFactor = (dimensions.width() + 0.3F * (float) size) / dimensions.width();
 		return dimensions.scale(scaleFactor);
 	}
 

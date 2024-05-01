@@ -1,5 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.event.game_effects;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
@@ -209,7 +210,7 @@ public class AccessoryManager {
 			AttributeModifier modifier = entry.getKey();
 			Attribute attribute = entry.getValue();
 
-			AttributeInstance attributeInstance = player.getAttributes().getInstance(attribute);
+			AttributeInstance attributeInstance = player.getAttributes().getInstance(BuiltInRegistries.ATTRIBUTE.wrapAsHolder(attribute));
 			if (attributeInstance != null) {
 				if (!attributeInstance.hasModifier(modifier)) {
 					attributeInstance.addTransientModifier(modifier);
@@ -236,19 +237,19 @@ public class AccessoryManager {
 				AttributeModifier modifier = modifierEntry.getKey();
 				Attribute attribute = modifierEntry.getValue();
 
-				AttributeInstance attributeInstance = player.getAttributes().getInstance(attribute);
+				AttributeInstance attributeInstance = player.getAttributes().getInstance(BuiltInRegistries.ATTRIBUTE.wrapAsHolder(attribute));
 				if (attributeInstance != null) {
 					if (!attributeInstance.hasModifier(modifier)) {
 						double amount = targetValue - attributeInstance.getValue();
-						AttributeModifier newModifier = new AttributeModifier(modifier.getId(), modifier.name, amount, modifier.getOperation());
+						AttributeModifier newModifier = new AttributeModifier(modifier.id(), modifier.name(), amount, modifier.operation());
 
 						attributeInstance.addTransientModifier(newModifier);
 					}
 					if (attributeInstance.getValue() != targetValue) {
-						attributeInstance.removeModifier(modifier.getId());
+						attributeInstance.removeModifier(modifier.id());
 
 						double amount = targetValue - attributeInstance.getValue();
-						AttributeModifier newModifier = new AttributeModifier(modifier.getId(), modifier.name, amount, modifier.getOperation());
+						AttributeModifier newModifier = new AttributeModifier(modifier.id(), modifier.name(), amount, modifier.operation());
 
 						attributeInstance.addTransientModifier(newModifier);
 					}
@@ -272,7 +273,7 @@ public class AccessoryManager {
 			AttributeModifier modifier = entry.getKey();
 			Attribute attribute = entry.getValue();
 
-			AttributeInstance attributeInstance = player.getAttributes().getInstance(attribute);
+			AttributeInstance attributeInstance = player.getAttributes().getInstance(BuiltInRegistries.ATTRIBUTE.wrapAsHolder(attribute));
 			if (attributeInstance != null) {
 				if (attributeInstance.hasModifier(modifier)) {
 					// Check for matching UUIDs in the activeAttributeModifiers map, rather than instances
@@ -285,14 +286,14 @@ public class AccessoryManager {
 
 					for (Map.Entry<AttributeModifier, Attribute> activeEntry : allActiveModifiers.entrySet()) {
 						AttributeModifier activeModifier = activeEntry.getKey();
-						if (activeModifier.getId().equals(modifier.getId())) {
+						if (activeModifier.id().equals(modifier.id())) {
 							found = true;
 							break;
 						}
 					}
 
 					if (!found) {
-						attributeInstance.removeModifier(modifier.getId());
+						attributeInstance.removeModifier(modifier.id());
 					}
 				}
 			}

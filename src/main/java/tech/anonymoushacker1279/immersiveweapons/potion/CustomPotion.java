@@ -9,10 +9,11 @@ public class CustomPotion extends Potion {
 		super(mobEffectInstance);
 	}
 
-	@Override
+	// TODO: check if still necessary
+	/*@Override
 	public String getName(String prefix) {
 		prefix = prefix.replace("item.minecraft.", "")
 				.replace(".effect", "");
 		return super.getName("item.immersiveweapons." + prefix);
-	}
+	}*/
 }

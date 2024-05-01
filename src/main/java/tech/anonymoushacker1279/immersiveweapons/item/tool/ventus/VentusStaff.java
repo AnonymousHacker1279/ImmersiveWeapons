@@ -86,7 +86,7 @@ public class VentusStaff extends Item {
 
 		if (!player.isCreative()) {
 			player.getCooldowns().addCooldown(this, 100);
-			itemInHand.hurtAndBreak(1, player, (player1) -> player1.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+			itemInHand.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
 		}
 	}
 

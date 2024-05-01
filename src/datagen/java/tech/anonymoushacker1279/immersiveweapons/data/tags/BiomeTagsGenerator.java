@@ -9,8 +9,8 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeWorldGenTagGroups;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWWorldGenTagGroups;
+import tech.anonymoushacker1279.immersiveweapons.data.groups.forge.ForgeWorldGenTagGroups;
+import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWWorldGenTagGroups;
 
 import java.util.concurrent.CompletableFuture;
 

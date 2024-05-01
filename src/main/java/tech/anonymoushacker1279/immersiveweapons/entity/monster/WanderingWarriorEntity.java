@@ -42,7 +42,7 @@ public class WanderingWarriorEntity extends AbstractWanderingWarriorEntity {
 	}
 
 	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag dataTag) {
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData) {
 		// 10% chance to spawn as berserk, increasing with difficulty
 		float berserkChance = 0.1f + (0.66f * difficulty.getSpecialMultiplier());
 
@@ -58,7 +58,7 @@ public class WanderingWarriorEntity extends AbstractWanderingWarriorEntity {
 			getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(getAttribute(Attributes.ATTACK_DAMAGE).getBaseValue() * 1.5);
 		}
 
-		return super.finalizeSpawn(level, difficulty, reason, spawnData, dataTag);
+		return super.finalizeSpawn(level, difficulty, reason, spawnData);
 	}
 
 	@Override

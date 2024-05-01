@@ -1,6 +1,9 @@
 package tech.anonymoushacker1279.immersiveweapons.network.payload.star_forge;
 
+import net.minecraft.core.UUIDUtil;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
@@ -11,21 +14,20 @@ import java.util.UUID;
 public record StarForgeUpdateRecipesPayload(UUID playerUUID, int containerId,
                                             List<ResourceLocation> recipeIds) implements CustomPacketPayload {
 
-	public static final ResourceLocation ID = new ResourceLocation(ImmersiveWeapons.MOD_ID, "star_forge_update_recipes");
+	public static final Type<StarForgeUpdateRecipesPayload> TYPE = new Type<>(new ResourceLocation(ImmersiveWeapons.MOD_ID, "star_forge_update_recipes"));
 
-	public StarForgeUpdateRecipesPayload(final FriendlyByteBuf buffer) {
-		this(buffer.readUUID(), buffer.readInt(), buffer.readList(FriendlyByteBuf::readResourceLocation));
-	}
+	public static final StreamCodec<FriendlyByteBuf, StarForgeUpdateRecipesPayload> STREAM_CODEC = StreamCodec.composite(
+			UUIDUtil.STREAM_CODEC,
+			StarForgeUpdateRecipesPayload::playerUUID,
+			ByteBufCodecs.INT,
+			StarForgeUpdateRecipesPayload::containerId,
+			ResourceLocation.STREAM_CODEC.apply(ByteBufCodecs.list()),
+			StarForgeUpdateRecipesPayload::recipeIds,
+			StarForgeUpdateRecipesPayload::new
+	);
 
 	@Override
-	public void write(FriendlyByteBuf buffer) {
-		buffer.writeUUID(playerUUID);
-		buffer.writeInt(containerId);
-		buffer.writeCollection(recipeIds, FriendlyByteBuf::writeResourceLocation);
-	}
-
-	@Override
-	public ResourceLocation id() {
-		return ID;
+	public Type<? extends CustomPacketPayload> type() {
+		return TYPE;
 	}
 }

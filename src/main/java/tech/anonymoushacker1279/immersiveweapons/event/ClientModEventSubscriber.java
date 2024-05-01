@@ -8,17 +8,18 @@ import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.*;
-import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.level.GrassColor;
 import net.minecraft.world.level.ItemLike;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod.EventBusSubscriber;
-import net.neoforged.fml.common.Mod.EventBusSubscriber.Bus;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.common.EventBusSubscriber.Bus;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.*;
-import net.neoforged.neoforge.client.gui.overlay.VanillaGuiOverlay;
+import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
@@ -103,27 +104,27 @@ public class ClientModEventSubscriber {
 
 			// Add potion items, which are not in the item registry.
 			// Celestial potions
-			event.accept(PotionUtils.setPotion(new ItemStack(Items.POTION), PotionRegistry.CELESTIAL_BREW_POTION.get()));
-			event.accept(PotionUtils.setPotion(new ItemStack(Items.SPLASH_POTION), PotionRegistry.CELESTIAL_BREW_POTION.get()));
-			event.accept(PotionUtils.setPotion(new ItemStack(Items.LINGERING_POTION), PotionRegistry.CELESTIAL_BREW_POTION.get()));
-			event.accept(PotionUtils.setPotion(new ItemStack(Items.TIPPED_ARROW), PotionRegistry.CELESTIAL_BREW_POTION.get()));
-			event.accept(PotionUtils.setPotion(new ItemStack(Items.POTION), PotionRegistry.LONG_CELESTIAL_BREW_POTION.get()));
-			event.accept(PotionUtils.setPotion(new ItemStack(Items.SPLASH_POTION), PotionRegistry.LONG_CELESTIAL_BREW_POTION.get()));
-			event.accept(PotionUtils.setPotion(new ItemStack(Items.LINGERING_POTION), PotionRegistry.LONG_CELESTIAL_BREW_POTION.get()));
-			event.accept(PotionUtils.setPotion(new ItemStack(Items.TIPPED_ARROW), PotionRegistry.LONG_CELESTIAL_BREW_POTION.get()));
+			event.accept(PotionContents.createItemStack(Items.POTION, PotionRegistry.CELESTIAL_BREW_POTION));
+			event.accept(PotionContents.createItemStack(Items.SPLASH_POTION, PotionRegistry.CELESTIAL_BREW_POTION));
+			event.accept(PotionContents.createItemStack(Items.LINGERING_POTION, PotionRegistry.CELESTIAL_BREW_POTION));
+			event.accept(PotionContents.createItemStack(Items.TIPPED_ARROW, PotionRegistry.CELESTIAL_BREW_POTION));
+			event.accept(PotionContents.createItemStack(Items.POTION, PotionRegistry.LONG_CELESTIAL_BREW_POTION));
+			event.accept(PotionContents.createItemStack(Items.SPLASH_POTION, PotionRegistry.LONG_CELESTIAL_BREW_POTION));
+			event.accept(PotionContents.createItemStack(Items.LINGERING_POTION, PotionRegistry.LONG_CELESTIAL_BREW_POTION));
+			event.accept(PotionContents.createItemStack(Items.TIPPED_ARROW, PotionRegistry.LONG_CELESTIAL_BREW_POTION));
 			// Death potions
-			event.accept(PotionUtils.setPotion(new ItemStack(Items.POTION), PotionRegistry.DEATH_POTION.get()));
-			event.accept(PotionUtils.setPotion(new ItemStack(Items.SPLASH_POTION), PotionRegistry.DEATH_POTION.get()));
-			event.accept(PotionUtils.setPotion(new ItemStack(Items.LINGERING_POTION), PotionRegistry.DEATH_POTION.get()));
-			event.accept(PotionUtils.setPotion(new ItemStack(Items.TIPPED_ARROW), PotionRegistry.DEATH_POTION.get()));
-			event.accept(PotionUtils.setPotion(new ItemStack(Items.POTION), PotionRegistry.STRONG_DEATH_POTION.get()));
-			event.accept(PotionUtils.setPotion(new ItemStack(Items.SPLASH_POTION), PotionRegistry.STRONG_DEATH_POTION.get()));
-			event.accept(PotionUtils.setPotion(new ItemStack(Items.LINGERING_POTION), PotionRegistry.STRONG_DEATH_POTION.get()));
-			event.accept(PotionUtils.setPotion(new ItemStack(Items.TIPPED_ARROW), PotionRegistry.STRONG_DEATH_POTION.get()));
-			event.accept(PotionUtils.setPotion(new ItemStack(Items.POTION), PotionRegistry.LONG_DEATH_POTION.get()));
-			event.accept(PotionUtils.setPotion(new ItemStack(Items.SPLASH_POTION), PotionRegistry.LONG_DEATH_POTION.get()));
-			event.accept(PotionUtils.setPotion(new ItemStack(Items.LINGERING_POTION), PotionRegistry.LONG_DEATH_POTION.get()));
-			event.accept(PotionUtils.setPotion(new ItemStack(Items.TIPPED_ARROW), PotionRegistry.LONG_DEATH_POTION.get()));
+			event.accept(PotionContents.createItemStack(Items.POTION, PotionRegistry.DEATH_POTION));
+			event.accept(PotionContents.createItemStack(Items.SPLASH_POTION, PotionRegistry.DEATH_POTION));
+			event.accept(PotionContents.createItemStack(Items.LINGERING_POTION, PotionRegistry.DEATH_POTION));
+			event.accept(PotionContents.createItemStack(Items.TIPPED_ARROW, PotionRegistry.DEATH_POTION));
+			event.accept(PotionContents.createItemStack(Items.POTION, PotionRegistry.STRONG_DEATH_POTION));
+			event.accept(PotionContents.createItemStack(Items.SPLASH_POTION, PotionRegistry.STRONG_DEATH_POTION));
+			event.accept(PotionContents.createItemStack(Items.LINGERING_POTION, PotionRegistry.STRONG_DEATH_POTION));
+			event.accept(PotionContents.createItemStack(Items.TIPPED_ARROW, PotionRegistry.STRONG_DEATH_POTION));
+			event.accept(PotionContents.createItemStack(Items.POTION, PotionRegistry.LONG_DEATH_POTION));
+			event.accept(PotionContents.createItemStack(Items.SPLASH_POTION, PotionRegistry.LONG_DEATH_POTION));
+			event.accept(PotionContents.createItemStack(Items.LINGERING_POTION, PotionRegistry.LONG_DEATH_POTION));
+			event.accept(PotionContents.createItemStack(Items.TIPPED_ARROW, PotionRegistry.LONG_DEATH_POTION));
 		}
 	}
 
@@ -334,18 +335,6 @@ public class ClientModEventSubscriber {
 
 		event.register((stack, color) -> GrassColor.get(0.5d, 1.0d),
 				BlockItemRegistry.PITFALL_ITEM.get());
-
-		// Handle dyeable armor
-		ArrayList<DyeableArmorItem> dyeableArmorItems = new ArrayList<>(4);
-
-		for (DeferredHolder<Item, ? extends Item> registryObject : ItemRegistry.ITEMS.getEntries()) {
-			if (registryObject.get() instanceof DyeableArmorItem item) {
-				dyeableArmorItems.add(item);
-			}
-		}
-
-		event.register((stack, color) -> color > 0 ? -1 : ((DyeableLeatherItem) stack.getItem())
-				.getColor(stack), dyeableArmorItems.toArray(DyeableArmorItem[]::new));
 	}
 
 	@SubscribeEvent
@@ -358,12 +347,12 @@ public class ClientModEventSubscriber {
 	}
 
 	@SubscribeEvent
-	public static void registerGuiOverlaysEvent(RegisterGuiOverlaysEvent event) {
-		event.registerAbove(VanillaGuiOverlay.VIGNETTE.id(),
+	public static void registerGuiOverlaysEvent(RegisterGuiLayersEvent event) {
+		event.registerAbove(VanillaGuiLayers.CROSSHAIR,
 				new ResourceLocation(ImmersiveWeapons.MOD_ID, "scope"),
 				IWOverlays.SCOPE_ELEMENT);
 
-		event.registerAbove(VanillaGuiOverlay.DEBUG_SCREEN.id(),
+		event.registerAbove(VanillaGuiLayers.DEBUG_OVERLAY,
 				new ResourceLocation(ImmersiveWeapons.MOD_ID, "debug_overlay"),
 				IWOverlays.DEBUG_TRACING_ELEMENT);
 	}

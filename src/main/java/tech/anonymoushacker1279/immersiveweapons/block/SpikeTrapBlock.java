@@ -2,6 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
@@ -39,14 +40,12 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 		registerDefaultState(stateDefinition.any().setValue(WATERLOGGED, Boolean.FALSE).setValue(POWERED, Boolean.FALSE));
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter blockGetter, BlockPos pos,
 	                           CollisionContext collisionContext) {
 		return SHAPE;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public BlockState updateShape(BlockState state, Direction facing, BlockState neighborState,
 	                              LevelAccessor levelAccessor, BlockPos currentPos,
@@ -77,7 +76,6 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 	 * @param state the <code>BlockState</code> of the block
 	 * @return FluidState
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
@@ -101,7 +99,6 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 	 * @param pos    the <code>BlocKPos</code> the block is at
 	 * @return boolean
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader reader, BlockPos pos) {
 		return Block.canSupportCenter(reader, pos.below(), Direction.UP);
@@ -116,7 +113,6 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 	 * @param pos    the <code>BlockPos</code> the block is at
 	 * @param entity the <code>Entity</code> passing through the block
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
 		if (entity instanceof Player || entity instanceof Mob) {
@@ -135,7 +131,6 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 	 * @param oldState the <code>BlockState</code> the block previously had
 	 * @param isMoving determines if the block is moving
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
 		if (!oldState.is(state.getBlock())) {
@@ -155,22 +150,20 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 	 * @param fromPos  the <code>BlockPos</code> of the changing block
 	 * @param isMoving determines if the block is moving
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
-	public void neighborChanged(BlockState state, Level level, BlockPos pos, Block blockIn,
-	                            BlockPos fromPos, boolean isMoving) {
+	public void neighborChanged(BlockState state, Level level, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
 		boolean hasNeighborSignal = level.hasNeighborSignal(pos);
-		if (hasNeighborSignal != state.getValue(POWERED)) {
+		if (hasNeighborSignal != state.getValue(POWERED) && level instanceof ServerLevel serverLevel) {
 			state = state.setValue(POWERED, hasNeighborSignal);
 			if (state.getValue(POWERED)) {
-				PacketDistributor.TRACKING_CHUNK.with(level.getChunkAt(pos))
-						.send(new LocalSoundPayload(pos, SoundEventRegistry.SPIKE_TRAP_EXTEND.get().getLocation(),
+				PacketDistributor.sendToPlayersTrackingChunk(serverLevel, serverLevel.getChunk(pos).getPos(),
+						new LocalSoundPayload(pos, SoundEventRegistry.SPIKE_TRAP_EXTEND.get().getLocation(),
 								SoundSource.BLOCKS, 1.0f, 1.0f, true));
 
 				level.gameEvent(GameEvent.BLOCK_ACTIVATE, pos, GameEvent.Context.of(state));
 			} else {
-				PacketDistributor.TRACKING_CHUNK.with(level.getChunkAt(pos))
-						.send(new LocalSoundPayload(pos, SoundEventRegistry.SPIKE_TRAP_RETRACT.get().getLocation(),
+				PacketDistributor.sendToPlayersTrackingChunk(serverLevel, serverLevel.getChunk(pos).getPos(),
+						new LocalSoundPayload(pos, SoundEventRegistry.SPIKE_TRAP_RETRACT.get().getLocation(),
 								SoundSource.BLOCKS, 1.0f, 1.0f, true));
 
 				level.gameEvent(GameEvent.BLOCK_DEACTIVATE, pos, GameEvent.Context.of(state));

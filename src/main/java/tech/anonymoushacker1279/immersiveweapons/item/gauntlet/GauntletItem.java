@@ -15,7 +15,7 @@ import net.neoforged.neoforge.common.ToolActions;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.EnchantmentRegistry;
 
-public class GauntletItem extends TieredItem implements Vanishable {
+public class GauntletItem extends TieredItem {
 
 	public final Ingredient repairIngredient;
 	public final double damage;
@@ -44,7 +44,7 @@ public class GauntletItem extends TieredItem implements Vanishable {
 			int enchantmentLevel = stack.getEnchantmentLevel(EnchantmentRegistry.CRIMSON_CLAW.get());
 			int duration = 200 + (enchantmentLevel * 100);
 
-			target.addEffect(new MobEffectInstance(EffectRegistry.BLEEDING_EFFECT.get(), duration,
+			target.addEffect(new MobEffectInstance(EffectRegistry.BLEEDING_EFFECT, duration,
 					bleedLevel + enchantmentLevel, true, false));
 
 			enchantmentLevel = stack.getEnchantmentLevel(EnchantmentRegistry.EXCESSIVE_FORCE.get());
@@ -58,14 +58,14 @@ public class GauntletItem extends TieredItem implements Vanishable {
 			}
 		}
 
-		stack.hurtAndBreak(1, attacker, (breakEvent) -> breakEvent.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+		stack.hurtAndBreak(1, attacker, EquipmentSlot.MAINHAND);
 		return true;
 	}
 
 	@Override
 	public boolean mineBlock(ItemStack stack, Level level, BlockState state, BlockPos pos, LivingEntity livingEntity) {
 		if (state.getDestroySpeed(level, pos) != 0.0F) {
-			stack.hurtAndBreak(2, livingEntity, (breakEvent) -> breakEvent.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+			stack.hurtAndBreak(2, livingEntity, EquipmentSlot.MAINHAND);
 		}
 
 		return true;

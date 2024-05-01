@@ -9,8 +9,8 @@ import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.CustomDataGenerator;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeBlockTagGroups;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWBlockTagGroups;
+import tech.anonymoushacker1279.immersiveweapons.data.groups.forge.ForgeBlockTagGroups;
+import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWBlockTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
 
 import java.util.ArrayList;
@@ -48,7 +48,7 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 		}
 
 		// Glass tag
-		tag(Blocks.GLASS).addTag(ForgeBlockTagGroups.BULLETPROOF_GLASS);
+		tag(Blocks.GLASS_BLOCKS).addTag(ForgeBlockTagGroups.BULLETPROOF_GLASS);
 
 		// Stained glass tag
 		for (Block block : CustomDataGenerator.ALL_BLOCKS) {
@@ -87,6 +87,16 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 				BlockRegistry.STARDUST_WOOD.get(),
 				BlockRegistry.STRIPPED_STARDUST_LOG.get(),
 				BlockRegistry.STRIPPED_STARDUST_WOOD.get());
+
+		// Tool tags
+		tag(IWBlockTagGroups.INCORRECT_FOR_COPPER_TOOL);
+		tag(IWBlockTagGroups.INCORRECT_FOR_COBALT_TOOL);
+		tag(IWBlockTagGroups.INCORRECT_FOR_MOLTEN_TOOL);
+		tag(IWBlockTagGroups.INCORRECT_FOR_TESLA_TOOL);
+		tag(IWBlockTagGroups.INCORRECT_FOR_VENTUS_TOOL);
+		tag(IWBlockTagGroups.INCORRECT_FOR_STARSTORM_TOOL);
+		tag(IWBlockTagGroups.INCORRECT_FOR_ASTRAL_TOOL);
+		tag(IWBlockTagGroups.INCORRECT_FOR_HANSIUM_TOOL);
 	}
 
 	/**

@@ -35,7 +35,6 @@ public class WoodenSpikesBlock extends DamageableBlock {
 		registerDefaultState(stateDefinition.any().setValue(WATERLOGGED, Boolean.FALSE).setValue(DAMAGE_STAGE, 0));
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext context) {
 		return SHAPE;
@@ -55,7 +54,6 @@ public class WoodenSpikesBlock extends DamageableBlock {
 	 * @param pos    the <code>BlockPos</code> the block is at
 	 * @param entity the <code>Entity</code> passing through the block
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
 		if (entity instanceof LivingEntity livingEntity) {
@@ -72,7 +70,7 @@ public class WoodenSpikesBlock extends DamageableBlock {
 						entity.hurt(IWDamageSources.WOODEN_SPIKES, damageable.calculateDamage(1.5f, 0.33f));
 
 						if (livingEntity.getRandom().nextFloat() <= 0.15f) {
-							livingEntity.addEffect(new MobEffectInstance(EffectRegistry.BLEEDING_EFFECT.get(),
+							livingEntity.addEffect(new MobEffectInstance(EffectRegistry.BLEEDING_EFFECT,
 									200, 0, true, false));
 						}
 

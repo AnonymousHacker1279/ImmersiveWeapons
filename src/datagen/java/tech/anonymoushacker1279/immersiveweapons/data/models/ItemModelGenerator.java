@@ -4,6 +4,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.armortrim.TrimMaterial;
 import net.minecraft.world.item.armortrim.TrimMaterials;
@@ -388,7 +389,7 @@ public class ItemModelGenerator extends ItemModelProvider implements DataGenUtil
 							basicItem(item);
 						}
 					} else if (!isAtSpawnEggItems && item instanceof ArmorItem armorItem) {
-						if (armorItem instanceof DyeableArmorItem) {
+						if (armorItem.builtInRegistryHolder().is(ItemTags.DYEABLE)) {
 							armorItem(armorItem, getItemLocation(item).withSuffix("_overlay"));
 						} else {
 							armorItem(armorItem, null);

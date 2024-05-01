@@ -5,7 +5,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -58,14 +58,14 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 	}
 
 	@Override
-	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+	protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
 		if (!level.isClientSide) {
 			ItemStack currentlyHeldItem = player.getMainHandItem();
 
 			// Disarm with pliers if armed
 			if (state.getValue(ARMED) && currentlyHeldItem.getItem() == ItemRegistry.PLIERS.get()) {
 				level.setBlock(pos, state.setValue(ARMED, false), 3);
-				return InteractionResult.PASS;
+				return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 			}
 
 			// Arm if not currently set and pliers are not held
@@ -79,7 +79,8 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 				if (!player.isCreative()) {
 					currentlyHeldItem.shrink(1);
 				}
-				return InteractionResult.CONSUME;
+
+				return ItemInteractionResult.CONSUME;
 			}
 
 			// Add sand if not already camouflaged
@@ -88,11 +89,12 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 				if (!player.isCreative()) {
 					currentlyHeldItem.shrink(1);
 				}
-				return InteractionResult.CONSUME;
+
+				return ItemInteractionResult.CONSUME;
 			}
 		}
 
-		return InteractionResult.PASS;
+		return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 	}
 
 	@Override

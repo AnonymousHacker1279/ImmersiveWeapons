@@ -2,7 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.data.modifiers;
 
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
@@ -14,12 +14,12 @@ import net.neoforged.neoforge.common.world.BiomeModifiers.AddSpawnsBiomeModifier
 import net.neoforged.neoforge.registries.NeoForgeRegistries.Keys;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.features.IWPlacedFeatures;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeWorldGenTagGroups;
+import tech.anonymoushacker1279.immersiveweapons.data.groups.forge.ForgeWorldGenTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 
 public class IWBiomeModifiers {
 
-	public static void bootstrap(BootstapContext<BiomeModifier> context) {
+	public static void bootstrap(BootstrapContext<BiomeModifier> context) {
 		// Ores
 		biomeModifier(context, new ResourceLocation(ImmersiveWeapons.MOD_ID, "molten_ore"),
 				new BiomeModifiers.AddFeaturesBiomeModifier(
@@ -83,7 +83,7 @@ public class IWBiomeModifiers {
 				));
 	}
 
-	protected static void biomeModifier(BootstapContext<BiomeModifier> context, ResourceLocation name, BiomeModifier modifier) {
+	protected static void biomeModifier(BootstrapContext<BiomeModifier> context, ResourceLocation name, BiomeModifier modifier) {
 		context.register(ResourceKey.create(Keys.BIOME_MODIFIERS, name), modifier);
 	}
 }

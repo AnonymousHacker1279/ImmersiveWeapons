@@ -8,10 +8,10 @@ public class BasicPotionEffect extends MobEffect {
 	/**
 	 * Constructor for BasicPotionEffect.
 	 *
-	 * @param typeIn        the <code>MobEffectCategory</code> instance
-	 * @param liquidColorIn the liquid color
+	 * @param category the <code>MobEffectCategory</code> instance
+	 * @param color    the liquid color
 	 */
-	public BasicPotionEffect(MobEffectCategory typeIn, int liquidColorIn) {
-		super(typeIn, liquidColorIn);
+	public BasicPotionEffect(MobEffectCategory category, int color) {
+		super(category, color);
 	}
 }

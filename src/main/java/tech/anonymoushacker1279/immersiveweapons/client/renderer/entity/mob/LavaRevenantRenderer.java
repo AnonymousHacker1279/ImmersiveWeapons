@@ -29,16 +29,16 @@ public class LavaRevenantRenderer extends MobRenderer<LavaRevenantEntity, LavaRe
 	}
 
 	@Override
-	protected void scale(LavaRevenantEntity pLivingEntity, PoseStack pMatrixStack, float pPartialTickTime) {
-		int i = pLivingEntity.getSize();
-		float f = 1.0F + 5.0F * (float) i;
-		pMatrixStack.scale(f, f, f);
-		pMatrixStack.translate(0.0D, 1.3125D, 0.1875D);
+	protected void scale(LavaRevenantEntity entity, PoseStack poseStack, float partialTick) {
+		int size = entity.getSize();
+		float sizeModifier = 1.0F + 5.0F * (float) size;
+		poseStack.scale(sizeModifier, sizeModifier, sizeModifier);
+		poseStack.translate(0.0D, 1.3125D, 0.1875D);
 	}
 
 	@Override
-	protected void setupRotations(LavaRevenantEntity pEntityLiving, PoseStack pMatrixStack, float pAgeInTicks, float pRotationYaw, float pPartialTicks) {
-		super.setupRotations(pEntityLiving, pMatrixStack, pAgeInTicks, pRotationYaw, pPartialTicks);
-		pMatrixStack.mulPose(Axis.XP.rotationDegrees(pEntityLiving.getXRot()));
+	protected void setupRotations(LavaRevenantEntity entity, PoseStack pMatrixStack, float age, float yaw, float partialTick, float scale) {
+		super.setupRotations(entity, pMatrixStack, age, yaw, partialTick, scale);
+		pMatrixStack.mulPose(Axis.XP.rotationDegrees(entity.getXRot()));
 	}
 }

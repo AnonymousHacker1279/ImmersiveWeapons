@@ -15,12 +15,12 @@ public class BleedingEffect extends MobEffect {
 
 	private int cooldownTicks = 0;
 
-	public BleedingEffect(MobEffectCategory effectCategory, int color) {
-		super(effectCategory, color);
+	public BleedingEffect(MobEffectCategory category, int color) {
+		super(category, color);
 	}
 
 	@Override
-	public void applyEffectTick(LivingEntity livingEntity, int amplifier) {
+	public boolean applyEffectTick(LivingEntity livingEntity, int amplifier) {
 		if (livingEntity.level() instanceof ServerLevel serverLevel) {
 			RandomSource random = livingEntity.getRandom();
 			if (cooldownTicks <= 0) {
@@ -48,6 +48,8 @@ public class BleedingEffect extends MobEffect {
 					livingEntity.getBbWidth() * 0.5f,
 					0.0d);
 		}
+
+		return true;
 	}
 
 	@Override

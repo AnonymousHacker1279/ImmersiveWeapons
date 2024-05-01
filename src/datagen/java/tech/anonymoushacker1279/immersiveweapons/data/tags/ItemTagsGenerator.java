@@ -13,13 +13,14 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.CustomDataGenerator;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeBlockTagGroups;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeItemTagGroups;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWBlockTagGroups;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWItemTagGroups;
+import tech.anonymoushacker1279.immersiveweapons.data.groups.forge.ForgeBlockTagGroups;
+import tech.anonymoushacker1279.immersiveweapons.data.groups.forge.ForgeItemTagGroups;
+import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWBlockTagGroups;
+import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
+import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -42,7 +43,6 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 	@SuppressWarnings("unchecked")
 	private void addForgeTags() {
 		// Copy item tags from block tags
-		copy(Blocks.STAINED_GLASS, Tags.Items.STAINED_GLASS);
 		copy(ForgeBlockTagGroups.COBALT_ORES, ForgeItemTagGroups.COBALT_ORES);
 		copy(ForgeBlockTagGroups.SULFUR_ORES, ForgeItemTagGroups.SULFUR_ORES);
 		copy(Blocks.ORES, Tags.Items.ORES);
@@ -90,13 +90,13 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 			} else if (item.getDescriptionId().contains("hoe")) {
 				tag(ItemTags.HOES).add(item);
 			} else if (item.getDescriptionId().contains("helmet")) {
-				tag(Tags.Items.ARMORS_HELMETS).add(item);
+				tag(ItemTags.HEAD_ARMOR).add(item);
 			} else if (item.getDescriptionId().contains("chestplate")) {
-				tag(Tags.Items.ARMORS_CHESTPLATES).add(item);
+				tag(ItemTags.CHEST_ARMOR).add(item);
 			} else if (item.getDescriptionId().contains("leggings")) {
-				tag(Tags.Items.ARMORS_LEGGINGS).add(item);
+				tag(ItemTags.LEG_ARMOR).add(item);
 			} else if (item.getDescriptionId().contains("boots")) {
-				tag(Tags.Items.ARMORS_BOOTS).add(item);
+				tag(ItemTags.FOOT_ARMOR).add(item);
 			}
 		}
 
@@ -106,7 +106,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 				ItemRegistry.AURORA_BOW.get());
 
 		// Head tags
-		tag(Tags.Items.HEADS).add(
+		tag(ItemTags.SKULLS).add(
 				BlockItemRegistry.MINUTEMAN_HEAD_ITEM.get(),
 				BlockItemRegistry.FIELD_MEDIC_HEAD_ITEM.get(),
 				BlockItemRegistry.DYING_SOLDIER_HEAD_ITEM.get(),
@@ -254,6 +254,27 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 				ItemRegistry.PEDESTAL_AUGMENT_ARMOR.get(),
 				ItemRegistry.PEDESTAL_AUGMENT_ENCHANTMENT.get(),
 				ItemRegistry.PEDESTAL_AUGMENT_CAPACITY.get());
+
+		// Firearm tags
+		for (DeferredHolder<Item, ? extends Item> item : ItemRegistry.ITEMS.getEntries()) {
+			if (item.get() instanceof AbstractGunItem gun) {
+				tag(IWItemTagGroups.FIREARMS).add(gun);
+			}
+		}
+
+		// Ranged weapon tags
+		tag(IWItemTagGroups.RANGED_WEAPONS)
+				.addTag(IWItemTagGroups.FIREARMS)
+				.add(Items.BOW, Items.CROSSBOW);
+
+		// Weapon and tools tags
+		tag(IWItemTagGroups.WEAPONS_AND_TOOLS)
+				.addTag(Tags.Items.TOOLS)
+				.addTag(IWItemTagGroups.RANGED_WEAPONS);
+
+		// Staff tags
+		tag(IWItemTagGroups.METEOR_STAFFS).add(ItemRegistry.METEOR_STAFF.get());
+		tag(IWItemTagGroups.CURSED_SIGHT_STAFFS).add(ItemRegistry.CURSED_SIGHT_STAFF.get());
 	}
 
 	/**

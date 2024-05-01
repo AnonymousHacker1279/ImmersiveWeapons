@@ -1,12 +1,12 @@
 package tech.anonymoushacker1279.immersiveweapons.data.damage_types;
 
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.damagesource.DamageType;
 
 public class DamageTypesGenerator {
 
-	public static void bootstrap(BootstapContext<DamageType> context) {
+	public static void bootstrap(BootstrapContext<DamageType> context) {
 		damageType(context, IWDamageTypes.BARBED_WIRE_KEY, IWDamageTypes.BARBED_WIRE);
 		damageType(context, IWDamageTypes.BEAR_TRAP_KEY, IWDamageTypes.BEAR_TRAP);
 		damageType(context, IWDamageTypes.BLEEDING_KEY, IWDamageTypes.BLEEDING);
@@ -28,7 +28,7 @@ public class DamageTypesGenerator {
 		damageType(context, IWDamageTypes.HELLFIRE_KEY, IWDamageTypes.HELLFIRE);
 	}
 
-	protected static void damageType(BootstapContext<DamageType> context, ResourceKey<DamageType> key, DamageType damageType) {
+	protected static void damageType(BootstrapContext<DamageType> context, ResourceKey<DamageType> key, DamageType damageType) {
 		context.register(key, damageType);
 	}
 }

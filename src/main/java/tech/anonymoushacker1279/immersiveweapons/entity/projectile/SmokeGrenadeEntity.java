@@ -65,9 +65,9 @@ public class SmokeGrenadeEntity extends AdvancedThrowableItemProjectile {
 
 	@Override
 	protected void onActivate() {
-		if (!level().isClientSide) {
-			PacketDistributor.TRACKING_CHUNK.with(level().getChunkAt(blockPosition()))
-					.send(new SmokeGrenadePayload(getX(), getY(), getZ(), color, CommonConfig.forceSmokeGrenadeParticles));
+		if (level() instanceof ServerLevel serverLevel) {
+			PacketDistributor.sendToPlayersTrackingChunk(serverLevel, serverLevel.getChunkAt(blockPosition()).getPos(),
+					new SmokeGrenadePayload(getX(), getY(), getZ(), color, CommonConfig.forceSmokeGrenadeParticles));
 		}
 	}
 
@@ -91,7 +91,7 @@ public class SmokeGrenadeEntity extends AdvancedThrowableItemProjectile {
 				}
 
 				if (ticksInGround % 10 == 0) {
-					gameEvent(GameEventRegistry.SMOKE_GRENADE_HISS.get(), getOwner());
+					gameEvent(GameEventRegistry.SMOKE_GRENADE_HISS, getOwner());
 				}
 			}
 		}

@@ -1,7 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.world.level.loot;
 
 import com.google.common.base.Suppliers;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
@@ -28,8 +28,8 @@ import java.util.function.Supplier;
 
 public class ToolSmeltingModifierHandler extends LootModifier {
 
-	public static final Supplier<Codec<ToolSmeltingModifierHandler>> CODEC = Suppliers.memoize(() ->
-			RecordCodecBuilder.create(inst -> codecStart(inst).and(
+	public static final Supplier<MapCodec<ToolSmeltingModifierHandler>> CODEC = Suppliers.memoize(() ->
+			RecordCodecBuilder.mapCodec(inst -> codecStart(inst).and(
 							TagKey.codec(Registries.ITEM).fieldOf("toolsTag").forGetter(m -> m.tools))
 					.apply(inst, ToolSmeltingModifierHandler::new))
 	);
@@ -75,7 +75,7 @@ public class ToolSmeltingModifierHandler extends LootModifier {
 	}
 
 	@Override
-	public Codec<? extends IGlobalLootModifier> codec() {
+	public MapCodec<? extends IGlobalLootModifier> codec() {
 		return CODEC.get();
 	}
 }

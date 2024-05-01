@@ -1,23 +1,16 @@
 package tech.anonymoushacker1279.immersiveweapons.init;
 
-import net.kyrptonaught.customportalapi.api.CustomPortalBuilder;
-import net.kyrptonaught.customportalapi.util.SHOULDTP;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.alchemy.PotionBrewing;
-import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.world.phys.AABB;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.entity.vehicle.CustomBoatType;
-import tech.anonymoushacker1279.immersiveweapons.item.materials.CustomArmorMaterials;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class PostSetupHandler {
@@ -29,15 +22,6 @@ public class PostSetupHandler {
 	 */
 	public static void init() {
 		ImmersiveWeapons.LOGGER.info("Initializing post-setup handler");
-
-		// Set custom armor equip sounds, as these don't exist during the initialization of materials
-		CustomArmorMaterials.TESLA.setEquipSound(SoundEventRegistry.TESLA_ARMOR_EQUIP.get());
-		CustomArmorMaterials.MOLTEN.setEquipSound(SoundEventRegistry.MOLTEN_ARMOR_EQUIP.get());
-		CustomArmorMaterials.VENTUS.setEquipSound(SoundEventRegistry.VENTUS_ARMOR_EQUIP.get());
-		CustomArmorMaterials.COPPER.setEquipSound(SoundEventRegistry.COPPER_ARMOR_EQUIP.get());
-		CustomArmorMaterials.COBALT.setEquipSound(SoundEventRegistry.COBALT_ARMOR_EQUIP.get());
-		CustomArmorMaterials.ASTRAL.setEquipSound(SoundEventRegistry.ASTRAL_ARMOR_EQUIP.get());
-		CustomArmorMaterials.STARSTORM.setEquipSound(SoundEventRegistry.STARSTORM_ARMOR_EQUIP.get());
 
 		// Add custom plants to the flower pot block
 		FlowerPotBlock emptyPot = ((FlowerPotBlock) Blocks.FLOWER_POT);
@@ -54,45 +38,9 @@ public class PostSetupHandler {
 		ItemRegistry.STARDUST_CHEST_BOAT.get()
 				.postSetup(EntityRegistry.STARDUST_CHEST_BOAT_ENTITY.get(), CustomBoatType.STARDUST_CHEST);
 
-		// Set brewing recipes, as these are not done via JSON like other recipes
-		// Celestial potions
-		PotionBrewing.addMix(
-				Potions.AWKWARD,
-				BlockItemRegistry.MOONGLOW_ITEM.get(),
-				PotionRegistry.CELESTIAL_BREW_POTION.get());
-		PotionBrewing.addMix(
-				PotionRegistry.CELESTIAL_BREW_POTION.get(),
-				Items.REDSTONE,
-				PotionRegistry.LONG_CELESTIAL_BREW_POTION.get());
-
-		// Death potions
-		PotionBrewing.addMix(
-				Potions.AWKWARD,
-				BlockItemRegistry.DEATHWEED_ITEM.get(),
-				PotionRegistry.DEATH_POTION.get());
-		PotionBrewing.addMix(
-				PotionRegistry.DEATH_POTION.get(),
-				Items.GLOWSTONE_DUST,
-				PotionRegistry.STRONG_DEATH_POTION.get());
-		PotionBrewing.addMix(
-				PotionRegistry.DEATH_POTION.get(),
-				Items.REDSTONE,
-				PotionRegistry.LONG_DEATH_POTION.get());
-		PotionBrewing.addMix(
-				Potions.STRENGTH,
-				Items.FERMENTED_SPIDER_EYE,
-				PotionRegistry.DEATH_POTION.get());
-		PotionBrewing.addMix(
-				Potions.STRONG_STRENGTH,
-				Items.FERMENTED_SPIDER_EYE,
-				PotionRegistry.STRONG_DEATH_POTION.get());
-		PotionBrewing.addMix(
-				Potions.LONG_STRENGTH,
-				Items.FERMENTED_SPIDER_EYE,
-				PotionRegistry.LONG_DEATH_POTION.get());
-
 		// Initialize custom portals
-		CustomPortalBuilder.beginPortal()
+		// TODO: reimplement when custom portal API is available
+		/*CustomPortalBuilder.beginPortal()
 				.frameBlock(BlockRegistry.TILTROS_PORTAL_FRAME.get())
 				.customPortalBlock(BlockRegistry.TILTROS_PORTAL::get)
 				.lightWithItem(ItemRegistry.AZUL_KEYSTONE.get())
@@ -106,7 +54,7 @@ public class PostSetupHandler {
 
 					generateBiodome(entity.level(), entity.blockPosition(), 7);
 				})
-				.registerPortal();
+				.registerPortal();*/
 	}
 
 	public static void generateBiodome(Level level, BlockPos center, int radius) {

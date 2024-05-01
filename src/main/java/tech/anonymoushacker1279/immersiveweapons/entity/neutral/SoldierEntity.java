@@ -47,8 +47,7 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 
 	@Override
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor levelAccessor, DifficultyInstance difficultyInstance,
-	                                    MobSpawnType mobSpawnType, @Nullable SpawnGroupData groupData,
-	                                    @Nullable CompoundTag compoundTag) {
+	                                    MobSpawnType mobSpawnType, @Nullable SpawnGroupData groupData) {
 
 		populateDefaultEquipmentSlots(random, difficultyInstance);
 		populateDefaultEquipmentEnchantments(random, difficultyInstance);
@@ -67,7 +66,7 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 			}
 		}
 
-		return super.finalizeSpawn(levelAccessor, difficultyInstance, mobSpawnType, groupData, compoundTag);
+		return super.finalizeSpawn(levelAccessor, difficultyInstance, mobSpawnType, groupData);
 	}
 
 	@Override
@@ -126,8 +125,9 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
-		return 1.74F;
+	protected EntityDimensions getDefaultDimensions(Pose pose) {
+		EntityDimensions dimensions = super.getDefaultDimensions(pose);
+		return dimensions.withEyeHeight(1.74f);
 	}
 
 	@Override

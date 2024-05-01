@@ -2,6 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.item.armor;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
@@ -9,8 +10,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -18,11 +18,11 @@ import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.AstralArmorPayload;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
-public class AstralArmorItem extends BasicArmorItem {
+public class AstralArmorItem extends ArmorItem {
 
 	private int dashCooldown = 0;
 
-	public AstralArmorItem(ArmorMaterial material, Type armorType, Properties properties) {
+	public AstralArmorItem(Holder<ArmorMaterial> material, Type armorType, Properties properties) {
 		super(material, armorType, properties);
 	}
 
@@ -38,7 +38,7 @@ public class AstralArmorItem extends BasicArmorItem {
 						player.getPersistentData().putBoolean("AstralArmorEffectEnabled", !effectEnabled);
 
 						// Send packet to server
-						PacketDistributor.SERVER.noArg().send(new AstralArmorPayload(!effectEnabled));
+						PacketDistributor.sendToServer(new AstralArmorPayload(!effectEnabled));
 
 						if (effectEnabled) {
 							player.displayClientMessage(Component.translatable("immersiveweapons.armor_effects.disabled")

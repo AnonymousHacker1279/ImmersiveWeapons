@@ -2,7 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.data.structures;
 
 import com.google.common.collect.ImmutableList;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Blocks;
@@ -22,7 +22,7 @@ public class StructureProcessorListGenerator {
 		return ResourceKey.create(Registries.PROCESSOR_LIST, new ResourceLocation(ImmersiveWeapons.MOD_ID, name));
 	}
 
-	public static void bootstrap(BootstapContext<StructureProcessorList> context) {
+	public static void bootstrap(BootstrapContext<StructureProcessorList> context) {
 		register(context, RUST_50_PERCENT, ImmutableList.of(
 				new RuleProcessor(ImmutableList.of(
 						new ProcessorRule(new RandomBlockMatchTest(Blocks.IRON_BLOCK, 0.5f), AlwaysTrueTest.INSTANCE, BlockRegistry.RUSTED_IRON_BLOCK.get().defaultBlockState())
@@ -48,7 +48,7 @@ public class StructureProcessorListGenerator {
 		));
 	}
 
-	protected static void register(BootstapContext<StructureProcessorList> context, ResourceKey<StructureProcessorList> key, List<StructureProcessor> processorList) {
+	protected static void register(BootstrapContext<StructureProcessorList> context, ResourceKey<StructureProcessorList> key, List<StructureProcessor> processorList) {
 		context.register(key, new StructureProcessorList(processorList));
 	}
 }

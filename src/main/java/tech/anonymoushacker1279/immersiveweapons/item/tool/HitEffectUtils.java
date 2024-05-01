@@ -12,17 +12,17 @@ public interface HitEffectUtils {
 
 	default void addMoltenEffects(LivingEntity target, LivingEntity source) {
 		int fireAspectLevel = source.getMainHandItem().getEnchantmentLevel(Enchantments.FIRE_ASPECT);
-		int flameLevel = source.getMainHandItem().getEnchantmentLevel(Enchantments.FLAMING_ARROWS);
+		int flameLevel = source.getMainHandItem().getEnchantmentLevel(Enchantments.FLAME);
 		int scorchShotLevel = source.getMainHandItem().getEnchantmentLevel(EnchantmentRegistry.SCORCH_SHOT.get());
 
 		if (fireAspectLevel > 0) {
-			target.addEffect(new MobEffectInstance(EffectRegistry.HELLFIRE_EFFECT.get(), 200, Mth.clamp(fireAspectLevel + 1, 1, 5), false, false));
+			target.addEffect(new MobEffectInstance(EffectRegistry.HELLFIRE_EFFECT, 200, Mth.clamp(fireAspectLevel + 1, 1, 5), false, false));
 		} else if (flameLevel > 0) {
-			target.addEffect(new MobEffectInstance(EffectRegistry.HELLFIRE_EFFECT.get(), 200, Mth.clamp(flameLevel + 1, 1, 5), false, false));
+			target.addEffect(new MobEffectInstance(EffectRegistry.HELLFIRE_EFFECT, 200, Mth.clamp(flameLevel + 1, 1, 5), false, false));
 		} else if (scorchShotLevel > 0) {
-			target.addEffect(new MobEffectInstance(EffectRegistry.HELLFIRE_EFFECT.get(), 200, Mth.clamp(scorchShotLevel + 1, 1, 5), false, false));
+			target.addEffect(new MobEffectInstance(EffectRegistry.HELLFIRE_EFFECT, 200, Mth.clamp(scorchShotLevel + 1, 1, 5), false, false));
 		} else {
-			target.addEffect(new MobEffectInstance(EffectRegistry.HELLFIRE_EFFECT.get(), 200, 1, false, false));
+			target.addEffect(new MobEffectInstance(EffectRegistry.HELLFIRE_EFFECT, 200, 1, false, false));
 		}
 	}
 

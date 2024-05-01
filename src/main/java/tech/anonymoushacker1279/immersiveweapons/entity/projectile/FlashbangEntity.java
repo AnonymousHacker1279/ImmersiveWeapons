@@ -46,7 +46,7 @@ public class FlashbangEntity extends AdvancedThrowableItemProjectile {
 					0.0D
 			);
 
-			gameEvent(GameEventRegistry.FLASHBANG_EXPLODE.get(), getOwner());
+			gameEvent(GameEventRegistry.FLASHBANG_EXPLODE, getOwner());
 
 			serverLevel.getEntities(this, getBoundingBox().inflate(CommonConfig.flashbangEffectRange))
 					.stream()
@@ -54,12 +54,11 @@ public class FlashbangEntity extends AdvancedThrowableItemProjectile {
 					.forEach(entity -> {
 						if (entity instanceof ServerPlayer player) {
 							if (canSee(player, this, false)) {
-								PacketDistributor.PLAYER.with(player)
-										.send(new PlayerSoundPayload(SoundEventRegistry.FLASHBANG_RINGING.get().getLocation(),
-												1.0f, level().getRandom().nextFloat() * 0.05f + 1.0f));
+								PacketDistributor.sendToPlayer(player, new PlayerSoundPayload(SoundEventRegistry.FLASHBANG_RINGING.get().getLocation(),
+										1.0f, level().getRandom().nextFloat() * 0.05f + 1.0f));
 
 								if (canSee(player, this, true)) {
-									player.addEffect(new MobEffectInstance(EffectRegistry.FLASHBANG_EFFECT.get(),
+									player.addEffect(new MobEffectInstance(EffectRegistry.FLASHBANG_EFFECT,
 											200, 0, true, false, false));
 									player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN,
 											200, 0, true, false, false));

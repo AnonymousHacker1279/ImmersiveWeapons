@@ -1,6 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.menu;
 
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Container;
@@ -12,7 +13,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.PacketDistributor;
-import net.neoforged.neoforge.network.PacketDistributor.TargetPoint;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.StarForgeBlockEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.MenuTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.StarForgeRecipe;
@@ -132,13 +132,15 @@ public class StarForgeMenu extends AbstractContainerMenu {
 			}
 
 			// Send the packet to the client
-			PacketDistributor.NEAR.with(new TargetPoint(
+			PacketDistributor.sendToPlayersNear(
+					(ServerLevel) starForgeBlockEntity.getLevel(),
+					null,
 					starForgeBlockEntity.getBlockPos().getX(),
 					starForgeBlockEntity.getBlockPos().getY(),
 					starForgeBlockEntity.getBlockPos().getZ(),
 					16,
-					starForgeBlockEntity.getLevel().dimension()
-			)).send(new StarForgeUpdateRecipesPayload(player.getUUID(), containerId, starForgeBlockEntity.getAvailableRecipeIds()));
+					new StarForgeUpdateRecipesPayload(player.getUUID(), containerId, starForgeBlockEntity.getAvailableRecipeIds())
+			);
 
 			// If there is a recipe already being crafted, cancel it
 			if (containerData.get(2) > 0) {
@@ -170,8 +172,7 @@ public class StarForgeMenu extends AbstractContainerMenu {
 		containerData.set(3, index);
 
 		// Send the packet to the server
-		PacketDistributor.SERVER.noArg()
-				.send(new StarForgeMenuPayload(containerId, index, beginCrafting));
+		PacketDistributor.sendToServer(new StarForgeMenuPayload(containerId, index, beginCrafting));
 	}
 
 	public boolean hasSolarEnergy() {

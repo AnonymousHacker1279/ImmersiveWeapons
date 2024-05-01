@@ -5,7 +5,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -30,8 +29,8 @@ public class EntityDiscoveredTrigger extends SimpleCriterionTrigger<EntityDiscov
 
 		public static final Codec<EntityDiscoveredTrigger.TriggerInstance> CODEC = RecordCodecBuilder.create(
 				instance -> instance.group(
-								ExtraCodecs.strictOptionalField(EntityPredicate.ADVANCEMENT_CODEC, "player").forGetter(EntityDiscoveredTrigger.TriggerInstance::player),
-								ExtraCodecs.strictOptionalField(EntityPredicate.ADVANCEMENT_CODEC, "entity").forGetter(EntityDiscoveredTrigger.TriggerInstance::entity)
+								EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(EntityDiscoveredTrigger.TriggerInstance::player),
+								EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("entity").forGetter(EntityDiscoveredTrigger.TriggerInstance::entity)
 						)
 						.apply(instance, EntityDiscoveredTrigger.TriggerInstance::new)
 		);

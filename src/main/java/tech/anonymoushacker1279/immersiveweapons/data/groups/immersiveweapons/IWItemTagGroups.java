@@ -1,4 +1,4 @@
-package tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons;
+package tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
@@ -68,4 +68,14 @@ public class IWItemTagGroups {
 			"weapons/gauntlets"));
 	public static final TagKey<Item> COMMANDER_PEDESTAL_AUGMENTS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
 			"commander_pedestal_augments"));
+	public static final TagKey<Item> FIREARMS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"weapons/firearms"));
+	public static final TagKey<Item> RANGED_WEAPONS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"weapons/ranged_weapons"));
+	public static final TagKey<Item> WEAPONS_AND_TOOLS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"weapons_and_tools"));
+	public static final TagKey<Item> METEOR_STAFFS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"weapons/meteor_staffs"));
+	public static final TagKey<Item> CURSED_SIGHT_STAFFS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"weapons/cursed_sight_staffs"));
 }

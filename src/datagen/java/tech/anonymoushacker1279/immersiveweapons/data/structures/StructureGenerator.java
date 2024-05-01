@@ -2,7 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.data.structures;
 
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.Structures;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -20,7 +20,7 @@ import net.minecraft.world.level.levelgen.structure.StructureSpawnOverride.Bound
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
 import net.minecraft.world.level.levelgen.structure.structures.JigsawStructure;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWWorldGenTagGroups;
+import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWWorldGenTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 
 import java.util.Map;
@@ -50,7 +50,7 @@ public class StructureGenerator {
 		return ResourceKey.create(Registries.STRUCTURE, new ResourceLocation(ImmersiveWeapons.MOD_ID, name));
 	}
 
-	public static void bootstrap(BootstapContext<Structure> context) {
+	public static void bootstrap(BootstrapContext<Structure> context) {
 		HolderGetter<Biome> biomeHolderGetter = context.lookup(Registries.BIOME);
 		HolderGetter<StructureTemplatePool> templatePoolHolderGetter = context.lookup(Registries.TEMPLATE_POOL);
 
@@ -355,7 +355,7 @@ public class StructureGenerator {
 		));
 	}
 
-	protected static void register(BootstapContext<Structure> context, ResourceKey<Structure> key, Structure structure) {
+	protected static void register(BootstrapContext<Structure> context, ResourceKey<Structure> key, Structure structure) {
 		context.register(key, structure);
 	}
 }

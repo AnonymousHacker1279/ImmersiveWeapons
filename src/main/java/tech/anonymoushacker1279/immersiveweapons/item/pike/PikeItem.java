@@ -16,7 +16,7 @@ import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 
 import java.util.function.Consumer;
 
-public class PikeItem extends TieredItem implements Vanishable {
+public class PikeItem extends TieredItem {
 
 	public final Ingredient repairIngredient;
 	public final double damage;
@@ -45,7 +45,7 @@ public class PikeItem extends TieredItem implements Vanishable {
 	 */
 	@Override
 	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-		stack.hurtAndBreak(1, attacker, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+		stack.hurtAndBreak(1, attacker, EquipmentSlot.MAINHAND);
 		return true;
 	}
 
@@ -62,7 +62,7 @@ public class PikeItem extends TieredItem implements Vanishable {
 	@Override
 	public boolean mineBlock(ItemStack stack, Level level, BlockState state, BlockPos pos, LivingEntity livingEntity) {
 		if (state.getDestroySpeed(level, pos) != 0.0D) {
-			stack.hurtAndBreak(2, livingEntity, (entity) -> entity.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+			stack.hurtAndBreak(2, livingEntity, EquipmentSlot.MAINHAND);
 		}
 		return true;
 	}

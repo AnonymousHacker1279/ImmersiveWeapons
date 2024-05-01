@@ -1,7 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.blockentity;
 
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.NonNullList;
+import net.minecraft.core.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.*;
@@ -85,10 +84,10 @@ public abstract class AbstractInventoryBlockEntity extends BlockEntity implement
 	 * @param nbt the <code>CompoundNBT</code> to load
 	 */
 	@Override
-	public void load(CompoundTag nbt) {
-		super.load(nbt);
+	public void loadAdditional(CompoundTag nbt, HolderLookup.Provider provider) {
+		super.loadAdditional(nbt, provider);
 		inventory.clear();
-		ContainerHelper.loadAllItems(nbt, inventory);
+		ContainerHelper.loadAllItems(nbt, inventory, provider);
 	}
 
 	/**
@@ -97,8 +96,8 @@ public abstract class AbstractInventoryBlockEntity extends BlockEntity implement
 	 * @param tag the <code>CompoundNBT</code> to save
 	 */
 	@Override
-	protected void saveAdditional(CompoundTag tag) {
-		writeItems(tag);
+	protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+		writeItems(tag, provider);
 	}
 
 	/**
@@ -107,9 +106,9 @@ public abstract class AbstractInventoryBlockEntity extends BlockEntity implement
 	 * @param tag the <code>CompoundTag</code> to write to
 	 * @return CompoundTag
 	 */
-	private CompoundTag writeItems(CompoundTag tag) {
-		super.saveAdditional(tag);
-		ContainerHelper.saveAllItems(tag, inventory, true);
+	private CompoundTag writeItems(CompoundTag tag, HolderLookup.Provider provider) {
+		super.saveAdditional(tag, provider);
+		ContainerHelper.saveAllItems(tag, inventory, provider);
 		return tag;
 	}
 
@@ -129,8 +128,8 @@ public abstract class AbstractInventoryBlockEntity extends BlockEntity implement
 	 * @return CompoundTag
 	 */
 	@Override
-	public CompoundTag getUpdateTag() {
-		return writeItems(new CompoundTag());
+	public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
+		return writeItems(new CompoundTag(), provider);
 	}
 
 	/**

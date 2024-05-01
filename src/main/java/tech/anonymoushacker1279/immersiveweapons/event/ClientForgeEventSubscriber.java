@@ -13,11 +13,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod.EventBusSubscriber;
-import net.neoforged.fml.common.Mod.EventBusSubscriber.Bus;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.common.EventBusSubscriber.Bus;
 import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.event.ViewportEvent.*;
-import net.neoforged.neoforge.client.gui.overlay.ExtendedGui;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
@@ -31,7 +30,7 @@ import tech.anonymoushacker1279.immersiveweapons.item.armor.ArmorUtils;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.data.GunData;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem;
 
-@EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.FORGE, value = Dist.CLIENT)
+@EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.GAME, value = Dist.CLIENT)
 public class ClientForgeEventSubscriber {
 
 	private static final Minecraft minecraft = Minecraft.getInstance();
@@ -110,9 +109,9 @@ public class ClientForgeEventSubscriber {
 			event.setCanceled(true);
 		}
 
-		if (player.hasEffect(EffectRegistry.FLASHBANG_EFFECT.get())) {
+		if (player.hasEffect(EffectRegistry.FLASHBANG_EFFECT)) {
 			// Slowly increase distance as the effect ticks closer to zero
-			float distance = 1.0f / (player.getEffect(EffectRegistry.FLASHBANG_EFFECT.get()).getDuration() / 20.0f);
+			float distance = 1.0f / (player.getEffect(EffectRegistry.FLASHBANG_EFFECT).getDuration() / 20.0f);
 
 			event.setNearPlaneDistance(0.0f);
 			event.setFarPlaneDistance(Math.max(distance * 32, 0.25f));
@@ -125,7 +124,7 @@ public class ClientForgeEventSubscriber {
 
 	@SubscribeEvent
 	public static void computeFogColorEvent(ComputeFogColor event) {
-		if (minecraft.player != null && minecraft.player.hasEffect(EffectRegistry.FLASHBANG_EFFECT.get())) {
+		if (minecraft.player != null && minecraft.player.hasEffect(EffectRegistry.FLASHBANG_EFFECT)) {
 			if (ClientConfig.darkModeFlashbangs) {
 				event.setRed(0.0f);
 				event.setGreen(0.0f);
@@ -173,20 +172,13 @@ public class ClientForgeEventSubscriber {
 	}
 
 	@SubscribeEvent
-	public static void renderGuiOverlayPostEvent(RenderGuiOverlayEvent.Post event) {
-		int screenHeight = event.getWindow().getGuiScaledHeight();
-		int screenWidth = event.getWindow().getGuiScaledWidth();
-
+	public static void renderGuiOverlayPostEvent(RenderGuiLayerEvent.Post event) {
 		if (GunData.changingPlayerFOV != -1) {
 			if (minecraft.options.getCameraType().isFirstPerson()) {
 				float deltaFrame = minecraft.getDeltaFrameTime() / 8;
 				GunData.scopeScale = Mth.lerp(0.25F * deltaFrame, GunData.scopeScale, 1.125F);
 
-				IWOverlays.SCOPE_ELEMENT.render((ExtendedGui) minecraft.gui,
-						event.getGuiGraphics(),
-						event.getPartialTick(),
-						screenWidth,
-						screenHeight);
+				IWOverlays.SCOPE_ELEMENT.render(event.getGuiGraphics(), event.getPartialTick());
 			}
 		}
 
@@ -195,11 +187,7 @@ public class ClientForgeEventSubscriber {
 		}
 
 		if (DebugTracingData.isDebugTracingEnabled) {
-			IWOverlays.DEBUG_TRACING_ELEMENT.render((ExtendedGui) minecraft.gui,
-					event.getGuiGraphics(),
-					event.getPartialTick(),
-					screenWidth,
-					screenHeight);
+			IWOverlays.DEBUG_TRACING_ELEMENT.render(event.getGuiGraphics(), event.getPartialTick());
 		}
 	}
 

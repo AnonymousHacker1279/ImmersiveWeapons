@@ -32,7 +32,6 @@ public class BranchBlock extends BasicOrientableBlock {
 		super(properties);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos,
 	                           CollisionContext collisionContext) {
@@ -45,14 +44,12 @@ public class BranchBlock extends BasicOrientableBlock {
 		};
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader reader, BlockPos pos) {
 		BlockState blockstate = reader.getBlockState(pos.relative(state.getValue(FACING)));
 		return blockstate.is(BURNED_OAK_LOGS);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState,
 	                              LevelAccessor level, BlockPos pos, BlockPos neighborPos) {

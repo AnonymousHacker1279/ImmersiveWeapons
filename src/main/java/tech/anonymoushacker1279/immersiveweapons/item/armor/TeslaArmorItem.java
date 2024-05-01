@@ -1,6 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.item.armor;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.StringRepresentable;
@@ -9,8 +10,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.PacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
@@ -20,11 +20,11 @@ import tech.anonymoushacker1279.immersiveweapons.network.payload.TeslaArmorPaylo
 
 import java.util.List;
 
-public class TeslaArmorItem extends BasicArmorItem {
+public class TeslaArmorItem extends ArmorItem {
 
 	private int noiseCooldown = 0;
 
-	public TeslaArmorItem(ArmorMaterial material, Type armorType, Properties properties) {
+	public TeslaArmorItem(Holder<ArmorMaterial> material, Type armorType, Properties properties) {
 		super(material, armorType, properties);
 	}
 
@@ -42,7 +42,7 @@ public class TeslaArmorItem extends BasicArmorItem {
 
 						// Send packet to server
 						state = state.getNext();
-						PacketDistributor.SERVER.noArg().send(new TeslaArmorPayload(state));
+						PacketDistributor.sendToServer(new TeslaArmorPayload(state));
 
 						if (state == EffectState.DISABLED) {
 							level.playSound(player,

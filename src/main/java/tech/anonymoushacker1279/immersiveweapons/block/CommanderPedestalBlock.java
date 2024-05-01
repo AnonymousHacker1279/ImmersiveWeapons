@@ -46,9 +46,9 @@ public class CommanderPedestalBlock extends Block implements EntityBlock {
 	}
 
 	@Override
-	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+	protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
 		if (hand != InteractionHand.MAIN_HAND) {
-			return InteractionResult.PASS;
+			return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 		}
 
 		if (level.getBlockEntity(pos) instanceof CommanderPedestalBlockEntity blockEntity) {
@@ -56,15 +56,15 @@ public class CommanderPedestalBlock extends Block implements EntityBlock {
 
 			if (itemInHand.isEmpty()) {
 				blockEntity.removeItem();
-				return InteractionResult.SUCCESS;
+				return ItemInteractionResult.SUCCESS;
 			} else {
 				if (blockEntity.addItem(player.isCreative() ? itemInHand.copy() : itemInHand)) {
-					return InteractionResult.CONSUME;
+					return ItemInteractionResult.CONSUME;
 				}
 			}
 		}
 
-		return InteractionResult.PASS;
+		return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 	}
 
 	@Override

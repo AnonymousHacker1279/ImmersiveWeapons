@@ -1,4 +1,4 @@
-package tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge;
+package tech.anonymoushacker1279.immersiveweapons.data.groups.forge;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;

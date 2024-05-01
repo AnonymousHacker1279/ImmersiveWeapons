@@ -1,7 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.data.features;
 
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -47,7 +47,7 @@ public class IWConfiguredFeatures {
 		return ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(ImmersiveWeapons.MOD_ID, name));
 	}
 
-	public static void bootstrap(BootstapContext<ConfiguredFeature<?, ?>> context) {
+	public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
 		register(context, PATCH_WOODEN_SPIKES_CONFIGURATION, Feature.BLOCK_PILE,
 				new BlockPileConfiguration(BlockStateProvider.simple(BlockRegistry.WOODEN_SPIKES.get()))
 		);
@@ -146,7 +146,7 @@ public class IWConfiguredFeatures {
 				new OreConfiguration(OreReplacementTargets.POTASSIUM_NITRATE_ORE_TARGETS, 6, 0.05f));
 	}
 
-	private static <FC extends FeatureConfiguration, F extends Feature<FC>> void register(BootstapContext<ConfiguredFeature<?, ?>> context,
+	private static <FC extends FeatureConfiguration, F extends Feature<FC>> void register(BootstrapContext<ConfiguredFeature<?, ?>> context,
 	                                                                                      ResourceKey<ConfiguredFeature<?, ?>> key,
 	                                                                                      F feature, FC configuration) {
 

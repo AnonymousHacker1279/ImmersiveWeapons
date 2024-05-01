@@ -3,7 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.data.dimensions;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
@@ -23,7 +23,7 @@ public class DimensionGenerator {
 	public static final ResourceKey<NoiseGeneratorSettings> TILTROS_NOISE = ResourceKey.create(Registries.NOISE_SETTINGS, DimensionTypeGenerator.TILTROS_LEVEL_ID);
 	public static final ResourceKey<Level> TILTROS_LEVEL = ResourceKey.create(Registries.DIMENSION, DimensionTypeGenerator.TILTROS_LEVEL_ID);
 
-	public static void bootstrap(BootstapContext<LevelStem> context) {
+	public static void bootstrap(BootstrapContext<LevelStem> context) {
 		HolderGetter<DimensionType> dimensionTypeHolderGetter = context.lookup(Registries.DIMENSION_TYPE);
 		HolderGetter<NoiseGeneratorSettings> noiseGeneratorSettingsHolderGetter = context.lookup(Registries.NOISE_SETTINGS);
 		HolderGetter<Biome> biomeHolderGetter = context.lookup(Registries.BIOME);
@@ -76,7 +76,7 @@ public class DimensionGenerator {
 				)));
 	}
 
-	private static void register(BootstapContext<LevelStem> context, ResourceKey<LevelStem> key, LevelStem levelStem) {
+	private static void register(BootstrapContext<LevelStem> context, ResourceKey<LevelStem> key, LevelStem levelStem) {
 		context.register(key, levelStem);
 	}
 }

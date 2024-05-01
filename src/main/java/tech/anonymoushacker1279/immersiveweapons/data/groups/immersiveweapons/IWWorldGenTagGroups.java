@@ -1,4 +1,4 @@
-package tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons;
+package tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;

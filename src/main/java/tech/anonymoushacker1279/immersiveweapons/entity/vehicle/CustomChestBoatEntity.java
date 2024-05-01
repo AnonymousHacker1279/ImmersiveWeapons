@@ -2,7 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.entity.vehicle;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.*;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
@@ -17,13 +17,14 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.storage.loot.LootTable;
 import org.jetbrains.annotations.Nullable;
 
 public class CustomChestBoatEntity extends CustomBoatEntity implements HasCustomInventoryScreen, ContainerEntity {
 
 	private NonNullList<ItemStack> itemStacks = NonNullList.withSize(27, ItemStack.EMPTY);
 	@Nullable
-	private ResourceLocation lootTable;
+	private ResourceKey<LootTable> lootTable;
 	private long lootTableSeed;
 
 	public CustomChestBoatEntity(EntityType<? extends Boat> type, Level level, Item dropItem) {
@@ -43,13 +44,13 @@ public class CustomChestBoatEntity extends CustomBoatEntity implements HasCustom
 	@Override
 	protected void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
-		addChestVehicleSaveData(compound);
+		addChestVehicleSaveData(compound, registryAccess());
 	}
 
 	@Override
 	protected void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
-		readChestVehicleSaveData(compound);
+		readChestVehicleSaveData(compound, registryAccess());
 	}
 
 	@Override
@@ -167,12 +168,12 @@ public class CustomChestBoatEntity extends CustomBoatEntity implements HasCustom
 
 	@Override
 	@Nullable
-	public ResourceLocation getLootTable() {
+	public ResourceKey<LootTable> getLootTable() {
 		return lootTable;
 	}
 
 	@Override
-	public void setLootTable(@Nullable ResourceLocation location) {
+	public void setLootTable(@Nullable ResourceKey<LootTable> location) {
 		lootTable = location;
 	}
 

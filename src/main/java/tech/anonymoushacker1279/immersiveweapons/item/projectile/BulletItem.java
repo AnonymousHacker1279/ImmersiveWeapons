@@ -2,11 +2,9 @@ package tech.anonymoushacker1279.immersiveweapons.item.projectile;
 
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow.Pickup;
 import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.*;
@@ -85,17 +83,16 @@ public class BulletItem<T extends BulletEntity> extends ArrowItem {
 	}
 
 	/**
-	 * Check if the bullet is infinite. A more flexible check than Vanilla provides.
-	 * Restricts the ability to lower level bullets, for balance.
+	 * Check if the bullet is infinite. Restricts the ability to lower level bullets, for balance.
 	 *
-	 * @param bullet the bullet being checked
-	 * @param gun    the gun firing the bullet
-	 * @param player the player firing the gun
+	 * @param bullet       the bullet being checked
+	 * @param gun          the gun firing the bullet
+	 * @param livingEntity the entity firing the gun
 	 * @return boolean
 	 */
 	@Override
-	public boolean isInfinite(ItemStack bullet, ItemStack gun, Player player) {
-		int enchant = EnchantmentHelper.getTagEnchantmentLevel(EnchantmentRegistry.ENDLESS_MUSKET_POUCH.get(), gun);
+	public boolean isInfinite(ItemStack bullet, ItemStack gun, LivingEntity livingEntity) {
+		int enchant = gun.getEnchantmentLevel(EnchantmentRegistry.ENDLESS_MUSKET_POUCH.get());
 		return (CommonConfig.infiniteAmmoOnAllTiers || canBeInfinite) && enchant > 0;
 	}
 

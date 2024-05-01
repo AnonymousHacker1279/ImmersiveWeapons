@@ -40,7 +40,6 @@ public class ShelfBlock extends BasicOrientableBlock implements EntityBlock, Sim
 				.setValue(WATERLOGGED, false));
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext selectionContext) {
 		return switch (state.getValue(FACING)) {
@@ -62,7 +61,6 @@ public class ShelfBlock extends BasicOrientableBlock implements EntityBlock, Sim
 				.setValue(FACING, context.getHorizontalDirection().getOpposite());
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
@@ -73,23 +71,10 @@ public class ShelfBlock extends BasicOrientableBlock implements EntityBlock, Sim
 		return new ShelfBlockEntity(blockPos, blockState);
 	}
 
-	/**
-	 * Runs when the block is activated.
-	 * Allows the block to respond to user interaction.
-	 *
-	 * @param state     the <code>BlockState</code> of the block
-	 * @param level     the <code>Level</code> the block is in
-	 * @param pos       the <code>BlockPos</code> the block is at
-	 * @param player    the <code>Player</code> interacting with the block
-	 * @param hand      the <code>InteractionHand</code> the Player used
-	 * @param hitResult the <code>BlockHitResult</code> of the interaction
-	 * @return InteractionResult
-	 */
-	@SuppressWarnings("deprecation")
 	@Override
-	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+	protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
 		if (hand != InteractionHand.MAIN_HAND) {
-			return InteractionResult.PASS;
+			return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 		}
 
 		if (level.getBlockEntity(pos) instanceof ShelfBlockEntity shelfBlockEntity) {
@@ -103,31 +88,30 @@ public class ShelfBlock extends BasicOrientableBlock implements EntityBlock, Sim
 								+ (shelfBlockEntity.isLocked() ? "locked" : "unlocked"))
 						.withStyle(ChatFormatting.YELLOW), true);
 
-				return InteractionResult.SUCCESS;
+				return ItemInteractionResult.SUCCESS;
 			}
 
 			if (!shelfBlockEntity.isLocked()) {
 				if (itemInHand.isEmpty()) {
 					// If not holding anything, remove the last added item
 					shelfBlockEntity.removeItem();
-					return InteractionResult.SUCCESS;
+					return ItemInteractionResult.SUCCESS;
 				} else {
 					if (shelfBlockEntity.addItem(player.isCreative() ? itemInHand.copy() : itemInHand)) {
-						return InteractionResult.CONSUME;
+						return ItemInteractionResult.CONSUME;
 					}
 				}
 			} else {
 				player.displayClientMessage(Component.translatable("immersiveweapons.block.wall_shelf.locked")
 						.withStyle(ChatFormatting.RED), true);
 
-				return InteractionResult.FAIL;
+				return ItemInteractionResult.FAIL;
 			}
 		}
 
-		return InteractionResult.PASS;
+		return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (!state.is(newState.getBlock())) {

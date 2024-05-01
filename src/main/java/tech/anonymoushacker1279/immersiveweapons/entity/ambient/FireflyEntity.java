@@ -37,9 +37,9 @@ public class FireflyEntity extends AmbientCreature {
 	}
 
 	@Override
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-		entityData.define(DATA_ID_FLAGS, (byte) 0);
+	protected void defineSynchedData(SynchedEntityData.Builder builder) {
+		super.defineSynchedData(builder);
+		builder.define(DATA_ID_FLAGS, (byte) 0);
 	}
 
 	/**
@@ -255,7 +255,8 @@ public class FireflyEntity extends AmbientCreature {
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose pPose, EntityDimensions pSize) {
-		return pSize.height / 2.0F;
+	protected EntityDimensions getDefaultDimensions(Pose pose) {
+		EntityDimensions dimensions = super.getDefaultDimensions(pose);
+		return dimensions.withEyeHeight(dimensions.height() / 2);
 	}
 }

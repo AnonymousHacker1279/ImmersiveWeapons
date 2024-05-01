@@ -1,30 +1,20 @@
 package tech.anonymoushacker1279.immersiveweapons.item.crafting;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.util.ExtraCodecs;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 
-public class BarrelTapRecipe implements Recipe<Container> {
-
-	protected final Ingredient material;
-	protected final int materialCount;
-	protected final ItemStack result;
-	protected final String group;
-
-	public BarrelTapRecipe(String group, Ingredient material, int materialCount, ItemStack result) {
-		this.material = material;
-		this.materialCount = materialCount;
-		this.result = result;
-		this.group = group;
-	}
+public record BarrelTapRecipe(String group, Ingredient material, int materialCount,
+                              ItemStack result) implements Recipe<Container> {
 
 	@Override
 	public boolean matches(Container container, Level level) {
@@ -32,7 +22,7 @@ public class BarrelTapRecipe implements Recipe<Container> {
 	}
 
 	@Override
-	public ItemStack assemble(Container container, RegistryAccess registryAccess) {
+	public ItemStack assemble(Container container, Provider provider) {
 		return result;
 	}
 
@@ -50,7 +40,7 @@ public class BarrelTapRecipe implements Recipe<Container> {
 	}
 
 	@Override
-	public ItemStack getResultItem(RegistryAccess registryAccess) {
+	public ItemStack getResultItem(Provider provider) {
 		return result.copy();
 	}
 
@@ -90,45 +80,46 @@ public class BarrelTapRecipe implements Recipe<Container> {
 		T create(String group, Ingredient material, int materialCount, ItemStack result);
 	}
 
-	public static class Serializer<T extends BarrelTapRecipe> implements RecipeSerializer<T> {
+	public static class Serializer implements RecipeSerializer<BarrelTapRecipe> {
 
-		private final BarrelTapRecipe.Factory<T> factory;
-		private final Codec<T> codec;
+		private static final MapCodec<BarrelTapRecipe> CODEC = RecordCodecBuilder.mapCodec(
+				instance -> instance.group(
+								Codec.STRING.optionalFieldOf("group", "").forGetter(recipe -> recipe.group),
+								Ingredient.CODEC.fieldOf("material").forGetter(recipe -> recipe.material),
+								Codec.INT.fieldOf("materialCount").forGetter(recipe -> recipe.materialCount),
+								ItemStack.SINGLE_ITEM_CODEC.fieldOf("result").forGetter(recipe -> recipe.result)
+						)
+						.apply(instance, BarrelTapRecipe::new)
+		);
 
-		public Serializer(BarrelTapRecipe.Factory<T> factory) {
-			this.factory = factory;
-			this.codec = RecordCodecBuilder.create(
-					instance -> instance.group(
-									ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(recipe -> recipe.group),
-									Ingredient.CODEC.fieldOf("material").forGetter(recipe -> recipe.material),
-									Codec.INT.fieldOf("materialCount").forGetter(recipe -> recipe.materialCount),
-									ItemStack.SINGLE_ITEM_CODEC.fieldOf("result").forGetter(recipe -> recipe.result)
-							)
-							.apply(instance, factory::create)
-			);
+		private static final StreamCodec<RegistryFriendlyByteBuf, BarrelTapRecipe> STREAM_CODEC = StreamCodec.of(
+				BarrelTapRecipe.Serializer::toNetwork, BarrelTapRecipe.Serializer::fromNetwork
+		);
+
+		@Override
+		public MapCodec<BarrelTapRecipe> codec() {
+			return CODEC;
 		}
 
 		@Override
-		public Codec<T> codec() {
-			return codec;
+		public StreamCodec<RegistryFriendlyByteBuf, BarrelTapRecipe> streamCodec() {
+			return STREAM_CODEC;
 		}
 
-		@Override
-		public T fromNetwork(FriendlyByteBuf buffer) {
+		private static BarrelTapRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
 			String group = buffer.readUtf();
-			Ingredient material = Ingredient.fromNetwork(buffer);
+			Ingredient material = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
 			int materialCount = buffer.readInt();
-			ItemStack result = buffer.readItem();
+			ItemStack result = ItemStack.STREAM_CODEC.decode(buffer);
 
-			return factory.create(group, material, materialCount, result);
+			return new BarrelTapRecipe(group, material, materialCount, result);
 		}
 
-		@Override
-		public void toNetwork(FriendlyByteBuf buffer, BarrelTapRecipe recipe) {
+		private static void toNetwork(RegistryFriendlyByteBuf buffer, BarrelTapRecipe recipe) {
 			buffer.writeUtf(recipe.group);
-			recipe.material.toNetwork(buffer);
+			Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.material);
 			buffer.writeInt(recipe.materialCount);
-			buffer.writeItem(recipe.result);
+			ItemStack.STREAM_CODEC.encode(buffer, recipe.result);
 		}
 	}
 }

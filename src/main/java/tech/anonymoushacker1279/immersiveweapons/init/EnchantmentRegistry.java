@@ -1,19 +1,17 @@
 package tech.anonymoushacker1279.immersiveweapons.init;
 
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.Enchantment.Rarity;
-import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.flag.FeatureFlagSet;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.enchantment.*;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.enchantment.*;
-import tech.anonymoushacker1279.immersiveweapons.item.CursedSightStaffItem;
-import tech.anonymoushacker1279.immersiveweapons.item.MeteorStaffItem;
-import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
-import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
-import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
 
+import java.util.Optional;
 import java.util.function.Supplier;
 
 @SuppressWarnings({"unused"})
@@ -25,34 +23,196 @@ public class EnchantmentRegistry {
 	// Equipment slots
 	public static final EquipmentSlot[] HANDS = new EquipmentSlot[]{EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND};
 
-	// Enchantment categories
-	public static final EnchantmentCategory GUN = EnchantmentCategory.create("gun", AbstractGunItem.class::isInstance);
-	public static final EnchantmentCategory GUN_OR_BOW_OR_CROSSBOW = EnchantmentCategory.create("gun_or_bow", (item) -> GUN.canEnchant(item) || EnchantmentCategory.BOW.canEnchant(item) || EnchantmentCategory.CROSSBOW.canEnchant(item));
-	public static final EnchantmentCategory PIKE = EnchantmentCategory.create("pike", PikeItem.class::isInstance);
-	public static final EnchantmentCategory GAUNTLET = EnchantmentCategory.create("gauntlet", GauntletItem.class::isInstance);
-	public static final EnchantmentCategory WEAPONS_OR_TOOLS = EnchantmentCategory.create("weapons_or_tools", (item) ->
-			GUN.canEnchant(item) || PIKE.canEnchant(item) || GAUNTLET.canEnchant(item) ||
-					EnchantmentCategory.DIGGER.canEnchant(item) || EnchantmentCategory.WEAPON.canEnchant(item) ||
-					EnchantmentCategory.BOW.canEnchant(item) || EnchantmentCategory.CROSSBOW.canEnchant(item) ||
-					EnchantmentCategory.TRIDENT.canEnchant(item));
-	public static final EnchantmentCategory METEOR_STAFF = EnchantmentCategory.create("meteor_staff", MeteorStaffItem.class::isInstance);
-	public static final EnchantmentCategory CURSED_SIGHT_STAFF = EnchantmentCategory.create("cursed_sight_staff", CursedSightStaffItem.class::isInstance);
+	public static final TagKey<Item> FIREARMS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"weapons/firearms"));
+	public static final TagKey<Item> RANGED_WEAPONS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"weapons/ranged_weapons"));
+	public static final TagKey<Item> PIKES = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"weapons/pikes"));
+	public static final TagKey<Item> GAUNTLETS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"weapons/gauntlets"));
+	public static final TagKey<Item> WEAPONS_AND_TOOLS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"weapons_and_tools"));
+	public static final TagKey<Item> METEOR_STAFFS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"weapons/meteor_staffs"));
+	public static final TagKey<Item> CURSED_SIGHT_STAFFS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+			"weapons/cursed_sight_staffs"));
 
 	// Enchantments
-	public static final Supplier<FirepowerEnchantment> FIREPOWER = ENCHANTMENTS.register("firepower", () -> new FirepowerEnchantment(Rarity.COMMON, GUN, HANDS));
-	public static final Supplier<ImpactEnchantment> IMPACT = ENCHANTMENTS.register("impact", () -> new ImpactEnchantment(Rarity.RARE, GUN, HANDS));
-	public static final Supplier<EndlessMusketPouchEnchantment> ENDLESS_MUSKET_POUCH = ENCHANTMENTS.register("endless_musket_pouch", () -> new EndlessMusketPouchEnchantment(Rarity.VERY_RARE, GUN, HANDS));
-	public static final Supplier<ScorchShotEnchantment> SCORCH_SHOT = ENCHANTMENTS.register("scorch_shot", () -> new ScorchShotEnchantment(Rarity.RARE, GUN, HANDS));
-	public static final Supplier<RapidFireEnchantment> RAPID_FIRE = ENCHANTMENTS.register("rapid_fire", () -> new RapidFireEnchantment(Rarity.UNCOMMON, GUN, HANDS));
-	public static final Supplier<VelocityEnchantment> VELOCITY = ENCHANTMENTS.register("velocity", () -> new VelocityEnchantment(Rarity.UNCOMMON, GUN_OR_BOW_OR_CROSSBOW, HANDS));
-	public static final Supplier<ExtendedReachEnchantment> EXTENDED_REACH = ENCHANTMENTS.register("extended_reach", () -> new ExtendedReachEnchantment(Rarity.RARE, PIKE, HANDS));
-	public static final Supplier<SharpenedHeadEnchantment> SHARPENED_HEAD = ENCHANTMENTS.register("sharpened_head", () -> new SharpenedHeadEnchantment(Rarity.COMMON, PIKE, HANDS));
-	public static final Supplier<CrimsonClawEnchantment> CRIMSON_CLAW = ENCHANTMENTS.register("crimson_claw", () -> new CrimsonClawEnchantment(Rarity.RARE, GAUNTLET, HANDS));
-	public static final Supplier<ExcessiveForceEnchantment> EXCESSIVE_FORCE = ENCHANTMENTS.register("excessive_force", () -> new ExcessiveForceEnchantment(Rarity.RARE, GAUNTLET, HANDS));
-	public static final Supplier<RegenerativeAssaultEnchantment> REGENERATIVE_ASSAULT = ENCHANTMENTS.register("regenerative_assault", () -> new RegenerativeAssaultEnchantment(Rarity.VERY_RARE, WEAPONS_OR_TOOLS, HANDS));
-	public static final Supplier<HeavyCometEnchantment> HEAVY_COMET = ENCHANTMENTS.register("heavy_comet", () -> new HeavyCometEnchantment(Rarity.RARE, METEOR_STAFF, HANDS));
-	public static final Supplier<BurningHeatEnchantment> BURNING_HEAT = ENCHANTMENTS.register("burning_heat", () -> new BurningHeatEnchantment(Rarity.RARE, METEOR_STAFF, HANDS));
-	public static final Supplier<CelestialFuryEnchantment> CELESTIAL_FURY = ENCHANTMENTS.register("celestial_fury", () -> new CelestialFuryEnchantment(Rarity.VERY_RARE, METEOR_STAFF, HANDS));
-	public static final Supplier<NightmarishStareEnchantment> NIGHTMARISH_STARE = ENCHANTMENTS.register("nightmarish_stare", () -> new NightmarishStareEnchantment(Rarity.UNCOMMON, CURSED_SIGHT_STAFF, HANDS));
-	public static final Supplier<MalevolentGazeEnchantment> MALEVOLENT_GAZE = ENCHANTMENTS.register("malevolent_gaze", () -> new MalevolentGazeEnchantment(Rarity.RARE, CURSED_SIGHT_STAFF, HANDS));
+	public static final Supplier<Enchantment> FIREPOWER = ENCHANTMENTS.register("firepower", () -> new Enchantment(Enchantment.definition(
+			FIREARMS,
+			10,
+			5,
+			Enchantment.dynamicCost(1, 10),
+			Enchantment.dynamicCost(16, 10),
+			1,
+			FeatureFlagSet.of(),
+			EquipmentSlot.MAINHAND
+	)));
+
+	public static final Supplier<Enchantment> IMPACT = ENCHANTMENTS.register("impact", () -> new Enchantment(Enchantment.definition(
+			FIREARMS,
+			2,
+			2,
+			Enchantment.dynamicCost(12, 20),
+			Enchantment.dynamicCost(37, 20),
+			4,
+			FeatureFlagSet.of(),
+			EquipmentSlot.MAINHAND
+	)));
+
+	public static final Supplier<Enchantment> ENDLESS_MUSKET_POUCH = ENCHANTMENTS.register("endless_musket_pouch", () -> new Enchantment(Enchantment.definition(
+			FIREARMS,
+			1,
+			1,
+			Enchantment.constantCost(20),
+			Enchantment.constantCost(50),
+			8,
+			EquipmentSlot.MAINHAND
+	)) {
+		@Override
+		protected boolean checkCompatibility(Enchantment otherEnchant) {
+			return !(otherEnchant instanceof MendingEnchantment) && super.checkCompatibility(otherEnchant);
+		}
+	});
+
+	public static final Supplier<Enchantment> SCORCH_SHOT = ENCHANTMENTS.register("scorch_shot", () -> new Enchantment(Enchantment.definition(
+			FIREARMS,
+			2,
+			1,
+			Enchantment.constantCost(20),
+			Enchantment.constantCost(50),
+			4,
+			EquipmentSlot.MAINHAND
+	)));
+
+	public static final Supplier<Enchantment> RAPID_FIRE = ENCHANTMENTS.register("rapid_fire", () -> new Enchantment(Enchantment.definition(
+			FIREARMS,
+			5,
+			3,
+			Enchantment.dynamicCost(10, 15),
+			Enchantment.dynamicCost(16, 15),
+			5,
+			EquipmentSlot.MAINHAND
+	)));
+
+	public static final Supplier<Enchantment> VELOCITY = ENCHANTMENTS.register("velocity", () -> new Enchantment(Enchantment.definition(
+			RANGED_WEAPONS,
+			5,
+			3,
+			Enchantment.dynamicCost(15, 20),
+			Enchantment.dynamicCost(25, 20),
+			5,
+			EquipmentSlot.MAINHAND
+	)));
+
+	public static final Supplier<Enchantment> EXTENDED_REACH = ENCHANTMENTS.register("extended_reach", () -> new Enchantment(Enchantment.definition(
+			PIKES,
+			2,
+			1,
+			Enchantment.constantCost(15),
+			Enchantment.constantCost(30),
+			3,
+			EquipmentSlot.MAINHAND
+	)));
+
+	public static final Supplier<DamageEnchantment> SHARPENED_HEAD = ENCHANTMENTS.register("sharpened_head", () -> new DamageEnchantment(Enchantment.definition(
+			PIKES,
+			10,
+			5,
+			Enchantment.dynamicCost(1, 11),
+			Enchantment.dynamicCost(21, 11),
+			1,
+			EquipmentSlot.MAINHAND
+	),
+			Optional.empty()
+	));
+
+	public static final Supplier<Enchantment> CRIMSON_CLAW = ENCHANTMENTS.register("crimson_claw", () -> new Enchantment(Enchantment.definition(
+			GAUNTLETS,
+			2,
+			3,
+			Enchantment.dynamicCost(10, 15),
+			Enchantment.dynamicCost(16, 15),
+			3,
+			FeatureFlagSet.of(),
+			HANDS
+	)));
+
+	public static final Supplier<Enchantment> EXCESSIVE_FORCE = ENCHANTMENTS.register("excessive_force", () -> new Enchantment(Enchantment.definition(
+			GAUNTLETS,
+			2,
+			2,
+			Enchantment.dynamicCost(20, 20),
+			Enchantment.dynamicCost(21, 20),
+			4,
+			FeatureFlagSet.of(),
+			HANDS
+	)));
+
+	public static final Supplier<Enchantment> REGENERATIVE_ASSAULT = ENCHANTMENTS.register("regenerative_assault", () -> new Enchantment(Enchantment.definition(
+			WEAPONS_AND_TOOLS,
+			1,
+			3,
+			Enchantment.dynamicCost(20, 20),
+			Enchantment.dynamicCost(25, 20),
+			6,
+			FeatureFlagSet.of(),
+			HANDS
+	)));
+
+	public static final Supplier<Enchantment> HEAVY_COMET = ENCHANTMENTS.register("heavy_comet", () -> new Enchantment(Enchantment.definition(
+			METEOR_STAFFS,
+			2,
+			2,
+			Enchantment.dynamicCost(20, 20),
+			Enchantment.dynamicCost(21, 20),
+			4,
+			FeatureFlagSet.of(),
+			HANDS
+	)));
+
+	public static final Supplier<Enchantment> BURNING_HEAT = ENCHANTMENTS.register("burning_heat", () -> new Enchantment(Enchantment.definition(
+			METEOR_STAFFS,
+			2,
+			1,
+			Enchantment.constantCost(25),
+			Enchantment.constantCost(50),
+			3,
+			FeatureFlagSet.of(),
+			HANDS
+	)));
+
+	public static final Supplier<Enchantment> CELESTIAL_FURY = ENCHANTMENTS.register("celestial_fury", () -> new Enchantment(Enchantment.definition(
+			METEOR_STAFFS,
+			1,
+			1,
+			Enchantment.constantCost(35),
+			Enchantment.constantCost(50),
+			5,
+			FeatureFlagSet.of(),
+			HANDS
+	)));
+
+	public static final Supplier<Enchantment> NIGHTMARISH_STARE = ENCHANTMENTS.register("nightmarish_stare", () -> new Enchantment(Enchantment.definition(
+			CURSED_SIGHT_STAFFS,
+			5,
+			7,
+			Enchantment.dynamicCost(10, 10),
+			Enchantment.dynamicCost(15, 15),
+			3,
+			FeatureFlagSet.of(),
+			HANDS
+	)));
+
+	public static final Supplier<Enchantment> MALEVOLENT_GAZE = ENCHANTMENTS.register("malevolent_gaze", () -> new Enchantment(Enchantment.definition(
+			CURSED_SIGHT_STAFFS,
+			2,
+			3,
+			Enchantment.dynamicCost(20, 20),
+			Enchantment.dynamicCost(21, 25),
+			5,
+			FeatureFlagSet.of(),
+			HANDS
+	)));
 }

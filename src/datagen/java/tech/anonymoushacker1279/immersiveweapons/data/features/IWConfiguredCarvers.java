@@ -2,7 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.data.features;
 
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
@@ -24,7 +24,7 @@ public class IWConfiguredCarvers {
 		return ResourceKey.create(Registries.CONFIGURED_CARVER, new ResourceLocation(ImmersiveWeapons.MOD_ID, name));
 	}
 
-	public static void bootstrap(BootstapContext<ConfiguredWorldCarver<?>> context) {
+	public static void bootstrap(BootstrapContext<ConfiguredWorldCarver<?>> context) {
 		HolderGetter<Block> blocks = context.lookup(Registries.BLOCK);
 
 		context.register(TRENCH, new ConfiguredWorldCarver<>(WorldCarver.CANYON,

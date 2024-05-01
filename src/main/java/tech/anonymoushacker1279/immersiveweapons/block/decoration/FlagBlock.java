@@ -67,7 +67,6 @@ public class FlagBlock extends BasicOrientableBlock implements SimpleWaterlogged
 	 * @param collisionContext the <code>CollisionContext</code> of the block
 	 * @return VoxelShape
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos,
 	                           CollisionContext collisionContext) {
@@ -83,13 +82,11 @@ public class FlagBlock extends BasicOrientableBlock implements SimpleWaterlogged
 	 * @param pos    the <code>BlockPos</code> the block is at
 	 * @return float
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public float getShadeBrightness(BlockState state, BlockGetter reader, BlockPos pos) {
 		return 1.0F;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);

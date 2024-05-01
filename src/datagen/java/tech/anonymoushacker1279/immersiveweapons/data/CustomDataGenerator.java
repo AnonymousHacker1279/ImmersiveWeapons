@@ -8,8 +8,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.common.Mod.EventBusSubscriber.Bus;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.common.EventBusSubscriber.Bus;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
@@ -35,7 +35,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
-@Mod.EventBusSubscriber(bus = Bus.MOD)
+@EventBusSubscriber(bus = Bus.MOD)
 public class CustomDataGenerator {
 
 	public static final List<Item> ALL_ITEMS = new ArrayList<>(250);
@@ -66,15 +66,15 @@ public class CustomDataGenerator {
 
 		// Server data
 		generator.addProvider(event.includeServer(), new AdvancementsGenerator(output, lookupProvider, existingFileHelper));
-		generator.addProvider(event.includeServer(), new LootTableGenerator(output));
-		generator.addProvider(event.includeServer(), new FamilyGenerator(output));
+		generator.addProvider(event.includeServer(), new LootTableGenerator(output, lookupProvider));
+		generator.addProvider(event.includeServer(), new FamilyGenerator(output, lookupProvider));
 		BlockTagsGenerator blockTagsGenerator = new BlockTagsGenerator(output, lookupProvider, existingFileHelper);
 		generator.addProvider(event.includeServer(), blockTagsGenerator);
 		generator.addProvider(event.includeServer(), new ItemTagsGenerator(output, lookupProvider, blockTagsGenerator, existingFileHelper));
 		generator.addProvider(event.includeServer(), new EntityTypeTagsGenerator(output, lookupProvider, existingFileHelper));
 		generator.addProvider(event.includeServer(), new GameEventTagsGenerator(output, lookupProvider, existingFileHelper));
 		generator.addProvider(event.includeServer(), new DataMapsGenerator(output, lookupProvider));
-		generator.addProvider(event.includeServer(), new GlobalLootModifierGenerator(output));
+		generator.addProvider(event.includeServer(), new GlobalLootModifierGenerator(output, lookupProvider));
 		generator.addProvider(event.includeServer(), new StructureUpdater(existingFileHelper, output));
 		generator.addProvider(event.includeServer(), new TradeDataGenerator(output));
 		generator.addProvider(event.includeServer(), PackMetadataGenerator.forFeaturePack(output, Component.translatable("immersiveweapons.datapack.description")));

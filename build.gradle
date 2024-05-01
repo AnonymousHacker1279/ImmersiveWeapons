@@ -1,7 +1,7 @@
 plugins {
 	id 'java-library'
 	id 'maven-publish'
-	id 'net.neoforged.gradle.userdev' version '7.0.102'
+	id 'net.neoforged.gradle.userdev' version '7.0.116'
 	id "com.hypherionmc.modutils.modpublisher" version "2.1.1"
 	id 'idea'
 }
@@ -51,7 +51,7 @@ base {
 
 jarJar.enable()
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 
@@ -131,30 +131,31 @@ sourceSets.main.resources {
 }
 
 dependencies {
-	implementation 'org.jetbrains:annotations:24.0.1'
+	implementation 'org.jetbrains:annotations:24.1.0'
 
 	implementation "net.neoforged:neoforge:${neoforge_version}"
 
-	implementation(jarJar("dev.lukebemish.biomesquisher:biomesquisher-neoforge-1.20.2:${biomesquisher_version}")) {
+	// TODO: reimplement as dependencies update
+	/*implementation(jarJar("dev.lukebemish.biomesquisher:biomesquisher-neoforge-1.20.2:${biomesquisher_version}")) {
 		jarJar.ranged(it, "[0.1.6-alpha,)")
 		exclude group: "ar.com.hjg", module: "pngj"
 	}
 
 	implementation(jarJar("net.kyrptonaught.customportalapi:cpapireforged-neo-1.20.4:${custom_portals_api_version}")) {
 		jarJar.ranged(it, "[1.0.5,)")
-	}
+	}*/
 
 	// Include Immersive Weapons Compatibility Bridge (IWCB) and Cobalt Config
-	implementation "tech.anonymoushacker1279.iwcompatbridge:IWCompatBridge:${iwcb_version}"
+	// implementation "tech.anonymoushacker1279.iwcompatbridge:IWCompatBridge:${iwcb_version}"
 	implementation "tech.anonymoushacker1279.cobaltconfig:CobaltConfig:${cobaltconfig_version}"
 
-	// Include JEI
+	/*// Include JEI
 	runtimeOnly "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
 	// Include WTHIT and badpackets
 	runtimeOnly "mcp.mobius.waila:wthit:neo-${wthit_version}"
 	runtimeOnly "lol.bai:badpackets:neo-${badpackets_version}"
 	// Include AttributeFix
-	implementation "curse.maven:attributefix-280510:${attributefix_version}"
+	implementation "curse.maven:attributefix-280510:${attributefix_version}"*/
 }
 
 tasks.named('processResources', ProcessResources).configure {
@@ -165,7 +166,7 @@ tasks.named('processResources', ProcessResources).configure {
 	]
 	inputs.properties replaceProperties
 
-	filesMatching(['META-INF/mods.toml']) {
+	filesMatching(['META-INF/neoforge.mods.toml']) {
 		expand replaceProperties + [project: project]
 	}
 
@@ -263,7 +264,7 @@ if (file("RELEASE_NOTES.md").exists()) {
 		setLoaders("neoforge")
 		setCurseEnvironment("both")
 		setArtifact(tasks.jarJar)
-		setJavaVersions([JavaVersion.VERSION_17])
+		setJavaVersions([JavaVersion.VERSION_21])
 		addAdditionalFile(javadocJar, sourcesJar)
 
 		curseDepends {

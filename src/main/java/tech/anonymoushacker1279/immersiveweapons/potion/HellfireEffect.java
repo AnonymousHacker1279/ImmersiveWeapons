@@ -23,11 +23,11 @@ public class HellfireEffect extends MobEffect {
 	}
 
 	@Override
-	public void applyEffectTick(LivingEntity livingEntity, int amplifier) {
+	public boolean applyEffectTick(LivingEntity livingEntity, int amplifier) {
 		if (livingEntity.isInWater() || livingEntity.hasEffect(MobEffects.FIRE_RESISTANCE) || ArmorUtils.isWearingMoltenArmor(livingEntity)) {
-			livingEntity.removeEffect(EffectRegistry.HELLFIRE_EFFECT.get());
+			livingEntity.removeEffect(EffectRegistry.HELLFIRE_EFFECT);
 
-			return;
+			return false;
 		}
 
 		if (livingEntity.level() instanceof ServerLevel serverLevel) {
@@ -42,7 +42,7 @@ public class HellfireEffect extends MobEffect {
 				}
 
 				livingEntity.hurt(IWDamageSources.HELLFIRE, amount);
-				livingEntity.setSecondsOnFire(Mth.ceil((float) cooldownTicks / 20));
+				livingEntity.igniteForSeconds(Mth.ceil((float) cooldownTicks / 20));
 			} else {
 				cooldownTicks--;
 			}
@@ -58,6 +58,8 @@ public class HellfireEffect extends MobEffect {
 					livingEntity.getBbWidth() * 0.5f,
 					0.1d);
 		}
+
+		return true;
 	}
 
 	@Override

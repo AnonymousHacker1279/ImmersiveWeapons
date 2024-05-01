@@ -25,8 +25,7 @@ public class WoodenTableBlock extends Block implements SimpleWaterloggedBlock {
 	 */
 	public WoodenTableBlock(Properties properties) {
 		super(properties);
-		registerDefaultState(stateDefinition.any()
-				.setValue(WATERLOGGED, false));
+		registerDefaultState(stateDefinition.any().setValue(WATERLOGGED, false));
 	}
 
 	/**
@@ -46,7 +45,6 @@ public class WoodenTableBlock extends Block implements SimpleWaterloggedBlock {
 	 * @param state the <code>BlockState</code> of the block
 	 * @return FluidState
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
@@ -61,11 +59,8 @@ public class WoodenTableBlock extends Block implements SimpleWaterloggedBlock {
 	 * @param collisionContext the <code>CollisionContext</code> of the block
 	 * @return VoxelShape
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos,
-	                           CollisionContext collisionContext) {
-
+	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext collisionContext) {
 		return SHAPE;
 	}
 }

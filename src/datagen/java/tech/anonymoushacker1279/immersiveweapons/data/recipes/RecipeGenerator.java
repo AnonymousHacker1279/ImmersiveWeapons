@@ -4,29 +4,32 @@ import com.google.common.collect.ImmutableList;
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.*;
-import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.common.crafting.NBTIngredient;
+import net.neoforged.neoforge.common.crafting.DataComponentIngredient;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.DataGenUtils;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeItemTagGroups;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWItemTagGroups;
+import tech.anonymoushacker1279.immersiveweapons.data.groups.forge.ForgeItemTagGroups;
+import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.AmmunitionTableRecipe.MaterialGroup;
 
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
 public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 
@@ -37,8 +40,8 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 			BlockItemRegistry.COBALT_ORE_ITEM.get(), BlockItemRegistry.DEEPSLATE_COBALT_ORE_ITEM.get(),
 			ItemRegistry.RAW_COBALT.get());
 
-	public RecipeGenerator(PackOutput output) {
-		super(output);
+	public RecipeGenerator(PackOutput output, CompletableFuture<Provider> provider) {
+		super(output, provider);
 		packOutput = output;
 	}
 
@@ -311,7 +314,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		// Molten smithing template
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.MOLTEN_SMITHING_TEMPLATE.get())
 				.define('a', IWItemTagGroups.MOLTEN_INGOTS)
-				.define('b', Tags.Items.OBSIDIAN)
+				.define('b', Tags.Items.OBSIDIANS)
 				.pattern(" a ")
 				.pattern("aba")
 				.pattern(" a ")
@@ -723,7 +726,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		// Mortar and shell
 		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, BlockItemRegistry.MORTAR_ITEM.get())
 				.define('a', ForgeItemTagGroups.METAL_INGOTS)
-				.define('b', Tags.Items.STONE)
+				.define('b', Tags.Items.STONES)
 				.pattern("b b")
 				.pattern("aba")
 				.group("artillery")
@@ -731,7 +734,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.save(output);
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ItemRegistry.MORTAR_SHELL.get())
 				.define('a', Items.TNT)
-				.define('b', Tags.Items.STONE)
+				.define('b', Tags.Items.STONES)
 				.pattern(" b ")
 				.pattern("bab")
 				.pattern(" b ")
@@ -748,7 +751,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.save(output);
 		// Sandbag
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.SANDBAG_ITEM.get(), 6)
-				.define('a', Tags.Items.SAND)
+				.define('a', Tags.Items.SANDS)
 				.define('b', ItemRegistry.CLOTH_SCRAP.get())
 				.pattern("bbb")
 				.pattern("aaa")
@@ -778,10 +781,12 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.unlockedBy("grass", has(Items.SHORT_GRASS))
 				.save(output);
 		// Punji sticks
+		ItemStack poison = new ItemStack(Items.POTION);
+		poison.update(DataComponents.POTION_CONTENTS, PotionContents.EMPTY, Potions.POISON, PotionContents::withPotion);
 		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.PUNJI_STICKS_ITEM.get(), 3)
 				.define('a', Items.DIRT)
 				.define('b', Items.BAMBOO)
-				.define('c', NBTIngredient.of(true, PotionUtils.setPotion(new ItemStack(Items.POTION), Potions.POISON)))
+				.define('c', DataComponentIngredient.of(true, poison))
 				.pattern("bbb")
 				.pattern("bcb")
 				.pattern("aaa")
@@ -823,7 +828,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 	private void createFirstAidItems() {
 		// Bandage
 		ShapedRecipeBuilder.shaped(RecipeCategory.BREWING, ItemRegistry.BANDAGE.get(), 2)
-				.define('a', Tags.Items.STRING)
+				.define('a', Tags.Items.STRINGS)
 				.define('b', ItemTags.WOOL)
 				.pattern("aba")
 				.group("first_aid")
@@ -993,7 +998,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.unlockedBy("tnt", has(Items.TNT))
 				.save(output);
 		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ItemRegistry.MOLOTOV_COCKTAIL.get())
-				.define('a', Tags.Items.STRING)
+				.define('a', Tags.Items.STRINGS)
 				.define('b', ItemRegistry.BOTTLE_OF_ALCOHOL.get())
 				.pattern(" a ")
 				.pattern(" b ")
@@ -1081,12 +1086,12 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.define('a', Tags.Items.INGOTS_IRON)
 				.define('b', ItemTags.PLANKS)
 				.define('c', ItemTags.STONE_CRAFTING_MATERIALS)
-				.define('d', Tags.Items.GUNPOWDER)
+				.define('d', Tags.Items.GUNPOWDERS)
 				.pattern("aaa")
 				.pattern("bdb")
 				.pattern("cbc")
 				.group("ammunition_table")
-				.unlockedBy("gunpowder", has(Tags.Items.GUNPOWDER))
+				.unlockedBy("gunpowder", has(Tags.Items.GUNPOWDERS))
 				.save(output);
 
 		// The Sword
@@ -1159,20 +1164,20 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 	private void createAccessories() {
 		// Satchel
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.SATCHEL.get())
-				.define('a', Tags.Items.LEATHER)
-				.define('b', Tags.Items.STRING)
+				.define('a', Tags.Items.LEATHERS)
+				.define('b', Tags.Items.STRINGS)
 				.define('c', Tags.Items.CHESTS_WOODEN)
 				.pattern(" b ")
 				.pattern("aca")
 				.pattern(" a ")
 				.group("satchel")
-				.unlockedBy("leather", has(Tags.Items.LEATHER))
+				.unlockedBy("leather", has(Tags.Items.LEATHERS))
 				.save(output);
 
 		// Powder horn
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.POWDER_HORN.get())
-				.define('a', Tags.Items.GUNPOWDER)
-				.define('b', Tags.Items.STRING)
+				.define('a', Tags.Items.GUNPOWDERS)
+				.define('b', Tags.Items.STRINGS)
 				.define('c', Items.GOAT_HORN)
 				.pattern(" b ")
 				.pattern("aca")
@@ -1182,9 +1187,11 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.save(output);
 
 		// Blademaster Emblem
+		ItemStack death = new ItemStack(Items.POTION);
+		death.update(DataComponents.POTION_CONTENTS, PotionContents.EMPTY, PotionRegistry.DEATH_POTION, PotionContents::withPotion);
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.BLADEMASTER_EMBLEM.get())
 				.define('a', IWItemTagGroups.STARSTORM_SHARDS)
-				.define('b', NBTIngredient.of(true, PotionUtils.setPotion(new ItemStack(Items.POTION), PotionRegistry.DEATH_POTION.get())))
+				.define('b', DataComponentIngredient.of(true, death))
 				.define('c', ItemRegistry.STARSTORM_SWORD.get())
 				.pattern("aaa")
 				.pattern("aca")
@@ -1260,7 +1267,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.GOGGLES.get())
 				.define('a', Tags.Items.GLASS_PANES)
 				.define('b', Tags.Items.INGOTS_IRON)
-				.define('c', Tags.Items.STRING)
+				.define('c', Tags.Items.STRINGS)
 				.pattern(" c ")
 				.pattern("aba")
 				.group("goggles")
@@ -1271,7 +1278,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.LAVA_GOGGLES.get())
 				.define('a', ItemRegistry.GOGGLES.get())
 				.define('b', IWItemTagGroups.MOLTEN_INGOTS)
-				.define('c', Tags.Items.OBSIDIAN)
+				.define('c', Tags.Items.OBSIDIANS)
 				.pattern(" c ")
 				.pattern("bab")
 				.pattern(" c ")
@@ -1347,7 +1354,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.save(output);
 		// Cloth scrap
 		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.CLOTH_SCRAP.get(), 4)
-				.define('a', Tags.Items.STRING)
+				.define('a', Tags.Items.STRINGS)
 				.define('b', Items.SHORT_GRASS)
 				.pattern("bbb")
 				.pattern("bab")

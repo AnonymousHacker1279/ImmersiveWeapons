@@ -7,6 +7,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -60,7 +61,7 @@ public class AzulLocatorItem extends Item {
 						}
 
 						if (!player.isCreative()) {
-							stack.hurtAndBreak(1, player, (entity) -> entity.broadcastBreakEvent(player.getUsedItemHand()));
+							stack.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
 						} else {
 							player.getCooldowns().addCooldown(this, 60);
 						}

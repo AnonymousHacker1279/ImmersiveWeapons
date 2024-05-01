@@ -1,12 +1,20 @@
 package tech.anonymoushacker1279.immersiveweapons.item.tool;
 
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SwordItem;
+import tech.anonymoushacker1279.immersiveweapons.item.materials.CustomTiers;
 
 public class TheSword extends SwordItem implements HitEffectUtils {
 
-	public TheSword(Tier tier, int attackDamage, float attackSpeed, Properties properties) {
-		super(tier, attackDamage, attackSpeed, properties);
+	public TheSword() {
+		super(CustomTiers.HANSIUM,
+				new Properties()
+						.attributes(createAttributes(
+								CustomTiers.HANSIUM, 3, -2.4f)
+						)
+						.fireResistant()
+		);
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.blockentity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.*;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -34,14 +35,9 @@ public class CelestialLanternBlockEntity extends BlockEntity implements EntityBl
 		return new CelestialLanternBlockEntity(blockPos, blockState);
 	}
 
-	/**
-	 * Save NBT data.
-	 *
-	 * @param tag the <code>CompoundNBT</code> to save
-	 */
 	@Override
-	protected void saveAdditional(CompoundTag tag) {
-		super.saveAdditional(tag);
+	protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+		super.saveAdditional(tag, provider);
 
 		ListTag listTag = new ListTag();
 		CelestialLanternBlock.ALL_TILTROS_LANTERNS
@@ -50,19 +46,14 @@ public class CelestialLanternBlockEntity extends BlockEntity implements EntityBl
 		tag.put("tiltros_lanterns", listTag);
 	}
 
-	/**
-	 * Load NBT data.
-	 *
-	 * @param tag the <code>CompoundTag</code> to load
-	 */
 	@Override
-	public void load(CompoundTag tag) {
-		super.load(tag);
+	public void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+		super.loadAdditional(tag, provider);
 		ListTag SAVED_LANTERNS = (ListTag) tag.get("tiltros_lanterns");
 		if (SAVED_LANTERNS != null) {
 			if (CelestialLanternBlock.ALL_TILTROS_LANTERNS.isEmpty() && !SAVED_LANTERNS.isEmpty()) {
 				List<BlockPos> blockPosList = new ArrayList<>(SAVED_LANTERNS.size());
-				SAVED_LANTERNS.forEach(tag1 -> blockPosList.add(NbtUtils.readBlockPos((CompoundTag) tag1)));
+				SAVED_LANTERNS.forEach(tag1 -> blockPosList.add(NbtUtils.readBlockPos((CompoundTag) tag1, "tiltros_lanterns").orElseThrow()));
 
 				CelestialLanternBlock.ALL_TILTROS_LANTERNS = blockPosList;
 			}

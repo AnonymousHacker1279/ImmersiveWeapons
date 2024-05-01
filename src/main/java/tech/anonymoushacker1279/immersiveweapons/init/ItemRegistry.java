@@ -1,9 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.init;
 
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.Item.Properties;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -11,6 +9,8 @@ import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.data.groups.forge.ForgeItemTagGroups;
+import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.item.*;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.AccessorySlot;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.*;
@@ -18,8 +18,7 @@ import tech.anonymoushacker1279.immersiveweapons.item.bow.*;
 import tech.anonymoushacker1279.immersiveweapons.item.fortitude.*;
 import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.*;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.*;
-import tech.anonymoushacker1279.immersiveweapons.item.materials.CustomArmorMaterials;
-import tech.anonymoushacker1279.immersiveweapons.item.materials.CustomItemMaterials;
+import tech.anonymoushacker1279.immersiveweapons.item.materials.CustomTiers;
 import tech.anonymoushacker1279.immersiveweapons.item.pike.*;
 import tech.anonymoushacker1279.immersiveweapons.item.potion.AlcoholItem;
 import tech.anonymoushacker1279.immersiveweapons.item.potion.WineItem;
@@ -46,87 +45,120 @@ public class ItemRegistry {
 	// Item Register
 	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(Registries.ITEM, ImmersiveWeapons.MOD_ID);
 
-	public static final TagKey<Item> COBALT_INGOTS = ItemTags.create(new ResourceLocation("forge", "ingots/cobalt"));
-	public static final TagKey<Item> MOLTEN_INGOTS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID, "ingots/molten"));
-	public static final TagKey<Item> TESLA_INGOTS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID, "ingots/tesla"));
-	public static final TagKey<Item> VENTUS_SHARDS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID, "shards/ventus"));
-	public static final TagKey<Item> ASTRAL_INGOTS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID, "ingots/astral"));
-	public static final TagKey<Item> STARSTORM_INGOTS = ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID, "ingots/starstorm"));
-
 	// Tools
 	@TextureMetadataMarker(frameTime = 2)
-	public static final Supplier<MoltenSword> MOLTEN_SWORD = ITEMS.register("molten_sword", () -> new MoltenSword(CustomItemMaterials.MOLTEN, 3, -2.4f, new Properties().fireResistant()));
+	public static final Supplier<MoltenSword> MOLTEN_SWORD = ITEMS.register("molten_sword", MoltenSword::new);
 	@TextureMetadataMarker(frameTime = 5)
-	public static final Supplier<MoltenPickaxe> MOLTEN_PICKAXE = ITEMS.register("molten_pickaxe", () -> new MoltenPickaxe(CustomItemMaterials.MOLTEN, 1, -2.8F, new Properties().fireResistant()));
+	public static final Supplier<MoltenPickaxe> MOLTEN_PICKAXE = ITEMS.register("molten_pickaxe", MoltenPickaxe::new);
 	@TextureMetadataMarker(frameTime = 5)
-	public static final Supplier<MoltenAxe> MOLTEN_AXE = ITEMS.register("molten_axe", () -> new MoltenAxe(CustomItemMaterials.MOLTEN, 5, -3.0f, new Properties().fireResistant()));
+	public static final Supplier<MoltenAxe> MOLTEN_AXE = ITEMS.register("molten_axe", MoltenAxe::new);
 	@TextureMetadataMarker(frameTime = 5)
-	public static final Supplier<MoltenShovel> MOLTEN_SHOVEL = ITEMS.register("molten_shovel", () -> new MoltenShovel(CustomItemMaterials.MOLTEN, 1.5f, -3.0f, new Properties().fireResistant()));
+	public static final Supplier<MoltenShovel> MOLTEN_SHOVEL = ITEMS.register("molten_shovel", MoltenShovel::new);
 	@TextureMetadataMarker(frameTime = 5)
-	public static final Supplier<MoltenHoe> MOLTEN_HOE = ITEMS.register("molten_hoe", () -> new MoltenHoe(CustomItemMaterials.MOLTEN, -5, 0.0f, new Properties().fireResistant()));
-	public static final Supplier<SwordItem> COPPER_SWORD = ITEMS.register("copper_sword", () -> new SwordItem(CustomItemMaterials.COPPER, 3, -2.4f, new Properties()));
-	public static final Supplier<PickaxeItem> COPPER_PICKAXE = ITEMS.register("copper_pickaxe", () -> new PickaxeItem(CustomItemMaterials.COPPER, 1, -2.8F, new Properties()));
-	public static final Supplier<AxeItem> COPPER_AXE = ITEMS.register("copper_axe", () -> new AxeItem(CustomItemMaterials.COPPER, 6, -3.1f, new Properties()));
-	public static final Supplier<ShovelItem> COPPER_SHOVEL = ITEMS.register("copper_shovel", () -> new ShovelItem(CustomItemMaterials.COPPER, 1.5f, -3.0f, new Properties()));
-	public static final Supplier<HoeItem> COPPER_HOE = ITEMS.register("copper_hoe", () -> new HoeItem(CustomItemMaterials.COPPER, -1, -1.0f, new Properties()));
+	public static final Supplier<MoltenHoe> MOLTEN_HOE = ITEMS.register("molten_hoe", MoltenHoe::new);
+	public static final Supplier<SwordItem> COPPER_SWORD = ITEMS.register("copper_sword", () -> new SwordItem(CustomTiers.COPPER, new Properties().attributes(
+			SwordItem.createAttributes(CustomTiers.COPPER, 3, -2.4f)
+	)));
+	public static final Supplier<PickaxeItem> COPPER_PICKAXE = ITEMS.register("copper_pickaxe", () -> new PickaxeItem(CustomTiers.COPPER, new Properties().attributes(
+			PickaxeItem.createAttributes(CustomTiers.COPPER, 1, -2.8f)
+	)));
+	public static final Supplier<AxeItem> COPPER_AXE = ITEMS.register("copper_axe", () -> new AxeItem(CustomTiers.COPPER, new Properties().attributes(
+			AxeItem.createAttributes(CustomTiers.COPPER, 6, -3.1f)
+	)));
+	public static final Supplier<ShovelItem> COPPER_SHOVEL = ITEMS.register("copper_shovel", () -> new ShovelItem(CustomTiers.COPPER, new Properties().attributes(
+			ShovelItem.createAttributes(CustomTiers.COPPER, 1.5f, -3.0f)
+	)));
+	public static final Supplier<HoeItem> COPPER_HOE = ITEMS.register("copper_hoe", () -> new HoeItem(CustomTiers.COPPER, new Properties().attributes(
+			HoeItem.createAttributes(CustomTiers.COPPER, -1, -1.0f)
+	)));
 	@TextureMetadataMarker(frameTime = 2)
-	public static final Supplier<TeslaSword> TESLA_SWORD = ITEMS.register("tesla_sword", () -> new TeslaSword(CustomItemMaterials.TESLA, 3, -2.4f, new Properties()));
+	public static final Supplier<TeslaSword> TESLA_SWORD = ITEMS.register("tesla_sword", TeslaSword::new);
 	@TextureMetadataMarker(frameTime = 2)
-	public static final Supplier<TeslaPickaxe> TESLA_PICKAXE = ITEMS.register("tesla_pickaxe", () -> new TeslaPickaxe(CustomItemMaterials.TESLA, 1, -2.8f, new Properties()));
+	public static final Supplier<TeslaPickaxe> TESLA_PICKAXE = ITEMS.register("tesla_pickaxe", TeslaPickaxe::new);
 	@TextureMetadataMarker(frameTime = 2)
-	public static final Supplier<TeslaAxe> TESLA_AXE = ITEMS.register("tesla_axe", () -> new TeslaAxe(CustomItemMaterials.TESLA, 5, -3.0f, new Properties()));
+	public static final Supplier<TeslaAxe> TESLA_AXE = ITEMS.register("tesla_axe", TeslaAxe::new);
 	@TextureMetadataMarker(frameTime = 3)
-	public static final Supplier<TeslaShovel> TESLA_SHOVEL = ITEMS.register("tesla_shovel", () -> new TeslaShovel(CustomItemMaterials.TESLA, 1.5f, -3.0f, new Properties()));
+	public static final Supplier<TeslaShovel> TESLA_SHOVEL = ITEMS.register("tesla_shovel", TeslaShovel::new);
 	@TextureMetadataMarker(frameTime = 3)
-	public static final Supplier<TeslaHoe> TESLA_HOE = ITEMS.register("tesla_hoe", () -> new TeslaHoe(CustomItemMaterials.TESLA, -6, 0.0f, new Properties()));
-	public static final Supplier<SwordItem> COBALT_SWORD = ITEMS.register("cobalt_sword", () -> new SwordItem(CustomItemMaterials.COBALT, 3, -2.4f, new Properties()));
-	public static final Supplier<PickaxeItem> COBALT_PICKAXE = ITEMS.register("cobalt_pickaxe", () -> new PickaxeItem(CustomItemMaterials.COBALT, 1, -2.8F, new Properties()));
-	public static final Supplier<AxeItem> COBALT_AXE = ITEMS.register("cobalt_axe", () -> new AxeItem(CustomItemMaterials.COBALT, 6, -3.1f, new Properties()));
-	public static final Supplier<ShovelItem> COBALT_SHOVEL = ITEMS.register("cobalt_shovel", () -> new ShovelItem(CustomItemMaterials.COBALT, 1.5f, -3.0f, new Properties()));
-	public static final Supplier<HoeItem> COBALT_HOE = ITEMS.register("cobalt_hoe", () -> new HoeItem(CustomItemMaterials.COBALT, -2, -1.0f, new Properties()));
+	public static final Supplier<TeslaHoe> TESLA_HOE = ITEMS.register("tesla_hoe", TeslaHoe::new);
+	public static final Supplier<SwordItem> COBALT_SWORD = ITEMS.register("cobalt_sword", () -> new SwordItem(CustomTiers.COBALT, new Properties().attributes(
+			SwordItem.createAttributes(CustomTiers.COBALT, 3, -2.4f)
+	)));
+	public static final Supplier<PickaxeItem> COBALT_PICKAXE = ITEMS.register("cobalt_pickaxe", () -> new PickaxeItem(CustomTiers.COBALT, new Properties().attributes(
+			PickaxeItem.createAttributes(CustomTiers.COBALT, 1, -2.8f)
+	)));
+	public static final Supplier<AxeItem> COBALT_AXE = ITEMS.register("cobalt_axe", () -> new AxeItem(CustomTiers.COBALT, new Properties().attributes(
+			AxeItem.createAttributes(CustomTiers.COBALT, 6, -3.1f)
+	)));
+	public static final Supplier<ShovelItem> COBALT_SHOVEL = ITEMS.register("cobalt_shovel", () -> new ShovelItem(CustomTiers.COBALT, new Properties().attributes(
+			ShovelItem.createAttributes(CustomTiers.COBALT, 1.5f, -3.0f)
+	)));
+	public static final Supplier<HoeItem> COBALT_HOE = ITEMS.register("cobalt_hoe", () -> new HoeItem(CustomTiers.COBALT, new Properties().attributes(
+			HoeItem.createAttributes(CustomTiers.COBALT, -2, -1.0f)
+	)));
 	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.VENTUS_TOOLS)
-	public static final Supplier<VentusSword> VENTUS_SWORD = ITEMS.register("ventus_sword", () -> new VentusSword(CustomItemMaterials.VENTUS, 3, -2.0f, new Properties()));
+	public static final Supplier<VentusSword> VENTUS_SWORD = ITEMS.register("ventus_sword", VentusSword::new);
 	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.VENTUS_TOOLS)
-	public static final Supplier<VentusPickaxe> VENTUS_PICKAXE = ITEMS.register("ventus_pickaxe", () -> new VentusPickaxe(CustomItemMaterials.VENTUS, 1, -2.4f, new Properties()));
+	public static final Supplier<VentusPickaxe> VENTUS_PICKAXE = ITEMS.register("ventus_pickaxe", VentusPickaxe::new);
 	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.VENTUS_TOOLS)
-	public static final Supplier<VentusAxe> VENTUS_AXE = ITEMS.register("ventus_axe", () -> new VentusAxe(CustomItemMaterials.VENTUS, 5, -2.6f, new Properties()));
+	public static final Supplier<VentusAxe> VENTUS_AXE = ITEMS.register("ventus_axe", VentusAxe::new);
 	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.VENTUS_TOOLS)
-	public static final Supplier<VentusShovel> VENTUS_SHOVEL = ITEMS.register("ventus_shovel", () -> new VentusShovel(CustomItemMaterials.VENTUS, 1.5f, -2.6f, new Properties()));
+	public static final Supplier<VentusShovel> VENTUS_SHOVEL = ITEMS.register("ventus_shovel", VentusShovel::new);
 	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.VENTUS_TOOLS)
-	public static final Supplier<VentusHoe> VENTUS_HOE = ITEMS.register("ventus_hoe", () -> new VentusHoe(CustomItemMaterials.VENTUS, -5, 0.2f, new Properties()));
+	public static final Supplier<VentusHoe> VENTUS_HOE = ITEMS.register("ventus_hoe", VentusHoe::new);
 	@TextureMetadataMarker(frameTime = 5, frames = {0, 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1})
 	public static final Supplier<VentusStaff> VENTUS_STAFF = ITEMS.register("ventus_staff", () -> new VentusStaff(new Properties().durability(300)));
-	public static final Supplier<SwordItem> ASTRAL_SWORD = ITEMS.register("astral_sword", () -> new SwordItem(CustomItemMaterials.ASTRAL, 3, -1.5f, new Properties()));
-	public static final Supplier<PickaxeItem> ASTRAL_PICKAXE = ITEMS.register("astral_pickaxe", () -> new PickaxeItem(CustomItemMaterials.ASTRAL, 1, -1.9f, new Properties()));
-	public static final Supplier<AxeItem> ASTRAL_AXE = ITEMS.register("astral_axe", () -> new AxeItem(CustomItemMaterials.ASTRAL, 5, -2.1f, new Properties()));
-	public static final Supplier<ShovelItem> ASTRAL_SHOVEL = ITEMS.register("astral_shovel", () -> new ShovelItem(CustomItemMaterials.ASTRAL, 1.5f, -2.1f, new Properties()));
-	public static final Supplier<HoeItem> ASTRAL_HOE = ITEMS.register("astral_hoe", () -> new HoeItem(CustomItemMaterials.ASTRAL, -4, 0.8f, new Properties()));
+	public static final Supplier<SwordItem> ASTRAL_SWORD = ITEMS.register("astral_sword", () -> new SwordItem(CustomTiers.ASTRAL, new Properties().attributes(
+			SwordItem.createAttributes(CustomTiers.ASTRAL, 3, -1.5f)
+	)));
+	public static final Supplier<PickaxeItem> ASTRAL_PICKAXE = ITEMS.register("astral_pickaxe", () -> new PickaxeItem(CustomTiers.ASTRAL, new Properties().attributes(
+			PickaxeItem.createAttributes(CustomTiers.ASTRAL, 1, -1.9f)
+	)));
+	public static final Supplier<AxeItem> ASTRAL_AXE = ITEMS.register("astral_axe", () -> new AxeItem(CustomTiers.ASTRAL, new Properties().attributes(
+			AxeItem.createAttributes(CustomTiers.ASTRAL, 5, -2.1f)
+	)));
+	public static final Supplier<ShovelItem> ASTRAL_SHOVEL = ITEMS.register("astral_shovel", () -> new ShovelItem(CustomTiers.ASTRAL, new Properties().attributes(
+			ShovelItem.createAttributes(CustomTiers.ASTRAL, 1.5f, -2.1f)
+	)));
+	public static final Supplier<HoeItem> ASTRAL_HOE = ITEMS.register("astral_hoe", () -> new HoeItem(CustomTiers.ASTRAL, new Properties().attributes(
+			HoeItem.createAttributes(CustomTiers.ASTRAL, -4, 0.8f)
+	)));
 	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.STARSTORM_ITEMS)
-	public static final Supplier<SwordItem> STARSTORM_SWORD = ITEMS.register("starstorm_sword", () -> new SwordItem(CustomItemMaterials.STARSTORM, 3, -2.4f, new Properties()));
+	public static final Supplier<SwordItem> STARSTORM_SWORD = ITEMS.register("starstorm_sword", () -> new SwordItem(CustomTiers.STARSTORM, new Properties().attributes(
+			SwordItem.createAttributes(CustomTiers.STARSTORM, 3, -2.4f)
+	)));
 	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.STARSTORM_ITEMS)
-	public static final Supplier<PickaxeItem> STARSTORM_PICKAXE = ITEMS.register("starstorm_pickaxe", () -> new PickaxeItem(CustomItemMaterials.STARSTORM, 1, -2.8f, new Properties()));
+	public static final Supplier<PickaxeItem> STARSTORM_PICKAXE = ITEMS.register("starstorm_pickaxe", () -> new PickaxeItem(CustomTiers.STARSTORM, new Properties().attributes(
+			PickaxeItem.createAttributes(CustomTiers.STARSTORM, 1, -2.8f)
+	)));
 	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.STARSTORM_ITEMS)
-	public static final Supplier<AxeItem> STARSTORM_AXE = ITEMS.register("starstorm_axe", () -> new AxeItem(CustomItemMaterials.STARSTORM, 5, -3.0f, new Properties()));
+	public static final Supplier<AxeItem> STARSTORM_AXE = ITEMS.register("starstorm_axe", () -> new AxeItem(CustomTiers.STARSTORM, new Properties().attributes(
+			AxeItem.createAttributes(CustomTiers.STARSTORM, 5, -3.0f)
+	)));
 	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.STARSTORM_ITEMS)
-	public static final Supplier<ShovelItem> STARSTORM_SHOVEL = ITEMS.register("starstorm_shovel", () -> new ShovelItem(CustomItemMaterials.STARSTORM, 1.5f, -3.0f, new Properties()));
+	public static final Supplier<ShovelItem> STARSTORM_SHOVEL = ITEMS.register("starstorm_shovel", () -> new ShovelItem(CustomTiers.STARSTORM, new Properties().attributes(
+			ShovelItem.createAttributes(CustomTiers.STARSTORM, 1.5f, -3.0f)
+	)));
 	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.STARSTORM_ITEMS)
-	public static final Supplier<HoeItem> STARSTORM_HOE = ITEMS.register("starstorm_hoe", () -> new HoeItem(CustomItemMaterials.STARSTORM, -7, 0.0f, new Properties()));
-	public static final Supplier<TheSword> THE_SWORD = ITEMS.register("the_sword", () -> new TheSword(CustomItemMaterials.HANSIUM, 3, -2.4f, new Properties().fireResistant()));
+	public static final Supplier<HoeItem> STARSTORM_HOE = ITEMS.register("starstorm_hoe", () -> new HoeItem(CustomTiers.STARSTORM, new Properties().attributes(
+			HoeItem.createAttributes(CustomTiers.STARSTORM, -7, 0.0f)
+	)));
+	public static final Supplier<TheSword> THE_SWORD = ITEMS.register("the_sword", TheSword::new);
 
 	// Weapons
 	public static final Supplier<PikeItem> WOODEN_PIKE = ITEMS.register("wooden_pike", () -> new PikeItem(Tiers.WOOD, new Properties(), 4, -2.6d, Ingredient.of(ItemTags.PLANKS)));
 	public static final Supplier<PikeItem> STONE_PIKE = ITEMS.register("stone_pike", () -> new PikeItem(Tiers.STONE, new Properties(), 4, -2.6d, Ingredient.of(ItemTags.STONE_TOOL_MATERIALS)));
 	public static final Supplier<PikeItem> GOLDEN_PIKE = ITEMS.register("golden_pike", () -> new PikeItem(Tiers.GOLD, new Properties(), 4, -2.6d, Ingredient.of(Tags.Items.INGOTS_GOLD)));
-	public static final Supplier<PikeItem> COPPER_PIKE = ITEMS.register("copper_pike", () -> new PikeItem(CustomItemMaterials.COPPER, new Properties(), 4, -2.6d, Ingredient.of(Tags.Items.INGOTS_COPPER)));
+	public static final Supplier<PikeItem> COPPER_PIKE = ITEMS.register("copper_pike", () -> new PikeItem(CustomTiers.COPPER, new Properties(), 4, -2.6d, Ingredient.of(Tags.Items.INGOTS_COPPER)));
 	public static final Supplier<PikeItem> IRON_PIKE = ITEMS.register("iron_pike", () -> new PikeItem(Tiers.IRON, new Properties(), 4, -2.6d, Ingredient.of(Tags.Items.INGOTS_IRON)));
-	public static final Supplier<PikeItem> COBALT_PIKE = ITEMS.register("cobalt_pike", () -> new PikeItem(CustomItemMaterials.COBALT, new Properties(), 4, -2.6d, Ingredient.of(COBALT_INGOTS)));
+	public static final Supplier<PikeItem> COBALT_PIKE = ITEMS.register("cobalt_pike", () -> new PikeItem(CustomTiers.COBALT, new Properties(), 4, -2.6d, Ingredient.of(ForgeItemTagGroups.COBALT_INGOTS)));
 	public static final Supplier<PikeItem> DIAMOND_PIKE = ITEMS.register("diamond_pike", () -> new PikeItem(Tiers.DIAMOND, new Properties(), 4, -2.6d, Ingredient.of(Tags.Items.GEMS_DIAMOND)));
 	public static final Supplier<PikeItem> NETHERITE_PIKE = ITEMS.register("netherite_pike", () -> new PikeItem(Tiers.NETHERITE, new Properties().fireResistant(), 4, -2.6d, Ingredient.of(Tags.Items.INGOTS_NETHERITE)));
-	public static final Supplier<MoltenPikeItem> MOLTEN_PIKE = ITEMS.register("molten_pike", () -> new MoltenPikeItem(CustomItemMaterials.MOLTEN, new Properties().fireResistant(), 4, -2.6d, Ingredient.of(MOLTEN_INGOTS)));
-	public static final Supplier<TeslaPikeItem> TESLA_PIKE = ITEMS.register("tesla_pike", () -> new TeslaPikeItem(CustomItemMaterials.TESLA, new Properties().fireResistant(), 4, -2.6d, Ingredient.of(TESLA_INGOTS)));
-	public static final Supplier<VentusPikeItem> VENTUS_PIKE = ITEMS.register("ventus_pike", () -> new VentusPikeItem(CustomItemMaterials.VENTUS, new Properties().fireResistant(), 4, -2.2d, Ingredient.of(VENTUS_SHARDS)));
-	public static final Supplier<PikeItem> ASTRAL_PIKE = ITEMS.register("astral_pike", () -> new PikeItem(CustomItemMaterials.ASTRAL, new Properties(), 4, -1.7d, Ingredient.of(ASTRAL_INGOTS)));
-	public static final Supplier<PikeItem> STARSTORM_PIKE = ITEMS.register("starstorm_pike", () -> new PikeItem(CustomItemMaterials.STARSTORM, new Properties(), 4, -2.6d, Ingredient.of(STARSTORM_INGOTS)));
+	public static final Supplier<MoltenPikeItem> MOLTEN_PIKE = ITEMS.register("molten_pike", () -> new MoltenPikeItem(CustomTiers.MOLTEN, new Properties().fireResistant(), 4, -2.6d, Ingredient.of(IWItemTagGroups.MOLTEN_INGOTS)));
+	public static final Supplier<TeslaPikeItem> TESLA_PIKE = ITEMS.register("tesla_pike", () -> new TeslaPikeItem(CustomTiers.TESLA, new Properties().fireResistant(), 4, -2.6d, Ingredient.of(IWItemTagGroups.TESLA_INGOTS)));
+	public static final Supplier<VentusPikeItem> VENTUS_PIKE = ITEMS.register("ventus_pike", () -> new VentusPikeItem(CustomTiers.VENTUS, new Properties().fireResistant(), 4, -2.2d, Ingredient.of(IWItemTagGroups.VENTUS_SHARDS)));
+	public static final Supplier<PikeItem> ASTRAL_PIKE = ITEMS.register("astral_pike", () -> new PikeItem(CustomTiers.ASTRAL, new Properties(), 4, -1.7d, Ingredient.of(IWItemTagGroups.ASTRAL_INGOTS)));
+	public static final Supplier<PikeItem> STARSTORM_PIKE = ITEMS.register("starstorm_pike", () -> new PikeItem(CustomTiers.STARSTORM, new Properties(), 4, -2.6d, Ingredient.of(IWItemTagGroups.STARSTORM_INGOTS)));
 	@DatagenExclusionMarker(Type.MODEL_GENERATOR_ITEM)
 	public static final Supplier<SimplePistolItem> FLINTLOCK_PISTOL = ITEMS.register("flintlock_pistol", () -> new SimplePistolItem(new Properties().durability(499)));
 	@DatagenExclusionMarker(Type.MODEL_GENERATOR_ITEM)
@@ -143,16 +175,16 @@ public class ItemRegistry {
 	public static final Supplier<GauntletItem> WOODEN_GAUNTLET = ITEMS.register("wooden_gauntlet", () -> new GauntletItem(Tiers.WOOD, 2, -2.3f, new Properties(), 0.15f, 0, Ingredient.of(ItemTags.PLANKS)));
 	public static final Supplier<GauntletItem> STONE_GAUNTLET = ITEMS.register("stone_gauntlet", () -> new GauntletItem(Tiers.STONE, 2, -2.3f, new Properties(), 0.25f, 0, Ingredient.of(ItemTags.STONE_TOOL_MATERIALS)));
 	public static final Supplier<GauntletItem> GOLDEN_GAUNTLET = ITEMS.register("golden_gauntlet", () -> new GauntletItem(Tiers.GOLD, 2, -2.3f, new Properties(), 0.35f, 0, Ingredient.of(Tags.Items.INGOTS_GOLD)));
-	public static final Supplier<GauntletItem> COPPER_GAUNTLET = ITEMS.register("copper_gauntlet", () -> new GauntletItem(CustomItemMaterials.COPPER, 2, -2.3f, new Properties(), 0.45f, 0, Ingredient.of(Tags.Items.INGOTS_COPPER)));
+	public static final Supplier<GauntletItem> COPPER_GAUNTLET = ITEMS.register("copper_gauntlet", () -> new GauntletItem(CustomTiers.COPPER, 2, -2.3f, new Properties(), 0.45f, 0, Ingredient.of(Tags.Items.INGOTS_COPPER)));
 	public static final Supplier<GauntletItem> IRON_GAUNTLET = ITEMS.register("iron_gauntlet", () -> new GauntletItem(Tiers.IRON, 2, -2.3f, new Properties(), 0.55f, 0, Ingredient.of(Tags.Items.INGOTS_IRON)));
-	public static final Supplier<GauntletItem> COBALT_GAUNTLET = ITEMS.register("cobalt_gauntlet", () -> new GauntletItem(CustomItemMaterials.COBALT, 2, -2.3f, new Properties(), 0.60f, 0, Ingredient.of(COBALT_INGOTS)));
+	public static final Supplier<GauntletItem> COBALT_GAUNTLET = ITEMS.register("cobalt_gauntlet", () -> new GauntletItem(CustomTiers.COBALT, 2, -2.3f, new Properties(), 0.60f, 0, Ingredient.of(ForgeItemTagGroups.COBALT_INGOTS)));
 	public static final Supplier<GauntletItem> DIAMOND_GAUNTLET = ITEMS.register("diamond_gauntlet", () -> new GauntletItem(Tiers.DIAMOND, 2, -2.3f, new Properties(), 0.75f, 1, Ingredient.of(Tags.Items.GEMS_DIAMOND)));
 	public static final Supplier<GauntletItem> NETHERITE_GAUNTLET = ITEMS.register("netherite_gauntlet", () -> new GauntletItem(Tiers.NETHERITE, 2, -2.3f, new Properties(), 0.85f, 1, Ingredient.of(Tags.Items.INGOTS_NETHERITE)));
-	public static final Supplier<MoltenGauntletItem> MOLTEN_GAUNTLET = ITEMS.register("molten_gauntlet", () -> new MoltenGauntletItem(CustomItemMaterials.MOLTEN, 2, -2.3f, new Properties(), 0.95f, 2, Ingredient.of(MOLTEN_INGOTS)));
-	public static final Supplier<TeslaGauntletItem> TESLA_GAUNTLET = ITEMS.register("tesla_gauntlet", () -> new TeslaGauntletItem(CustomItemMaterials.TESLA, 2, -2.3f, new Properties(), 0.95f, 2, Ingredient.of(TESLA_INGOTS)));
-	public static final Supplier<VentusGauntletItem> VENTUS_GAUNTLET = ITEMS.register("ventus_gauntlet", () -> new VentusGauntletItem(CustomItemMaterials.VENTUS, 2, -1.9f, new Properties(), 0.95f, 2, Ingredient.of(VENTUS_SHARDS)));
-	public static final Supplier<GauntletItem> ASTRAL_GAUNTLET = ITEMS.register("astral_gauntlet", () -> new GauntletItem(CustomItemMaterials.ASTRAL, 2, -1.4f, new Properties(), 0.95f, 2, Ingredient.of(ASTRAL_INGOTS)));
-	public static final Supplier<GauntletItem> STARSTORM_GAUNTLET = ITEMS.register("starstorm_gauntlet", () -> new GauntletItem(CustomItemMaterials.STARSTORM, 2, -2.3f, new Properties(), 0.95f, 2, Ingredient.of(STARSTORM_INGOTS)));
+	public static final Supplier<MoltenGauntletItem> MOLTEN_GAUNTLET = ITEMS.register("molten_gauntlet", () -> new MoltenGauntletItem(CustomTiers.MOLTEN, 2, -2.3f, new Properties(), 0.95f, 2, Ingredient.of(IWItemTagGroups.MOLTEN_INGOTS)));
+	public static final Supplier<TeslaGauntletItem> TESLA_GAUNTLET = ITEMS.register("tesla_gauntlet", () -> new TeslaGauntletItem(CustomTiers.TESLA, 2, -2.3f, new Properties(), 0.95f, 2, Ingredient.of(IWItemTagGroups.TESLA_INGOTS)));
+	public static final Supplier<VentusGauntletItem> VENTUS_GAUNTLET = ITEMS.register("ventus_gauntlet", () -> new VentusGauntletItem(CustomTiers.VENTUS, 2, -1.9f, new Properties(), 0.95f, 2, Ingredient.of(IWItemTagGroups.VENTUS_SHARDS)));
+	public static final Supplier<GauntletItem> ASTRAL_GAUNTLET = ITEMS.register("astral_gauntlet", () -> new GauntletItem(CustomTiers.ASTRAL, 2, -1.4f, new Properties(), 0.95f, 2, Ingredient.of(IWItemTagGroups.ASTRAL_INGOTS)));
+	public static final Supplier<GauntletItem> STARSTORM_GAUNTLET = ITEMS.register("starstorm_gauntlet", () -> new GauntletItem(CustomTiers.STARSTORM, 2, -2.3f, new Properties(), 0.95f, 2, Ingredient.of(IWItemTagGroups.STARSTORM_INGOTS)));
 	public static final Supplier<MeteorStaffItem> METEOR_STAFF = ITEMS.register("meteor_staff", () -> new MeteorStaffItem(new Properties().durability(199)));
 	public static final Supplier<CursedSightStaffItem> CURSED_SIGHT_STAFF = ITEMS.register("cursed_sight_staff", () -> new CursedSightStaffItem(new Properties().durability(149)));
 	@TextureMetadataMarker(frameTime = 3)
@@ -381,45 +413,45 @@ public class ItemRegistry {
 	public static final Supplier<RecordItem> MUSIC_DISC_DEADMANS_DESERT_THEME_2 = ITEMS.register("music_disc_deadmans_desert_theme_2", () -> new RecordItem(0, SoundEventRegistry.DEADMANS_DESERT_THEME_2::get, new Properties().stacksTo(1).rarity(Rarity.RARE), 2860));
 
 	// Armor
-	public static final Supplier<MoltenArmorItem> MOLTEN_HELMET = ITEMS.register("molten_helmet", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, ArmorItem.Type.HELMET, new Item.Properties().fireResistant()));
-	public static final Supplier<MoltenArmorItem> MOLTEN_CHESTPLATE = ITEMS.register("molten_chestplate", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, ArmorItem.Type.CHESTPLATE, new Item.Properties().fireResistant()));
-	public static final Supplier<MoltenArmorItem> MOLTEN_LEGGINGS = ITEMS.register("molten_leggings", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, ArmorItem.Type.LEGGINGS, new Item.Properties().fireResistant()));
-	public static final Supplier<MoltenArmorItem> MOLTEN_BOOTS = ITEMS.register("molten_boots", () -> new MoltenArmorItem(CustomArmorMaterials.MOLTEN, ArmorItem.Type.BOOTS, new Item.Properties().fireResistant()));
-	public static final Supplier<CopperArmorItem> COPPER_HELMET = ITEMS.register("copper_helmet", () -> new CopperArmorItem(CustomArmorMaterials.COPPER, ArmorItem.Type.HELMET, new Item.Properties()));
-	public static final Supplier<CopperArmorItem> COPPER_CHESTPLATE = ITEMS.register("copper_chestplate", () -> new CopperArmorItem(CustomArmorMaterials.COPPER, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
-	public static final Supplier<CopperArmorItem> COPPER_LEGGINGS = ITEMS.register("copper_leggings", () -> new CopperArmorItem(CustomArmorMaterials.COPPER, ArmorItem.Type.LEGGINGS, new Item.Properties()));
-	public static final Supplier<CopperArmorItem> COPPER_BOOTS = ITEMS.register("copper_boots", () -> new CopperArmorItem(CustomArmorMaterials.COPPER, ArmorItem.Type.BOOTS, new Item.Properties()));
-	public static final Supplier<TeslaArmorItem> TESLA_HELMET = ITEMS.register("tesla_helmet", () -> new TeslaArmorItem(CustomArmorMaterials.TESLA, ArmorItem.Type.HELMET, new Item.Properties()));
-	public static final Supplier<TeslaArmorItem> TESLA_CHESTPLATE = ITEMS.register("tesla_chestplate", () -> new TeslaArmorItem(CustomArmorMaterials.TESLA, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
-	public static final Supplier<TeslaArmorItem> TESLA_LEGGINGS = ITEMS.register("tesla_leggings", () -> new TeslaArmorItem(CustomArmorMaterials.TESLA, ArmorItem.Type.LEGGINGS, new Item.Properties()));
-	public static final Supplier<TeslaArmorItem> TESLA_BOOTS = ITEMS.register("tesla_boots", () -> new TeslaArmorItem(CustomArmorMaterials.TESLA, ArmorItem.Type.BOOTS, new Item.Properties()));
-	public static final Supplier<CobaltArmorItem> COBALT_HELMET = ITEMS.register("cobalt_helmet", () -> new CobaltArmorItem(CustomArmorMaterials.COBALT, ArmorItem.Type.HELMET, new Item.Properties()));
-	public static final Supplier<CobaltArmorItem> COBALT_CHESTPLATE = ITEMS.register("cobalt_chestplate", () -> new CobaltArmorItem(CustomArmorMaterials.COBALT, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
-	public static final Supplier<CobaltArmorItem> COBALT_LEGGINGS = ITEMS.register("cobalt_leggings", () -> new CobaltArmorItem(CustomArmorMaterials.COBALT, ArmorItem.Type.LEGGINGS, new Item.Properties()));
-	public static final Supplier<CobaltArmorItem> COBALT_BOOTS = ITEMS.register("cobalt_boots", () -> new CobaltArmorItem(CustomArmorMaterials.COBALT, ArmorItem.Type.BOOTS, new Item.Properties()));
-	public static final Supplier<VentusArmorItem> VENTUS_HELMET = ITEMS.register("ventus_helmet", () -> new VentusArmorItem(CustomArmorMaterials.VENTUS, ArmorItem.Type.HELMET, new Item.Properties()));
-	public static final Supplier<VentusArmorItem> VENTUS_CHESTPLATE = ITEMS.register("ventus_chestplate", () -> new VentusArmorItem(CustomArmorMaterials.VENTUS, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
-	public static final Supplier<VentusArmorItem> VENTUS_LEGGINGS = ITEMS.register("ventus_leggings", () -> new VentusArmorItem(CustomArmorMaterials.VENTUS, ArmorItem.Type.LEGGINGS, new Item.Properties()));
-	public static final Supplier<VentusArmorItem> VENTUS_BOOTS = ITEMS.register("ventus_boots", () -> new VentusArmorItem(CustomArmorMaterials.VENTUS, ArmorItem.Type.BOOTS, new Item.Properties()));
-	public static final Supplier<AstralArmorItem> ASTRAL_HELMET = ITEMS.register("astral_helmet", () -> new AstralArmorItem(CustomArmorMaterials.ASTRAL, ArmorItem.Type.HELMET, new Item.Properties()));
-	public static final Supplier<AstralArmorItem> ASTRAL_CHESTPLATE = ITEMS.register("astral_chestplate", () -> new AstralArmorItem(CustomArmorMaterials.ASTRAL, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
-	public static final Supplier<AstralArmorItem> ASTRAL_LEGGINGS = ITEMS.register("astral_leggings", () -> new AstralArmorItem(CustomArmorMaterials.ASTRAL, ArmorItem.Type.LEGGINGS, new Item.Properties()));
-	public static final Supplier<AstralArmorItem> ASTRAL_BOOTS = ITEMS.register("astral_boots", () -> new AstralArmorItem(CustomArmorMaterials.ASTRAL, ArmorItem.Type.BOOTS, new Item.Properties()));
+	public static final Supplier<MoltenArmorItem> MOLTEN_HELMET = ITEMS.register("molten_helmet", () -> new MoltenArmorItem(ArmorMaterialRegistry.MOLTEN, ArmorItem.Type.HELMET, new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(39)).fireResistant()));
+	public static final Supplier<MoltenArmorItem> MOLTEN_CHESTPLATE = ITEMS.register("molten_chestplate", () -> new MoltenArmorItem(ArmorMaterialRegistry.MOLTEN, ArmorItem.Type.CHESTPLATE, new Item.Properties().durability(ArmorItem.Type.CHESTPLATE.getDurability(39)).fireResistant()));
+	public static final Supplier<MoltenArmorItem> MOLTEN_LEGGINGS = ITEMS.register("molten_leggings", () -> new MoltenArmorItem(ArmorMaterialRegistry.MOLTEN, ArmorItem.Type.LEGGINGS, new Item.Properties().durability(ArmorItem.Type.LEGGINGS.getDurability(39)).fireResistant()));
+	public static final Supplier<MoltenArmorItem> MOLTEN_BOOTS = ITEMS.register("molten_boots", () -> new MoltenArmorItem(ArmorMaterialRegistry.MOLTEN, ArmorItem.Type.BOOTS, new Item.Properties().durability(ArmorItem.Type.BOOTS.getDurability(39)).fireResistant()));
+	public static final Supplier<ArmorItem> COPPER_HELMET = ITEMS.register("copper_helmet", () -> new ArmorItem(ArmorMaterialRegistry.COPPER, ArmorItem.Type.HELMET, new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(13))));
+	public static final Supplier<ArmorItem> COPPER_CHESTPLATE = ITEMS.register("copper_chestplate", () -> new ArmorItem(ArmorMaterialRegistry.COPPER, ArmorItem.Type.CHESTPLATE, new Item.Properties().durability(ArmorItem.Type.CHESTPLATE.getDurability(13))));
+	public static final Supplier<ArmorItem> COPPER_LEGGINGS = ITEMS.register("copper_leggings", () -> new ArmorItem(ArmorMaterialRegistry.COPPER, ArmorItem.Type.LEGGINGS, new Item.Properties().durability(ArmorItem.Type.LEGGINGS.getDurability(13))));
+	public static final Supplier<ArmorItem> COPPER_BOOTS = ITEMS.register("copper_boots", () -> new ArmorItem(ArmorMaterialRegistry.COPPER, ArmorItem.Type.BOOTS, new Item.Properties().durability(ArmorItem.Type.BOOTS.getDurability(13))));
+	public static final Supplier<TeslaArmorItem> TESLA_HELMET = ITEMS.register("tesla_helmet", () -> new TeslaArmorItem(ArmorMaterialRegistry.TESLA, ArmorItem.Type.HELMET, new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(42))));
+	public static final Supplier<TeslaArmorItem> TESLA_CHESTPLATE = ITEMS.register("tesla_chestplate", () -> new TeslaArmorItem(ArmorMaterialRegistry.TESLA, ArmorItem.Type.CHESTPLATE, new Item.Properties().durability(ArmorItem.Type.CHESTPLATE.getDurability(42))));
+	public static final Supplier<TeslaArmorItem> TESLA_LEGGINGS = ITEMS.register("tesla_leggings", () -> new TeslaArmorItem(ArmorMaterialRegistry.TESLA, ArmorItem.Type.LEGGINGS, new Item.Properties().durability(ArmorItem.Type.LEGGINGS.getDurability(42))));
+	public static final Supplier<TeslaArmorItem> TESLA_BOOTS = ITEMS.register("tesla_boots", () -> new TeslaArmorItem(ArmorMaterialRegistry.TESLA, ArmorItem.Type.BOOTS, new Item.Properties().durability(ArmorItem.Type.BOOTS.getDurability(42))));
+	public static final Supplier<CobaltArmorItem> COBALT_HELMET = ITEMS.register("cobalt_helmet", () -> new CobaltArmorItem(ArmorMaterialRegistry.COBALT, ArmorItem.Type.HELMET, new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(19))));
+	public static final Supplier<CobaltArmorItem> COBALT_CHESTPLATE = ITEMS.register("cobalt_chestplate", () -> new CobaltArmorItem(ArmorMaterialRegistry.COBALT, ArmorItem.Type.CHESTPLATE, new Item.Properties().durability(ArmorItem.Type.CHESTPLATE.getDurability(19))));
+	public static final Supplier<CobaltArmorItem> COBALT_LEGGINGS = ITEMS.register("cobalt_leggings", () -> new CobaltArmorItem(ArmorMaterialRegistry.COBALT, ArmorItem.Type.LEGGINGS, new Item.Properties().durability(ArmorItem.Type.LEGGINGS.getDurability(19))));
+	public static final Supplier<CobaltArmorItem> COBALT_BOOTS = ITEMS.register("cobalt_boots", () -> new CobaltArmorItem(ArmorMaterialRegistry.COBALT, ArmorItem.Type.BOOTS, new Item.Properties().durability(ArmorItem.Type.BOOTS.getDurability(19))));
+	public static final Supplier<VentusArmorItem> VENTUS_HELMET = ITEMS.register("ventus_helmet", () -> new VentusArmorItem(ArmorMaterialRegistry.VENTUS, ArmorItem.Type.HELMET, new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(39))));
+	public static final Supplier<VentusArmorItem> VENTUS_CHESTPLATE = ITEMS.register("ventus_chestplate", () -> new VentusArmorItem(ArmorMaterialRegistry.VENTUS, ArmorItem.Type.CHESTPLATE, new Item.Properties().durability(ArmorItem.Type.CHESTPLATE.getDurability(39))));
+	public static final Supplier<VentusArmorItem> VENTUS_LEGGINGS = ITEMS.register("ventus_leggings", () -> new VentusArmorItem(ArmorMaterialRegistry.VENTUS, ArmorItem.Type.LEGGINGS, new Item.Properties().durability(ArmorItem.Type.LEGGINGS.getDurability(39))));
+	public static final Supplier<VentusArmorItem> VENTUS_BOOTS = ITEMS.register("ventus_boots", () -> new VentusArmorItem(ArmorMaterialRegistry.VENTUS, ArmorItem.Type.BOOTS, new Item.Properties().durability(ArmorItem.Type.BOOTS.getDurability(39))));
+	public static final Supplier<AstralArmorItem> ASTRAL_HELMET = ITEMS.register("astral_helmet", () -> new AstralArmorItem(ArmorMaterialRegistry.ASTRAL, ArmorItem.Type.HELMET, new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(25))));
+	public static final Supplier<AstralArmorItem> ASTRAL_CHESTPLATE = ITEMS.register("astral_chestplate", () -> new AstralArmorItem(ArmorMaterialRegistry.ASTRAL, ArmorItem.Type.CHESTPLATE, new Item.Properties().durability(ArmorItem.Type.CHESTPLATE.getDurability(25))));
+	public static final Supplier<AstralArmorItem> ASTRAL_LEGGINGS = ITEMS.register("astral_leggings", () -> new AstralArmorItem(ArmorMaterialRegistry.ASTRAL, ArmorItem.Type.LEGGINGS, new Item.Properties().durability(ArmorItem.Type.LEGGINGS.getDurability(25))));
+	public static final Supplier<AstralArmorItem> ASTRAL_BOOTS = ITEMS.register("astral_boots", () -> new AstralArmorItem(ArmorMaterialRegistry.ASTRAL, ArmorItem.Type.BOOTS, new Item.Properties().durability(ArmorItem.Type.BOOTS.getDurability(25))));
 	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.STARSTORM_ITEMS)
-	public static final Supplier<StarstormArmorItem> STARSTORM_HELMET = ITEMS.register("starstorm_helmet", () -> new StarstormArmorItem(CustomArmorMaterials.STARSTORM, ArmorItem.Type.HELMET, new Item.Properties()));
+	public static final Supplier<ArmorItem> STARSTORM_HELMET = ITEMS.register("starstorm_helmet", () -> new ArmorItem(ArmorMaterialRegistry.STARSTORM, ArmorItem.Type.HELMET, new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(32))));
 	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.STARSTORM_ITEMS)
-	public static final Supplier<StarstormArmorItem> STARSTORM_CHESTPLATE = ITEMS.register("starstorm_chestplate", () -> new StarstormArmorItem(CustomArmorMaterials.STARSTORM, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
+	public static final Supplier<ArmorItem> STARSTORM_CHESTPLATE = ITEMS.register("starstorm_chestplate", () -> new ArmorItem(ArmorMaterialRegistry.STARSTORM, ArmorItem.Type.CHESTPLATE, new Item.Properties().durability(ArmorItem.Type.CHESTPLATE.getDurability(32))));
 	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.STARSTORM_ITEMS)
-	public static final Supplier<StarstormArmorItem> STARSTORM_LEGGINGS = ITEMS.register("starstorm_leggings", () -> new StarstormArmorItem(CustomArmorMaterials.STARSTORM, ArmorItem.Type.LEGGINGS, new Item.Properties()));
+	public static final Supplier<ArmorItem> STARSTORM_LEGGINGS = ITEMS.register("starstorm_leggings", () -> new ArmorItem(ArmorMaterialRegistry.STARSTORM, ArmorItem.Type.LEGGINGS, new Item.Properties().durability(ArmorItem.Type.LEGGINGS.getDurability(32))));
 	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.STARSTORM_ITEMS)
-	public static final Supplier<StarstormArmorItem> STARSTORM_BOOTS = ITEMS.register("starstorm_boots", () -> new StarstormArmorItem(CustomArmorMaterials.STARSTORM, ArmorItem.Type.BOOTS, new Item.Properties()));
+	public static final Supplier<ArmorItem> STARSTORM_BOOTS = ITEMS.register("starstorm_boots", () -> new ArmorItem(ArmorMaterialRegistry.STARSTORM, ArmorItem.Type.BOOTS, new Item.Properties().durability(ArmorItem.Type.BOOTS.getDurability(32))));
 	@LanguageEntryOverride("Padded Leather Cap")
-	public static final Supplier<PaddedLeatherArmorItem> PADDED_LEATHER_HELMET = ITEMS.register("padded_leather_helmet", () -> new PaddedLeatherArmorItem(CustomArmorMaterials.PADDED_LEATHER, ArmorItem.Type.HELMET, new Item.Properties()));
+	public static final Supplier<ArmorItem> PADDED_LEATHER_HELMET = ITEMS.register("padded_leather_helmet", () -> new ArmorItem(ArmorMaterialRegistry.PADDED_LEATHER, ArmorItem.Type.HELMET, new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(6))));
 	@LanguageEntryOverride("Padded Leather Tunic")
-	public static final Supplier<PaddedLeatherArmorItem> PADDED_LEATHER_CHESTPLATE = ITEMS.register("padded_leather_chestplate", () -> new PaddedLeatherArmorItem(CustomArmorMaterials.PADDED_LEATHER, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
+	public static final Supplier<ArmorItem> PADDED_LEATHER_CHESTPLATE = ITEMS.register("padded_leather_chestplate", () -> new ArmorItem(ArmorMaterialRegistry.PADDED_LEATHER, ArmorItem.Type.CHESTPLATE, new Item.Properties().durability(ArmorItem.Type.CHESTPLATE.getDurability(6))));
 	@LanguageEntryOverride("Padded Leather Pants")
-	public static final Supplier<PaddedLeatherArmorItem> PADDED_LEATHER_LEGGINGS = ITEMS.register("padded_leather_leggings", () -> new PaddedLeatherArmorItem(CustomArmorMaterials.PADDED_LEATHER, ArmorItem.Type.LEGGINGS, new Item.Properties()));
-	public static final Supplier<PaddedLeatherArmorItem> PADDED_LEATHER_BOOTS = ITEMS.register("padded_leather_boots", () -> new PaddedLeatherArmorItem(CustomArmorMaterials.PADDED_LEATHER, ArmorItem.Type.BOOTS, new Item.Properties()));
+	public static final Supplier<ArmorItem> PADDED_LEATHER_LEGGINGS = ITEMS.register("padded_leather_leggings", () -> new ArmorItem(ArmorMaterialRegistry.PADDED_LEATHER, ArmorItem.Type.LEGGINGS, new Item.Properties().durability(ArmorItem.Type.LEGGINGS.getDurability(6))));
+	public static final Supplier<ArmorItem> PADDED_LEATHER_BOOTS = ITEMS.register("padded_leather_boots", () -> new ArmorItem(ArmorMaterialRegistry.PADDED_LEATHER, ArmorItem.Type.BOOTS, new Item.Properties().durability(ArmorItem.Type.BOOTS.getDurability(6))));
 
 	// Spawn eggs
 	public static final Supplier<DeferredSpawnEggItem> DYING_SOLDIER_SPAWN_EGG = ITEMS.register("dying_soldier_spawn_egg", () -> new DeferredSpawnEggItem(EntityRegistry.DYING_SOLDIER_ENTITY, 0x7a6851, 0x783d22, (new Item.Properties()).stacksTo(16)));

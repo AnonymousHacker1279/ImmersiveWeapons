@@ -2,11 +2,11 @@ package tech.anonymoushacker1279.immersiveweapons.data.loot;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.critereon.*;
+import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.EntityType;
@@ -16,6 +16,7 @@ import net.minecraft.world.level.storage.loot.LootTable.Builder;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.entries.TagEntry;
 import net.minecraft.world.level.storage.loot.functions.*;
+import net.minecraft.world.level.storage.loot.functions.SetNameFunction.Target;
 import net.minecraft.world.level.storage.loot.predicates.*;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
@@ -28,12 +29,12 @@ import java.util.function.BiConsumer;
 public class EntityLootTables implements LootTableSubProvider {
 
 	@Nullable
-	private BiConsumer<ResourceLocation, LootTable.Builder> out;
+	private BiConsumer<ResourceKey<LootTable>, Builder> out;
 
 	protected static final EntityPredicate.Builder ENTITY_ON_FIRE = EntityPredicate.Builder.entity().flags(EntityFlagsPredicate.Builder.flags().setOnFire(true));
 
 	@Override
-	public void generate(BiConsumer<ResourceLocation, Builder> out) {
+	public void generate(Provider provider, BiConsumer<ResourceKey<LootTable>, Builder> out) {
 		this.out = out;
 
 		add(EntityRegistry.ROCK_SPIDER_ENTITY.get(), LootTable.lootTable()
@@ -144,7 +145,8 @@ public class EntityLootTables implements LootTableSubProvider {
 						.setRolls(ConstantValue.exactly(1.0F))
 						.add(LootItem.lootTableItem(Items.IRON_SWORD)
 								.apply(SetNameFunction.setName(Component.translatable("loot.immersiveweapons.entity.hans.iron_sword")
-										.withStyle(ChatFormatting.DARK_PURPLE))))
+												.withStyle(ChatFormatting.DARK_PURPLE),
+										Target.ITEM_NAME)))
 						.when(LootItemKilledByPlayerCondition.killedByPlayer())
 						.when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.035F, 0.01F)))
 				.withPool(LootPool.lootPool()
@@ -288,92 +290,49 @@ public class EntityLootTables implements LootTableSubProvider {
 						.name("healing_equipment")
 						.setRolls(ConstantValue.exactly(1.0F))
 						.add(LootItem.lootTableItem(Items.POTION)
+								// TODO: custom lang entries for each tier of potion
 								.setWeight(35)
 								.apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 4.0F)))
 								.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 0.33F)))
 								.apply(SetNameFunction.setName(Component.translatable("loot.immersiveweapons.entity.super_hans.super_healing_potion")
-										.withStyle(ChatFormatting.GOLD)))
-								// Level III healing potion
-								.apply(SetNbtFunction.setTag(new CompoundTag() {{
-									put("CustomPotionEffects", new ListTag() {{
-										add(new CompoundTag() {{
-											putInt("Id", 6);
-											putByte("Amplifier", (byte) 2);
-											putInt("Duration", 0);
-											putByte("ShowParticles", (byte) 1);
-										}});
-									}});
-									putString("Potion", "minecraft:empty");
-									putInt("CustomPotionColor", 6684672);
-								}})))
+												.withStyle(ChatFormatting.GOLD),
+										Target.ITEM_NAME))
+								.apply(SetPotionFunction.setPotion(PotionRegistry.SUPER_HEALING_POTION)))
 						.add(LootItem.lootTableItem(Items.POTION)
 								.setWeight(35)
 								.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)))
 								.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 0.33F)))
 								.apply(SetNameFunction.setName(Component.translatable("loot.immersiveweapons.entity.super_hans.super_regeneration_potion")
-										.withStyle(ChatFormatting.GOLD)))
-								// Level III regeneration potion
-								.apply(SetNbtFunction.setTag(new CompoundTag() {{
-									put("CustomPotionEffects", new ListTag() {{
-										add(new CompoundTag() {{
-											putInt("Id", 10);
-											putByte("Amplifier", (byte) 2);
-											putInt("Duration", 300);
-											putByte("ShowParticles", (byte) 1);
-										}});
-									}});
-									putString("Potion", "minecraft:empty");
-									putInt("CustomPotionColor", 12719124);
-								}})))
+												.withStyle(ChatFormatting.GOLD),
+										Target.ITEM_NAME))
+								.apply(SetPotionFunction.setPotion(PotionRegistry.SUPER_REGENERATION_POTION)))
 						.add(LootItem.lootTableItem(Items.POTION)
 								.setWeight(15)
 								.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)))
 								.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 0.33F)))
 								.apply(SetNameFunction.setName(Component.translatable("loot.immersiveweapons.entity.super_hans.super_healing_potion")
-										.withStyle(ChatFormatting.GOLD)))
-								// Level IV healing potion
-								.apply(SetNbtFunction.setTag(new CompoundTag() {{
-									put("CustomPotionEffects", new ListTag() {{
-										add(new CompoundTag() {{
-											putInt("Id", 6);
-											putByte("Amplifier", (byte) 3);
-											putInt("Duration", 0);
-											putByte("ShowParticles", (byte) 1);
-										}});
-									}});
-									putString("Potion", "minecraft:empty");
-									putInt("CustomPotionColor", 6684672);
-								}})))
+												.withStyle(ChatFormatting.GOLD),
+										Target.ITEM_NAME))
+								.apply(SetPotionFunction.setPotion(PotionRegistry.ULTRA_HEALING_POTION)))
 						.add(LootItem.lootTableItem(Items.POTION)
 								.setWeight(15)
 								.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0f)))
 								.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 0.33F)))
 								.apply(SetNameFunction.setName(Component.translatable("loot.immersiveweapons.entity.super_hans.super_regeneration_potion")
-										.withStyle(ChatFormatting.GOLD)))
-								// Level IV regeneration potion
-								.apply(SetNbtFunction.setTag(new CompoundTag() {{
-									put("CustomPotionEffects", new ListTag() {{
-										add(new CompoundTag() {{
-											putInt("Id", 10);
-											putByte("Amplifier", (byte) 3);
-											putInt("Duration", 200);
-											putByte("ShowParticles", (byte) 1);
-										}});
-									}});
-									putString("Potion", "minecraft:empty");
-									putInt("CustomPotionColor", 12719124);
-								}})))
+												.withStyle(ChatFormatting.GOLD),
+										Target.ITEM_NAME))
+								.apply(SetPotionFunction.setPotion(PotionRegistry.ULTRA_REGENERATION_POTION)))
 						.when(LootItemKilledByPlayerCondition.killedByPlayer())
 				));
 	}
 
-	protected void add(EntityType<?> pEntityType, LootTable.Builder pLootTableBuilder) {
-		add(pEntityType.getDefaultLootTable(), pLootTableBuilder);
+	protected void add(EntityType<?> entityType, LootTable.Builder builder) {
+		add(entityType.getDefaultLootTable(), builder);
 	}
 
-	protected void add(ResourceLocation pLootTableId, LootTable.Builder pLootTableBuilder) {
+	protected void add(ResourceKey<LootTable> lootTableResourceKey, LootTable.Builder builder) {
 		if (out != null) {
-			out.accept(pLootTableId, pLootTableBuilder);
+			out.accept(lootTableResourceKey, builder);
 		}
 	}
 }

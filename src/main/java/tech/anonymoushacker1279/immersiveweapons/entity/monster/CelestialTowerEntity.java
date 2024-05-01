@@ -80,17 +80,17 @@ public class CelestialTowerEntity extends Monster implements AttackerTracker, Gr
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose pPose, EntityDimensions pSize) {
-		return 9F;
+	protected EntityDimensions getDefaultDimensions(Pose pose) {
+		EntityDimensions dimensions = super.getDefaultDimensions(pose);
+		return dimensions.withEyeHeight(9);
 	}
 
 	@Nullable
 	@Override
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty,
-	                                    MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData,
-	                                    @Nullable CompoundTag pDataTag) {
+	                                    MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData) {
 
-		pSpawnData = super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
+		pSpawnData = super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData);
 
 		teleportTo(getX(), getY() + 2, getZ());
 		ALL_TOWERS.add(this);

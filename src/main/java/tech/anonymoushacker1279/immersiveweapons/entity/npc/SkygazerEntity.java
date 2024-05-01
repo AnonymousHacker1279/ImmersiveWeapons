@@ -1,5 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.npc;
 
+import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -15,7 +17,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.StarmiteEntity;
@@ -24,8 +26,7 @@ import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
-import java.util.*;
-import java.util.Map.Entry;
+import java.util.Objects;
 
 public class SkygazerEntity extends AbstractMerchantEntity {
 
@@ -112,12 +113,17 @@ public class SkygazerEntity extends AbstractMerchantEntity {
 
 		// Check the enchants on the two items. If the book has the same level or lower, remove the offer
 		if (!enchantableItem.isEmpty() && !enchantableBook.isEmpty()) {
-			Map<Enchantment, Integer> existingEnchantments = enchantableItem.getAllEnchantments();
-			Map<Enchantment, Integer> enchantmentsFromBook = new HashMap<>(EnchantmentHelper.getEnchantments(enchantableBook));
-			for (Entry<Enchantment, Integer> entry : enchantmentsFromBook.entrySet()) {
-				Enchantment enchantment = entry.getKey();
-				if (existingEnchantments.containsKey(enchantment) && existingEnchantments.get(enchantment) >= entry.getValue()) {
-					return;
+			ItemEnchantments existingEnchantments = enchantableItem.getAllEnchantments();
+			ItemEnchantments bookEnchantments = enchantableBook.getOrDefault(DataComponents.STORED_ENCHANTMENTS, ItemEnchantments.EMPTY);
+
+			for (Holder<Enchantment> enchantment : bookEnchantments.keySet()) {
+				int bookLevel = bookEnchantments.getLevel(enchantment.value());
+				int existingLevel = existingEnchantments.getLevel(enchantment.value());
+
+				if (existingLevel >= bookLevel) {
+					getOffers().removeIf(offer -> (offer instanceof IdentifiableMerchantOffer identifiableMerchantOffer
+							&& identifiableMerchantOffer.getId().equals("enchant_item_with_enchanting_books")));
+					break;
 				}
 			}
 		}

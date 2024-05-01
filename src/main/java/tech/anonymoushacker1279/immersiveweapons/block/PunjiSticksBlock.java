@@ -4,9 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -38,7 +36,6 @@ public class PunjiSticksBlock extends Block implements SimpleWaterloggedBlock {
 		registerDefaultState(stateDefinition.any().setValue(WATERLOGGED, Boolean.FALSE));
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext selectionContext) {
 		return SHAPE;
@@ -49,7 +46,6 @@ public class PunjiSticksBlock extends Block implements SimpleWaterloggedBlock {
 		return defaultBlockState().setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
@@ -60,7 +56,6 @@ public class PunjiSticksBlock extends Block implements SimpleWaterloggedBlock {
 		builder.add(WATERLOGGED);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
 		if (entity instanceof LivingEntity livingEntity) {
@@ -80,12 +75,6 @@ public class PunjiSticksBlock extends Block implements SimpleWaterloggedBlock {
 	}
 
 	protected int getFeatherFallingLevel(LivingEntity entity) {
-		ItemStack boots = entity.getItemBySlot(EquipmentSlot.FEET);
-
-		if (EnchantmentHelper.getEnchantments(boots).containsKey(Enchantments.FALL_PROTECTION)) {
-			return EnchantmentHelper.getEnchantments(boots).getOrDefault(Enchantments.FALL_PROTECTION, 0);
-		}
-
-		return 0;
+		return entity.getItemBySlot(EquipmentSlot.FEET).getEnchantmentLevel(Enchantments.FEATHER_FALLING);
 	}
 }

@@ -111,8 +111,7 @@ public class AmmunitionTableMenu extends AbstractContainerMenu {
 		modifier = (float) Math.round(modifier * 100.0F) / 100.0F;
 		containerData.set(0, (int) (modifier * 100.0F));
 
-		PacketDistributor.SERVER.noArg()
-				.send(new AmmunitionTablePayload(containerId, modifier));
+		PacketDistributor.sendToServer(new AmmunitionTablePayload(containerId, modifier));
 	}
 
 	public static void setDensityModifierOnServer(ServerPlayer player, int containerId, float densityModifier) {

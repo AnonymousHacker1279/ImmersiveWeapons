@@ -1,6 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.blockentity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.*;
@@ -60,29 +61,21 @@ public class BearTrapBlockEntity extends BlockEntity implements EntityBlock {
 		}
 	}
 
-	/**
-	 * Load NBT data.
-	 *
-	 * @param nbt the <code>CompoundNBT</code> to load
-	 */
 	@Override
-	public void load(CompoundTag nbt) {
-		super.load(nbt);
-		if (nbt.hasUUID("trapped_entity")) {
-			entityUUID = nbt.getUUID("trapped_entity");
+	public void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+		super.loadAdditional(tag, provider);
+
+		if (tag.hasUUID("trapped_entity")) {
+			entityUUID = tag.getUUID("trapped_entity");
 		}
 	}
 
-	/**
-	 * Save NBT data.
-	 *
-	 * @param pTag the <code>CompoundNBT</code> to save
-	 */
 	@Override
-	protected void saveAdditional(CompoundTag pTag) {
-		super.saveAdditional(pTag);
+	protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+		super.saveAdditional(tag, provider);
+
 		if (trappedEntity != null && trappedEntity.isAlive()) {
-			pTag.putUUID("trapped_entity", trappedEntity.getUUID());
+			tag.putUUID("trapped_entity", trappedEntity.getUUID());
 		}
 	}
 
@@ -115,7 +108,9 @@ public class BearTrapBlockEntity extends BlockEntity implements EntityBlock {
 
 		trappedEntity = livingEntity;
 		if (trappedEntity instanceof Mob mob) {
-			mob.goalSelector.getRunningGoals().filter(WrappedGoal::isRunning).forEach(WrappedGoal::stop);
+			mob.goalSelector.getAvailableGoals().stream()
+					.filter(WrappedGoal::isRunning)
+					.forEach(goal -> mob.goalSelector.removeGoal(goal.getGoal()));
 			mob.goalSelector.addGoal(0, doNothingGoal = new DoNothingGoal(mob, this));
 		}
 	}

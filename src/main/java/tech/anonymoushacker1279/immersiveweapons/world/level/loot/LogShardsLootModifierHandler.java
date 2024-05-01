@@ -2,6 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.world.level.loot;
 
 import com.google.common.base.Suppliers;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.registries.Registries;
@@ -18,14 +19,15 @@ import java.util.function.Supplier;
 
 public class LogShardsLootModifierHandler extends LootModifier {
 
-	public static final Supplier<Codec<LogShardsLootModifierHandler>> CODEC = Suppliers.memoize(() -> RecordCodecBuilder.create(inst -> codecStart(inst).and(
-			inst.group(
-					TagKey.codec(Registries.ITEM).fieldOf("blockTag").forGetter(m -> m.tag),
-					Codec.INT.fieldOf("minShards").forGetter(m -> m.minShards),
-					Codec.INT.fieldOf("maxShards").forGetter(m -> m.maxShards),
-					ItemStack.CODEC.fieldOf("replacement").forGetter(m -> m.replacement)
-			)).apply(inst, LogShardsLootModifierHandler::new)
-	));
+	public static final Supplier<MapCodec<LogShardsLootModifierHandler>> CODEC = Suppliers.memoize(() ->
+			RecordCodecBuilder.mapCodec(inst -> codecStart(inst).and(
+					inst.group(
+							TagKey.codec(Registries.ITEM).fieldOf("blockTag").forGetter(m -> m.tag),
+							Codec.INT.fieldOf("minShards").forGetter(m -> m.minShards),
+							Codec.INT.fieldOf("maxShards").forGetter(m -> m.maxShards),
+							ItemStack.CODEC.fieldOf("replacement").forGetter(m -> m.replacement)
+					)).apply(inst, LogShardsLootModifierHandler::new)
+			));
 
 	private final int minShards;
 	private final int maxShards;
@@ -69,14 +71,14 @@ public class LogShardsLootModifierHandler extends LootModifier {
 		if (shardCount >= 1) {
 			replacement.setCount(shardCount);
 			generatedLoot.add(replacement);
-			generatedLoot.remove(0); // The original item shouldn't drop, so remove it from the loot list
+			generatedLoot.removeFirst(); // The original item shouldn't drop, so remove it from the loot list
 		}
 
 		return generatedLoot;
 	}
 
 	@Override
-	public Codec<? extends IGlobalLootModifier> codec() {
+	public MapCodec<? extends IGlobalLootModifier> codec() {
 		return CODEC.get();
 	}
 }

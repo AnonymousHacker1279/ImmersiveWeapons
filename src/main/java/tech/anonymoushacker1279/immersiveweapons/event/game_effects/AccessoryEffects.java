@@ -43,7 +43,7 @@ public class AccessoryEffects {
 
 			// Roll for bleed cancel
 			if (player.getRandom().nextFloat() <= bleedCancelChance) {
-				player.removeEffect(EffectRegistry.BLEEDING_EFFECT.get());
+				player.removeEffect(EffectRegistry.BLEEDING_EFFECT);
 			}
 		}
 	}
@@ -83,12 +83,12 @@ public class AccessoryEffects {
 		// Roll for bleeding
 		if (event.getSource().is(DamageTypes.PLAYER_ATTACK) && player.getRandom().nextFloat() <= bleedChance) {
 			// If bleeding already exists, increase the duration
-			if (damagedEntity.hasEffect(EffectRegistry.BLEEDING_EFFECT.get())) {
-				MobEffectInstance effect = damagedEntity.getEffect(EffectRegistry.BLEEDING_EFFECT.get());
-				damagedEntity.removeEffect(EffectRegistry.BLEEDING_EFFECT.get());
-				damagedEntity.addEffect(new MobEffectInstance(EffectRegistry.BLEEDING_EFFECT.get(), effect.getDuration() + 140, effect.getAmplifier()));
+			if (damagedEntity.hasEffect(EffectRegistry.BLEEDING_EFFECT)) {
+				MobEffectInstance effect = damagedEntity.getEffect(EffectRegistry.BLEEDING_EFFECT);
+				damagedEntity.removeEffect(EffectRegistry.BLEEDING_EFFECT);
+				damagedEntity.addEffect(new MobEffectInstance(EffectRegistry.BLEEDING_EFFECT, effect.getDuration() + 140, effect.getAmplifier()));
 			} else {
-				damagedEntity.addEffect(new MobEffectInstance(EffectRegistry.BLEEDING_EFFECT.get(), 140, 0));
+				damagedEntity.addEffect(new MobEffectInstance(EffectRegistry.BLEEDING_EFFECT, 140, 0));
 			}
 		}
 	}

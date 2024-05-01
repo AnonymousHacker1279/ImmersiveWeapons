@@ -2,7 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.data.features;
 
 import net.minecraft.core.*;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -38,7 +38,7 @@ public class IWPlacedFeatures {
 		return ResourceKey.create(Registries.PLACED_FEATURE, new ResourceLocation(ImmersiveWeapons.MOD_ID, name));
 	}
 
-	public static void bootstrap(BootstapContext<PlacedFeature> context) {
+	public static void bootstrap(BootstrapContext<PlacedFeature> context) {
 		HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
 
 		register(context, PATCH_WOODEN_SPIKES, configuredFeatures.getOrThrow(IWConfiguredFeatures.PATCH_WOODEN_SPIKES_CONFIGURATION),
@@ -150,7 +150,7 @@ public class IWPlacedFeatures {
 				));
 	}
 
-	private static void register(BootstapContext<PlacedFeature> context, ResourceKey<PlacedFeature> key, Holder<ConfiguredFeature<?, ?>> configuration, List<PlacementModifier> modifiers) {
+	private static void register(BootstrapContext<PlacedFeature> context, ResourceKey<PlacedFeature> key, Holder<ConfiguredFeature<?, ?>> configuration, List<PlacementModifier> modifiers) {
 		context.register(key, new PlacedFeature(configuration, List.copyOf(modifiers)));
 	}
 }

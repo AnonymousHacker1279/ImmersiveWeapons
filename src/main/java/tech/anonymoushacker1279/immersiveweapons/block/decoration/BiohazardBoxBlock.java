@@ -34,7 +34,6 @@ public class BiohazardBoxBlock extends BasicOrientableBlock implements SimpleWat
 		registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false));
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos,
 	                           CollisionContext collisionContext) {
@@ -57,7 +56,6 @@ public class BiohazardBoxBlock extends BasicOrientableBlock implements SimpleWat
 		return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);

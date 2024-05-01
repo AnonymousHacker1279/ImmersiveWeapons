@@ -38,11 +38,10 @@ public class TiltrosDimensionSpecialEffects extends DimensionSpecialEffects {
 	}
 
 	@Override
-	public boolean renderSky(ClientLevel level, int ticks, float partialTick, PoseStack poseStack,
-	                         Camera camera, Matrix4f matrix4f, boolean isFoggy,
-	                         Runnable setupFog) {
-
+	public boolean renderSky(ClientLevel level, int ticks, float partialTick, Matrix4f modelViewMatrix, Camera camera, Matrix4f projectionMatrix, boolean isFoggy, Runnable setupFog) {
 		FogRenderer.setupFog(camera, FogMode.FOG_SKY, 32.0f, false, partialTick);
+		PoseStack poseStack = new PoseStack();
+		poseStack.mulPose(modelViewMatrix);
 
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();

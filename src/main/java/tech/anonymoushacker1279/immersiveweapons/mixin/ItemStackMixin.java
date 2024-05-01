@@ -1,16 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.mixin;
 
-import com.llamalad7.mixinextras.sugar.Local;
-import net.minecraft.ChatFormatting;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.ModifyArg;
-import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 
 /**
  * Re-color enchantment names at the max Skygazer cap.
@@ -18,7 +9,9 @@ import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin {
 
-	@ModifyArg(
+	// TODO: check for new injection point, in ItemEnchantments.addToTooltip
+
+	/*@ModifyArg(
 			method = "lambda$appendEnchantmentNames$16",
 			at = @At(
 					value = "INVOKE",
@@ -41,5 +34,5 @@ public abstract class ItemStackMixin {
 		}
 
 		return object;
-	}
+	}*/
 }

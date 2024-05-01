@@ -31,7 +31,7 @@ public class SmallPartsTableBlock extends BasicOrientableBlock {
 
 
 	@Override
-	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
 		if (level.isClientSide) {
 			return InteractionResult.SUCCESS;
 		} else {

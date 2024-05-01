@@ -74,8 +74,8 @@ public class CelestialTowerSummonGoal extends WaveSummonGoal<CelestialTowerEntit
 			Skeleton skeleton = new Skeleton(EntityType.SKELETON, mob.level());
 
 			ItemStack bow = new ItemStack(Items.BOW);
-			bow.enchant(Enchantments.POWER_ARROWS, mob.getRandom().nextIntBetweenInclusive(1, 3 + mob.getWavesSpawned()));
-			bow.enchant(Enchantments.PUNCH_ARROWS, mob.getRandom().nextIntBetweenInclusive(1, 2 + mob.getWavesSpawned()));
+			bow.enchant(Enchantments.POWER, mob.getRandom().nextIntBetweenInclusive(1, 3 + mob.getWavesSpawned()));
+			bow.enchant(Enchantments.PUNCH, mob.getRandom().nextIntBetweenInclusive(1, 2 + mob.getWavesSpawned()));
 
 			skeleton.setItemSlot(EquipmentSlot.HEAD, new ItemStack(Items.IRON_HELMET));
 			Objects.requireNonNull(skeleton.getAttribute(Attributes.MAX_HEALTH))

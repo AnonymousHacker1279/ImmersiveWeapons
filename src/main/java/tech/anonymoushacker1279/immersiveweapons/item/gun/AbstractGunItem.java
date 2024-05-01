@@ -3,6 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.item.gun;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.HumanoidModel.ArmPose;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -38,12 +39,14 @@ import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-public abstract class AbstractGunItem extends Item implements Vanishable {
+public abstract class AbstractGunItem extends Item {
 
 	protected static final Predicate<ItemStack> MUSKET_BALLS = (stack) -> stack.is(ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID, "projectiles/musket_balls")));
 	protected static final Predicate<ItemStack> FLARES = (stack) -> stack.is(ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID, "projectiles/flares")));
 	protected static final Predicate<ItemStack> CANNONBALLS = (stack) -> stack.is(ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID, "projectiles/cannonballs")));
 	protected static final Predicate<ItemStack> FLAMMABLE_POWDERS = (stack) -> isPowder(stack.getItem());
+
+	DataComponentType<Float> DENSITY_MODIFIER = DataComponentTypeRegistry.DENSITY_MODIFIER.get();
 
 	/**
 	 * Constructor for AbstractGunItem.
@@ -91,9 +94,9 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 
 					handleAmmoStack(gun, ammo, bulletsToFire, player);
 					handlePowderStack(powder, player);
+
 					if (!isCreative) {
-						gun.hurtAndBreak(5, player, (entity) ->
-								entity.broadcastBreakEvent(entity.getUsedItemHand()));
+						gun.hurtAndBreak(5, player, EquipmentSlot.MAINHAND);
 					}
 				}
 			}
@@ -246,8 +249,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 		super.onUseTick(level, livingEntity, stack, remainingUseDuration);
 
 		if (!level.isClientSide && canScope() && livingEntity instanceof ServerPlayer serverPlayer) {
-			PacketDistributor.PLAYER.with(serverPlayer)
-					.send(new GunScopePayload(GunData.playerFOV, 15.0d, GunData.scopeScale));
+			PacketDistributor.sendToPlayer(serverPlayer, new GunScopePayload(GunData.playerFOV, 15.0d, GunData.scopeScale));
 		}
 	}
 
@@ -263,8 +265,8 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 
 	@Override
 	public boolean onDroppedByPlayer(ItemStack item, Player player) {
-		PacketDistributor.PLAYER.with((ServerPlayer) player)
-				.send(new GunScopePayload(GunData.playerFOV, -1, 0.5f));
+		// TODO: check cast here
+		PacketDistributor.sendToPlayer((ServerPlayer) player, new GunScopePayload(GunData.playerFOV, -1, 0.5f));
 
 		return super.onDroppedByPlayer(item, player);
 	}
@@ -471,14 +473,13 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 
 		enchantmentLevel = gun.getEnchantmentLevel(EnchantmentRegistry.SCORCH_SHOT.get());
 		if (enchantmentLevel > 0) {
-			bullet.setSecondsOnFire(enchantmentLevel * 100);
+			bullet.igniteForSeconds(enchantmentLevel * 100);
 		}
 
 		// Handle bullet density modifiers
 		if (ammo != null) {
-			if (ammo.getTag() != null && ammo.getTag().contains("densityModifier")) {
-				float densityModifier = ammo.getTag().getFloat("densityModifier");
-
+			float densityModifier = ammo.getOrDefault(DENSITY_MODIFIER, 0f);
+			if (densityModifier > 0) {
 				// A full 100% value is +20% damage
 				bullet.setBaseDamage(bullet.getBaseDamage() + (bullet.getBaseDamage() * (densityModifier * 0.2f)));
 
@@ -493,8 +494,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 		}
 
 		int weaponDamage = powderType.getWeaponDamageAmount();
-		gun.hurtAndBreak(weaponDamage, shooter, (entity) ->
-				entity.broadcastBreakEvent(shooter.getUsedItemHand()));
+		gun.hurtAndBreak(weaponDamage, shooter, EquipmentSlot.MAINHAND);
 
 		prepareBulletForFire(gun, bullet, shooter, powderVelocityModifier);
 		handleMuzzleFlash(shooter.level(), shooter, powderType);

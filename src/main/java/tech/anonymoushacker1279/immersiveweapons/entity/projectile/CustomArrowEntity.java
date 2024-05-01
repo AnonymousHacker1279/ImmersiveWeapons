@@ -89,9 +89,9 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 	}
 
 	@Override
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-		entityData.define(GRAVITY_MODIFIER_ACCESSOR, 1.0f);
+	protected void defineSynchedData(SynchedEntityData.Builder builder) {
+		super.defineSynchedData(builder);
+		builder.define(GRAVITY_MODIFIER_ACCESSOR, 1.0f);
 	}
 
 	@Override
@@ -280,9 +280,8 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 	protected void onHit(HitResult result) {
 		super.onHit(result);
 
-		if (color != -1 && !level().isClientSide) {
-			PacketDistributor.TRACKING_CHUNK.with(level().getChunkAt(blockPosition()))
-					.send(new SmokeGrenadePayload(getX(), getY(), getZ(), color, CommonConfig.forceSmokeGrenadeParticles));
+		if (color != -1 && level() instanceof ServerLevel serverLevel) {
+			PacketDistributor.sendToPlayersTrackingChunk(serverLevel, chunkPosition(), new SmokeGrenadePayload(getX(), getY(), getZ(), color, CommonConfig.forceSmokeGrenadeParticles));
 		}
 
 		if (isExplosive && !hasExploded) {

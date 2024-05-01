@@ -1,6 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.block.decoration;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.level.Level;
@@ -9,11 +10,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import tech.anonymoushacker1279.immersiveweapons.init.ParticleTypesRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
-import java.util.function.Supplier;
-
 public class MoonglowBlock extends FlowerBlock {
 
-	public MoonglowBlock(Supplier<MobEffect> mobEffect, int effectDuration, Properties properties) {
+	public MoonglowBlock(Holder<MobEffect> mobEffect, int effectDuration, Properties properties) {
 		super(mobEffect, effectDuration, properties);
 	}
 

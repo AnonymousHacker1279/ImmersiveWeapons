@@ -62,7 +62,6 @@ public class TeslaSynthesizerBlock extends Block implements SimpleWaterloggedBlo
 	 * @param collisionContext the <code>CollisionContext</code> of the block
 	 * @return VoxelShape
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos,
 	                           CollisionContext collisionContext) {
@@ -108,20 +107,9 @@ public class TeslaSynthesizerBlock extends Block implements SimpleWaterloggedBlo
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 
-	/**
-	 * Runs when the block is activated.
-	 * Allows the block to respond to user interaction.
-	 *
-	 * @param state     the <code>BlockState</code> of the block
-	 * @param level     the <code>Level</code> the block is in
-	 * @param pos       the <code>BlockPos</code> the block is at
-	 * @param player    the <code>Player</code> interacting with the block
-	 * @param hand      the <code>InteractionHand</code> the PlayerEntity used
-	 * @param hitResult the <code>BlockHitResult</code> of the interaction
-	 * @return InteractionResult
-	 */
+
 	@Override
-	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
 
 		if (level.getBlockEntity(pos) instanceof TeslaSynthesizerBlockEntity blockEntity && player instanceof ServerPlayer serverPlayer) {
 			serverPlayer.openMenu(new SimpleMenuProvider((id, inventory, player1) -> new TeslaSynthesizerMenu(id, inventory, blockEntity, blockEntity.containerData), CONTAINER_NAME));

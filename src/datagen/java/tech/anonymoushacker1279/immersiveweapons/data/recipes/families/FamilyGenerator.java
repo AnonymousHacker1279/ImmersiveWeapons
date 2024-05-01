@@ -2,6 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.data.recipes.families;
 
 import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger.TriggerInstance;
+import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
@@ -16,11 +17,12 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.recipes.RecipeGenerator;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 public class FamilyGenerator extends RecipeGenerator {
 
-	public FamilyGenerator(PackOutput output) {
-		super(output);
+	public FamilyGenerator(PackOutput output, CompletableFuture<Provider> provider) {
+		super(output, provider);
 	}
 
 	@Override

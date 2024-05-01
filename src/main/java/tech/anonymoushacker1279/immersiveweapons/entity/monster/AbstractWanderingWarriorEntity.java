@@ -1,7 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.monster;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
@@ -134,10 +133,9 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 	 */
 	@Override
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
-	                                    MobSpawnType spawnType, @Nullable SpawnGroupData groupData,
-	                                    @Nullable CompoundTag tag) {
+	                                    MobSpawnType spawnType, @Nullable SpawnGroupData groupData) {
 
-		groupData = super.finalizeSpawn(level, difficulty, spawnType, groupData, tag);
+		groupData = super.finalizeSpawn(level, difficulty, spawnType, groupData);
 		populateDefaultEquipmentSlots(random, difficulty);
 		populateDefaultEquipmentEnchantments(random, difficulty);
 		setCombatTask();

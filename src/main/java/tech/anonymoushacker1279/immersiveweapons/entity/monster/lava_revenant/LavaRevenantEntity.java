@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.*;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -104,9 +105,9 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 	}
 
 	@Override
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-		entityData.define(ID_SIZE, 0);
+	protected void defineSynchedData(SynchedEntityData.Builder builder) {
+		super.defineSynchedData(builder);
+		builder.define(ID_SIZE, 0);
 	}
 
 	private void updateSizeInfo() {
@@ -124,8 +125,12 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose pPose, EntityDimensions pSize) {
-		return pSize.height * 0.35F;
+	protected EntityDimensions getDefaultDimensions(Pose pose) {
+		EntityDimensions dimensions = super.getDefaultDimensions(pose);
+		int size = getSize();
+		float scaleFactor = (dimensions.width() + 0.2F * (float) size) / dimensions.width();
+
+		return dimensions.scale(scaleFactor).withEyeHeight(dimensions.height() * 0.35f);
 	}
 
 	@Override
@@ -356,13 +361,12 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 
 	@Override
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty,
-	                                    MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData,
-	                                    @Nullable CompoundTag pDataTag) {
+	                                    MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData) {
 
 		anchorPoint = blockPosition().above(15);
 		setSize(getRandom().nextIntBetweenInclusive(1, 3));
 		setHealth(getMaxHealth());
-		return super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
+		return super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData);
 	}
 
 	/**
@@ -417,11 +421,6 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 		return SoundEventRegistry.LAVA_REVENANT_DEATH.get();
 	}
 
-	@Override
-	public MobType getMobType() {
-		return MobType.UNDEAD;
-	}
-
 	/**
 	 * Returns the volume for the sounds this mob makes.
 	 */
@@ -433,14 +432,6 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 	@Override
 	public boolean canAttackType(EntityType<?> pType) {
 		return true;
-	}
-
-	@Override
-	public EntityDimensions getDimensions(Pose pPose) {
-		int size = getSize();
-		EntityDimensions dimensions = super.getDimensions(pPose);
-		float scaleFactor = (dimensions.width + 0.2F * (float) size) / dimensions.width;
-		return dimensions.scale(scaleFactor);
 	}
 
 	@Override
@@ -811,9 +802,8 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 					}
 					attackPhase = LavaRevenantEntity.AttackPhase.CIRCLE;
 					if (!isSilent()) {
-						PacketDistributor.TRACKING_CHUNK.with(level().getChunkAt(blockPosition()))
-								.send(new LocalSoundPayload(blockPosition(), SoundEventRegistry.LAVA_REVENANT_BITE.get().getLocation(),
-										SoundSource.HOSTILE, 0.3F, level().getRandom().nextFloat() * 0.1F + 0.9F, false));
+						PacketDistributor.sendToPlayersTrackingChunk((ServerLevel) level(), chunkPosition(), new LocalSoundPayload(blockPosition(), SoundEventRegistry.LAVA_REVENANT_BITE.get().getLocation(),
+								SoundSource.HOSTILE, 0.3F, level().getRandom().nextFloat() * 0.1F + 0.9F, false));
 					}
 				} else if (horizontalCollision || hurtTime > 0) {
 					attackPhase = LavaRevenantEntity.AttackPhase.CIRCLE;

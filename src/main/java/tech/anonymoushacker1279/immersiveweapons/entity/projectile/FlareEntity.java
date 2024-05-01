@@ -44,7 +44,7 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 	@Override
 	protected void doWhileTicking() {
 		if (!isOnFire()) {
-			setSecondsOnFire(300);
+			igniteForSeconds(300);
 
 			entityData.set(USE_LEGACY_LIGHTING, !PluginHandler.isPluginActive("iwcompatbridge:lucent_plugin"));
 		}
@@ -124,7 +124,7 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 	protected void doWhenHitEntity(Entity entity) {
 		super.doWhenHitEntity(entity);
 		hasHitEntity = true;
-		entity.setSecondsOnFire(6);
+		entity.igniteForSeconds(6);
 		aggroNearbyMinutemen();
 	}
 
@@ -191,9 +191,9 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 	}
 
 	@Override
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-		entityData.define(USE_LEGACY_LIGHTING, false);
+	protected void defineSynchedData(SynchedEntityData.Builder builder) {
+		super.defineSynchedData(builder);
+		builder.define(USE_LEGACY_LIGHTING, false);
 	}
 
 	@Override

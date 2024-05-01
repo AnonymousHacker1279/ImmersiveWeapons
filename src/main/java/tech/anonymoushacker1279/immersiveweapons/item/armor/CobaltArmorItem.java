@@ -1,6 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.item.armor;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -9,8 +10,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.PacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
@@ -18,9 +18,9 @@ import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.CobaltArmorPayload;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
-public class CobaltArmorItem extends BasicArmorItem {
+public class CobaltArmorItem extends ArmorItem {
 
-	public CobaltArmorItem(ArmorMaterial material, Type armorType, Properties properties) {
+	public CobaltArmorItem(Holder<ArmorMaterial> material, Type armorType, Properties properties) {
 		super(material, armorType, properties);
 	}
 
@@ -40,7 +40,7 @@ public class CobaltArmorItem extends BasicArmorItem {
 						player.getPersistentData().putBoolean("CobaltArmorEffectEnabled", !effectEnabled);
 
 						// Send packet to server
-						PacketDistributor.SERVER.noArg().send(new CobaltArmorPayload(!effectEnabled));
+						PacketDistributor.sendToServer(new CobaltArmorPayload(!effectEnabled));
 
 						if (effectEnabled) {
 							player.displayClientMessage(Component.translatable("immersiveweapons.armor_effects.disabled")

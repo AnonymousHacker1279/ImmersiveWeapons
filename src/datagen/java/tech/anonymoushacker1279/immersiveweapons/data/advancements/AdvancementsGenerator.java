@@ -5,7 +5,9 @@ import net.minecraft.advancements.Advancement.Builder;
 import net.minecraft.advancements.*;
 import net.minecraft.advancements.AdvancementRequirements.Strategy;
 import net.minecraft.advancements.critereon.*;
+import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -13,6 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.AdvancementProvider;
@@ -21,17 +24,26 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.advancement.EntityDiscoveredTrigger;
 import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
 import tech.anonymoushacker1279.immersiveweapons.data.dimensions.DimensionGenerator;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWItemTagGroups;
+import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 
 public class AdvancementsGenerator extends AdvancementProvider {
 
+	static Provider PROVIDER;
+
 	public AdvancementsGenerator(PackOutput output, CompletableFuture<Provider> provider, ExistingFileHelper exFileHelper) {
 		super(output, provider, exFileHelper, List.of((lookup, consumer, existingFileHelper) -> registerAdvancements(consumer)));
+
+		try {
+			PROVIDER = provider.get();
+		} catch (InterruptedException | ExecutionException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	public static void registerAdvancements(Consumer<AdvancementHolder> consumer) {
@@ -1472,6 +1484,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.save(consumer, prefixString("the_sword"));
 
 		// Battlefield advancements
+		HolderGetter<Biome> holderGetter = PROVIDER.lookupOrThrow(Registries.BIOME);
 		AdvancementHolder discoverBattlefield = Builder.advancement().parent(root)
 				.display(Blocks.SKELETON_SKULL,
 						createTitle("battlefield"),
@@ -1479,7 +1492,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("visit",
 						PlayerTrigger.TriggerInstance.located(
-								LocationPredicate.Builder.inBiome(IWBiomes.BATTLEFIELD)))
+								LocationPredicate.Builder.inBiome(holderGetter.getOrThrow(IWBiomes.BATTLEFIELD))))
 				.rewards(AdvancementRewards.Builder.experience(50))
 				.save(consumer, prefixString("battlefield"));
 

@@ -11,7 +11,6 @@ import java.util.List;
 public class DebugTracingOverlay {
 
 	private static final String ARMOR_VALUES = Component.translatable("immersiveweapons.debug_tracing.armor_values").getString();
-	private static final String MELEE_ITEM_DAMAGE = Component.translatable("immersiveweapons.debug_tracing.melee_item_damage").getString();
 	private static final String GUN_BASE_VELOCITY = Component.translatable("immersiveweapons.debug_tracing.gun_base_velocity").getString();
 	private static final String LIVE_BULLET_DAMAGE = Component.translatable("immersiveweapons.debug_tracing.live_bullet_damage").getString();
 	private static final String LAST_DAMAGE_VALUES = Component.translatable("immersiveweapons.debug_tracing.last_damage_values").getString();
@@ -36,11 +35,6 @@ public class DebugTracingOverlay {
 					Math.round(DebugTracingData.KNOCKBACK_RESISTANCE * 100) + "%");
 
 			overlayItems.add(drAndKbr);
-		}
-		if (DebugTracingData.meleeItemDamage > 0) {
-			String meleeItemDamage = appendData(MELEE_ITEM_DAMAGE, DebugTracingData.meleeItemDamage);
-
-			overlayItems.add(meleeItemDamage);
 		}
 		if (DebugTracingData.gunBaseVelocity > 0) {
 			String gunBaseVelocity = appendData(GUN_BASE_VELOCITY, DebugTracingData.gunBaseVelocity);

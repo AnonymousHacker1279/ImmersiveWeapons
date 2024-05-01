@@ -13,13 +13,12 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.common.Mod.EventBusSubscriber.Bus;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.common.EventBusSubscriber.Bus;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
-import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
-import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.*;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectBuilder.EffectScalingType;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectType;
@@ -34,7 +33,7 @@ import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem.T
 import java.util.*;
 import java.util.Map.Entry;
 
-@Mod.EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.FORGE, value = Dist.CLIENT)
+@EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.GAME, value = Dist.CLIENT)
 public class TooltipHandler {
 
 	static int jonnyCurseRandomizer = (int) (Math.random() * 11 + 1);
@@ -53,9 +52,9 @@ public class TooltipHandler {
 		}
 
 		if (KillCountWeapon.hasKillCount(stack)) {
-			event.getToolTip().add(1, KillCountWeapon.getTierText(stack));
+			event.getToolTip().add(1, KillCountWeapon.getTierComponent(stack));
 			event.getToolTip().add(2, Component.literal(""));
-			event.getToolTip().add(KillCountWeapon.getTooltipText(stack).withStyle(ChatFormatting.GOLD, ChatFormatting.ITALIC));
+			event.getToolTip().add(KillCountWeapon.getKillComponent(stack));
 		}
 
 		// Swords
@@ -184,8 +183,8 @@ public class TooltipHandler {
 				shiftTooltipInfo.add(Component.translatable("tooltip.immersiveweapons.bullet.meta.misfire_chance", misfireChance).withStyle(ChatFormatting.RED, ChatFormatting.ITALIC));
 			}
 
-			if (stack.getTag() != null && stack.getTag().contains("densityModifier")) {
-				float densityModifier = stack.getTag().getFloat("densityModifier");
+			float densityModifier = stack.getOrDefault(DataComponentTypeRegistry.DENSITY_MODIFIER.get(), -1f);
+			if (densityModifier != -1f) {
 				densityModifier = (float) Math.round(densityModifier * 100f) / 100f;
 				shiftTooltipInfo.add(Component.translatable("tooltip.immersiveweapons.bullet.meta.density_modifier", densityModifier).withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
 			}
@@ -211,12 +210,13 @@ public class TooltipHandler {
 		if (stack.getItem() instanceof AstralArmorItem) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.astral_armor").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
-		if (stack.getItem() instanceof StarstormArmorItem) {
+		// TODO: find a better way to add tooltips
+		/*if (stack.getItem() instanceof StarstormArmorItem) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.starstorm_armor").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
 		if (stack.getItem() instanceof PaddedLeatherArmorItem) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.padded_leather_armor").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-		}
+		}*/
 
 		// Throwables
 		if (stack.getItem() instanceof ThrowableItem grenade) {
@@ -609,9 +609,9 @@ public class TooltipHandler {
 
 					if (entry.getValue() == Attributes.MAX_HEALTH) {
 						// Convert to hearts
-						amount = (float) Math.round(entry.getKey().getAmount() / 2f) + " hearts";
+						amount = (float) Math.round(entry.getKey().amount() / 2f) + " hearts";
 					} else {
-						amount = (float) Math.round(entry.getKey().getAmount() * 1000f) / 10f + "%";
+						amount = (float) Math.round(entry.getKey().amount() * 1000f) / 10f + "%";
 					}
 
 					altTooltips.add(Component.translatable(entry.getValue().getDescriptionId()).append(": " + amount).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));

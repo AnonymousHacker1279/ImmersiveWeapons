@@ -2,7 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.data.structures;
 
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.structure.Structure;
@@ -38,7 +38,7 @@ public class StructureSetGenerator {
 		return ResourceKey.create(Registries.STRUCTURE_SET, new ResourceLocation(ImmersiveWeapons.MOD_ID, name));
 	}
 
-	public static void bootstrap(BootstapContext<StructureSet> context) {
+	public static void bootstrap(BootstrapContext<StructureSet> context) {
 		HolderGetter<Structure> structureHolderGetter = context.lookup(Registries.STRUCTURE);
 
 		register(context, ABANDONED_FACTORY, new StructureSet(
@@ -168,7 +168,7 @@ public class StructureSetGenerator {
 		));
 	}
 
-	private static void register(BootstapContext<StructureSet> context, ResourceKey<StructureSet> key, StructureSet structureSet) {
+	private static void register(BootstrapContext<StructureSet> context, ResourceKey<StructureSet> key, StructureSet structureSet) {
 		context.register(key, structureSet);
 	}
 }

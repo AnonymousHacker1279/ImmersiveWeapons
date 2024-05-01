@@ -86,11 +86,11 @@ public class StormCreeperEntity extends Creeper implements GrantAdvancementOnDis
 	}
 
 	@Override
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-		entityData.define(DATA_SWELL_DIR, -1);
-		entityData.define(DATA_IS_POWERED, false);
-		entityData.define(DATA_IS_IGNITED, false);
+	protected void defineSynchedData(SynchedEntityData.Builder builder) {
+		super.defineSynchedData(builder);
+		builder.define(DATA_SWELL_DIR, -1);
+		builder.define(DATA_IS_POWERED, false);
+		builder.define(DATA_IS_IGNITED, false);
 	}
 
 	@Override
@@ -233,7 +233,7 @@ public class StormCreeperEntity extends Creeper implements GrantAdvancementOnDis
 			level().playSound(pPlayer, getX(), getY(), getZ(), soundEvent, getSoundSource(), 1.0F, random.nextFloat() * 0.4F + 0.8F);
 			if (!level().isClientSide) {
 				ignite();
-				itemInHand.hurtAndBreak(1, pPlayer, (player) -> player.broadcastBreakEvent(pHand));
+				itemInHand.hurtAndBreak(1, pPlayer, EquipmentSlot.MAINHAND);
 			}
 
 			return InteractionResult.sidedSuccess(level().isClientSide);

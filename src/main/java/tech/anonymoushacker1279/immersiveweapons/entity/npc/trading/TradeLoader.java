@@ -1,10 +1,10 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.npc.trading;
 
 import com.google.gson.*;
-import com.mojang.serialization.JsonOps;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.RegistryOps;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
@@ -33,9 +33,11 @@ public class TradeLoader extends SimpleJsonResourceReloadListener {
 	@SuppressWarnings("ConstantConditions")
 	protected void apply(Map<ResourceLocation, JsonElement> pObject, ResourceManager pResourceManager, ProfilerFiller pProfiler) {
 		TRADES.clear();
+		RegistryOps<JsonElement> registryops = makeConditionalOps();
+
 		pObject.forEach((id, element) -> {
 			try {
-				MerchantTrades trades = MerchantTrades.CODEC.parse(JsonOps.INSTANCE, element).getOrThrow(false, errorMsg -> {});
+				MerchantTrades trades = MerchantTrades.CODEC.parse(registryops, element).getOrThrow();
 				TRADES.put(BuiltInRegistries.ENTITY_TYPE.get(id), trades);
 			} catch (Exception e) {
 				throw new IllegalStateException("Failed to load merchant trades from " + id, e);
@@ -46,7 +48,7 @@ public class TradeLoader extends SimpleJsonResourceReloadListener {
 		if (ServerLifecycleHooks.getCurrentServer() != null) {
 			for (Entry<EntityType<?>, MerchantTrades> entry : TRADES.entrySet()) {
 				final SyncMerchantTradesPayload payload = new SyncMerchantTradesPayload(entry.getKey(), entry.getValue());
-				PacketDistributor.ALL.noArg().send(payload);
+				PacketDistributor.sendToAllPlayers(payload);
 			}
 		}
 	}

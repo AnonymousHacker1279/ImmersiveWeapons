@@ -18,7 +18,7 @@ public class EnvironmentEffects {
 
 	// Handle stuff for the celestial protection effect
 	public static void celestialProtectionEffect(LivingHurtEvent event, LivingEntity damagedEntity) {
-		if (damagedEntity.hasEffect(EffectRegistry.CELESTIAL_PROTECTION_EFFECT.get())) {
+		if (damagedEntity.hasEffect(EffectRegistry.CELESTIAL_PROTECTION_EFFECT)) {
 			float damage = event.getAmount();
 			float celestialProtectionChanceForNoDamage = 0.0f;
 
@@ -49,8 +49,7 @@ public class EnvironmentEffects {
 
 			// Re-sync persistent data to client for debug tracing
 			if (damagedEntity instanceof ServerPlayer serverPlayer) {
-				PacketDistributor.PLAYER.with(serverPlayer)
-						.send(new SyncPlayerDataPayload(serverPlayer.getPersistentData(), serverPlayer.getUUID()));
+				PacketDistributor.sendToPlayer(serverPlayer, new SyncPlayerDataPayload(serverPlayer.getPersistentData(), serverPlayer.getUUID()));
 			}
 
 			event.setAmount(damage);
@@ -59,8 +58,8 @@ public class EnvironmentEffects {
 
 	// Handle stuff for the damage vulnerability effect
 	public static void damageVulnerabilityEffect(LivingHurtEvent event, LivingEntity damagedEntity) {
-		if (damagedEntity.hasEffect(EffectRegistry.DAMAGE_VULNERABILITY_EFFECT.get())) {
-			int level = Objects.requireNonNull(damagedEntity.getEffect(EffectRegistry.DAMAGE_VULNERABILITY_EFFECT.get()))
+		if (damagedEntity.hasEffect(EffectRegistry.DAMAGE_VULNERABILITY_EFFECT)) {
+			int level = Objects.requireNonNull(damagedEntity.getEffect(EffectRegistry.DAMAGE_VULNERABILITY_EFFECT))
 					.getAmplifier();
 			float damage = event.getAmount();
 
@@ -107,7 +106,7 @@ public class EnvironmentEffects {
 
 			if (ArmorUtils.isWearingMoltenArmor(damagedEntity)) {
 				// Inflict Hellfire on the attacking entity
-				sourceEntity.addEffect(new MobEffectInstance(EffectRegistry.HELLFIRE_EFFECT.get(), 200, 0, false, false));
+				sourceEntity.addEffect(new MobEffectInstance(EffectRegistry.HELLFIRE_EFFECT, 200, 0, false, false));
 			}
 		}
 	}

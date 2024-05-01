@@ -40,7 +40,7 @@ public class CurseCleaningSoapItem extends Item {
 			// Clear Jonny's Curse modifiers
 			AttributeInstance attributeInstance = player.getAttributes().getInstance(Attributes.MOVEMENT_SPEED);
 			if (attributeInstance != null && attributeInstance.hasModifier(ForgeEventSubscriber.JONNYS_CURSE_SPEED_MODIFIER)) {
-				attributeInstance.removeModifier(ForgeEventSubscriber.JONNYS_CURSE_SPEED_MODIFIER.getId());
+				attributeInstance.removeModifier(ForgeEventSubscriber.JONNYS_CURSE_SPEED_MODIFIER);
 			}
 
 			if (wasCursed) {

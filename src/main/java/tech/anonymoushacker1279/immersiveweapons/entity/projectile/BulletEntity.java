@@ -18,6 +18,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.*;
 import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.Tags.Blocks;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
@@ -137,7 +138,7 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 		// Check if glass can be broken, and if it hasn't already broken glass
 		if (CommonConfig.bulletsBreakGlass && !hasAlreadyBrokeGlass
 				&& !lastState.is(BULLETPROOF_GLASS)
-				&& (lastState.is(Tags.Blocks.GLASS) || lastState.is(Tags.Blocks.GLASS_PANES))) {
+				&& (lastState.is(Blocks.GLASS_BLOCKS) || lastState.is(Tags.Blocks.GLASS_PANES))) {
 
 			level().destroyBlock(hitResult.getBlockPos(), false);
 			hasAlreadyBrokeGlass = true;
@@ -214,8 +215,7 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 	protected void doWhileTicking() {
 		if (tickCount % 10 == 0 && !inGround && getOwner() instanceof ServerPlayer player) {
 			if (!level().isClientSide) {
-				PacketDistributor.PLAYER.with(player)
-						.send(new BulletEntityDebugPayload(calculateDamage(), isCritArrow()));
+				PacketDistributor.sendToPlayer(player, new BulletEntityDebugPayload(calculateDamage(), isCritArrow()));
 			}
 		}
 
