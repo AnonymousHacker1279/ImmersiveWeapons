@@ -5,7 +5,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.*;
 import net.neoforged.neoforge.common.Tags;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.data.groups.forge.ForgeItemTagGroups;
+import tech.anonymoushacker1279.immersiveweapons.data.groups.common.CommonItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
@@ -35,7 +35,7 @@ public record ToolFamilies(TagKey<Item> material,
 
 	public static final ToolFamilies COPPER = new ToolFamilies(
 			Tags.Items.INGOTS_COPPER,
-			ForgeItemTagGroups.COPPER_NUGGETS,
+			CommonItemTagGroups.COPPER_NUGGETS,
 			Tags.Items.RODS_WOODEN,
 			ItemRegistry.COPPER_SWORD,
 			ItemRegistry.COPPER_PICKAXE,
@@ -51,8 +51,8 @@ public record ToolFamilies(TagKey<Item> material,
 	);
 
 	public static final ToolFamilies COBALT = new ToolFamilies(
-			ForgeItemTagGroups.COBALT_INGOTS,
-			ForgeItemTagGroups.COBALT_NUGGETS,
+			CommonItemTagGroups.COBALT_INGOTS,
+			CommonItemTagGroups.COBALT_NUGGETS,
 			Tags.Items.RODS_WOODEN,
 			ItemRegistry.COBALT_SWORD,
 			ItemRegistry.COBALT_PICKAXE,

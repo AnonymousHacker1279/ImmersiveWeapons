@@ -4,7 +4,7 @@
   "group": "cobalt",
   "ingredients": [
     {
-      "tag": "forge:ingots/cobalt"
+      "tag": "c:ingots/cobalt"
     }
   ],
   "result": {

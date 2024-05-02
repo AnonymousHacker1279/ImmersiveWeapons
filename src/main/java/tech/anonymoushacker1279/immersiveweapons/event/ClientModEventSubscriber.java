@@ -11,6 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionContents;
+import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.level.GrassColor;
 import net.minecraft.world.level.ItemLike;
 import net.neoforged.api.distmarker.Dist;
@@ -335,6 +336,15 @@ public class ClientModEventSubscriber {
 
 		event.register((stack, color) -> GrassColor.get(0.5d, 1.0d),
 				BlockItemRegistry.PITFALL_ITEM.get());
+
+		// Handle dyeable armor
+		event.register(
+				(stack, color) -> color > 0 ? -1 : DyedItemColor.getOrDefault(stack, -6265536),
+				ItemRegistry.PADDED_LEATHER_HELMET.get(),
+				ItemRegistry.PADDED_LEATHER_CHESTPLATE.get(),
+				ItemRegistry.PADDED_LEATHER_LEGGINGS.get(),
+				ItemRegistry.PADDED_LEATHER_BOOTS.get()
+		);
 	}
 
 	@SubscribeEvent

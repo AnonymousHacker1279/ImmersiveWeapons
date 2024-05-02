@@ -13,7 +13,7 @@
       "base_multiplier": 0.28,
       "density": 0.1,
       "ingredient": {
-        "tag": "forge:nuggets/copper"
+        "tag": "c:nuggets/copper"
       }
     }
   ],

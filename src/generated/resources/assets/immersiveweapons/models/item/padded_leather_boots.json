@@ -63,6 +63,7 @@
     }
   ],
   "textures": {
-    "layer0": "immersiveweapons:item/padded_leather_boots"
+    "layer0": "immersiveweapons:item/padded_leather_boots",
+    "layer1": "immersiveweapons:item/padded_leather_boots_overlay"
   }
 }

@@ -3,10 +3,10 @@
   "category": "equipment",
   "key": {
     "a": {
-      "tag": "forge:nuggets/cobalt"
+      "tag": "c:nuggets/cobalt"
     },
     "b": {
-      "tag": "forge:ingots/cobalt"
+      "tag": "c:ingots/cobalt"
     }
   },
   "pattern": [

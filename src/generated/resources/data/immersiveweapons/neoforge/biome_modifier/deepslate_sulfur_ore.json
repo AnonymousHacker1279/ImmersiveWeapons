@@ -1,6 +1,6 @@
 {
   "type": "neoforge:add_features",
-  "biomes": "#forge:is_wet_cave",
+  "biomes": "#c:is_wet_cave",
   "features": "immersiveweapons:deepslate_sulfur_ore",
   "step": "underground_ores"
 }

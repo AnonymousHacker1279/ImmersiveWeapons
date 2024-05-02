@@ -4,7 +4,7 @@
   "group": "traps",
   "key": {
     "a": {
-      "tag": "forge:ingots/metal"
+      "tag": "c:ingots/metal"
     },
     "b": {
       "item": "minecraft:heavy_weighted_pressure_plate"

@@ -7,7 +7,7 @@
       "tag": "minecraft:wooden_slabs"
     },
     "b": {
-      "tag": "forge:ingots/metal"
+      "tag": "c:ingots/metal"
     }
   },
   "pattern": [

@@ -6,6 +6,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWItemTagGroups;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -25,10 +26,9 @@ public abstract class EntityMixin {
 		if (self instanceof LivingEntity livingEntity) {
 			AtomicInteger paddedArmorCount = new AtomicInteger();
 			livingEntity.getArmorSlots().forEach(itemStack -> {
-				// TODO: should probably use a tag for this
-			/*if (itemStack.getItem() instanceof PaddedLeatherArmorItem) {
-				paddedArmorCount.getAndIncrement();
-			}*/
+				if (itemStack.is(IWItemTagGroups.PADDED_ARMOR)) {
+					paddedArmorCount.getAndIncrement();
+				}
 			});
 
 			if (paddedArmorCount.get() == 4) {

@@ -6,14 +6,14 @@
       "base_multiplier": 2.6,
       "density": 0.89,
       "ingredient": {
-        "tag": "forge:ingots/cobalt"
+        "tag": "c:ingots/cobalt"
       }
     },
     {
       "base_multiplier": 0.28,
       "density": 0.1,
       "ingredient": {
-        "tag": "forge:nuggets/cobalt"
+        "tag": "c:nuggets/cobalt"
       }
     }
   ],

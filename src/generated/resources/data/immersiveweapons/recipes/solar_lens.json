@@ -4,7 +4,7 @@
   "group": "star_forge",
   "key": {
     "a": {
-      "tag": "forge:ingots/cobalt"
+      "tag": "c:ingots/cobalt"
     },
     "b": {
       "tag": "c:glass_panes"

@@ -14,7 +14,7 @@ import net.neoforged.neoforge.common.world.BiomeModifiers.AddSpawnsBiomeModifier
 import net.neoforged.neoforge.registries.NeoForgeRegistries.Keys;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.features.IWPlacedFeatures;
-import tech.anonymoushacker1279.immersiveweapons.data.groups.forge.ForgeWorldGenTagGroups;
+import tech.anonymoushacker1279.immersiveweapons.data.groups.common.CommonWorldGenTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 
 public class IWBiomeModifiers {
@@ -37,7 +37,7 @@ public class IWBiomeModifiers {
 
 		biomeModifier(context, new ResourceLocation(ImmersiveWeapons.MOD_ID, "deepslate_sulfur_ore"),
 				new BiomeModifiers.AddFeaturesBiomeModifier(
-						context.lookup(Registries.BIOME).getOrThrow(ForgeWorldGenTagGroups.IS_WET_CAVE),
+						context.lookup(Registries.BIOME).getOrThrow(CommonWorldGenTagGroups.IS_WET_CAVE),
 						HolderSet.direct(context.lookup(Registries.PLACED_FEATURE).getOrThrow(IWPlacedFeatures.DEEPSLATE_SULFUR_ORE)),
 						Decoration.UNDERGROUND_ORES
 				));

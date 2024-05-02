@@ -63,6 +63,7 @@
     }
   ],
   "textures": {
-    "layer0": "immersiveweapons:item/padded_leather_helmet"
+    "layer0": "immersiveweapons:item/padded_leather_helmet",
+    "layer1": "immersiveweapons:item/padded_leather_helmet_overlay"
   }
 }

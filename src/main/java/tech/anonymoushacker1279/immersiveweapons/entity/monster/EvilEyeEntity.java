@@ -272,9 +272,9 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 	}
 
 	@Override
-	protected EntityDimensions getDefaultDimensions(Pose pPose) {
+	protected EntityDimensions getDefaultDimensions(Pose pose) {
 		int size = getSize();
-		EntityDimensions dimensions = super.getDimensions(pPose);
+		EntityDimensions dimensions = super.getDefaultDimensions(pose);
 		float scaleFactor = (dimensions.width() + 0.3F * (float) size) / dimensions.width();
 		return dimensions.scale(scaleFactor);
 	}

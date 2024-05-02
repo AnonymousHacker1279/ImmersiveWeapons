@@ -4,7 +4,7 @@
   "group": "firearm",
   "key": {
     "a": {
-      "tag": "forge:nuggets/copper"
+      "tag": "c:nuggets/copper"
     },
     "b": {
       "item": "minecraft:paper"

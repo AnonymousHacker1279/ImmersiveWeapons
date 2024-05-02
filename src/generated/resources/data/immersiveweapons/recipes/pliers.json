@@ -10,7 +10,7 @@
       "item": "immersiveweapons:tool_joint"
     },
     "c": {
-      "tag": "forge:ingots/metal"
+      "tag": "c:ingots/metal"
     }
   },
   "pattern": [

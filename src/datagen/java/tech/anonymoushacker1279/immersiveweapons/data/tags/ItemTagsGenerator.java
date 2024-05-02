@@ -13,8 +13,8 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.CustomDataGenerator;
-import tech.anonymoushacker1279.immersiveweapons.data.groups.forge.ForgeBlockTagGroups;
-import tech.anonymoushacker1279.immersiveweapons.data.groups.forge.ForgeItemTagGroups;
+import tech.anonymoushacker1279.immersiveweapons.data.groups.common.CommonBlockTagGroups;
+import tech.anonymoushacker1279.immersiveweapons.data.groups.common.CommonItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWBlockTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
@@ -32,7 +32,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 
 	@Override
 	protected void addTags(Provider provider) {
-		addForgeTags();
+		addCommonTags();
 		addImmersiveWeaponsTags();
 		addMinecraftTags();
 	}
@@ -41,21 +41,21 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 	 * Add tags under the Forge namespace
 	 */
 	@SuppressWarnings("unchecked")
-	private void addForgeTags() {
+	private void addCommonTags() {
 		// Copy item tags from block tags
-		copy(ForgeBlockTagGroups.COBALT_ORES, ForgeItemTagGroups.COBALT_ORES);
-		copy(ForgeBlockTagGroups.SULFUR_ORES, ForgeItemTagGroups.SULFUR_ORES);
+		copy(CommonBlockTagGroups.COBALT_ORES, CommonItemTagGroups.COBALT_ORES);
+		copy(CommonBlockTagGroups.SULFUR_ORES, CommonItemTagGroups.SULFUR_ORES);
 		copy(Blocks.ORES, Tags.Items.ORES);
 
 		// Ingot tags
-		tag(ForgeItemTagGroups.COBALT_INGOTS).add(ItemRegistry.COBALT_INGOT.get());
+		tag(CommonItemTagGroups.COBALT_INGOTS).add(ItemRegistry.COBALT_INGOT.get());
 		tag(Tags.Items.INGOTS_COPPER).add(Items.COPPER_INGOT);
-		tag(ForgeItemTagGroups.METAL_INGOTS).addTags(
-				ForgeItemTagGroups.COBALT_INGOTS,
+		tag(CommonItemTagGroups.METAL_INGOTS).addTags(
+				CommonItemTagGroups.COBALT_INGOTS,
 				Tags.Items.INGOTS_COPPER,
 				Tags.Items.INGOTS_IRON,
 				Tags.Items.INGOTS_GOLD);
-		tag(Tags.Items.INGOTS).addTag(ForgeItemTagGroups.METAL_INGOTS);
+		tag(Tags.Items.INGOTS).addTag(CommonItemTagGroups.METAL_INGOTS);
 		tag(Tags.Items.INGOTS).addTag(IWItemTagGroups.MOLTEN_INGOTS);
 		tag(Tags.Items.INGOTS).addTag(IWItemTagGroups.ELECTRIC_INGOTS);
 		tag(Tags.Items.INGOTS).addTag(IWItemTagGroups.TESLA_INGOTS);
@@ -63,19 +63,19 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		tag(Tags.Items.INGOTS).addTag(IWItemTagGroups.ASTRAL_INGOTS);
 
 		// Nugget tags
-		tag(ForgeItemTagGroups.COBALT_NUGGETS).add(ItemRegistry.COBALT_NUGGET.get());
-		tag(ForgeItemTagGroups.COPPER_NUGGETS).add(ItemRegistry.COPPER_NUGGET.get());
-		tag(ForgeItemTagGroups.METAL_NUGGETS).addTags(
-				ForgeItemTagGroups.COBALT_NUGGETS,
-				ForgeItemTagGroups.COPPER_NUGGETS,
+		tag(CommonItemTagGroups.COBALT_NUGGETS).add(ItemRegistry.COBALT_NUGGET.get());
+		tag(CommonItemTagGroups.COPPER_NUGGETS).add(ItemRegistry.COPPER_NUGGET.get());
+		tag(CommonItemTagGroups.METAL_NUGGETS).addTags(
+				CommonItemTagGroups.COBALT_NUGGETS,
+				CommonItemTagGroups.COPPER_NUGGETS,
 				Tags.Items.NUGGETS_IRON,
 				Tags.Items.NUGGETS_GOLD);
-		tag(Tags.Items.NUGGETS).addTag(ForgeItemTagGroups.METAL_NUGGETS);
+		tag(Tags.Items.NUGGETS).addTag(CommonItemTagGroups.METAL_NUGGETS);
 		tag(Tags.Items.NUGGETS).addTag(IWItemTagGroups.TESLA_NUGGETS);
 		tag(Tags.Items.NUGGETS).addTag(IWItemTagGroups.ASTRAL_NUGGETS);
 
 		// Dust tags
-		tag(ForgeItemTagGroups.SULFUR_DUSTS).add(ItemRegistry.SULFUR_DUST.get());
+		tag(CommonItemTagGroups.SULFUR_DUSTS).add(ItemRegistry.SULFUR_DUST.get());
 
 		// Loop through the registry and add groups of items to a tag
 		for (Item item : CustomDataGenerator.ALL_ITEMS) {
@@ -275,6 +275,13 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		// Staff tags
 		tag(IWItemTagGroups.METEOR_STAFFS).add(ItemRegistry.METEOR_STAFF.get());
 		tag(IWItemTagGroups.CURSED_SIGHT_STAFFS).add(ItemRegistry.CURSED_SIGHT_STAFF.get());
+
+		// Padded armor tags
+		tag(IWItemTagGroups.PADDED_ARMOR).add(
+				ItemRegistry.PADDED_LEATHER_HELMET.get(),
+				ItemRegistry.PADDED_LEATHER_CHESTPLATE.get(),
+				ItemRegistry.PADDED_LEATHER_LEGGINGS.get(),
+				ItemRegistry.PADDED_LEATHER_BOOTS.get());
 	}
 
 	/**
@@ -338,12 +345,19 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 				ItemRegistry.ASTRAL_INGOT.get(),
 				ItemRegistry.STARSTORM_INGOT.get());
 
-		// Music discs
+		// Music discs tag
 		for (DeferredHolder<Item, ? extends Item> item : ItemRegistry.ITEMS.getEntries()) {
 			if (item.get() instanceof RecordItem record) {
 				tag(ItemTags.MUSIC_DISCS).add(record);
 			}
 		}
 
+		// Dyeable items tag
+		tag(ItemTags.DYEABLE).add(
+				ItemRegistry.PADDED_LEATHER_HELMET.get(),
+				ItemRegistry.PADDED_LEATHER_CHESTPLATE.get(),
+				ItemRegistry.PADDED_LEATHER_LEGGINGS.get(),
+				ItemRegistry.PADDED_LEATHER_BOOTS.get()
+		);
 	}
 }

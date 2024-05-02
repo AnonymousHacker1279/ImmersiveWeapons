@@ -4,7 +4,7 @@
   "group": "alarms",
   "key": {
     "a": {
-      "tag": "forge:ingots/metal"
+      "tag": "c:ingots/metal"
     },
     "b": {
       "item": "minecraft:note_block"

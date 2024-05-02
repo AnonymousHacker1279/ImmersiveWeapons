@@ -10,10 +10,10 @@
       "tag": "minecraft:coals"
     },
     {
-      "tag": "forge:dusts/sulfur"
+      "tag": "c:dusts/sulfur"
     },
     {
-      "tag": "forge:dusts/sulfur"
+      "tag": "c:dusts/sulfur"
     },
     {
       "item": "immersiveweapons:potassium_nitrate"

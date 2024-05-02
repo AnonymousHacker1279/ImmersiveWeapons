@@ -3,7 +3,7 @@
   "category": "equipment",
   "key": {
     "a": {
-      "tag": "forge:nuggets/copper"
+      "tag": "c:nuggets/copper"
     },
     "b": {
       "tag": "c:ingots/copper"

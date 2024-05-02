@@ -4,7 +4,7 @@
   "group": "chairs",
   "key": {
     "a": {
-      "tag": "forge:ingots/metal"
+      "tag": "c:ingots/metal"
     },
     "b": {
       "tag": "minecraft:wool"

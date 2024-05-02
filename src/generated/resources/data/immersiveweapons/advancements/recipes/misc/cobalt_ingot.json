@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "#forge:ores/cobalt"
+            "items": "#c:ores/cobalt"
           }
         ]
       },

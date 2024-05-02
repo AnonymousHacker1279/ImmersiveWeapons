@@ -6,6 +6,6 @@
   ],
   "group": "small_parts",
   "material": {
-    "tag": "forge:ingots/metal"
+    "tag": "c:ingots/metal"
   }
 }

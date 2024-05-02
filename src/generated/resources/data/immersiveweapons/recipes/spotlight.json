@@ -10,7 +10,7 @@
       "item": "minecraft:black_concrete"
     },
     "c": {
-      "tag": "forge:ingots/metal"
+      "tag": "c:ingots/metal"
     }
   },
   "pattern": [

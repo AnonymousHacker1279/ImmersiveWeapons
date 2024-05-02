@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "a": {
-      "tag": "forge:nuggets/metal"
+      "tag": "c:nuggets/metal"
     },
     "b": {
       "item": "minecraft:torch"

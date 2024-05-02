@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "a": {
-      "tag": "forge:ingots/metal"
+      "tag": "c:ingots/metal"
     },
     "b": {
       "item": "minecraft:stone"

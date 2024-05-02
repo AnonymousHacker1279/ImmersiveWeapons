@@ -17,7 +17,7 @@ public class IWOverlays {
 
 	public static final LayeredDraw.Layer SCOPE_ELEMENT = (gui, partialTick) -> {
 		if (GunData.changingPlayerFOV != -1 && MINECRAFT.options.getCameraType().isFirstPerson()) {
-			ScopeOverlay.renderOverlay(gui.guiWidth(), gui.guiHeight(), GunData.scopeScale);
+			ScopeOverlay.renderOverlay(gui, gui.guiWidth(), gui.guiHeight(), GunData.scopeScale);
 		}
 	};
 
