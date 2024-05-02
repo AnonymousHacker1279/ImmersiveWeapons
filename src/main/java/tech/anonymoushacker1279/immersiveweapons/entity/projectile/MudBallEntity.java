@@ -3,7 +3,6 @@ package tech.anonymoushacker1279.immersiveweapons.entity.projectile;
 import net.minecraft.core.particles.*;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.monster.Blaze;
-import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
@@ -11,7 +10,7 @@ import net.minecraft.world.phys.HitResult;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
-public class MudBallEntity extends ThrowableItemProjectile {
+public class MudBallEntity extends AdvancedThrowableItemProjectile {
 
 	public MudBallEntity(EntityType<? extends MudBallEntity> entityType, Level level) {
 		super(entityType, level);
@@ -19,6 +18,10 @@ public class MudBallEntity extends ThrowableItemProjectile {
 
 	public MudBallEntity(Level level, LivingEntity livingEntity) {
 		super(EntityRegistry.MUD_BALL_ENTITY.get(), livingEntity, level);
+	}
+
+	public MudBallEntity(Level level, double x, double y, double z) {
+		super(EntityRegistry.MUD_BALL_ENTITY.get(), level, x, y, z);
 	}
 
 	@Override

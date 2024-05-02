@@ -43,7 +43,12 @@ public class IWItemTagGroups {
 	public static final TagKey<Item> WEAPONS_AND_TOOLS = createItemTag("weapons_and_tools");
 	public static final TagKey<Item> METEOR_STAFFS = createItemTag("weapons/meteor_staffs");
 	public static final TagKey<Item> CURSED_SIGHT_STAFFS = createItemTag("weapons/cursed_sight_staffs");
-	public static final TagKey<Item> PADDED_ARMOR = createItemTag("armor/padded");
+	public static final TagKey<Item> MOLTEN_ARMOR = createItemTag("armor/molten");
+	public static final TagKey<Item> TESLA_ARMOR = createItemTag("armor/tesla");
+	public static final TagKey<Item> VENTUS_ARMOR = createItemTag("armor/ventus");
+	public static final TagKey<Item> ASTRAL_ARMOR = createItemTag("armor/astral");
+	public static final TagKey<Item> STARSTORM_ARMOR = createItemTag("armor/starstorm");
+	public static final TagKey<Item> PADDED_LEATHER = createItemTag("armor/padded_leather");
 
 	private static TagKey<Item> createItemTag(String tag) {
 		return TagKey.create(Registries.ITEM, new ResourceLocation(ImmersiveWeapons.MOD_ID, tag));

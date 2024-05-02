@@ -26,7 +26,7 @@ public abstract class EntityMixin {
 		if (self instanceof LivingEntity livingEntity) {
 			AtomicInteger paddedArmorCount = new AtomicInteger();
 			livingEntity.getArmorSlots().forEach(itemStack -> {
-				if (itemStack.is(IWItemTagGroups.PADDED_ARMOR)) {
+				if (itemStack.is(IWItemTagGroups.PADDED_LEATHER)) {
 					paddedArmorCount.getAndIncrement();
 				}
 			});

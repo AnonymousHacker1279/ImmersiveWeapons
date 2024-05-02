@@ -61,7 +61,6 @@ public class ModEventSubscriber {
 	public static void registerPayloadHandlerEvent(RegisterPayloadHandlersEvent event) {
 		ImmersiveWeapons.LOGGER.info("Registering packet payload handlers");
 
-		// TODO: check and make sure version is correct
 		String version = ModList.get()
 				.getModContainerById(ImmersiveWeapons.MOD_ID)
 				.map(ModContainer::getModInfo)

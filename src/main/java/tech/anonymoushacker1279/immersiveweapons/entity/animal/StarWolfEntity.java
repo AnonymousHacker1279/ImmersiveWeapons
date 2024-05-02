@@ -24,22 +24,21 @@ public class StarWolfEntity extends Wolf implements GrantAdvancementOnDiscovery 
 		return Mob.createMobAttributes()
 				.add(Attributes.MOVEMENT_SPEED, 0.35F)
 				.add(Attributes.MAX_HEALTH, 12.0D)
-				.add(Attributes.ATTACK_DAMAGE, 2.5D);
+				.add(Attributes.ATTACK_DAMAGE, 5.0D);
 	}
 
 	@Override
 	public void setTame(boolean tamed, boolean applySideEffects) {
 		super.setTame(tamed, applySideEffects);
 
-		// TODO: re-evaluate attributes with the new wolf changes
-		/*if (pTamed) {
-			getAttribute(Attributes.MAX_HEALTH).setBaseValue(30.0D);
-			setHealth(30.0F);
+		if (tamed) {
+			getAttribute(Attributes.MAX_HEALTH).setBaseValue(44.0D);
+			setHealth(44.0F);
 		} else {
 			getAttribute(Attributes.MAX_HEALTH).setBaseValue(12.0D);
 		}
 
-		getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(5.0D);*/
+		getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(6.0D);
 	}
 
 	@Override

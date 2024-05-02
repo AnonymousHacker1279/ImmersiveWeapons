@@ -276,8 +276,8 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		tag(IWItemTagGroups.METEOR_STAFFS).add(ItemRegistry.METEOR_STAFF.get());
 		tag(IWItemTagGroups.CURSED_SIGHT_STAFFS).add(ItemRegistry.CURSED_SIGHT_STAFF.get());
 
-		// Padded armor tags
-		tag(IWItemTagGroups.PADDED_ARMOR).add(
+		// Armor tags
+		tag(IWItemTagGroups.PADDED_LEATHER).add(
 				ItemRegistry.PADDED_LEATHER_HELMET.get(),
 				ItemRegistry.PADDED_LEATHER_CHESTPLATE.get(),
 				ItemRegistry.PADDED_LEATHER_LEGGINGS.get(),

@@ -1,11 +1,13 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.projectile;
 
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.level.Level;
@@ -116,6 +118,31 @@ public abstract class AdvancedThrowableItemProjectile extends ThrowableItemProje
 		if (ticksInGround > 300) {
 			kill();
 		}
+	}
+
+	public void shootFromDirection(Direction direction, float velocity, float inaccuracy) {
+		float x;
+		float y;
+		float z;
+
+		switch (direction) {
+			case EAST, WEST -> {
+				x = 0;
+				y = direction.toYRot();
+				z = 0;
+			}
+			default -> {
+				x = direction.toYRot();
+				y = 0;
+				z = 0;
+			}
+		}
+
+		float newX = -Mth.sin(y * (float) (Math.PI / 180.0)) * Mth.cos(x * (float) (Math.PI / 180.0));
+		float newY = -Mth.sin((x + z) * (float) (Math.PI / 180.0));
+		float newZ = Mth.cos(y * (float) (Math.PI / 180.0)) * Mth.cos(x * (float) (Math.PI / 180.0));
+
+		this.shoot(newX, newY, newZ, velocity, inaccuracy);
 	}
 
 	public static boolean canSee(LivingEntity livingEntity, Entity entity, boolean lookingAt) {

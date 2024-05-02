@@ -1109,6 +1109,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		add("loot.immersiveweapons.entity.hans.iron_sword", "The Grand Blade of Hans");
 		add("loot.immersiveweapons.entity.super_hans.super_healing_potion", "Super Potion of Healing");
 		add("loot.immersiveweapons.entity.super_hans.super_regeneration_potion", "Super Potion of Regeneration");
+		add("loot.immersiveweapons.entity.super_hans.ultra_healing_potion", "Ultra Potion of Healing");
+		add("loot.immersiveweapons.entity.super_hans.ultra_regeneration_potion", "Ultra Potion of Regeneration");
 		add("immersiveweapons.boss.celestial_tower.waves", "Celestial Tower: Wave %s of %s");
 		add("immersiveweapons.boss.the_commander.waves", "The Commander: Wave %s of %s");
 		add("itemGroup.immersiveweapons.creative_tab", "Immersive Weapons");

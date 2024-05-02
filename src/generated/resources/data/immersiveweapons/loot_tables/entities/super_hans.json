@@ -206,7 +206,7 @@
               "function": "minecraft:set_name",
               "name": {
                 "color": "gold",
-                "translate": "loot.immersiveweapons.entity.super_hans.super_healing_potion"
+                "translate": "loot.immersiveweapons.entity.super_hans.ultra_healing_potion"
               },
               "target": "item_name"
             },
@@ -238,7 +238,7 @@
               "function": "minecraft:set_name",
               "name": {
                 "color": "gold",
-                "translate": "loot.immersiveweapons.entity.super_hans.super_regeneration_potion"
+                "translate": "loot.immersiveweapons.entity.super_hans.ultra_regeneration_potion"
               },
               "target": "item_name"
             },

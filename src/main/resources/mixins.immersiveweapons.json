@@ -7,11 +7,11 @@
 		"ClientboundSetEntityMotionPacketMixin",
 		"CombatRulesMixin",
 		"EntityMixin",
-		"ItemStackMixin",
+		"ItemEnchantmentsMixin",
 		"SlimeMixin"
 	],
 	"client": [
-		"ItemStackMixin"
+		"ItemEnchantmentsMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

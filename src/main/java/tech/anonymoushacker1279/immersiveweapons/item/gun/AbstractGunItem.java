@@ -265,7 +265,6 @@ public abstract class AbstractGunItem extends Item {
 
 	@Override
 	public boolean onDroppedByPlayer(ItemStack item, Player player) {
-		// TODO: check cast here
 		PacketDistributor.sendToPlayer((ServerPlayer) player, new GunScopePayload(GunData.playerFOV, -1, 0.5f));
 
 		return super.onDroppedByPlayer(item, player);

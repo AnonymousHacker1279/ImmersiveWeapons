@@ -290,7 +290,6 @@ public class EntityLootTables implements LootTableSubProvider {
 						.name("healing_equipment")
 						.setRolls(ConstantValue.exactly(1.0F))
 						.add(LootItem.lootTableItem(Items.POTION)
-								// TODO: custom lang entries for each tier of potion
 								.setWeight(35)
 								.apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 4.0F)))
 								.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 0.33F)))
@@ -310,7 +309,7 @@ public class EntityLootTables implements LootTableSubProvider {
 								.setWeight(15)
 								.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)))
 								.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 0.33F)))
-								.apply(SetNameFunction.setName(Component.translatable("loot.immersiveweapons.entity.super_hans.super_healing_potion")
+								.apply(SetNameFunction.setName(Component.translatable("loot.immersiveweapons.entity.super_hans.ultra_healing_potion")
 												.withStyle(ChatFormatting.GOLD),
 										Target.ITEM_NAME))
 								.apply(SetPotionFunction.setPotion(PotionRegistry.ULTRA_HEALING_POTION)))
@@ -318,7 +317,7 @@ public class EntityLootTables implements LootTableSubProvider {
 								.setWeight(15)
 								.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0f)))
 								.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 0.33F)))
-								.apply(SetNameFunction.setName(Component.translatable("loot.immersiveweapons.entity.super_hans.super_regeneration_potion")
+								.apply(SetNameFunction.setName(Component.translatable("loot.immersiveweapons.entity.super_hans.ultra_regeneration_potion")
 												.withStyle(ChatFormatting.GOLD),
 										Target.ITEM_NAME))
 								.apply(SetPotionFunction.setPotion(PotionRegistry.ULTRA_REGENERATION_POTION)))

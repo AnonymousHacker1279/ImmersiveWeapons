@@ -3,14 +3,20 @@ package tech.anonymoushacker1279.immersiveweapons;
 import com.mojang.logging.LogUtils;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModList;
+import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLConstructModEvent;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import org.slf4j.Logger;
 import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
 import tech.anonymoushacker1279.immersiveweapons.block.properties.WoodTypes;
+import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
+import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.world.level.CustomBlockSetTypes;
+import tech.anonymoushacker1729.cobaltconfig.client.CobaltConfigScreen;
+import tech.anonymoushacker1729.cobaltconfig.config.ConfigManager.ConfigBuilder;
 
 @Mod(ImmersiveWeapons.MOD_ID)
 public class ImmersiveWeapons {
@@ -28,14 +34,13 @@ public class ImmersiveWeapons {
 		// Load configuration
 		LOGGER.info("Registering configuration files");
 
-		// TODO: reimplement when Cobalt Config is available
-		/*new ConfigBuilder(MOD_ID, CommonConfig.class)
+		new ConfigBuilder(MOD_ID, CommonConfig.class)
 				.setConfigName("Common Config")
 				.build();
 		new ConfigBuilder(MOD_ID, "client", ClientConfig.class)
 				.setConfigName("Client Config")
 				.setClientOnly(true)
-				.build();*/
+				.build();
 
 		// Initialize deferred registry
 		DeferredRegistryHandler.init(modEventBus);
@@ -67,8 +72,7 @@ public class ImmersiveWeapons {
 	}
 
 	public void constructMod(FMLConstructModEvent event) {
-		// TODO: reimplement when Cobalt Config is available
-		/*ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class,
-				() -> new ConfigScreenHandler.ConfigScreenFactory((mc, screen) -> CobaltConfigScreen.getScreen(screen, MOD_ID)));*/
+		ModLoadingContext.get().registerExtensionPoint(IConfigScreenFactory.class,
+				() -> (minecraft, modListScreen) -> CobaltConfigScreen.getScreen(modListScreen, MOD_ID));
 	}
 }

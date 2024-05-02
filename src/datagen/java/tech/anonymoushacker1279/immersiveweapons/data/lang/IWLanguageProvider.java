@@ -10,7 +10,7 @@ public abstract class IWLanguageProvider extends LanguageProvider {
 	}
 
 	public void addPotion(String name, String type, String translation) {
-		add("item.immersiveweapons." + type + "." + name, translation);
+		add("item.minecraft." + type + ".effect." + name, translation);
 	}
 
 	public void addContainer(String name, String translation) {

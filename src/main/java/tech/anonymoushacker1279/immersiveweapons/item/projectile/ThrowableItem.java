@@ -1,5 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.item.projectile;
 
+import net.minecraft.core.Direction;
+import net.minecraft.core.Position;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -125,7 +127,7 @@ public class ThrowableItem extends Item {
 		}
 	}
 
-	private ThrowableItemProjectile createMolotov(ItemStack stack, Level level, Player player) {
+	public ThrowableItemProjectile createMolotov(ItemStack stack, Level level, Player player) {
 		MolotovEntity molotovEntity = new MolotovEntity(level, player);
 		molotovEntity.setItem(stack);
 		molotovEntity.shootFromRotation(player, player.getXRot(), player.getYRot(), -20.0F, 0.5F, 1.0F);
@@ -133,7 +135,15 @@ public class ThrowableItem extends Item {
 		return molotovEntity;
 	}
 
-	private ThrowableItemProjectile createMudBall(ItemStack stack, Level level, Player player) {
+	public ThrowableItemProjectile createMolotov(ItemStack stack, Level level, Position position, Direction direction) {
+		MolotovEntity molotovEntity = new MolotovEntity(level, position.x(), position.y(), position.z());
+		molotovEntity.setItem(stack);
+		molotovEntity.shootFromDirection(direction, 0.75F, 0.5F);
+
+		return molotovEntity;
+	}
+
+	public ThrowableItemProjectile createMudBall(ItemStack stack, Level level, Player player) {
 		MudBallEntity mudBall = new MudBallEntity(level, player);
 		mudBall.setItem(stack);
 		mudBall.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, 1.5F, 1.0F);
@@ -141,7 +151,15 @@ public class ThrowableItem extends Item {
 		return mudBall;
 	}
 
-	private ThrowableItemProjectile createSmokeGrenade(ItemStack stack, Level level, Player player, float charge) {
+	public ThrowableItemProjectile createMudBall(ItemStack stack, Level level, Position position, Direction direction) {
+		MudBallEntity mudBall = new MudBallEntity(level, position.x(), position.y(), position.z());
+		mudBall.setItem(stack);
+		mudBall.shootFromDirection(direction, 1.5F, 1.0F);
+
+		return mudBall;
+	}
+
+	public ThrowableItemProjectile createSmokeGrenade(ItemStack stack, Level level, Player player, float charge) {
 		SmokeGrenadeEntity smokeGrenadeEntity = new SmokeGrenadeEntity(level, player);
 		smokeGrenadeEntity.setColor(color);
 		smokeGrenadeEntity.setItem(stack);
@@ -150,10 +168,27 @@ public class ThrowableItem extends Item {
 		return smokeGrenadeEntity;
 	}
 
-	private ThrowableItemProjectile createFlashbang(ItemStack stack, Level level, Player player, float charge) {
+	public ThrowableItemProjectile createSmokeGrenade(ItemStack stack, Level level, Position position, Direction direction, float charge) {
+		SmokeGrenadeEntity smokeGrenadeEntity = new SmokeGrenadeEntity(level, position.x(), position.y(), position.z());
+		smokeGrenadeEntity.setColor(color);
+		smokeGrenadeEntity.setItem(stack);
+		smokeGrenadeEntity.shootFromDirection(direction, charge * 1.5F, 0.5F);
+
+		return smokeGrenadeEntity;
+	}
+
+	public ThrowableItemProjectile createFlashbang(ItemStack stack, Level level, Player player, float charge) {
 		FlashbangEntity flashbangEntity = new FlashbangEntity(level, player);
 		flashbangEntity.setItem(stack);
 		flashbangEntity.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, charge * 1.5F, 0.5F);
+
+		return flashbangEntity;
+	}
+
+	public ThrowableItemProjectile createFlashbang(ItemStack stack, Level level, Position position, Direction direction, float charge) {
+		FlashbangEntity flashbangEntity = new FlashbangEntity(level, position.x(), position.y(), position.z());
+		flashbangEntity.setItem(stack);
+		flashbangEntity.shootFromDirection(direction, charge * 1.5F, 0.5F);
 
 		return flashbangEntity;
 	}

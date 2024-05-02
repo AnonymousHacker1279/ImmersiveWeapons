@@ -18,11 +18,11 @@ import net.neoforged.fml.common.EventBusSubscriber.Bus;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
+import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.*;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectBuilder.EffectScalingType;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectType;
-import tech.anonymoushacker1279.immersiveweapons.item.armor.*;
 import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem.PowderType;
@@ -198,25 +198,24 @@ public class TooltipHandler {
 		}
 
 		// Armor
-		if (stack.getItem() instanceof MoltenArmorItem) {
+		if (stack.is(IWItemTagGroups.MOLTEN_ARMOR)) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.molten_armor").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
-		if (stack.getItem() instanceof TeslaArmorItem) {
+		if (stack.is(IWItemTagGroups.TESLA_ARMOR)) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.tesla_armor").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
-		if (stack.getItem() instanceof VentusArmorItem) {
+		if (stack.is(IWItemTagGroups.VENTUS_ARMOR)) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.ventus_armor").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
-		if (stack.getItem() instanceof AstralArmorItem) {
+		if (stack.is(IWItemTagGroups.ASTRAL_ARMOR)) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.astral_armor").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
-		// TODO: find a better way to add tooltips
-		/*if (stack.getItem() instanceof StarstormArmorItem) {
+		if (stack.is(IWItemTagGroups.STARSTORM_ARMOR)) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.starstorm_armor").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
-		if (stack.getItem() instanceof PaddedLeatherArmorItem) {
+		if (stack.is(IWItemTagGroups.PADDED_LEATHER)) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.padded_leather_armor").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
-		}*/
+		}
 
 		// Throwables
 		if (stack.getItem() instanceof ThrowableItem grenade) {
