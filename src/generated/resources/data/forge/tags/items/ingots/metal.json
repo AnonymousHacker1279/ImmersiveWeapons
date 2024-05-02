@@ -1,8 +1,8 @@
 {
   "values": [
     "#forge:ingots/cobalt",
-    "#forge:ingots/copper",
-    "#forge:ingots/iron",
-    "#forge:ingots/gold"
+    "#c:ingots/copper",
+    "#c:ingots/iron",
+    "#c:ingots/gold"
   ]
 }

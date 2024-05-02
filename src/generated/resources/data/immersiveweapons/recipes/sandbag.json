@@ -4,7 +4,7 @@
   "group": "sandbags",
   "key": {
     "a": {
-      "tag": "forge:sand"
+      "tag": "c:sands"
     },
     "b": {
       "item": "immersiveweapons:cloth_scrap"
@@ -17,6 +17,6 @@
   ],
   "result": {
     "count": 6,
-    "item": "immersiveweapons:sandbag"
+    "id": "immersiveweapons:sandbag"
   }
 }

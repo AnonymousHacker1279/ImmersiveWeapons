@@ -4,10 +4,10 @@
   "group": "powder_horn",
   "key": {
     "a": {
-      "tag": "forge:gunpowder"
+      "tag": "c:gunpowders"
     },
     "b": {
-      "tag": "forge:string"
+      "tag": "c:strings"
     },
     "c": {
       "item": "minecraft:goat_horn"
@@ -19,6 +19,7 @@
     " a "
   ],
   "result": {
-    "item": "immersiveweapons:powder_horn"
+    "count": 1,
+    "id": "immersiveweapons:powder_horn"
   }
 }

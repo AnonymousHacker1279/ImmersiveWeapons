@@ -3,13 +3,13 @@
   "category": "building",
   "key": {
     "a": {
-      "tag": "forge:ingots/iron"
+      "tag": "c:ingots/iron"
     },
     "b": {
       "tag": "minecraft:planks"
     },
     "c": {
-      "tag": "forge:ingots/copper"
+      "tag": "c:ingots/copper"
     }
   },
   "pattern": [
@@ -17,6 +17,7 @@
     "aba"
   ],
   "result": {
-    "item": "immersiveweapons:small_parts_table"
+    "count": 1,
+    "id": "immersiveweapons:small_parts_table"
   }
 }

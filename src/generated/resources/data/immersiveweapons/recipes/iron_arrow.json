@@ -3,7 +3,7 @@
   "category": "equipment",
   "key": {
     "a": {
-      "tag": "forge:ingots/iron"
+      "tag": "c:ingots/iron"
     },
     "b": {
       "item": "minecraft:stick"
@@ -19,6 +19,6 @@
   ],
   "result": {
     "count": 4,
-    "item": "immersiveweapons:iron_arrow"
+    "id": "immersiveweapons:iron_arrow"
   }
 }

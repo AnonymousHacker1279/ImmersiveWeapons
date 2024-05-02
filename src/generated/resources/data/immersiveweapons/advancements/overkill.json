@@ -12,7 +12,8 @@
     "frame": "challenge",
     "hidden": true,
     "icon": {
-      "item": "immersiveweapons:starstorm_arrow"
+      "count": 1,
+      "id": "immersiveweapons:starstorm_arrow"
     },
     "title": {
       "translate": "advancements.immersiveweapons.overkill.title"

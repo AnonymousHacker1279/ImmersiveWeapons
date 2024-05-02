@@ -7,7 +7,7 @@
       "item": "immersiveweapons:stardust_planks"
     },
     "b": {
-      "tag": "forge:rods/wooden"
+      "tag": "c:rods/wooden"
     }
   },
   "pattern": [
@@ -16,6 +16,6 @@
   ],
   "result": {
     "count": 3,
-    "item": "immersiveweapons:stardust_fence"
+    "id": "immersiveweapons:stardust_fence"
   }
 }

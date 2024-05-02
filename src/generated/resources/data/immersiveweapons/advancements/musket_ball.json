@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "immersiveweapons:projectiles/musket_balls"
+            "items": "#immersiveweapons:projectiles/musket_balls"
           }
         ]
       },
@@ -17,7 +17,8 @@
       "translate": "advancements.immersiveweapons.musket_ball.description"
     },
     "icon": {
-      "item": "immersiveweapons:golden_musket_ball"
+      "count": 1,
+      "id": "immersiveweapons:golden_musket_ball"
     },
     "title": {
       "translate": "advancements.immersiveweapons.musket_ball.title"

@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:small_parts_table"
-            ]
+            "items": "immersiveweapons:small_parts_table"
           }
         ]
       },
@@ -19,7 +17,8 @@
       "translate": "advancements.immersiveweapons.small_parts_table.description"
     },
     "icon": {
-      "item": "immersiveweapons:small_parts_table"
+      "count": 1,
+      "id": "immersiveweapons:small_parts_table"
     },
     "title": {
       "translate": "advancements.immersiveweapons.small_parts_table.title"

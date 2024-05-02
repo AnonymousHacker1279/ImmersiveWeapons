@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:ammunition_table"
-            ]
+            "items": "immersiveweapons:ammunition_table"
           }
         ]
       },
@@ -19,7 +17,8 @@
       "translate": "advancements.immersiveweapons.ammunition_table.description"
     },
     "icon": {
-      "item": "immersiveweapons:ammunition_table"
+      "count": 1,
+      "id": "immersiveweapons:ammunition_table"
     },
     "title": {
       "translate": "advancements.immersiveweapons.ammunition_table.title"

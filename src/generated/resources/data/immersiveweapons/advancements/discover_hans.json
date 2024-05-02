@@ -21,7 +21,8 @@
       "translate": "advancements.immersiveweapons.discover_hans.description"
     },
     "icon": {
-      "item": "immersiveweapons:hans_head"
+      "count": 1,
+      "id": "immersiveweapons:hans_head"
     },
     "title": {
       "translate": "advancements.immersiveweapons.discover_hans.title"

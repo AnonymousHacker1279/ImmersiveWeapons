@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:ammunition_table"
-            ]
+            "items": "immersiveweapons:ammunition_table"
           }
         ]
       },

@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:meteor_staff"
-            ]
+            "items": "immersiveweapons:meteor_staff"
           }
         ]
       },
@@ -20,8 +18,8 @@
     },
     "frame": "challenge",
     "icon": {
-      "item": "immersiveweapons:meteor_staff",
-      "nbt": "{Damage:0}"
+      "count": 1,
+      "id": "immersiveweapons:meteor_staff"
     },
     "title": {
       "translate": "advancements.immersiveweapons.meteor_staff.title"

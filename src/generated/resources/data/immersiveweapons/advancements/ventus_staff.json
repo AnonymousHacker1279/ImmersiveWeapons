@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:ventus_staff"
-            ]
+            "items": "immersiveweapons:ventus_staff"
           }
         ]
       },
@@ -20,8 +18,8 @@
     },
     "frame": "challenge",
     "icon": {
-      "item": "immersiveweapons:ventus_staff",
-      "nbt": "{Damage:0}"
+      "count": 1,
+      "id": "immersiveweapons:ventus_staff"
     },
     "title": {
       "translate": "advancements.immersiveweapons.ventus_staff.title"

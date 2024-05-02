@@ -21,7 +21,8 @@
       "translate": "advancements.immersiveweapons.discover_dying_soldier.description"
     },
     "icon": {
-      "item": "immersiveweapons:dying_soldier_head"
+      "count": 1,
+      "id": "immersiveweapons:dying_soldier_head"
     },
     "title": {
       "translate": "advancements.immersiveweapons.discover_dying_soldier.title"

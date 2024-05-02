@@ -21,7 +21,8 @@
       "translate": "advancements.immersiveweapons.discover_lava_revenant.description"
     },
     "icon": {
-      "item": "immersiveweapons:sulfur"
+      "count": 1,
+      "id": "immersiveweapons:sulfur"
     },
     "title": {
       "translate": "advancements.immersiveweapons.discover_lava_revenant.title"

@@ -5,7 +5,9 @@
     "tag": "immersiveweapons:ingots/astral"
   },
   "ingot_count": 5,
-  "result": "immersiveweapons:astral_helmet",
+  "result": {
+    "id": "immersiveweapons:astral_helmet"
+  },
   "secondary_material": [],
   "secondary_material_count": 0,
   "smelt_time": 600

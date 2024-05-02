@@ -4,7 +4,7 @@
   "group": "ammunition_table",
   "key": {
     "a": {
-      "tag": "forge:ingots/iron"
+      "tag": "c:ingots/iron"
     },
     "b": {
       "tag": "minecraft:planks"
@@ -13,7 +13,7 @@
       "tag": "minecraft:stone_crafting_materials"
     },
     "d": {
-      "tag": "forge:gunpowder"
+      "tag": "c:gunpowders"
     }
   },
   "pattern": [
@@ -22,6 +22,7 @@
     "cbc"
   ],
   "result": {
-    "item": "immersiveweapons:ammunition_table"
+    "count": 1,
+    "id": "immersiveweapons:ammunition_table"
   }
 }

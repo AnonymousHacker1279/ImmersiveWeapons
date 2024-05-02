@@ -5,7 +5,9 @@
     "tag": "immersiveweapons:ingots/astral"
   },
   "ingot_count": 1,
-  "result": "immersiveweapons:astral_shovel",
+  "result": {
+    "id": "immersiveweapons:astral_shovel"
+  },
   "secondary_material": {
     "item": "immersiveweapons:obsidian_rod"
   },

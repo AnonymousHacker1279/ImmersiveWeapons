@@ -11,9 +11,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:potassium_nitrate"
-            ]
+            "items": "immersiveweapons:potassium_nitrate"
           }
         ]
       },

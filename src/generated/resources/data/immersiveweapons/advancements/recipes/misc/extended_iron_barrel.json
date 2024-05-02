@@ -11,9 +11,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:iron_barrel"
-            ]
+            "items": "immersiveweapons:iron_barrel"
           }
         ]
       },

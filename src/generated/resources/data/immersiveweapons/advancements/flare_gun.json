@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:flare_gun"
-            ]
+            "items": "immersiveweapons:flare_gun"
           }
         ]
       },
@@ -20,8 +18,8 @@
     },
     "frame": "goal",
     "icon": {
-      "item": "immersiveweapons:flare_gun",
-      "nbt": "{Damage:0}"
+      "count": 1,
+      "id": "immersiveweapons:flare_gun"
     },
     "title": {
       "translate": "advancements.immersiveweapons.flare_gun.title"

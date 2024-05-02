@@ -3,7 +3,7 @@
   "category": "equipment",
   "key": {
     "a": {
-      "tag": "forge:ingots/gold"
+      "tag": "c:ingots/gold"
     },
     "b": {
       "item": "minecraft:stick"
@@ -19,6 +19,6 @@
   ],
   "result": {
     "count": 4,
-    "item": "immersiveweapons:golden_arrow"
+    "id": "immersiveweapons:golden_arrow"
   }
 }

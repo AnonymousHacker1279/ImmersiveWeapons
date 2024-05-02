@@ -3,7 +3,7 @@
   "category": "building",
   "key": {
     "a": {
-      "tag": "forge:ingots/copper"
+      "tag": "c:ingots/copper"
     }
   },
   "pattern": [
@@ -12,6 +12,7 @@
     "a a"
   ],
   "result": {
-    "item": "immersiveweapons:copper_leggings"
+    "count": 1,
+    "id": "immersiveweapons:copper_leggings"
   }
 }

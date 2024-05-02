@@ -9,7 +9,7 @@
             "entity": "this",
             "predicate": {
               "type_specific": {
-                "type": "player",
+                "type": "minecraft:player",
                 "advancements": {
                   "immersiveweapons:astral_axe": true,
                   "immersiveweapons:astral_hoe": true,
@@ -31,7 +31,8 @@
     },
     "frame": "challenge",
     "icon": {
-      "item": "immersiveweapons:astral_block"
+      "count": 1,
+      "id": "immersiveweapons:astral_block"
     },
     "title": {
       "translate": "advancements.immersiveweapons.astral_tools.title"

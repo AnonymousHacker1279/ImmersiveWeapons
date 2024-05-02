@@ -19,6 +19,7 @@
     "aaa"
   ],
   "result": {
-    "item": "immersiveweapons:star_forge_controller"
+    "count": 1,
+    "id": "immersiveweapons:star_forge_controller"
   }
 }

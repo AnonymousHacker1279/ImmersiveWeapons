@@ -21,7 +21,8 @@
       "translate": "advancements.immersiveweapons.discover_evil_eye.description"
     },
     "icon": {
-      "item": "immersiveweapons:broken_lens"
+      "count": 1,
+      "id": "immersiveweapons:broken_lens"
     },
     "title": {
       "translate": "advancements.immersiveweapons.discover_evil_eye.title"

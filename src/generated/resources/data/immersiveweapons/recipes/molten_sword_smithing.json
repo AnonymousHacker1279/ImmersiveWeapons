@@ -7,7 +7,8 @@
     "item": "minecraft:netherite_sword"
   },
   "result": {
-    "item": "immersiveweapons:molten_sword"
+    "count": 1,
+    "id": "immersiveweapons:molten_sword"
   },
   "template": {
     "item": "immersiveweapons:molten_smithing_template"

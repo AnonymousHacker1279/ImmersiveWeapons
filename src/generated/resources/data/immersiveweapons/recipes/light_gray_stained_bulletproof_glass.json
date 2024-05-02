@@ -7,7 +7,7 @@
       "item": "immersiveweapons:bulletproof_glass"
     },
     "b": {
-      "tag": "forge:dyes/light_gray"
+      "tag": "c:dyes/light_gray"
     }
   },
   "pattern": [
@@ -17,6 +17,6 @@
   ],
   "result": {
     "count": 8,
-    "item": "immersiveweapons:light_gray_stained_bulletproof_glass"
+    "id": "immersiveweapons:light_gray_stained_bulletproof_glass"
   }
 }

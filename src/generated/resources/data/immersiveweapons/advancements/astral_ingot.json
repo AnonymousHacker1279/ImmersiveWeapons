@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:astral_ingot"
-            ]
+            "items": "immersiveweapons:astral_ingot"
           }
         ]
       },
@@ -19,7 +17,8 @@
       "translate": "advancements.immersiveweapons.astral_ingot.description"
     },
     "icon": {
-      "item": "immersiveweapons:astral_ingot"
+      "count": 1,
+      "id": "immersiveweapons:astral_ingot"
     },
     "title": {
       "translate": "advancements.immersiveweapons.astral_ingot.title"

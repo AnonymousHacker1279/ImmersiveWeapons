@@ -21,7 +21,8 @@
       "translate": "advancements.immersiveweapons.discover_minuteman.description"
     },
     "icon": {
-      "item": "immersiveweapons:minuteman_head"
+      "count": 1,
+      "id": "immersiveweapons:minuteman_head"
     },
     "title": {
       "translate": "advancements.immersiveweapons.discover_minuteman.title"

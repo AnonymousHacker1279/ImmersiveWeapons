@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:flintlock_pistol"
-            ]
+            "items": "immersiveweapons:flintlock_pistol"
           }
         ]
       },
@@ -20,8 +18,8 @@
     },
     "frame": "goal",
     "icon": {
-      "item": "immersiveweapons:flintlock_pistol",
-      "nbt": "{Damage:0}"
+      "count": 1,
+      "id": "immersiveweapons:flintlock_pistol"
     },
     "title": {
       "translate": "advancements.immersiveweapons.flintlock_pistol.title"

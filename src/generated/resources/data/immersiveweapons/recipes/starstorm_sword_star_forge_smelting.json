@@ -5,7 +5,9 @@
     "tag": "immersiveweapons:ingots/starstorm"
   },
   "ingot_count": 2,
-  "result": "immersiveweapons:starstorm_sword",
+  "result": {
+    "id": "immersiveweapons:starstorm_sword"
+  },
   "secondary_material": {
     "item": "immersiveweapons:obsidian_rod"
   },

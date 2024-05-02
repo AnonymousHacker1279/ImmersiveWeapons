@@ -11,9 +11,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:warden_heart"
-            ]
+            "items": "immersiveweapons:warden_heart"
           }
         ]
       },

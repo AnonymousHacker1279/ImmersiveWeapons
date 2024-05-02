@@ -11,9 +11,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:star_forge_bricks"
-            ]
+            "items": "immersiveweapons:star_forge_bricks"
           }
         ]
       },

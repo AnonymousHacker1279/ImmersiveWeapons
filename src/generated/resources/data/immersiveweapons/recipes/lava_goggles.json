@@ -10,7 +10,7 @@
       "tag": "immersiveweapons:ingots/molten"
     },
     "c": {
-      "tag": "forge:obsidian"
+      "tag": "c:obsidians"
     }
   },
   "pattern": [
@@ -19,6 +19,7 @@
     " c "
   ],
   "result": {
-    "item": "immersiveweapons:lava_goggles"
+    "count": 1,
+    "id": "immersiveweapons:lava_goggles"
   }
 }

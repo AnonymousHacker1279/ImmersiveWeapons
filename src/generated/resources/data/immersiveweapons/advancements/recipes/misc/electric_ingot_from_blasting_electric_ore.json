@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:electric_ore"
-            ]
+            "items": "immersiveweapons:electric_ore"
           }
         ]
       },

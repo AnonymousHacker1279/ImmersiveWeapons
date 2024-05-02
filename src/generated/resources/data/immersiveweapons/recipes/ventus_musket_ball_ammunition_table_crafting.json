@@ -10,5 +10,7 @@
       }
     }
   ],
-  "result": "immersiveweapons:ventus_musket_ball"
+  "result": {
+    "id": "immersiveweapons:ventus_musket_ball"
+  }
 }

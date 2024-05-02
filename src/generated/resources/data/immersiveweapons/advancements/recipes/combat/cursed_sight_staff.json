@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:cursed_sight_staff_core"
-            ]
+            "items": "immersiveweapons:cursed_sight_staff_core"
           }
         ]
       },

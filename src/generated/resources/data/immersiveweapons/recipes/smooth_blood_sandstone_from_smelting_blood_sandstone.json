@@ -6,5 +6,8 @@
   "ingredient": {
     "item": "immersiveweapons:blood_sandstone"
   },
-  "result": "immersiveweapons:smooth_blood_sandstone"
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:smooth_blood_sandstone"
+  }
 }

@@ -5,7 +5,9 @@
     "tag": "immersiveweapons:ingots/astral"
   },
   "ingot_count": 7,
-  "result": "immersiveweapons:astral_leggings",
+  "result": {
+    "id": "immersiveweapons:astral_leggings"
+  },
   "secondary_material": [],
   "secondary_material_count": 0,
   "smelt_time": 600

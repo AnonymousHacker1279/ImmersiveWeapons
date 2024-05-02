@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:tiltros_portal_frame"
-            ]
+            "items": "immersiveweapons:tiltros_portal_frame"
           }
         ]
       },
@@ -20,7 +18,8 @@
     },
     "hidden": true,
     "icon": {
-      "item": "immersiveweapons:tiltros_portal_frame"
+      "count": 1,
+      "id": "immersiveweapons:tiltros_portal_frame"
     },
     "title": {
       "translate": "advancements.immersiveweapons.tiltros_portal.title"

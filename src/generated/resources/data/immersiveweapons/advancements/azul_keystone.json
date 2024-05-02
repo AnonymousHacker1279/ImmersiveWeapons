@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:azul_keystone"
-            ]
+            "items": "immersiveweapons:azul_keystone"
           }
         ]
       },
@@ -20,7 +18,8 @@
     },
     "hidden": true,
     "icon": {
-      "item": "immersiveweapons:azul_keystone_fragment"
+      "count": 1,
+      "id": "immersiveweapons:azul_keystone_fragment"
     },
     "title": {
       "translate": "advancements.immersiveweapons.azul_keystone.title"

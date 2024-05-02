@@ -10,10 +10,11 @@ import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.EventBusSubscriber.Bus;
+import net.neoforged.neoforge.common.data.AdvancementProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.data.advancements.AdvancementsGenerator;
+import tech.anonymoushacker1279.immersiveweapons.data.advancements.AdvancementGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.data_maps.DataMapsGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.lang.LanguageGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.loot.GlobalLootModifierGenerator;
@@ -53,7 +54,10 @@ public class CustomDataGenerator {
 		DataGenerator generator = event.getGenerator();
 		PackOutput output = generator.getPackOutput();
 
-		CompletableFuture<Provider> lookupProvider = event.getLookupProvider();
+		DatapackRegistriesGenerator datapackGenerator = generator.addProvider(event.includeServer(),
+				new DatapackRegistriesGenerator(output, event.getLookupProvider()));
+
+		CompletableFuture<Provider> lookupProvider = datapackGenerator.getRegistryProvider();
 		ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
 
 		// Client data
@@ -65,7 +69,7 @@ public class CustomDataGenerator {
 		generator.addProvider(event.includeClient(), new TextureMetadataGenerator(output));
 
 		// Server data
-		generator.addProvider(event.includeServer(), new AdvancementsGenerator(output, lookupProvider, existingFileHelper));
+		generator.addProvider(event.includeServer(), new AdvancementProvider(output, lookupProvider, existingFileHelper, List.of(new AdvancementGenerator())));
 		generator.addProvider(event.includeServer(), new LootTableGenerator(output, lookupProvider));
 		generator.addProvider(event.includeServer(), new FamilyGenerator(output, lookupProvider));
 		BlockTagsGenerator blockTagsGenerator = new BlockTagsGenerator(output, lookupProvider, existingFileHelper);
@@ -78,11 +82,8 @@ public class CustomDataGenerator {
 		generator.addProvider(event.includeServer(), new StructureUpdater(existingFileHelper, output));
 		generator.addProvider(event.includeServer(), new TradeDataGenerator(output));
 		generator.addProvider(event.includeServer(), PackMetadataGenerator.forFeaturePack(output, Component.translatable("immersiveweapons.datapack.description")));
-
-		DatapackRegistriesGenerator datapackRegistriesGenerator = new DatapackRegistriesGenerator(output, lookupProvider);
-		generator.addProvider(event.includeServer(), datapackRegistriesGenerator);
-		generator.addProvider(event.includeServer(), new BiomeTagsGenerator(output, datapackRegistriesGenerator.getRegistryProvider(), existingFileHelper));
-		generator.addProvider(event.includeServer(), new DamageTypeTagsGenerator(output, datapackRegistriesGenerator.getRegistryProvider(), existingFileHelper));
+		generator.addProvider(event.includeServer(), new BiomeTagsGenerator(output, lookupProvider, existingFileHelper));
+		generator.addProvider(event.includeServer(), new DamageTypeTagsGenerator(output, lookupProvider, existingFileHelper));
 	}
 
 	private static void prepareLists() {

@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:tesla_sword"
-            ]
+            "items": "immersiveweapons:tesla_sword"
           }
         ]
       },
@@ -20,8 +18,8 @@
     },
     "frame": "goal",
     "icon": {
-      "item": "immersiveweapons:tesla_sword",
-      "nbt": "{Damage:0}"
+      "count": 1,
+      "id": "immersiveweapons:tesla_sword"
     },
     "title": {
       "translate": "advancements.immersiveweapons.tesla_sword.title"

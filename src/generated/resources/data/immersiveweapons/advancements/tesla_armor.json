@@ -5,24 +5,16 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:tesla_helmet"
-            ]
+            "items": "immersiveweapons:tesla_helmet"
           },
           {
-            "items": [
-              "immersiveweapons:tesla_chestplate"
-            ]
+            "items": "immersiveweapons:tesla_chestplate"
           },
           {
-            "items": [
-              "immersiveweapons:tesla_leggings"
-            ]
+            "items": "immersiveweapons:tesla_leggings"
           },
           {
-            "items": [
-              "immersiveweapons:tesla_boots"
-            ]
+            "items": "immersiveweapons:tesla_boots"
           }
         ]
       },
@@ -35,8 +27,8 @@
     },
     "frame": "goal",
     "icon": {
-      "item": "immersiveweapons:tesla_helmet",
-      "nbt": "{Damage:0}"
+      "count": 1,
+      "id": "immersiveweapons:tesla_helmet"
     },
     "title": {
       "translate": "advancements.immersiveweapons.tesla_armor.title"

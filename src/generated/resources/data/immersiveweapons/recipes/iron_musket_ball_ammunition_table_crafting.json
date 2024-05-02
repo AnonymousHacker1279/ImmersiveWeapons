@@ -6,16 +6,18 @@
       "base_multiplier": 2.6,
       "density": 0.79,
       "ingredient": {
-        "tag": "forge:ingots/iron"
+        "tag": "c:ingots/iron"
       }
     },
     {
       "base_multiplier": 0.28,
       "density": 0.09,
       "ingredient": {
-        "tag": "forge:nuggets/iron"
+        "tag": "c:nuggets/iron"
       }
     }
   ],
-  "result": "immersiveweapons:iron_musket_ball"
+  "result": {
+    "id": "immersiveweapons:iron_musket_ball"
+  }
 }

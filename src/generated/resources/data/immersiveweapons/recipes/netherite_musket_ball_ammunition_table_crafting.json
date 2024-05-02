@@ -6,9 +6,11 @@
       "base_multiplier": 2.6,
       "density": 2.5,
       "ingredient": {
-        "tag": "forge:ingots/netherite"
+        "tag": "c:ingots/netherite"
       }
     }
   ],
-  "result": "immersiveweapons:netherite_musket_ball"
+  "result": {
+    "id": "immersiveweapons:netherite_musket_ball"
+  }
 }

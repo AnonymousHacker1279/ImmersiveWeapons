@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:stone_shard"
-            ]
+            "items": "immersiveweapons:stone_shard"
           }
         ]
       },
@@ -20,7 +18,8 @@
     },
     "frame": "goal",
     "icon": {
-      "item": "immersiveweapons:stone_shard"
+      "count": 1,
+      "id": "immersiveweapons:stone_shard"
     },
     "title": {
       "translate": "advancements.immersiveweapons.stone_shard.title"

@@ -9,7 +9,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "biome": "immersiveweapons:battlefield"
+                "biomes": "immersiveweapons:battlefield"
               }
             }
           }
@@ -23,7 +23,8 @@
       "translate": "advancements.immersiveweapons.battlefield.description"
     },
     "icon": {
-      "item": "minecraft:skeleton_skull"
+      "count": 1,
+      "id": "minecraft:skeleton_skull"
     },
     "title": {
       "translate": "advancements.immersiveweapons.battlefield.title"

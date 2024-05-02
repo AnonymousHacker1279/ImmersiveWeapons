@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:tesla_hoe"
-            ]
+            "items": "immersiveweapons:tesla_hoe"
           }
         ]
       },
@@ -20,8 +18,8 @@
     },
     "frame": "challenge",
     "icon": {
-      "item": "immersiveweapons:tesla_hoe",
-      "nbt": "{Damage:0}"
+      "count": 1,
+      "id": "immersiveweapons:tesla_hoe"
     },
     "title": {
       "translate": "advancements.immersiveweapons.tesla_hoe.title"

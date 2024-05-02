@@ -6,7 +6,7 @@
       "base_multiplier": 2.6,
       "density": 0.89,
       "ingredient": {
-        "tag": "forge:ingots/copper"
+        "tag": "c:ingots/copper"
       }
     },
     {
@@ -17,5 +17,7 @@
       }
     }
   ],
-  "result": "immersiveweapons:copper_musket_ball"
+  "result": {
+    "id": "immersiveweapons:copper_musket_ball"
+  }
 }

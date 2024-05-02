@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:bamboo"
-            ]
+            "items": "minecraft:bamboo"
           }
         ]
       },
@@ -19,7 +17,8 @@
       "translate": "advancements.immersiveweapons.bamboo.description"
     },
     "icon": {
-      "item": "minecraft:bamboo"
+      "count": 1,
+      "id": "minecraft:bamboo"
     },
     "title": {
       "translate": "advancements.immersiveweapons.bamboo.title"

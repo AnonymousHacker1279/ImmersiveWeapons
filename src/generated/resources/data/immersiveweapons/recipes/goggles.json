@@ -4,13 +4,13 @@
   "group": "goggles",
   "key": {
     "a": {
-      "tag": "forge:glass_panes"
+      "tag": "c:glass_panes"
     },
     "b": {
-      "tag": "forge:ingots/iron"
+      "tag": "c:ingots/iron"
     },
     "c": {
-      "tag": "forge:string"
+      "tag": "c:strings"
     }
   },
   "pattern": [
@@ -18,6 +18,7 @@
     "aba"
   ],
   "result": {
-    "item": "immersiveweapons:goggles"
+    "count": 1,
+    "id": "immersiveweapons:goggles"
   }
 }

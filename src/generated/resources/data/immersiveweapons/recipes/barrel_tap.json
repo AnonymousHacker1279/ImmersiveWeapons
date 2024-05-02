@@ -4,7 +4,7 @@
   "group": "barrel_tap",
   "key": {
     "a": {
-      "tag": "forge:ingots/iron"
+      "tag": "c:ingots/iron"
     },
     "b": {
       "tag": "forge:nuggets/metal"
@@ -16,6 +16,7 @@
     "  a"
   ],
   "result": {
-    "item": "immersiveweapons:barrel_tap"
+    "count": 1,
+    "id": "immersiveweapons:barrel_tap"
   }
 }

@@ -4,7 +4,7 @@
   "group": "first_aid",
   "key": {
     "a": {
-      "tag": "forge:string"
+      "tag": "c:strings"
     },
     "b": {
       "tag": "minecraft:wool"
@@ -15,6 +15,6 @@
   ],
   "result": {
     "count": 2,
-    "item": "immersiveweapons:bandage"
+    "id": "immersiveweapons:bandage"
   }
 }

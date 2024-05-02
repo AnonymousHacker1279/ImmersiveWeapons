@@ -17,5 +17,7 @@
       }
     }
   ],
-  "result": "immersiveweapons:astral_musket_ball"
+  "result": {
+    "id": "immersiveweapons:astral_musket_ball"
+  }
 }

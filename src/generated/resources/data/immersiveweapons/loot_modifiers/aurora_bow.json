@@ -8,11 +8,8 @@
     }
   ],
   "item": {
-    "Count": 1,
-    "id": "immersiveweapons:aurora_bow",
-    "tag": {
-      "Damage": 0
-    }
+    "count": 1,
+    "id": "immersiveweapons:aurora_bow"
   },
   "max_enchant_levels": 30,
   "max_quantity": 1,

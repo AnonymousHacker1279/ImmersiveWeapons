@@ -4,10 +4,10 @@
   "group": "lights",
   "key": {
     "a": {
-      "tag": "forge:nuggets/iron"
+      "tag": "c:nuggets/iron"
     },
     "b": {
-      "tag": "forge:glass_panes"
+      "tag": "c:glass_panes"
     },
     "c": {
       "item": "immersiveweapons:celestial_fragment"
@@ -19,6 +19,7 @@
     "aba"
   ],
   "result": {
-    "item": "immersiveweapons:celestial_lantern"
+    "count": 1,
+    "id": "immersiveweapons:celestial_lantern"
   }
 }

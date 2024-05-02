@@ -5,7 +5,9 @@
     "tag": "immersiveweapons:ingots/astral"
   },
   "ingot_count": 8,
-  "result": "immersiveweapons:astral_chestplate",
+  "result": {
+    "id": "immersiveweapons:astral_chestplate"
+  },
   "secondary_material": [],
   "secondary_material_count": 0,
   "smelt_time": 600

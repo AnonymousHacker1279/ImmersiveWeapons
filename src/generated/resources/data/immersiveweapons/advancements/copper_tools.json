@@ -9,7 +9,7 @@
             "entity": "this",
             "predicate": {
               "type_specific": {
-                "type": "player",
+                "type": "minecraft:player",
                 "advancements": {
                   "immersiveweapons:copper_axe": true,
                   "immersiveweapons:copper_hoe": true,
@@ -31,7 +31,8 @@
     },
     "frame": "challenge",
     "icon": {
-      "item": "minecraft:copper_block"
+      "count": 1,
+      "id": "minecraft:copper_block"
     },
     "title": {
       "translate": "advancements.immersiveweapons.copper_tools.title"

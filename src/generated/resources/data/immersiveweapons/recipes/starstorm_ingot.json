@@ -16,6 +16,7 @@
     "aaa"
   ],
   "result": {
-    "item": "immersiveweapons:starstorm_ingot"
+    "count": 1,
+    "id": "immersiveweapons:starstorm_ingot"
   }
 }

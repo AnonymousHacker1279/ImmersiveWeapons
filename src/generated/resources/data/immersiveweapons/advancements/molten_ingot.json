@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:molten_ingot"
-            ]
+            "items": "immersiveweapons:molten_ingot"
           }
         ]
       },
@@ -19,7 +17,8 @@
       "translate": "advancements.immersiveweapons.molten_ingot.description"
     },
     "icon": {
-      "item": "immersiveweapons:molten_ingot"
+      "count": 1,
+      "id": "immersiveweapons:molten_ingot"
     },
     "title": {
       "translate": "advancements.immersiveweapons.molten_ingot.title"

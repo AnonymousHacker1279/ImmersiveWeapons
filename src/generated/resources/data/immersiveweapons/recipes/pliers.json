@@ -19,6 +19,7 @@
     "a a"
   ],
   "result": {
-    "item": "immersiveweapons:pliers"
+    "count": 1,
+    "id": "immersiveweapons:pliers"
   }
 }

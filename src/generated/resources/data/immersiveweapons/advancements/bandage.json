@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:bandage"
-            ]
+            "items": "immersiveweapons:bandage"
           }
         ]
       },
@@ -19,7 +17,8 @@
       "translate": "advancements.immersiveweapons.bandage.description"
     },
     "icon": {
-      "item": "immersiveweapons:bandage"
+      "count": 1,
+      "id": "immersiveweapons:bandage"
     },
     "title": {
       "translate": "advancements.immersiveweapons.bandage.title"

@@ -11,9 +11,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:mortar_and_pestle"
-            ]
+            "items": "immersiveweapons:mortar_and_pestle"
           }
         ]
       },

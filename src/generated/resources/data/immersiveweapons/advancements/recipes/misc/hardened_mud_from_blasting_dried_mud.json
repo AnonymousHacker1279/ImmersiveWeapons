@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:dried_mud"
-            ]
+            "items": "immersiveweapons:dried_mud"
           }
         ]
       },

@@ -4,7 +4,7 @@
   "group": "azul_keystone",
   "key": {
     "a": {
-      "tag": "forge:gems/diamond"
+      "tag": "c:gems/diamond"
     },
     "b": {
       "item": "immersiveweapons:azul_keystone_fragment"
@@ -16,6 +16,7 @@
     " b "
   ],
   "result": {
-    "item": "immersiveweapons:azul_keystone"
+    "count": 1,
+    "id": "immersiveweapons:azul_keystone"
   }
 }

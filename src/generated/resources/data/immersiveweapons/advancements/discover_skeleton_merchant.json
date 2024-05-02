@@ -21,7 +21,8 @@
       "translate": "advancements.immersiveweapons.discover_skeleton_merchant.description"
     },
     "icon": {
-      "item": "immersiveweapons:skeleton_merchant_head"
+      "count": 1,
+      "id": "immersiveweapons:skeleton_merchant_head"
     },
     "title": {
       "translate": "advancements.immersiveweapons.discover_skeleton_merchant.title"

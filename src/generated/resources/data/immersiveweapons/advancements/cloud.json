@@ -10,16 +10,12 @@
             "predicate": {
               "equipment": {
                 "feet": {
-                  "items": [
-                    "minecraft:air"
-                  ]
+                  "items": "minecraft:air"
                 }
               },
               "stepping_on": {
                 "block": {
-                  "blocks": [
-                    "immersiveweapons:cloud"
-                  ]
+                  "blocks": "immersiveweapons:cloud"
                 }
               }
             }
@@ -35,7 +31,8 @@
     },
     "frame": "challenge",
     "icon": {
-      "item": "immersiveweapons:cloud"
+      "count": 1,
+      "id": "immersiveweapons:cloud"
     },
     "title": {
       "translate": "advancements.immersiveweapons.cloud.title"

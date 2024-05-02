@@ -7,7 +7,8 @@
     "item": "minecraft:shield"
   },
   "result": {
-    "item": "immersiveweapons:netherite_shield"
+    "count": 1,
+    "id": "immersiveweapons:netherite_shield"
   },
   "template": {
     "item": "minecraft:netherite_upgrade_smithing_template"

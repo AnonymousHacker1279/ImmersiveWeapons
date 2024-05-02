@@ -9,7 +9,7 @@
             "entity": "this",
             "predicate": {
               "type_specific": {
-                "type": "player",
+                "type": "minecraft:player",
                 "advancements": {
                   "immersiveweapons:molten_axe": true,
                   "immersiveweapons:molten_hoe": true,
@@ -31,7 +31,8 @@
     },
     "frame": "challenge",
     "icon": {
-      "item": "immersiveweapons:molten_block"
+      "count": 1,
+      "id": "immersiveweapons:molten_block"
     },
     "title": {
       "translate": "advancements.immersiveweapons.molten_tools.title"

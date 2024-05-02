@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:electric_ingot"
-            ]
+            "items": "immersiveweapons:electric_ingot"
           }
         ]
       },
@@ -19,7 +17,8 @@
       "translate": "advancements.immersiveweapons.electric_ingot.description"
     },
     "icon": {
-      "item": "immersiveweapons:electric_ingot"
+      "count": 1,
+      "id": "immersiveweapons:electric_ingot"
     },
     "title": {
       "translate": "advancements.immersiveweapons.electric_ingot.title"

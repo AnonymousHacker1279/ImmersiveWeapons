@@ -7,7 +7,7 @@
       "item": "immersiveweapons:bulletproof_glass"
     },
     "b": {
-      "tag": "forge:dyes/white"
+      "tag": "c:dyes/white"
     }
   },
   "pattern": [
@@ -17,6 +17,6 @@
   ],
   "result": {
     "count": 8,
-    "item": "immersiveweapons:white_stained_bulletproof_glass"
+    "id": "immersiveweapons:white_stained_bulletproof_glass"
   }
 }

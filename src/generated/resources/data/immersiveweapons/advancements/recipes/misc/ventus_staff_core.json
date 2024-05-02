@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "immersiveweapons:shards/ventus"
+            "items": "#immersiveweapons:shards/ventus"
           }
         ]
       },

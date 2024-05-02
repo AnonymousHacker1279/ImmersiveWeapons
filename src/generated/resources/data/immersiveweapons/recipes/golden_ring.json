@@ -4,7 +4,7 @@
   "group": "ring",
   "key": {
     "a": {
-      "tag": "forge:ingots/gold"
+      "tag": "c:ingots/gold"
     },
     "b": {
       "item": "immersiveweapons:cobalt_ring"
@@ -16,6 +16,7 @@
     " a "
   ],
   "result": {
-    "item": "immersiveweapons:golden_ring"
+    "count": 1,
+    "id": "immersiveweapons:golden_ring"
   }
 }

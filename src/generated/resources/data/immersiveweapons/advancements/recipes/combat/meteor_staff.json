@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:celestial_fragment"
-            ]
+            "items": "immersiveweapons:celestial_fragment"
           }
         ]
       },

@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:astral_block"
-            ]
+            "items": "immersiveweapons:astral_block"
           }
         ]
       },

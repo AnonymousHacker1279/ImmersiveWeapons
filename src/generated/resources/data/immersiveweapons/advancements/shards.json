@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "immersiveweapons:shards/shards"
+            "items": "#immersiveweapons:shards/shards"
           }
         ]
       },
@@ -18,7 +18,8 @@
       "translate": "advancements.immersiveweapons.shards.description"
     },
     "icon": {
-      "item": "immersiveweapons:stone_shard"
+      "count": 1,
+      "id": "immersiveweapons:stone_shard"
     },
     "show_toast": false,
     "title": {

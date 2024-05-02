@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:diamond_shard"
-            ]
+            "items": "immersiveweapons:diamond_shard"
           }
         ]
       },
@@ -20,7 +18,8 @@
     },
     "frame": "goal",
     "icon": {
-      "item": "immersiveweapons:diamond_shard"
+      "count": 1,
+      "id": "immersiveweapons:diamond_shard"
     },
     "title": {
       "translate": "advancements.immersiveweapons.diamond_shard.title"

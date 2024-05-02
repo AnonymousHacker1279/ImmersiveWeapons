@@ -16,6 +16,7 @@
     "b b"
   ],
   "result": {
-    "item": "immersiveweapons:wooden_spikes"
+    "count": 1,
+    "id": "immersiveweapons:wooden_spikes"
   }
 }

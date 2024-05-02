@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "immersiveweapons:shards/wood"
+            "items": "#immersiveweapons:shards/wood"
           }
         ]
       },

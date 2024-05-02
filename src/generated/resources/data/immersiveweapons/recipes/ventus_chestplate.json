@@ -12,6 +12,7 @@
     "aaa"
   ],
   "result": {
-    "item": "immersiveweapons:ventus_chestplate"
+    "count": 1,
+    "id": "immersiveweapons:ventus_chestplate"
   }
 }

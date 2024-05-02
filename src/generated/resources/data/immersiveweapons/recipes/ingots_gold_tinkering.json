@@ -7,6 +7,6 @@
   ],
   "group": "small_parts",
   "material": {
-    "tag": "forge:ingots/gold"
+    "tag": "c:ingots/gold"
   }
 }

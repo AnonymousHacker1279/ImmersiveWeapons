@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:copper_hoe"
-            ]
+            "items": "immersiveweapons:copper_hoe"
           }
         ]
       },
@@ -20,8 +18,8 @@
     },
     "frame": "goal",
     "icon": {
-      "item": "immersiveweapons:copper_hoe",
-      "nbt": "{Damage:0}"
+      "count": 1,
+      "id": "immersiveweapons:copper_hoe"
     },
     "title": {
       "translate": "advancements.immersiveweapons.copper_hoe.title"

@@ -12,6 +12,7 @@
     "aaa"
   ],
   "result": {
-    "item": "immersiveweapons:cobalt_chestplate"
+    "count": 1,
+    "id": "immersiveweapons:cobalt_chestplate"
   }
 }

@@ -10,7 +10,7 @@
       "item": "immersiveweapons:smoke_powder"
     },
     "c": {
-      "tag": "forge:dyes/blue"
+      "tag": "c:dyes/blue"
     }
   },
   "pattern": [
@@ -19,6 +19,6 @@
   ],
   "result": {
     "count": 4,
-    "item": "immersiveweapons:smoke_grenade_arrow_blue"
+    "id": "immersiveweapons:smoke_grenade_arrow_blue"
   }
 }

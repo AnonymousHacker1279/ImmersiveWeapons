@@ -21,7 +21,8 @@
       "translate": "advancements.immersiveweapons.discover_the_commander.description"
     },
     "icon": {
-      "item": "immersiveweapons:the_commander_head"
+      "count": 1,
+      "id": "immersiveweapons:the_commander_head"
     },
     "title": {
       "translate": "advancements.immersiveweapons.discover_the_commander.title"

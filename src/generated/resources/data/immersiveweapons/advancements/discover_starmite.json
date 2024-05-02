@@ -21,7 +21,8 @@
       "translate": "advancements.immersiveweapons.discover_starmite.description"
     },
     "icon": {
-      "item": "immersiveweapons:starstorm_crystal"
+      "count": 1,
+      "id": "immersiveweapons:starstorm_crystal"
     },
     "title": {
       "translate": "advancements.immersiveweapons.discover_starmite.title"

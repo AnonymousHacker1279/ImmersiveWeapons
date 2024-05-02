@@ -7,7 +7,7 @@
       "item": "immersiveweapons:burned_oak_planks"
     },
     "b": {
-      "tag": "forge:rods/wooden"
+      "tag": "c:rods/wooden"
     }
   },
   "pattern": [
@@ -17,6 +17,6 @@
   ],
   "result": {
     "count": 3,
-    "item": "immersiveweapons:burned_oak_sign"
+    "id": "immersiveweapons:burned_oak_sign"
   }
 }

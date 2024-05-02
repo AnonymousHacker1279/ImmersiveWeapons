@@ -5,7 +5,9 @@
     "tag": "immersiveweapons:ingots/astral"
   },
   "ingot_count": 2,
-  "result": "immersiveweapons:astral_sword",
+  "result": {
+    "id": "immersiveweapons:astral_sword"
+  },
   "secondary_material": {
     "item": "immersiveweapons:obsidian_rod"
   },

@@ -18,6 +18,7 @@
     "c c"
   ],
   "result": {
-    "item": "immersiveweapons:spotlight"
+    "count": 1,
+    "id": "immersiveweapons:spotlight"
   }
 }

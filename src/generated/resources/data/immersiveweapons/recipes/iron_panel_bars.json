@@ -4,7 +4,7 @@
   "group": "iron_panel",
   "key": {
     "a": {
-      "tag": "forge:storage_blocks/iron"
+      "tag": "c:storage_blocks/iron"
     },
     "b": {
       "item": "minecraft:iron_bars"
@@ -15,6 +15,6 @@
   ],
   "result": {
     "count": 8,
-    "item": "immersiveweapons:iron_panel_bars"
+    "id": "immersiveweapons:iron_panel_bars"
   }
 }

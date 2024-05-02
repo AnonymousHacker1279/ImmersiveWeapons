@@ -5,24 +5,16 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:astral_helmet"
-            ]
+            "items": "immersiveweapons:astral_helmet"
           },
           {
-            "items": [
-              "immersiveweapons:astral_chestplate"
-            ]
+            "items": "immersiveweapons:astral_chestplate"
           },
           {
-            "items": [
-              "immersiveweapons:astral_leggings"
-            ]
+            "items": "immersiveweapons:astral_leggings"
           },
           {
-            "items": [
-              "immersiveweapons:astral_boots"
-            ]
+            "items": "immersiveweapons:astral_boots"
           }
         ]
       },
@@ -35,8 +27,8 @@
     },
     "frame": "goal",
     "icon": {
-      "item": "immersiveweapons:astral_helmet",
-      "nbt": "{Damage:0}"
+      "count": 1,
+      "id": "immersiveweapons:astral_helmet"
     },
     "title": {
       "translate": "advancements.immersiveweapons.astral_armor.title"

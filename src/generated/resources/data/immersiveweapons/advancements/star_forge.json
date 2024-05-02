@@ -5,24 +5,16 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:star_forge_controller"
-            ]
+            "items": "immersiveweapons:star_forge_controller"
           },
           {
-            "items": [
-              "immersiveweapons:star_forge_bricks"
-            ]
+            "items": "immersiveweapons:star_forge_bricks"
           },
           {
-            "items": [
-              "immersiveweapons:solar_lens"
-            ]
+            "items": "immersiveweapons:solar_lens"
           },
           {
-            "items": [
-              "minecraft:iron_bars"
-            ]
+            "items": "minecraft:iron_bars"
           }
         ]
       },
@@ -34,7 +26,8 @@
       "translate": "advancements.immersiveweapons.star_forge.description"
     },
     "icon": {
-      "item": "immersiveweapons:star_forge_controller"
+      "count": 1,
+      "id": "immersiveweapons:star_forge_controller"
     },
     "title": {
       "translate": "advancements.immersiveweapons.star_forge.title"

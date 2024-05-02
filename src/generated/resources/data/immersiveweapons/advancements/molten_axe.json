@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:molten_axe"
-            ]
+            "items": "immersiveweapons:molten_axe"
           }
         ]
       },
@@ -20,8 +18,8 @@
     },
     "frame": "goal",
     "icon": {
-      "item": "immersiveweapons:molten_axe",
-      "nbt": "{Damage:0}"
+      "count": 1,
+      "id": "immersiveweapons:molten_axe"
     },
     "title": {
       "translate": "advancements.immersiveweapons.molten_axe.title"

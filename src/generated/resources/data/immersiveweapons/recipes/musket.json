@@ -21,6 +21,7 @@
     " c "
   ],
   "result": {
-    "item": "immersiveweapons:musket"
+    "count": 1,
+    "id": "immersiveweapons:musket"
   }
 }

@@ -4,7 +4,7 @@
   "group": "cloth_scrap",
   "key": {
     "a": {
-      "tag": "forge:string"
+      "tag": "c:strings"
     },
     "b": {
       "item": "minecraft:short_grass"
@@ -17,6 +17,6 @@
   ],
   "result": {
     "count": 4,
-    "item": "immersiveweapons:cloth_scrap"
+    "id": "immersiveweapons:cloth_scrap"
   }
 }

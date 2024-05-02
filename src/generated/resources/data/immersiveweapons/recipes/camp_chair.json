@@ -16,6 +16,7 @@
     "a a"
   ],
   "result": {
-    "item": "immersiveweapons:camp_chair"
+    "count": 1,
+    "id": "immersiveweapons:camp_chair"
   }
 }

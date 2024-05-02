@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:hansium_ingot"
-            ]
+            "items": "immersiveweapons:hansium_ingot"
           }
         ]
       },
@@ -19,7 +17,8 @@
       "translate": "advancements.immersiveweapons.hansium_ingot.description"
     },
     "icon": {
-      "item": "immersiveweapons:hansium_ingot"
+      "count": 1,
+      "id": "immersiveweapons:hansium_ingot"
     },
     "title": {
       "translate": "advancements.immersiveweapons.hansium_ingot.title"

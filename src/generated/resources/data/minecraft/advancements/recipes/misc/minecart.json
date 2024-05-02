@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:ingots/metal"
+            "items": "#forge:ingots/metal"
           }
         ]
       },

@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:copper_sword"
-            ]
+            "items": "immersiveweapons:copper_sword"
           }
         ]
       },
@@ -19,8 +17,8 @@
       "translate": "advancements.immersiveweapons.copper_sword.description"
     },
     "icon": {
-      "item": "immersiveweapons:copper_sword",
-      "nbt": "{Damage:0}"
+      "count": 1,
+      "id": "immersiveweapons:copper_sword"
     },
     "title": {
       "translate": "advancements.immersiveweapons.copper_sword.title"

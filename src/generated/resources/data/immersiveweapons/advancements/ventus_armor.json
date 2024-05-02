@@ -5,24 +5,16 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:ventus_helmet"
-            ]
+            "items": "immersiveweapons:ventus_helmet"
           },
           {
-            "items": [
-              "immersiveweapons:ventus_chestplate"
-            ]
+            "items": "immersiveweapons:ventus_chestplate"
           },
           {
-            "items": [
-              "immersiveweapons:ventus_leggings"
-            ]
+            "items": "immersiveweapons:ventus_leggings"
           },
           {
-            "items": [
-              "immersiveweapons:ventus_boots"
-            ]
+            "items": "immersiveweapons:ventus_boots"
           }
         ]
       },
@@ -35,8 +27,8 @@
     },
     "frame": "goal",
     "icon": {
-      "item": "immersiveweapons:ventus_helmet",
-      "nbt": "{Damage:0}"
+      "count": 1,
+      "id": "immersiveweapons:ventus_helmet"
     },
     "title": {
       "translate": "advancements.immersiveweapons.ventus_armor.title"

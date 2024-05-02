@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:first_aid_kit"
-            ]
+            "items": "immersiveweapons:first_aid_kit"
           }
         ]
       },
@@ -20,7 +18,8 @@
     },
     "frame": "goal",
     "icon": {
-      "item": "immersiveweapons:first_aid_kit"
+      "count": 1,
+      "id": "immersiveweapons:first_aid_kit"
     },
     "title": {
       "translate": "advancements.immersiveweapons.first_aid_kit.title"

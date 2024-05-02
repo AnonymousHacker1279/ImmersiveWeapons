@@ -11,9 +11,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:molten_block"
-            ]
+            "items": "immersiveweapons:molten_block"
           }
         ]
       },

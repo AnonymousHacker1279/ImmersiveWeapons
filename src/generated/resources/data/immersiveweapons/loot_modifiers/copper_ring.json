@@ -16,7 +16,7 @@
     }
   ],
   "item": {
-    "Count": 1,
+    "count": 1,
     "id": "immersiveweapons:copper_ring"
   },
   "mob_type": "undead"

@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:the_sword"
-            ]
+            "items": "immersiveweapons:the_sword"
           }
         ]
       },
@@ -20,8 +18,8 @@
     },
     "frame": "challenge",
     "icon": {
-      "item": "immersiveweapons:the_sword",
-      "nbt": "{Damage:0}"
+      "count": 1,
+      "id": "immersiveweapons:the_sword"
     },
     "title": {
       "translate": "advancements.immersiveweapons.the_sword.title"

@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "immersiveweapons:accessories"
+            "items": "#immersiveweapons:accessories"
           }
         ]
       },
@@ -17,7 +17,8 @@
       "translate": "advancements.immersiveweapons.accessories.description"
     },
     "icon": {
-      "item": "immersiveweapons:satchel"
+      "count": 1,
+      "id": "immersiveweapons:satchel"
     },
     "title": {
       "translate": "advancements.immersiveweapons.accessories.title"

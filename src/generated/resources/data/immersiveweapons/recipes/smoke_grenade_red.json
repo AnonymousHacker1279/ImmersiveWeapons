@@ -13,7 +13,7 @@
       "item": "immersiveweapons:smoke_powder"
     },
     "d": {
-      "tag": "forge:dyes/red"
+      "tag": "c:dyes/red"
     }
   },
   "pattern": [
@@ -23,6 +23,6 @@
   ],
   "result": {
     "count": 2,
-    "item": "immersiveweapons:smoke_grenade_red"
+    "id": "immersiveweapons:smoke_grenade_red"
   }
 }

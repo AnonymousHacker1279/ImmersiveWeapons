@@ -3,10 +3,10 @@
   "category": "equipment",
   "key": {
     "a": {
-      "tag": "forge:nuggets/iron"
+      "tag": "c:nuggets/iron"
     },
     "b": {
-      "tag": "forge:ingots/iron"
+      "tag": "c:ingots/iron"
     }
   },
   "pattern": [
@@ -14,6 +14,7 @@
     "b"
   ],
   "result": {
-    "item": "immersiveweapons:iron_pike_head"
+    "count": 1,
+    "id": "immersiveweapons:iron_pike_head"
   }
 }

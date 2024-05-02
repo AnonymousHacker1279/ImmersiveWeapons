@@ -8,7 +8,6 @@ import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.PackOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -27,26 +26,12 @@ import tech.anonymoushacker1279.immersiveweapons.data.dimensions.DimensionGenera
 import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 
-public class AdvancementsGenerator extends AdvancementProvider {
+public record AdvancementGenerator() implements AdvancementProvider.AdvancementGenerator {
 
-	static Provider PROVIDER;
-
-	public AdvancementsGenerator(PackOutput output, CompletableFuture<Provider> provider, ExistingFileHelper exFileHelper) {
-		super(output, provider, exFileHelper, List.of((lookup, consumer, existingFileHelper) -> registerAdvancements(consumer)));
-
-		try {
-			PROVIDER = provider.get();
-		} catch (InterruptedException | ExecutionException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	public static void registerAdvancements(Consumer<AdvancementHolder> consumer) {
+	@Override
+	public void generate(Provider provider, Consumer<AdvancementHolder> consumer, ExistingFileHelper existingFileHelper) {
 		// Root advancement
 		AdvancementHolder root = Builder.advancement()
 				.display(ItemRegistry.TESLA_SWORD.get(),
@@ -1484,7 +1469,7 @@ public class AdvancementsGenerator extends AdvancementProvider {
 				.save(consumer, prefixString("the_sword"));
 
 		// Battlefield advancements
-		HolderGetter<Biome> holderGetter = PROVIDER.lookupOrThrow(Registries.BIOME);
+		HolderGetter<Biome> holderGetter = provider.lookupOrThrow(Registries.BIOME);
 		AdvancementHolder discoverBattlefield = Builder.advancement().parent(root)
 				.display(Blocks.SKELETON_SKULL,
 						createTitle("battlefield"),

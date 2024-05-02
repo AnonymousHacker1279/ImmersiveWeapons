@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "immersiveweapons:burned_oak_logs"
+            "items": "#immersiveweapons:burned_oak_logs"
           }
         ]
       },

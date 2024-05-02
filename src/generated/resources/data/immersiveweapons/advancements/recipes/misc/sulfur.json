@@ -11,9 +11,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:raw_sulfur_block"
-            ]
+            "items": "immersiveweapons:raw_sulfur_block"
           }
         ]
       },

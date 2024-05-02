@@ -11,9 +11,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:musket"
-            ]
+            "items": "immersiveweapons:musket"
           }
         ]
       },

@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:astral_sword"
-            ]
+            "items": "immersiveweapons:astral_sword"
           }
         ]
       },
@@ -20,8 +18,8 @@
     },
     "frame": "goal",
     "icon": {
-      "item": "immersiveweapons:astral_sword",
-      "nbt": "{Damage:0}"
+      "count": 1,
+      "id": "immersiveweapons:astral_sword"
     },
     "title": {
       "translate": "advancements.immersiveweapons.astral_sword.title"

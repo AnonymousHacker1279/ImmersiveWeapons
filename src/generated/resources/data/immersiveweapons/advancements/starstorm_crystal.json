@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:starstorm_crystal"
-            ]
+            "items": "immersiveweapons:starstorm_crystal"
           }
         ]
       },
@@ -19,7 +17,8 @@
       "translate": "advancements.immersiveweapons.starstorm_crystal.description"
     },
     "icon": {
-      "item": "immersiveweapons:starstorm_crystal"
+      "count": 1,
+      "id": "immersiveweapons:starstorm_crystal"
     },
     "title": {
       "translate": "advancements.immersiveweapons.starstorm_crystal.title"

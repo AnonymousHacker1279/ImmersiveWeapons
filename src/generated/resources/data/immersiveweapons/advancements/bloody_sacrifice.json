@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:bloody_sacrifice"
-            ]
+            "items": "immersiveweapons:bloody_sacrifice"
           }
         ]
       },
@@ -20,8 +18,8 @@
     },
     "frame": "challenge",
     "icon": {
-      "item": "immersiveweapons:bloody_sacrifice",
-      "nbt": "{Damage:0}"
+      "count": 1,
+      "id": "immersiveweapons:bloody_sacrifice"
     },
     "title": {
       "translate": "advancements.immersiveweapons.bloody_sacrifice.title"

@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:tesla_synthesizer"
-            ]
+            "items": "immersiveweapons:tesla_synthesizer"
           }
         ]
       },
@@ -19,7 +17,8 @@
       "translate": "advancements.immersiveweapons.tesla_synthesizer.description"
     },
     "icon": {
-      "item": "immersiveweapons:tesla_synthesizer"
+      "count": 1,
+      "id": "immersiveweapons:tesla_synthesizer"
     },
     "title": {
       "translate": "advancements.immersiveweapons.tesla_synthesizer.title"

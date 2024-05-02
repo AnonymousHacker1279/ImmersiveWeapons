@@ -11,9 +11,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:leather_chestplate"
-            ]
+            "items": "minecraft:leather_chestplate"
           }
         ]
       },

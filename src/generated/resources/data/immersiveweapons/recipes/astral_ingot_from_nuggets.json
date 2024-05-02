@@ -13,6 +13,7 @@
     "aaa"
   ],
   "result": {
-    "item": "immersiveweapons:astral_ingot"
+    "count": 1,
+    "id": "immersiveweapons:astral_ingot"
   }
 }

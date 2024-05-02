@@ -7,7 +7,7 @@
       "item": "minecraft:tnt"
     },
     "b": {
-      "tag": "forge:stone"
+      "tag": "c:stones"
     }
   },
   "pattern": [
@@ -16,6 +16,7 @@
     " b "
   ],
   "result": {
-    "item": "immersiveweapons:mortar_shell"
+    "count": 1,
+    "id": "immersiveweapons:mortar_shell"
   }
 }

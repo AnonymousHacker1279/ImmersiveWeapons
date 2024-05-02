@@ -5,7 +5,9 @@
     "tag": "immersiveweapons:ingots/starstorm"
   },
   "ingot_count": 4,
-  "result": "immersiveweapons:starstorm_boots",
+  "result": {
+    "id": "immersiveweapons:starstorm_boots"
+  },
   "secondary_material": [],
   "secondary_material_count": 0,
   "smelt_time": 600

@@ -21,7 +21,8 @@
       "translate": "advancements.immersiveweapons.discover_skygazer.description"
     },
     "icon": {
-      "item": "minecraft:book"
+      "count": 1,
+      "id": "minecraft:book"
     },
     "title": {
       "translate": "advancements.immersiveweapons.discover_skygazer.title"

@@ -5,5 +5,7 @@
     "item": "minecraft:sweet_berries"
   },
   "materialCount": 12,
-  "result": "immersiveweapons:bottle_of_wine"
+  "result": {
+    "id": "immersiveweapons:bottle_of_wine"
+  }
 }

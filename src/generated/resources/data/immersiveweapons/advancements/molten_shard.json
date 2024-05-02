@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:molten_shard"
-            ]
+            "items": "immersiveweapons:molten_shard"
           }
         ]
       },
@@ -19,7 +17,8 @@
       "translate": "advancements.immersiveweapons.molten_shard.description"
     },
     "icon": {
-      "item": "immersiveweapons:molten_shard"
+      "count": 1,
+      "id": "immersiveweapons:molten_shard"
     },
     "title": {
       "translate": "advancements.immersiveweapons.molten_shard.title"

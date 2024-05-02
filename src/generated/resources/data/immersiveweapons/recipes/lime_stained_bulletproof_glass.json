@@ -7,7 +7,7 @@
       "item": "immersiveweapons:bulletproof_glass"
     },
     "b": {
-      "tag": "forge:dyes/lime"
+      "tag": "c:dyes/lime"
     }
   },
   "pattern": [
@@ -17,6 +17,6 @@
   ],
   "result": {
     "count": 8,
-    "item": "immersiveweapons:lime_stained_bulletproof_glass"
+    "id": "immersiveweapons:lime_stained_bulletproof_glass"
   }
 }

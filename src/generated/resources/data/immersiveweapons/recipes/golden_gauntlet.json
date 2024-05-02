@@ -3,7 +3,7 @@
   "category": "equipment",
   "key": {
     "a": {
-      "tag": "forge:ingots/gold"
+      "tag": "c:ingots/gold"
     },
     "b": {
       "item": "immersiveweapons:gauntlet_scaffolding"
@@ -14,6 +14,7 @@
     "aba"
   ],
   "result": {
-    "item": "immersiveweapons:golden_gauntlet"
+    "count": 1,
+    "id": "immersiveweapons:golden_gauntlet"
   }
 }

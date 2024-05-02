@@ -7,7 +7,8 @@
     "item": "immersiveweapons:diamond_gauntlet"
   },
   "result": {
-    "item": "immersiveweapons:netherite_gauntlet"
+    "count": 1,
+    "id": "immersiveweapons:netherite_gauntlet"
   },
   "template": {
     "item": "minecraft:netherite_upgrade_smithing_template"

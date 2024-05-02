@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:netherite_ingot"
-            ]
+            "items": "minecraft:netherite_ingot"
           }
         ]
       },
@@ -19,7 +17,8 @@
       "translate": "advancements.immersiveweapons.netherite_ingot.description"
     },
     "icon": {
-      "item": "minecraft:netherite_ingot"
+      "count": 1,
+      "id": "minecraft:netherite_ingot"
     },
     "title": {
       "translate": "advancements.immersiveweapons.netherite_ingot.title"

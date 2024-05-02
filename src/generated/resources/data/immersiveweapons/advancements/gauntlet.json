@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "immersiveweapons:weapons/gauntlets"
+            "items": "#immersiveweapons:weapons/gauntlets"
           }
         ]
       },
@@ -17,8 +17,8 @@
       "translate": "advancements.immersiveweapons.gauntlet.description"
     },
     "icon": {
-      "item": "immersiveweapons:iron_gauntlet",
-      "nbt": "{Damage:0}"
+      "count": 1,
+      "id": "immersiveweapons:iron_gauntlet"
     },
     "title": {
       "translate": "advancements.immersiveweapons.gauntlet.title"

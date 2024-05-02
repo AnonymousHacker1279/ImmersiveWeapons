@@ -11,9 +11,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:raw_cobalt_block"
-            ]
+            "items": "immersiveweapons:raw_cobalt_block"
           }
         ]
       },

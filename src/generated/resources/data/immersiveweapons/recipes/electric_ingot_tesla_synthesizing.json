@@ -11,5 +11,7 @@
   "material2": {
     "item": "immersiveweapons:conductive_alloy"
   },
-  "result": "immersiveweapons:electric_ingot"
+  "result": {
+    "id": "immersiveweapons:electric_ingot"
+  }
 }

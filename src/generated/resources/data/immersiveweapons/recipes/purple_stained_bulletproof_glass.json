@@ -7,7 +7,7 @@
       "item": "immersiveweapons:bulletproof_glass"
     },
     "b": {
-      "tag": "forge:dyes/purple"
+      "tag": "c:dyes/purple"
     }
   },
   "pattern": [
@@ -17,6 +17,6 @@
   ],
   "result": {
     "count": 8,
-    "item": "immersiveweapons:purple_stained_bulletproof_glass"
+    "id": "immersiveweapons:purple_stained_bulletproof_glass"
   }
 }

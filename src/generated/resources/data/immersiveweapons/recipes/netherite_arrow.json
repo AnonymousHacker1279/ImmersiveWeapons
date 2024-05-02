@@ -7,7 +7,7 @@
       "item": "immersiveweapons:diamond_arrow"
     },
     "b": {
-      "tag": "forge:ingots/netherite"
+      "tag": "c:ingots/netherite"
     }
   },
   "pattern": [
@@ -17,6 +17,6 @@
   ],
   "result": {
     "count": 8,
-    "item": "immersiveweapons:netherite_arrow"
+    "id": "immersiveweapons:netherite_arrow"
   }
 }

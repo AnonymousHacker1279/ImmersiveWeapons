@@ -7,7 +7,7 @@
       "item": "minecraft:glass"
     },
     "b": {
-      "tag": "forge:ingots/iron"
+      "tag": "c:ingots/iron"
     }
   },
   "pattern": [
@@ -17,6 +17,6 @@
   ],
   "result": {
     "count": 8,
-    "item": "immersiveweapons:bulletproof_glass"
+    "id": "immersiveweapons:bulletproof_glass"
   }
 }

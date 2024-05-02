@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:obsidian_shard"
-            ]
+            "items": "immersiveweapons:obsidian_shard"
           }
         ]
       },
@@ -20,7 +18,8 @@
     },
     "frame": "goal",
     "icon": {
-      "item": "immersiveweapons:obsidian_shard"
+      "count": 1,
+      "id": "immersiveweapons:obsidian_shard"
     },
     "title": {
       "translate": "advancements.immersiveweapons.obsidian_shard.title"

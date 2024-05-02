@@ -12,14 +12,14 @@
         {
           "condition": "minecraft:location_check",
           "predicate": {
-            "biome": "immersiveweapons:deadmans_desert"
+            "biomes": "immersiveweapons:deadmans_desert"
           }
         }
       ]
     }
   ],
   "item": {
-    "Count": 1,
+    "count": 1,
     "id": "immersiveweapons:music_disc_deadmans_desert_theme_2"
   },
   "max_enchant_levels": 0,

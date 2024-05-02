@@ -5,7 +5,9 @@
     "tag": "immersiveweapons:ingots/astral"
   },
   "ingot_count": 5,
-  "result": "immersiveweapons:astral_gauntlet",
+  "result": {
+    "id": "immersiveweapons:astral_gauntlet"
+  },
   "secondary_material": {
     "item": "immersiveweapons:gauntlet_scaffolding"
   },

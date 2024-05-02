@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:conductive_alloy"
-            ]
+            "items": "immersiveweapons:conductive_alloy"
           }
         ]
       },
@@ -19,7 +17,8 @@
       "translate": "advancements.immersiveweapons.conductive_alloy.description"
     },
     "icon": {
-      "item": "immersiveweapons:conductive_alloy"
+      "count": 1,
+      "id": "immersiveweapons:conductive_alloy"
     },
     "title": {
       "translate": "advancements.immersiveweapons.conductive_alloy.title"

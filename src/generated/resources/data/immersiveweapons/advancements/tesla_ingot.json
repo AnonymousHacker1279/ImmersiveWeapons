@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:tesla_ingot"
-            ]
+            "items": "immersiveweapons:tesla_ingot"
           }
         ]
       },
@@ -19,7 +17,8 @@
       "translate": "advancements.immersiveweapons.tesla_ingot.description"
     },
     "icon": {
-      "item": "immersiveweapons:tesla_ingot"
+      "count": 1,
+      "id": "immersiveweapons:tesla_ingot"
     },
     "title": {
       "translate": "advancements.immersiveweapons.tesla_ingot.title"

@@ -11,9 +11,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:starstorm_block"
-            ]
+            "items": "immersiveweapons:starstorm_block"
           }
         ]
       },

@@ -5,7 +5,9 @@
     "tag": "immersiveweapons:ingots/starstorm"
   },
   "ingot_count": 5,
-  "result": "immersiveweapons:starstorm_gauntlet",
+  "result": {
+    "id": "immersiveweapons:starstorm_gauntlet"
+  },
   "secondary_material": {
     "item": "immersiveweapons:gauntlet_scaffolding"
   },

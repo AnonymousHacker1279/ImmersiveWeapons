@@ -9,7 +9,7 @@
             "entity": "this",
             "predicate": {
               "type_specific": {
-                "type": "player",
+                "type": "minecraft:player",
                 "advancements": {
                   "immersiveweapons:ventus_axe": true,
                   "immersiveweapons:ventus_hoe": true,
@@ -31,7 +31,8 @@
     },
     "frame": "challenge",
     "icon": {
-      "item": "immersiveweapons:ventus_ore"
+      "count": 1,
+      "id": "immersiveweapons:ventus_ore"
     },
     "title": {
       "translate": "advancements.immersiveweapons.ventus_tools.title"

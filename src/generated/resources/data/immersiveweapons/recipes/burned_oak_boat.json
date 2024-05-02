@@ -12,6 +12,7 @@
     "aaa"
   ],
   "result": {
-    "item": "immersiveweapons:burned_oak_boat"
+    "count": 1,
+    "id": "immersiveweapons:burned_oak_boat"
   }
 }

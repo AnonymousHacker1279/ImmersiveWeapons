@@ -13,6 +13,7 @@
     "aaa"
   ],
   "result": {
-    "item": "immersiveweapons:tesla_block"
+    "count": 1,
+    "id": "immersiveweapons:tesla_block"
   }
 }

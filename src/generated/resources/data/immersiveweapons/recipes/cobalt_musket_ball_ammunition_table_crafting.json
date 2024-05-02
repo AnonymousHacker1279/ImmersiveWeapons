@@ -17,5 +17,7 @@
       }
     }
   ],
-  "result": "immersiveweapons:cobalt_musket_ball"
+  "result": {
+    "id": "immersiveweapons:cobalt_musket_ball"
+  }
 }

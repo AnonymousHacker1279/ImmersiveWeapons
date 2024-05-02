@@ -9,7 +9,7 @@
             "entity": "this",
             "predicate": {
               "type_specific": {
-                "type": "player",
+                "type": "minecraft:player",
                 "advancements": {
                   "immersiveweapons:cobalt_axe": true,
                   "immersiveweapons:cobalt_hoe": true,
@@ -31,7 +31,8 @@
     },
     "frame": "challenge",
     "icon": {
-      "item": "immersiveweapons:cobalt_block"
+      "count": 1,
+      "id": "immersiveweapons:cobalt_block"
     },
     "title": {
       "translate": "advancements.immersiveweapons.cobalt_tools.title"

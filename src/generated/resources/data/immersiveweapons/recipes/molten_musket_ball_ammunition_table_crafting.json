@@ -17,5 +17,7 @@
       }
     }
   ],
-  "result": "immersiveweapons:molten_musket_ball"
+  "result": {
+    "id": "immersiveweapons:molten_musket_ball"
+  }
 }

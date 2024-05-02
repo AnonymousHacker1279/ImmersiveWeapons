@@ -3,10 +3,10 @@
   "category": "equipment",
   "key": {
     "a": {
-      "tag": "forge:nuggets/gold"
+      "tag": "c:nuggets/gold"
     },
     "b": {
-      "tag": "forge:ingots/gold"
+      "tag": "c:ingots/gold"
     }
   },
   "pattern": [
@@ -14,6 +14,7 @@
     "b"
   ],
   "result": {
-    "item": "immersiveweapons:golden_pike_head"
+    "count": 1,
+    "id": "immersiveweapons:golden_pike_head"
   }
 }

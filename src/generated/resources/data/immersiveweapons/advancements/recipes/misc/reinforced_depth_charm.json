@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:depth_charm"
-            ]
+            "items": "immersiveweapons:depth_charm"
           }
         ]
       },

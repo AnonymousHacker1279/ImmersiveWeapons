@@ -16,6 +16,7 @@
     "aaa"
   ],
   "result": {
-    "item": "immersiveweapons:molten_ingot"
+    "count": 1,
+    "id": "immersiveweapons:molten_ingot"
   }
 }

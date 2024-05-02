@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "immersiveweapons:shards/starstorm"
+            "items": "#immersiveweapons:shards/starstorm"
           }
         ]
       },

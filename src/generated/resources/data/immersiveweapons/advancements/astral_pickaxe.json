@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:astral_pickaxe"
-            ]
+            "items": "immersiveweapons:astral_pickaxe"
           }
         ]
       },
@@ -20,8 +18,8 @@
     },
     "frame": "goal",
     "icon": {
-      "item": "immersiveweapons:astral_pickaxe",
-      "nbt": "{Damage:0}"
+      "count": 1,
+      "id": "immersiveweapons:astral_pickaxe"
     },
     "title": {
       "translate": "advancements.immersiveweapons.astral_pickaxe.title"

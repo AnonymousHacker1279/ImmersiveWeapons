@@ -21,7 +21,8 @@
       "translate": "advancements.immersiveweapons.discover_field_medic.description"
     },
     "icon": {
-      "item": "immersiveweapons:field_medic_head"
+      "count": 1,
+      "id": "immersiveweapons:field_medic_head"
     },
     "title": {
       "translate": "advancements.immersiveweapons.discover_field_medic.title"

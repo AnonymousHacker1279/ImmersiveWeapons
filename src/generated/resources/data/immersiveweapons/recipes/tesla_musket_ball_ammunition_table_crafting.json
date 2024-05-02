@@ -17,5 +17,7 @@
       }
     }
   ],
-  "result": "immersiveweapons:tesla_musket_ball"
+  "result": {
+    "id": "immersiveweapons:tesla_musket_ball"
+  }
 }

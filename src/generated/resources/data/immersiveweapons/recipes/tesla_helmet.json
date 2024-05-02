@@ -11,6 +11,7 @@
     "a a"
   ],
   "result": {
-    "item": "immersiveweapons:tesla_helmet"
+    "count": 1,
+    "id": "immersiveweapons:tesla_helmet"
   }
 }

@@ -12,7 +12,8 @@
     "frame": "goal",
     "hidden": true,
     "icon": {
-      "item": "immersiveweapons:mud_ball"
+      "count": 1,
+      "id": "immersiveweapons:mud_ball"
     },
     "title": {
       "translate": "advancements.immersiveweapons.mud_ball.title"

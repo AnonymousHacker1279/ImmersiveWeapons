@@ -4,13 +4,13 @@
   "group": "satchel",
   "key": {
     "a": {
-      "tag": "forge:leather"
+      "tag": "c:leathers"
     },
     "b": {
-      "tag": "forge:string"
+      "tag": "c:strings"
     },
     "c": {
-      "tag": "forge:chests/wooden"
+      "tag": "c:chests/wooden"
     }
   },
   "pattern": [
@@ -19,6 +19,7 @@
     " a "
   ],
   "result": {
-    "item": "immersiveweapons:satchel"
+    "count": 1,
+    "id": "immersiveweapons:satchel"
   }
 }

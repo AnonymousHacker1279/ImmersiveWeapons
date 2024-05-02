@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:netherite_arrow"
-            ]
+            "items": "immersiveweapons:netherite_arrow"
           }
         ]
       },
@@ -17,9 +15,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:netherite_musket_ball"
-            ]
+            "items": "immersiveweapons:netherite_musket_ball"
           }
         ]
       },
@@ -32,7 +28,8 @@
     },
     "frame": "challenge",
     "icon": {
-      "item": "immersiveweapons:netherite_arrow"
+      "count": 1,
+      "id": "immersiveweapons:netherite_arrow"
     },
     "title": {
       "translate": "advancements.immersiveweapons.netherite_projectile.title"

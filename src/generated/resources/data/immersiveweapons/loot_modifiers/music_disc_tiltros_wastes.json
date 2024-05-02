@@ -12,14 +12,14 @@
         {
           "condition": "minecraft:location_check",
           "predicate": {
-            "biome": "immersiveweapons:tiltros_wastes"
+            "biomes": "immersiveweapons:tiltros_wastes"
           }
         }
       ]
     }
   ],
   "item": {
-    "Count": 1,
+    "count": 1,
     "id": "immersiveweapons:music_disc_tiltros_wastes_theme"
   },
   "max_enchant_levels": 0,

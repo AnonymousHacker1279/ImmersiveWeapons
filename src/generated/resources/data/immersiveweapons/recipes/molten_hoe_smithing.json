@@ -7,7 +7,8 @@
     "item": "minecraft:netherite_hoe"
   },
   "result": {
-    "item": "immersiveweapons:molten_hoe"
+    "count": 1,
+    "id": "immersiveweapons:molten_hoe"
   },
   "template": {
     "item": "immersiveweapons:molten_smithing_template"

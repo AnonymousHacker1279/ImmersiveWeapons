@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:bottle_of_alcohol"
-            ]
+            "items": "immersiveweapons:bottle_of_alcohol"
           }
         ]
       },
@@ -19,7 +17,8 @@
       "translate": "advancements.immersiveweapons.bottle_of_alcohol.description"
     },
     "icon": {
-      "item": "immersiveweapons:bottle_of_alcohol"
+      "count": 1,
+      "id": "immersiveweapons:bottle_of_alcohol"
     },
     "title": {
       "translate": "advancements.immersiveweapons.bottle_of_alcohol.title"

@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "immersiveweapons:weapons/pikes"
+            "items": "#immersiveweapons:weapons/pikes"
           }
         ]
       },
@@ -17,8 +17,8 @@
       "translate": "advancements.immersiveweapons.pike.description"
     },
     "icon": {
-      "item": "immersiveweapons:iron_pike",
-      "nbt": "{Damage:0}"
+      "count": 1,
+      "id": "immersiveweapons:iron_pike"
     },
     "title": {
       "translate": "advancements.immersiveweapons.pike.title"

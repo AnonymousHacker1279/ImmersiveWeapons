@@ -5,5 +5,7 @@
     "item": "minecraft:wheat"
   },
   "materialCount": 12,
-  "result": "immersiveweapons:bottle_of_alcohol"
+  "result": {
+    "id": "immersiveweapons:bottle_of_alcohol"
+  }
 }

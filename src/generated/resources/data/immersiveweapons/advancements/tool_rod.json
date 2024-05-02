@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:wooden_tool_rod"
-            ]
+            "items": "immersiveweapons:wooden_tool_rod"
           }
         ]
       },
@@ -19,7 +17,8 @@
       "translate": "advancements.immersiveweapons.tool_rod.description"
     },
     "icon": {
-      "item": "immersiveweapons:wooden_tool_rod"
+      "count": 1,
+      "id": "immersiveweapons:wooden_tool_rod"
     },
     "title": {
       "translate": "advancements.immersiveweapons.tool_rod.title"

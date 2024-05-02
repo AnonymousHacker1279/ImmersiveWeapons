@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:astral_axe"
-            ]
+            "items": "immersiveweapons:astral_axe"
           }
         ]
       },
@@ -20,8 +18,8 @@
     },
     "frame": "goal",
     "icon": {
-      "item": "immersiveweapons:astral_axe",
-      "nbt": "{Damage:0}"
+      "count": 1,
+      "id": "immersiveweapons:astral_axe"
     },
     "title": {
       "translate": "advancements.immersiveweapons.astral_axe.title"

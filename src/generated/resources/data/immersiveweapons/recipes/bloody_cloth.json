@@ -16,6 +16,7 @@
     "aaa"
   ],
   "result": {
-    "item": "immersiveweapons:bloody_cloth"
+    "count": 1,
+    "id": "immersiveweapons:bloody_cloth"
   }
 }

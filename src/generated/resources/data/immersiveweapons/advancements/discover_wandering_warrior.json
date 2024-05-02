@@ -21,7 +21,8 @@
       "translate": "advancements.immersiveweapons.discover_wandering_warrior.description"
     },
     "icon": {
-      "item": "immersiveweapons:wandering_warrior_head"
+      "count": 1,
+      "id": "immersiveweapons:wandering_warrior_head"
     },
     "title": {
       "translate": "advancements.immersiveweapons.discover_wandering_warrior.title"

@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:flag_pole"
-            ]
+            "items": "immersiveweapons:flag_pole"
           }
         ]
       },

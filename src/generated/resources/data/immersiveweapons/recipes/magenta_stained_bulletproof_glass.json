@@ -7,7 +7,7 @@
       "item": "immersiveweapons:bulletproof_glass"
     },
     "b": {
-      "tag": "forge:dyes/magenta"
+      "tag": "c:dyes/magenta"
     }
   },
   "pattern": [
@@ -17,6 +17,6 @@
   ],
   "result": {
     "count": 8,
-    "item": "immersiveweapons:magenta_stained_bulletproof_glass"
+    "id": "immersiveweapons:magenta_stained_bulletproof_glass"
   }
 }

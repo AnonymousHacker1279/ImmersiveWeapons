@@ -4,10 +4,10 @@
   "group": "firearm",
   "key": {
     "a": {
-      "tag": "forge:ingots/iron"
+      "tag": "c:ingots/iron"
     },
     "b": {
-      "tag": "forge:ingots/copper"
+      "tag": "c:ingots/copper"
     }
   },
   "pattern": [
@@ -17,6 +17,6 @@
   ],
   "result": {
     "count": 2,
-    "item": "immersiveweapons:cannonball"
+    "id": "immersiveweapons:cannonball"
   }
 }

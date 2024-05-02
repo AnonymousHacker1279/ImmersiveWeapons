@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:ventus_shard"
-            ]
+            "items": "immersiveweapons:ventus_shard"
           }
         ]
       },
@@ -19,7 +17,8 @@
       "translate": "advancements.immersiveweapons.ventus_shard.description"
     },
     "icon": {
-      "item": "immersiveweapons:ventus_shard"
+      "count": 1,
+      "id": "immersiveweapons:ventus_shard"
     },
     "title": {
       "translate": "advancements.immersiveweapons.ventus_shard.title"

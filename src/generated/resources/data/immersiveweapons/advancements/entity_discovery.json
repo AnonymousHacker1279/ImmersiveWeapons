@@ -232,7 +232,8 @@
     },
     "frame": "goal",
     "icon": {
-      "item": "minecraft:creeper_head"
+      "count": 1,
+      "id": "minecraft:creeper_head"
     },
     "title": {
       "translate": "advancements.immersiveweapons.entity_discovery.title"

@@ -4,5 +4,7 @@
   "group": "piston_crushing",
   "maxCount": 4,
   "minCount": 2,
-  "result": "immersiveweapons:starstorm_shard"
+  "result": {
+    "id": "immersiveweapons:starstorm_shard"
+  }
 }

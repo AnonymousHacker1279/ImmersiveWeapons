@@ -135,11 +135,12 @@
               "name": {
                 "color": "gold",
                 "translate": "loot.immersiveweapons.entity.super_hans.super_healing_potion"
-              }
+              },
+              "target": "item_name"
             },
             {
-              "function": "minecraft:set_nbt",
-              "tag": "{CustomPotionColor:6684672,CustomPotionEffects:[{Amplifier:2b,Duration:0,Id:6,ShowParticles:1b}],Potion:\"minecraft:empty\"}"
+              "function": "minecraft:set_potion",
+              "id": "immersiveweapons:super_healing"
             }
           ],
           "name": "minecraft:potion",
@@ -170,11 +171,12 @@
               "name": {
                 "color": "gold",
                 "translate": "loot.immersiveweapons.entity.super_hans.super_regeneration_potion"
-              }
+              },
+              "target": "item_name"
             },
             {
-              "function": "minecraft:set_nbt",
-              "tag": "{CustomPotionColor:12719124,CustomPotionEffects:[{Amplifier:2b,Duration:300,Id:10,ShowParticles:1b}],Potion:\"minecraft:empty\"}"
+              "function": "minecraft:set_potion",
+              "id": "immersiveweapons:super_regeneration"
             }
           ],
           "name": "minecraft:potion",
@@ -205,11 +207,12 @@
               "name": {
                 "color": "gold",
                 "translate": "loot.immersiveweapons.entity.super_hans.super_healing_potion"
-              }
+              },
+              "target": "item_name"
             },
             {
-              "function": "minecraft:set_nbt",
-              "tag": "{CustomPotionColor:6684672,CustomPotionEffects:[{Amplifier:3b,Duration:0,Id:6,ShowParticles:1b}],Potion:\"minecraft:empty\"}"
+              "function": "minecraft:set_potion",
+              "id": "immersiveweapons:ultra_healing"
             }
           ],
           "name": "minecraft:potion",
@@ -236,11 +239,12 @@
               "name": {
                 "color": "gold",
                 "translate": "loot.immersiveweapons.entity.super_hans.super_regeneration_potion"
-              }
+              },
+              "target": "item_name"
             },
             {
-              "function": "minecraft:set_nbt",
-              "tag": "{CustomPotionColor:12719124,CustomPotionEffects:[{Amplifier:3b,Duration:200,Id:10,ShowParticles:1b}],Potion:\"minecraft:empty\"}"
+              "function": "minecraft:set_potion",
+              "id": "immersiveweapons:ultra_regeneration"
             }
           ],
           "name": "minecraft:potion",

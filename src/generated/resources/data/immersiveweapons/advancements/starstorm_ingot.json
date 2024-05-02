@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:starstorm_ingot"
-            ]
+            "items": "immersiveweapons:starstorm_ingot"
           }
         ]
       },
@@ -19,7 +17,8 @@
       "translate": "advancements.immersiveweapons.starstorm_ingot.description"
     },
     "icon": {
-      "item": "immersiveweapons:starstorm_ingot"
+      "count": 1,
+      "id": "immersiveweapons:starstorm_ingot"
     },
     "title": {
       "translate": "advancements.immersiveweapons.starstorm_ingot.title"

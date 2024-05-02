@@ -22,6 +22,7 @@
     "a  "
   ],
   "result": {
-    "item": "immersiveweapons:immersive_weapons_flag"
+    "count": 1,
+    "id": "immersiveweapons:immersive_weapons_flag"
   }
 }

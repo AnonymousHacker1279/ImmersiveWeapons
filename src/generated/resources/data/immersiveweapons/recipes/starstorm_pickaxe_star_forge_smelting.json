@@ -5,7 +5,9 @@
     "tag": "immersiveweapons:ingots/starstorm"
   },
   "ingot_count": 3,
-  "result": "immersiveweapons:starstorm_pickaxe",
+  "result": {
+    "id": "immersiveweapons:starstorm_pickaxe"
+  },
   "secondary_material": {
     "item": "immersiveweapons:obsidian_rod"
   },

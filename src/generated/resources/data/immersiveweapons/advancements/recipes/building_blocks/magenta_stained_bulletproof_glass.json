@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:bulletproof_glass"
-            ]
+            "items": "immersiveweapons:bulletproof_glass"
           }
         ]
       },

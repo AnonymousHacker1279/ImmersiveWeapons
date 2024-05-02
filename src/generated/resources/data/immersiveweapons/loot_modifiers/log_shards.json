@@ -5,14 +5,14 @@
     {
       "condition": "minecraft:match_tool",
       "predicate": {
-        "tag": "minecraft:pickaxes"
+        "items": "#minecraft:pickaxes"
       }
     }
   ],
   "maxShards": 5,
   "minShards": 2,
   "replacement": {
-    "Count": 1,
+    "count": 1,
     "id": "immersiveweapons:wooden_shard"
   }
 }

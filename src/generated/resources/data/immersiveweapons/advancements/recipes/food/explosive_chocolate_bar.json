@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:chocolate_bar"
-            ]
+            "items": "immersiveweapons:chocolate_bar"
           }
         ]
       },

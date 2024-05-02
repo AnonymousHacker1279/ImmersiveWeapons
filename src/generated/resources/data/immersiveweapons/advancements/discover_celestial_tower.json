@@ -21,7 +21,8 @@
       "translate": "advancements.immersiveweapons.discover_celestial_tower.description"
     },
     "icon": {
-      "item": "immersiveweapons:celestial_fragment"
+      "count": 1,
+      "id": "immersiveweapons:celestial_fragment"
     },
     "title": {
       "translate": "advancements.immersiveweapons.discover_celestial_tower.title"

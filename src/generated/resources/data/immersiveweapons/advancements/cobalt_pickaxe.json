@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:cobalt_pickaxe"
-            ]
+            "items": "immersiveweapons:cobalt_pickaxe"
           }
         ]
       },
@@ -19,8 +17,8 @@
       "translate": "advancements.immersiveweapons.cobalt_pickaxe.description"
     },
     "icon": {
-      "item": "immersiveweapons:cobalt_pickaxe",
-      "nbt": "{Damage:0}"
+      "count": 1,
+      "id": "immersiveweapons:cobalt_pickaxe"
     },
     "title": {
       "translate": "advancements.immersiveweapons.cobalt_pickaxe.title"

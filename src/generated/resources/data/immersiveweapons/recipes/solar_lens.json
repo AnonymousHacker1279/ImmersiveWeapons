@@ -7,7 +7,7 @@
       "tag": "forge:ingots/cobalt"
     },
     "b": {
-      "tag": "forge:glass_panes"
+      "tag": "c:glass_panes"
     }
   },
   "pattern": [
@@ -16,6 +16,7 @@
     " a "
   ],
   "result": {
-    "item": "immersiveweapons:solar_lens"
+    "count": 1,
+    "id": "immersiveweapons:solar_lens"
   }
 }

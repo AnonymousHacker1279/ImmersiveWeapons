@@ -6,7 +6,7 @@
       "tag": "immersiveweapons:shards/diamond"
     },
     "b": {
-      "tag": "forge:gems/diamond"
+      "tag": "c:gems/diamond"
     }
   },
   "pattern": [
@@ -14,6 +14,7 @@
     "b"
   ],
   "result": {
-    "item": "immersiveweapons:diamond_pike_head"
+    "count": 1,
+    "id": "immersiveweapons:diamond_pike_head"
   }
 }

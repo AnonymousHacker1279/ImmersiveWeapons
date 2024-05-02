@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:azul_keystone_fragment"
-            ]
+            "items": "immersiveweapons:azul_keystone_fragment"
           }
         ]
       },

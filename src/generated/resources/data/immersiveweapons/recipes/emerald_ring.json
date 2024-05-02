@@ -4,7 +4,7 @@
   "group": "ring",
   "key": {
     "a": {
-      "tag": "forge:gems/emerald"
+      "tag": "c:gems/emerald"
     },
     "b": {
       "item": "immersiveweapons:golden_ring"
@@ -15,6 +15,7 @@
     " b "
   ],
   "result": {
-    "item": "immersiveweapons:emerald_ring"
+    "count": 1,
+    "id": "immersiveweapons:emerald_ring"
   }
 }

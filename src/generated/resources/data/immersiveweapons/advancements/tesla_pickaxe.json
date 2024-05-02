@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:tesla_pickaxe"
-            ]
+            "items": "immersiveweapons:tesla_pickaxe"
           }
         ]
       },
@@ -20,8 +18,8 @@
     },
     "frame": "goal",
     "icon": {
-      "item": "immersiveweapons:tesla_pickaxe",
-      "nbt": "{Damage:0}"
+      "count": 1,
+      "id": "immersiveweapons:tesla_pickaxe"
     },
     "title": {
       "translate": "advancements.immersiveweapons.tesla_pickaxe.title"

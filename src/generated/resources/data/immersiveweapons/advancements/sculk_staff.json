@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:sculk_staff"
-            ]
+            "items": "immersiveweapons:sculk_staff"
           }
         ]
       },
@@ -20,8 +18,8 @@
     },
     "frame": "challenge",
     "icon": {
-      "item": "immersiveweapons:sculk_staff",
-      "nbt": "{Damage:0}"
+      "count": 1,
+      "id": "immersiveweapons:sculk_staff"
     },
     "title": {
       "translate": "advancements.immersiveweapons.sculk_staff.title"

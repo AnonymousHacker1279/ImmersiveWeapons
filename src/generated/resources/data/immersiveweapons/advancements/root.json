@@ -24,8 +24,8 @@
       "translate": "advancements.immersiveweapons.root.description"
     },
     "icon": {
-      "item": "immersiveweapons:tesla_sword",
-      "nbt": "{Damage:0}"
+      "count": 1,
+      "id": "immersiveweapons:tesla_sword"
     },
     "show_toast": false,
     "title": {

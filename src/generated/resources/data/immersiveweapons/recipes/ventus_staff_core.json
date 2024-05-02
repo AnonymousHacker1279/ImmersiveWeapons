@@ -7,7 +7,7 @@
       "tag": "immersiveweapons:shards/ventus"
     },
     "b": {
-      "tag": "forge:gems/diamond"
+      "tag": "c:gems/diamond"
     }
   },
   "pattern": [
@@ -16,6 +16,7 @@
     "aaa"
   ],
   "result": {
-    "item": "immersiveweapons:ventus_staff_core"
+    "count": 1,
+    "id": "immersiveweapons:ventus_staff_core"
   }
 }

@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:cobalt_ingot"
-            ]
+            "items": "immersiveweapons:cobalt_ingot"
           }
         ]
       },
@@ -19,7 +17,8 @@
       "translate": "advancements.immersiveweapons.cobalt_ingot.description"
     },
     "icon": {
-      "item": "immersiveweapons:cobalt_ingot"
+      "count": 1,
+      "id": "immersiveweapons:cobalt_ingot"
     },
     "title": {
       "translate": "advancements.immersiveweapons.cobalt_ingot.title"

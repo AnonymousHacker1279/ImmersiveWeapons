@@ -11,9 +11,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:leather_leggings"
-            ]
+            "items": "minecraft:leather_leggings"
           }
         ]
       },

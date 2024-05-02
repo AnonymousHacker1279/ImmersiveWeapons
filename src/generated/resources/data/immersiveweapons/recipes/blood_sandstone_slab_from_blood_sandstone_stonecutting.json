@@ -1,8 +1,10 @@
 {
   "type": "minecraft:stonecutting",
-  "count": 2,
   "ingredient": {
     "item": "immersiveweapons:blood_sandstone"
   },
-  "result": "immersiveweapons:blood_sandstone_slab"
+  "result": {
+    "count": 2,
+    "id": "immersiveweapons:blood_sandstone_slab"
+  }
 }

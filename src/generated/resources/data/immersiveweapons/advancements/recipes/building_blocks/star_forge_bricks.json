@@ -11,9 +11,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:moonglow"
-            ]
+            "items": "immersiveweapons:moonglow"
           }
         ]
       },

@@ -7,7 +7,7 @@
       "tag": "immersiveweapons:ingots/molten"
     },
     "b": {
-      "tag": "forge:obsidian"
+      "tag": "c:obsidians"
     }
   },
   "pattern": [
@@ -16,6 +16,7 @@
     " a "
   ],
   "result": {
-    "item": "immersiveweapons:molten_smithing_template"
+    "count": 1,
+    "id": "immersiveweapons:molten_smithing_template"
   }
 }

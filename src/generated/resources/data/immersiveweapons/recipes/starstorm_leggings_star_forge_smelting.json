@@ -5,7 +5,9 @@
     "tag": "immersiveweapons:ingots/starstorm"
   },
   "ingot_count": 7,
-  "result": "immersiveweapons:starstorm_leggings",
+  "result": {
+    "id": "immersiveweapons:starstorm_leggings"
+  },
   "secondary_material": [],
   "secondary_material_count": 0,
   "smelt_time": 600

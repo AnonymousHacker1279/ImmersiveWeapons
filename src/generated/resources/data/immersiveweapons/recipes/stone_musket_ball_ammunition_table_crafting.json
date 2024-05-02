@@ -10,5 +10,7 @@
       }
     }
   ],
-  "result": "immersiveweapons:stone_musket_ball"
+  "result": {
+    "id": "immersiveweapons:stone_musket_ball"
+  }
 }

@@ -22,7 +22,8 @@
               "name": {
                 "color": "dark_purple",
                 "translate": "loot.immersiveweapons.entity.hans.iron_sword"
-              }
+              },
+              "target": "item_name"
             }
           ],
           "name": "minecraft:iron_sword"

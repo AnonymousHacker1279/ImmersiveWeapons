@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:starstorm_sword"
-            ]
+            "items": "immersiveweapons:starstorm_sword"
           }
         ]
       },
@@ -19,8 +17,8 @@
       "translate": "advancements.immersiveweapons.starstorm_sword.description"
     },
     "icon": {
-      "item": "immersiveweapons:starstorm_sword",
-      "nbt": "{Damage:0}"
+      "count": 1,
+      "id": "immersiveweapons:starstorm_sword"
     },
     "title": {
       "translate": "advancements.immersiveweapons.starstorm_sword.title"

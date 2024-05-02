@@ -69,7 +69,8 @@
               "name": {
                 "color": "red",
                 "translate": "loot.immersiveweapons.chest.village.battlefield.medic_station.iron_axe"
-              }
+              },
+              "target": "item_name"
             }
           ],
           "name": "minecraft:iron_axe",

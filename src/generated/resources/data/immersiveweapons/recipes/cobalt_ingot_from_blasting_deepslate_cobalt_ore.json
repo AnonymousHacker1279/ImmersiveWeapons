@@ -7,5 +7,8 @@
   "ingredient": {
     "item": "immersiveweapons:deepslate_cobalt_ore"
   },
-  "result": "immersiveweapons:cobalt_ingot"
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:cobalt_ingot"
+  }
 }

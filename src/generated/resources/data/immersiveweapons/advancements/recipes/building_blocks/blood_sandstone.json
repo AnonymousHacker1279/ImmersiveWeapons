@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:blood_sand"
-            ]
+            "items": "immersiveweapons:blood_sand"
           }
         ]
       },

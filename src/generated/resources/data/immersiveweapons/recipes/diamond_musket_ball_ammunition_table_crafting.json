@@ -10,5 +10,7 @@
       }
     }
   ],
-  "result": "immersiveweapons:diamond_musket_ball"
+  "result": {
+    "id": "immersiveweapons:diamond_musket_ball"
+  }
 }

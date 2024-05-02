@@ -11,9 +11,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:painkillers"
-            ]
+            "items": "immersiveweapons:painkillers"
           }
         ]
       },

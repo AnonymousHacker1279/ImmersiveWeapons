@@ -4,16 +4,17 @@
   "group": "conductive_alloy",
   "key": {
     "a": {
-      "tag": "forge:ingots/copper"
+      "tag": "c:ingots/copper"
     },
     "b": {
-      "tag": "forge:ingots/gold"
+      "tag": "c:ingots/gold"
     }
   },
   "pattern": [
     "ab"
   ],
   "result": {
-    "item": "immersiveweapons:conductive_alloy"
+    "count": 1,
+    "id": "immersiveweapons:conductive_alloy"
   }
 }

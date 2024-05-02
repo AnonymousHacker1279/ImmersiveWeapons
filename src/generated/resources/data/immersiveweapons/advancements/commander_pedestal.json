@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:commander_pedestal"
-            ]
+            "items": "immersiveweapons:commander_pedestal"
           }
         ]
       },
@@ -20,7 +18,8 @@
     },
     "frame": "goal",
     "icon": {
-      "item": "immersiveweapons:commander_pedestal"
+      "count": 1,
+      "id": "immersiveweapons:commander_pedestal"
     },
     "title": {
       "translate": "advancements.immersiveweapons.commander_pedestal.title"

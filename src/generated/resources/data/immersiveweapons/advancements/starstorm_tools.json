@@ -9,7 +9,7 @@
             "entity": "this",
             "predicate": {
               "type_specific": {
-                "type": "player",
+                "type": "minecraft:player",
                 "advancements": {
                   "immersiveweapons:starstorm_axe": true,
                   "immersiveweapons:starstorm_hoe": true,
@@ -31,7 +31,8 @@
     },
     "frame": "challenge",
     "icon": {
-      "item": "immersiveweapons:starstorm_block"
+      "count": 1,
+      "id": "immersiveweapons:starstorm_block"
     },
     "title": {
       "translate": "advancements.immersiveweapons.starstorm_tools.title"

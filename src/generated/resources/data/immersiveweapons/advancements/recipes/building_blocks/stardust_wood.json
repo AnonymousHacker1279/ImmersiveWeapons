@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "immersiveweapons:stardust_logs"
+            "items": "#immersiveweapons:stardust_logs"
           }
         ]
       },

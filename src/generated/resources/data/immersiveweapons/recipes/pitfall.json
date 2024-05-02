@@ -18,6 +18,7 @@
     "aaa"
   ],
   "result": {
-    "item": "immersiveweapons:pitfall"
+    "count": 1,
+    "id": "immersiveweapons:pitfall"
   }
 }

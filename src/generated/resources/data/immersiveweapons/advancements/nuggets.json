@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "forge:nuggets"
+            "items": "#c:nuggets"
           }
         ]
       },
@@ -18,7 +18,8 @@
       "translate": "advancements.immersiveweapons.nuggets.description"
     },
     "icon": {
-      "item": "minecraft:gold_nugget"
+      "count": 1,
+      "id": "minecraft:gold_nugget"
     },
     "show_toast": false,
     "title": {

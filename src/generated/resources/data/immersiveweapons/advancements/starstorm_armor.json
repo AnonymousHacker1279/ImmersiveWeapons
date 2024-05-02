@@ -5,24 +5,16 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:starstorm_helmet"
-            ]
+            "items": "immersiveweapons:starstorm_helmet"
           },
           {
-            "items": [
-              "immersiveweapons:starstorm_chestplate"
-            ]
+            "items": "immersiveweapons:starstorm_chestplate"
           },
           {
-            "items": [
-              "immersiveweapons:starstorm_leggings"
-            ]
+            "items": "immersiveweapons:starstorm_leggings"
           },
           {
-            "items": [
-              "immersiveweapons:starstorm_boots"
-            ]
+            "items": "immersiveweapons:starstorm_boots"
           }
         ]
       },
@@ -35,8 +27,8 @@
     },
     "frame": "goal",
     "icon": {
-      "item": "immersiveweapons:starstorm_helmet",
-      "nbt": "{Damage:0}"
+      "count": 1,
+      "id": "immersiveweapons:starstorm_helmet"
     },
     "title": {
       "translate": "advancements.immersiveweapons.starstorm_armor.title"

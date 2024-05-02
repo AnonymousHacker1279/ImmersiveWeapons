@@ -33,6 +33,6 @@
   ],
   "result": {
     "count": 4,
-    "item": "minecraft:gunpowder"
+    "id": "minecraft:gunpowder"
   }
 }

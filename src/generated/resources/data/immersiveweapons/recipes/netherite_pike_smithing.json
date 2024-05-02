@@ -7,7 +7,8 @@
     "item": "immersiveweapons:diamond_pike"
   },
   "result": {
-    "item": "immersiveweapons:netherite_pike"
+    "count": 1,
+    "id": "immersiveweapons:netherite_pike"
   },
   "template": {
     "item": "minecraft:netherite_upgrade_smithing_template"

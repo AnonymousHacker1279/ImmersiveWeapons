@@ -21,7 +21,8 @@
       "translate": "advancements.immersiveweapons.discover_rock_spider.description"
     },
     "icon": {
-      "item": "minecraft:spider_eye"
+      "count": 1,
+      "id": "minecraft:spider_eye"
     },
     "title": {
       "translate": "advancements.immersiveweapons.discover_rock_spider.title"

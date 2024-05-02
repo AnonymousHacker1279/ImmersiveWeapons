@@ -12,7 +12,8 @@
     "frame": "challenge",
     "hidden": true,
     "icon": {
-      "item": "immersiveweapons:kill_counter"
+      "count": 1,
+      "id": "immersiveweapons:kill_counter"
     },
     "title": {
       "translate": "advancements.immersiveweapons.kill_counter.title"

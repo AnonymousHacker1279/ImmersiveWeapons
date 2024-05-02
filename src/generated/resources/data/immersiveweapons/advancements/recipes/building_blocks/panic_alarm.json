@@ -11,9 +11,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "minecraft:note_block"
-            ]
+            "items": "minecraft:note_block"
           }
         ]
       },

@@ -12,7 +12,8 @@
     "frame": "challenge",
     "hidden": true,
     "icon": {
-      "item": "immersiveweapons:astral_musket_ball"
+      "count": 1,
+      "id": "immersiveweapons:astral_musket_ball"
     },
     "title": {
       "translate": "advancements.immersiveweapons.firearm_long_range.title"

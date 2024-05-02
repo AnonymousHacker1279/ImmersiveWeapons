@@ -1,8 +1,8 @@
 plugins {
 	id 'java-library'
 	id 'maven-publish'
-	id 'net.neoforged.gradle.userdev' version '7.0.116'
-	id "com.hypherionmc.modutils.modpublisher" version "2.1.1"
+	id 'net.neoforged.gradle.userdev' version '7.0.118'
+	id "com.hypherionmc.modutils.modpublisher" version "2.1.2"
 	id 'idea'
 }
 

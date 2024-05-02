@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:tesla_shovel"
-            ]
+            "items": "immersiveweapons:tesla_shovel"
           }
         ]
       },
@@ -20,8 +18,8 @@
     },
     "frame": "goal",
     "icon": {
-      "item": "immersiveweapons:tesla_shovel",
-      "nbt": "{Damage:0}"
+      "count": 1,
+      "id": "immersiveweapons:tesla_shovel"
     },
     "title": {
       "translate": "advancements.immersiveweapons.tesla_shovel.title"

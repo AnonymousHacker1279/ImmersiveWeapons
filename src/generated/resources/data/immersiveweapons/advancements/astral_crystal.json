@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:astral_crystal"
-            ]
+            "items": "immersiveweapons:astral_crystal"
           }
         ]
       },
@@ -19,7 +17,8 @@
       "translate": "advancements.immersiveweapons.astral_crystal.description"
     },
     "icon": {
-      "item": "immersiveweapons:astral_crystal"
+      "count": 1,
+      "id": "immersiveweapons:astral_crystal"
     },
     "title": {
       "translate": "advancements.immersiveweapons.astral_crystal.title"

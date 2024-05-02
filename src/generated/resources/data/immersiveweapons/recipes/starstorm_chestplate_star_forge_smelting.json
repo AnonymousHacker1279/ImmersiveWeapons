@@ -5,7 +5,9 @@
     "tag": "immersiveweapons:ingots/starstorm"
   },
   "ingot_count": 8,
-  "result": "immersiveweapons:starstorm_chestplate",
+  "result": {
+    "id": "immersiveweapons:starstorm_chestplate"
+  },
   "secondary_material": [],
   "secondary_material_count": 0,
   "smelt_time": 600

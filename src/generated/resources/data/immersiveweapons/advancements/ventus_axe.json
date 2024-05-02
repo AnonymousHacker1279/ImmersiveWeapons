@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:ventus_axe"
-            ]
+            "items": "immersiveweapons:ventus_axe"
           }
         ]
       },
@@ -20,8 +18,8 @@
     },
     "frame": "goal",
     "icon": {
-      "item": "immersiveweapons:ventus_axe",
-      "nbt": "{Damage:0}"
+      "count": 1,
+      "id": "immersiveweapons:ventus_axe"
     },
     "title": {
       "translate": "advancements.immersiveweapons.ventus_axe.title"

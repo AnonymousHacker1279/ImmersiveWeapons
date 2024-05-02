@@ -21,7 +21,8 @@
       "translate": "advancements.immersiveweapons.discover_storm_creeper.description"
     },
     "icon": {
-      "item": "immersiveweapons:storm_creeper_head"
+      "count": 1,
+      "id": "immersiveweapons:storm_creeper_head"
     },
     "title": {
       "translate": "advancements.immersiveweapons.discover_storm_creeper.title"

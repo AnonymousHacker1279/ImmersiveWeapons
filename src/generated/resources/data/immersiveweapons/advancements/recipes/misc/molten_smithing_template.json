@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "immersiveweapons:ingots/molten"
+            "items": "#immersiveweapons:ingots/molten"
           }
         ]
       },

@@ -17,5 +17,7 @@
       }
     }
   ],
-  "result": "immersiveweapons:starstorm_musket_ball"
+  "result": {
+    "id": "immersiveweapons:starstorm_musket_ball"
+  }
 }

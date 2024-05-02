@@ -5,24 +5,16 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:molten_helmet"
-            ]
+            "items": "immersiveweapons:molten_helmet"
           },
           {
-            "items": [
-              "immersiveweapons:molten_chestplate"
-            ]
+            "items": "immersiveweapons:molten_chestplate"
           },
           {
-            "items": [
-              "immersiveweapons:molten_leggings"
-            ]
+            "items": "immersiveweapons:molten_leggings"
           },
           {
-            "items": [
-              "immersiveweapons:molten_boots"
-            ]
+            "items": "immersiveweapons:molten_boots"
           }
         ]
       },
@@ -35,8 +27,8 @@
     },
     "frame": "goal",
     "icon": {
-      "item": "immersiveweapons:molten_helmet",
-      "nbt": "{Damage:0}"
+      "count": 1,
+      "id": "immersiveweapons:molten_helmet"
     },
     "title": {
       "translate": "advancements.immersiveweapons.molten_armor.title"

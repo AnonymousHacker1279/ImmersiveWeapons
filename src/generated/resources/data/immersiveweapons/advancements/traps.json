@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:bear_trap"
-            ]
+            "items": "immersiveweapons:bear_trap"
           }
         ]
       },
@@ -17,9 +15,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:punji_sticks"
-            ]
+            "items": "immersiveweapons:punji_sticks"
           }
         ]
       },
@@ -29,9 +25,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:landmine"
-            ]
+            "items": "immersiveweapons:landmine"
           }
         ]
       },
@@ -41,9 +35,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:bear_trap"
-            ]
+            "items": "immersiveweapons:bear_trap"
           }
         ]
       },
@@ -53,9 +45,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:barbed_wire"
-            ]
+            "items": "immersiveweapons:barbed_wire"
           }
         ]
       },
@@ -65,9 +55,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:spike_trap"
-            ]
+            "items": "immersiveweapons:spike_trap"
           }
         ]
       },
@@ -77,9 +65,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:pitfall"
-            ]
+            "items": "immersiveweapons:pitfall"
           }
         ]
       },
@@ -89,9 +75,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:wooden_spikes"
-            ]
+            "items": "immersiveweapons:wooden_spikes"
           }
         ]
       },
@@ -104,7 +88,8 @@
     },
     "frame": "goal",
     "icon": {
-      "item": "immersiveweapons:bear_trap"
+      "count": 1,
+      "id": "immersiveweapons:bear_trap"
     },
     "title": {
       "translate": "advancements.immersiveweapons.traps.title"

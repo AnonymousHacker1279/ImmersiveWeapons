@@ -4,7 +4,7 @@
   "group": "molotov_cocktail",
   "key": {
     "a": {
-      "tag": "forge:string"
+      "tag": "c:strings"
     },
     "b": {
       "item": "immersiveweapons:bottle_of_alcohol"
@@ -15,6 +15,7 @@
     " b "
   ],
   "result": {
-    "item": "immersiveweapons:molotov_cocktail"
+    "count": 1,
+    "id": "immersiveweapons:molotov_cocktail"
   }
 }

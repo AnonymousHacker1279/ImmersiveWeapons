@@ -6,7 +6,7 @@
       "tag": "forge:nuggets/copper"
     },
     "b": {
-      "tag": "forge:ingots/copper"
+      "tag": "c:ingots/copper"
     }
   },
   "pattern": [
@@ -14,6 +14,7 @@
     "b"
   ],
   "result": {
-    "item": "immersiveweapons:copper_pike_head"
+    "count": 1,
+    "id": "immersiveweapons:copper_pike_head"
   }
 }

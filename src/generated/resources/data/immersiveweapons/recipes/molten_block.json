@@ -13,6 +13,7 @@
     "aaa"
   ],
   "result": {
-    "item": "immersiveweapons:molten_block"
+    "count": 1,
+    "id": "immersiveweapons:molten_block"
   }
 }

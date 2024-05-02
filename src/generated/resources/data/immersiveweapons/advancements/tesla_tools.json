@@ -9,7 +9,7 @@
             "entity": "this",
             "predicate": {
               "type_specific": {
-                "type": "player",
+                "type": "minecraft:player",
                 "advancements": {
                   "immersiveweapons:tesla_axe": true,
                   "immersiveweapons:tesla_hoe": true,
@@ -31,7 +31,8 @@
     },
     "frame": "challenge",
     "icon": {
-      "item": "immersiveweapons:tesla_block"
+      "count": 1,
+      "id": "immersiveweapons:tesla_block"
     },
     "title": {
       "translate": "advancements.immersiveweapons.tesla_tools.title"

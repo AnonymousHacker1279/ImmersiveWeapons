@@ -6,16 +6,18 @@
       "base_multiplier": 2.6,
       "density": 1.93,
       "ingredient": {
-        "tag": "forge:ingots/gold"
+        "tag": "c:ingots/gold"
       }
     },
     {
       "base_multiplier": 0.28,
       "density": 0.21,
       "ingredient": {
-        "tag": "forge:nuggets/gold"
+        "tag": "c:nuggets/gold"
       }
     }
   ],
-  "result": "immersiveweapons:golden_musket_ball"
+  "result": {
+    "id": "immersiveweapons:golden_musket_ball"
+  }
 }

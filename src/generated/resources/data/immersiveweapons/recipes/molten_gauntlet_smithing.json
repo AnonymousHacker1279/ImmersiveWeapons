@@ -7,7 +7,8 @@
     "item": "immersiveweapons:netherite_gauntlet"
   },
   "result": {
-    "item": "immersiveweapons:molten_gauntlet"
+    "count": 1,
+    "id": "immersiveweapons:molten_gauntlet"
   },
   "template": {
     "item": "immersiveweapons:molten_smithing_template"

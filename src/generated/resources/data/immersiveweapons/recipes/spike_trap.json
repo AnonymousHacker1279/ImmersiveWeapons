@@ -4,13 +4,13 @@
   "group": "traps",
   "key": {
     "a": {
-      "tag": "forge:dusts/redstone"
+      "tag": "c:dusts/redstone"
     },
     "b": {
-      "tag": "forge:ingots/iron"
+      "tag": "c:ingots/iron"
     },
     "c": {
-      "tag": "forge:nuggets/iron"
+      "tag": "c:nuggets/iron"
     }
   },
   "pattern": [
@@ -19,6 +19,7 @@
     " a "
   ],
   "result": {
-    "item": "immersiveweapons:spike_trap"
+    "count": 1,
+    "id": "immersiveweapons:spike_trap"
   }
 }

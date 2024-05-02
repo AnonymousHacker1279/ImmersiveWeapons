@@ -5,24 +5,16 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:padded_leather_helmet"
-            ]
+            "items": "immersiveweapons:padded_leather_helmet"
           },
           {
-            "items": [
-              "immersiveweapons:padded_leather_chestplate"
-            ]
+            "items": "immersiveweapons:padded_leather_chestplate"
           },
           {
-            "items": [
-              "immersiveweapons:padded_leather_leggings"
-            ]
+            "items": "immersiveweapons:padded_leather_leggings"
           },
           {
-            "items": [
-              "immersiveweapons:padded_leather_boots"
-            ]
+            "items": "immersiveweapons:padded_leather_boots"
           }
         ]
       },
@@ -35,8 +27,8 @@
     },
     "frame": "goal",
     "icon": {
-      "item": "immersiveweapons:padded_leather_helmet",
-      "nbt": "{Damage:0}"
+      "count": 1,
+      "id": "immersiveweapons:padded_leather_helmet"
     },
     "title": {
       "translate": "advancements.immersiveweapons.padded_leather_armor.title"

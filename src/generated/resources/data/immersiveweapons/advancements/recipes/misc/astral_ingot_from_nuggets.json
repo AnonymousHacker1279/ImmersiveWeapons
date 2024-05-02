@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "immersiveweapons:ingots/astral"
+            "items": "#immersiveweapons:ingots/astral"
           }
         ]
       },

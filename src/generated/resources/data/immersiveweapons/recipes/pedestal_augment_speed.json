@@ -7,10 +7,10 @@
       "item": "immersiveweapons:hansium_ingot"
     },
     "b": {
-      "tag": "forge:ingots/gold"
+      "tag": "c:ingots/gold"
     },
     "c": {
-      "tag": "forge:dyes/red"
+      "tag": "c:dyes/red"
     },
     "d": {
       "item": "minecraft:sugar"
@@ -22,6 +22,7 @@
     "bca"
   ],
   "result": {
-    "item": "immersiveweapons:pedestal_augment_speed"
+    "count": 1,
+    "id": "immersiveweapons:pedestal_augment_speed"
   }
 }

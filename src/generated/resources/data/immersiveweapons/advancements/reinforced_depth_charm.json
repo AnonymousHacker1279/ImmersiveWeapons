@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:reinforced_depth_charm"
-            ]
+            "items": "immersiveweapons:reinforced_depth_charm"
           }
         ]
       },
@@ -20,7 +18,8 @@
     },
     "frame": "challenge",
     "icon": {
-      "item": "immersiveweapons:reinforced_depth_charm"
+      "count": 1,
+      "id": "immersiveweapons:reinforced_depth_charm"
     },
     "title": {
       "translate": "advancements.immersiveweapons.reinforced_depth_charm.title"

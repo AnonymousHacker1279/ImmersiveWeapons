@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:starstorm_hoe"
-            ]
+            "items": "immersiveweapons:starstorm_hoe"
           }
         ]
       },
@@ -20,8 +18,8 @@
     },
     "frame": "challenge",
     "icon": {
-      "item": "immersiveweapons:starstorm_hoe",
-      "nbt": "{Damage:0}"
+      "count": 1,
+      "id": "immersiveweapons:starstorm_hoe"
     },
     "title": {
       "translate": "advancements.immersiveweapons.starstorm_hoe.title"

@@ -24,7 +24,8 @@
     },
     "frame": "goal",
     "icon": {
-      "item": "immersiveweapons:moonglow"
+      "count": 1,
+      "id": "immersiveweapons:moonglow"
     },
     "title": {
       "translate": "advancements.immersiveweapons.enter_tiltros.title"

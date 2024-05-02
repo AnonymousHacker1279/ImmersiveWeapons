@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:copper_pickaxe"
-            ]
+            "items": "immersiveweapons:copper_pickaxe"
           }
         ]
       },
@@ -19,8 +17,8 @@
       "translate": "advancements.immersiveweapons.copper_pickaxe.description"
     },
     "icon": {
-      "item": "immersiveweapons:copper_pickaxe",
-      "nbt": "{Damage:0}"
+      "count": 1,
+      "id": "immersiveweapons:copper_pickaxe"
     },
     "title": {
       "translate": "advancements.immersiveweapons.copper_pickaxe.title"

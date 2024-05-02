@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:celestial_lantern"
-            ]
+            "items": "immersiveweapons:celestial_lantern"
           }
         ]
       },
@@ -20,7 +18,8 @@
     },
     "frame": "goal",
     "icon": {
-      "item": "immersiveweapons:celestial_lantern"
+      "count": 1,
+      "id": "immersiveweapons:celestial_lantern"
     },
     "title": {
       "translate": "advancements.immersiveweapons.celestial_lantern.title"

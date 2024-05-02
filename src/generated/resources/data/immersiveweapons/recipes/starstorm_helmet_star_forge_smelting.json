@@ -5,7 +5,9 @@
     "tag": "immersiveweapons:ingots/starstorm"
   },
   "ingot_count": 5,
-  "result": "immersiveweapons:starstorm_helmet",
+  "result": {
+    "id": "immersiveweapons:starstorm_helmet"
+  },
   "secondary_material": [],
   "secondary_material_count": 0,
   "smelt_time": 600

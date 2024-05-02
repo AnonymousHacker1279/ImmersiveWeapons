@@ -4,10 +4,10 @@
   "group": "first_aid",
   "key": {
     "a": {
-      "tag": "forge:ingots/iron"
+      "tag": "c:ingots/iron"
     },
     "b": {
-      "tag": "forge:nuggets/iron"
+      "tag": "c:nuggets/iron"
     }
   },
   "pattern": [
@@ -17,6 +17,6 @@
   ],
   "result": {
     "count": 2,
-    "item": "immersiveweapons:syringe"
+    "id": "immersiveweapons:syringe"
   }
 }

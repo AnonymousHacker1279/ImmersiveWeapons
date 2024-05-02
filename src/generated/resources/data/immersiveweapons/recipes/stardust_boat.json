@@ -12,6 +12,7 @@
     "aaa"
   ],
   "result": {
-    "item": "immersiveweapons:stardust_boat"
+    "count": 1,
+    "id": "immersiveweapons:stardust_boat"
   }
 }

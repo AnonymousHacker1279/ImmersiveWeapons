@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:golden_ring"
-            ]
+            "items": "immersiveweapons:golden_ring"
           }
         ]
       },

@@ -14,9 +14,7 @@
           "source_entity": {
             "equipment": {
               "mainhand": {
-                "items": [
-                  "immersiveweapons:used_syringe"
-                ]
+                "items": "immersiveweapons:used_syringe"
               }
             }
           }
@@ -32,7 +30,8 @@
     "frame": "challenge",
     "hidden": true,
     "icon": {
-      "item": "immersiveweapons:used_syringe"
+      "count": 1,
+      "id": "immersiveweapons:used_syringe"
     },
     "title": {
       "translate": "advancements.immersiveweapons.used_syringe.title"

@@ -4,7 +4,7 @@
   "group": "barbed_wire",
   "key": {
     "a": {
-      "tag": "forge:ingots/iron"
+      "tag": "c:ingots/iron"
     },
     "b": {
       "item": "immersiveweapons:barbed_wire"
@@ -16,6 +16,6 @@
   ],
   "result": {
     "count": 6,
-    "item": "immersiveweapons:barbed_wire_fence"
+    "id": "immersiveweapons:barbed_wire_fence"
   }
 }

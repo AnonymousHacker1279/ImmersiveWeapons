@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:blunderbuss"
-            ]
+            "items": "immersiveweapons:blunderbuss"
           }
         ]
       },
@@ -20,8 +18,8 @@
     },
     "frame": "goal",
     "icon": {
-      "item": "immersiveweapons:blunderbuss",
-      "nbt": "{Damage:0}"
+      "count": 1,
+      "id": "immersiveweapons:blunderbuss"
     },
     "title": {
       "translate": "advancements.immersiveweapons.blunderbuss.title"

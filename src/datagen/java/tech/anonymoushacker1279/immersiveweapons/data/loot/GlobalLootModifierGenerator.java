@@ -28,16 +28,11 @@ import java.util.concurrent.ExecutionException;
 
 public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 
-	final Provider lookupProvider;
+	private final CompletableFuture<Provider> registries;
 
 	public GlobalLootModifierGenerator(PackOutput output, CompletableFuture<Provider> lookupProvider) {
 		super(output, lookupProvider, ImmersiveWeapons.MOD_ID);
-
-		try {
-			this.lookupProvider = lookupProvider.get();
-		} catch (InterruptedException | ExecutionException e) {
-			throw new RuntimeException(e);
-		}
+		registries = lookupProvider;
 	}
 
 	@Override
@@ -245,6 +240,13 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 	 * @return the loot item condition
 	 */
 	private LootItemCondition[] inBiomeDungeonCondition(ResourceKey<Biome> biome) {
+		Provider lookupProvider;
+		try {
+			lookupProvider = registries.get();
+		} catch (InterruptedException | ExecutionException e) {
+			throw new RuntimeException(e);
+		}
+
 		HolderGetter<Biome> holderGetter = lookupProvider.lookupOrThrow(Registries.BIOME);
 
 		return new LootItemCondition[]{LootTableIdCondition.builder(BuiltInLootTables.SIMPLE_DUNGEON.location())

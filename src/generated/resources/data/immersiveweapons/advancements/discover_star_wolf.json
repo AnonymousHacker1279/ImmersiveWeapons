@@ -21,7 +21,8 @@
       "translate": "advancements.immersiveweapons.discover_star_wolf.description"
     },
     "icon": {
-      "item": "minecraft:bone"
+      "count": 1,
+      "id": "minecraft:bone"
     },
     "title": {
       "translate": "advancements.immersiveweapons.discover_star_wolf.title"

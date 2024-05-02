@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:starstorm_pickaxe"
-            ]
+            "items": "immersiveweapons:starstorm_pickaxe"
           }
         ]
       },
@@ -19,8 +17,8 @@
       "translate": "advancements.immersiveweapons.starstorm_pickaxe.description"
     },
     "icon": {
-      "item": "immersiveweapons:starstorm_pickaxe",
-      "nbt": "{Damage:0}"
+      "count": 1,
+      "id": "immersiveweapons:starstorm_pickaxe"
     },
     "title": {
       "translate": "advancements.immersiveweapons.starstorm_pickaxe.title"

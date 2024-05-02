@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "immersiveweapons:commander_pedestal_augments"
+            "items": "#immersiveweapons:commander_pedestal_augments"
           }
         ]
       },
@@ -18,7 +18,8 @@
     },
     "frame": "challenge",
     "icon": {
-      "item": "immersiveweapons:pedestal_augment_speed"
+      "count": 1,
+      "id": "immersiveweapons:pedestal_augment_speed"
     },
     "title": {
       "translate": "advancements.immersiveweapons.pedestal_augment.title"

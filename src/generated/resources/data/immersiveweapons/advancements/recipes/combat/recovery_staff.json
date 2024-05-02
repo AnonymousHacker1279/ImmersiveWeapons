@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:bloated_heart"
-            ]
+            "items": "immersiveweapons:bloated_heart"
           }
         ]
       },

@@ -5,9 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": [
-              "immersiveweapons:medic_statue"
-            ]
+            "items": "immersiveweapons:medic_statue"
           }
         ]
       },
@@ -20,7 +18,8 @@
     },
     "frame": "goal",
     "icon": {
-      "item": "immersiveweapons:medic_statue"
+      "count": 1,
+      "id": "immersiveweapons:medic_statue"
     },
     "title": {
       "translate": "advancements.immersiveweapons.medic_statue.title"
