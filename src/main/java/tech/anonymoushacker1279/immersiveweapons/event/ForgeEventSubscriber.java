@@ -47,7 +47,6 @@ import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.entity.player.CriticalHitEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
-import net.neoforged.neoforge.event.level.LevelEvent;
 import net.neoforged.neoforge.event.level.PistonEvent;
 import net.neoforged.neoforge.event.level.PistonEvent.PistonMoveType;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
@@ -56,6 +55,7 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.StarstormCrystalBlock;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.StarmiteEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.npc.trading.MerchantTrades;
 import tech.anonymoushacker1279.immersiveweapons.entity.npc.trading.TradeLoader;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MeteorEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MudBallEntity;
@@ -65,12 +65,12 @@ import tech.anonymoushacker1279.immersiveweapons.item.*;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.PistonCrushingRecipe;
 import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
-import tech.anonymoushacker1279.immersiveweapons.network.payload.DebugDataPayload;
-import tech.anonymoushacker1279.immersiveweapons.network.payload.SyncPlayerDataPayload;
+import tech.anonymoushacker1279.immersiveweapons.network.payload.*;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
 import java.util.*;
+import java.util.Map.Entry;
 
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.GAME)
 public class ForgeEventSubscriber {
@@ -347,6 +347,9 @@ public class ForgeEventSubscriber {
 		if (event.getEntity() instanceof ServerPlayer player) {
 			// Send update packet
 			PacketDistributor.sendToPlayer(player, new SyncPlayerDataPayload(player.getPersistentData(), player.getUUID()));
+
+			// Initialize custom damage sources
+			IWDamageSources.init(event.getLevel().registryAccess());
 		}
 
 		// Handle the Velocity enchantment on bows (guns are handled in the gun code)
@@ -468,12 +471,6 @@ public class ForgeEventSubscriber {
 				}
 			}
 		}
-	}
-
-	@SubscribeEvent
-	public static void levelLoadEvent(LevelEvent.Load event) {
-		// Initialize custom damage sources
-		IWDamageSources.init(event.getLevel().registryAccess());
 	}
 
 	@SubscribeEvent
@@ -638,5 +635,16 @@ public class ForgeEventSubscriber {
 				Potions.LONG_STRENGTH,
 				Items.FERMENTED_SPIDER_EYE,
 				PotionRegistry.LONG_DEATH_POTION);
+	}
+
+
+	@SubscribeEvent
+	public static void onDatapackSyncEvent(OnDatapackSyncEvent event) {
+		ImmersiveWeapons.LOGGER.info("Syncing datapack objects");
+
+		for (Entry<EntityType<?>, MerchantTrades> entry : TradeLoader.TRADES.entrySet()) {
+			SyncMerchantTradesPayload payload = new SyncMerchantTradesPayload(entry.getKey(), entry.getValue());
+			PacketDistributor.sendToAllPlayers(payload);
+		}
 	}
 }

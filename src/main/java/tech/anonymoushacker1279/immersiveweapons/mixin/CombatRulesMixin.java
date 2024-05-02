@@ -1,8 +1,9 @@
 package tech.anonymoushacker1279.immersiveweapons.mixin;
 
-import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.CombatRules;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -15,10 +16,12 @@ import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 @Mixin(CombatRules.class)
 public abstract class CombatRulesMixin {
 
-	@Inject(method = "getDamageAfterAbsorb(FFF)F", at = @At("RETURN"), cancellable = true, require = 0)
-	private static void getDamageAfterAbsorb(float damage, float totalArmor, float toughnessAttribute, CallbackInfoReturnable<Float> ci, @Local(ordinal = 3) float toughnessModifier) {
-		float clampedArmorProtection = (float) Mth.clamp(totalArmor - damage / toughnessModifier, totalArmor * 0.2F, CommonConfig.maxArmorProtection);
-		float newDamage = damage * (1.0F - clampedArmorProtection / 25.0F);
-		ci.setReturnValue(newDamage);
+	@Inject(method = "getDamageAfterAbsorb", at = @At("RETURN"), cancellable = true, require = 0)
+	private static void getDamageAfterAbsorb(float damage, DamageSource source, float armor, float armorToughness, CallbackInfoReturnable<Float> ci) {
+		float toughnessModifier = 2.0F + armorToughness / 4.0F;
+		float armorProtection = (float) Mth.clamp(armor - damage / toughnessModifier, armor * 0.2F, CommonConfig.maxArmorProtection) / 25f;
+		float armorBreachModifier = EnchantmentHelper.calculateArmorBreach(source.getEntity(), armorProtection);
+		float damageModifier = 1.0F - armorBreachModifier;
+		ci.setReturnValue(damage * damageModifier);
 	}
 }
