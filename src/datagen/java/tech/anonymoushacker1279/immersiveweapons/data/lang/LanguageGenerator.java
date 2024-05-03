@@ -947,6 +947,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("hansium_ingot.description", "Obtain a Hansium Ingot, dropped by the mighty Super Hans");
 		addAdvancement("the_sword.title", "The Sword of All Time");
 		addAdvancement("the_sword.description", "Obtain The Sword, a powerful combination of several swords");
+		addAdvancement("recovery_staff.title", "What Hurts Me Can Also Heal Me");
+		addAdvancement("recovery_staff.description", "Obtain a Recovery Staff, allowing you to heal yourself based on incoming damage");
 
 		// Player utility
 		addAdvancement("bottle_of_alcohol.title", "mmmmm alacol");

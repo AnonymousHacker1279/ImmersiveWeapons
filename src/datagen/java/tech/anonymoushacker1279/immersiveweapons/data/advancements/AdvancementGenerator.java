@@ -1468,6 +1468,16 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 				.rewards(AdvancementRewards.Builder.experience(250))
 				.save(consumer, prefixString("the_sword"));
 
+		Builder.advancement().parent(hansiumIngot)
+				.display(ItemRegistry.RECOVERY_STAFF.get(),
+						createTitle("recovery_staff"),
+						createDescription("recovery_staff"),
+						null, AdvancementType.CHALLENGE, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.RECOVERY_STAFF.get()))
+				.rewards(AdvancementRewards.Builder.experience(75))
+				.save(consumer, prefixString("recovery_staff"));
+
 		// Battlefield advancements
 		HolderGetter<Biome> holderGetter = provider.lookupOrThrow(Registries.BIOME);
 		AdvancementHolder discoverBattlefield = Builder.advancement().parent(root)

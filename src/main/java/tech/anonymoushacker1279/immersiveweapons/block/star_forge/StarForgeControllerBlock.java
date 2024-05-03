@@ -54,35 +54,11 @@ public class StarForgeControllerBlock extends BasicOrientableBlock implements En
 	}
 
 	@Override
-	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-		if (level.isClientSide) {
-			return InteractionResult.SUCCESS;
-		} else {
-			if (level.getBlockEntity(pos) instanceof StarForgeBlockEntity blockEntity && player instanceof ServerPlayer serverPlayer) {
-				if (blockEntity.isInUse()) {
-					return InteractionResult.FAIL;
-				}
-
-				serverPlayer.openMenu(new SimpleMenuProvider((id, inventory, player1) -> new StarForgeMenu(id, inventory, blockEntity, blockEntity.containerData), CONTAINER_NAME), buffer -> {
-					List<ResourceLocation> recipeLocations = blockEntity.getAvailableRecipeIds();
-					buffer.writeVarInt(recipeLocations.size());
-
-					for (ResourceLocation location : recipeLocations) {
-						buffer.writeResourceLocation(location);
-					}
-				});
-			}
-
-			return InteractionResult.CONSUME;
-		}
-	}
-
-	@Override
 	protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
 		if (level.isClientSide) {
 			return ItemInteractionResult.SUCCESS;
 		} else {
-			if (level.getBlockEntity(pos) instanceof StarForgeBlockEntity blockEntity) {
+			if (level.getBlockEntity(pos) instanceof StarForgeBlockEntity blockEntity && player instanceof ServerPlayer serverPlayer) {
 				if (player.isHolding(Items.LAVA_BUCKET)) {
 					blockEntity.raiseTemperature(150);
 
@@ -90,6 +66,20 @@ public class StarForgeControllerBlock extends BasicOrientableBlock implements En
 						player.getItemInHand(hand).shrink(1);
 						player.getInventory().add(new ItemStack(Items.BUCKET));
 					}
+				} else {
+					if (blockEntity.isInUse()) {
+						return ItemInteractionResult.FAIL;
+					}
+
+					serverPlayer.openMenu(new SimpleMenuProvider((id, inventory, player1) -> new StarForgeMenu(id, inventory, blockEntity, blockEntity.containerData), CONTAINER_NAME), buffer -> {
+						List<ResourceLocation> recipeLocations = blockEntity.getAvailableRecipeIds();
+						buffer.writeVarInt(recipeLocations.size());
+
+						for (ResourceLocation location : recipeLocations) {
+							buffer.writeResourceLocation(location);
+						}
+					});
+
 				}
 			}
 

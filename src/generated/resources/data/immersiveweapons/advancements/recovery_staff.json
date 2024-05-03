@@ -1,0 +1,37 @@
+{
+  "parent": "immersiveweapons:hansium_ingot",
+  "criteria": {
+    "hold": {
+      "conditions": {
+        "items": [
+          {
+            "items": "immersiveweapons:recovery_staff"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersiveweapons.recovery_staff.description"
+    },
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "immersiveweapons:recovery_staff"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.recovery_staff.title"
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ],
+  "rewards": {
+    "experience": 75
+  },
+  "sends_telemetry_event": true
+}
