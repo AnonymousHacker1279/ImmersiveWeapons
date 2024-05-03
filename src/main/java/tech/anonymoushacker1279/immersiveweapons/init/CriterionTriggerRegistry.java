@@ -8,7 +8,6 @@ import tech.anonymoushacker1279.immersiveweapons.advancement.EntityDiscoveredTri
 
 import java.util.function.Supplier;
 
-@SuppressWarnings({"unused"})
 public class CriterionTriggerRegistry {
 
 	// Criterion Trigger Register

@@ -6,7 +6,7 @@ import net.minecraft.world.item.Item.Properties;
 
 import java.util.function.Supplier;
 
-@SuppressWarnings({"unused"})
+@SuppressWarnings("unused")
 public class BlockItemRegistry {
 
 	@SuppressWarnings("EmptyMethod")

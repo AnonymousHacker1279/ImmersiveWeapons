@@ -9,7 +9,6 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.potion.*;
 import tech.anonymoushacker1279.immersiveweapons.util.markers.LanguageEntryOverride;
 
-@SuppressWarnings({"unused"})
 public class EffectRegistry {
 
 	// Effect Register

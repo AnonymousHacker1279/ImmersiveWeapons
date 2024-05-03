@@ -20,7 +20,7 @@ public class CursedItem extends Item {
 
 	private final String name;
 	public static float CURSE_EFFECT_FADE = 1.0f;
-	DataComponentType<Boolean> AT_MAX_CHARGE = DataComponentTypeRegistry.AT_MAX_CHARGE.get();
+	final DataComponentType<Boolean> AT_MAX_CHARGE = DataComponentTypeRegistry.AT_MAX_CHARGE.get();
 
 	/**
 	 * Cursed items cannot be removed once used. Their effects are permanent in survival mode, even persisting through death.

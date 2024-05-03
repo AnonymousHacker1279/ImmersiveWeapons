@@ -12,7 +12,6 @@ import tech.anonymoushacker1279.immersiveweapons.client.particle.smoke_grenade.S
 
 import java.util.function.Supplier;
 
-@SuppressWarnings({"unused"})
 public class ParticleTypesRegistry {
 
 	// Particle Type Register

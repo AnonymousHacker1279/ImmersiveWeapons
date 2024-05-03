@@ -23,7 +23,6 @@ import tech.anonymoushacker1279.immersiveweapons.util.markers.LanguageEntryOverr
 
 import java.util.function.Supplier;
 
-@SuppressWarnings({"unused"})
 public class EntityRegistry {
 
 	// Entity Register

@@ -125,10 +125,5 @@ public class DispenserBehaviorRegistry implements DispenseItemBehavior {
 			stack.shrink(1);
 			return stack;
 		}
-
-		@Override
-		protected void playSound(BlockSource blockSource) {
-			blockSource.level().levelEvent(this.dispenseConfig.overrideDispenseEvent().orElse(1002), blockSource.pos(), 0);
-		}
 	}
 }

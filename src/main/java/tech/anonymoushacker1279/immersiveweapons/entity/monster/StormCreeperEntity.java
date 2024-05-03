@@ -285,11 +285,6 @@ public class StormCreeperEntity extends Creeper implements GrantAdvancementOnDis
 		entityData.set(DATA_IS_IGNITED, true);
 	}
 
-	/**
-	 * Returns {@code true} if an entity is able to drop its skull due to being blown up by this creeper.
-	 * <p>
-	 * Does not test if this creeper is charged, the caller must do that. However, does test the doMobLoot gamerule.
-	 */
 	@Override
 	public boolean canDropMobsSkull() {
 		return isPowered() && droppedSkulls < 1;

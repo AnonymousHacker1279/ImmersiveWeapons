@@ -20,7 +20,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
-import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
@@ -46,7 +45,7 @@ public abstract class AbstractGunItem extends Item {
 	protected static final Predicate<ItemStack> CANNONBALLS = (stack) -> stack.is(ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID, "projectiles/cannonballs")));
 	protected static final Predicate<ItemStack> FLAMMABLE_POWDERS = (stack) -> isPowder(stack.getItem());
 
-	DataComponentType<Float> DENSITY_MODIFIER = DataComponentTypeRegistry.DENSITY_MODIFIER.get();
+	final DataComponentType<Float> DENSITY_MODIFIER = DataComponentTypeRegistry.DENSITY_MODIFIER.get();
 
 	/**
 	 * Constructor for AbstractGunItem.
@@ -224,17 +223,10 @@ public abstract class AbstractGunItem extends Item {
 	}
 
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level level, Player player,
-	                                              InteractionHand hand) {
+	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
 
 		ItemStack itemInHand = player.getItemInHand(hand);
 		boolean hasAmmo = !findAmmo(itemInHand, player).isEmpty();
-
-		InteractionResultHolder<ItemStack> resultHolder = EventHooks.onArrowNock(itemInHand, level, player,
-				hand, hasAmmo);
-		if (resultHolder != null) {
-			return resultHolder;
-		}
 
 		if (!player.isCreative() && !hasAmmo) {
 			return InteractionResultHolder.fail(itemInHand);

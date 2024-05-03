@@ -12,7 +12,6 @@ import tech.anonymoushacker1279.immersiveweapons.blockentity.*;
 
 import java.util.function.Supplier;
 
-@SuppressWarnings({"unused"})
 public class BlockEntityRegistry {
 
 	// Block Entity Register

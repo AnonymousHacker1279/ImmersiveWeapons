@@ -32,7 +32,7 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 	protected float densityModifier = 0.0f;
 	protected final NonNullList<Integer> slotCosts = NonNullList.withSize(7, 0);
 
-	DataComponentType<Float> DENSITY_MODIFIER = DataComponentTypeRegistry.DENSITY_MODIFIER.get();
+	final DataComponentType<Float> DENSITY_MODIFIER = DataComponentTypeRegistry.DENSITY_MODIFIER.get();
 
 	public final ContainerData containerData = new ContainerData() {
 		@Override

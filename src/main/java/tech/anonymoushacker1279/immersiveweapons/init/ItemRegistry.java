@@ -39,7 +39,7 @@ import tech.anonymoushacker1279.immersiveweapons.world.food.FoodItemProperties;
 
 import java.util.function.Supplier;
 
-@SuppressWarnings({"unused"})
+@SuppressWarnings("unused")
 public class ItemRegistry {
 
 	// Item Register

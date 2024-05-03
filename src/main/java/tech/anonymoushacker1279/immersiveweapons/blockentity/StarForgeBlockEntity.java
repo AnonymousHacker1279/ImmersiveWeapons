@@ -113,7 +113,7 @@ public class StarForgeBlockEntity extends BaseContainerBlockEntity implements En
 			float temperatureModifier = 1.0f + (biomeTemperature * 5);
 			temperature = Mth.clamp((int) (temperature + (hasSolarEnergy ? 1 : -1) * temperatureModifier), 0, 1000);
 
-			if (temperature == 1000 && !inventory.get(0).isEmpty()) {
+			if (temperature == 1000 && !inventory.getFirst().isEmpty()) {
 				if (!state.getValue(StarForgeControllerBlock.LIT)) {
 					level.setBlock(pos, state.setValue(StarForgeControllerBlock.LIT, true), 3);
 				}

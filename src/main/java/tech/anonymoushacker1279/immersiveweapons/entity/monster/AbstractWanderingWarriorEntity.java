@@ -128,7 +128,6 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 	 * @param difficulty the <code>DifficultyInstance</code> of the world
 	 * @param spawnType  the <code>MobSpawnType</code> for the entity
 	 * @param groupData  the <code>SpawnGroupData</code> for the entity
-	 * @param tag        the <code>CompoundTag</code> data tag for the entity
 	 * @return SpawnGroupData
 	 */
 	@Override

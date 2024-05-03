@@ -52,11 +52,11 @@ public class CursedSightStaffItem extends Item implements SummoningStaff {
 				EvilEyeEntity evilEyeEntity = EvilEyeEntity.create(level, player.position(), true);
 
 				// Handle enchantments
-				int enchantmentLevel = getEnchantmentLevel(player.getItemInHand(hand), EnchantmentRegistry.NIGHTMARISH_STARE.get());
+				int enchantmentLevel = player.getItemInHand(hand).getEnchantmentLevel(EnchantmentRegistry.NIGHTMARISH_STARE.get());
 				if (enchantmentLevel > 0) {
 					evilEyeEntity.setEffectChance(0.05f + (0.05f * enchantmentLevel));
 				}
-				enchantmentLevel = getEnchantmentLevel(player.getItemInHand(hand), EnchantmentRegistry.MALEVOLENT_GAZE.get());
+				enchantmentLevel = player.getItemInHand(hand).getEnchantmentLevel(EnchantmentRegistry.MALEVOLENT_GAZE.get());
 				if (enchantmentLevel > 0) {
 					int duration = Math.min(100 + (40 * enchantmentLevel), 300);
 					int effectLevel = Math.min(1 + enchantmentLevel, 5);

@@ -34,7 +34,7 @@ public class SlimeMixin {
 	 * contains a size tag.
 	 * <p>
 	 * Also stores the spawn type reason for later use. This is set normally within the super method of
-	 * {@link Slime#finalizeSpawn(ServerLevelAccessor, DifficultyInstance, MobSpawnType, SpawnGroupData, CompoundTag)},
+	 * {@link Slime#finalizeSpawn(ServerLevelAccessor, DifficultyInstance, MobSpawnType, SpawnGroupData)},
 	 * but the modified {@link Slime#setSize(int, boolean)} method is called before the super method, so the spawn type
 	 * is not yet available.
 	 *
@@ -66,7 +66,6 @@ public class SlimeMixin {
 	 * @param operation the <code>Operation</code> instance
 	 */
 	@WrapOperation(method = "setSize", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ai/attributes/AttributeInstance;setBaseValue(D)V"))
-	@SuppressWarnings("unused")
 	private void setSize(AttributeInstance instance, double original, Operation<Double> operation) {
 		if (immersiveWeapons$earlySpawnType != null && immersiveWeapons$earlySpawnType != MobSpawnType.STRUCTURE) {
 			operation.call(instance, original);

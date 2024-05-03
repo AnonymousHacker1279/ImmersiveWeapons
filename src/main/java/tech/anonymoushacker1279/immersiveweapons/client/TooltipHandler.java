@@ -606,7 +606,7 @@ public class TooltipHandler {
 				for (Entry<AttributeModifier, Attribute> entry : item.getStandardAttributeModifiers().entrySet()) {
 					String amount;
 
-					if (entry.getValue() == Attributes.MAX_HEALTH) {
+					if (entry.getValue() == Attributes.MAX_HEALTH.value()) {
 						// Convert to hearts
 						amount = (float) Math.round(entry.getKey().amount() / 2f) + " hearts";
 					} else {

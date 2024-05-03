@@ -30,7 +30,6 @@ public class TradeLoader extends SimpleJsonResourceReloadListener {
 	}
 
 	@Override
-	@SuppressWarnings("ConstantConditions")
 	protected void apply(Map<ResourceLocation, JsonElement> pObject, ResourceManager pResourceManager, ProfilerFiller pProfiler) {
 		TRADES.clear();
 		RegistryOps<JsonElement> registryops = makeConditionalOps();

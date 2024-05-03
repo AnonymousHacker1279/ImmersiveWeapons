@@ -57,7 +57,7 @@ public class EnchantItemForItems implements VillagerTrades.ItemListing {
 			villagerXP = randomSource.nextIntBetweenInclusive(totalEnchantmentLevels / 2, totalEnchantmentLevels);
 		}
 
-		IdentifiableMerchantOffer offer = new IdentifiableMerchantOffer(new ItemCost(enchantableItem.getItem()), Optional.of(new ItemCost(tradingItem, itemCost)), newEnchantableItem, 1, villagerXP, 0);
+		IdentifiableMerchantOffer offer = new IdentifiableMerchantOffer(new ItemCost(enchantableItem.getItem()), Optional.of(new ItemCost(tradingItem, itemCost)), newEnchantableItem, maxUses, villagerXP, 0);
 		offer.setId("enchant_item_for_items");
 		return offer;
 	}

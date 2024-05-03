@@ -40,7 +40,7 @@ import tech.anonymoushacker1279.immersiveweapons.world.level.CustomBlockSetTypes
 import java.util.Optional;
 import java.util.function.Supplier;
 
-@SuppressWarnings({"unused"})
+@SuppressWarnings("unused")
 public class BlockRegistry {
 
 	// Block Register

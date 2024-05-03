@@ -9,7 +9,6 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
 import java.util.function.Supplier;
 
-@SuppressWarnings({"unused"})
 public class SoundEventRegistry {
 
 	// Sound Event Register

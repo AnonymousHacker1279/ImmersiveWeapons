@@ -27,6 +27,7 @@ public class EnchantItemWithEnchantingBooks implements VillagerTrades.ItemListin
 		this.enchantableItem = enchantableItem.copy();
 		this.tradingItem = tradingItem.copy();
 		this.maxUses = maxUses;
+		this.villagerXP = villagerXP;
 	}
 
 	@Override
@@ -55,7 +56,7 @@ public class EnchantItemWithEnchantingBooks implements VillagerTrades.ItemListin
 		// Give XP based on the total levels of all enchantments
 		villagerXP = randomSource.nextIntBetweenInclusive(totalEnchantmentLevels / 4, totalEnchantmentLevels / 2);
 
-		IdentifiableMerchantOffer offer = new IdentifiableMerchantOffer(new ItemCost(enchantableItem.getItem()), Optional.of(new ItemCost(tradingItem.getItem())), newEnchantableItem, 1, villagerXP, 0);
+		IdentifiableMerchantOffer offer = new IdentifiableMerchantOffer(new ItemCost(enchantableItem.getItem()), Optional.of(new ItemCost(tradingItem.getItem())), newEnchantableItem, maxUses, villagerXP, 0);
 		offer.setId("enchant_item_with_enchanting_books");
 		return offer;
 	}

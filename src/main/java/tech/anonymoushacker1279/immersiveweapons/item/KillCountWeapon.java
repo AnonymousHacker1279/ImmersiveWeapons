@@ -12,8 +12,8 @@ import tech.anonymoushacker1279.immersiveweapons.init.DataComponentTypeRegistry;
  */
 public class KillCountWeapon {
 
-	static DataComponentType<Integer> KILL_COUNT = DataComponentTypeRegistry.KILL_COUNT.get();
-	static DataComponentType<Component> TIER = DataComponentTypeRegistry.KILL_COUNT_TIER.get();
+	static final DataComponentType<Integer> KILL_COUNT = DataComponentTypeRegistry.KILL_COUNT.get();
+	static final DataComponentType<Component> TIER = DataComponentTypeRegistry.KILL_COUNT_TIER.get();
 
 	/**
 	 * Initialize an item with a kill count.

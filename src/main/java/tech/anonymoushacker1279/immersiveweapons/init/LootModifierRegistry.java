@@ -9,7 +9,7 @@ import tech.anonymoushacker1279.immersiveweapons.world.level.loot.*;
 
 import java.util.function.Supplier;
 
-@SuppressWarnings({"unused"})
+@SuppressWarnings("unused")
 public class LootModifierRegistry {
 
 	// Global Loot Modifier Register

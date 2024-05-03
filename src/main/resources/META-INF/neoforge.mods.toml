@@ -32,8 +32,8 @@ side = "BOTH"
 
 [[dependencies.immersiveweapons]]
 modId = "cobaltconfig"
-type = "optional" # TODO: make required after updated
-versionRange = "[1.20.4-1.0.0,)"
+type = "required"
+versionRange = "[1.20.6-1.1.0,)"
 ordering = "NONE"
 side = "BOTH"
 

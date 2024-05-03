@@ -9,7 +9,6 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.util.markers.LanguageEntryOverride;
 
-@SuppressWarnings({"unused"})
 public class PotionRegistry {
 	// Potion Register
 	public static final DeferredRegister<Potion> POTIONS = DeferredRegister.create(Registries.POTION, ImmersiveWeapons.MOD_ID);

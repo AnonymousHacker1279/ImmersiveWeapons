@@ -9,7 +9,6 @@ import tech.anonymoushacker1279.immersiveweapons.item.crafting.*;
 
 import java.util.function.Supplier;
 
-@SuppressWarnings({"unused"})
 public class RecipeTypeRegistry {
 
 	// Recipe Type Register

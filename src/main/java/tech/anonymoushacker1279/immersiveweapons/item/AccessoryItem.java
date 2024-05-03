@@ -26,7 +26,6 @@ public class AccessoryItem extends Item {
 	private final List<MobEffectInstance> mobEffects;
 
 	private static final Map<AttributeModifier, Attribute> GLOBAL_ATTRIBUTE_MODIFIER_MAP = new HashMap<>(5);
-	private static final List<AccessoryItem> ACCESSORY_ITEMS = new ArrayList<>(30);
 
 	/**
 	 * AccessoryItems provide various effects when equipped. There are specific categories they may be placed in, and only
@@ -50,8 +49,6 @@ public class AccessoryItem extends Item {
 		for (Map<AttributeModifier, Attribute> map : dynamicAttributeModifiers.keySet()) {
 			GLOBAL_ATTRIBUTE_MODIFIER_MAP.putAll(map);
 		}
-
-		ACCESSORY_ITEMS.add(this);
 	}
 
 	public AccessorySlot getSlot() {
@@ -115,7 +112,7 @@ public class AccessoryItem extends Item {
 		}
 
 		// If there are multiple accessories of the same type, only the first one is active.
-		return accessories.get(0) == stack;
+		return accessories.getFirst() == stack;
 	}
 
 	/**
