@@ -1010,75 +1010,75 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		List<MaterialGroup> musketBallMaterials = new ArrayList<>(20);
 
 		// Wood
-		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.WOODEN_SHARDS, 0.08f, 0.28f));
+		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.WOODEN_SHARDS, 0.08f, 0.14f));
 		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.WOODEN_MUSKET_BALL.get());
 
 		// Stone
 		musketBallMaterials.clear();
-		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.STONE_SHARDS, 0.25f, 0.28f));
+		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.STONE_SHARDS, 0.25f, 0.14f));
 		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.STONE_MUSKET_BALL.get());
 
 		// Gold
 		musketBallMaterials.clear();
-		musketBallMaterials.add(new MaterialGroup(Tags.Items.INGOTS_GOLD, 1.93f, 2.6f));
-		musketBallMaterials.add(new MaterialGroup(Tags.Items.NUGGETS_GOLD, 0.21f, 0.28f));
+		musketBallMaterials.add(new MaterialGroup(Tags.Items.INGOTS_GOLD, 1.93f, 1.3f));
+		musketBallMaterials.add(new MaterialGroup(Tags.Items.NUGGETS_GOLD, 0.21f, 0.14f));
 		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.GOLDEN_MUSKET_BALL.get());
 
 		// Copper
 		musketBallMaterials.clear();
-		musketBallMaterials.add(new MaterialGroup(Tags.Items.INGOTS_COPPER, 0.89f, 2.6f));
-		musketBallMaterials.add(new MaterialGroup(CommonItemTagGroups.COPPER_NUGGETS, 0.1f, 0.28f));
+		musketBallMaterials.add(new MaterialGroup(Tags.Items.INGOTS_COPPER, 0.89f, 1.3f));
+		musketBallMaterials.add(new MaterialGroup(CommonItemTagGroups.COPPER_NUGGETS, 0.1f, 0.14f));
 		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.COPPER_MUSKET_BALL.get());
 
 		// Iron
 		musketBallMaterials.clear();
-		musketBallMaterials.add(new MaterialGroup(Tags.Items.INGOTS_IRON, 0.79f, 2.6f));
-		musketBallMaterials.add(new MaterialGroup(Tags.Items.NUGGETS_IRON, 0.09f, 0.28f));
+		musketBallMaterials.add(new MaterialGroup(Tags.Items.INGOTS_IRON, 0.79f, 1.3f));
+		musketBallMaterials.add(new MaterialGroup(Tags.Items.NUGGETS_IRON, 0.09f, 0.14f));
 		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.IRON_MUSKET_BALL.get());
 
 		// Cobalt
 		musketBallMaterials.clear();
-		musketBallMaterials.add(new MaterialGroup(CommonItemTagGroups.COBALT_INGOTS, 0.89f, 2.6f));
-		musketBallMaterials.add(new MaterialGroup(CommonItemTagGroups.COBALT_NUGGETS, 0.1f, 0.28f));
+		musketBallMaterials.add(new MaterialGroup(CommonItemTagGroups.COBALT_INGOTS, 0.89f, 1.3f));
+		musketBallMaterials.add(new MaterialGroup(CommonItemTagGroups.COBALT_NUGGETS, 0.1f, 0.14f));
 		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.COBALT_MUSKET_BALL.get());
 
 		// Diamond
 		musketBallMaterials.clear();
-		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.DIAMOND_SHARDS, 0.09f, 0.28f));
+		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.DIAMOND_SHARDS, 0.09f, 0.14f));
 		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.DIAMOND_MUSKET_BALL.get());
 
 		// Netherite
 		musketBallMaterials.clear();
-		musketBallMaterials.add(new MaterialGroup(Tags.Items.INGOTS_NETHERITE, 2.5f, 2.6f));
+		musketBallMaterials.add(new MaterialGroup(Tags.Items.INGOTS_NETHERITE, 2.5f, 1.3f));
 		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.NETHERITE_MUSKET_BALL.get());
 
 		// Molten
 		musketBallMaterials.clear();
-		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.MOLTEN_INGOTS, 0.35f, 2.6f));
-		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.MOLTEN_SHARDS, 0.04f, 0.28f));
+		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.MOLTEN_INGOTS, 0.35f, 1.3f));
+		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.MOLTEN_SHARDS, 0.04f, 0.14f));
 		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.MOLTEN_MUSKET_BALL.get());
 
 		// Tesla
 		musketBallMaterials.clear();
-		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.TESLA_INGOTS, 2.0f, 2.6f));
-		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.TESLA_NUGGETS, 0.22f, 0.28f));
+		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.TESLA_INGOTS, 2.0f, 1.3f));
+		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.TESLA_NUGGETS, 0.22f, 0.14f));
 		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.TESLA_MUSKET_BALL.get());
 
 		// Ventus
 		musketBallMaterials.clear();
-		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.VENTUS_SHARDS, 0.05f, 2.6f));
+		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.VENTUS_SHARDS, 0.05f, 1.3f));
 		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.VENTUS_MUSKET_BALL.get());
 
 		// Starstorm
 		musketBallMaterials.clear();
-		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.STARSTORM_INGOTS, 0.4f, 2.6f));
-		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.STARSTORM_SHARDS, 0.04f, 0.28f));
+		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.STARSTORM_INGOTS, 0.4f, 1.3f));
+		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.STARSTORM_SHARDS, 0.04f, 0.14f));
 		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.STARSTORM_MUSKET_BALL.get());
 
 		// Astral
 		musketBallMaterials.clear();
-		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.ASTRAL_INGOTS, 0.6f, 2.6f));
-		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.ASTRAL_NUGGETS, 0.06f, 0.28f));
+		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.ASTRAL_INGOTS, 0.6f, 1.3f));
+		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.ASTRAL_NUGGETS, 0.06f, 0.14f));
 		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.ASTRAL_MUSKET_BALL.get());
 
 		// Ammunition Table

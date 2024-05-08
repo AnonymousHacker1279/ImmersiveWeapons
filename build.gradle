@@ -153,13 +153,13 @@ dependencies {
 	// implementation "tech.anonymoushacker1279.iwcompatbridge:IWCompatBridge:${iwcb_version}"
 	implementation "tech.anonymoushacker1279.cobaltconfig:CobaltConfig:${cobaltconfig_version}"
 
-	/*// Include JEI
-	runtimeOnly "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
+	// Include JEI
+	// runtimeOnly "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
 	// Include WTHIT and badpackets
 	runtimeOnly "mcp.mobius.waila:wthit:neo-${wthit_version}"
 	runtimeOnly "lol.bai:badpackets:neo-${badpackets_version}"
 	// Include AttributeFix
-	implementation "curse.maven:attributefix-280510:${attributefix_version}"*/
+	// implementation "curse.maven:attributefix-280510:${attributefix_version}"
 }
 
 tasks.named('processResources', ProcessResources).configure {

@@ -47,6 +47,22 @@ public class AmmunitionTableScreen extends AbstractContainerScreen<AmmunitionTab
 				DisplayMode.NORMAL,
 				0,
 				15728880);
+
+		// Render the excess stack size below the result slot
+		int excess = menu.getExcessStackSize();
+		if (excess > 0) {
+			String excessStackSize = "+" + excess;
+			font.drawInBatch(excessStackSize,
+					leftPos + 145,
+					topPos + 55,
+					0x000000,
+					false,
+					guiGraphics.pose().last().pose(),
+					guiGraphics.bufferSource(),
+					DisplayMode.NORMAL,
+					0,
+					15728880);
+		}
 	}
 
 	@Override

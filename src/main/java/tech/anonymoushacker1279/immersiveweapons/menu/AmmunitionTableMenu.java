@@ -19,7 +19,7 @@ public class AmmunitionTableMenu extends AbstractContainerMenu {
 	private final ContainerData containerData;
 
 	public AmmunitionTableMenu(int containerID, Inventory inventory) {
-		this(containerID, inventory, new SimpleContainer(7), new SimpleContainerData(1));
+		this(containerID, inventory, new SimpleContainer(7), new SimpleContainerData(2));
 	}
 
 	public AmmunitionTableMenu(int containerID, Inventory inventory, Container container, ContainerData containerData) {
@@ -30,7 +30,16 @@ public class AmmunitionTableMenu extends AbstractContainerMenu {
 		// Ammunition table inventory slots (first begins at (8, 19), it is a 3x2 grid)
 		for (int i = 0; i < 2; ++i) {
 			for (int j = 0; j < 3; ++j) {
-				addSlot(new Slot(container, j + i * 3, 8 + j * 18, 19 + i * 18));
+				addSlot(new Slot(container, j + i * 3, 8 + j * 18, 19 + i * 18) {
+					@Override
+					public void setChanged() {
+						super.setChanged();
+
+						if (container instanceof AmmunitionTableBlockEntity blockEntity) {
+							blockEntity.calculateOutput(false);
+						}
+					}
+				});
 			}
 		}
 
@@ -44,10 +53,10 @@ public class AmmunitionTableMenu extends AbstractContainerMenu {
 			@Override
 			public void onTake(Player player, ItemStack stack) {
 				if (container instanceof AmmunitionTableBlockEntity blockEntity) {
-					blockEntity.completeCraft();
+					blockEntity.depleteMaterials();
+					blockEntity.calculateOutput(true);
+					super.onTake(player, stack);
 				}
-
-				super.onTake(player, stack);
 			}
 		});
 
@@ -85,8 +94,10 @@ public class AmmunitionTableMenu extends AbstractContainerMenu {
 
 			if (oldStack.isEmpty()) {
 				slot.set(ItemStack.EMPTY);
-			} else {
-				slot.setChanged();
+			}
+
+			if (index == 6 && container instanceof AmmunitionTableBlockEntity blockEntity) {
+				blockEntity.calculateOutput(true);
 			}
 
 			slot.onTake(player, oldStack);
@@ -102,6 +113,10 @@ public class AmmunitionTableMenu extends AbstractContainerMenu {
 
 	public float getDensityModifier() {
 		return containerData.get(0) / 100.0F;
+	}
+
+	public int getExcessStackSize() {
+		return containerData.get(1);
 	}
 
 	public void setDensityModifier(float densityModifier) {
@@ -120,7 +135,9 @@ public class AmmunitionTableMenu extends AbstractContainerMenu {
 
 		if (menu.containerId == containerId && menu instanceof AmmunitionTableMenu ammunitionTableMenu) {
 			ammunitionTableMenu.containerData.set(0, (int) (densityModifier * 100.0f));
-			ammunitionTableMenu.container.setChanged();
+			if (ammunitionTableMenu.container instanceof AmmunitionTableBlockEntity blockEntity) {
+				blockEntity.calculateOutput(false);
+			}
 		}
 	}
 }
