@@ -7,8 +7,7 @@
 		"ClientboundSetEntityMotionPacketMixin",
 		"CombatRulesMixin",
 		"EntityMixin",
-		"ItemEnchantmentsMixin",
-		"SlimeMixin"
+		"ItemEnchantmentsMixin"
 	],
 	"client": [
 		"ItemEnchantmentsMixin"

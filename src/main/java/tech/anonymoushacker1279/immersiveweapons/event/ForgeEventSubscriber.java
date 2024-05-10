@@ -20,6 +20,7 @@ import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.CaveSpider;
+import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.ThrownTrident;
@@ -366,6 +367,17 @@ public class ForgeEventSubscriber {
 					arrow.setDeltaMovement(arrow.getDeltaMovement().scale(1 + (0.1f * enchantLevel)));
 				}
 			}
+		}
+
+		// Handle Big Slime in the Champion Tower, because size is overridden during finalizeSpawn...
+		if (event.getEntity() instanceof Slime slime && slime.getTags().contains("ChampionTowerMiniboss")) {
+			slime.setSize(4, true);
+			slime.getAttribute(Attributes.MAX_HEALTH).setBaseValue(150.0d);
+			slime.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(50.0d);
+			slime.getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(10.0d);
+			slime.getAttribute(Attributes.ATTACK_KNOCKBACK).setBaseValue(5.0d);
+			slime.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0.7d);
+			slime.heal(150);
 		}
 	}
 

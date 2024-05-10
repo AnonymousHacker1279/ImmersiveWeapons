@@ -5,8 +5,7 @@ import net.minecraft.core.Vec3i;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerBossEvent;
-import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.level.*;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.BossEvent.BossBarColor;
 import net.minecraft.world.BossEvent.BossBarOverlay;
@@ -21,12 +20,12 @@ import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.*;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.block.decoration.CelestialLanternBlock;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.entity.*;
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.*;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
+import tech.anonymoushacker1279.immersiveweapons.world.level.saveddata.IWSavedData;
 
 import java.util.*;
 
@@ -241,10 +240,15 @@ public class CelestialTowerEntity extends Monster implements AttackerTracker, Gr
 
 		int nearbyLanterns = 0;
 
-		for (BlockPos lanternPos : CelestialLanternBlock.ALL_TILTROS_LANTERNS) {
-			if (nearbyLanterns < 3) {
+
+		if (pLevel instanceof ServerLevel serverLevel) {
+			for (BlockPos lanternPos : IWSavedData.getData(serverLevel.getServer()).getAllLanterns()) {
 				if (lanternPos.distManhattan(new Vec3i(blockPosition().getX(), blockPosition().getY(), blockPosition().getZ())) < CommonConfig.celestialTowerSpawnCheckingRadius) {
 					nearbyLanterns++;
+
+					if (nearbyLanterns >= 3) {
+						break;
+					}
 				}
 			}
 		}
