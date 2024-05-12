@@ -8,6 +8,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
@@ -16,6 +17,8 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
+import tech.anonymoushacker1279.immersiveweapons.init.AttributeRegistry;
+import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.function.Consumer;
 
@@ -151,13 +154,16 @@ public class PikeItem extends TieredItem {
 						new AttributeModifier(
 								BASE_ATTACK_DAMAGE_UUID,
 								"Weapon modifier",
-								(float) 4 + tier.getAttackDamageBonus(),
-								AttributeModifier.Operation.ADD_VALUE
+								(float) 3 + tier.getAttackDamageBonus(),
+								Operation.ADD_VALUE
 						),
 						EquipmentSlotGroup.MAINHAND)
 				.add(
 						Attributes.ATTACK_SPEED,
-						new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", pAttackSpeed, AttributeModifier.Operation.ADD_VALUE),
+						new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", pAttackSpeed, Operation.ADD_VALUE),
+						EquipmentSlotGroup.MAINHAND)
+				.add(AttributeRegistry.ARMOR_BREACH,
+						new AttributeModifier(GeneralUtilities.ARMOR_BREACH_MODIFIER, "Weapon modifier", 0.25d, Operation.ADD_VALUE),
 						EquipmentSlotGroup.MAINHAND)
 				.build();
 	}

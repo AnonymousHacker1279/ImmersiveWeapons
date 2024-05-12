@@ -1162,6 +1162,9 @@ public class LanguageGenerator extends IWLanguageProvider {
 		add("tooltip.immersiveweapons.accessory.slot.charm", "Charm");
 		add("tooltip.immersiveweapons.accessory.slot.spirit", "Spirit");
 
+		// Attributes
+		add("immersiveweapons.attribute.armor_breach", "Armor Breach");
+
 		// IWCB strings
 		add("tooltip.iwcompatbridge.accessory_note", "Equip this in a Curios slot to gain the effect.");
 	}

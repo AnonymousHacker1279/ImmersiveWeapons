@@ -674,6 +674,7 @@
   "immersiveweapons.armor_effects.enabled": "Armor effects have been enabled",
   "immersiveweapons.armor_effects.tesla_armor.effect_everything": "Currently effecting ALL creatures (including players)",
   "immersiveweapons.armor_effects.tesla_armor.effect_mobs": "Currently effecting only mobs",
+  "immersiveweapons.attribute.armor_breach": "Armor Breach",
   "immersiveweapons.block.wall_shelf.locked": "This shelf has been locked",
   "immersiveweapons.block.wall_shelf.unlocked": "This shelf has been unlocked",
   "immersiveweapons.boss.celestial_tower.waves": "Celestial Tower: Wave %s of %s",
