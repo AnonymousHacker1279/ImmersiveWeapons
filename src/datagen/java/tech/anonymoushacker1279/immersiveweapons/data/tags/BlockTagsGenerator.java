@@ -89,14 +89,25 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 				BlockRegistry.STRIPPED_STARDUST_WOOD.get());
 
 		// Tool tags
-		tag(IWBlockTagGroups.INCORRECT_FOR_COPPER_TOOL);
-		tag(IWBlockTagGroups.INCORRECT_FOR_COBALT_TOOL);
-		tag(IWBlockTagGroups.INCORRECT_FOR_MOLTEN_TOOL);
-		tag(IWBlockTagGroups.INCORRECT_FOR_TESLA_TOOL);
-		tag(IWBlockTagGroups.INCORRECT_FOR_VENTUS_TOOL);
+		tag(IWBlockTagGroups.INCORRECT_FOR_COPPER_TOOL)
+				.addTag(BlockTags.NEEDS_DIAMOND_TOOL)
+				.addTag(Blocks.NEEDS_NETHERITE_TOOL)
+				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL);
+		tag(IWBlockTagGroups.INCORRECT_FOR_COBALT_TOOL)
+				.addTag(BlockTags.NEEDS_DIAMOND_TOOL)
+				.addTag(Blocks.NEEDS_NETHERITE_TOOL)
+				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL);
+		tag(IWBlockTagGroups.INCORRECT_FOR_MOLTEN_TOOL)
+				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL);
+		tag(IWBlockTagGroups.INCORRECT_FOR_TESLA_TOOL)
+				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL);
+		tag(IWBlockTagGroups.INCORRECT_FOR_VENTUS_TOOL)
+				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL);
 		tag(IWBlockTagGroups.INCORRECT_FOR_STARSTORM_TOOL);
 		tag(IWBlockTagGroups.INCORRECT_FOR_ASTRAL_TOOL);
 		tag(IWBlockTagGroups.INCORRECT_FOR_HANSIUM_TOOL);
+
+		tag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL);
 	}
 
 	/**
@@ -197,6 +208,25 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 
 		// Smelts-to-glass tag
 		tag(BlockTags.SMELTS_TO_GLASS).add(BlockRegistry.BLOOD_SAND.get());
+
+		// Incorrect for X tool tags
+		tag(BlockTags.INCORRECT_FOR_WOODEN_TOOL)
+				.addTag(Blocks.NEEDS_NETHERITE_TOOL)
+				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL);
+		tag(BlockTags.INCORRECT_FOR_STONE_TOOL)
+				.addTag(Blocks.NEEDS_NETHERITE_TOOL)
+				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL);
+		tag(BlockTags.INCORRECT_FOR_GOLD_TOOL)
+				.addTag(Blocks.NEEDS_NETHERITE_TOOL)
+				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL);
+		tag(BlockTags.INCORRECT_FOR_IRON_TOOL)
+				.addTag(Blocks.NEEDS_NETHERITE_TOOL)
+				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL);
+		tag(BlockTags.INCORRECT_FOR_DIAMOND_TOOL)
+				.addTag(Blocks.NEEDS_NETHERITE_TOOL)
+				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL);
+		tag(BlockTags.INCORRECT_FOR_NETHERITE_TOOL)
+				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL);
 	}
 
 	/**

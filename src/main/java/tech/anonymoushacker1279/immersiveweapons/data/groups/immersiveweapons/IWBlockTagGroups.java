@@ -18,6 +18,7 @@ public class IWBlockTagGroups {
 	public static final TagKey<Block> INCORRECT_FOR_STARSTORM_TOOL = createBlockTag("incorrect_for_starstorm_tool");
 	public static final TagKey<Block> INCORRECT_FOR_ASTRAL_TOOL = createBlockTag("incorrect_for_astral_tool");
 	public static final TagKey<Block> INCORRECT_FOR_HANSIUM_TOOL = createBlockTag("incorrect_for_hansium_tool");
+	public static final TagKey<Block> NEEDS_ASTRAL_STARSTORM_TOOL = createBlockTag("needs_astral_starstorm_tool");
 
 	private static TagKey<Block> createBlockTag(String tag) {
 		return TagKey.create(Registries.BLOCK, new ResourceLocation(ImmersiveWeapons.MOD_ID, tag));

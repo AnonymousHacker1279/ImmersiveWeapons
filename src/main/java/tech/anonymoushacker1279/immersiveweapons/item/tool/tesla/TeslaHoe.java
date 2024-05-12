@@ -12,7 +12,7 @@ public class TeslaHoe extends HoeItem implements HitEffectUtils {
 		super(CustomTiers.TESLA,
 				new Properties()
 						.attributes(createAttributes(
-								CustomTiers.TESLA, -6, 0.0f)
+								CustomTiers.TESLA, -7, 0.0f)
 						)
 		);
 	}

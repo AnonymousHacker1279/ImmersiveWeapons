@@ -21,6 +21,8 @@ import java.util.UUID;
  */
 public class GeneralUtilities {
 
+	public static final UUID ATTACK_REACH_MODIFIER = UUID.fromString("9f470b49-0445-4341-ae85-55b9e5ec2a1c");
+
 
 	/**
 	 * Get a random number between a minimum and maximum.

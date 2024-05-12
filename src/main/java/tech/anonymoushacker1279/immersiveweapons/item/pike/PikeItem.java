@@ -7,8 +7,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -19,15 +22,11 @@ import java.util.function.Consumer;
 public class PikeItem extends TieredItem {
 
 	public final Ingredient repairIngredient;
-	public final double damage;
-	public final double attackSpeed;
 
-	public PikeItem(Tier tier, Properties properties, double damageBonus, double attackSpeed, Ingredient repairIngredient) {
+	public PikeItem(Tier tier, Properties properties, Ingredient repairIngredient) {
 		super(tier, properties);
 
 		this.repairIngredient = repairIngredient;
-		damage = damageBonus + tier.getAttackDamageBonus();
-		this.attackSpeed = attackSpeed;
 	}
 
 	@Override
@@ -35,45 +34,21 @@ public class PikeItem extends TieredItem {
 		return !player.isCreative();
 	}
 
-	/**
-	 * Runs when an enemy is hurt.
-	 *
-	 * @param stack    the <code>ItemStack</code> instance
-	 * @param target   the <code>LivingEntity</code> target
-	 * @param attacker the <code>LivingEntity</code> attacker
-	 * @return boolean
-	 */
 	@Override
 	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
 		stack.hurtAndBreak(1, attacker, EquipmentSlot.MAINHAND);
 		return true;
 	}
 
-	/**
-	 * Runs when a block is mined.
-	 *
-	 * @param stack        the <code>ItemStack</code> instance
-	 * @param level        the <code>Level</code> the block is in
-	 * @param state        the <code>BlockState</code> of the block
-	 * @param pos          the <code>BlockPos</code> the block is at
-	 * @param livingEntity the <code>LivingEntity</code> destroying the block
-	 * @return boolean
-	 */
 	@Override
 	public boolean mineBlock(ItemStack stack, Level level, BlockState state, BlockPos pos, LivingEntity livingEntity) {
 		if (state.getDestroySpeed(level, pos) != 0.0D) {
 			stack.hurtAndBreak(2, livingEntity, EquipmentSlot.MAINHAND);
 		}
+
 		return true;
 	}
 
-	/**
-	 * Check if the repair item is valid.
-	 *
-	 * @param toRepair the <code>ItemStack</code> to repair
-	 * @param repair   the <code>ItemStack</code> to repair the first item
-	 * @return boolean
-	 */
 	@Override
 	public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
 		return repairIngredient.test(repair) || super.isValidRepairItem(toRepair, repair);
@@ -167,5 +142,23 @@ public class PikeItem extends TieredItem {
 				}
 			}
 		});
+	}
+
+	public static ItemAttributeModifiers createAttributes(Tier tier, float pAttackSpeed) {
+		return ItemAttributeModifiers.builder()
+				.add(
+						Attributes.ATTACK_DAMAGE,
+						new AttributeModifier(
+								BASE_ATTACK_DAMAGE_UUID,
+								"Weapon modifier",
+								(float) 4 + tier.getAttackDamageBonus(),
+								AttributeModifier.Operation.ADD_VALUE
+						),
+						EquipmentSlotGroup.MAINHAND)
+				.add(
+						Attributes.ATTACK_SPEED,
+						new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", pAttackSpeed, AttributeModifier.Operation.ADD_VALUE),
+						EquipmentSlotGroup.MAINHAND)
+				.build();
 	}
 }

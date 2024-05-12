@@ -20,7 +20,9 @@ import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IW
 import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
+import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
+import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -217,36 +219,18 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 				ItemRegistry.STARSTORM_HOE.get());
 
 		// Pike tags
-		tag(IWItemTagGroups.PIKES).add(
-				ItemRegistry.WOODEN_PIKE.get(),
-				ItemRegistry.STONE_PIKE.get(),
-				ItemRegistry.GOLDEN_PIKE.get(),
-				ItemRegistry.COPPER_PIKE.get(),
-				ItemRegistry.IRON_PIKE.get(),
-				ItemRegistry.COBALT_PIKE.get(),
-				ItemRegistry.DIAMOND_PIKE.get(),
-				ItemRegistry.NETHERITE_PIKE.get(),
-				ItemRegistry.MOLTEN_PIKE.get(),
-				ItemRegistry.TESLA_PIKE.get(),
-				ItemRegistry.VENTUS_PIKE.get(),
-				ItemRegistry.ASTRAL_PIKE.get(),
-				ItemRegistry.STARSTORM_PIKE.get());
+		for (DeferredHolder<Item, ? extends Item> item : ItemRegistry.ITEMS.getEntries()) {
+			if (item.get() instanceof PikeItem pike) {
+				tag(IWItemTagGroups.PIKES).add(pike);
+			}
+		}
 
 		// Gauntlet tags
-		tag(IWItemTagGroups.GAUNTLETS).add(
-				ItemRegistry.WOODEN_GAUNTLET.get(),
-				ItemRegistry.STONE_GAUNTLET.get(),
-				ItemRegistry.GOLDEN_GAUNTLET.get(),
-				ItemRegistry.COPPER_GAUNTLET.get(),
-				ItemRegistry.IRON_GAUNTLET.get(),
-				ItemRegistry.COBALT_GAUNTLET.get(),
-				ItemRegistry.DIAMOND_GAUNTLET.get(),
-				ItemRegistry.NETHERITE_GAUNTLET.get(),
-				ItemRegistry.MOLTEN_GAUNTLET.get(),
-				ItemRegistry.TESLA_GAUNTLET.get(),
-				ItemRegistry.VENTUS_GAUNTLET.get(),
-				ItemRegistry.ASTRAL_GAUNTLET.get(),
-				ItemRegistry.STARSTORM_GAUNTLET.get());
+		for (DeferredHolder<Item, ? extends Item> item : ItemRegistry.ITEMS.getEntries()) {
+			if (item.get() instanceof GauntletItem gauntlet) {
+				tag(IWItemTagGroups.GAUNTLETS).add(gauntlet);
+			}
+		}
 
 		// Commander Pedestal Augment tags
 		tag(IWItemTagGroups.COMMANDER_PEDESTAL_AUGMENTS).add(

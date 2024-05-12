@@ -64,7 +64,6 @@ import tech.anonymoushacker1279.immersiveweapons.event.game_effects.*;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.*;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.PistonCrushingRecipe;
-import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.*;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
@@ -75,8 +74,6 @@ import java.util.Map.Entry;
 
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.GAME)
 public class ForgeEventSubscriber {
-
-	public static final UUID ATTACK_REACH_MODIFIER = UUID.fromString("9f470b49-0445-4341-ae85-55b9e5ec2a1c");
 
 	public static final AttributeModifier JONNYS_CURSE_SPEED_MODIFIER = new AttributeModifier(
 			UUID.fromString("c74619c0-b953-4ee7-a3d7-adf974c22d7d"),
@@ -390,57 +387,18 @@ public class ForgeEventSubscriber {
 	@SubscribeEvent
 	public static void itemAttributeModifierEvent(ItemAttributeModifierEvent event) {
 		// Add reach distance attributes to pikes
-		if (event.getItemStack().getItem() instanceof PikeItem pike && event.getSlotType() == EquipmentSlot.MAINHAND) {
-			double damage = pike.damage;
-			int enchantmentLevel = event.getItemStack().getEnchantmentLevel(EnchantmentRegistry.SHARPENED_HEAD.get());
-			if (enchantmentLevel > 0) {
-				damage += 1.0d + Math.max(0, enchantmentLevel - 1) * 0.5d;
-			}
-
-			event.addModifier(Attributes.ATTACK_DAMAGE,
-					new AttributeModifier(Item.BASE_ATTACK_DAMAGE_UUID,
-							"Attack damage",
-							damage,
-							Operation.ADD_VALUE));
-
-			event.addModifier(Attributes.ATTACK_SPEED,
-					new AttributeModifier(Item.BASE_ATTACK_SPEED_UUID,
-							"Attack speed",
-							pike.attackSpeed,
-							Operation.ADD_VALUE));
-
+		if (event.getItemStack().getItem() instanceof PikeItem && event.getSlotType() == EquipmentSlot.MAINHAND) {
 			double distance = 0.5d;
-			enchantmentLevel = event.getItemStack().getEnchantmentLevel(EnchantmentRegistry.EXTENDED_REACH.get());
+			int enchantmentLevel = event.getItemStack().getEnchantmentLevel(EnchantmentRegistry.EXTENDED_REACH.get());
 
 			if (enchantmentLevel > 0) {
 				distance += 0.5d * enchantmentLevel;
 			}
 
 			event.addModifier(Attributes.ENTITY_INTERACTION_RANGE,
-					new AttributeModifier(ATTACK_REACH_MODIFIER,
+					new AttributeModifier(GeneralUtilities.ATTACK_REACH_MODIFIER,
 							"Reach distance",
 							distance,
-							Operation.ADD_VALUE));
-		}
-
-		// Add reach distance attributes to gauntlets
-		if (event.getItemStack().getItem() instanceof GauntletItem gauntlet && event.getSlotType() == EquipmentSlot.MAINHAND) {
-			event.addModifier(Attributes.ATTACK_DAMAGE,
-					new AttributeModifier(Item.BASE_ATTACK_DAMAGE_UUID,
-							"Attack damage",
-							gauntlet.damage,
-							Operation.ADD_VALUE));
-
-			event.addModifier(Attributes.ATTACK_SPEED,
-					new AttributeModifier(Item.BASE_ATTACK_SPEED_UUID,
-							"Attack speed",
-							gauntlet.attackSpeed,
-							Operation.ADD_VALUE));
-
-			event.addModifier(Attributes.ENTITY_INTERACTION_RANGE,
-					new AttributeModifier(ATTACK_REACH_MODIFIER,
-							"Weapon modifier",
-							-2.0d,
 							Operation.ADD_VALUE));
 		}
 	}

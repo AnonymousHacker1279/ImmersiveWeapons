@@ -1151,6 +1151,17 @@ public class LanguageGenerator extends IWLanguageProvider {
 		add("item.immersiveweapons.music_disc_deadmans_desert_theme_1.desc", "AnonymousHacker1279 - Deadman's Desert Theme 1");
 		add("item.immersiveweapons.music_disc_deadmans_desert_theme_2.desc", "AnonymousHacker1279 - Deadman's Desert Theme 2");
 
+		// Accessory slots
+		add("tooltip.immersiveweapons.accessory.slot.head", "Head");
+		add("tooltip.immersiveweapons.accessory.slot.body", "Body");
+		add("tooltip.immersiveweapons.accessory.slot.necklace", "Necklace");
+		add("tooltip.immersiveweapons.accessory.slot.hand", "Hand");
+		add("tooltip.immersiveweapons.accessory.slot.bracelet", "Bracelet");
+		add("tooltip.immersiveweapons.accessory.slot.ring", "Ring");
+		add("tooltip.immersiveweapons.accessory.slot.belt", "Belt");
+		add("tooltip.immersiveweapons.accessory.slot.charm", "Charm");
+		add("tooltip.immersiveweapons.accessory.slot.spirit", "Spirit");
+
 		// IWCB strings
 		add("tooltip.iwcompatbridge.accessory_note", "Equip this in a Curios slot to gain the effect.");
 	}

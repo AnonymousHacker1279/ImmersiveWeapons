@@ -11,7 +11,7 @@ public class TheSword extends SwordItem implements HitEffectUtils {
 		super(CustomTiers.HANSIUM,
 				new Properties()
 						.attributes(createAttributes(
-								CustomTiers.HANSIUM, 3, -2.4f)
+								CustomTiers.HANSIUM, 3, -1.3f)
 						)
 						.fireResistant()
 		);

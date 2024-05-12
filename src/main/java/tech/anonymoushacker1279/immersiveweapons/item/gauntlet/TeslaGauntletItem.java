@@ -8,8 +8,8 @@ import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
 
 public class TeslaGauntletItem extends GauntletItem implements HitEffectUtils {
 
-	public TeslaGauntletItem(Tier tier, int damageBonus, float attackSpeed, Properties properties, float bleedChance, int bleedLevel, Ingredient repairIngredient) {
-		super(tier, damageBonus, attackSpeed, properties, bleedChance, bleedLevel, repairIngredient);
+	public TeslaGauntletItem(Tier tier, Properties properties, float bleedChance, int bleedLevel, Ingredient repairIngredient) {
+		super(tier, properties, bleedChance, bleedLevel, repairIngredient);
 	}
 
 	@Override
@@ -18,6 +18,7 @@ public class TeslaGauntletItem extends GauntletItem implements HitEffectUtils {
 			addTeslaEffects(target);
 			return true;
 		}
+
 		return false;
 	}
 }

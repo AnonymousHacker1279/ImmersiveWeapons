@@ -94,7 +94,7 @@ runs {
 
 		// If the selected toolchain is a JBR, enable DCEVM for improved hotswapping
 		if (it.project.javaToolchains.launcherFor(java.toolchain).map { it.metadata.vendor }.getOrElse("").contains("JetBrains")) {
-			jvmArguments.addAll '-XX:+AllowEnhancedClassRedefinition'
+			jvmArguments.addAll '-XX:+AllowEnhancedClassRedefinition', '-XX:NonProfiledCodeHeapSize=256M', '-XX:ReservedCodeCacheSize=300M'
 		}
 
 		modSources project.sourceSets.main, project.sourceSets.datagen

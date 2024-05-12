@@ -563,7 +563,7 @@ public class TooltipHandler {
 		if (ImmersiveWeapons.IWCB_LOADED && PluginHandler.isPluginActive("iwcompatbridge:curios_plugin")) {
 			shiftTooltips.add(Component.translatable("tooltip.iwcompatbridge.accessory_note").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
 		} else {
-			shiftTooltips.add(Component.translatable("tooltip.immersiveweapons.accessory_slot", item.getSlot()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+			shiftTooltips.add(Component.translatable("tooltip.immersiveweapons.accessory_slot", item.getSlot().getComponent()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
 
 			if (item.isActive(player, stack)) {
 				shiftTooltips.add(Component.translatable("tooltip.immersiveweapons.accessory_note").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));

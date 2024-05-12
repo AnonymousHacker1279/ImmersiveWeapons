@@ -122,11 +122,11 @@ public class BlockRegistry {
 	public static final Supplier<TeslaSynthesizerBlock> TESLA_SYNTHESIZER = BLOCKS.register("tesla_synthesizer", () -> new TeslaSynthesizerBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(10.0f).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion()));
 	public static final Supplier<Block> TILTROS_PORTAL_FRAME = BLOCKS.register("tiltros_portal_frame", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLACK).strength(50.0f, 1200f).sound(SoundType.STONE).requiresCorrectToolForDrops().noOcclusion()));
 	// Netherite tier
-	public static final Supplier<DropExperienceBlock> ASTRAL_ORE = BLOCKS.register("astral_ore", () -> new DropExperienceBlock(UniformInt.of(7, 12), BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(8.0f, 10.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
-	public static final Supplier<Block> ASTRAL_BLOCK = BLOCKS.register("astral_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(25.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
-	public static final Supplier<AmethystClusterBlock> STARSTORM_CRYSTAL = BLOCKS.register("starstorm_crystal", () -> new StarstormCrystalBlock(7, 3, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).randomTicks().strength(0.4f).sound(SoundType.AMETHYST_CLUSTER).requiresCorrectToolForDrops().lightLevel((blockState) -> 6)));
+	public static final Supplier<DropExperienceBlock> ASTRAL_ORE = BLOCKS.register("astral_ore", () -> new DropExperienceBlock(UniformInt.of(7, 12), BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).instrument(NoteBlockInstrument.BASEDRUM).strength(8.0f, 10.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+	public static final Supplier<Block> ASTRAL_BLOCK = BLOCKS.register("astral_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).instrument(NoteBlockInstrument.BASEDRUM).strength(25.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+	public static final Supplier<AmethystClusterBlock> STARSTORM_CRYSTAL = BLOCKS.register("starstorm_crystal", () -> new StarstormCrystalBlock(7, 3, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).randomTicks().strength(0.4f).sound(SoundType.AMETHYST_CLUSTER).requiresCorrectToolForDrops().lightLevel((blockState) -> 6)));
 	@TextureMetadataMarker(frameTime = 24, interpolate = true, frames = {0, 1, 2, 3, 2, 1})
-	public static final Supplier<Block> STARSTORM_BLOCK = BLOCKS.register("starstorm_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).strength(30.0f).sound(SoundType.AMETHYST).requiresCorrectToolForDrops()));
+	public static final Supplier<Block> STARSTORM_BLOCK = BLOCKS.register("starstorm_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).strength(30.0f).sound(SoundType.AMETHYST).requiresCorrectToolForDrops()));
 
 	// Breakable via axe
 	// Wood tier

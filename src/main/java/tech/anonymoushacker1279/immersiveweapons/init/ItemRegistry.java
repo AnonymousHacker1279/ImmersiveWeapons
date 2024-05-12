@@ -146,19 +146,45 @@ public class ItemRegistry {
 	public static final Supplier<TheSword> THE_SWORD = ITEMS.register("the_sword", TheSword::new);
 
 	// Weapons
-	public static final Supplier<PikeItem> WOODEN_PIKE = ITEMS.register("wooden_pike", () -> new PikeItem(Tiers.WOOD, new Properties(), 4, -2.6d, Ingredient.of(ItemTags.PLANKS)));
-	public static final Supplier<PikeItem> STONE_PIKE = ITEMS.register("stone_pike", () -> new PikeItem(Tiers.STONE, new Properties(), 4, -2.6d, Ingredient.of(ItemTags.STONE_TOOL_MATERIALS)));
-	public static final Supplier<PikeItem> GOLDEN_PIKE = ITEMS.register("golden_pike", () -> new PikeItem(Tiers.GOLD, new Properties(), 4, -2.6d, Ingredient.of(Tags.Items.INGOTS_GOLD)));
-	public static final Supplier<PikeItem> COPPER_PIKE = ITEMS.register("copper_pike", () -> new PikeItem(CustomTiers.COPPER, new Properties(), 4, -2.6d, Ingredient.of(Tags.Items.INGOTS_COPPER)));
-	public static final Supplier<PikeItem> IRON_PIKE = ITEMS.register("iron_pike", () -> new PikeItem(Tiers.IRON, new Properties(), 4, -2.6d, Ingredient.of(Tags.Items.INGOTS_IRON)));
-	public static final Supplier<PikeItem> COBALT_PIKE = ITEMS.register("cobalt_pike", () -> new PikeItem(CustomTiers.COBALT, new Properties(), 4, -2.6d, Ingredient.of(CommonItemTagGroups.COBALT_INGOTS)));
-	public static final Supplier<PikeItem> DIAMOND_PIKE = ITEMS.register("diamond_pike", () -> new PikeItem(Tiers.DIAMOND, new Properties(), 4, -2.6d, Ingredient.of(Tags.Items.GEMS_DIAMOND)));
-	public static final Supplier<PikeItem> NETHERITE_PIKE = ITEMS.register("netherite_pike", () -> new PikeItem(Tiers.NETHERITE, new Properties().fireResistant(), 4, -2.6d, Ingredient.of(Tags.Items.INGOTS_NETHERITE)));
-	public static final Supplier<MoltenPikeItem> MOLTEN_PIKE = ITEMS.register("molten_pike", () -> new MoltenPikeItem(CustomTiers.MOLTEN, new Properties().fireResistant(), 4, -2.6d, Ingredient.of(IWItemTagGroups.MOLTEN_INGOTS)));
-	public static final Supplier<TeslaPikeItem> TESLA_PIKE = ITEMS.register("tesla_pike", () -> new TeslaPikeItem(CustomTiers.TESLA, new Properties().fireResistant(), 4, -2.6d, Ingredient.of(IWItemTagGroups.TESLA_INGOTS)));
-	public static final Supplier<VentusPikeItem> VENTUS_PIKE = ITEMS.register("ventus_pike", () -> new VentusPikeItem(CustomTiers.VENTUS, new Properties().fireResistant(), 4, -2.2d, Ingredient.of(IWItemTagGroups.VENTUS_SHARDS)));
-	public static final Supplier<PikeItem> ASTRAL_PIKE = ITEMS.register("astral_pike", () -> new PikeItem(CustomTiers.ASTRAL, new Properties(), 4, -1.7d, Ingredient.of(IWItemTagGroups.ASTRAL_INGOTS)));
-	public static final Supplier<PikeItem> STARSTORM_PIKE = ITEMS.register("starstorm_pike", () -> new PikeItem(CustomTiers.STARSTORM, new Properties(), 4, -2.6d, Ingredient.of(IWItemTagGroups.STARSTORM_INGOTS)));
+	public static final Supplier<PikeItem> WOODEN_PIKE = ITEMS.register("wooden_pike", () -> new PikeItem(Tiers.WOOD, new Properties().attributes(
+			PikeItem.createAttributes(Tiers.WOOD, -2.6f)
+	), Ingredient.of(ItemTags.PLANKS)));
+	public static final Supplier<PikeItem> STONE_PIKE = ITEMS.register("stone_pike", () -> new PikeItem(Tiers.STONE, new Properties().attributes(
+			PikeItem.createAttributes(Tiers.STONE, -2.6f)
+	), Ingredient.of(ItemTags.STONE_TOOL_MATERIALS)));
+	public static final Supplier<PikeItem> GOLDEN_PIKE = ITEMS.register("golden_pike", () -> new PikeItem(Tiers.GOLD, new Properties().attributes(
+			PikeItem.createAttributes(Tiers.GOLD, -2.6f)
+	), Ingredient.of(Tags.Items.INGOTS_GOLD)));
+	public static final Supplier<PikeItem> COPPER_PIKE = ITEMS.register("copper_pike", () -> new PikeItem(CustomTiers.COPPER, new Properties().attributes(
+			PikeItem.createAttributes(CustomTiers.COPPER, -2.6f)
+	), Ingredient.of(Tags.Items.INGOTS_COPPER)));
+	public static final Supplier<PikeItem> IRON_PIKE = ITEMS.register("iron_pike", () -> new PikeItem(Tiers.IRON, new Properties().attributes(
+			PikeItem.createAttributes(Tiers.IRON, -2.6f)
+	), Ingredient.of(Tags.Items.INGOTS_IRON)));
+	public static final Supplier<PikeItem> COBALT_PIKE = ITEMS.register("cobalt_pike", () -> new PikeItem(CustomTiers.COBALT, new Properties().attributes(
+			PikeItem.createAttributes(CustomTiers.COBALT, -2.6f)
+	), Ingredient.of(CommonItemTagGroups.COBALT_INGOTS)));
+	public static final Supplier<PikeItem> DIAMOND_PIKE = ITEMS.register("diamond_pike", () -> new PikeItem(Tiers.DIAMOND, new Properties().attributes(
+			PikeItem.createAttributes(Tiers.DIAMOND, -2.6f)
+	), Ingredient.of(Tags.Items.GEMS_DIAMOND)));
+	public static final Supplier<PikeItem> NETHERITE_PIKE = ITEMS.register("netherite_pike", () -> new PikeItem(Tiers.NETHERITE, new Properties().fireResistant().attributes(
+			PikeItem.createAttributes(Tiers.NETHERITE, -2.6f)
+	), Ingredient.of(Tags.Items.INGOTS_NETHERITE)));
+	public static final Supplier<MoltenPikeItem> MOLTEN_PIKE = ITEMS.register("molten_pike", () -> new MoltenPikeItem(CustomTiers.MOLTEN, new Properties().fireResistant().attributes(
+			PikeItem.createAttributes(CustomTiers.MOLTEN, -2.6f)
+	), Ingredient.of(IWItemTagGroups.MOLTEN_INGOTS)));
+	public static final Supplier<TeslaPikeItem> TESLA_PIKE = ITEMS.register("tesla_pike", () -> new TeslaPikeItem(CustomTiers.TESLA, new Properties().fireResistant().attributes(
+			PikeItem.createAttributes(CustomTiers.TESLA, -2.6f)
+	), Ingredient.of(IWItemTagGroups.TESLA_INGOTS)));
+	public static final Supplier<VentusPikeItem> VENTUS_PIKE = ITEMS.register("ventus_pike", () -> new VentusPikeItem(CustomTiers.VENTUS, new Properties().fireResistant().attributes(
+			PikeItem.createAttributes(CustomTiers.VENTUS, -2.2f)
+	), Ingredient.of(IWItemTagGroups.VENTUS_SHARDS)));
+	public static final Supplier<PikeItem> ASTRAL_PIKE = ITEMS.register("astral_pike", () -> new PikeItem(CustomTiers.ASTRAL, new Properties().attributes(
+			PikeItem.createAttributes(CustomTiers.ASTRAL, -1.7f)
+	), Ingredient.of(IWItemTagGroups.ASTRAL_INGOTS)));
+	public static final Supplier<PikeItem> STARSTORM_PIKE = ITEMS.register("starstorm_pike", () -> new PikeItem(CustomTiers.STARSTORM, new Properties().attributes(
+			PikeItem.createAttributes(CustomTiers.STARSTORM, -2.6f)
+	), Ingredient.of(IWItemTagGroups.STARSTORM_INGOTS)));
 	@DatagenExclusionMarker(Type.MODEL_GENERATOR_ITEM)
 	public static final Supplier<SimplePistolItem> FLINTLOCK_PISTOL = ITEMS.register("flintlock_pistol", () -> new SimplePistolItem(new Properties().durability(499)));
 	@DatagenExclusionMarker(Type.MODEL_GENERATOR_ITEM)
@@ -172,19 +198,45 @@ public class ItemRegistry {
 	public static final Supplier<FlareGunItem> FLARE_GUN = ITEMS.register("flare_gun", () -> new FlareGunItem(new Properties().durability(399)));
 	@DatagenExclusionMarker(Type.MODEL_GENERATOR_ITEM)
 	public static final Supplier<HandCannonItem> HAND_CANNON = ITEMS.register("hand_cannon", () -> new HandCannonItem(new Properties().durability(199)));
-	public static final Supplier<GauntletItem> WOODEN_GAUNTLET = ITEMS.register("wooden_gauntlet", () -> new GauntletItem(Tiers.WOOD, 2, -2.3f, new Properties(), 0.15f, 0, Ingredient.of(ItemTags.PLANKS)));
-	public static final Supplier<GauntletItem> STONE_GAUNTLET = ITEMS.register("stone_gauntlet", () -> new GauntletItem(Tiers.STONE, 2, -2.3f, new Properties(), 0.25f, 0, Ingredient.of(ItemTags.STONE_TOOL_MATERIALS)));
-	public static final Supplier<GauntletItem> GOLDEN_GAUNTLET = ITEMS.register("golden_gauntlet", () -> new GauntletItem(Tiers.GOLD, 2, -2.3f, new Properties(), 0.35f, 0, Ingredient.of(Tags.Items.INGOTS_GOLD)));
-	public static final Supplier<GauntletItem> COPPER_GAUNTLET = ITEMS.register("copper_gauntlet", () -> new GauntletItem(CustomTiers.COPPER, 2, -2.3f, new Properties(), 0.45f, 0, Ingredient.of(Tags.Items.INGOTS_COPPER)));
-	public static final Supplier<GauntletItem> IRON_GAUNTLET = ITEMS.register("iron_gauntlet", () -> new GauntletItem(Tiers.IRON, 2, -2.3f, new Properties(), 0.55f, 0, Ingredient.of(Tags.Items.INGOTS_IRON)));
-	public static final Supplier<GauntletItem> COBALT_GAUNTLET = ITEMS.register("cobalt_gauntlet", () -> new GauntletItem(CustomTiers.COBALT, 2, -2.3f, new Properties(), 0.60f, 0, Ingredient.of(CommonItemTagGroups.COBALT_INGOTS)));
-	public static final Supplier<GauntletItem> DIAMOND_GAUNTLET = ITEMS.register("diamond_gauntlet", () -> new GauntletItem(Tiers.DIAMOND, 2, -2.3f, new Properties(), 0.75f, 1, Ingredient.of(Tags.Items.GEMS_DIAMOND)));
-	public static final Supplier<GauntletItem> NETHERITE_GAUNTLET = ITEMS.register("netherite_gauntlet", () -> new GauntletItem(Tiers.NETHERITE, 2, -2.3f, new Properties(), 0.85f, 1, Ingredient.of(Tags.Items.INGOTS_NETHERITE)));
-	public static final Supplier<MoltenGauntletItem> MOLTEN_GAUNTLET = ITEMS.register("molten_gauntlet", () -> new MoltenGauntletItem(CustomTiers.MOLTEN, 2, -2.3f, new Properties(), 0.95f, 2, Ingredient.of(IWItemTagGroups.MOLTEN_INGOTS)));
-	public static final Supplier<TeslaGauntletItem> TESLA_GAUNTLET = ITEMS.register("tesla_gauntlet", () -> new TeslaGauntletItem(CustomTiers.TESLA, 2, -2.3f, new Properties(), 0.95f, 2, Ingredient.of(IWItemTagGroups.TESLA_INGOTS)));
-	public static final Supplier<VentusGauntletItem> VENTUS_GAUNTLET = ITEMS.register("ventus_gauntlet", () -> new VentusGauntletItem(CustomTiers.VENTUS, 2, -1.9f, new Properties(), 0.95f, 2, Ingredient.of(IWItemTagGroups.VENTUS_SHARDS)));
-	public static final Supplier<GauntletItem> ASTRAL_GAUNTLET = ITEMS.register("astral_gauntlet", () -> new GauntletItem(CustomTiers.ASTRAL, 2, -1.4f, new Properties(), 0.95f, 2, Ingredient.of(IWItemTagGroups.ASTRAL_INGOTS)));
-	public static final Supplier<GauntletItem> STARSTORM_GAUNTLET = ITEMS.register("starstorm_gauntlet", () -> new GauntletItem(CustomTiers.STARSTORM, 2, -2.3f, new Properties(), 0.95f, 2, Ingredient.of(IWItemTagGroups.STARSTORM_INGOTS)));
+	public static final Supplier<GauntletItem> WOODEN_GAUNTLET = ITEMS.register("wooden_gauntlet", () -> new GauntletItem(Tiers.WOOD, new Properties().attributes(
+			GauntletItem.createAttributes(Tiers.WOOD, -2.3f)
+	), 0.15f, 0, Ingredient.of(ItemTags.PLANKS)));
+	public static final Supplier<GauntletItem> STONE_GAUNTLET = ITEMS.register("stone_gauntlet", () -> new GauntletItem(Tiers.STONE, new Properties().attributes(
+			GauntletItem.createAttributes(Tiers.STONE, -2.3f)
+	), 0.25f, 0, Ingredient.of(ItemTags.STONE_TOOL_MATERIALS)));
+	public static final Supplier<GauntletItem> GOLDEN_GAUNTLET = ITEMS.register("golden_gauntlet", () -> new GauntletItem(Tiers.GOLD, new Properties().attributes(
+			GauntletItem.createAttributes(Tiers.GOLD, -2.3f)
+	), 0.35f, 0, Ingredient.of(Tags.Items.INGOTS_GOLD)));
+	public static final Supplier<GauntletItem> COPPER_GAUNTLET = ITEMS.register("copper_gauntlet", () -> new GauntletItem(CustomTiers.COPPER, new Properties().attributes(
+			GauntletItem.createAttributes(CustomTiers.COPPER, -2.3f)
+	), 0.45f, 0, Ingredient.of(Tags.Items.INGOTS_COPPER)));
+	public static final Supplier<GauntletItem> IRON_GAUNTLET = ITEMS.register("iron_gauntlet", () -> new GauntletItem(Tiers.IRON, new Properties().attributes(
+			GauntletItem.createAttributes(Tiers.IRON, -2.3f)
+	), 0.55f, 0, Ingredient.of(Tags.Items.INGOTS_IRON)));
+	public static final Supplier<GauntletItem> COBALT_GAUNTLET = ITEMS.register("cobalt_gauntlet", () -> new GauntletItem(CustomTiers.COBALT, new Properties().attributes(
+			GauntletItem.createAttributes(CustomTiers.COBALT, -2.3f)
+	), 0.60f, 0, Ingredient.of(CommonItemTagGroups.COBALT_INGOTS)));
+	public static final Supplier<GauntletItem> DIAMOND_GAUNTLET = ITEMS.register("diamond_gauntlet", () -> new GauntletItem(Tiers.DIAMOND, new Properties().attributes(
+			GauntletItem.createAttributes(Tiers.DIAMOND, -2.3f)
+	), 0.75f, 1, Ingredient.of(Tags.Items.GEMS_DIAMOND)));
+	public static final Supplier<GauntletItem> NETHERITE_GAUNTLET = ITEMS.register("netherite_gauntlet", () -> new GauntletItem(Tiers.NETHERITE, new Properties().attributes(
+			GauntletItem.createAttributes(Tiers.NETHERITE, -2.3f)
+	), 0.85f, 1, Ingredient.of(Tags.Items.INGOTS_NETHERITE)));
+	public static final Supplier<MoltenGauntletItem> MOLTEN_GAUNTLET = ITEMS.register("molten_gauntlet", () -> new MoltenGauntletItem(CustomTiers.MOLTEN, new Properties().attributes(
+			GauntletItem.createAttributes(CustomTiers.MOLTEN, -2.3f)
+	), 0.95f, 2, Ingredient.of(IWItemTagGroups.MOLTEN_INGOTS)));
+	public static final Supplier<TeslaGauntletItem> TESLA_GAUNTLET = ITEMS.register("tesla_gauntlet", () -> new TeslaGauntletItem(CustomTiers.TESLA, new Properties().attributes(
+			GauntletItem.createAttributes(CustomTiers.TESLA, -2.3f)
+	), 0.95f, 3, Ingredient.of(IWItemTagGroups.TESLA_INGOTS)));
+	public static final Supplier<VentusGauntletItem> VENTUS_GAUNTLET = ITEMS.register("ventus_gauntlet", () -> new VentusGauntletItem(CustomTiers.VENTUS, new Properties().attributes(
+			GauntletItem.createAttributes(CustomTiers.VENTUS, -1.9f)
+	), 0.95f, 2, Ingredient.of(IWItemTagGroups.VENTUS_SHARDS)));
+	public static final Supplier<GauntletItem> ASTRAL_GAUNTLET = ITEMS.register("astral_gauntlet", () -> new GauntletItem(CustomTiers.ASTRAL, new Properties().attributes(
+			GauntletItem.createAttributes(CustomTiers.ASTRAL, -1.4f)
+	), 0.95f, 2, Ingredient.of(IWItemTagGroups.ASTRAL_INGOTS)));
+	public static final Supplier<GauntletItem> STARSTORM_GAUNTLET = ITEMS.register("starstorm_gauntlet", () -> new GauntletItem(CustomTiers.STARSTORM, new Properties().attributes(
+			GauntletItem.createAttributes(CustomTiers.STARSTORM, -2.3f)
+	), 0.95f, 2, Ingredient.of(IWItemTagGroups.STARSTORM_INGOTS)));
 	public static final Supplier<MeteorStaffItem> METEOR_STAFF = ITEMS.register("meteor_staff", () -> new MeteorStaffItem(new Properties().durability(199)));
 	public static final Supplier<CursedSightStaffItem> CURSED_SIGHT_STAFF = ITEMS.register("cursed_sight_staff", () -> new CursedSightStaffItem(new Properties().durability(149)));
 	@TextureMetadataMarker(frameTime = 3)

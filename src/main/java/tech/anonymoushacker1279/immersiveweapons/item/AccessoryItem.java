@@ -1,5 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.item;
 
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -299,15 +300,25 @@ public class AccessoryItem extends Item {
 	 * An enum of accessory slots.
 	 */
 	public enum AccessorySlot {
-		HEAD,
-		BODY,
-		NECKLACE,
-		HAND,
-		BRACELET,
-		RING,
-		BELT,
-		CHARM,
-		SPIRIT
+		HEAD("head"),
+		BODY("body"),
+		NECKLACE("necklace"),
+		HAND("hand"),
+		BRACELET("bracelet"),
+		RING("ring"),
+		BELT("belt"),
+		CHARM("charm"),
+		SPIRIT("spirit");
+
+		private final String name;
+
+		AccessorySlot(String name) {
+			this.name = name;
+		}
+
+		public Component getComponent() {
+			return Component.translatable("tooltip.immersiveweapons.accessory.slot." + name);
+		}
 	}
 
 	/**
