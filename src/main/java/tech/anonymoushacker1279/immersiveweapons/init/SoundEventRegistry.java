@@ -79,4 +79,5 @@ public class SoundEventRegistry {
 	public static final Supplier<SoundEvent> STARMITE_HURT = SOUND_EVENTS.register("starmite_hurt", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "starmite_hurt")));
 	public static final Supplier<SoundEvent> STARMITE_DEATH = SOUND_EVENTS.register("starmite_death", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "starmite_death")));
 	public static final Supplier<SoundEvent> STARMITE_STEP = SOUND_EVENTS.register("starmite_step", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "starmite_step")));
+	public static final Supplier<SoundEvent> TILTROS_PORTAL_WHOOSH = SOUND_EVENTS.register("tiltros_portal_whoosh", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(ImmersiveWeapons.MOD_ID, "tiltros_portal_whoosh")));
 }

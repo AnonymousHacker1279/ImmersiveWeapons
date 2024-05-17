@@ -261,5 +261,6 @@ public class BlockRegistry {
 	public static final Supplier<FlowerPotBlock> POTTED_DEATHWEED = BLOCKS.register("potted_deathweed", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, DEATHWEED, BlockBehaviour.Properties.of().pushReaction(PushReaction.DESTROY).lightLevel((state) -> 12).instabreak().noOcclusion()));
 	public static final Supplier<SaplingBlock> STARDUST_SAPLING = BLOCKS.register("stardust_sapling", () -> new SaplingBlock(new TreeGrower("stardust_sapling", Optional.of(STARDUST_TREE_CONFIGURATION), Optional.empty(), Optional.empty()), BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).strength(0.0f).sound(SoundType.GRASS).noCollission().instabreak().offsetType(OffsetType.NONE)));
 	public static final Supplier<SolarLensBlock> SOLAR_LENS = BLOCKS.register("solar_lens", () -> new SolarLensBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).pushReaction(PushReaction.DESTROY).strength(0.5f).sound(SoundType.GLASS).noOcclusion()));
+	@TextureMetadataMarker
 	public static final Supplier<TiltrosPortalBlock> TILTROS_PORTAL = BLOCKS.register("tiltros_portal", () -> new TiltrosPortalBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLACK).pushReaction(PushReaction.BLOCK).strength(-1.0f, 3600000f).noCollission().lightLevel(state -> 15).noLootTable()));
 }

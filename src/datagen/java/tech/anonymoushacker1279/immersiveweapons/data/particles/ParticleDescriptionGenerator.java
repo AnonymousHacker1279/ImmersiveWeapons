@@ -22,5 +22,6 @@ public class ParticleDescriptionGenerator extends ParticleDescriptionProvider {
 		spriteSet(ParticleTypesRegistry.MUZZLE_FLASH_PARTICLE.get(), new ResourceLocation(ImmersiveWeapons.MOD_ID, "muzzle_flash/muzzle_flash"), 3, false);
 		spriteSet(ParticleTypesRegistry.SMOKE_GRENADE_PARTICLE.get(), new ResourceLocation("big_smoke"), 12, false);
 		spriteSet(ParticleTypesRegistry.STARDUST_LEAVES_PARTICLE.get(), new ResourceLocation(ImmersiveWeapons.MOD_ID, "stardust_leaves/stardust_leaves"), 2, false);
+		spriteSet(ParticleTypesRegistry.TILTROS_PORTAL_PARTICLE.get(), new ResourceLocation("generic"), 7, false);
 	}
 }

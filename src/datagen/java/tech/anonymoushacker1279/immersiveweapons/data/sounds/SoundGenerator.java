@@ -580,5 +580,11 @@ public class SoundGenerator extends SoundDefinitionsProvider {
 										"biome/deadmans_desert/music/music_1"),
 								SoundType.SOUND)
 						.stream()));
+
+		add(SoundEventRegistry.TILTROS_PORTAL_WHOOSH.get(), definition()
+				.subtitle("subtitles.immersiveweapons.block.tiltros_portal.whoosh")
+				.with(Sound.sound(new ResourceLocation(ImmersiveWeapons.MOD_ID,
+								"block/tiltros_portal/whoosh/whoosh"),
+						SoundType.SOUND)));
 	}
 }

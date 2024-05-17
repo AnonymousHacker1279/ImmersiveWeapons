@@ -25,4 +25,5 @@ public class ParticleTypesRegistry {
 	public static final Supplier<SimpleParticleType> MOONGLOW_PARTICLE = PARTICLE_TYPES.register("moonglow", () -> new SimpleParticleType(false));
 	public static final Supplier<SimpleParticleType> STARDUST_LEAVES_PARTICLE = PARTICLE_TYPES.register("stardust_leaves", () -> new SimpleParticleType(false));
 	public static final Supplier<SimpleParticleType> DEADMANS_DESERT_AMBIENT_PARTICLE = PARTICLE_TYPES.register("deadmans_desert_ambient", () -> new SimpleParticleType(false));
+	public static final Supplier<SimpleParticleType> TILTROS_PORTAL_PARTICLE = PARTICLE_TYPES.register("tiltros_portal", () -> new SimpleParticleType(false));
 }

@@ -328,6 +328,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addSubtitle("block.spike_trap.retract", "Spike trap retracts");
 		addSubtitle("block.panic_alarm.alarm", "Alarm sounds");
 		addSubtitle("block.mortar.fire", "Mortar fires");
+		addSubtitle("block.tiltros_portal.whoosh", "Portal whooshes");
 
 		// Entity
 		addSubtitle("entity.soldier.ambient", "Soldier speaking");

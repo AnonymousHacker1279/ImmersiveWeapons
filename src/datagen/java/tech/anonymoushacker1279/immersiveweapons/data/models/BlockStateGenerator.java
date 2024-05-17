@@ -662,8 +662,21 @@ public class BlockStateGenerator extends BlockStateProvider {
 		// Tiltros Portal and Frame
 		getVariantBuilder(BlockRegistry.TILTROS_PORTAL.get())
 				.forAllStates(state -> ConfiguredModel.builder()
-						.modelFile(models().withExistingParent(BuiltInRegistries.BLOCK.getKey(BlockRegistry.TILTROS_PORTAL.get()).getPath(), "minecraft:block/block")
-								.texture("particle", new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/tiltros_portal_frame"))
+						.modelFile(models().getBuilder("tiltros_portal")
+								.texture("particle", new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/tiltros_portal"))
+								.texture("portal", new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/tiltros_portal"))
+								.renderType("minecraft:translucent")
+								.element()
+								.from(0, 6, 0).to(16, 10, 16)
+								.face(Direction.UP)
+								.uvs(0, 0, 16, 16)
+								.texture("#portal")
+								.end()
+								.face(Direction.DOWN)
+								.uvs(0, 0, 16, 16)
+								.texture("#portal")
+								.end()
+								.end()
 						)
 						.build());
 	}

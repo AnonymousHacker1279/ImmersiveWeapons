@@ -36,7 +36,7 @@ public class ClientboundSetEntityMotionPacketMixin {
 	}
 
 	@Inject(method = "<init>(Lnet/minecraft/network/FriendlyByteBuf;)V", at = @At("RETURN"))
-	public void ClientboundSetEntityMotionPacket(FriendlyByteBuf pBuffer, CallbackInfo ci) {
+	private void ClientboundSetEntityMotionPacket(FriendlyByteBuf pBuffer, CallbackInfo ci) {
 		this.id = pBuffer.readVarInt();
 		this.xa = pBuffer.readInt();
 		this.ya = pBuffer.readInt();
@@ -44,7 +44,7 @@ public class ClientboundSetEntityMotionPacketMixin {
 	}
 
 	@Inject(method = "write", at = @At("RETURN"))
-	public void write(FriendlyByteBuf pBuffer, CallbackInfo ci) {
+	private void write(FriendlyByteBuf pBuffer, CallbackInfo ci) {
 		pBuffer.writeVarInt(this.id);
 		pBuffer.writeInt(this.xa);
 		pBuffer.writeInt(this.ya);
