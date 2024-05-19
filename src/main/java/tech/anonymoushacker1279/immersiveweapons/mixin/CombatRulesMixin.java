@@ -12,6 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.AttributeRegistry;
 
 /**
@@ -28,11 +29,19 @@ public abstract class CombatRulesMixin {
 
 		if (source.getEntity() instanceof LivingEntity livingEntity) {
 			ItemStack heldItem = livingEntity.getMainHandItem();
-			heldItem.getAttributeModifiers(EquipmentSlot.MAINHAND).forEach((attribute, attributeModifier) -> {
-				if (attribute == AttributeRegistry.ARMOR_BREACH) {
-					armorBreachModifier[0] -= (float) attributeModifier.amount();
-				}
-			});
+
+			// Prevents being able to fire a projectile and switching to a weapon with armor breach to increase damage
+			if (source.getDirectEntity() instanceof CustomArrowEntity customArrowEntity) {
+				heldItem = customArrowEntity.firedWithStack;
+			}
+
+			if (heldItem != null) {
+				heldItem.getAttributeModifiers(EquipmentSlot.MAINHAND).forEach((attribute, attributeModifier) -> {
+					if (attribute == AttributeRegistry.ARMOR_BREACH) {
+						armorBreachModifier[0] -= (float) attributeModifier.amount();
+					}
+				});
+			}
 		}
 
 		float damageModifier = 1.0F - armorBreachModifier[0];

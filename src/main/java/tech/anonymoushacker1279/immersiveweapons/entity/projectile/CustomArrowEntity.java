@@ -35,6 +35,8 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 
 	protected static final byte VANILLA_IMPACT_STATUS_ID = 3;
 	public Item referenceItem = Items.AIR;
+	@Nullable
+	public ItemStack firedWithStack;
 	protected float inertia;
 	public double gravityModifier = 1.0d;
 	protected boolean shouldStopMoving = false;
@@ -44,8 +46,7 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 	public boolean isExplosive = false;
 	private boolean hasExploded = false;
 
-	public static final EntityDataAccessor<Float> GRAVITY_MODIFIER_ACCESSOR = SynchedEntityData.defineId(CustomArrowEntity.class,
-			EntityDataSerializers.FLOAT);
+	public static final EntityDataAccessor<Float> GRAVITY_MODIFIER_ACCESSOR = SynchedEntityData.defineId(CustomArrowEntity.class, EntityDataSerializers.FLOAT);
 
 	public CustomArrowEntity(EntityType<? extends Arrow> type, Level level) {
 		super(type, level);
@@ -55,6 +56,8 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 		this(type, level);
 		setPos(shooter.getX(), shooter.getY() + shooter.getEyeHeight() - 0.1, shooter.getZ());
 		setOwner(shooter);
+		firedWithStack = shooter.getUseItem();
+
 		if (shooter instanceof Player) {
 			pickup = Pickup.ALLOWED;
 		}
