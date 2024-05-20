@@ -126,6 +126,19 @@ public class ClientModEventSubscriber {
 			event.accept(PotionContents.createItemStack(Items.SPLASH_POTION, PotionRegistry.LONG_DEATH_POTION));
 			event.accept(PotionContents.createItemStack(Items.LINGERING_POTION, PotionRegistry.LONG_DEATH_POTION));
 			event.accept(PotionContents.createItemStack(Items.TIPPED_ARROW, PotionRegistry.LONG_DEATH_POTION));
+			// Broken Armor potions
+			event.accept(PotionContents.createItemStack(Items.POTION, PotionRegistry.BROKEN_ARMOR_POTION));
+			event.accept(PotionContents.createItemStack(Items.SPLASH_POTION, PotionRegistry.BROKEN_ARMOR_POTION));
+			event.accept(PotionContents.createItemStack(Items.LINGERING_POTION, PotionRegistry.BROKEN_ARMOR_POTION));
+			event.accept(PotionContents.createItemStack(Items.TIPPED_ARROW, PotionRegistry.BROKEN_ARMOR_POTION));
+			event.accept(PotionContents.createItemStack(Items.POTION, PotionRegistry.STRONG_BROKEN_ARMOR_POTION));
+			event.accept(PotionContents.createItemStack(Items.SPLASH_POTION, PotionRegistry.STRONG_BROKEN_ARMOR_POTION));
+			event.accept(PotionContents.createItemStack(Items.LINGERING_POTION, PotionRegistry.STRONG_BROKEN_ARMOR_POTION));
+			event.accept(PotionContents.createItemStack(Items.TIPPED_ARROW, PotionRegistry.STRONG_BROKEN_ARMOR_POTION));
+			event.accept(PotionContents.createItemStack(Items.POTION, PotionRegistry.LONG_BROKEN_ARMOR_POTION));
+			event.accept(PotionContents.createItemStack(Items.SPLASH_POTION, PotionRegistry.LONG_BROKEN_ARMOR_POTION));
+			event.accept(PotionContents.createItemStack(Items.LINGERING_POTION, PotionRegistry.LONG_BROKEN_ARMOR_POTION));
+			event.accept(PotionContents.createItemStack(Items.TIPPED_ARROW, PotionRegistry.LONG_BROKEN_ARMOR_POTION));
 		}
 	}
 

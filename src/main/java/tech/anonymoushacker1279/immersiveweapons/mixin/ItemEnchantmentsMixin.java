@@ -19,13 +19,7 @@ import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 @Mixin(ItemEnchantments.class)
 public abstract class ItemEnchantmentsMixin {
 
-	@ModifyArg(
-			method = "addToTooltip",
-			at = @At(
-					value = "INVOKE",
-					target = "Ljava/util/function/Consumer;accept(Ljava/lang/Object;)V"
-			)
-	)
+	@ModifyArg(method = "addToTooltip", at = @At(value = "INVOKE", target = "Ljava/util/function/Consumer;accept(Ljava/lang/Object;)V"))
 	private Object recolorEnchantmentNames(Object object, @Local Holder<Enchantment> holder) {
 		if (object instanceof Component component) {
 			ResourceLocation enchantmentLocation = BuiltInRegistries.ENCHANTMENT.getKey(holder.value());

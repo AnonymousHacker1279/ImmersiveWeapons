@@ -249,7 +249,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		// Ranged weapon tags
 		tag(IWItemTagGroups.RANGED_WEAPONS)
 				.addTag(IWItemTagGroups.FIREARMS)
-				.add(Items.BOW, Items.CROSSBOW);
+				.addTag(Tags.Items.TOOLS_BOWS);
 
 		// Weapon and tools tags
 		tag(IWItemTagGroups.WEAPONS_AND_TOOLS)
@@ -343,5 +343,8 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 				ItemRegistry.PADDED_LEATHER_LEGGINGS.get(),
 				ItemRegistry.PADDED_LEATHER_BOOTS.get()
 		);
+
+		// Enchantable items tag
+		tag(ItemTags.BOW_ENCHANTABLE).addTag(Tags.Items.TOOLS_BOWS);
 	}
 }

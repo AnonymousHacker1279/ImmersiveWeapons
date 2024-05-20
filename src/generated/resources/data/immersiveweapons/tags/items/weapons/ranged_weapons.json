@@ -1,7 +1,6 @@
 {
   "values": [
     "#immersiveweapons:weapons/firearms",
-    "minecraft:bow",
-    "minecraft:crossbow"
+    "#c:tools/bows"
   ]
 }

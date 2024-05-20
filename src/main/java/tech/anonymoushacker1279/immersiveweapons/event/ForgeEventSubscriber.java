@@ -605,6 +605,20 @@ public class ForgeEventSubscriber {
 				Potions.LONG_STRENGTH,
 				Items.FERMENTED_SPIDER_EYE,
 				PotionRegistry.LONG_DEATH_POTION);
+
+		// Broken Armor potions
+		builder.addMix(
+				Potions.AWKWARD,
+				Items.PRISMARINE_SHARD,
+				PotionRegistry.BROKEN_ARMOR_POTION);
+		builder.addMix(
+				PotionRegistry.BROKEN_ARMOR_POTION,
+				Items.GLOWSTONE_DUST,
+				PotionRegistry.STRONG_BROKEN_ARMOR_POTION);
+		builder.addMix(
+				PotionRegistry.BROKEN_ARMOR_POTION,
+				Items.REDSTONE,
+				PotionRegistry.LONG_BROKEN_ARMOR_POTION);
 	}
 
 

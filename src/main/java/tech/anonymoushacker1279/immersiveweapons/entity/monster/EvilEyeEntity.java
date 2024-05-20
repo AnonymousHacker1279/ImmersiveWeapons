@@ -23,6 +23,7 @@ import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.FlyAroundEntityGoal;
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.FlyRandomlyGoal;
+import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 
 import java.util.*;
@@ -63,6 +64,8 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 		highTierDebuffs.add(MobEffects.POISON);
 		highTierDebuffs.add(MobEffects.WEAKNESS);
 		highTierDebuffs.add(MobEffects.LEVITATION);
+		highTierDebuffs.add(EffectRegistry.DAMAGE_VULNERABILITY_EFFECT);
+		highTierDebuffs.add(EffectRegistry.BROKEN_ARMOR_EFFECT);
 	}
 
 	private EvilEyeEntity(Level level, Vec3 position, boolean staff) {
