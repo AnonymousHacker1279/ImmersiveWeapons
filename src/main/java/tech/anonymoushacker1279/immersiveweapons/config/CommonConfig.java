@@ -77,6 +77,9 @@ public class CommonConfig {
 	@ConfigEntry(comment = "Set the inaccuracy modifier", group = "Hand Cannon", min = 0, max = 10)
 	public static float handCannonFireInaccuracy = 1.85f;
 
+	@ConfigEntry(comment = "Set radius in blocks where the Ventus Staff can push things", group = "Ventus Staff", min = 0, max = 64)
+	public static int ventusStaffRadius = 3;
+
 	@ConfigEntry(comment = "Set the maximum range the staff can be used", group = "Meteor Staff", min = 0, max = 256)
 	public static int meteorStaffMaxUseRange = 100;
 

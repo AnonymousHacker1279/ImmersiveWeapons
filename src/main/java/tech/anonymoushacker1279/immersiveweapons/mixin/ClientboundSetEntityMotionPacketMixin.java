@@ -15,7 +15,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  */
 @Mixin(ClientboundSetEntityMotionPacket.class)
 public class ClientboundSetEntityMotionPacketMixin {
-
 	@Shadow
 	private int id;
 
@@ -38,16 +37,16 @@ public class ClientboundSetEntityMotionPacketMixin {
 	@Inject(method = "<init>(Lnet/minecraft/network/FriendlyByteBuf;)V", at = @At("RETURN"))
 	private void ClientboundSetEntityMotionPacket(FriendlyByteBuf pBuffer, CallbackInfo ci) {
 		this.id = pBuffer.readVarInt();
-		this.xa = pBuffer.readInt();
-		this.ya = pBuffer.readInt();
-		this.za = pBuffer.readInt();
+		this.xa = pBuffer.readVarInt();
+		this.ya = pBuffer.readVarInt();
+		this.za = pBuffer.readVarInt();
 	}
 
 	@Inject(method = "write", at = @At("RETURN"))
 	private void write(FriendlyByteBuf pBuffer, CallbackInfo ci) {
 		pBuffer.writeVarInt(this.id);
-		pBuffer.writeInt(this.xa);
-		pBuffer.writeInt(this.ya);
-		pBuffer.writeInt(this.za);
+		pBuffer.writeVarInt(this.xa);
+		pBuffer.writeVarInt(this.ya);
+		pBuffer.writeVarInt(this.za);
 	}
 }
