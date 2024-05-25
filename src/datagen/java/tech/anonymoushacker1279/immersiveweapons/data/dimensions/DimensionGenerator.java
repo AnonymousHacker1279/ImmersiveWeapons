@@ -35,8 +35,8 @@ public class DimensionGenerator {
 										List.of(
 												Pair.of(
 														new ParameterPoint(
-																Parameter.point(0.6f),
-																Parameter.point(0.25f),
+																Parameter.point(0.3f),
+																Parameter.point(0.1f),
 																Parameter.point(1.0f),
 																Parameter.point(0.85f),
 																Parameter.point(0.3f),
@@ -47,8 +47,8 @@ public class DimensionGenerator {
 												),
 												Pair.of(
 														new ParameterPoint(
-																Parameter.point(0.6f),
-																Parameter.point(0.3f),
+																Parameter.point(0.35f),
+																Parameter.point(0.2f),
 																Parameter.point(1.0f),
 																Parameter.point(0.7f),
 																Parameter.point(0.3f),

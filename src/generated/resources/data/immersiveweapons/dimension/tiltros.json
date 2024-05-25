@@ -11,9 +11,9 @@
             "continentalness": 1.0,
             "depth": 0.3,
             "erosion": 0.85,
-            "humidity": 0.25,
+            "humidity": 0.1,
             "offset": 0.0,
-            "temperature": 0.6,
+            "temperature": 0.3,
             "weirdness": 0.1
           }
         },
@@ -23,9 +23,9 @@
             "continentalness": 1.0,
             "depth": 0.3,
             "erosion": 0.7,
-            "humidity": 0.3,
+            "humidity": 0.2,
             "offset": 0.0,
-            "temperature": 0.6,
+            "temperature": 0.35,
             "weirdness": 0.1
           }
         },
