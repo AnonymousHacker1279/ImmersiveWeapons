@@ -63,10 +63,10 @@ public class PunjiSticksBlock extends Block implements SimpleWaterloggedBlock {
 				int featherFallingLevel = getFeatherFallingLevel(livingEntity);
 				float damage = (livingEntity.fallDistance + 10f) *
 						(1.25f - (featherFallingLevel <= 4 ? featherFallingLevel * 0.25f : 1.0f));
-				livingEntity.hurt(IWDamageSources.PUNJI_STICKS_FALL, damage);
+				livingEntity.hurt(IWDamageSources.punjiSticksFall(level.registryAccess()), damage);
 			} else {
 				float damage = (float) (livingEntity.getDeltaMovement().dot(new Vec3(1, 1, 1)) / 1.5f) + 2.0f;
-				livingEntity.hurt(IWDamageSources.PUNJI_STICKS, damage);
+				livingEntity.hurt(IWDamageSources.punjiSticks(level.registryAccess()), damage);
 			}
 
 			livingEntity.addEffect(new MobEffectInstance(MobEffects.POISON, 60, 0, false, true));

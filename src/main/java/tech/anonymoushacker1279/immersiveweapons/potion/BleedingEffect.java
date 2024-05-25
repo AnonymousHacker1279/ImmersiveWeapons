@@ -32,7 +32,7 @@ public class BleedingEffect extends MobEffect {
 					livingEntity.invulnerableTime = cooldownTicks;
 				}
 
-				livingEntity.hurt(IWDamageSources.BLEEDING, amount);
+				livingEntity.hurt(IWDamageSources.bleeding(serverLevel.registryAccess()), amount);
 			} else {
 				cooldownTicks--;
 			}

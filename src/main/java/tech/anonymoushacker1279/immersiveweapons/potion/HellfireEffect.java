@@ -41,7 +41,7 @@ public class HellfireEffect extends MobEffect {
 					livingEntity.invulnerableTime = cooldownTicks;
 				}
 
-				livingEntity.hurt(IWDamageSources.HELLFIRE, amount);
+				livingEntity.hurt(IWDamageSources.hellfire(serverLevel.registryAccess()), amount);
 				livingEntity.igniteForSeconds(Mth.ceil((float) cooldownTicks / 20));
 			} else {
 				cooldownTicks--;

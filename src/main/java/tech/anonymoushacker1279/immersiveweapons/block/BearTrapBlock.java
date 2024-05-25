@@ -124,7 +124,7 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 						double d0 = Math.abs(entity.getX() - entity.xOld);
 						double d1 = Math.abs(entity.getZ() - entity.zOld);
 						if (d0 >= (double) 0.003F || d1 >= (double) 0.003F) {
-							entity.hurt(IWDamageSources.BEAR_TRAP, 1.0F);
+							entity.hurt(IWDamageSources.bearTrap(level.registryAccess()), 1.0F);
 						}
 					}
 				}
@@ -136,7 +136,7 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 
 				level.setBlock(pos, state.setValue(TRIGGERED, true), 3);
 				level.gameEvent(GameEvent.BLOCK_ACTIVATE, pos, GameEvent.Context.of(state));
-				livingEntity.hurt(IWDamageSources.BEAR_TRAP, 2.0F);
+				livingEntity.hurt(IWDamageSources.bearTrap(level.registryAccess()), 2.0F);
 				level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventRegistry.BEAR_TRAP_CLOSE.get(),
 						SoundSource.BLOCKS, 1f, 1f, false);
 

@@ -11,27 +11,6 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
 public class IWDamageSources {
 
-	private static RegistryAccess access;
-
-	public static DamageSource BARBED_WIRE;
-	public static DamageSource BEAR_TRAP;
-	public static DamageSource BLEEDING;
-	public static DamageSource EXPLOSIVE_CHOCOLATE_BAR;
-	public static DamageSource DEATHWEED;
-	public static DamageSource WOODEN_SPIKES;
-	public static DamageSource SPIKE_TRAP;
-	public static DamageSource USED_SYRINGE;
-	public static DamageSource MORTAR;
-	public static DamageSource LANDMINE;
-	public static DamageSource DEADMANS_DESERT_ATMOSPHERE;
-	public static DamageSource PUNJI_STICKS;
-	public static DamageSource PUNJI_STICKS_FALL;
-	public static DamageSource BULLET;
-	public static DamageSource CANNONBALL;
-	public static DamageSource EXPLOSIVE_CANNONBALL;
-	public static DamageSource EXPLOSIVE_ARROW;
-	public static DamageSource HELLFIRE;
-
 	public static final ResourceKey<DamageType> BARBED_WIRE_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "barbed_wire"));
 	public static final ResourceKey<DamageType> BEAR_TRAP_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "bear_trap"));
 	public static final ResourceKey<DamageType> BLEEDING_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "bleeding"));
@@ -52,29 +31,6 @@ public class IWDamageSources {
 	public static final ResourceKey<DamageType> EXPLOSIVE_ARROW_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "explosive_arrow"));
 	public static final ResourceKey<DamageType> HELLFIRE_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "hellfire"));
 
-	public static void init(RegistryAccess registryAccess) {
-		access = registryAccess;
-
-		BARBED_WIRE = getDamageSource(registryAccess, BARBED_WIRE_KEY);
-		BEAR_TRAP = getDamageSource(registryAccess, BEAR_TRAP_KEY);
-		BLEEDING = getDamageSource(registryAccess, BLEEDING_KEY);
-		EXPLOSIVE_CHOCOLATE_BAR = getDamageSource(registryAccess, EXPLOSIVE_CHOCOLATE_BAR_KEY);
-		DEATHWEED = getDamageSource(registryAccess, DEATHWEED_KEY);
-		WOODEN_SPIKES = getDamageSource(registryAccess, WOODEN_SPIKES_KEY);
-		SPIKE_TRAP = getDamageSource(registryAccess, SPIKE_TRAP_KEY);
-		USED_SYRINGE = getDamageSource(registryAccess, USED_SYRINGE_KEY);
-		MORTAR = getDamageSource(registryAccess, MORTAR_KEY);
-		LANDMINE = getDamageSource(registryAccess, LANDMINE_KEY);
-		DEADMANS_DESERT_ATMOSPHERE = getDamageSource(registryAccess, DEADMANS_DESERT_ATMOSPHERE_KEY);
-		PUNJI_STICKS = getDamageSource(registryAccess, PUNJI_STICKS_KEY);
-		PUNJI_STICKS_FALL = getDamageSource(registryAccess, PUNJI_STICKS_FALL_KEY);
-		BULLET = getDamageSource(registryAccess, BULLET_KEY);
-		CANNONBALL = getDamageSource(registryAccess, CANNONBALL_KEY);
-		EXPLOSIVE_CANNONBALL = getDamageSource(registryAccess, EXPLOSIVE_CANNONBALL_KEY);
-		EXPLOSIVE_ARROW = getDamageSource(registryAccess, EXPLOSIVE_ARROW_KEY);
-		HELLFIRE = getDamageSource(registryAccess, HELLFIRE_KEY);
-	}
-
 	private static DamageSource getDamageSource(RegistryAccess registryAccess, ResourceKey<DamageType> key) {
 		return new DamageSource(registryAccess.registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(key));
 	}
@@ -83,23 +39,79 @@ public class IWDamageSources {
 		return new DamageSource(registryAccess.registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(key), directEntity, causingEntity);
 	}
 
+	public static DamageSource barbedWire(RegistryAccess registryAccess) {
+		return getDamageSource(registryAccess, BARBED_WIRE_KEY);
+	}
+
+	public static DamageSource bearTrap(RegistryAccess registryAccess) {
+		return getDamageSource(registryAccess, BEAR_TRAP_KEY);
+	}
+
+	public static DamageSource bleeding(RegistryAccess registryAccess) {
+		return getDamageSource(registryAccess, BLEEDING_KEY);
+	}
+
+	public static DamageSource explosiveChocolateBar(RegistryAccess registryAccess) {
+		return getDamageSource(registryAccess, EXPLOSIVE_CHOCOLATE_BAR_KEY);
+	}
+
+	public static DamageSource deathweed(RegistryAccess registryAccess) {
+		return getDamageSource(registryAccess, DEATHWEED_KEY);
+	}
+
+	public static DamageSource woodenSpikes(RegistryAccess registryAccess) {
+		return getDamageSource(registryAccess, WOODEN_SPIKES_KEY);
+	}
+
+	public static DamageSource spikeTrap(RegistryAccess registryAccess) {
+		return getDamageSource(registryAccess, SPIKE_TRAP_KEY);
+	}
+
+	public static DamageSource usedSyringe(RegistryAccess registryAccess) {
+		return getDamageSource(registryAccess, USED_SYRINGE_KEY);
+	}
+
+	public static DamageSource mortar(RegistryAccess registryAccess) {
+		return getDamageSource(registryAccess, MORTAR_KEY);
+	}
+
+	public static DamageSource landmine(RegistryAccess registryAccess) {
+		return getDamageSource(registryAccess, LANDMINE_KEY);
+	}
+
+	public static DamageSource deadmansDesertAtmosphere(RegistryAccess registryAccess) {
+		return getDamageSource(registryAccess, DEADMANS_DESERT_ATMOSPHERE_KEY);
+	}
+
+	public static DamageSource punjiSticks(RegistryAccess registryAccess) {
+		return getDamageSource(registryAccess, PUNJI_STICKS_KEY);
+	}
+
+	public static DamageSource punjiSticksFall(RegistryAccess registryAccess) {
+		return getDamageSource(registryAccess, PUNJI_STICKS_FALL_KEY);
+	}
+
+	public static DamageSource hellfire(RegistryAccess registryAccess) {
+		return getDamageSource(registryAccess, HELLFIRE_KEY);
+	}
+
 	public static DamageSource meteor(Entity entity, Entity owner) {
-		return getEntityDamageSource(access, METEOR_KEY, entity, owner);
+		return getEntityDamageSource(entity.level().registryAccess(), METEOR_KEY, entity, owner);
 	}
 
 	public static DamageSource bullet(Entity entity, Entity owner) {
-		return getEntityDamageSource(access, BULLET_KEY, entity, owner);
+		return getEntityDamageSource(entity.level().registryAccess(), BULLET_KEY, entity, owner);
 	}
 
 	public static DamageSource cannonball(Entity entity, Entity owner) {
-		return getEntityDamageSource(access, CANNONBALL_KEY, entity, owner);
+		return getEntityDamageSource(entity.level().registryAccess(), CANNONBALL_KEY, entity, owner);
 	}
 
 	public static DamageSource explosiveCannonball(Entity entity, Entity owner) {
-		return getEntityDamageSource(access, EXPLOSIVE_CANNONBALL_KEY, entity, owner);
+		return getEntityDamageSource(entity.level().registryAccess(), EXPLOSIVE_CANNONBALL_KEY, entity, owner);
 	}
 
 	public static DamageSource explosiveArrow(Entity entity, Entity owner) {
-		return getEntityDamageSource(access, EXPLOSIVE_ARROW_KEY, entity, owner);
+		return getEntityDamageSource(entity.level().registryAccess(), EXPLOSIVE_ARROW_KEY, entity, owner);
 	}
 }

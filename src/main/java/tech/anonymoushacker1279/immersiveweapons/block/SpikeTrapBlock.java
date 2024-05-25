@@ -117,7 +117,7 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
 		if (entity instanceof Player || entity instanceof Mob) {
 			if (state.getValue(POWERED)) {
-				entity.hurt(IWDamageSources.SPIKE_TRAP, 2f);
+				entity.hurt(IWDamageSources.spikeTrap(level.registryAccess()), 2f);
 			}
 		}
 	}

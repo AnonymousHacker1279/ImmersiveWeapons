@@ -123,7 +123,7 @@ public class FieldMedicEntity extends SoldierEntity {
 
 				// Hepatitis chance
 				if (randomNumber <= 0.3f) {
-					entity.hurt(IWDamageSources.USED_SYRINGE, 8.0F);
+					entity.hurt(IWDamageSources.usedSyringe(level().registryAccess()), 8.0F);
 				}
 			}
 		}

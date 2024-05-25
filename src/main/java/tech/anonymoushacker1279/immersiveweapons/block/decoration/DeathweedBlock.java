@@ -37,7 +37,7 @@ public class DeathweedBlock extends FlowerBlock {
 			if (!level.isClientSide) {
 				float chance = livingEntity.getRandom().nextFloat();
 				if (livingEntity.tickCount % 8 == 0 && chance <= 0.65f) {
-					livingEntity.hurt(IWDamageSources.DEATHWEED, 1.0f);
+					livingEntity.hurt(IWDamageSources.deathweed(level.registryAccess()), 1.0f);
 
 					if (chance <= 0.25f) {
 						livingEntity.addEffect(new MobEffectInstance(EffectRegistry.DAMAGE_VULNERABILITY_EFFECT, 200));

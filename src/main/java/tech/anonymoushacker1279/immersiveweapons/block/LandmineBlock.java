@@ -52,7 +52,7 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 
 	private static void explode(Level level, BlockPos pos, @Nullable LivingEntity livingEntity) {
 		if (!level.isClientSide) {
-			level.explode(livingEntity, IWDamageSources.LANDMINE, null, pos.getX(), pos.getY(), pos.getZ(), 2.0F, false, ExplosionInteraction.BLOCK);
+			level.explode(livingEntity, IWDamageSources.landmine(level.registryAccess()), null, pos.getX(), pos.getY(), pos.getZ(), 2.0F, false, ExplosionInteraction.BLOCK);
 			level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.TNT_PRIMED, SoundSource.BLOCKS, 1.0F, 1.0F, false);
 		}
 	}

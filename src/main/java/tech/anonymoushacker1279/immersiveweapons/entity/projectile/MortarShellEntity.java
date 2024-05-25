@@ -126,7 +126,7 @@ public class MortarShellEntity extends Projectile implements ItemSupplier {
 
 		if (!level().isClientSide) {
 			level().explode(this,
-					IWDamageSources.MORTAR,
+					IWDamageSources.mortar(level().registryAccess()),
 					null,
 					blockPosition().getX(), blockPosition().getY(), blockPosition().getZ(),
 					4.0F, false, ExplosionInteraction.BLOCK);

@@ -22,16 +22,14 @@ public class UsedSyringeItem extends Item {
 	}
 
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level level, Player player,
-	                                              InteractionHand hand) {
-
+	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
 		ItemStack itemInHand = player.getItemInHand(hand);
 
 		float randomNumber = level.getRandom().nextFloat();
 		if (randomNumber <= 0.8f) {
 			player.addEffect(new MobEffectInstance(MobEffects.POISON, 500, 0, false, true));
 			if (randomNumber <= 0.3f) {
-				player.hurt(IWDamageSources.USED_SYRINGE, 8.0F);
+				player.hurt(IWDamageSources.usedSyringe(level.registryAccess()), 8.0F);
 			}
 		}
 

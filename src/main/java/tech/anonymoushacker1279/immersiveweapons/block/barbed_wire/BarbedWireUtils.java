@@ -41,7 +41,7 @@ public interface BarbedWireUtils {
 					}
 
 					if (shouldHurt && !level.isClientSide) {
-						entity.hurt(IWDamageSources.BARBED_WIRE, damage);
+						entity.hurt(IWDamageSources.barbedWire(level.registryAccess()), damage);
 					}
 				}
 			}

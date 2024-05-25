@@ -90,7 +90,7 @@ public class ForgeEventSubscriber {
 			if (player.level().getBiome(player.blockPosition()).is(DEADMANS_DESERT)) {
 				// If the player is under the effects of Celestial Protection, they are immune to damage
 				if (!player.hasEffect(EffectRegistry.CELESTIAL_PROTECTION_EFFECT)) {
-					player.hurt(IWDamageSources.DEADMANS_DESERT_ATMOSPHERE, 1);
+					player.hurt(IWDamageSources.deadmansDesertAtmosphere(player.level().registryAccess()), 1);
 				}
 			}
 		}
@@ -345,9 +345,6 @@ public class ForgeEventSubscriber {
 		if (event.getEntity() instanceof ServerPlayer player) {
 			// Send update packet
 			PacketDistributor.sendToPlayer(player, new SyncPlayerDataPayload(player.getPersistentData(), player.getUUID()));
-
-			// Initialize custom damage sources
-			IWDamageSources.init(event.getLevel().registryAccess());
 		}
 
 		// Handle the Velocity enchantment on bows (guns are handled in the gun code)

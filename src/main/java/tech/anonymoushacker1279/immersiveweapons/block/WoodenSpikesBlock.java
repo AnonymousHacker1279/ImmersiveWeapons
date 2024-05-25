@@ -67,7 +67,7 @@ public class WoodenSpikesBlock extends DamageableBlock {
 					}
 
 					if (level.getBlockEntity(pos) instanceof DamageableBlockEntity damageable && level.getGameTime() % 10 == 0) {
-						entity.hurt(IWDamageSources.WOODEN_SPIKES, damageable.calculateDamage(1.5f, 0.33f));
+						entity.hurt(IWDamageSources.woodenSpikes(level.registryAccess()), damageable.calculateDamage(1.5f, 0.33f));
 
 						if (livingEntity.getRandom().nextFloat() <= 0.15f) {
 							livingEntity.addEffect(new MobEffectInstance(EffectRegistry.BLEEDING_EFFECT,
