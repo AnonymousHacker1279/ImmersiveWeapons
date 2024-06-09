@@ -38,7 +38,6 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.neoforged.bus.api.Event.Result;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.EventBusSubscriber.Bus;
@@ -529,10 +528,7 @@ public class ForgeEventSubscriber {
 
 		if (entity instanceof Player player) {
 			AccessoryEffects.meleeCritChanceEffects(event, player);
-
-			if (event.getResult() == Result.DEFAULT || event.getResult() == Result.ALLOW) {
-				AccessoryEffects.meleeCritDamageBonusEffects(event, player);
-			}
+			AccessoryEffects.meleeCritDamageBonusEffects(event, player);
 		}
 	}
 

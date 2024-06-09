@@ -110,7 +110,7 @@ public class AccessoryEffects {
 		double meleeCritDamageBonus = AccessoryManager.collectEffects(EffectType.MELEE_CRIT_DAMAGE_BONUS, player);
 
 		// Apply the melee critical damage
-		event.setDamageModifier((float) (event.getDamageModifier() + meleeCritDamageBonus));
+		event.setDamageMultiplier((float) (event.getDamageMultiplier() + meleeCritDamageBonus));
 	}
 
 	public static void meleeCritChanceEffects(CriticalHitEvent event, Player player) {
@@ -119,7 +119,7 @@ public class AccessoryEffects {
 
 		// Roll for critical hit
 		if (player.getRandom().nextFloat() <= meleeCritChance) {
-			event.setResult(CriticalHitEvent.Result.ALLOW);
+			event.setCriticalHit(true);
 		}
 	}
 

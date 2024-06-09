@@ -680,6 +680,7 @@
   "immersiveweapons.block.wall_shelf.unlocked": "This shelf has been unlocked",
   "immersiveweapons.boss.celestial_tower.waves": "Celestial Tower: Wave %s of %s",
   "immersiveweapons.boss.the_commander.waves": "The Commander: Wave %s of %s",
+  "immersiveweapons.cobaltconfig.blockDecay": "Block Decay",
   "immersiveweapons.cobaltconfig.blunderbussFireInaccuracy": "Blunderbuss Fire Inaccuracy",
   "immersiveweapons.cobaltconfig.blunderbussFireVelocity": "Blunderbuss Fire Velocity",
   "immersiveweapons.cobaltconfig.bulletsBreakGlass": "Bullets Break Glass",

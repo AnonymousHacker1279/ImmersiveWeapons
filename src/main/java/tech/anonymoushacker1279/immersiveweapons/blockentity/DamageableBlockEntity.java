@@ -11,6 +11,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockEntityRegistry;
 
 public class DamageableBlockEntity extends BlockEntity {
@@ -82,7 +83,7 @@ public class DamageableBlockEntity extends BlockEntity {
 	 * @param pos   the <code>BlockPos</code> the block is at
 	 */
 	public void takeDamage(BlockState state, Level level, BlockPos pos, IntegerProperty damageStage) {
-		if (level.isClientSide) {
+		if (level.isClientSide || !CommonConfig.blockDecay) {
 			return;
 		}
 

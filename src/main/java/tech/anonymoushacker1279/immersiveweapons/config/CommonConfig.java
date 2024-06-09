@@ -17,6 +17,9 @@ public class CommonConfig {
 	@ConfigEntry(comment = "Set the range of the Panic Alarm's sound", group = "General", min = 0, max = 128)
 	public static int panicAlarmRange = 48;
 
+	@ConfigEntry(comment = "Allow damageable blocks like barbed wire and wooden spikes to decay as they are used", group = "General")
+	public static boolean blockDecay = true;
+
 	@ConfigEntry(comment = "Set the maximum armor protection cap. The vanilla default is 20, but higher values allow better armor to work as intended. 25 is fully unlocked.", group = "Combat Rules", min = 20, max = 25)
 	public static double maxArmorProtection = 25.0d;
 
