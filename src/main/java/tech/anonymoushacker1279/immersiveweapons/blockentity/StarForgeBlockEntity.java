@@ -159,7 +159,7 @@ public class StarForgeBlockEntity extends BaseContainerBlockEntity implements En
 		ListTag availableRecipesTag = tag.getList("availableRecipes", 10);
 		for (int i = 0; i < availableRecipesTag.size(); i++) {
 			CompoundTag recipeTag = availableRecipesTag.getCompound(i);
-			ResourceLocation recipeId = new ResourceLocation(recipeTag.getString("recipeId"));
+			ResourceLocation recipeId = ResourceLocation.parse(recipeTag.getString("recipeId"));
 			savedRecipes.add(recipeId);
 		}
 	}

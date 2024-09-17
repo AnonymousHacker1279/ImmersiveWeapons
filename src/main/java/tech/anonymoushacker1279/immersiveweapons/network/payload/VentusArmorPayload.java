@@ -11,7 +11,7 @@ import tech.anonymoushacker1279.immersiveweapons.item.armor.VentusArmorItem;
 
 public record VentusArmorPayload(VentusArmorItem.PacketTypes packetType, boolean state) implements CustomPacketPayload {
 
-	public static final Type<VentusArmorPayload> TYPE = new Type<>(new ResourceLocation(ImmersiveWeapons.MOD_ID, "ventus_armor"));
+	public static final Type<VentusArmorPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "ventus_armor"));
 
 	public static final StreamCodec<FriendlyByteBuf, VentusArmorPayload> STREAM_CODEC = StreamCodec.composite(
 			NeoForgeStreamCodecs.enumCodec(VentusArmorItem.PacketTypes.class),

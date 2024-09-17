@@ -136,7 +136,7 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 
 		groupData = super.finalizeSpawn(level, difficulty, spawnType, groupData);
 		populateDefaultEquipmentSlots(random, difficulty);
-		populateDefaultEquipmentEnchantments(random, difficulty);
+		populateDefaultEquipmentEnchantments(level, random, difficulty);
 		setCombatTask();
 		setCanPickUpLoot(random.nextFloat() < 0.55F * difficulty.getSpecialMultiplier());
 

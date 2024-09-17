@@ -15,7 +15,7 @@ import java.util.List;
 
 public class StarForgeScreen extends AbstractContainerScreen<StarForgeMenu> {
 
-	private static final ResourceLocation GUI_TEXTURE = new ResourceLocation(ImmersiveWeapons.MOD_ID + ":textures/gui/container/star_forge.png");
+	private static final ResourceLocation GUI_TEXTURE = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/gui/container/star_forge.png");
 	private static final Component SI_TOOLTIP_INACTIVE = Component.translatable("container.immersiveweapons.star_forge.si_inactive");
 	private static final Component SI_TOOLTIP_ACTIVE = Component.translatable("container.immersiveweapons.star_forge.si_active");
 

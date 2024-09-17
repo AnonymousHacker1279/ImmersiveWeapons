@@ -175,7 +175,7 @@ public class ClientForgeEventSubscriber {
 	public static void renderGuiOverlayPostEvent(RenderGuiLayerEvent.Post event) {
 		if (GunData.changingPlayerFOV != -1) {
 			if (minecraft.options.getCameraType().isFirstPerson()) {
-				float deltaFrame = minecraft.getDeltaFrameTime() / 8;
+				float deltaFrame = minecraft.getTimer().getGameTimeDeltaTicks() / 8;
 				GunData.scopeScale = Mth.lerp(0.25F * deltaFrame, GunData.scopeScale, 1.125F);
 
 				IWOverlays.SCOPE_ELEMENT.render(event.getGuiGraphics(), event.getPartialTick());

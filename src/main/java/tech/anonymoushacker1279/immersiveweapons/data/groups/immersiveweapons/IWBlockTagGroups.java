@@ -21,6 +21,6 @@ public class IWBlockTagGroups {
 	public static final TagKey<Block> NEEDS_ASTRAL_STARSTORM_TOOL = createBlockTag("needs_astral_starstorm_tool");
 
 	private static TagKey<Block> createBlockTag(String tag) {
-		return TagKey.create(Registries.BLOCK, new ResourceLocation(ImmersiveWeapons.MOD_ID, tag));
+		return TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, tag));
 	}
 }

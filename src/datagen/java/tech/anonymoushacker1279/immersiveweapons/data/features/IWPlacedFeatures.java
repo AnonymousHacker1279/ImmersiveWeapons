@@ -36,7 +36,7 @@ public class IWPlacedFeatures {
 	public static final ResourceKey<PlacedFeature> POTASSIUM_NITRATE_ORE = createKey("potassium_nitrate_ore");
 
 	private static ResourceKey<PlacedFeature> createKey(String name) {
-		return ResourceKey.create(Registries.PLACED_FEATURE, new ResourceLocation(ImmersiveWeapons.MOD_ID, name));
+		return ResourceKey.create(Registries.PLACED_FEATURE, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, name));
 	}
 
 	public static void bootstrap(BootstrapContext<PlacedFeature> context) {

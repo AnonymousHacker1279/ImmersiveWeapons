@@ -41,7 +41,7 @@ public class IWWorldGenTagGroups {
 	 * @param tag a string to be used for the tag
 	 */
 	private static TagKey<Biome> createStructureTag(String tag) {
-		return TagKey.create(Registries.BIOME, new ResourceLocation(ImmersiveWeapons.MOD_ID, "has_structure/" + tag));
+		return TagKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "has_structure/" + tag));
 	}
 
 	/**
@@ -50,6 +50,6 @@ public class IWWorldGenTagGroups {
 	 * @param tag a string to be used for the tag
 	 */
 	private static TagKey<Biome> createBiomeTag(String tag) {
-		return TagKey.create(Registries.BIOME, new ResourceLocation(ImmersiveWeapons.MOD_ID, tag));
+		return TagKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, tag));
 	}
 }

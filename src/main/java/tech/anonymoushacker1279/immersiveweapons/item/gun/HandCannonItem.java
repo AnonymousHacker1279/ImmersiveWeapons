@@ -43,10 +43,10 @@ public class HandCannonItem extends SimplePistolItem {
 	}
 
 	@Override
-	public void prepareBulletForFire(ItemStack gun, BulletEntity bulletEntity, LivingEntity livingEntity, float powderModifier) {
-		bulletEntity.shootFromRotation(livingEntity, livingEntity.getXRot(), livingEntity.getYRot(),
+	public void prepareBulletForFire(ItemStack gun, BulletEntity bulletEntity, LivingEntity shooter, float powderModifier) {
+		bulletEntity.shootFromRotation(shooter, shooter.getXRot(), shooter.getYRot(),
 				0.0F,
-				getFireVelocity(gun, powderModifier),
+				getFireVelocity(gun, powderModifier, shooter),
 				CommonConfig.handCannonFireInaccuracy);
 	}
 

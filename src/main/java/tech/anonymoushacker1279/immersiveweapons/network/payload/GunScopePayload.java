@@ -10,7 +10,7 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 public record GunScopePayload(double playerFOV, double changingPlayerFOV,
                               float scopeScale) implements CustomPacketPayload {
 
-	public static final Type<GunScopePayload> TYPE = new Type<>(new ResourceLocation(ImmersiveWeapons.MOD_ID, "gun_scope"));
+	public static final Type<GunScopePayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "gun_scope"));
 
 	public static final StreamCodec<FriendlyByteBuf, GunScopePayload> STREAM_CODEC = StreamCodec.composite(
 			ByteBufCodecs.DOUBLE,

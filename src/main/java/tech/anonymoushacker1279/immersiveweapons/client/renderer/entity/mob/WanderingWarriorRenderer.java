@@ -12,7 +12,7 @@ import tech.anonymoushacker1279.immersiveweapons.entity.monster.WanderingWarrior
 
 public class WanderingWarriorRenderer extends HumanoidMobRenderer<WanderingWarriorEntity, PlayerModel<WanderingWarriorEntity>> {
 
-	private static final ResourceLocation WANDERING_WARRIOR_TEXTURE = new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/wandering_warrior/wandering_warrior.png");
+	private static final ResourceLocation WANDERING_WARRIOR_TEXTURE = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/entity/wandering_warrior/wandering_warrior.png");
 
 	/**
 	 * Constructor for WanderingWarriorRenderer.

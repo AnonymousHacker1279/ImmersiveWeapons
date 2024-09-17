@@ -9,7 +9,7 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
 public record AstralCrystalPayload(BlockPos pos) implements CustomPacketPayload {
 
-	public static final Type<AstralCrystalPayload> TYPE = new Type<>(new ResourceLocation(ImmersiveWeapons.MOD_ID, "astral_crystal"));
+	public static final Type<AstralCrystalPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "astral_crystal"));
 
 	public static final StreamCodec<FriendlyByteBuf, AstralCrystalPayload> STREAM_CODEC = StreamCodec.composite(
 			BlockPos.STREAM_CODEC,

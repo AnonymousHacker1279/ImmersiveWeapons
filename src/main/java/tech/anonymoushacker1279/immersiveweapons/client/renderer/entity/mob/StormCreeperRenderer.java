@@ -13,7 +13,7 @@ import tech.anonymoushacker1279.immersiveweapons.entity.monster.StormCreeperEnti
 
 public class StormCreeperRenderer extends MobRenderer<StormCreeperEntity, CreeperModel<StormCreeperEntity>> {
 
-	private static final ResourceLocation TEXTURE_LOCATION = new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/storm_creeper/storm_creeper.png");
+	private static final ResourceLocation TEXTURE_LOCATION = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/entity/storm_creeper/storm_creeper.png");
 
 	public StormCreeperRenderer(Context context) {
 		super(context, new CreeperModel<>(context.bakeLayer(ModelLayers.CREEPER)), 0.5F);

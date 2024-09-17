@@ -10,7 +10,7 @@ import tech.anonymoushacker1279.immersiveweapons.item.armor.TeslaArmorItem.Effec
 
 public record TeslaArmorPayload(EffectState state) implements CustomPacketPayload {
 
-	public static final Type<TeslaArmorPayload> TYPE = new Type<>(new ResourceLocation(ImmersiveWeapons.MOD_ID, "tesla_armor"));
+	public static final Type<TeslaArmorPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "tesla_armor"));
 
 	public static final StreamCodec<FriendlyByteBuf, TeslaArmorPayload> STREAM_CODEC = StreamCodec.composite(
 			NeoForgeStreamCodecs.enumCodec(EffectState.class),

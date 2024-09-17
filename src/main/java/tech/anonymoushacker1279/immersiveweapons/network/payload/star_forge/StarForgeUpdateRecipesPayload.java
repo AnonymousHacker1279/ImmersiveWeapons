@@ -14,7 +14,7 @@ import java.util.UUID;
 public record StarForgeUpdateRecipesPayload(UUID playerUUID, int containerId,
                                             List<ResourceLocation> recipeIds) implements CustomPacketPayload {
 
-	public static final Type<StarForgeUpdateRecipesPayload> TYPE = new Type<>(new ResourceLocation(ImmersiveWeapons.MOD_ID, "star_forge_update_recipes"));
+	public static final Type<StarForgeUpdateRecipesPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "star_forge_update_recipes"));
 
 	public static final StreamCodec<FriendlyByteBuf, StarForgeUpdateRecipesPayload> STREAM_CODEC = StreamCodec.composite(
 			UUIDUtil.STREAM_CODEC,

@@ -106,7 +106,7 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 
 		if (tag.contains("excessStack")) {
 			String itemName = tag.getString("excessStack");
-			excessStack = BuiltInRegistries.ITEM.get(new ResourceLocation(itemName)).getDefaultInstance();
+			excessStack = BuiltInRegistries.ITEM.get(ResourceLocation.parse(itemName)).getDefaultInstance();
 			excessStack.setCount(Math.clamp(containerData.get(1), 0, 99));
 			excessStack.set(DENSITY_MODIFIER, densityModifier);
 		}

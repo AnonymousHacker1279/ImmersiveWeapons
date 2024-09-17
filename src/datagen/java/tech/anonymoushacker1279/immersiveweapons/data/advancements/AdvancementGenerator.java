@@ -37,7 +37,7 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 				.display(ItemRegistry.TESLA_SWORD.get(),
 						createTitle("root").withStyle(ChatFormatting.RED),
 						createDescription("root"),
-						new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/block/red_stained_bulletproof_glass.png"),
+						ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/block/red_stained_bulletproof_glass.png"),
 						AdvancementType.TASK, false, false, false)
 				.addCriterion("exist",
 						PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.inDimension(Level.OVERWORLD)))
@@ -1562,7 +1562,7 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 	}
 
 	private static ResourceLocation prefixRL(String string) {
-		return new ResourceLocation(ImmersiveWeapons.MOD_ID, string);
+		return ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, string);
 	}
 
 	private static String prefixString(String string) {

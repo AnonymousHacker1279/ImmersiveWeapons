@@ -7,22 +7,21 @@ import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 
 public record AstralCrystalRecipe(String group, Ingredient primaryMaterial, Ingredient secondaryMaterial,
-                                  ItemStack result) implements Recipe<Container> {
+                                  ItemStack result) implements Recipe<RecipeInput> {
 
 	@Override
-	public boolean matches(Container container, Level level) {
+	public boolean matches(RecipeInput input, Level level) {
 		return false;
 	}
 
 	@Override
-	public ItemStack assemble(Container container, Provider provider) {
+	public ItemStack assemble(RecipeInput input, Provider registries) {
 		return result;
 	}
 

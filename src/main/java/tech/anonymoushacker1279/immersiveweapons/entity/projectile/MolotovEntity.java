@@ -1,9 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.projectile;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EntityType;
@@ -35,16 +32,6 @@ public class MolotovEntity extends AdvancedThrowableItemProjectile {
 
 	public MolotovEntity(Level level, double x, double y, double z) {
 		super(EntityRegistry.MOLOTOV_COCKTAIL_ENTITY.get(), level, x, y, z);
-	}
-
-	/**
-	 * Get the entity spawn packet.
-	 *
-	 * @return IPacket
-	 */
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket() {
-		return new ClientboundAddEntityPacket(this);
 	}
 
 	/**

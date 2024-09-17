@@ -10,6 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.EquipmentSlot.Type;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -36,7 +37,7 @@ public abstract class AbstractStatueBlockEntity<T extends SoldierEntity> extends
 	protected float armorSpawnChance = 0.0f;
 	protected float gearEnchantChance = 0.0f;
 
-	protected static final ResourceKey<Biome> BATTLEFIELD = ResourceKey.create(Registries.BIOME, new ResourceLocation(ImmersiveWeapons.MOD_ID, "battlefield"));
+	protected static final ResourceKey<Biome> BATTLEFIELD = ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "battlefield"));
 
 	public AbstractStatueBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState, int maxNearbyEntities) {
 		super(type, pos, blockState);
@@ -81,7 +82,7 @@ public abstract class AbstractStatueBlockEntity<T extends SoldierEntity> extends
 			if (entity != null) {
 				if (entity.getRandom().nextFloat() <= armorSpawnChance) {
 					for (EquipmentSlot equipmentslot : EquipmentSlot.values()) {
-						if (equipmentslot.getType() == EquipmentSlot.Type.ARMOR) {
+						if (equipmentslot.getType() == Type.HUMANOID_ARMOR) {
 							ItemStack itemstack = entity.getItemBySlot(equipmentslot);
 
 							int armorTier = 0;

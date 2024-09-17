@@ -15,7 +15,7 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
 public class TiltrosDimensionSpecialEffects extends DimensionSpecialEffects {
 
-	private static final ResourceLocation SKY_LOCATION = new ResourceLocation(ImmersiveWeapons.MOD_ID,
+	private static final ResourceLocation SKY_LOCATION = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 			"textures/environment/tiltros_sky.png");
 
 	public TiltrosDimensionSpecialEffects() {
@@ -49,7 +49,6 @@ public class TiltrosDimensionSpecialEffects extends DimensionSpecialEffects {
 		RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
 		RenderSystem.setShaderTexture(0, SKY_LOCATION);
 		Tesselator tesselator = Tesselator.getInstance();
-		BufferBuilder bufferBuilder = tesselator.getBuilder();
 
 		for (int i = 0; i < 6; ++i) {
 			poseStack.pushPose();
@@ -74,12 +73,12 @@ public class TiltrosDimensionSpecialEffects extends DimensionSpecialEffects {
 			}
 
 			Matrix4f poseMatrix = poseStack.last().pose();
-			bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
-			bufferBuilder.vertex(poseMatrix, -100.0F, -100.0F, -100.0F).uv(0.0F, 0.0F).color(255, 255, 255, 75).endVertex();
-			bufferBuilder.vertex(poseMatrix, -100.0F, -100.0F, 100.0F).uv(0.0F, 1.0F).color(255, 255, 255, 75).endVertex();
-			bufferBuilder.vertex(poseMatrix, 100.0F, -100.0F, 100.0F).uv(1.0F, 1.0F).color(255, 255, 255, 75).endVertex();
-			bufferBuilder.vertex(poseMatrix, 100.0F, -100.0F, -100.0F).uv(1.0F, 0.0F).color(255, 255, 255, 75).endVertex();
-			tesselator.end();
+			BufferBuilder bufferBuilder = tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
+			bufferBuilder.addVertex(poseMatrix, -100.0F, -100.0F, -100.0F).setUv(0.0F, 0.0F).setColor(255, 255, 255, 75);
+			bufferBuilder.addVertex(poseMatrix, -100.0F, -100.0F, 100.0F).setUv(0.0F, 1.0F).setColor(255, 255, 255, 75);
+			bufferBuilder.addVertex(poseMatrix, 100.0F, -100.0F, 100.0F).setUv(1.0F, 1.0F).setColor(255, 255, 255, 75);
+			bufferBuilder.addVertex(poseMatrix, 100.0F, -100.0F, -100.0F).setUv(1.0F, 0.0F).setColor(255, 255, 255, 75);
+			BufferUploader.drawWithShader(bufferBuilder.buildOrThrow());
 			poseStack.popPose();
 		}
 

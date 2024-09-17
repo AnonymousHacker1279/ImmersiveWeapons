@@ -50,7 +50,7 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 	                                    MobSpawnType mobSpawnType, @Nullable SpawnGroupData groupData) {
 
 		populateDefaultEquipmentSlots(random, difficultyInstance);
-		populateDefaultEquipmentEnchantments(random, difficultyInstance);
+		populateDefaultEquipmentEnchantments(levelAccessor, random, difficultyInstance);
 		prepareForCombat();
 		setCanPickUpLoot(true);
 
@@ -196,7 +196,7 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 	}
 
 	@Override
-	public boolean canBeLeashed(Player pPlayer) {
+	public boolean canBeLeashed() {
 		return false;
 	}
 

@@ -8,7 +8,6 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.Container;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
@@ -19,15 +18,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public record AmmunitionTableRecipe(String group, List<MaterialGroup> materials,
-                                    ItemStack result) implements Recipe<Container> {
+                                    ItemStack result) implements Recipe<RecipeInput> {
 
 	@Override
-	public boolean matches(Container container, Level level) {
+	public boolean matches(RecipeInput input, Level level) {
 		return false;
 	}
 
 	@Override
-	public ItemStack assemble(Container container, Provider provider) {
+	public ItemStack assemble(RecipeInput input, Provider registries) {
 		return result;
 	}
 

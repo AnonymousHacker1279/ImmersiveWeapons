@@ -183,16 +183,15 @@ public class StormCreeperEntity extends Creeper implements GrantAdvancementOnDis
 	}
 
 	@Override
-	protected void dropCustomDeathLoot(DamageSource pSource, int pLooting, boolean pRecentlyHit) {
-		super.dropCustomDeathLoot(pSource, pLooting, pRecentlyHit);
-		Entity entity = pSource.getEntity();
-		if (entity instanceof StormCreeperEntity creeper) {
+	protected void dropCustomDeathLoot(ServerLevel level, DamageSource damageSource, boolean recentlyHit) {
+		super.dropCustomDeathLoot(level, damageSource, recentlyHit);
+
+		if (damageSource.getEntity() instanceof StormCreeperEntity creeper) {
 			if (creeper.canDropMobsSkull()) {
 				creeper.increaseDroppedSkulls();
 				spawnAtLocation(Items.CREEPER_HEAD);
 			}
 		}
-
 	}
 
 	@Override
@@ -296,9 +295,9 @@ public class StormCreeperEntity extends Creeper implements GrantAdvancementOnDis
 	}
 
 	@Override
-	public int getExperienceReward() {
+	public int getBaseExperienceReward() {
 		xpReward = 5 + level().random.nextInt(5);
-		return super.getExperienceReward();
+		return super.getBaseExperienceReward();
 	}
 
 	@Override

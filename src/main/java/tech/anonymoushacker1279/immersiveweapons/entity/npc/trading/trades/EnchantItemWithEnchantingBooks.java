@@ -1,6 +1,8 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.npc.trading.trades;
 
+import net.minecraft.core.HolderLookup.RegistryLookup;
 import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.npc.VillagerTrades;
@@ -40,18 +42,18 @@ public class EnchantItemWithEnchantingBooks implements VillagerTrades.ItemListin
 
 			// Add the existing enchantments, increasing the level if the book has a higher level
 			bookEnchantments.keySet().forEach(enchantmentHolder -> {
-				Enchantment enchantment = enchantmentHolder.value();
-				int level = bookEnchantments.getLevel(enchantment);
-				int currentLevel = enchantments.getLevel(enchantment);
+				int level = bookEnchantments.getLevel(enchantmentHolder);
+				int currentLevel = enchantments.getLevel(enchantmentHolder);
 
-				if ((currentLevel < level) || (currentLevel == 0 && enchantment.canEnchant(newEnchantableItem))) {
-					EnchantmentHelper.updateEnchantments(newEnchantableItem, mutable -> mutable.upgrade(enchantment, level));
+				if ((currentLevel < level) || (currentLevel == 0 && newEnchantableItem.supportsEnchantment(enchantmentHolder))) {
+					EnchantmentHelper.updateEnchantments(newEnchantableItem, mutable -> mutable.upgrade(enchantmentHolder, level));
 				}
 			});
 		}
 
 		// Add up the total levels of all enchantments
-		totalEnchantmentLevels = GeneralUtilities.getTotalEnchantmentLevels(newEnchantableItem);
+		RegistryLookup<Enchantment> enchantmentLookup = trader.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
+		totalEnchantmentLevels = GeneralUtilities.getTotalEnchantmentLevels(enchantmentLookup, newEnchantableItem);
 
 		// Give XP based on the total levels of all enchantments
 		villagerXP = randomSource.nextIntBetweenInclusive(totalEnchantmentLevels / 4, totalEnchantmentLevels / 2);

@@ -212,7 +212,7 @@ public class AccessoryManager {
 
 			AttributeInstance attributeInstance = player.getAttributes().getInstance(BuiltInRegistries.ATTRIBUTE.wrapAsHolder(attribute));
 			if (attributeInstance != null) {
-				if (!attributeInstance.hasModifier(modifier)) {
+				if (!attributeInstance.hasModifier(modifier.id())) {
 					attributeInstance.addTransientModifier(modifier);
 				}
 			}
@@ -239,9 +239,9 @@ public class AccessoryManager {
 
 				AttributeInstance attributeInstance = player.getAttributes().getInstance(BuiltInRegistries.ATTRIBUTE.wrapAsHolder(attribute));
 				if (attributeInstance != null) {
-					if (!attributeInstance.hasModifier(modifier)) {
+					if (!attributeInstance.hasModifier(modifier.id())) {
 						double amount = targetValue - attributeInstance.getValue();
-						AttributeModifier newModifier = new AttributeModifier(modifier.id(), modifier.name(), amount, modifier.operation());
+						AttributeModifier newModifier = new AttributeModifier(modifier.id(), amount, modifier.operation());
 
 						attributeInstance.addTransientModifier(newModifier);
 					}
@@ -249,7 +249,7 @@ public class AccessoryManager {
 						attributeInstance.removeModifier(modifier.id());
 
 						double amount = targetValue - attributeInstance.getValue();
-						AttributeModifier newModifier = new AttributeModifier(modifier.id(), modifier.name(), amount, modifier.operation());
+						AttributeModifier newModifier = new AttributeModifier(modifier.id(), amount, modifier.operation());
 
 						attributeInstance.addTransientModifier(newModifier);
 					}
@@ -275,7 +275,7 @@ public class AccessoryManager {
 
 			AttributeInstance attributeInstance = player.getAttributes().getInstance(BuiltInRegistries.ATTRIBUTE.wrapAsHolder(attribute));
 			if (attributeInstance != null) {
-				if (attributeInstance.hasModifier(modifier)) {
+				if (attributeInstance.hasModifier(modifier.id())) {
 					// Check for matching UUIDs in the activeAttributeModifiers map, rather than instances
 					boolean found = false;
 

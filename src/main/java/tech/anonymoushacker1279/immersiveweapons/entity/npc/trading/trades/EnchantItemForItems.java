@@ -1,5 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.npc.trading.trades;
 
+import net.minecraft.core.HolderLookup.RegistryLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.npc.VillagerTrades;
@@ -32,22 +34,22 @@ public class EnchantItemForItems implements VillagerTrades.ItemListing {
 		// If there are any enchantments on the item, increase the enchantment level by 1
 		ItemStack newEnchantableItem = enchantableItem.copy();
 		if (newEnchantableItem.isEnchanted()) {
-			ItemEnchantments enchantments = newEnchantableItem.getEnchantments();
+			ItemEnchantments enchantments = newEnchantableItem.getTagEnchantments();
 
 			enchantments.keySet().forEach(enchantmentHolder -> {
-				Enchantment enchantment = enchantmentHolder.value();
 				int maxLevel = CommonConfig.skygazerEnchantCaps.getOrDefault(enchantmentHolder.getRegisteredName(), -1);
-				int currentLevel = enchantments.getLevel(enchantment);
+				int currentLevel = enchantments.getLevel(enchantmentHolder);
 
 				if (maxLevel == -1) {
-					EnchantmentHelper.updateEnchantments(newEnchantableItem, mutable -> mutable.upgrade(enchantment, currentLevel + 1));
+					EnchantmentHelper.updateEnchantments(newEnchantableItem, mutable -> mutable.upgrade(enchantmentHolder, currentLevel + 1));
 				} else {
-					EnchantmentHelper.updateEnchantments(newEnchantableItem, mutable -> mutable.upgrade(enchantment, Math.min(currentLevel + 1, maxLevel)));
+					EnchantmentHelper.updateEnchantments(newEnchantableItem, mutable -> mutable.upgrade(enchantmentHolder, Math.min(currentLevel + 1, maxLevel)));
 				}
 			});
 
 			// Add up the total levels of all enchantments
-			totalEnchantmentLevels = GeneralUtilities.getTotalEnchantmentLevels(newEnchantableItem);
+			RegistryLookup<Enchantment> enchantmentLookup = trader.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
+			totalEnchantmentLevels = GeneralUtilities.getTotalEnchantmentLevels(enchantmentLookup, newEnchantableItem);
 
 			// The item cost rises exponentially with higher enchantment levels
 			// It caps at 32

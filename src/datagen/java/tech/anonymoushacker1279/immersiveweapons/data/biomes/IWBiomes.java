@@ -18,7 +18,7 @@ public class IWBiomes {
 	public static final ResourceKey<Biome> DEADMANS_DESERT = createKey("deadmans_desert");
 
 	private static ResourceKey<Biome> createKey(String name) {
-		return ResourceKey.create(Registries.BIOME, new ResourceLocation(ImmersiveWeapons.MOD_ID, name));
+		return ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, name));
 	}
 
 	public static void bootstrap(BootstrapContext<Biome> context) {

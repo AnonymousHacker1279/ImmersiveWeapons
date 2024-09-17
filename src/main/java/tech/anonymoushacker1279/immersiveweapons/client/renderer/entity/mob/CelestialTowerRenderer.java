@@ -10,7 +10,7 @@ import tech.anonymoushacker1279.immersiveweapons.entity.monster.CelestialTowerEn
 
 public class CelestialTowerRenderer<T extends CelestialTowerEntity> extends MobRenderer<T, CelestialTowerModel<T>> {
 
-	private static final ResourceLocation TEXTURE_LOCATION = new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/celestial_tower/celestial_tower.png");
+	private static final ResourceLocation TEXTURE_LOCATION = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/entity/celestial_tower/celestial_tower.png");
 
 	public CelestialTowerRenderer(EntityRendererProvider.Context context) {
 		super(context, new CelestialTowerModel<>(context.bakeLayer(CelestialTowerModel.LAYER_LOCATION)), 1.0F);

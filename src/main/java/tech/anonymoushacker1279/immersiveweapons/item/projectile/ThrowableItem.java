@@ -81,7 +81,7 @@ public class ThrowableItem extends Item {
 	public void releaseUsing(ItemStack pStack, Level pLevel, LivingEntity pLivingEntity, int pTimeCharged) {
 		// Allow smoke grenade throws to be charged
 		if (type.canCharge && pLivingEntity instanceof Player player) {
-			int i = this.getUseDuration(pStack) - pTimeCharged;
+			int i = this.getUseDuration(pStack, pLivingEntity) - pTimeCharged;
 			if (i < 0) {
 				return;
 			}
@@ -112,8 +112,8 @@ public class ThrowableItem extends Item {
 	}
 
 	@Override
-	public int getUseDuration(ItemStack pStack) {
-		return type.canCharge ? 72000 : super.getUseDuration(pStack);
+	public int getUseDuration(ItemStack pStack, LivingEntity livingEntity) {
+		return type.canCharge ? 72000 : super.getUseDuration(pStack, livingEntity);
 	}
 
 	private void handleCooldown(Player player, ItemStack itemInHand) {

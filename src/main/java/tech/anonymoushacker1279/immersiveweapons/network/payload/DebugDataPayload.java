@@ -13,7 +13,7 @@ import java.util.UUID;
 public record DebugDataPayload(UUID playerUUID, float lastDamageDealt, float lastDamageTaken,
                                int ticksSinceRest) implements CustomPacketPayload {
 
-	public static final Type<DebugDataPayload> TYPE = new Type<>(new ResourceLocation(ImmersiveWeapons.MOD_ID, "debug_data"));
+	public static final Type<DebugDataPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "debug_data"));
 
 	public static final StreamCodec<FriendlyByteBuf, DebugDataPayload> STREAM_CODEC = StreamCodec.composite(
 			UUIDUtil.STREAM_CODEC,

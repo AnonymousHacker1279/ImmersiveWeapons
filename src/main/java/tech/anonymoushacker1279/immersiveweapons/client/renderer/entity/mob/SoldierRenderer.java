@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
 import net.minecraft.client.renderer.entity.layers.HumanoidArmorLayer;
 import net.minecraft.resources.ResourceLocation;
-import tech.anonymoushacker1279.immersiveweapons.client.model.CustomArmPoses;
+import tech.anonymoushacker1279.immersiveweapons.client.CustomArmPoses;
 import tech.anonymoushacker1279.immersiveweapons.entity.neutral.SoldierEntity;
 
 public class SoldierRenderer<T extends SoldierEntity> extends HumanoidMobRenderer<T, PlayerModel<T>> {

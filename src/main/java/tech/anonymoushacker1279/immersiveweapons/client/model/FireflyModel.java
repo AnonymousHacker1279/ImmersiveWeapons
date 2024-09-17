@@ -12,7 +12,7 @@ import tech.anonymoushacker1279.immersiveweapons.entity.ambient.FireflyEntity;
 
 public class FireflyModel<T extends FireflyEntity> extends EntityModel<T> {
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(
-			new ResourceLocation(ImmersiveWeapons.MOD_ID, "firefly"),
+			ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "firefly"),
 			"main");
 
 	private final ModelPart wings;
@@ -84,8 +84,8 @@ public class FireflyModel<T extends FireflyEntity> extends EntityModel<T> {
 	}
 
 	@Override
-	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-		wings.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
-		body.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+	public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
+		wings.render(poseStack, buffer, packedLight, packedOverlay, color);
+		body.render(poseStack, buffer, packedLight, packedOverlay, color);
 	}
 }

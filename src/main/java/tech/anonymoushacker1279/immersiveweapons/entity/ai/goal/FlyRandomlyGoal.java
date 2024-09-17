@@ -23,8 +23,8 @@ public class FlyRandomlyGoal extends Goal {
 	private BlockPos targetPosition;
 	private int targetingCooldown;
 
-	private static final ResourceKey<Biome> DEADMANS_DESERT = ResourceKey.create(Registries.BIOME, new ResourceLocation(ImmersiveWeapons.MOD_ID, "deadmans_desert"));
-	private static final ResourceKey<Level> TILTROS = ResourceKey.create(Registries.DIMENSION, new ResourceLocation(ImmersiveWeapons.MOD_ID, "tiltros"));
+	private static final ResourceKey<Biome> DEADMANS_DESERT = ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "deadmans_desert"));
+	private static final ResourceKey<Level> TILTROS = ResourceKey.create(Registries.DIMENSION, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "tiltros"));
 
 	public FlyRandomlyGoal(EvilEyeEntity pMob) {
 		evilEyeEntity = pMob;

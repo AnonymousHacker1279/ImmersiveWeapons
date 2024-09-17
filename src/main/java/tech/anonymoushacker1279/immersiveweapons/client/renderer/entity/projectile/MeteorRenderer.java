@@ -15,7 +15,7 @@ public class MeteorRenderer<T extends MeteorEntity> extends EntityRenderer<T> {
 
 	protected final MeteorModel<MeteorEntity> model;
 
-	private static final ResourceLocation TEXTURE_LOCATION = new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/meteor/meteor.png");
+	private static final ResourceLocation TEXTURE_LOCATION = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/entity/meteor/meteor.png");
 
 	public MeteorRenderer(EntityRendererProvider.Context context) {
 		super(context);
@@ -31,7 +31,7 @@ public class MeteorRenderer<T extends MeteorEntity> extends EntityRenderer<T> {
 		// Offset the model to the center, to compensate for the scaling
 		pMatrixStack.translate(-0.125f, 0, -0.125f);
 
-		model.renderToBuffer(pMatrixStack, pBuffer.getBuffer(RenderType.entityTranslucent(TEXTURE_LOCATION)), pPackedLight, OverlayTexture.NO_OVERLAY, 1.0f, 1.0f, 1.0f, 1.0f);
+		model.renderToBuffer(pMatrixStack, pBuffer.getBuffer(RenderType.entityTranslucent(TEXTURE_LOCATION)), pPackedLight, OverlayTexture.NO_OVERLAY, 16777215);
 		pMatrixStack.popPose();
 
 		super.render(pEntity, pEntityYaw, pPartialTicks, pMatrixStack, pBuffer, pPackedLight);

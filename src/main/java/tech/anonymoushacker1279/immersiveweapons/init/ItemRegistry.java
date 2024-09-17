@@ -9,6 +9,7 @@ import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.data.IWJukeboxSongs;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.common.CommonItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.item.*;
@@ -454,15 +455,15 @@ public class ItemRegistry {
 	@LanguageEntryOverride("Pedestal Augment: Capacity")
 	public static final Supplier<Item> PEDESTAL_AUGMENT_CAPACITY = ITEMS.register("pedestal_augment_capacity", () -> new Item(new Properties().stacksTo(4)));
 	@LanguageEntryOverride("Music Disc")
-	public static final Supplier<RecordItem> MUSIC_DISC_STARLIGHT_PLAINS_THEME_1 = ITEMS.register("music_disc_starlight_plains_theme_1", () -> new RecordItem(0, SoundEventRegistry.STARLIGHT_PLAINS_THEME_1::get, new Properties().stacksTo(1).rarity(Rarity.RARE), 2580));
+	public static final Supplier<Item> MUSIC_DISC_STARLIGHT_PLAINS_THEME_1 = ITEMS.register("music_disc_starlight_plains_theme_1", () -> new Item(new Properties().stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(IWJukeboxSongs.STARLIGHT_PLAINS_THEME_1)));
 	@LanguageEntryOverride("Music Disc")
-	public static final Supplier<RecordItem> MUSIC_DISC_STARLIGHT_PLAINS_THEME_2 = ITEMS.register("music_disc_starlight_plains_theme_2", () -> new RecordItem(0, SoundEventRegistry.STARLIGHT_PLAINS_THEME_2::get, new Properties().stacksTo(1).rarity(Rarity.RARE), 2540));
+	public static final Supplier<Item> MUSIC_DISC_STARLIGHT_PLAINS_THEME_2 = ITEMS.register("music_disc_starlight_plains_theme_2", () -> new Item(new Properties().stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(IWJukeboxSongs.STARLIGHT_PLAINS_THEME_2)));
 	@LanguageEntryOverride("Music Disc")
-	public static final Supplier<RecordItem> MUSIC_DISC_TILTROS_WASTES_THEME = ITEMS.register("music_disc_tiltros_wastes_theme", () -> new RecordItem(0, SoundEventRegistry.TILTROS_WASTES_MUSIC::get, new Properties().stacksTo(1).rarity(Rarity.RARE), 3700));
+	public static final Supplier<Item> MUSIC_DISC_TILTROS_WASTES_THEME = ITEMS.register("music_disc_tiltros_wastes_theme", () -> new Item(new Properties().stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(IWJukeboxSongs.TILTROS_WASTES_MUSIC)));
 	@LanguageEntryOverride("Music Disc")
-	public static final Supplier<RecordItem> MUSIC_DISC_DEADMANS_DESERT_THEME_1 = ITEMS.register("music_disc_deadmans_desert_theme_1", () -> new RecordItem(0, SoundEventRegistry.DEADMANS_DESERT_THEME_1::get, new Properties().stacksTo(1).rarity(Rarity.RARE), 2900));
+	public static final Supplier<Item> MUSIC_DISC_DEADMANS_DESERT_THEME_1 = ITEMS.register("music_disc_deadmans_desert_theme_1", () -> new Item(new Properties().stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(IWJukeboxSongs.DEADMANS_DESERT_THEME_1)));
 	@LanguageEntryOverride("Music Disc")
-	public static final Supplier<RecordItem> MUSIC_DISC_DEADMANS_DESERT_THEME_2 = ITEMS.register("music_disc_deadmans_desert_theme_2", () -> new RecordItem(0, SoundEventRegistry.DEADMANS_DESERT_THEME_2::get, new Properties().stacksTo(1).rarity(Rarity.RARE), 2860));
+	public static final Supplier<Item> MUSIC_DISC_DEADMANS_DESERT_THEME_2 = ITEMS.register("music_disc_deadmans_desert_theme_2", () -> new Item(new Properties().stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(IWJukeboxSongs.DEADMANS_DESERT_THEME_2)));
 
 	// Armor
 	public static final Supplier<MoltenArmorItem> MOLTEN_HELMET = ITEMS.register("molten_helmet", () -> new MoltenArmorItem(ArmorMaterialRegistry.MOLTEN, ArmorItem.Type.HELMET, new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(39)).fireResistant()));

@@ -28,11 +28,19 @@ import java.util.concurrent.ExecutionException;
 
 public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 
-	private final CompletableFuture<Provider> registries;
+	private final Provider registries;
 
 	public GlobalLootModifierGenerator(PackOutput output, CompletableFuture<Provider> lookupProvider) {
 		super(output, lookupProvider, ImmersiveWeapons.MOD_ID);
-		registries = lookupProvider;
+
+		Provider provider;
+		try {
+			provider = lookupProvider.get();
+		} catch (InterruptedException | ExecutionException e) {
+			throw new RuntimeException(e);
+		}
+
+		registries = provider;
 	}
 
 	@Override
@@ -173,7 +181,7 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 	 */
 	private LootItemCondition[] simpleDropCondition(float chance, float lootingMultiplier) {
 		return new LootItemCondition[]{
-				LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(chance, lootingMultiplier)
+				LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(registries, chance, lootingMultiplier)
 						.and(LootItemKilledByPlayerCondition.killedByPlayer())
 						.build()};
 	}
@@ -208,7 +216,7 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 								EntityPredicate.Builder.entity()
 										.of(entityType)
 										.build())
-						.and(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(chance, lootingMultiplier))
+						.and(LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(registries, chance, lootingMultiplier))
 						.and(LootItemKilledByPlayerCondition.killedByPlayer())
 						.build()};
 	}
@@ -240,14 +248,7 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 	 * @return the loot item condition
 	 */
 	private LootItemCondition[] inBiomeDungeonCondition(ResourceKey<Biome> biome) {
-		Provider lookupProvider;
-		try {
-			lookupProvider = registries.get();
-		} catch (InterruptedException | ExecutionException e) {
-			throw new RuntimeException(e);
-		}
-
-		HolderGetter<Biome> holderGetter = lookupProvider.lookupOrThrow(Registries.BIOME);
+		HolderGetter<Biome> holderGetter = registries.lookupOrThrow(Registries.BIOME);
 
 		return new LootItemCondition[]{LootTableIdCondition.builder(BuiltInLootTables.SIMPLE_DUNGEON.location())
 				.and(LocationCheck.checkLocation(LocationPredicate.Builder.inBiome(holderGetter.getOrThrow(biome))))

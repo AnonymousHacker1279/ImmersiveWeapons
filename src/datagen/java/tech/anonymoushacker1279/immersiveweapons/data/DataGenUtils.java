@@ -22,7 +22,7 @@ public interface DataGenUtils {
 	}
 
 	default ResourceLocation getBowPullingPredicateLocation() {
-		return new ResourceLocation(ImmersiveWeapons.MOD_ID, "pulling");
+		return ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "pulling");
 	}
 
 	default ResourceLocation getBowPullingLocation(Item item, int stage) {

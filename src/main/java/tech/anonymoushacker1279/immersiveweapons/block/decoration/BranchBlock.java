@@ -21,7 +21,7 @@ public class BranchBlock extends BasicOrientableBlock {
 	private static final VoxelShape SHAPE_EAST = Block.box(13.0D, 0.0D, 4.0D, 16.0D, 5.0D, 12.0D);
 	private static final VoxelShape SHAPE_WEST = Block.box(0.0D, 0.0D, 4.0D, 3.0D, 5.0D, 12.0D);
 
-	public static final TagKey<Block> BURNED_OAK_LOGS = BlockTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID, "burned_oak_logs"));
+	public static final TagKey<Block> BURNED_OAK_LOGS = BlockTags.create(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "burned_oak_logs"));
 
 	/**
 	 * Constructor for BranchBlock.

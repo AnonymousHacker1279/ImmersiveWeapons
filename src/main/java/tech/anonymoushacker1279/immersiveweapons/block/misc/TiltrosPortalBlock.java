@@ -1,6 +1,5 @@
 package tech.anonymoushacker1279.immersiveweapons.block.misc;
 
-import net.kyrptonaught.customportalapi.CustomPortalBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
@@ -8,13 +7,15 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.phys.HitResult;
 import tech.anonymoushacker1279.immersiveweapons.init.ParticleTypesRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 
-public class TiltrosPortalBlock extends CustomPortalBlock {
+// TODO: reimplement when Custom Portals API is updated
+public class TiltrosPortalBlock extends Block {
 
 	public TiltrosPortalBlock(Properties properties) {
 		super(properties);

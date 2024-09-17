@@ -14,10 +14,8 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.EventBusSubscriber.Bus;
-import net.neoforged.neoforge.event.entity.living.LivingHurtEvent;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
@@ -108,7 +106,8 @@ public class RecoveryStaffItem extends Item implements SummoningStaff {
 		return healAmount;
 	}
 
-	@SubscribeEvent
+	// TODO: reimplement
+	/*@SubscribeEvent
 	public static void livingHurtEvent(LivingHurtEvent event) {
 		if (event.getEntity() instanceof Player player) {
 			player.getInventory().items.stream()
@@ -118,5 +117,5 @@ public class RecoveryStaffItem extends Item implements SummoningStaff {
 						staff.setHealAmount((event.getAmount() / 2) + 4);
 					});
 		}
-	}
+	}*/
 }

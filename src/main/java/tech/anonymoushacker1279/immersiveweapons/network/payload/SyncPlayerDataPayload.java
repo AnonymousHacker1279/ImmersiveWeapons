@@ -20,7 +20,7 @@ import java.util.UUID;
  */
 public record SyncPlayerDataPayload(CompoundTag tag, UUID playerUUID) implements CustomPacketPayload {
 
-	public static final Type<SyncPlayerDataPayload> TYPE = new Type<>(new ResourceLocation(ImmersiveWeapons.MOD_ID, "sync_player_data"));
+	public static final Type<SyncPlayerDataPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "sync_player_data"));
 
 	public static final StreamCodec<FriendlyByteBuf, SyncPlayerDataPayload> STREAM_CODEC = StreamCodec.composite(
 			ByteBufCodecs.COMPOUND_TAG,

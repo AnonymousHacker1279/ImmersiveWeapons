@@ -1,7 +1,8 @@
 package tech.anonymoushacker1279.immersiveweapons.item.projectile;
 
-import net.minecraft.core.Direction;
-import net.minecraft.core.Position;
+import net.minecraft.core.*;
+import net.minecraft.core.Holder.Reference;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -9,14 +10,15 @@ import net.minecraft.world.entity.projectile.AbstractArrow.Pickup;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils.HitEffect;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.annotation.Nullable;
+import java.util.*;
 import java.util.function.Supplier;
 
 public class CustomArrowItem<T extends CustomArrowEntity> extends ArrowItem {
@@ -51,7 +53,7 @@ public class CustomArrowItem<T extends CustomArrowEntity> extends ArrowItem {
 	}
 
 	@Override
-	public AbstractArrow createArrow(Level level, ItemStack stack, LivingEntity shooter) {
+	public AbstractArrow createArrow(Level level, ItemStack ammo, LivingEntity shooter, @Nullable ItemStack weapon) {
 		CustomArrowEntity arrowEntity = new CustomArrowEntity(entitySupplier.get(), shooter, level);
 		setCommonArrowCharacteristics(arrowEntity);
 
@@ -71,7 +73,8 @@ public class CustomArrowItem<T extends CustomArrowEntity> extends ArrowItem {
 	private void setCommonArrowCharacteristics(CustomArrowEntity arrowEntity) {
 		arrowEntity.setPierceLevel((byte) pierceLevel);
 		arrowEntity.setBaseDamage(damage);
-		arrowEntity.setKnockback(knockbackStrength);
+		// TODO: reimplement via mixin
+		// arrowEntity.setKnockback(knockbackStrength);
 		arrowEntity.gravityModifier = gravityModifier;
 		arrowEntity.shootingVectorInputs = shootingVectorInputs;
 		arrowEntity.hitEffect = hitEffect;
@@ -90,14 +93,21 @@ public class CustomArrowItem<T extends CustomArrowEntity> extends ArrowItem {
 	 * Check if the arrow is infinite. A more flexible check than Vanilla provides.
 	 * Restricts the ability to lower level arrows, for balance.
 	 *
-	 * @param arrow        the arrow being checked
-	 * @param bow          the bow firing the arrow
-	 * @param livingEntity the entity firing the bow
+	 * @param arrow   the arrow being checked
+	 * @param bow     the bow firing the arrow
+	 * @param shooter the entity firing the bow
 	 * @return boolean
 	 */
 	@Override
-	public boolean isInfinite(ItemStack arrow, ItemStack bow, LivingEntity livingEntity) {
-		int enchant = bow.getEnchantmentLevel(Enchantments.INFINITY);
+	public boolean isInfinite(ItemStack arrow, ItemStack bow, LivingEntity shooter) {
+		HolderGetter<Enchantment> enchantmentGetter = shooter.registryAccess().lookup(Registries.ENCHANTMENT).orElseThrow();
+		Optional<Reference<Enchantment>> infinity = enchantmentGetter.get(Enchantments.INFINITY);
+
+		int enchant = 0;
+		if (infinity.isPresent()) {
+			enchant = bow.getEnchantmentLevel(infinity.get());
+		}
+
 		return canBeInfinite() && enchant > 0;
 	}
 

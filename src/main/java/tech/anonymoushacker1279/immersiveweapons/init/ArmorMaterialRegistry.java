@@ -131,13 +131,13 @@ public class ArmorMaterialRegistry {
 			15,
 			SoundEvents.ARMOR_EQUIP_LEATHER,
 			() -> Ingredient.of(Items.LEATHER),
-			List.of(new ArmorMaterial.Layer(new ResourceLocation(ImmersiveWeapons.MOD_ID, "padded_leather"), "", true), new ArmorMaterial.Layer(new ResourceLocation(ImmersiveWeapons.MOD_ID, "padded_leather"), "_overlay", false)),
+			List.of(new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "padded_leather"), "", true), new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "padded_leather"), "_overlay", false)),
 			0.0F,
 			0.0F
 	));
 
 	private static DeferredHolder<ArmorMaterial, ArmorMaterial> register(String name, EnumMap<ArmorItem.Type, Integer> defense, int enchantmentValue, Holder<SoundEvent> equipSound, Supplier<Ingredient> repairIngredients, float toughness, float knockbackResistance) {
-		List<Layer> armorLayers = List.of(new Layer(new ResourceLocation(ImmersiveWeapons.MOD_ID, name)));
+		List<Layer> armorLayers = List.of(new Layer(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, name)));
 		return ARMOR_MATERIALS.register(name, () -> new ArmorMaterial(defense, enchantmentValue, equipSound, repairIngredients, armorLayers, toughness, knockbackResistance));
 	}
 }

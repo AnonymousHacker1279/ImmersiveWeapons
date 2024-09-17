@@ -10,7 +10,7 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 public record StarForgeMenuPayload(int containerId, int menuSelectionIndex,
                                    boolean beginCrafting) implements CustomPacketPayload {
 
-	public static final Type<StarForgeMenuPayload> TYPE = new Type<>(new ResourceLocation(ImmersiveWeapons.MOD_ID, "star_forge_menu"));
+	public static final Type<StarForgeMenuPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "star_forge_menu"));
 
 	public static final StreamCodec<FriendlyByteBuf, StarForgeMenuPayload> STREAM_CODEC = StreamCodec.composite(
 			ByteBufCodecs.INT,

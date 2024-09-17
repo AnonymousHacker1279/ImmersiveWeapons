@@ -13,8 +13,7 @@ import net.minecraft.world.entity.player.*;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.EntityBlock;
@@ -153,11 +152,10 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 		ItemStack material2 = items.get(1);
 		ItemStack material3 = items.get(2);
 		ItemStack fuel = items.get(3);
-		if (isBurning() || !material1.isEmpty()
-				&& !material2.isEmpty() && !material3.isEmpty() && !fuel.isEmpty()) {
+		if (isBurning() || !material1.isEmpty() && !material2.isEmpty() && !material3.isEmpty() && !fuel.isEmpty()) {
 
 			Optional<RecipeHolder<TeslaSynthesizerRecipe>> recipeHolder = level.getRecipeManager()
-					.getRecipeFor(RecipeTypeRegistry.TESLA_SYNTHESIZER_RECIPE_TYPE.get(), this, level);
+					.getRecipeFor(RecipeTypeRegistry.TESLA_SYNTHESIZER_RECIPE_TYPE.get(), new TeslaSynthesizerRecipeInput(material1, material2, material3), level);
 
 			TeslaSynthesizerRecipe synthesizerRecipe = recipeHolder.map(RecipeHolder::value).orElse(null);
 
@@ -260,7 +258,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 		CompoundTag compoundTag = tag.getCompound("RecipesUsed");
 
 		for (String string : compoundTag.getAllKeys()) {
-			recipes.put(new ResourceLocation(string), compoundTag.getInt(string));
+			recipes.put(ResourceLocation.parse(string), compoundTag.getInt(string));
 		}
 
 	}
@@ -314,7 +312,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	private int getCookTime() {
 		if (level != null) {
 			Optional<RecipeHolder<TeslaSynthesizerRecipe>> recipe = level.getRecipeManager()
-					.getRecipeFor(RecipeTypeRegistry.TESLA_SYNTHESIZER_RECIPE_TYPE.get(), this, level);
+					.getRecipeFor(RecipeTypeRegistry.TESLA_SYNTHESIZER_RECIPE_TYPE.get(), new TeslaSynthesizerRecipeInput(items.get(0), items.get(1), items.get(2)), level);
 
 			if (recipe.isPresent()) {
 				return recipe.get().value().getCookTime();
@@ -495,6 +493,24 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 		for (ItemStack itemStack : items) {
 			helper.accountStack(itemStack);
 		}
+	}
+}
 
+record TeslaSynthesizerRecipeInput(ItemStack material1, ItemStack material2,
+                                   ItemStack material3) implements RecipeInput {
+
+	@Override
+	public ItemStack getItem(int index) {
+		return switch (index) {
+			case 0 -> material1;
+			case 1 -> material2;
+			case 2 -> material3;
+			default -> ItemStack.EMPTY;
+		};
+	}
+
+	@Override
+	public int size() {
+		return 3;
 	}
 }

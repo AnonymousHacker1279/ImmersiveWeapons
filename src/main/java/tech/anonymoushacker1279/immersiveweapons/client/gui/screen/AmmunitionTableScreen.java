@@ -12,7 +12,7 @@ import tech.anonymoushacker1279.immersiveweapons.menu.AmmunitionTableMenu;
 
 public class AmmunitionTableScreen extends AbstractContainerScreen<AmmunitionTableMenu> {
 
-	private static final ResourceLocation GUI_TEXTURE = new ResourceLocation(ImmersiveWeapons.MOD_ID + ":textures/gui/container/ammunition_table.png");
+	private static final ResourceLocation GUI_TEXTURE = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/gui/container/ammunition_table.png");
 
 	public AmmunitionTableScreen(AmmunitionTableMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
 		super(pMenu, pPlayerInventory, pTitle);

@@ -16,6 +16,6 @@ public class CommonWorldGenTagGroups {
 	 * @param tag a string to be used for the tag
 	 */
 	private static TagKey<Biome> createBiomeTag(String tag) {
-		return TagKey.create(Registries.BIOME, new ResourceLocation("c", tag));
+		return TagKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("c", tag));
 	}
 }

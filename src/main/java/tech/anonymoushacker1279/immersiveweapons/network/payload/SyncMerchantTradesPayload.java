@@ -12,7 +12,7 @@ import tech.anonymoushacker1279.immersiveweapons.entity.npc.trading.MerchantTrad
 public record SyncMerchantTradesPayload(EntityType<?> entityType,
                                         MerchantTrades trades) implements CustomPacketPayload {
 
-	public static final Type<SyncMerchantTradesPayload> TYPE = new Type<>(new ResourceLocation(ImmersiveWeapons.MOD_ID, "sync_merchant_trades"));
+	public static final Type<SyncMerchantTradesPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "sync_merchant_trades"));
 
 	public static final StreamCodec<RegistryFriendlyByteBuf, SyncMerchantTradesPayload> STREAM_CODEC = StreamCodec.composite(
 			EntityTypeCodec(),

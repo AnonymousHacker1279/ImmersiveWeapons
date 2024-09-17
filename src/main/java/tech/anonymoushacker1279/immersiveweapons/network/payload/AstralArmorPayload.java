@@ -9,7 +9,7 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
 public record AstralArmorPayload(boolean state) implements CustomPacketPayload {
 
-	public static final Type<AstralArmorPayload> TYPE = new Type<>(new ResourceLocation(ImmersiveWeapons.MOD_ID, "astral_armor"));
+	public static final Type<AstralArmorPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "astral_armor"));
 
 	public static final StreamCodec<FriendlyByteBuf, AstralArmorPayload> STREAM_CODEC = StreamCodec.composite(
 			ByteBufCodecs.BOOL,

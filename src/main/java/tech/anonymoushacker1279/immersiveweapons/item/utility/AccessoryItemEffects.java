@@ -1,30 +1,36 @@
 package tech.anonymoushacker1279.immersiveweapons.item.utility;
 
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectBuilder;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectBuilder.EffectScalingType;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectType;
 
-import java.util.UUID;
-
 public class AccessoryItemEffects {
 
-	public static final AttributeModifier BLOATED_HEART_HEALTH_MODIFIER = new AttributeModifier(UUID.fromString("e5485685-cfbe-422b-b7dd-eda29049a508"),
-			"Bloated Heart boost", 4.0d, Operation.ADD_VALUE);
-	public static final AttributeModifier AGILITY_BRACELET_SPEED_MODIFIER = new AttributeModifier(UUID.fromString("0360d69c-bf02-4dc3-a64f-86d9a9b345cd"),
-			"Agility Bracelet boost", 0.05d, Operation.ADD_MULTIPLIED_BASE);
-	public static final AttributeModifier AGILITY_BRACELET_STEP_HEIGHT_MODIFIER = new AttributeModifier(UUID.fromString("57108471-149e-4d4a-829b-e38632429f57"),
-			"Agility Bracelet boost", 0.5d, Operation.ADD_VALUE);
-	public static final AttributeModifier NETHERITE_SHIELD_KB_MODIFIER = new AttributeModifier(UUID.fromString("18e993c3-cf20-4a18-bdb4-11751c4dfb0f"),
-			"Netherite Shield knockback resistance", 0.0d, Operation.ADD_VALUE);
-	public static final AttributeModifier GLOVE_OF_RAPID_SWINGING_ATTACK_SPEED_MODIFIER = new AttributeModifier(UUID.fromString("c8ea3a7c-99ab-437b-90c7-3b7ddfb3ffd4"),
-			"Glove of Rapid Swinging boost", 0.25d, Operation.ADD_VALUE);
-	public static final AttributeModifier SUPER_BLANKET_CAPE_SPEED_MODIFIER = new AttributeModifier(UUID.fromString("e71dd651-f3c8-4354-b5f9-c3d9ed24d8f3"),
-			"Super Blanket Cape boost", 0.05d, Operation.ADD_MULTIPLIED_BASE);
+	public static final AttributeModifier BLOATED_HEART_HEALTH_MODIFIER = new AttributeModifier(
+			ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "bloated_heart_health_modifier"),
+			4.0d, Operation.ADD_VALUE);
+	public static final AttributeModifier AGILITY_BRACELET_SPEED_MODIFIER = new AttributeModifier(
+			ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "agility_bracelet_speed_modifier"),
+			0.05d, Operation.ADD_MULTIPLIED_BASE);
+	public static final AttributeModifier AGILITY_BRACELET_STEP_HEIGHT_MODIFIER = new AttributeModifier(
+			ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "agility_bracelet_step_height_modifier"),
+			0.5d, Operation.ADD_VALUE);
+	public static final AttributeModifier NETHERITE_SHIELD_KB_MODIFIER = new AttributeModifier(
+			ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "netherite_shield_knockback_resistance"),
+			0.0d, Operation.ADD_VALUE);
+	public static final AttributeModifier GLOVE_OF_RAPID_SWINGING_ATTACK_SPEED_MODIFIER = new AttributeModifier(
+			ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "glove_of_rapid_swinging_attack_speed_modifier"),
+			0.25d, Operation.ADD_VALUE);
+	public static final AttributeModifier SUPER_BLANKET_CAPE_SPEED_MODIFIER = new AttributeModifier(
+			ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "super_blanket_cape_speed_modifier"),
+			0.05d, Operation.ADD_MULTIPLIED_BASE);
 
 	public static final EffectBuilder SATCHEL = new EffectBuilder()
 			.addEffect(EffectType.FIREARM_AMMO_CONSERVATION_CHANCE, 0.1d);

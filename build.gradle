@@ -1,8 +1,8 @@
 plugins {
 	id 'java-library'
 	id 'maven-publish'
-	id 'net.neoforged.gradle.userdev' version '7.0.133'
-	id "com.hypherionmc.modutils.modpublisher" version "2.1.2"
+	id 'net.neoforged.gradle.userdev' version '7.0.163'
+	id "com.hypherionmc.modutils.modpublisher" version "2.1.6"
 	id 'idea'
 }
 
@@ -39,6 +39,10 @@ repositories {
 		content {
 			includeGroup "curse.maven"
 		}
+	}
+	maven {
+		name = "TerraformersMC"
+		url = "https://maven.terraformersmc.com/"
 	}
 }
 
@@ -104,22 +108,22 @@ runs {
 		// Setup client information from gradle.properties in the user home
 		// All of these are optional
 		if (project.hasProperty('mc_uuid')) {
-			programArguments('--uuid', (String) project.property('mc_uuid'))
+			arguments('--uuid', (String) project.property('mc_uuid'))
 		}
 		if (project.hasProperty('mc_username')) {
-			programArguments('--username', (String) project.property('mc_username'))
+			arguments('--username', (String) project.property('mc_username'))
 		}
 		if (project.hasProperty('mc_accessToken')) {
-			programArguments('--accessToken', (String) project.property('mc_accessToken'))
+			arguments('--accessToken', (String) project.property('mc_accessToken'))
 		}
 	}
 
 	server {
-		programArgument '--nogui'
+		argument '--nogui'
 	}
 
 	data {
-		programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+		arguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
 	}
 }
 
@@ -135,26 +139,27 @@ dependencies {
 
 	implementation "net.neoforged:neoforge:${neoforge_version}"
 
-	// TODO: reimplement as dependencies update
-	/*implementation(jarJar("dev.lukebemish.biomesquisher:biomesquisher-neoforge-1.20.2:[0.1.6-alpha,)")) {
+	implementation(jarJar("dev.lukebemish:biomesquisher:[${biomesquisher_version}]")) {
 		version {
 			prefer biomesquisher_version
 		}
-		exclude group: "ar.com.hjg", module: "pngj"
-	}*/
+		capabilities {
+			requireCapability("dev.lukebemish:biomesquisher-neoforge")
+		}
+	}
 
-	implementation(jarJar("net.kyrptonaught.customportalapi:cpapireforged-neo-1.20.6:[1.0.7,)")) {
+	/*implementation(jarJar("net.kyrptonaught.customportalapi:cpapireforged-neo-1.20.6:[1.0.7,)")) {
 		version {
 			prefer custom_portals_api_version
 		}
-	}
+	}*/
 
 	// Include Immersive Weapons Compatibility Bridge (IWCB) and Cobalt Config
 	// implementation "tech.anonymoushacker1279.iwcompatbridge:IWCompatBridge:${iwcb_version}"
 	implementation "tech.anonymoushacker1279.cobaltconfig:CobaltConfig:${cobaltconfig_version}"
 
 	// Include JEI
-	// runtimeOnly "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
+	runtimeOnly "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
 	// Include WTHIT and badpackets
 	runtimeOnly "mcp.mobius.waila:wthit:neo-${wthit_version}"
 	runtimeOnly "lol.bai:badpackets:neo-${badpackets_version}"

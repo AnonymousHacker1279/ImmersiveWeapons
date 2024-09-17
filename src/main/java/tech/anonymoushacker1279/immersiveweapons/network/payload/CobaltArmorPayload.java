@@ -9,7 +9,7 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
 public record CobaltArmorPayload(boolean state) implements CustomPacketPayload {
 
-	public static final Type<CobaltArmorPayload> TYPE = new Type<>(new ResourceLocation(ImmersiveWeapons.MOD_ID, "cobalt_armor"));
+	public static final Type<CobaltArmorPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "cobalt_armor"));
 
 	public static final StreamCodec<FriendlyByteBuf, CobaltArmorPayload> STREAM_CODEC = StreamCodec.composite(
 			ByteBufCodecs.BOOL,

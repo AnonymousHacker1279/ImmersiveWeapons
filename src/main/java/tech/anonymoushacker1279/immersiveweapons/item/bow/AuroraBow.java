@@ -14,7 +14,7 @@ public class AuroraBow extends BowItem {
 	}
 
 	@Override
-	public AbstractArrow customArrow(AbstractArrow abstractArrow, ItemStack stack) {
+	public AbstractArrow customArrow(AbstractArrow abstractArrow, ItemStack projectileStack, ItemStack weaponStack) {
 		if (abstractArrow instanceof CustomArrowEntity customArrowEntity) {
 			customArrowEntity.gravityModifier = customArrowEntity.gravityModifier / 4;
 

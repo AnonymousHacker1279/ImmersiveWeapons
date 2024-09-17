@@ -1,19 +1,24 @@
 package tech.anonymoushacker1279.immersiveweapons.item.tool;
 
+import net.minecraft.core.HolderGetter;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
+import tech.anonymoushacker1279.immersiveweapons.data.IWEnchantments;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
-import tech.anonymoushacker1279.immersiveweapons.init.EnchantmentRegistry;
 
 public interface HitEffectUtils {
 
 	default void addMoltenEffects(LivingEntity target, LivingEntity source) {
-		int fireAspectLevel = source.getMainHandItem().getEnchantmentLevel(Enchantments.FIRE_ASPECT);
-		int flameLevel = source.getMainHandItem().getEnchantmentLevel(Enchantments.FLAME);
-		int scorchShotLevel = source.getMainHandItem().getEnchantmentLevel(EnchantmentRegistry.SCORCH_SHOT.get());
+		HolderGetter<Enchantment> enchantmentGetter = source.registryAccess().lookup(Registries.ENCHANTMENT).orElseThrow();
+
+		int fireAspectLevel = source.getMainHandItem().getEnchantmentLevel(enchantmentGetter.get(Enchantments.FIRE_ASPECT).orElseThrow());
+		int flameLevel = source.getMainHandItem().getEnchantmentLevel(enchantmentGetter.get(Enchantments.FLAME).orElseThrow());
+		int scorchShotLevel = source.getMainHandItem().getEnchantmentLevel(enchantmentGetter.get(IWEnchantments.SCORCH_SHOT).orElseThrow());
 
 		if (fireAspectLevel > 0) {
 			target.addEffect(new MobEffectInstance(EffectRegistry.HELLFIRE_EFFECT, 200, Mth.clamp(fireAspectLevel + 1, 1, 5), false, false));

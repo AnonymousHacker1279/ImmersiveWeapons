@@ -10,8 +10,8 @@ import tech.anonymoushacker1279.immersiveweapons.entity.monster.EvilEyeEntity;
 
 public class EvilEyeRenderer extends MobRenderer<EvilEyeEntity, EvilEyeModel<EvilEyeEntity>> {
 
-	private static final ResourceLocation TEXTURE_LOCATION = new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/evil_eye/evil_eye.png");
-	private static final ResourceLocation ALT_TEXTURE_LOCATION = new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/evil_eye/evil_eye_alt.png");
+	private static final ResourceLocation TEXTURE_LOCATION = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/entity/evil_eye/evil_eye.png");
+	private static final ResourceLocation ALT_TEXTURE_LOCATION = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/entity/evil_eye/evil_eye_alt.png");
 
 	public EvilEyeRenderer(EntityRendererProvider.Context context) {
 		super(context, new EvilEyeModel<>(context.bakeLayer(EvilEyeModel.LAYER_LOCATION)), 0.15F);

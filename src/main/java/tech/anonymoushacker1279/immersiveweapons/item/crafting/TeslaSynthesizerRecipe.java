@@ -7,7 +7,6 @@ import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
@@ -15,17 +14,17 @@ import tech.anonymoushacker1279.immersiveweapons.init.*;
 
 public record TeslaSynthesizerRecipe(String group, Ingredient blockIngredient, Ingredient material1,
                                      Ingredient material2, ItemStack result,
-                                     int cookTime) implements Recipe<Container> {
+                                     int cookTime) implements Recipe<RecipeInput> {
 
 	@Override
-	public boolean matches(Container container, Level level) {
-		return blockIngredient.test(container.getItem(0))
-				&& material1.test(container.getItem(1))
-				&& material2.test(container.getItem(2));
+	public boolean matches(RecipeInput input, Level level) {
+		return blockIngredient.test(input.getItem(0))
+				&& material1.test(input.getItem(1))
+				&& material2.test(input.getItem(2));
 	}
 
 	@Override
-	public ItemStack assemble(Container container, Provider provider) {
+	public ItemStack assemble(RecipeInput input, Provider registries) {
 		return result;
 	}
 

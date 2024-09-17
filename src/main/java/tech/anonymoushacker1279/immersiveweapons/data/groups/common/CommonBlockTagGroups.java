@@ -13,6 +13,6 @@ public class CommonBlockTagGroups {
 	public static final TagKey<Block> SULFUR_ORES = createBlockTag("ores/sulfur");
 
 	private static TagKey<Block> createBlockTag(String tag) {
-		return TagKey.create(Registries.BLOCK, new ResourceLocation("c", tag));
+		return TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath("c", tag));
 	}
 }

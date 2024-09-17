@@ -10,7 +10,7 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 public record PlayerSoundPayload(ResourceLocation soundLocation, float volume,
                                  float pitch) implements CustomPacketPayload {
 
-	public static final Type<PlayerSoundPayload> TYPE = new Type<>(new ResourceLocation(ImmersiveWeapons.MOD_ID, "player_sound"));
+	public static final Type<PlayerSoundPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "player_sound"));
 
 	public static final StreamCodec<FriendlyByteBuf, PlayerSoundPayload> STREAM_CODEC = StreamCodec.composite(
 			ResourceLocation.STREAM_CODEC,

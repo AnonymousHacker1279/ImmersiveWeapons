@@ -11,25 +11,25 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
 public class IWDamageSources {
 
-	public static final ResourceKey<DamageType> BARBED_WIRE_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "barbed_wire"));
-	public static final ResourceKey<DamageType> BEAR_TRAP_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "bear_trap"));
-	public static final ResourceKey<DamageType> BLEEDING_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "bleeding"));
-	public static final ResourceKey<DamageType> EXPLOSIVE_CHOCOLATE_BAR_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "explosive_chocolate_bar"));
-	public static final ResourceKey<DamageType> DEATHWEED_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "deathweed"));
-	public static final ResourceKey<DamageType> WOODEN_SPIKES_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "wooden_spikes"));
-	public static final ResourceKey<DamageType> SPIKE_TRAP_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "spike_trap"));
-	public static final ResourceKey<DamageType> USED_SYRINGE_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "used_syringe"));
-	public static final ResourceKey<DamageType> MORTAR_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "mortar"));
-	public static final ResourceKey<DamageType> LANDMINE_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "landmine"));
-	public static final ResourceKey<DamageType> DEADMANS_DESERT_ATMOSPHERE_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "deadmans_desert_atmosphere"));
-	public static final ResourceKey<DamageType> METEOR_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "meteor"));
-	public static final ResourceKey<DamageType> PUNJI_STICKS_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "punji_sticks"));
-	public static final ResourceKey<DamageType> PUNJI_STICKS_FALL_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "punji_sticks_fall"));
-	public static final ResourceKey<DamageType> BULLET_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "bullet"));
-	public static final ResourceKey<DamageType> CANNONBALL_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "cannonball"));
-	public static final ResourceKey<DamageType> EXPLOSIVE_CANNONBALL_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "explosive_cannonball"));
-	public static final ResourceKey<DamageType> EXPLOSIVE_ARROW_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "explosive_arrow"));
-	public static final ResourceKey<DamageType> HELLFIRE_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, new ResourceLocation(ImmersiveWeapons.MOD_ID, "hellfire"));
+	public static final ResourceKey<DamageType> BARBED_WIRE_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "barbed_wire"));
+	public static final ResourceKey<DamageType> BEAR_TRAP_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "bear_trap"));
+	public static final ResourceKey<DamageType> BLEEDING_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "bleeding"));
+	public static final ResourceKey<DamageType> EXPLOSIVE_CHOCOLATE_BAR_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "explosive_chocolate_bar"));
+	public static final ResourceKey<DamageType> DEATHWEED_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "deathweed"));
+	public static final ResourceKey<DamageType> WOODEN_SPIKES_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "wooden_spikes"));
+	public static final ResourceKey<DamageType> SPIKE_TRAP_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "spike_trap"));
+	public static final ResourceKey<DamageType> USED_SYRINGE_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "used_syringe"));
+	public static final ResourceKey<DamageType> MORTAR_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "mortar"));
+	public static final ResourceKey<DamageType> LANDMINE_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "landmine"));
+	public static final ResourceKey<DamageType> DEADMANS_DESERT_ATMOSPHERE_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "deadmans_desert_atmosphere"));
+	public static final ResourceKey<DamageType> METEOR_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "meteor"));
+	public static final ResourceKey<DamageType> PUNJI_STICKS_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "punji_sticks"));
+	public static final ResourceKey<DamageType> PUNJI_STICKS_FALL_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "punji_sticks_fall"));
+	public static final ResourceKey<DamageType> BULLET_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "bullet"));
+	public static final ResourceKey<DamageType> CANNONBALL_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "cannonball"));
+	public static final ResourceKey<DamageType> EXPLOSIVE_CANNONBALL_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "explosive_cannonball"));
+	public static final ResourceKey<DamageType> EXPLOSIVE_ARROW_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "explosive_arrow"));
+	public static final ResourceKey<DamageType> HELLFIRE_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "hellfire"));
 
 	private static DamageSource getDamageSource(RegistryAccess registryAccess, ResourceKey<DamageType> key) {
 		return new DamageSource(registryAccess.registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(key));

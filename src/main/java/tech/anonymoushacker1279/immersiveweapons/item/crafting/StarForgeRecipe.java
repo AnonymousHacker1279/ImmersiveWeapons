@@ -9,17 +9,22 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 
 public record StarForgeRecipe(String group, Ingredient ingot, int ingotCount, Ingredient secondaryMaterial,
                               int secondaryMaterialCount, int smeltTime,
-                              ItemStack result) implements Recipe<Container> {
+                              ItemStack result) implements Recipe<RecipeInput> {
 
-	public boolean matches(Container container, Level level) {
+	@Override
+	public boolean matches(RecipeInput input, Level level) {
 		return false;
+	}
+
+	@Override
+	public ItemStack assemble(RecipeInput input, Provider registries) {
+		return result;
 	}
 
 	public boolean matches(Container container) {
@@ -31,11 +36,6 @@ public record StarForgeRecipe(String group, Ingredient ingot, int ingotCount, In
 		}
 
 		return false;
-	}
-
-	@Override
-	public ItemStack assemble(Container container, Provider provider) {
-		return new ItemStack(Items.AIR);
 	}
 
 	@Override

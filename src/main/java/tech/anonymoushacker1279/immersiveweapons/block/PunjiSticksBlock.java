@@ -1,10 +1,13 @@
 package tech.anonymoushacker1279.immersiveweapons.block;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderGetter;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -75,6 +78,7 @@ public class PunjiSticksBlock extends Block implements SimpleWaterloggedBlock {
 	}
 
 	protected int getFeatherFallingLevel(LivingEntity entity) {
-		return entity.getItemBySlot(EquipmentSlot.FEET).getEnchantmentLevel(Enchantments.FEATHER_FALLING);
+		HolderGetter<Enchantment> enchantmentGetter = entity.registryAccess().lookup(Registries.ENCHANTMENT).orElseThrow();
+		return entity.getItemBySlot(EquipmentSlot.FEET).getEnchantmentLevel(enchantmentGetter.getOrThrow(Enchantments.FEATHER_FALLING));
 	}
 }

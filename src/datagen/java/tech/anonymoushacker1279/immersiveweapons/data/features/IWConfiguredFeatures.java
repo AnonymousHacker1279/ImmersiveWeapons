@@ -44,7 +44,7 @@ public class IWConfiguredFeatures {
 	public static final ResourceKey<ConfiguredFeature<?, ?>> POTASSIUM_NITRATE_ORE_CONFIGURATION = createKey("potassium_nitrate_ore");
 
 	private static ResourceKey<ConfiguredFeature<?, ?>> createKey(String name) {
-		return ResourceKey.create(Registries.CONFIGURED_FEATURE, new ResourceLocation(ImmersiveWeapons.MOD_ID, name));
+		return ResourceKey.create(Registries.CONFIGURED_FEATURE, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, name));
 	}
 
 	public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {

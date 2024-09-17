@@ -76,11 +76,8 @@ public abstract class CustomPotionItem extends Item {
 		return pStack;
 	}
 
-	/**
-	 * How long it takes to use or consume an item
-	 */
 	@Override
-	public int getUseDuration(ItemStack pStack) {
+	public int getUseDuration(ItemStack stack, LivingEntity entity) {
 		return 32;
 	}
 

@@ -8,7 +8,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
@@ -18,20 +17,20 @@ import tech.anonymoushacker1279.immersiveweapons.init.RecipeSerializerRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.RecipeTypeRegistry;
 
 public record PistonCrushingRecipe(String group, ResourceLocation block, ItemStack result, int minCount,
-                                   int maxCount) implements Recipe<Container> {
+                                   int maxCount) implements Recipe<RecipeInput> {
 
 	@Override
-	public boolean matches(Container container, Level level) {
+	public boolean matches(RecipeInput input, Level level) {
 		return false;
+	}
+
+	@Override
+	public ItemStack assemble(RecipeInput input, Provider registries) {
+		return result;
 	}
 
 	public boolean matches(Block block) {
 		return this.block.equals(BuiltInRegistries.BLOCK.getKey(block));
-	}
-
-	@Override
-	public ItemStack assemble(Container container, Provider provider) {
-		return result;
 	}
 
 	@Override

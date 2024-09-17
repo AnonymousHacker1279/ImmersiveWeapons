@@ -51,6 +51,6 @@ public class IWItemTagGroups {
 	public static final TagKey<Item> PADDED_LEATHER = createItemTag("armor/padded_leather");
 
 	private static TagKey<Item> createItemTag(String tag) {
-		return TagKey.create(Registries.ITEM, new ResourceLocation(ImmersiveWeapons.MOD_ID, tag));
+		return TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, tag));
 	}
 }

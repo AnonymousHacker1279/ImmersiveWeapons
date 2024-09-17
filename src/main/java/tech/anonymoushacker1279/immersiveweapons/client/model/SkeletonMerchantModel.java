@@ -17,7 +17,7 @@ import tech.anonymoushacker1279.immersiveweapons.entity.npc.SkeletonMerchantEnti
 public class SkeletonMerchantModel<T extends SkeletonMerchantEntity> extends HumanoidModel<T> {
 
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(
-			new ResourceLocation(ImmersiveWeapons.MOD_ID, "skeleton_merchant"),
+			ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "skeleton_merchant"),
 			"main");
 
 	public SkeletonMerchantModel(ModelPart pRoot) {

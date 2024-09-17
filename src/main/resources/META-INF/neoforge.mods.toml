@@ -15,6 +15,7 @@ authors = "AnonymousHacker1279"
 description = '''
 Immersive Weapons is more than just a weapons mod aiming to spice up your combat skills.
 '''
+enumExtensions = "META-INF/enumextensions.json"
 
 [[dependencies.immersiveweapons]]
 modId = "neoforge"

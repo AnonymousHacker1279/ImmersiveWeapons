@@ -6,7 +6,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.alchemy.Potion;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
@@ -32,7 +31,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 
 	private static final Map<LanguageCategory, List<DeferredHolder<?, ?>>> LANGUAGE_EXCLUSIONS = new HashMap<>(50);
 	private static final Map<LanguageCategory, Map<DeferredHolder<?, ?>, String>> LANGUAGE_OVERRIDES = new HashMap<>(50);
-	private static final List<Class<?>> REGISTRY_CLASSES = List.of(BlockRegistry.class, ItemRegistry.class, EffectRegistry.class, EnchantmentRegistry.class, EntityRegistry.class, PotionRegistry.class);
+	private static final List<Class<?>> REGISTRY_CLASSES = List.of(BlockRegistry.class, ItemRegistry.class, EffectRegistry.class, EntityRegistry.class, PotionRegistry.class);
 
 	public LanguageGenerator(PackOutput output) {
 		super(output, ImmersiveWeapons.MOD_ID);
@@ -56,7 +55,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addBiomes();
 		addAdvancements();
 		addConfigDescriptions();
-		addEnchantments();
+		// addEnchantments();
 		addNetworkingFailures();
 		addMisc();
 	}
@@ -109,7 +108,6 @@ public class LanguageGenerator extends IWLanguageProvider {
 		BLOCKS(BlockRegistry.class),
 		ITEMS(ItemRegistry.class),
 		EFFECTS(EffectRegistry.class),
-		ENCHANTMENTS(EnchantmentRegistry.class),
 		ENTITIES(EntityRegistry.class),
 		POTIONS(PotionRegistry.class);
 
@@ -1072,7 +1070,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		}
 	}
 
-	private void addEnchantments() {
+	// TODO: find new way to get custom enchantments without the registry
+	/*private void addEnchantments() {
 		Stream<DeferredHolder<Enchantment, ? extends Enchantment>> enchantments = EnchantmentRegistry.ENCHANTMENTS
 				.getEntries()
 				.stream()
@@ -1098,7 +1097,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		for (DeferredHolder<?, ?> holder : LANGUAGE_OVERRIDES.getOrDefault(LanguageCategory.ENCHANTMENTS, Collections.emptyMap()).keySet()) {
 			add((Enchantment) holder.get(), LANGUAGE_OVERRIDES.get(LanguageCategory.ENTITIES).get(holder));
 		}
-	}
+	}*/
 
 	private void addNetworkingFailures() {
 		addNetworkingFailure("generic", "A networking error occurred regarding Immersive Weapons: %s");

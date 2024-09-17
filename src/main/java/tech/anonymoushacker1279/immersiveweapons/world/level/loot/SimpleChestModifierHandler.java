@@ -6,10 +6,14 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.core.HolderSet.Named;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
@@ -17,6 +21,7 @@ import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import net.neoforged.neoforge.common.loot.LootModifier;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Optional;
 import java.util.function.Supplier;
 
 public class SimpleChestModifierHandler extends LootModifier {
@@ -109,7 +114,9 @@ public class SimpleChestModifierHandler extends LootModifier {
 			ItemStack stack = itemStack.copyWithCount(lootQuantity);
 
 			if (maxEnchantLevels > 0) {
-				EnchantmentHelper.enchantItem(FeatureFlagSet.of(), RandomSource.create(), stack, maxEnchantLevels, allowTreasure);
+				RegistryAccess access = context.getLevel().registryAccess();
+				Optional<Named<Enchantment>> tag = access.registryOrThrow(Registries.ENCHANTMENT).getTag(EnchantmentTags.ON_RANDOM_LOOT);
+				EnchantmentHelper.enchantItem(RandomSource.create(), stack, maxEnchantLevels, access, tag);
 			}
 
 			generatedLoot.add(stack);

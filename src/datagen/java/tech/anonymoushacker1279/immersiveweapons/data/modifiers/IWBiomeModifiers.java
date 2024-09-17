@@ -21,49 +21,49 @@ public class IWBiomeModifiers {
 
 	public static void bootstrap(BootstrapContext<BiomeModifier> context) {
 		// Ores
-		biomeModifier(context, new ResourceLocation(ImmersiveWeapons.MOD_ID, "molten_ore"),
+		biomeModifier(context, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "molten_ore"),
 				new BiomeModifiers.AddFeaturesBiomeModifier(
 						context.lookup(Registries.BIOME).getOrThrow(BiomeTags.IS_NETHER),
 						HolderSet.direct(context.lookup(Registries.PLACED_FEATURE).getOrThrow(IWPlacedFeatures.MOLTEN_ORE)),
 						Decoration.UNDERGROUND_ORES
 				));
 
-		biomeModifier(context, new ResourceLocation(ImmersiveWeapons.MOD_ID, "nether_sulfur_ore"),
+		biomeModifier(context, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "nether_sulfur_ore"),
 				new BiomeModifiers.AddFeaturesBiomeModifier(
 						context.lookup(Registries.BIOME).getOrThrow(BiomeTags.IS_NETHER),
 						HolderSet.direct(context.lookup(Registries.PLACED_FEATURE).getOrThrow(IWPlacedFeatures.NETHER_SULFUR_ORE)),
 						Decoration.UNDERGROUND_ORES
 				));
 
-		biomeModifier(context, new ResourceLocation(ImmersiveWeapons.MOD_ID, "deepslate_sulfur_ore"),
+		biomeModifier(context, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "deepslate_sulfur_ore"),
 				new BiomeModifiers.AddFeaturesBiomeModifier(
 						context.lookup(Registries.BIOME).getOrThrow(CommonWorldGenTagGroups.IS_WET_CAVE),
 						HolderSet.direct(context.lookup(Registries.PLACED_FEATURE).getOrThrow(IWPlacedFeatures.DEEPSLATE_SULFUR_ORE)),
 						Decoration.UNDERGROUND_ORES
 				));
 
-		biomeModifier(context, new ResourceLocation(ImmersiveWeapons.MOD_ID, "sulfur_ore"),
+		biomeModifier(context, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "sulfur_ore"),
 				new BiomeModifiers.AddFeaturesBiomeModifier(
 						context.lookup(Registries.BIOME).getOrThrow(BiomeTags.WATER_ON_MAP_OUTLINES),
 						HolderSet.direct(context.lookup(Registries.PLACED_FEATURE).getOrThrow(IWPlacedFeatures.SULFUR_ORE)),
 						Decoration.UNDERGROUND_ORES
 				));
 
-		biomeModifier(context, new ResourceLocation(ImmersiveWeapons.MOD_ID, "deepslate_cobalt_ore"),
+		biomeModifier(context, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "deepslate_cobalt_ore"),
 				new BiomeModifiers.AddFeaturesBiomeModifier(
 						context.lookup(Registries.BIOME).getOrThrow(BiomeTags.IS_OVERWORLD),
 						HolderSet.direct(context.lookup(Registries.PLACED_FEATURE).getOrThrow(IWPlacedFeatures.DEEPSLATE_COBALT_ORE)),
 						Decoration.UNDERGROUND_ORES
 				));
 
-		biomeModifier(context, new ResourceLocation(ImmersiveWeapons.MOD_ID, "potassium_nitrate_ore"),
+		biomeModifier(context, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "potassium_nitrate_ore"),
 				new BiomeModifiers.AddFeaturesBiomeModifier(
 						context.lookup(Registries.BIOME).getOrThrow(BiomeTags.IS_OVERWORLD),
 						HolderSet.direct(context.lookup(Registries.PLACED_FEATURE).getOrThrow(IWPlacedFeatures.POTASSIUM_NITRATE_ORE)),
 						Decoration.UNDERGROUND_ORES
 				));
 
-		biomeModifier(context, new ResourceLocation(ImmersiveWeapons.MOD_ID, "cobalt_ore"),
+		biomeModifier(context, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "cobalt_ore"),
 				new BiomeModifiers.AddFeaturesBiomeModifier(
 						context.lookup(Registries.BIOME).getOrThrow(BiomeTags.IS_OVERWORLD),
 						HolderSet.direct(context.lookup(Registries.PLACED_FEATURE).getOrThrow(IWPlacedFeatures.COBALT_ORE)),
@@ -71,12 +71,12 @@ public class IWBiomeModifiers {
 				));
 
 		// Spawns
-		biomeModifier(context, new ResourceLocation(ImmersiveWeapons.MOD_ID, "wandering_warrior_spawn"),
+		biomeModifier(context, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "wandering_warrior_spawn"),
 				AddSpawnsBiomeModifier.singleSpawn(
 						context.lookup(Registries.BIOME).getOrThrow(BiomeTags.IS_OVERWORLD),
 						new SpawnerData(EntityRegistry.WANDERING_WARRIOR_ENTITY.get(), 65, 1, 1)
 				));
-		biomeModifier(context, new ResourceLocation(ImmersiveWeapons.MOD_ID, "hans_spawn"),
+		biomeModifier(context, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "hans_spawn"),
 				AddSpawnsBiomeModifier.singleSpawn(
 						context.lookup(Registries.BIOME).getOrThrow(BiomeTags.IS_OVERWORLD),
 						new SpawnerData(EntityRegistry.HANS_ENTITY.get(), 5, 1, 1)

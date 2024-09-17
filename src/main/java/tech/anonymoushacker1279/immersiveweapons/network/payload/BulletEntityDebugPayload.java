@@ -10,7 +10,7 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 public record BulletEntityDebugPayload(double liveBulletDamage,
                                        boolean isBulletCritical) implements CustomPacketPayload {
 
-	public static final Type<BulletEntityDebugPayload> TYPE = new Type<>(new ResourceLocation(ImmersiveWeapons.MOD_ID, "bullet_entity_debug"));
+	public static final Type<BulletEntityDebugPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "bullet_entity_debug"));
 
 	public static final StreamCodec<FriendlyByteBuf, BulletEntityDebugPayload> STREAM_CODEC = StreamCodec.composite(
 			ByteBufCodecs.DOUBLE,

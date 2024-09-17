@@ -39,7 +39,7 @@ public class StructureTemplatePoolGenerator {
 	public static final ResourceKey<StructureTemplatePool> WATER_TOWER = createKey("water_tower");
 
 	private static ResourceKey<StructureTemplatePool> createKey(String name) {
-		return ResourceKey.create(Registries.TEMPLATE_POOL, new ResourceLocation(ImmersiveWeapons.MOD_ID, name));
+		return ResourceKey.create(Registries.TEMPLATE_POOL, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, name));
 	}
 
 	public static void bootstrap(BootstrapContext<StructureTemplatePool> context) {

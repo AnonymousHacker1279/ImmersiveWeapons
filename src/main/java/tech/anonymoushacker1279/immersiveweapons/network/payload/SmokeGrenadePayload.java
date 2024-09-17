@@ -10,7 +10,7 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 public record SmokeGrenadePayload(double x, double y, double z,
                                   int color, int forcedParticleCount) implements CustomPacketPayload {
 
-	public static final Type<SmokeGrenadePayload> TYPE = new Type<>(new ResourceLocation(ImmersiveWeapons.MOD_ID, "smoke_grenade"));
+	public static final Type<SmokeGrenadePayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "smoke_grenade"));
 
 	public static final StreamCodec<FriendlyByteBuf, SmokeGrenadePayload> STREAM_CODEC = StreamCodec.composite(
 			ByteBufCodecs.DOUBLE,

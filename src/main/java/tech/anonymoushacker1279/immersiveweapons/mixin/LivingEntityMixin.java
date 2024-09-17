@@ -11,7 +11,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -20,7 +19,6 @@ import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.AttributeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
-import tech.anonymoushacker1279.immersiveweapons.potion.BrokenArmorEffect;
 
 import javax.annotation.Nullable;
 
@@ -40,6 +38,7 @@ public abstract class LivingEntityMixin {
 	@Nullable
 	public abstract MobEffectInstance getEffect(Holder<MobEffect> pEffect);
 
+	// TODO: rework armor breach
 	@ModifyVariable(method = "getDamageAfterArmorAbsorb", at = @At(value = "STORE"), require = 0, argsOnly = true)
 	private float getDamageAfterAbsorb(float previousValue, @Local(argsOnly = true) DamageSource source, @Local(argsOnly = true) float damageAmount) {
 		float armor = getArmorValue();
@@ -47,7 +46,7 @@ public abstract class LivingEntityMixin {
 
 		float toughnessModifier = 2.0F + armorToughness / 4.0F;
 		float armorProtection = (float) Mth.clamp(armor - damageAmount / toughnessModifier, armor * 0.2F, CommonConfig.maxArmorProtection) / 25f;
-		final float[] armorBreachModifier = {EnchantmentHelper.calculateArmorBreach(source.getEntity(), armorProtection)};
+		// final float[] armorBreachModifier = {EnchantmentHelper.calculateArmorBreach(source.getEntity(), armorProtection)};
 
 		if (source.getEntity() instanceof LivingEntity attackingEntity) {
 			ItemStack heldItem = attackingEntity.getMainHandItem();
@@ -58,9 +57,9 @@ public abstract class LivingEntityMixin {
 			}
 
 			if (heldItem != null) {
-				heldItem.getAttributeModifiers(EquipmentSlot.MAINHAND).forEach((attribute, attributeModifier) -> {
+				heldItem.getAttributeModifiers().forEach(EquipmentSlot.MAINHAND, (attribute, attributeModifier) -> {
 					if (attribute == AttributeRegistry.ARMOR_BREACH) {
-						armorBreachModifier[0] -= (float) attributeModifier.amount();
+						// armorBreachModifier[0] -= (float) attributeModifier.amount();
 					}
 				});
 			}
@@ -69,14 +68,14 @@ public abstract class LivingEntityMixin {
 			MobEffectInstance brokenArmorEffect = getEffect(EffectRegistry.BROKEN_ARMOR_EFFECT);
 			if (brokenArmorEffect != null) {
 				int level = brokenArmorEffect.getAmplifier();
-				armorBreachModifier[0] -= ((BrokenArmorEffect) brokenArmorEffect.getEffect().value()).calculateArmorBreach(level);
+				// armorBreachModifier[0] -= ((BrokenArmorEffect) brokenArmorEffect.getEffect().value()).calculateArmorBreach(level);
 			}
 		}
 
 		// Ensure the modifier does not go below zero
-		armorBreachModifier[0] = Math.max(0.0F, armorBreachModifier[0]);
+		// armorBreachModifier[0] = Math.max(0.0F, armorBreachModifier[0]);
 
-		float damageModifier = 1.0F - armorBreachModifier[0];
-		return damageAmount * damageModifier;
+		// float damageModifier = 1.0F - armorBreachModifier[0];
+		return damageAmount * armorProtection;
 	}
 }

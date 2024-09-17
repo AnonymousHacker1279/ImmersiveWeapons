@@ -13,7 +13,7 @@ import tech.anonymoushacker1279.immersiveweapons.entity.npc.SkeletonMerchantEnti
 
 public class SkeletonMerchantRenderer extends HumanoidMobRenderer<SkeletonMerchantEntity, SkeletonMerchantModel<SkeletonMerchantEntity>> {
 
-	private static final ResourceLocation TEXTURE_LOCATION = new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/skeleton_merchant/skeleton_merchant.png");
+	private static final ResourceLocation TEXTURE_LOCATION = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/entity/skeleton_merchant/skeleton_merchant.png");
 
 	public SkeletonMerchantRenderer(EntityRendererProvider.Context context) {
 		this(context, SkeletonMerchantModel.LAYER_LOCATION, ModelLayers.STRAY_INNER_ARMOR, ModelLayers.STRAY_OUTER_ARMOR);

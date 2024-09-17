@@ -45,7 +45,7 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 	public List<Double> shootingVectorInputs = List.of(0.0025d, 0.2d, 1.1d);
 	public HitEffect hitEffect = HitEffect.NONE;
 	public boolean flameTrail = false;
-	private static final TagKey<Block> BULLETPROOF_GLASS = BlockTags.create(new ResourceLocation("forge", "bulletproof_glass"));
+	private static final TagKey<Block> BULLETPROOF_GLASS = BlockTags.create(ResourceLocation.fromNamespaceAndPath("forge", "bulletproof_glass"));
 
 	public BulletEntity(EntityType<? extends Arrow> entityType, Level level) {
 		super(entityType, level);
@@ -165,7 +165,7 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 			double distance = Math.sqrt(Math.pow(location.x - initialPos.x, 2) + Math.pow(location.y - initialPos.y, 2) + Math.pow(location.z - initialPos.z, 2));
 
 			if (distance > 200 && player.getServer() != null) {
-				AdvancementHolder advancement = player.getServer().getAdvancements().get(new ResourceLocation(ImmersiveWeapons.MOD_ID, "firearm_long_range"));
+				AdvancementHolder advancement = player.getServer().getAdvancements().get(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "firearm_long_range"));
 
 				if (advancement != null) {
 					player.getAdvancements().award(advancement, "");

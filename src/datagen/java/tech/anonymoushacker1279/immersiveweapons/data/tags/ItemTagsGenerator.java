@@ -102,7 +102,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 			}
 		}
 
-		tag(Tags.Items.TOOLS_BOWS).add(
+		tag(Tags.Items.TOOLS_BOW).add(
 				ItemRegistry.ICE_BOW.get(),
 				ItemRegistry.DRAGONS_BREATH_BOW.get(),
 				ItemRegistry.AURORA_BOW.get());
@@ -249,7 +249,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		// Ranged weapon tags
 		tag(IWItemTagGroups.RANGED_WEAPONS)
 				.addTag(IWItemTagGroups.FIREARMS)
-				.addTag(Tags.Items.TOOLS_BOWS);
+				.addTag(Tags.Items.TOOLS_BOW);
 
 		// Weapon and tools tags
 		tag(IWItemTagGroups.WEAPONS_AND_TOOLS)
@@ -329,13 +329,6 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 				ItemRegistry.ASTRAL_INGOT.get(),
 				ItemRegistry.STARSTORM_INGOT.get());
 
-		// Music discs tag
-		for (DeferredHolder<Item, ? extends Item> item : ItemRegistry.ITEMS.getEntries()) {
-			if (item.get() instanceof RecordItem record) {
-				tag(ItemTags.MUSIC_DISCS).add(record);
-			}
-		}
-
 		// Dyeable items tag
 		tag(ItemTags.DYEABLE).add(
 				ItemRegistry.PADDED_LEATHER_HELMET.get(),
@@ -345,6 +338,6 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		);
 
 		// Enchantable items tag
-		tag(ItemTags.BOW_ENCHANTABLE).addTag(Tags.Items.TOOLS_BOWS);
+		tag(ItemTags.BOW_ENCHANTABLE).addTag(Tags.Items.TOOLS_BOW);
 	}
 }
