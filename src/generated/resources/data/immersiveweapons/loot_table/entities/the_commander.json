@@ -1,0 +1,107 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:killed_by_player"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "immersiveweapons:commander_pedestal"
+        }
+      ],
+      "name": "commander_pedestal",
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:gunpowder"
+        }
+      ],
+      "functions": [
+        {
+          "add": false,
+          "count": {
+            "type": "minecraft:uniform",
+            "max": 24.0,
+            "min": 12.0
+          },
+          "function": "minecraft:set_count"
+        },
+        {
+          "count": {
+            "type": "minecraft:uniform",
+            "max": 8.0,
+            "min": 3.0
+          },
+          "enchantment": "minecraft:looting",
+          "function": "minecraft:enchanted_count_increase"
+        }
+      ],
+      "name": "gunpowder",
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:killed_by_player"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 20.0,
+                "min": 10.0
+              },
+              "function": "minecraft:set_count"
+            },
+            {
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 2.0,
+                "min": 1.0
+              },
+              "enchantment": "minecraft:looting",
+              "function": "minecraft:enchanted_count_increase"
+            }
+          ],
+          "name": "immersiveweapons:cannonball"
+        }
+      ],
+      "name": "cannonball",
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:killed_by_player"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "immersiveweapons:medal_of_dishonor"
+        }
+      ],
+      "name": "medal_of_dishonor",
+      "rolls": {
+        "type": "immersiveweapons:entity_killers"
+      }
+    }
+  ],
+  "random_sequence": "immersiveweapons:entities/the_commander"
+}

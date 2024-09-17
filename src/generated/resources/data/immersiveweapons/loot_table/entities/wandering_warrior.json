@@ -1,0 +1,75 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:killed_by_player"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 3.0,
+                "min": 0.0
+              },
+              "function": "minecraft:set_count"
+            },
+            {
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 2.0,
+                "min": 0.0
+              },
+              "enchantment": "minecraft:looting",
+              "function": "minecraft:enchanted_count_increase"
+            }
+          ],
+          "name": "minecraft:leather"
+        }
+      ],
+      "name": "leather",
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:killed_by_player"
+        },
+        {
+          "condition": "minecraft:random_chance_with_enchanted_bonus",
+          "enchanted_chance": {
+            "type": "minecraft:linear",
+            "base": 0.15,
+            "per_level_above_first": 0.05
+          },
+          "enchantment": "minecraft:looting",
+          "unenchanted_chance": 0.1
+        },
+        {
+          "condition": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "nbt": "{isBerserk:1b}"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "immersiveweapons:berserkers_amulet"
+        }
+      ],
+      "name": "berserkers_amulet",
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "immersiveweapons:entities/wandering_warrior"
+}

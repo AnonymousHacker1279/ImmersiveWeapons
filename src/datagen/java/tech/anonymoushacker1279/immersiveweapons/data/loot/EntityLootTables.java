@@ -359,5 +359,7 @@ public class EntityLootTables extends EntityLootSubProvider {
 
 		add(EntityRegistry.FIREFLY_ENTITY.get(), LootTable.lootTable());
 		add(EntityRegistry.STAR_WOLF_ENTITY.get(), LootTable.lootTable());
+		add(EntityRegistry.SKYGAZER_ENTITY.get(), LootTable.lootTable());
+		add(EntityRegistry.SKELETON_MERCHANT_ENTITY.get(), LootTable.lootTable());
 	}
 }
