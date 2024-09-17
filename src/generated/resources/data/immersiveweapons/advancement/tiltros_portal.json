@@ -1,0 +1,34 @@
+{
+  "parent": "immersiveweapons:root",
+  "criteria": {
+    "hold": {
+      "conditions": {
+        "items": [
+          {
+            "items": "immersiveweapons:tiltros_portal_frame"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersiveweapons.tiltros_portal.description"
+    },
+    "hidden": true,
+    "icon": {
+      "count": 1,
+      "id": "immersiveweapons:tiltros_portal_frame"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.tiltros_portal.title"
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

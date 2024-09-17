@@ -1,0 +1,33 @@
+{
+  "parent": "immersiveweapons:starstorm_crystal",
+  "criteria": {
+    "hold": {
+      "conditions": {
+        "items": [
+          {
+            "items": "immersiveweapons:starstorm_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersiveweapons.starstorm_ingot.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "immersiveweapons:starstorm_ingot"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.starstorm_ingot.title"
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

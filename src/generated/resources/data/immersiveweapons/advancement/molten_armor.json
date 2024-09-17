@@ -1,0 +1,46 @@
+{
+  "parent": "immersiveweapons:molten_ingot",
+  "criteria": {
+    "hold": {
+      "conditions": {
+        "items": [
+          {
+            "items": "immersiveweapons:molten_helmet"
+          },
+          {
+            "items": "immersiveweapons:molten_chestplate"
+          },
+          {
+            "items": "immersiveweapons:molten_leggings"
+          },
+          {
+            "items": "immersiveweapons:molten_boots"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersiveweapons.molten_armor.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "immersiveweapons:molten_helmet"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.molten_armor.title"
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

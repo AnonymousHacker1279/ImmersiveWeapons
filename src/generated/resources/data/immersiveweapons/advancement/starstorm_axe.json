@@ -1,0 +1,36 @@
+{
+  "parent": "immersiveweapons:starstorm_ingot",
+  "criteria": {
+    "hold": {
+      "conditions": {
+        "items": [
+          {
+            "items": "immersiveweapons:starstorm_axe"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersiveweapons.starstorm_axe.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "immersiveweapons:starstorm_axe"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.starstorm_axe.title"
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ],
+  "rewards": {
+    "experience": 35
+  },
+  "sends_telemetry_event": true
+}

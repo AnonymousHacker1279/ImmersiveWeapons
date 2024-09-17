@@ -1,0 +1,34 @@
+{
+  "parent": "immersiveweapons:small_parts_table",
+  "criteria": {
+    "hold": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#immersiveweapons:smoke_grenades"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersiveweapons.smoke_grenade.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "immersiveweapons:smoke_grenade"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.smoke_grenade.title"
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

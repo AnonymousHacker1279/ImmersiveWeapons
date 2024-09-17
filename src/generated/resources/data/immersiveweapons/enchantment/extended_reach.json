@@ -1,0 +1,20 @@
+{
+  "anvil_cost": 3,
+  "description": {
+    "translate": "enchantment.immersiveweapons.extended_reach"
+  },
+  "max_cost": {
+    "base": 30,
+    "per_level_above_first": 0
+  },
+  "max_level": 1,
+  "min_cost": {
+    "base": 15,
+    "per_level_above_first": 0
+  },
+  "slots": [
+    "hand"
+  ],
+  "supported_items": "#immersiveweapons:weapons/pikes",
+  "weight": 2
+}

@@ -36,6 +36,13 @@ public class BlockLootTables extends BlockLootSubProvider {
 	}
 
 	@Override
+	protected Iterable<Block> getKnownBlocks() {
+		return BlockRegistry.BLOCKS.getEntries().stream()
+				.map(supplier -> (Block) supplier.get())
+				::iterator;
+	}
+
+	@Override
 	protected void generate() {
 		List<Block> blocks = new ArrayList<>(250);
 		BlockRegistry.BLOCKS.getEntries().stream().map(Supplier::get).forEach(blocks::add);
@@ -54,6 +61,9 @@ public class BlockLootTables extends BlockLootSubProvider {
 		dropSelf(BlockRegistry.BURNED_OAK_PLANKS.get());
 		dropSelf(BlockRegistry.BURNED_OAK_PRESSURE_PLATE.get());
 		dropSelf(BlockRegistry.BURNED_OAK_SIGN.get());
+		dropSelf(BlockRegistry.BURNED_OAK_WALL_SIGN.get());
+		dropSelf(BlockRegistry.BURNED_OAK_HANGING_SIGN.get());
+		dropSelf(BlockRegistry.BURNED_OAK_WALL_HANGING_SIGN.get());
 		dropSelf(BlockRegistry.BURNED_OAK_SLAB.get());
 		dropSelf(BlockRegistry.BURNED_OAK_STAIRS.get());
 		dropSelf(BlockRegistry.BURNED_OAK_TRAPDOOR.get());
@@ -88,6 +98,7 @@ public class BlockLootTables extends BlockLootSubProvider {
 		dropSelf(BlockRegistry.PANIC_ALARM.get());
 		dropSelf(BlockRegistry.PUNJI_STICKS.get());
 		dropSelf(BlockRegistry.RAW_COBALT_BLOCK.get());
+		dropSelf(BlockRegistry.RAW_SULFUR_BLOCK.get());
 		dropSelf(BlockRegistry.SMALL_PARTS_TABLE.get());
 		dropSelf(BlockRegistry.AMMUNITION_TABLE.get());
 		dropSelf(BlockRegistry.SPIKE_TRAP.get());
@@ -109,6 +120,9 @@ public class BlockLootTables extends BlockLootSubProvider {
 		dropSelf(BlockRegistry.STARDUST_PRESSURE_PLATE.get());
 		dropSelf(BlockRegistry.STARDUST_BUTTON.get());
 		dropSelf(BlockRegistry.STARDUST_SIGN.get());
+		dropSelf(BlockRegistry.STARDUST_WALL_SIGN.get());
+		dropSelf(BlockRegistry.STARDUST_HANGING_SIGN.get());
+		dropSelf(BlockRegistry.STARDUST_WALL_HANGING_SIGN.get());
 		dropSelf(BlockRegistry.STARDUST_TRAPDOOR.get());
 		dropSelf(BlockRegistry.STRIPPED_STARDUST_LOG.get());
 		dropSelf(BlockRegistry.STRIPPED_STARDUST_WOOD.get());
@@ -139,9 +153,15 @@ public class BlockLootTables extends BlockLootSubProvider {
 		dropSelf(BlockRegistry.STAR_FORGE_CONTROLLER.get());
 		dropSelf(BlockRegistry.SOLAR_LENS.get());
 		dropSelf(BlockRegistry.TILTROS_PORTAL_FRAME.get());
+		dropSelf(BlockRegistry.COMMANDER_PEDESTAL.get());
 
 		blocks.stream().filter(WoodenTableBlock.class::isInstance).forEach(this::dropSelf);
 		blocks.stream().filter(CustomSkullBlock.class::isInstance).forEach(this::dropSelf);
+		blocks.stream().filter(block -> block.getDescriptionId().contains("bulletproof_glass")).forEach(this::dropSelf);
+
+		add(BlockRegistry.CLOUD.get(), noDrop());
+		add(BlockRegistry.POTTED_DEATHWEED.get(), noDrop());
+		add(BlockRegistry.POTTED_MOONGLOW.get(), noDrop());
 
 		// Complex block drops
 		add(BlockRegistry.BURNED_OAK_DOOR.get(), this::createDoorTable);

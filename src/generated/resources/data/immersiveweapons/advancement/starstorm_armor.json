@@ -1,0 +1,46 @@
+{
+  "parent": "immersiveweapons:starstorm_ingot",
+  "criteria": {
+    "hold": {
+      "conditions": {
+        "items": [
+          {
+            "items": "immersiveweapons:starstorm_helmet"
+          },
+          {
+            "items": "immersiveweapons:starstorm_chestplate"
+          },
+          {
+            "items": "immersiveweapons:starstorm_leggings"
+          },
+          {
+            "items": "immersiveweapons:starstorm_boots"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersiveweapons.starstorm_armor.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "immersiveweapons:starstorm_helmet"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.starstorm_armor.title"
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

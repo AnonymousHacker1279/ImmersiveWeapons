@@ -9,14 +9,11 @@ import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
-import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import tech.anonymoushacker1279.immersiveweapons.util.markers.DatagenExclusionMarker;
 import tech.anonymoushacker1279.immersiveweapons.util.markers.DatagenExclusionMarker.Type;
 import tech.anonymoushacker1279.immersiveweapons.util.markers.LanguageEntryOverride;
-import tech.anonymoushacker1729.cobaltconfig.config.ConfigEntry;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -54,7 +51,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addDeathMessages();
 		addBiomes();
 		addAdvancements();
-		addConfigDescriptions();
+		// addConfigDescriptions();
 		// addEnchantments();
 		addNetworkingFailures();
 		addMisc();
@@ -1050,7 +1047,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("discover_skeleton_merchant.description", "Discover a Skeleton Merchant, a trader which resides in lush caves");
 	}
 
-	private void addConfigDescriptions() {
+	/*private void addConfigDescriptions() {
 		// Config classes uses annotations on fields, loop through declared fields that have a ConfigEntry annotation and pull the field name
 		for (Field field : ClientConfig.class.getDeclaredFields()) {
 			if (field.isAnnotationPresent(ConfigEntry.class)) {
@@ -1068,7 +1065,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 				addConfigField(field.getName(), description);
 			}
 		}
-	}
+	}*/
 
 	// TODO: find new way to get custom enchantments without the registry
 	/*private void addEnchantments() {

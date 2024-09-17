@@ -1,0 +1,36 @@
+{
+  "parent": "immersiveweapons:root",
+  "criteria": {
+    "hold": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#immersiveweapons:accessories"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersiveweapons.accessories.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "immersiveweapons:satchel"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.accessories.title"
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ],
+  "rewards": {
+    "experience": 15
+  },
+  "sends_telemetry_event": true
+}

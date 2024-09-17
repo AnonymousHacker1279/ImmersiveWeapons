@@ -33,7 +33,7 @@ side = "BOTH"
 
 [[dependencies.immersiveweapons]]
 modId = "cobaltconfig"
-type = "required"
+type = "optional"
 versionRange = "[1.20.6-1.1.0,)"
 ordering = "NONE"
 side = "BOTH"

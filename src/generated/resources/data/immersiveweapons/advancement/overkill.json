@@ -1,0 +1,31 @@
+{
+  "parent": "immersiveweapons:root",
+  "criteria": {
+    "": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersiveweapons.overkill.description"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "count": 1,
+      "id": "immersiveweapons:starstorm_arrow"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.overkill.title"
+    }
+  },
+  "requirements": [
+    [
+      ""
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,8 @@
+{
+  "comparator_output": 0,
+  "description": {
+    "translate": "jukebox_song.immersiveweapons.tiltros_wastes_music"
+  },
+  "length_in_seconds": 3700.0,
+  "sound_event": "immersiveweapons:tiltros_wastes_music"
+}
