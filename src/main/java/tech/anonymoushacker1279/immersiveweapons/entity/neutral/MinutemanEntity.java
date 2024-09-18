@@ -46,18 +46,8 @@ public class MinutemanEntity extends RangedSoldierEntity {
 		goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 8.0F));
 		goalSelector.addGoal(5, new RandomLookAroundGoal(this));
 
-		targetSelector.addGoal(1, new HurtByTargetWithPredicateGoal(this, (initialPredicate) ->
-				!(initialPredicate instanceof Player player) || !AccessoryItem.isAccessoryActive(player, getPeaceAccessory()), MinutemanEntity.class, IronGolem.class)
-				.setAlertOthers());
-		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true, (targetPredicate) -> {
-			if (targetPredicate instanceof Player player) {
-				return !player.isCreative()
-						&& (isAngryAt(player) || AccessoryItem.isAccessoryActive(player, ItemRegistry.MEDAL_OF_DISHONOR.get()))
-						&& !AccessoryItem.isAccessoryActive(player, getPeaceAccessory());
-			}
-
-			return false;
-		}));
+		targetSelector.addGoal(1, new HurtByTargetWithPredicateGoal(this, this::canTargetEntityWhenHurt, MinutemanEntity.class, IronGolem.class).setAlertOthers());
+		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true, this::canTargetPlayer));
 		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Monster.class, true, (targetPredicate) -> !(targetPredicate instanceof Creeper)));
 		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, DyingSoldierEntity.class, true));
 		targetSelector.addGoal(4, new DefendVillageTargetGoal(this));
@@ -101,5 +91,10 @@ public class MinutemanEntity extends RangedSoldierEntity {
 	@Override
 	protected AccessoryItem getPeaceAccessory() {
 		return ItemRegistry.MEDAL_OF_HONOR.get();
+	}
+
+	@Override
+	protected AccessoryItem getAggroAccessory() {
+		return ItemRegistry.MEDAL_OF_DISHONOR.get();
 	}
 }

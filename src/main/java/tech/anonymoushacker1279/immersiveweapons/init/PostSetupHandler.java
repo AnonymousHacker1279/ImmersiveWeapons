@@ -1,5 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.init;
 
+import net.kyrptonaught.customportalapi.api.CustomPortalBuilder;
+import net.kyrptonaught.customportalapi.util.SHOULDTP;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -10,6 +12,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.world.phys.AABB;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
 import tech.anonymoushacker1279.immersiveweapons.entity.vehicle.CustomBoatType;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
@@ -39,8 +42,7 @@ public class PostSetupHandler {
 				.postSetup(EntityRegistry.STARDUST_CHEST_BOAT_ENTITY.get(), CustomBoatType.STARDUST_CHEST);
 
 		// Initialize custom portals
-		// TODO: re-implement when Custom Portals API is updated
-		/*CustomPortalBuilder.beginPortal()
+		CustomPortalBuilder.beginPortal()
 				.frameBlock(BlockRegistry.TILTROS_PORTAL_FRAME.get())
 				.customPortalBlock(BlockRegistry.TILTROS_PORTAL::get)
 				.lightWithItem(ItemRegistry.AZUL_KEYSTONE.get())
@@ -48,13 +50,14 @@ public class PostSetupHandler {
 				.flatPortal()
 				.registerBeforeTPEvent(entity -> CommonConfig.tiltrosEnabled ? SHOULDTP.CONTINUE_TP : SHOULDTP.CANCEL_TP)
 				.registerPostTPEvent(entity -> {
+					// TODO: investigate why this event doesn't run anymore
 					if (!entity.level().dimension().equals(TILTROS)) {
 						return;
 					}
 
 					generateBiodome(entity.level(), entity.blockPosition(), 7);
 				})
-				.registerPortal();*/
+				.registerPortal();
 	}
 
 	public static void generateBiodome(Level level, BlockPos center, int radius) {

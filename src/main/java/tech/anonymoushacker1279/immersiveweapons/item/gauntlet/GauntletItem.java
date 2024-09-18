@@ -86,7 +86,7 @@ public class GauntletItem extends TieredItem {
 		return repairIngredient.test(repair) || super.isValidRepairItem(toRepair, repair);
 	}
 
-	public static ItemAttributeModifiers createAttributes(Tier tier, float attackSpeed) {
+	public static ItemAttributeModifiers createAttributes(Tier tier, float attackSpeedModifier) {
 		return ItemAttributeModifiers.builder()
 				.add(
 						Attributes.ATTACK_DAMAGE,
@@ -100,7 +100,7 @@ public class GauntletItem extends TieredItem {
 						Attributes.ATTACK_SPEED,
 						new AttributeModifier(
 								ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "attack_speed"),
-								attackSpeed,
+								4 + attackSpeedModifier,
 								AttributeModifier.Operation.ADD_VALUE),
 						EquipmentSlotGroup.MAINHAND)
 				.add(

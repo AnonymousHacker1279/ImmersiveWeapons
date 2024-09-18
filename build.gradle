@@ -148,11 +148,11 @@ dependencies {
 		}
 	}
 
-	/*implementation(jarJar("net.kyrptonaught.customportalapi:cpapireforged-neo-1.20.6:[1.0.7,)")) {
+	implementation(jarJar("net.kyrptonaught.customportalapi:cpapireforged-neo-${minecraft_version}:[${custom_portals_api_version},)")) {
 		version {
 			prefer custom_portals_api_version
 		}
-	}*/
+	}
 
 	// Include Immersive Weapons Compatibility Bridge (IWCB) and Cobalt Config
 	// implementation "tech.anonymoushacker1279.iwcompatbridge:IWCompatBridge:${iwcb_version}"

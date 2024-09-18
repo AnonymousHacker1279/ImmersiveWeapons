@@ -459,7 +459,7 @@ public class ItemRegistry {
 	@LanguageEntryOverride("Music Disc")
 	public static final Supplier<Item> MUSIC_DISC_STARLIGHT_PLAINS_THEME_2 = ITEMS.register("music_disc_starlight_plains_theme_2", () -> new Item(new Properties().stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(IWJukeboxSongs.STARLIGHT_PLAINS_THEME_2)));
 	@LanguageEntryOverride("Music Disc")
-	public static final Supplier<Item> MUSIC_DISC_TILTROS_WASTES_THEME = ITEMS.register("music_disc_tiltros_wastes_theme", () -> new Item(new Properties().stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(IWJukeboxSongs.TILTROS_WASTES_MUSIC)));
+	public static final Supplier<Item> MUSIC_DISC_TILTROS_WASTES_THEME = ITEMS.register("music_disc_tiltros_wastes_theme", () -> new Item(new Properties().stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(IWJukeboxSongs.TILTROS_WASTES_THEME)));
 	@LanguageEntryOverride("Music Disc")
 	public static final Supplier<Item> MUSIC_DISC_DEADMANS_DESERT_THEME_1 = ITEMS.register("music_disc_deadmans_desert_theme_1", () -> new Item(new Properties().stacksTo(1).rarity(Rarity.RARE).jukeboxPlayable(IWJukeboxSongs.DEADMANS_DESERT_THEME_1)));
 	@LanguageEntryOverride("Music Disc")

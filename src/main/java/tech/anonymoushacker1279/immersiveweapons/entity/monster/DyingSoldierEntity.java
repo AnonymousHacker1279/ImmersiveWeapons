@@ -50,11 +50,8 @@ public class DyingSoldierEntity extends RangedSoldierEntity {
 		goalSelector.addGoal(6, new MoveThroughVillageGoal(this, 1.0D, false,
 				6, () -> true));
 
-		targetSelector.addGoal(1, new HurtByTargetWithPredicateGoal(this, (initialPredicate) ->
-				!(initialPredicate instanceof Player player) || !AccessoryItem.isAccessoryActive(player, ItemRegistry.MEDAL_OF_DISHONOR.get()), DyingSoldierEntity.class)
-				.setAlertOthers(DyingSoldierEntity.class));
-		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true, (targetPredicate) ->
-				!AccessoryItem.isAccessoryActive((Player) targetPredicate, ItemRegistry.MEDAL_OF_DISHONOR.get())));
+		targetSelector.addGoal(1, new HurtByTargetWithPredicateGoal(this, this::canTargetEntityWhenHurt, DyingSoldierEntity.class).setAlertOthers(DyingSoldierEntity.class));
+		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true, this::canTargetPlayer));
 		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
 		targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, MinutemanEntity.class, true));
 		targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, FieldMedicEntity.class, true));
@@ -94,6 +91,11 @@ public class DyingSoldierEntity extends RangedSoldierEntity {
 	@Override
 	protected AccessoryItem getPeaceAccessory() {
 		return ItemRegistry.MEDAL_OF_DISHONOR.get();
+	}
+
+	@Override
+	protected AccessoryItem getAggroAccessory() {
+		return ItemRegistry.MEDAL_OF_HONOR.get();
 	}
 
 	@Override

@@ -17,6 +17,15 @@
 				"class": "tech/anonymoushacker1279/immersiveweapons/client/CustomArmPoses",
 				"field": "AIM_MUSKET_POSE_PARAMS"
 			}
+		},
+		{
+			"enum": "net/minecraft/client/model/HumanoidModel$ArmPose",
+			"name": "IMMERSIVEWEAPONS_HOLD_PIKE",
+			"constructor": "(ZLnet/neoforged/neoforge/client/IArmPoseTransformer;)V",
+			"parameters": {
+				"class": "tech/anonymoushacker1279/immersiveweapons/client/CustomArmPoses",
+				"field": "HOLD_PIKE_POSE_PARAMS"
+			}
 		}
 	]
 }

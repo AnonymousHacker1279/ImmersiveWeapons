@@ -44,8 +44,8 @@ public class SkygazerEntity extends AbstractMerchantEntity {
 				player.awardStat(Stats.TALKED_TO_VILLAGER);
 			}
 
-			if (!getOffers().isEmpty()) {
-				if (!level().isClientSide) {
+			if (!level().isClientSide) {
+				if (!getOffers().isEmpty()) {
 					// An offer is always added to add enchanting levels from a book to an item in the player's inventory
 					setupAddItemEnchantsTrade(player);
 

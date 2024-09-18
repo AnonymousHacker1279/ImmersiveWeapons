@@ -203,4 +203,32 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 	protected abstract void prepareForCombat();
 
 	protected abstract AccessoryItem getPeaceAccessory();
+
+	protected abstract AccessoryItem getAggroAccessory();
+
+	protected boolean canTargetEntityWhenHurt(LivingEntity entity) {
+		if (entity instanceof Player player) {
+			return !player.isCreative()
+					&& ((isAngryAt(player) || AccessoryItem.isAccessoryActive(player, getAggroAccessory()))
+					&& !AccessoryItem.isAccessoryActive(player, getPeaceAccessory()));
+		} else {
+			for (Class<? extends Entity> clazz : ignoresDamageFrom) {
+				if (clazz.isInstance(entity)) {
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
+
+	protected boolean canTargetPlayer(LivingEntity entity) {
+		if (entity instanceof Player player) {
+			return !player.isCreative()
+					&& (isAngryAt(player) || AccessoryItem.isAccessoryActive(player, getAggroAccessory()))
+					&& !AccessoryItem.isAccessoryActive(player, getPeaceAccessory());
+		}
+
+		return false;
+	}
 }

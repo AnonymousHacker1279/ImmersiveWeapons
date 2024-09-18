@@ -1142,6 +1142,11 @@ public class LanguageGenerator extends IWLanguageProvider {
 		add("immersiveweapons.kill_count_weapon.tier.hans_worthy", "Hans-Worthy");
 
 		// Music disc descriptions
+		add("jukebox_song.immersiveweapons.starlight_plains_theme_1", "Starlight Plains Theme 1");
+		add("jukebox_song.immersiveweapons.starlight_plains_theme_2", "Starlight Plains Theme 2");
+		add("jukebox_song.immersiveweapons.tiltros_wastes_theme", "Tiltros Wastes Theme");
+		add("jukebox_song.immersiveweapons.deadmans_desert_theme_1", "Deadman's Desert Theme 1");
+		add("jukebox_song.immersiveweapons.deadmans_desert_theme_2", "Deadman's Desert Theme 2");
 		add("item.immersiveweapons.music_disc_starlight_plains_theme_1.desc", "RandomDev - Starlight Plains Theme 1");
 		add("item.immersiveweapons.music_disc_starlight_plains_theme_2.desc", "RandomDev - Starlight Plains Theme 2");
 		add("item.immersiveweapons.music_disc_tiltros_wastes_theme.desc", "RandomDev - Tiltros Wastes Theme");

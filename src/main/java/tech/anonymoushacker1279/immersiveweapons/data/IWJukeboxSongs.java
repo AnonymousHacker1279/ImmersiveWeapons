@@ -16,7 +16,7 @@ public class IWJukeboxSongs {
 
 	public static final ResourceKey<JukeboxSong> STARLIGHT_PLAINS_THEME_1 = createKey("starlight_plains_theme_1");
 	public static final ResourceKey<JukeboxSong> STARLIGHT_PLAINS_THEME_2 = createKey("starlight_plains_theme_2");
-	public static final ResourceKey<JukeboxSong> TILTROS_WASTES_MUSIC = createKey("tiltros_wastes_music");
+	public static final ResourceKey<JukeboxSong> TILTROS_WASTES_THEME = createKey("tiltros_wastes_theme");
 	public static final ResourceKey<JukeboxSong> DEADMANS_DESERT_THEME_1 = createKey("deadmans_desert_theme_1");
 	public static final ResourceKey<JukeboxSong> DEADMANS_DESERT_THEME_2 = createKey("deadmans_desert_theme_2");
 
@@ -27,7 +27,7 @@ public class IWJukeboxSongs {
 	public static void bootstrap(BootstrapContext<JukeboxSong> context) {
 		register(context, STARLIGHT_PLAINS_THEME_1, SoundEventRegistry.STARLIGHT_PLAINS_THEME_1, 2580f, 0);
 		register(context, STARLIGHT_PLAINS_THEME_2, SoundEventRegistry.STARLIGHT_PLAINS_THEME_2, 2540f, 0);
-		register(context, TILTROS_WASTES_MUSIC, SoundEventRegistry.TILTROS_WASTES_MUSIC, 3700f, 0);
+		register(context, TILTROS_WASTES_THEME, SoundEventRegistry.TILTROS_WASTES_MUSIC, 3700f, 0);
 		register(context, DEADMANS_DESERT_THEME_1, SoundEventRegistry.DEADMANS_DESERT_THEME_1, 2900f, 0);
 		register(context, DEADMANS_DESERT_THEME_2, SoundEventRegistry.DEADMANS_DESERT_THEME_2, 2860f, 0);
 	}

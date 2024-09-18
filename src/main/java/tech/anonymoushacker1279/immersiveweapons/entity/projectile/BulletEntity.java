@@ -45,7 +45,7 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 	public List<Double> shootingVectorInputs = List.of(0.0025d, 0.2d, 1.1d);
 	public HitEffect hitEffect = HitEffect.NONE;
 	public boolean flameTrail = false;
-	private static final TagKey<Block> BULLETPROOF_GLASS = BlockTags.create(ResourceLocation.fromNamespaceAndPath("forge", "bulletproof_glass"));
+	private static final TagKey<Block> BULLETPROOF_GLASS = BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "bulletproof_glass"));
 
 	public BulletEntity(EntityType<? extends Arrow> entityType, Level level) {
 		super(entityType, level);

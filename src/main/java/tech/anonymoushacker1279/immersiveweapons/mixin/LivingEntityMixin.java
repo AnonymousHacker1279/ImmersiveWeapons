@@ -1,24 +1,12 @@
 package tech.anonymoushacker1279.immersiveweapons.mixin;
 
-import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.core.Holder;
-import net.minecraft.util.Mth;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
-import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity;
-import tech.anonymoushacker1279.immersiveweapons.init.AttributeRegistry;
-import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 
 import javax.annotation.Nullable;
 
@@ -39,7 +27,7 @@ public abstract class LivingEntityMixin {
 	public abstract MobEffectInstance getEffect(Holder<MobEffect> pEffect);
 
 	// TODO: rework armor breach
-	@ModifyVariable(method = "getDamageAfterArmorAbsorb", at = @At(value = "STORE"), require = 0, argsOnly = true)
+	/*@ModifyVariable(method = "getDamageAfterArmorAbsorb", at = @At(value = "STORE"), require = 0, argsOnly = true)
 	private float getDamageAfterAbsorb(float previousValue, @Local(argsOnly = true) DamageSource source, @Local(argsOnly = true) float damageAmount) {
 		float armor = getArmorValue();
 		float armorToughness = (float) getAttributeValue(Attributes.ARMOR_TOUGHNESS);
@@ -77,5 +65,5 @@ public abstract class LivingEntityMixin {
 
 		// float damageModifier = 1.0F - armorBreachModifier[0];
 		return damageAmount * armorProtection;
-	}
+	}*/
 }
