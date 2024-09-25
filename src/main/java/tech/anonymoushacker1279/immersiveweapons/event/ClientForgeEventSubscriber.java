@@ -21,7 +21,7 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
-import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
+import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
@@ -125,7 +125,7 @@ public class ClientForgeEventSubscriber {
 	@SubscribeEvent
 	public static void computeFogColorEvent(ComputeFogColor event) {
 		if (minecraft.player != null && minecraft.player.hasEffect(EffectRegistry.FLASHBANG_EFFECT)) {
-			if (ClientConfig.darkModeFlashbangs) {
+			if (IWConfigs.CLIENT.darkModeFlashbangs.getAsBoolean()) {
 				event.setRed(0.0f);
 				event.setGreen(0.0f);
 				event.setBlue(0.0f);

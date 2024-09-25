@@ -14,7 +14,7 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.PacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
-import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
+import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.TeslaArmorPayload;
 
@@ -121,7 +121,7 @@ public class TeslaArmorItem extends ArmorItem {
 	 * @param player the <code>Player</code> instance
 	 */
 	private void effectNoise(Level level, Player player) {
-		if (noiseCooldown == 0 && ClientConfig.teslaArmorEffectSound) {
+		if (noiseCooldown == 0 && IWConfigs.CLIENT.teslaArmorEffectSound.getAsBoolean()) {
 			level.playSound(player,
 					player.blockPosition(),
 					SoundEventRegistry.TESLA_ARMOR_EFFECT.get(),

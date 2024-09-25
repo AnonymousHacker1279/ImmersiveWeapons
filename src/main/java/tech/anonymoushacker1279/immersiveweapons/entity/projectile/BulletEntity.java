@@ -14,6 +14,7 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.*;
@@ -24,8 +25,7 @@ import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact.BulletImpactParticleOptions;
-import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
-import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
+import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.MusketItem;
@@ -51,10 +51,8 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 		super(entityType, level);
 	}
 
-	public BulletEntity(EntityType<? extends BulletEntity> entityType, LivingEntity shooter, Level level) {
-		this(entityType, level);
-		setOwner(shooter);
-		setPos(shooter.getX(), shooter.getEyeY() - 0.1f, shooter.getZ());
+	public BulletEntity(EntityType<? extends BulletEntity> entityType, LivingEntity shooter, Level level, @Nullable ItemStack firedFromWeapon) {
+		super(entityType, shooter, level, firedFromWeapon);
 		initialPos = shooter.position();
 	}
 
@@ -136,7 +134,7 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 		}
 
 		// Check if glass can be broken, and if it hasn't already broken glass
-		if (CommonConfig.bulletsBreakGlass && !hasAlreadyBrokeGlass
+		if (IWConfigs.SERVER.bulletsBreakGlass.getAsBoolean() && !hasAlreadyBrokeGlass
 				&& !lastState.is(BULLETPROOF_GLASS)
 				&& (lastState.is(Blocks.GLASS_BLOCKS) || lastState.is(Tags.Blocks.GLASS_PANES))) {
 
@@ -182,7 +180,7 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 			serverLevel.sendParticles(
 					ParticleTypesRegistry.BLOOD_PARTICLE.get(),
 					position().x, position().y, position().z,
-					ClientConfig.gunShotBloodParticles,
+					IWConfigs.CLIENT.gunShotBloodParticles.get(),
 					GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
 					GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
 					GeneralUtilities.getRandomNumber(-0.03d, 0.03d),

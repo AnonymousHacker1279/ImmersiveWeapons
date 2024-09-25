@@ -47,7 +47,7 @@ public class StructureUpdater implements DataProvider {
 	@Override
 	public CompletableFuture<?> run(CachedOutput cache) {
 		try {
-			for (Entry<ResourceLocation, Resource> entry : resources.listResources("structures", location -> true).entrySet()) {
+			for (Entry<ResourceLocation, Resource> entry : resources.listResources("structure", location -> true).entrySet()) {
 				if (entry.getKey().getNamespace().equals(ImmersiveWeapons.MOD_ID)) {
 					ResourceLocation location = entry.getKey();
 					Resource resource = entry.getValue();

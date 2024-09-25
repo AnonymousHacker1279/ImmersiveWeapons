@@ -66,11 +66,11 @@ public abstract class RangedSoldierEntity extends SoldierEntity implements Range
 
 	protected BulletEntity createBullet(Level level, LivingEntity livingEntity) {
 		if (getGunItem() instanceof FlareGunItem) {
-			return ItemRegistry.FLARE.get().createFlare(level, livingEntity);
+			return ItemRegistry.FLARE.get().createFlare(level, livingEntity, getGun());
 		} else if (getGunItem() instanceof HandCannonItem) {
-			return ItemRegistry.CANNONBALL.get().createCannonball(level, livingEntity);
+			return ItemRegistry.CANNONBALL.get().createCannonball(level, livingEntity, getGun());
 		} else {
-			return getDefaultBulletItem().createBullet(level, livingEntity);
+			return getDefaultBulletItem().createBullet(level, livingEntity, getGun());
 		}
 	}
 

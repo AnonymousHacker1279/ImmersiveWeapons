@@ -6,7 +6,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
+import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 
@@ -74,12 +74,12 @@ public class SimpleShotgunItem extends AbstractGunItem {
 
 	@Override
 	public float getBaseFireVelocity() {
-		return CommonConfig.blunderbussFireVelocity;
+		return (float) IWConfigs.SERVER.blunderbussFireVelocity.getAsDouble();
 	}
 
 	@Override
 	public float getInaccuracy() {
-		return CommonConfig.blunderbussFireInaccuracy;
+		return (float) IWConfigs.SERVER.blunderbussFireInaccuracy.getAsDouble();
 	}
 
 	@Override

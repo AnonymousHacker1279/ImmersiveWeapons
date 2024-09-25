@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.world.phys.AABB;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
+import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.entity.vehicle.CustomBoatType;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
@@ -48,9 +48,9 @@ public class PostSetupHandler {
 				.lightWithItem(ItemRegistry.AZUL_KEYSTONE.get())
 				.destDimID(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "tiltros"))
 				.flatPortal()
-				.registerBeforeTPEvent(entity -> CommonConfig.tiltrosEnabled ? SHOULDTP.CONTINUE_TP : SHOULDTP.CANCEL_TP)
+				.registerBeforeTPEvent(entity -> IWConfigs.SERVER.tiltrosEnabled.getAsBoolean() ? SHOULDTP.CONTINUE_TP : SHOULDTP.CANCEL_TP)
 				.registerPostTPEvent(entity -> {
-					// TODO: investigate why this event doesn't run anymore
+					// TODO: event is not fired, currently using a custom build, follow https://github.com/AzureDoom/customportalapi-reforged/pull/15
 					if (!entity.level().dimension().equals(TILTROS)) {
 						return;
 					}

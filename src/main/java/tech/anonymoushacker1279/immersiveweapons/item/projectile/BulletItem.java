@@ -10,11 +10,12 @@ import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
-import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
+import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.data.IWEnchantments;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.*;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils.HitEffect;
+import tech.anonymoushacker1279.immersiveweapons.util.ArrowKnockbackAccessor;
 
 import java.util.*;
 import java.util.function.Supplier;
@@ -49,22 +50,22 @@ public class BulletItem<T extends BulletEntity> extends ArrowItem {
 		this.isExplosive = isExplosive;
 	}
 
-	public BulletEntity createBullet(Level level, LivingEntity shooter) {
-		BulletEntity bulletEntity = new BulletEntity(entitySupplier.get(), shooter, level);
+	public BulletEntity createBullet(Level level, LivingEntity shooter, ItemStack gun) {
+		BulletEntity bulletEntity = new BulletEntity(entitySupplier.get(), shooter, level, gun);
 		setCommonBulletCharacteristics(bulletEntity);
 
 		return bulletEntity;
 	}
 
-	public FlareEntity createFlare(Level level, LivingEntity shooter) {
-		FlareEntity flareEntity = new FlareEntity(entitySupplier.get(), shooter, level);
+	public FlareEntity createFlare(Level level, LivingEntity shooter, ItemStack gun) {
+		FlareEntity flareEntity = new FlareEntity(entitySupplier.get(), shooter, level, gun);
 		setCommonBulletCharacteristics(flareEntity);
 
 		return flareEntity;
 	}
 
-	public CannonballEntity createCannonball(Level level, LivingEntity shooter) {
-		CannonballEntity cannonballEntity = new CannonballEntity(shooter, level);
+	public CannonballEntity createCannonball(Level level, LivingEntity shooter, ItemStack gun) {
+		CannonballEntity cannonballEntity = new CannonballEntity(shooter, level, gun);
 		setCommonBulletCharacteristics(cannonballEntity);
 		cannonballEntity.isExplosive = isExplosive;
 
@@ -76,8 +77,7 @@ public class BulletItem<T extends BulletEntity> extends ArrowItem {
 		bulletEntity.setSoundEvent(SoundEventRegistry.BULLET_WHIZZ.get());
 		bulletEntity.setPierceLevel((byte) pierceLevel);
 		bulletEntity.setBaseDamage(damage);
-		// TODO: reimplement via mixin
-		// bulletEntity.setKnockback(knockbackStrength);
+		((ArrowKnockbackAccessor) bulletEntity).setBaseKnockback(knockbackStrength);
 		bulletEntity.gravityModifier = gravityModifier;
 		bulletEntity.shootingVectorInputs = shootingVectorInputs;
 		bulletEntity.hitEffect = hitEffect;
@@ -103,8 +103,8 @@ public class BulletItem<T extends BulletEntity> extends ArrowItem {
 		if (endlessMusketPouch.isPresent()) {
 			enchantmentLevel = gun.getEnchantmentLevel(endlessMusketPouch.get());
 		}
-		
-		return (CommonConfig.infiniteAmmoOnAllTiers || canBeInfinite) && enchantmentLevel > 0;
+
+		return (IWConfigs.SERVER.infiniteAmmoOnAllTiers.getAsBoolean() || canBeInfinite) && enchantmentLevel > 0;
 	}
 
 	public static class BulletBuilder<T extends BulletEntity> {

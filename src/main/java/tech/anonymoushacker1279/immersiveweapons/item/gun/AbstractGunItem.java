@@ -23,7 +23,7 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
+import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.data.IWEnchantments;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
 import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryManager;
@@ -125,11 +125,11 @@ public abstract class AbstractGunItem extends Item {
 						BulletEntity bulletEntity;
 
 						if (MUSKET_BALLS.test(ammo)) {
-							bulletEntity = bulletItem.createBullet(level, player);
+							bulletEntity = bulletItem.createBullet(level, player, gun);
 						} else if (FLARES.test(ammo)) {
-							bulletEntity = bulletItem.createFlare(level, player);
+							bulletEntity = bulletItem.createFlare(level, player, gun);
 						} else {
-							bulletEntity = bulletItem.createCannonball(level, player);
+							bulletEntity = bulletItem.createCannonball(level, player, gun);
 						}
 
 						setupFire(player, bulletEntity, gun, ammo, powderType);
@@ -390,11 +390,11 @@ public abstract class AbstractGunItem extends Item {
 	}
 
 	public float getBaseFireVelocity() {
-		return CommonConfig.flintlockPistolFireVelocity;
+		return (float) IWConfigs.SERVER.flintlockPistolFireVelocity.getAsDouble();
 	}
 
 	public float getInaccuracy() {
-		return CommonConfig.flintlockPistolFireInaccuracy;
+		return (float) IWConfigs.SERVER.flintlockPistolFireInaccuracy.getAsDouble();
 	}
 
 	public int getKnockbackLevel() {
@@ -421,14 +421,13 @@ public abstract class AbstractGunItem extends Item {
 		}
 
 		// Roll for random crits
-		if (shooter.getRandom().nextFloat() <= CommonConfig.gunCritChance) {
+		if (shooter.getRandom().nextFloat() <= IWConfigs.SERVER.gunCritChance.getAsDouble()) {
 			bullet.setCritArrow(true);
 		}
 
 		// Handle enchants
 		HolderGetter<Enchantment> enchantmentGetter = shooter.registryAccess().lookup(Registries.ENCHANTMENT).orElseThrow();
 		Optional<Reference<Enchantment>> firepower = enchantmentGetter.get(IWEnchantments.FIREPOWER);
-		Optional<Reference<Enchantment>> impact = enchantmentGetter.get(IWEnchantments.IMPACT);
 		Optional<Reference<Enchantment>> scorchShot = enchantmentGetter.get(IWEnchantments.SCORCH_SHOT);
 
 		int enchantmentLevel;
@@ -437,16 +436,6 @@ public abstract class AbstractGunItem extends Item {
 			if (enchantmentLevel > 0) {
 				bullet.setBaseDamage(bullet.getBaseDamage() + (double) enchantmentLevel * 0.5D + 0.5D);
 			}
-		}
-
-		if (impact.isPresent()) {
-			enchantmentLevel = gun.getEnchantmentLevel(impact.get());
-			// TODO: may need a mixin in AbstractArrow#doKnockback to get this functionality back because it is locked to enchants now
-			/*int kb = getKnockbackLevel() + bullet.getKnockback();
-			if (enchantmentLevel > 0) {
-				kb += enchantmentLevel;
-			}
-			bullet.setKnockback(kb);*/
 		}
 
 		if (scorchShot.isPresent()) {

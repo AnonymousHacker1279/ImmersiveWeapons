@@ -5,7 +5,7 @@ import net.minecraft.client.particle.*;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
-import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
+import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 
 public class SmokeGrenadeParticle extends TextureSheetParticle {
 
@@ -36,7 +36,7 @@ public class SmokeGrenadeParticle extends TextureSheetParticle {
 
 		super(level, x, y, z, 0.0D, 0.0D, 0.0D);
 		friction = 0.96F;
-		boolean fancyParticles = ClientConfig.fancySmokeGrenadeParticles;
+		boolean fancyParticles = IWConfigs.CLIENT.fancySmokeGrenadeParticles.getAsBoolean();
 		gravity = fancyParticles ? 0.02F : 0.05F;
 		speedUpWhenYMotionIsBlocked = true;
 		sprites = spriteSet;
@@ -72,7 +72,7 @@ public class SmokeGrenadeParticle extends TextureSheetParticle {
 	public float getQuadSize(float pScaleFactor) {
 		float size = quadSize * Mth.clamp(((float) age + pScaleFactor) / (float) lifetime * 32.0F, 0.0F, 1.0F);
 
-		if (ClientConfig.fancySmokeGrenadeParticles) {
+		if (IWConfigs.CLIENT.fancySmokeGrenadeParticles.getAsBoolean()) {
 			size *= 0.66F;
 		}
 

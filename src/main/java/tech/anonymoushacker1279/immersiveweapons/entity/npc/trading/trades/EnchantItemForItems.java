@@ -10,7 +10,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.*;
 import net.minecraft.world.item.trading.ItemCost;
 import net.minecraft.world.item.trading.MerchantOffer;
-import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
+import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
+import tech.anonymoushacker1279.immersiveweapons.config.ServerConfig;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.Optional;
@@ -37,7 +38,7 @@ public class EnchantItemForItems implements VillagerTrades.ItemListing {
 			ItemEnchantments enchantments = newEnchantableItem.getTagEnchantments();
 
 			enchantments.keySet().forEach(enchantmentHolder -> {
-				int maxLevel = CommonConfig.skygazerEnchantCaps.getOrDefault(enchantmentHolder.getRegisteredName(), -1);
+				int maxLevel = ServerConfig.getEnchantCap(enchantmentHolder.getRegisteredName());
 				int currentLevel = enchantments.getLevel(enchantmentHolder);
 
 				if (maxLevel == -1) {
@@ -53,7 +54,7 @@ public class EnchantItemForItems implements VillagerTrades.ItemListing {
 
 			// The item cost rises exponentially with higher enchantment levels
 			// It caps at 32
-			itemCost = Math.min(CommonConfig.skygazerMaxEnchantUpgradeCost, (int) Math.pow(1.3, ((float) totalEnchantmentLevels / 2)));
+			itemCost = Math.min(IWConfigs.SERVER.skygazerMaxEnchantUpgradeCost.getAsInt(), (int) Math.pow(1.3, ((float) totalEnchantmentLevels / 2)));
 
 			// Give XP based on the total levels of all enchantments
 			villagerXP = randomSource.nextIntBetweenInclusive(totalEnchantmentLevels / 2, totalEnchantmentLevels);

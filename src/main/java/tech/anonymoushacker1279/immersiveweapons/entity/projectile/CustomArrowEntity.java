@@ -23,7 +23,7 @@ import net.neoforged.neoforge.common.Tags.EntityTypes;
 import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
+import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.SmokeGrenadePayload;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
@@ -35,8 +35,6 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 
 	protected static final byte VANILLA_IMPACT_STATUS_ID = 3;
 	public Item referenceItem = Items.AIR;
-	@Nullable
-	public ItemStack firedWithStack;
 	protected float inertia;
 	public double gravityModifier = 1.0d;
 	protected boolean shouldStopMoving = false;
@@ -52,11 +50,11 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 		super(type, level);
 	}
 
-	public CustomArrowEntity(EntityType<? extends Arrow> type, LivingEntity shooter, Level level) {
+	public CustomArrowEntity(EntityType<? extends Arrow> type, LivingEntity shooter, Level level, @Nullable ItemStack weapon) {
 		this(type, level);
-		setPos(shooter.getX(), shooter.getY() + shooter.getEyeHeight() - 0.1, shooter.getZ());
+		setPos(shooter.getX(), shooter.getY() + shooter.getEyeHeight() - 0.1f, shooter.getZ());
 		setOwner(shooter);
-		firedWithStack = shooter.getUseItem();
+		firedFromWeapon = weapon;
 
 		if (shooter instanceof Player) {
 			pickup = Pickup.ALLOWED;
@@ -265,7 +263,7 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 
 		if (color != -1 && inGroundTime > 0) {
 			if (level() instanceof ServerLevel serverLevel && tickCount % 2 == 0) {
-				serverLevel.getEntities(this, getBoundingBox().inflate(CommonConfig.smokeGrenadeEffectRange))
+				serverLevel.getEntities(this, getBoundingBox().inflate(IWConfigs.SERVER.smokeGrenadeEffectRange.getAsDouble()))
 						.stream()
 						.filter(entity -> !entity.isSpectator())
 						.forEach(entity -> {
@@ -284,7 +282,7 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 		super.onHit(result);
 
 		if (color != -1 && level() instanceof ServerLevel serverLevel) {
-			PacketDistributor.sendToPlayersTrackingChunk(serverLevel, chunkPosition(), new SmokeGrenadePayload(getX(), getY(), getZ(), color, CommonConfig.forceSmokeGrenadeParticles));
+			PacketDistributor.sendToPlayersTrackingChunk(serverLevel, chunkPosition(), new SmokeGrenadePayload(getX(), getY(), getZ(), color, IWConfigs.SERVER.forceSmokeGrenadeParticles.getAsInt()));
 		}
 
 		if (isExplosive && !hasExploded) {

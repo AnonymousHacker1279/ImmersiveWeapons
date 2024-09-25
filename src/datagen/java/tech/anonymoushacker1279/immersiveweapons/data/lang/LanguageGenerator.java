@@ -1,14 +1,21 @@
 package tech.anonymoushacker1279.immersiveweapons.data.lang;
 
+import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.core.HolderLookup.RegistryLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
+import tech.anonymoushacker1279.immersiveweapons.config.ServerConfig;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import tech.anonymoushacker1279.immersiveweapons.util.markers.DatagenExclusionMarker;
@@ -17,6 +24,8 @@ import tech.anonymoushacker1279.immersiveweapons.util.markers.LanguageEntryOverr
 
 import java.lang.reflect.Field;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Stream;
 
 /**
@@ -30,8 +39,16 @@ public class LanguageGenerator extends IWLanguageProvider {
 	private static final Map<LanguageCategory, Map<DeferredHolder<?, ?>, String>> LANGUAGE_OVERRIDES = new HashMap<>(50);
 	private static final List<Class<?>> REGISTRY_CLASSES = List.of(BlockRegistry.class, ItemRegistry.class, EffectRegistry.class, EntityRegistry.class, PotionRegistry.class);
 
-	public LanguageGenerator(PackOutput output) {
+	private final RegistryLookup<Enchantment> enchantmentProvider;
+
+	public LanguageGenerator(PackOutput output, CompletableFuture<Provider> lookupProvider) {
 		super(output, ImmersiveWeapons.MOD_ID);
+
+		try {
+			enchantmentProvider = lookupProvider.get().lookupOrThrow(Registries.ENCHANTMENT);
+		} catch (InterruptedException | ExecutionException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	@Override
@@ -51,8 +68,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addDeathMessages();
 		addBiomes();
 		addAdvancements();
-		// addConfigDescriptions();
-		// addEnchantments();
+		addConfigDescriptions();
+		addEnchantments();
 		addNetworkingFailures();
 		addMisc();
 	}
@@ -1047,10 +1064,49 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("discover_skeleton_merchant.description", "Discover a Skeleton Merchant, a trader which resides in lush caves");
 	}
 
-	/*private void addConfigDescriptions() {
-		// Config classes uses annotations on fields, loop through declared fields that have a ConfigEntry annotation and pull the field name
+	private void addConfigDescriptions() {
+		add("immersiveweapons.configuration.title", "Immersive Weapons Configuration");
+		add("immersiveweapons.configuration.general", "General Settings");
+		add("immersiveweapons.configuration.general.tooltip", "General, miscellaneous settings");
+		add("immersiveweapons.configuration.entity", "Entity Settings");
+		add("immersiveweapons.configuration.entity.tooltip", "Entity-specific settings");
+		add("immersiveweapons.configuration.celestial_tower", "Celestial Tower Settings");
+		add("immersiveweapons.configuration.celestial_tower.tooltip", "Celestial Tower settings");
+		add("immersiveweapons.configuration.skygazer", "Skygazer Settings");
+		add("immersiveweapons.configuration.skygazer.tooltip", "Skygazer settings");
+		add("immersiveweapons.configuration.the_commander", "The Commander Settings");
+		add("immersiveweapons.configuration.the_commander.tooltip", "The Commander settings");
+		add("immersiveweapons.configuration.weapons", "Weapon Settings");
+		add("immersiveweapons.configuration.weapons.tooltip", "Weapon-specific settings");
+		add("immersiveweapons.configuration.flintlock_pistol", "Flintlock Pistol Settings");
+		add("immersiveweapons.configuration.flintlock_pistol.tooltip", "Flintlock Pistol settings");
+		add("immersiveweapons.configuration.blunderbuss", "Blunderbuss Settings");
+		add("immersiveweapons.configuration.blunderbuss.tooltip", "Blunderbuss settings");
+		add("immersiveweapons.configuration.flare_gun", "Flare Gun Settings");
+		add("immersiveweapons.configuration.flare_gun.tooltip", "Flare Gun settings");
+		add("immersiveweapons.configuration.musket", "Musket Settings");
+		add("immersiveweapons.configuration.musket.tooltip", "Musket settings");
+		add("immersiveweapons.configuration.hand_cannon", "Hand Cannon Settings");
+		add("immersiveweapons.configuration.hand_cannon.tooltip", "Hand Cannon settings");
+		add("immersiveweapons.configuration.ventus_staff", "Ventus Staff Settings");
+		add("immersiveweapons.configuration.ventus_staff.tooltip", "Ventus Staff settings");
+		add("immersiveweapons.configuration.meteor_staff", "Meteor Staff Settings");
+		add("immersiveweapons.configuration.meteor_staff.tooltip", "Meteor Staff settings");
+		add("immersiveweapons.configuration.cursed_sight_staff", "Cursed Sight Staff Settings");
+		add("immersiveweapons.configuration.cursed_sight_staff.tooltip", "Cursed Sight Staff settings");
+		add("immersiveweapons.configuration.sculk_staff", "Sculk Staff Settings");
+		add("immersiveweapons.configuration.sculk_staff.tooltip", "Sculk Staff settings");
+		add("immersiveweapons.configuration.recovery_staff", "Recovery Staff Settings");
+		add("immersiveweapons.configuration.recovery_staff.tooltip", "Recovery Staff settings");
+		add("immersiveweapons.configuration.throwables", "Throwable Settings");
+		add("immersiveweapons.configuration.throwables.tooltip", "Throwable-specific settings");
+		add("immersiveweapons.configuration.smoke_grenade", "Smoke Grenade Settings");
+		add("immersiveweapons.configuration.smoke_grenade.tooltip", "Smoke Grenade settings");
+		add("immersiveweapons.configuration.flashbang", "Flashbang Settings");
+		add("immersiveweapons.configuration.flashbang.tooltip", "Flashbang settings");
+
 		for (Field field : ClientConfig.class.getDeclaredFields()) {
-			if (field.isAnnotationPresent(ConfigEntry.class)) {
+			if (field.getType().getDeclaringClass() == ModConfigSpec.class) {
 				// Insert a space before each uppercase letter, then trim the result to remove leading spaces
 				String spacedFieldName = field.getName().replaceAll("(?<!^)(?=[A-Z])", " ").trim();
 				// Convert the spaced field name to a sentence
@@ -1058,43 +1114,34 @@ public class LanguageGenerator extends IWLanguageProvider {
 				addConfigField(field.getName(), description);
 			}
 		}
-		for (Field field : CommonConfig.class.getDeclaredFields()) {
-			if (field.isAnnotationPresent(ConfigEntry.class)) {
+
+		for (Field field : ServerConfig.class.getDeclaredFields()) {
+			if (field.getType().getDeclaringClass() == ModConfigSpec.class) {
+				// Insert a space before each uppercase letter, then trim the result to remove leading spaces
 				String spacedFieldName = field.getName().replaceAll("(?<!^)(?=[A-Z])", " ").trim();
+				// Convert the spaced field name to a sentence
 				String description = capitalizeWords(spacedFieldName);
 				addConfigField(field.getName(), description);
 			}
 		}
-	}*/
+	}
 
-	// TODO: find new way to get custom enchantments without the registry
-	/*private void addEnchantments() {
-		Stream<DeferredHolder<Enchantment, ? extends Enchantment>> enchantments = EnchantmentRegistry.ENCHANTMENTS
-				.getEntries()
-				.stream()
-				.filter(item -> !LANGUAGE_EXCLUSIONS.getOrDefault(LanguageCategory.ENCHANTMENTS, Collections.emptyList())
-						.contains(item));
+	private void addEnchantments() {
+		enchantmentProvider.listElements()
+				.filter(reference -> reference.key().location().getNamespace().equals(ImmersiveWeapons.MOD_ID))
+				.forEach(reference -> {
+					// Get the reference name
+					String enchantmentName = reference.key().location().getPath();
 
-		// Get a list of all items, and convert their registry names to proper names
-		// Turn underscores into spaces, and capitalize the first letter of each word
-		enchantments.forEach(enchantment -> {
-			// Get the enchantment name
-			String enchantmentName = enchantment.getKey().location().getPath();
+					// Convert underscores to spaces
+					enchantmentName = enchantmentName.replace("_", " ");
+					// Capitalize the first letter of all words
+					enchantmentName = capitalizeWords(enchantmentName);
 
-			// Convert underscores to spaces
-			enchantmentName = enchantmentName.replace("_", " ");
-			// Capitalize the first letter of all words
-			enchantmentName = capitalizeWords(enchantmentName);
-
-			// Add the item to the language file
-			addEnchantment(enchantment, enchantmentName);
-		});
-
-		// Add entries with overrides
-		for (DeferredHolder<?, ?> holder : LANGUAGE_OVERRIDES.getOrDefault(LanguageCategory.ENCHANTMENTS, Collections.emptyMap()).keySet()) {
-			add((Enchantment) holder.get(), LANGUAGE_OVERRIDES.get(LanguageCategory.ENTITIES).get(holder));
-		}
-	}*/
+					// Add the item to the language file
+					addEnchantment(reference.key().location().toLanguageKey(), enchantmentName);
+				});
+	}
 
 	private void addNetworkingFailures() {
 		addNetworkingFailure("generic", "A networking error occurred regarding Immersive Weapons: %s");

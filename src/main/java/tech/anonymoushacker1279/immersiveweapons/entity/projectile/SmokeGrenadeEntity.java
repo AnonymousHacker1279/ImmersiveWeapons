@@ -8,8 +8,7 @@ import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.Tags.EntityTypes;
 import net.neoforged.neoforge.network.PacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.smoke_grenade.SmokeGrenadeParticleOptions;
-import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
-import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
+import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.SmokeGrenadePayload;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
@@ -40,9 +39,9 @@ public class SmokeGrenadeEntity extends AdvancedThrowableItemProjectile {
 	}
 
 	public static void runOnClientImpact(double x, double y, double z, int color, Level level, int forcedParticleCount) {
-		int particles = forcedParticleCount == -1 ? ClientConfig.smokeGrenadeParticles : forcedParticleCount;
+		int particles = forcedParticleCount == -1 ? IWConfigs.CLIENT.smokeGrenadeParticles.getAsInt() : forcedParticleCount;
 
-		if (ClientConfig.fancySmokeGrenadeParticles) {
+		if (IWConfigs.CLIENT.fancySmokeGrenadeParticles.getAsBoolean()) {
 			particles *= 3;
 		}
 
@@ -67,7 +66,7 @@ public class SmokeGrenadeEntity extends AdvancedThrowableItemProjectile {
 	protected void onActivate() {
 		if (level() instanceof ServerLevel serverLevel) {
 			PacketDistributor.sendToPlayersTrackingChunk(serverLevel, serverLevel.getChunkAt(blockPosition()).getPos(),
-					new SmokeGrenadePayload(getX(), getY(), getZ(), color, CommonConfig.forceSmokeGrenadeParticles));
+					new SmokeGrenadePayload(getX(), getY(), getZ(), color, IWConfigs.SERVER.forceSmokeGrenadeParticles.getAsInt()));
 		}
 	}
 
@@ -78,7 +77,7 @@ public class SmokeGrenadeEntity extends AdvancedThrowableItemProjectile {
 		if (ticksInGround > 0) {
 			if (level() instanceof ServerLevel serverLevel) {
 				if (tickCount % 2 == 0) {
-					serverLevel.getEntities(this, getBoundingBox().inflate(CommonConfig.smokeGrenadeEffectRange))
+					serverLevel.getEntities(this, getBoundingBox().inflate(IWConfigs.SERVER.smokeGrenadeEffectRange.getAsDouble()))
 							.stream()
 							.filter(entity -> !entity.isSpectator())
 							.forEach(entity -> {

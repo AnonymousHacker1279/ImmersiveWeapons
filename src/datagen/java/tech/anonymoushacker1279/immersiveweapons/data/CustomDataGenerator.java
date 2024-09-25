@@ -5,6 +5,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.metadata.PackMetadataGenerator;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -28,8 +29,7 @@ import tech.anonymoushacker1279.immersiveweapons.data.structures.StructureUpdate
 import tech.anonymoushacker1279.immersiveweapons.data.tags.*;
 import tech.anonymoushacker1279.immersiveweapons.data.textures.TextureMetadataGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.trades.TradeDataGenerator;
-import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
-import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +41,7 @@ public class CustomDataGenerator {
 
 	public static final List<Item> ALL_ITEMS = new ArrayList<>(250);
 	public static final List<Block> ALL_BLOCKS = new ArrayList<>(250);
+	public static final List<EntityType<?>> ALL_ENTITIES = new ArrayList<>(250);
 
 	/**
 	 * Event handler for the GatherDataEvent.
@@ -64,7 +65,7 @@ public class CustomDataGenerator {
 		generator.addProvider(event.includeClient(), new BlockStateGenerator(output, existingFileHelper));
 		generator.addProvider(event.includeClient(), new ItemModelGenerator(output, existingFileHelper));
 		generator.addProvider(event.includeClient(), new SoundGenerator(output, ImmersiveWeapons.MOD_ID, existingFileHelper));
-		generator.addProvider(event.includeClient(), new LanguageGenerator(output));
+		generator.addProvider(event.includeClient(), new LanguageGenerator(output, lookupProvider));
 		generator.addProvider(event.includeClient(), new ParticleDescriptionGenerator(output, existingFileHelper));
 		generator.addProvider(event.includeClient(), new TextureMetadataGenerator(output));
 
@@ -89,5 +90,6 @@ public class CustomDataGenerator {
 	private static void prepareLists() {
 		ItemRegistry.ITEMS.getEntries().stream().map(Supplier::get).forEach(ALL_ITEMS::add);
 		BlockRegistry.BLOCKS.getEntries().stream().map(Supplier::get).forEach(ALL_BLOCKS::add);
+		EntityRegistry.ENTITY_TYPES.getEntries().stream().map(Supplier::get).forEach(ALL_ENTITIES::add);
 	}
 }

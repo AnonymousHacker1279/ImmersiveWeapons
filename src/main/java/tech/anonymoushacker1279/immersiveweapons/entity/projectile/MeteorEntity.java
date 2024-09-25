@@ -23,7 +23,7 @@ import net.minecraft.world.level.Level.ExplosionInteraction;
 import net.minecraft.world.phys.*;
 import net.neoforged.neoforge.event.EventHooks;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
+import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.data.IWEnchantments;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
@@ -194,7 +194,7 @@ public class MeteorEntity extends Projectile {
 
 		// Explode on impact
 
-		ExplosionInteraction explosionInteraction = CommonConfig.meteorStaffExplosionBreakBlocks ? ExplosionInteraction.MOB : ExplosionInteraction.NONE;
+		ExplosionInteraction explosionInteraction = IWConfigs.SERVER.meteorStaffExplosionBreakBlocks.getAsBoolean() ? ExplosionInteraction.MOB : ExplosionInteraction.NONE;
 
 		if (!level().isClientSide) {
 			if (getOwner() != null) {
@@ -202,7 +202,7 @@ public class MeteorEntity extends Projectile {
 						IWDamageSources.meteor(this, getOwner()),
 						null,
 						position().subtract(0, 1.5, 0),
-						CommonConfig.meteorStaffExplosionRadius + explosionRadiusModifier,
+						(float) (IWConfigs.SERVER.meteorStaffExplosionRadius.getAsDouble() + explosionRadiusModifier),
 						catchFire,
 						explosionInteraction);
 			}

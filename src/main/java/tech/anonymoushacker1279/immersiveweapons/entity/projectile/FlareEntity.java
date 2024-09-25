@@ -13,6 +13,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
 import tech.anonymoushacker1279.immersiveweapons.entity.neutral.MinutemanEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
@@ -37,8 +38,8 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 		gravityModifier = 0.005d;
 	}
 
-	public FlareEntity(EntityType<? extends BulletEntity> entityType, LivingEntity shooter, Level level) {
-		super(entityType, shooter, level);
+	public FlareEntity(EntityType<? extends BulletEntity> entityType, LivingEntity shooter, Level level, @Nullable ItemStack firedFromWeapon) {
+		super(entityType, shooter, level, firedFromWeapon);
 	}
 
 	@Override

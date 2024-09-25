@@ -32,16 +32,9 @@ ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.immersiveweapons]]
-modId = "cobaltconfig"
-type = "optional"
-versionRange = "[1.20.6-1.1.0,)"
-ordering = "NONE"
-side = "BOTH"
-
-[[dependencies.immersiveweapons]]
 modId = "biomesquisher"
-type = "optional" # TODO: make required after updated
-versionRange = "[0.1.6-alpha,)"
+type = "required"
+versionRange = "[0.4.1,)"
 ordering = "NONE"
 side = "BOTH"
 

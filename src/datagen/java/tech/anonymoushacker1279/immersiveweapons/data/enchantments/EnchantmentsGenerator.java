@@ -1,15 +1,24 @@
 package tech.anonymoushacker1279.immersiveweapons.data.enchantments;
 
+import net.minecraft.advancements.critereon.EntityPredicate;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.enchantment.*;
 import net.minecraft.world.item.enchantment.effects.AddValue;
+import net.minecraft.world.item.enchantment.effects.EnchantmentAttributeEffect;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
+import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.IWEnchantments;
+import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWEntityTypeTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWItemTagGroups;
 
 public class EnchantmentsGenerator {
@@ -33,14 +42,24 @@ public class EnchantmentsGenerator {
 		register(context,
 				IWEnchantments.IMPACT,
 				Enchantment.enchantment(Enchantment.definition(
-						itemGetter.getOrThrow(IWItemTagGroups.FIREARMS),
-						2,
-						2,
-						Enchantment.dynamicCost(12, 20),
-						Enchantment.dynamicCost(37, 20),
-						4,
-						EquipmentSlotGroup.HAND
-				)));
+								itemGetter.getOrThrow(IWItemTagGroups.FIREARMS),
+								2,
+								2,
+								Enchantment.dynamicCost(12, 20),
+								Enchantment.dynamicCost(37, 20),
+								4,
+								EquipmentSlotGroup.HAND
+						))
+						.withEffect(
+								EnchantmentEffectComponents.KNOCKBACK,
+								new AddValue(LevelBasedValue.perLevel(1.0F)),
+								LootItemEntityPropertyCondition.hasProperties(
+										LootContext.EntityTarget.DIRECT_ATTACKER,
+										EntityPredicate.Builder.entity()
+												.of(IWEntityTypeTagGroups.MUSKET_BALLS)
+												.build()
+								)
+						));
 
 		register(context,
 				IWEnchantments.ENDLESS_MUSKET_POUCH,
@@ -93,14 +112,23 @@ public class EnchantmentsGenerator {
 		register(context,
 				IWEnchantments.EXTENDED_REACH,
 				Enchantment.enchantment(Enchantment.definition(
-						itemGetter.getOrThrow(IWItemTagGroups.PIKES),
-						2,
-						1,
-						Enchantment.constantCost(15),
-						Enchantment.constantCost(30),
-						3,
-						EquipmentSlotGroup.HAND
-				)));
+								itemGetter.getOrThrow(IWItemTagGroups.PIKES),
+								2,
+								1,
+								Enchantment.constantCost(15),
+								Enchantment.constantCost(30),
+								3,
+								EquipmentSlotGroup.HAND
+						))
+						.withEffect(
+								EnchantmentEffectComponents.ATTRIBUTES,
+								new EnchantmentAttributeEffect(
+										ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "enchantment.extended_reach"),
+										Attributes.ENTITY_INTERACTION_RANGE,
+										LevelBasedValue.constant(0.5f),
+										AttributeModifier.Operation.ADD_VALUE
+								)
+						));
 
 		register(context,
 				IWEnchantments.SHARPENED_HEAD,

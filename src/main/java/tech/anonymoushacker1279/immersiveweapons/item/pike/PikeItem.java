@@ -72,6 +72,12 @@ public class PikeItem extends TieredItem {
 								4 + attackSpeedModifier,
 								Operation.ADD_VALUE),
 						EquipmentSlotGroup.MAINHAND)
+				.add(Attributes.ENTITY_INTERACTION_RANGE,
+						new AttributeModifier(
+								ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "entity_interaction_range"),
+								0.5d,
+								Operation.ADD_VALUE),
+						EquipmentSlotGroup.MAINHAND)
 				.add(AttributeRegistry.ARMOR_BREACH,
 						new AttributeModifier(
 								ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "armor_breach"),

@@ -225,8 +225,8 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 	protected boolean canTargetPlayer(LivingEntity entity) {
 		if (entity instanceof Player player) {
 			return !player.isCreative()
-					&& (isAngryAt(player) || AccessoryItem.isAccessoryActive(player, getAggroAccessory()))
-					&& !AccessoryItem.isAccessoryActive(player, getPeaceAccessory());
+					&& ((isAngryAt(player) || AccessoryItem.isAccessoryActive(player, getAggroAccessory()))
+					&& !AccessoryItem.isAccessoryActive(player, getPeaceAccessory()));
 		}
 
 		return false;

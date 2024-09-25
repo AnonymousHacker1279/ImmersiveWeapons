@@ -382,26 +382,6 @@ public class ForgeEventSubscriber {
 		event.getEntity().getPersistentData().merge(event.getOriginal().getPersistentData());
 	}
 
-	// TODO: rework extended reach enchantment
-	/*@SubscribeEvent
-	public static void itemAttributeModifierEvent(ItemAttributeModifierEvent event) {
-		// Add reach distance attributes to pikes
-		if (event.getItemStack().getItem() instanceof PikeItem) {
-			double distance = 0.5d;
-			int enchantmentLevel = event.getItemStack().getEnchantmentLevel(EnchantmentRegistry.EXTENDED_REACH.get());  // no easy way to get an enchantment holder here
-
-			if (enchantmentLevel > 0) {
-				distance += 0.5d * enchantmentLevel;
-			}
-
-			event.addModifier(Attributes.ENTITY_INTERACTION_RANGE,
-					new AttributeModifier(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "pike_attack_reach"),
-							distance,
-							Operation.ADD_VALUE),
-					EquipmentSlotGroup.HAND);
-		}
-	}*/
-
 	@SubscribeEvent
 	public static void prePistonEvent(PistonEvent.Pre event) {
 		LevelAccessor levelAccessor = event.getLevel();
@@ -528,12 +508,10 @@ public class ForgeEventSubscriber {
 
 	@SubscribeEvent
 	public static void criticalHitEvent(CriticalHitEvent event) {
-		LivingEntity entity = event.getEntity();
+		Player player = event.getEntity();
 
-		if (entity instanceof Player player) {
-			AccessoryEffects.meleeCritChanceEffects(event, player);
-			AccessoryEffects.meleeCritDamageBonusEffects(event, player);
-		}
+		AccessoryEffects.meleeCritChanceEffects(event, player);
+		AccessoryEffects.meleeCritDamageBonusEffects(event, player);
 	}
 
 	@SubscribeEvent

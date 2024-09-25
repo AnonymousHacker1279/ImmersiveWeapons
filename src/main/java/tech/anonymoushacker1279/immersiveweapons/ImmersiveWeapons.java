@@ -2,12 +2,16 @@ package tech.anonymoushacker1279.immersiveweapons;
 
 import com.mojang.logging.LogUtils;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.client.gui.ConfigurationScreen;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import org.slf4j.Logger;
 import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
 import tech.anonymoushacker1279.immersiveweapons.block.properties.WoodTypes;
+import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.world.level.CustomBlockSetTypes;
 
@@ -21,27 +25,20 @@ public class ImmersiveWeapons {
 	public static final Logger LOGGER = LogUtils.getLogger();
 
 	// Mod setup begins here
-	public ImmersiveWeapons(IEventBus modEventBus) {
+	public ImmersiveWeapons(IEventBus modEventBus, ModContainer container) {
 		LOGGER.info("Immersive Weapons is starting");
 
 		// Load configuration
 		LOGGER.info("Registering configuration files");
-
-		// TODO: rework config
-		/*new ConfigBuilder(MOD_ID, CommonConfig.class)
-				.setConfigName("Common Config")
-				.build();
-		new ConfigBuilder(MOD_ID, "client", ClientConfig.class)
-				.setConfigName("Client Config")
-				.setClientOnly(true)
-				.build();*/
+		IWConfigs.init(container);
 
 		// Initialize deferred registry
 		DeferredRegistryHandler.init(modEventBus);
 
 		// Add event listeners
 		modEventBus.addListener(this::setup);
-		// modEventBus.addListener(this::constructMod);
+
+		container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
 	}
 
 	/**
@@ -64,9 +61,4 @@ public class ImmersiveWeapons {
 			IWCB_LOADED = true;
 		}
 	}
-
-	/*public void constructMod(FMLConstructModEvent event) {
-		ModLoadingContext.get().registerExtensionPoint(IConfigScreenFactory.class,
-				() -> (minecraft, modListScreen) -> CobaltConfigScreen.getScreen(modListScreen, MOD_ID));
-	}*/
 }

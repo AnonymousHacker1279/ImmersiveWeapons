@@ -16,6 +16,7 @@ import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils.HitEffect;
+import tech.anonymoushacker1279.immersiveweapons.util.ArrowKnockbackAccessor;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -54,7 +55,7 @@ public class CustomArrowItem<T extends CustomArrowEntity> extends ArrowItem {
 
 	@Override
 	public AbstractArrow createArrow(Level level, ItemStack ammo, LivingEntity shooter, @Nullable ItemStack weapon) {
-		CustomArrowEntity arrowEntity = new CustomArrowEntity(entitySupplier.get(), shooter, level);
+		CustomArrowEntity arrowEntity = new CustomArrowEntity(entitySupplier.get(), shooter, level, weapon);
 		setCommonArrowCharacteristics(arrowEntity);
 
 		return arrowEntity;
@@ -73,8 +74,7 @@ public class CustomArrowItem<T extends CustomArrowEntity> extends ArrowItem {
 	private void setCommonArrowCharacteristics(CustomArrowEntity arrowEntity) {
 		arrowEntity.setPierceLevel((byte) pierceLevel);
 		arrowEntity.setBaseDamage(damage);
-		// TODO: reimplement via mixin
-		// arrowEntity.setKnockback(knockbackStrength);
+		((ArrowKnockbackAccessor) arrowEntity).setBaseKnockback(knockbackStrength);
 		arrowEntity.gravityModifier = gravityModifier;
 		arrowEntity.shootingVectorInputs = shootingVectorInputs;
 		arrowEntity.hitEffect = hitEffect;

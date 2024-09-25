@@ -1,7 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.item.gun;
 
 import net.minecraft.sounds.SoundEvent;
-import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
+import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 
 public class MusketItem extends AbstractGunItem {
@@ -50,11 +50,11 @@ public class MusketItem extends AbstractGunItem {
 
 	@Override
 	public float getBaseFireVelocity() {
-		return CommonConfig.musketFireVelocity;
+		return (float) IWConfigs.SERVER.musketFireVelocity.getAsDouble();
 	}
 
 	@Override
 	public float getInaccuracy() {
-		return CommonConfig.musketFireInaccuracy;
+		return (float) IWConfigs.SERVER.musketFireInaccuracy.getAsDouble();
 	}
 }

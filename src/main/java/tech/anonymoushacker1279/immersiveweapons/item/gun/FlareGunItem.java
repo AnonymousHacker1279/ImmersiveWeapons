@@ -3,7 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.item.gun;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
+import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 
@@ -52,11 +52,11 @@ public class FlareGunItem extends SimplePistolItem {
 
 	@Override
 	public float getBaseFireVelocity() {
-		return CommonConfig.flareGunFireVelocity;
+		return (float) IWConfigs.SERVER.flareGunFireVelocity.getAsDouble();
 	}
 
 	@Override
 	public float getInaccuracy() {
-		return CommonConfig.flareGunFireInaccuracy;
+		return (float) IWConfigs.SERVER.flareGunFireInaccuracy.getAsDouble();
 	}
 }
