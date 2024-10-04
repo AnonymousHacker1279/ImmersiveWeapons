@@ -4,8 +4,6 @@ import com.mojang.serialization.Codec;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.component.DataComponentType.Builder;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.util.ExtraCodecs;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -21,9 +19,9 @@ public class DataComponentTypeRegistry {
 
 	// Data Component Types
 	public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> KILL_COUNT = register("kill_count",
-			builder -> builder.persistent(ExtraCodecs.POSITIVE_INT).networkSynchronized(ByteBufCodecs.VAR_INT));
-	public static final DeferredHolder<DataComponentType<?>, DataComponentType<Component>> KILL_COUNT_TIER = register("kill_count_tier",
-			builder -> builder.persistent(ComponentSerialization.FLAT_CODEC).networkSynchronized(ComponentSerialization.STREAM_CODEC));
+			builder -> builder.persistent(ExtraCodecs.NON_NEGATIVE_INT).networkSynchronized(ByteBufCodecs.VAR_INT));
+	public static final DeferredHolder<DataComponentType<?>, DataComponentType<String>> KILL_COUNT_TIER = register("kill_count_tier",
+			builder -> builder.persistent(Codec.STRING).networkSynchronized(ByteBufCodecs.STRING_UTF8));
 	public static final DeferredHolder<DataComponentType<?>, DataComponentType<Boolean>> AT_MAX_CHARGE = register("at_max_charge",
 			builder -> builder.persistent(Codec.BOOL).networkSynchronized(ByteBufCodecs.BOOL));
 	public static final DeferredHolder<DataComponentType<?>, DataComponentType<Float>> DENSITY_MODIFIER = register("density_modifier",

@@ -173,7 +173,7 @@ public abstract class AbstractGunItem extends Item {
 	public ItemStack findAmmo(ItemStack gun, LivingEntity livingEntity) {
 		if (gun.getItem() instanceof AbstractGunItem gunItem) {
 			if (livingEntity instanceof Player player) {
-				Predicate<ItemStack> ammoPredicate = (gunItem).getInventoryAmmoPredicate();
+				Predicate<ItemStack> ammoPredicate = gunItem.getInventoryAmmoPredicate();
 				ItemStack heldAmmo = AbstractGunItem.getHeldPredicate(player, ammoPredicate);
 				if (!heldAmmo.isEmpty()) {
 					return heldAmmo;

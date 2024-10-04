@@ -387,7 +387,8 @@ public class ClientModEventSubscriber {
 				ItemRegistry.BLUNDERBUSS.get(),
 				ItemRegistry.MUSKET.get(),
 				ItemRegistry.MUSKET_SCOPE.get(),
-				ItemRegistry.FLARE_GUN.get()
+				ItemRegistry.FLARE_GUN.get(),
+				ItemRegistry.HAND_CANNON.get()
 		);
 		event.registerItem(ClientExtensions.PIKE,
 				ItemRegistry.WOODEN_PIKE.get(),

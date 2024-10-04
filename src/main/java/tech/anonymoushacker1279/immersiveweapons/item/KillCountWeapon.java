@@ -13,7 +13,7 @@ import tech.anonymoushacker1279.immersiveweapons.init.DataComponentTypeRegistry;
 public class KillCountWeapon {
 
 	static final DataComponentType<Integer> KILL_COUNT = DataComponentTypeRegistry.KILL_COUNT.get();
-	static final DataComponentType<Component> TIER = DataComponentTypeRegistry.KILL_COUNT_TIER.get();
+	static final DataComponentType<String> TIER = DataComponentTypeRegistry.KILL_COUNT_TIER.get();
 
 	/**
 	 * Initialize an item with a kill count.
@@ -22,7 +22,7 @@ public class KillCountWeapon {
 	 */
 	public static void initialize(ItemStack stack) {
 		stack.set(KILL_COUNT, 0);
-		stack.set(TIER, getTierComponent(WeaponTier.SPECIAL));
+		stack.set(TIER, WeaponTier.SPECIAL.name);
 	}
 
 	/**
@@ -41,8 +41,8 @@ public class KillCountWeapon {
 	 * @param stack the <code>ItemStack</code> to increment
 	 */
 	public static void increment(ItemStack stack) {
-		int killCount = stack.getOrDefault(KILL_COUNT, 0);
-		stack.set(KILL_COUNT, killCount + 1);
+		int killCount = stack.getOrDefault(KILL_COUNT, 0) + 1;
+		stack.set(KILL_COUNT, killCount);
 
 		// Determine if the weapon prefix needs to be changed
 		WeaponTier highestTier = WeaponTier.SPECIAL;
@@ -52,9 +52,9 @@ public class KillCountWeapon {
 			}
 		}
 
-		WeaponTier oldTier = getTierByName(stack.getOrDefault(TIER, WeaponTier.SPECIAL.name).toString());
+		WeaponTier oldTier = getTierByName(stack.getOrDefault(TIER, WeaponTier.SPECIAL.name));
 		if (!oldTier.equals(highestTier)) {
-			stack.set(TIER, getTierComponent(highestTier));
+			stack.set(TIER, highestTier.name);
 		}
 	}
 
@@ -90,7 +90,7 @@ public class KillCountWeapon {
 	 */
 	public static MutableComponent getTierComponent(ItemStack stack) {
 		return Component.translatable("immersiveweapons.kill_count_weapon.tier." + stack.getOrDefault(TIER, WeaponTier.SPECIAL.name))
-				.withStyle(getTierByName(stack.getOrDefault(TIER, WeaponTier.SPECIAL.name).toString()).chatFormatting);
+				.withStyle(getTierByName(stack.getOrDefault(TIER, WeaponTier.SPECIAL.name)).chatFormatting);
 	}
 
 	/**
