@@ -275,6 +275,13 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 		tag.put("RecipesUsed", compoundTag);
 	}
 
+	@Override
+	public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
+		CompoundTag tag = super.getUpdateTag(provider);
+		saveAdditional(tag, provider);
+		return tag;
+	}
+
 	/**
 	 * Determines if the recipe can be smelt.
 	 *

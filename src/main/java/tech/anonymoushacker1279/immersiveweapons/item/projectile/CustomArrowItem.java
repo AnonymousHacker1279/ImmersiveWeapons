@@ -74,7 +74,7 @@ public class CustomArrowItem<T extends CustomArrowEntity> extends ArrowItem {
 	private void setCommonArrowCharacteristics(CustomArrowEntity arrowEntity) {
 		arrowEntity.setPierceLevel((byte) pierceLevel);
 		arrowEntity.setBaseDamage(damage);
-		((ArrowKnockbackAccessor) arrowEntity).setBaseKnockback(knockbackStrength);
+		((ArrowKnockbackAccessor) arrowEntity).immersiveWeapons$setBaseKnockback(knockbackStrength);
 		arrowEntity.gravityModifier = gravityModifier;
 		arrowEntity.shootingVectorInputs = shootingVectorInputs;
 		arrowEntity.hitEffect = hitEffect;

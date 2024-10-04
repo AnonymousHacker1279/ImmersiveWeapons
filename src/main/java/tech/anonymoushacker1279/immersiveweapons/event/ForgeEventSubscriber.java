@@ -53,6 +53,7 @@ import net.neoforged.neoforge.event.level.PistonEvent.PistonMoveType;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.api.events.ComputeEnchantedLootBonusEvent;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.StarstormCrystalBlock;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
 import tech.anonymoushacker1279.immersiveweapons.data.IWEnchantments;
@@ -303,12 +304,13 @@ public class ForgeEventSubscriber {
 			// Handle charging of cursed accessories on kill
 			List<ItemStack> curses = CursedItem.getCurses(player);
 			for (ItemStack curse : curses) {
-				if (curse.get(AT_MAX_CHARGE) != null) {
-					if (!curse.isDamaged()) {
+				Boolean maxCharge = curse.get(AT_MAX_CHARGE);
+				if (maxCharge != null) {
+					if (!curse.isDamaged() && !maxCharge) {
 						curse.setDamageValue(100);
 					}
 
-					if (curse.getDamageValue() <= 100 && curse.getDamageValue() >= 0) {
+					if (curse.getDamageValue() <= 100 && curse.getDamageValue() > 0) {
 						curse.setDamageValue(curse.getDamageValue() - 1);
 
 						// If at max charge, set a tag, so it will no longer charge
@@ -422,9 +424,8 @@ public class ForgeEventSubscriber {
 		}
 	}
 
-	// TODO: event no longer exists, follow https://github.com/neoforged/NeoForge/issues/1112
-	/*@SubscribeEvent
-	public static void lootingLevelEvent(LootingLevelEvent event) {
+	@SubscribeEvent
+	public static void computeEnchantedLootBonusEvent(ComputeEnchantedLootBonusEvent event) {
 		if (event.getDamageSource() == null) {
 			return;
 		}
@@ -432,13 +433,13 @@ public class ForgeEventSubscriber {
 		if (event.getDamageSource().getEntity() instanceof Player player) {
 			// Increase the looting level by 3 with the Bloody Sacrifice curse
 			if (player.getPersistentData().getBoolean("used_curse_accessory_bloody_sacrifice")) {
-				event.setLootingLevel(event.getLootingLevel() + 3);
+				event.setEnchantmentLevel(event.getEnchantmentLevel() + 3);
 			}
 
 			// Increase the looting level from accessories
 			AccessoryEffects.lootingEffects(event, player);
 		}
-	}*/
+	}
 
 	@SubscribeEvent
 	public static void livingDropsEvent(LivingDropsEvent event) {

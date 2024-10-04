@@ -6,7 +6,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Spider;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 
 
@@ -35,13 +34,5 @@ public class RockSpiderEntity extends Spider implements GrantAdvancementOnDiscov
 	protected EntityDimensions getDefaultDimensions(Pose pose) {
 		EntityDimensions dimensions = super.getDefaultDimensions(pose);
 		return dimensions.withEyeHeight(0.15f);
-	}
-
-	@Override
-	public boolean checkSpawnRules(LevelAccessor pLevel, MobSpawnType pSpawnReason) {
-		boolean notInWater = pLevel.getBlockState(blockPosition().below()).getFluidState().isEmpty();
-		boolean onGround = !pLevel.getBlockState(blockPosition().below()).isAir();
-
-		return notInWater && onGround;
 	}
 }

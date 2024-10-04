@@ -8,6 +8,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.entity.player.CriticalHitEvent;
+import tech.anonymoushacker1279.immersiveweapons.api.events.ComputeEnchantedLootBonusEvent;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MeteorEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
@@ -213,12 +214,11 @@ public class AccessoryEffects {
 		}
 	}
 
-	// TODO: event no longer exists and has no alternative
-	/*public static void lootingEffects(LootingLevelEvent event, Player player) {
+	public static void lootingEffects(ComputeEnchantedLootBonusEvent event, Player player) {
 		// Get the total looting level from all items
 		double lootingLevel = AccessoryManager.collectEffects(EffectType.LOOTING_LEVEL, player);
 
 		// Apply the looting level
-		event.setLootingLevel(event.getLootingLevel() + (int) lootingLevel);
-	}*/
+		event.setEnchantmentLevel(event.getEnchantmentLevel() + (int) lootingLevel);
+	}
 }

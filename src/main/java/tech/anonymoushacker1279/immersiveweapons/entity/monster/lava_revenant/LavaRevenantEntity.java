@@ -435,14 +435,6 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 	}
 
 	@Override
-	public boolean checkSpawnRules(LevelAccessor pLevel, MobSpawnType pSpawnReason) {
-		boolean notInWater = pLevel.getBlockState(blockPosition().below()).getFluidState().isEmpty();
-		boolean inAir = pLevel.getBlockState(blockPosition().below()).isAir();
-
-		return notInWater && inAir;
-	}
-
-	@Override
 	public boolean checkSpawnObstruction(LevelReader pLevel) {
 
 		if (blockPosition().getY() > 0) {

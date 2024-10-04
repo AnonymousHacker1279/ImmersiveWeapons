@@ -50,7 +50,6 @@ public class PostSetupHandler {
 				.flatPortal()
 				.registerBeforeTPEvent(entity -> IWConfigs.SERVER.tiltrosEnabled.getAsBoolean() ? SHOULDTP.CONTINUE_TP : SHOULDTP.CANCEL_TP)
 				.registerPostTPEvent(entity -> {
-					// TODO: event is not fired, currently using a custom build, follow https://github.com/AzureDoom/customportalapi-reforged/pull/15
 					if (!entity.level().dimension().equals(TILTROS)) {
 						return;
 					}

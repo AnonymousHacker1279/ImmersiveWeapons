@@ -26,7 +26,7 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.*;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
@@ -271,7 +271,6 @@ public class StormCreeperEntity extends Creeper implements GrantAdvancementOnDis
 
 			level().addFreshEntity(effectCloud);
 		}
-
 	}
 
 	@Override
@@ -298,22 +297,5 @@ public class StormCreeperEntity extends Creeper implements GrantAdvancementOnDis
 	public int getBaseExperienceReward() {
 		xpReward = 5 + level().random.nextInt(5);
 		return super.getBaseExperienceReward();
-	}
-
-	@Override
-	public boolean checkSpawnRules(LevelAccessor pLevel, MobSpawnType pSpawnReason) {
-		boolean walkTargetAboveZero = super.checkSpawnRules(pLevel, pSpawnReason);
-		boolean isValidSpawn = pLevel.getBlockState(blockPosition().below()).isValidSpawn(pLevel, blockPosition(), getType());
-		boolean isDarkEnough = isDarkEnoughToSpawn((ServerLevelAccessor) pLevel, blockPosition(), pLevel.getRandom());
-
-		if (pSpawnReason == MobSpawnType.SPAWN_EGG) {
-			return true;
-		}
-
-		if (pSpawnReason == MobSpawnType.NATURAL) {
-			return walkTargetAboveZero && isValidSpawn && isDarkEnough;
-		} else {
-			return walkTargetAboveZero && isValidSpawn;
-		}
 	}
 }

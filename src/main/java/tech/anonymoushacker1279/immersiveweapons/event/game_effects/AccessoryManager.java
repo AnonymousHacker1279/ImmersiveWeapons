@@ -43,9 +43,8 @@ public class AccessoryManager {
 				}
 			}
 		}
-
-		// Clamp the value at a maximum of 100%
-		return Mth.clamp(effectValue, 0, 1);
+		
+		return type.clamp ? Mth.clamp(effectValue, 0, 1) : effectValue;
 	}
 
 	/**

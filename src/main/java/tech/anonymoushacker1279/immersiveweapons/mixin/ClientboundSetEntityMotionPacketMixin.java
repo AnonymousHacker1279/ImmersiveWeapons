@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * in projectiles with high speed.
  */
 @Mixin(ClientboundSetEntityMotionPacket.class)
-public class ClientboundSetEntityMotionPacketMixin {
+public abstract class ClientboundSetEntityMotionPacketMixin {
 	@Shadow
 	private int id;
 

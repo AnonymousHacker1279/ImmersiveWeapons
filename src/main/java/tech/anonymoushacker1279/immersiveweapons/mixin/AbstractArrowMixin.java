@@ -17,11 +17,11 @@ import tech.anonymoushacker1279.immersiveweapons.util.ArrowKnockbackAccessor;
 public abstract class AbstractArrowMixin implements ArrowKnockbackAccessor {
 
 	@Unique
-	private double baseKnockback = 0.0;
+	private double immersiveWeapons$baseKnockback = 0.0;
 
 	@Override
-	public void setBaseKnockback(double baseKnockback) {
-		this.baseKnockback = baseKnockback;
+	public void immersiveWeapons$setBaseKnockback(double baseKnockback) {
+		this.immersiveWeapons$baseKnockback = baseKnockback;
 	}
 
 	/**
@@ -63,6 +63,6 @@ public abstract class AbstractArrowMixin implements ArrowKnockbackAccessor {
 	 */
 	@ModifyVariable(method = "doKnockback", at = @At(value = "STORE", ordinal = 0), ordinal = 0)
 	private double modifyKnockback(double originalKnockback) {
-		return originalKnockback + baseKnockback;
+		return originalKnockback + immersiveWeapons$baseKnockback;
 	}
 }

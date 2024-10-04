@@ -154,9 +154,8 @@ dependencies {
 		}
 	}
 
-	// Include Immersive Weapons Compatibility Bridge (IWCB) and Cobalt Config
-	// implementation "tech.anonymoushacker1279.iwcompatbridge:IWCompatBridge:${iwcb_version}"
-	// implementation "tech.anonymoushacker1279.cobaltconfig:CobaltConfig:${cobaltconfig_version}"
+	// Include Immersive Weapons Compatibility Bridge (IWCB)
+	implementation "tech.anonymoushacker1279.iwcompatbridge:IWCompatBridge:${iwcb_version}"
 
 	// Include JEI
 	runtimeOnly "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"

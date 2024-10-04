@@ -2,10 +2,10 @@ package tech.anonymoushacker1279.immersiveweapons;
 
 import com.mojang.logging.LogUtils;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.ModContainer;
-import net.neoforged.fml.ModList;
+import net.neoforged.fml.*;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.fml.event.lifecycle.FMLConstructModEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import org.slf4j.Logger;
@@ -37,8 +37,7 @@ public class ImmersiveWeapons {
 
 		// Add event listeners
 		modEventBus.addListener(this::setup);
-
-		container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
+		modEventBus.addListener(this::constructMod);
 	}
 
 	/**
@@ -60,5 +59,9 @@ public class ImmersiveWeapons {
 		if (ModList.get().isLoaded("iwcompatbridge")) {
 			IWCB_LOADED = true;
 		}
+	}
+
+	public void constructMod(FMLConstructModEvent event) {
+		ModLoadingContext.get().registerExtensionPoint(IConfigScreenFactory.class, () -> ConfigurationScreen::new);
 	}
 }

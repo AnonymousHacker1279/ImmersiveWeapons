@@ -3,7 +3,6 @@ package tech.anonymoushacker1279.immersiveweapons.entity.monster;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
@@ -12,19 +11,16 @@ import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.*;
+import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.HurtByTargetWithPredicateGoal;
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.RangedGunAttackGoal;
 import tech.anonymoushacker1279.immersiveweapons.entity.neutral.*;
-import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem;
 
 import java.util.List;
-
-import static net.minecraft.world.entity.monster.Monster.isDarkEnoughToSpawn;
 
 public class DyingSoldierEntity extends RangedSoldierEntity {
 
@@ -101,22 +97,6 @@ public class DyingSoldierEntity extends RangedSoldierEntity {
 	@Override
 	public SoundSource getSoundSource() {
 		return SoundSource.HOSTILE;
-	}
-
-	@Override
-	public boolean checkSpawnRules(LevelAccessor pLevel, MobSpawnType mobSpawnType) {
-		if (pLevel instanceof ServerLevelAccessor serverLevelAccessor) {
-			return pLevel.getDifficulty() != Difficulty.PEACEFUL
-					&& (MobSpawnType.ignoresLightRequirements(mobSpawnType) || isDarkEnoughToSpawn(serverLevelAccessor, blockPosition(), random))
-					&& checkMobSpawnRules(EntityRegistry.DYING_SOLDIER_ENTITY.get(), pLevel, mobSpawnType, blockPosition(), random);
-		}
-
-		return false;
-	}
-
-	@Override
-	public boolean checkSpawnObstruction(LevelReader pLevel) {
-		return super.checkSpawnObstruction(pLevel) && pLevel.canSeeSky(blockPosition());
 	}
 
 	@Override

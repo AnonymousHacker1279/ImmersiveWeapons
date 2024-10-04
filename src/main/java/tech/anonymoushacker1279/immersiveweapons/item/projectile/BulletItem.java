@@ -77,7 +77,7 @@ public class BulletItem<T extends BulletEntity> extends ArrowItem {
 		bulletEntity.setSoundEvent(SoundEventRegistry.BULLET_WHIZZ.get());
 		bulletEntity.setPierceLevel((byte) pierceLevel);
 		bulletEntity.setBaseDamage(damage);
-		((ArrowKnockbackAccessor) bulletEntity).setBaseKnockback(knockbackStrength);
+		((ArrowKnockbackAccessor) bulletEntity).immersiveWeapons$setBaseKnockback(knockbackStrength);
 		bulletEntity.gravityModifier = gravityModifier;
 		bulletEntity.shootingVectorInputs = shootingVectorInputs;
 		bulletEntity.hitEffect = hitEffect;

@@ -21,7 +21,7 @@ import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
  * Handles the respawning of Super Hans when tossing a Hans' Blessing into a fire block.
  */
 @Mixin(BaseFireBlock.class)
-public class BaseFireBlockMixin {
+public abstract class BaseFireBlockMixin {
 
 	@Inject(method = "entityInside", at = @At("RETURN"))
 	private void checkForSuperHansSpawn(BlockState pState, Level pLevel, BlockPos pPos, Entity pEntity, CallbackInfo ci) {

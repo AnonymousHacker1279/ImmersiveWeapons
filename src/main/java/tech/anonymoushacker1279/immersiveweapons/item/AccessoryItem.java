@@ -333,22 +333,22 @@ public class AccessoryItem extends Item {
 		/**
 		 * Modifier for reload time for firearms.
 		 */
-		FIREARM_RELOAD_SPEED("firearm_reload_speed"),
+		FIREARM_RELOAD_SPEED("firearm_reload_speed", false),
 
 		/**
 		 * Modifier for melee damage.
 		 */
-		MELEE_DAMAGE("melee_damage"),
+		MELEE_DAMAGE("melee_damage", false),
 
 		/**
 		 * Modifier for projectile damage.
 		 */
-		PROJECTILE_DAMAGE("projectile_damage"),
+		PROJECTILE_DAMAGE("projectile_damage", false),
 
 		/**
 		 * Modifier to all outgoing damage sources.
 		 */
-		GENERAL_DAMAGE("general_damage"),
+		GENERAL_DAMAGE("general_damage", false),
 
 		/**
 		 * Modifier to all incoming damage sources.
@@ -358,7 +358,7 @@ public class AccessoryItem extends Item {
 		/**
 		 * Modifier to melee knockback.
 		 */
-		MELEE_KNOCKBACK("melee_knockback"),
+		MELEE_KNOCKBACK("melee_knockback", false),
 
 		/**
 		 * Chance for melee attacks to inflict {@link BleedingEffect}.
@@ -369,7 +369,7 @@ public class AccessoryItem extends Item {
 		 * Modifier to melee critical damage. Additive with vanilla critical damage, which is 50% by default.
 		 * For example, a value of 0.5d will result in 100% critical damage.
 		 */
-		MELEE_CRIT_DAMAGE_BONUS("melee_crit_damage_bonus"),
+		MELEE_CRIT_DAMAGE_BONUS("melee_crit_damage_bonus", false),
 
 		/**
 		 * Chance for any melee attack to become critical, regardless of vanilla critical hit conditions.
@@ -394,7 +394,7 @@ public class AccessoryItem extends Item {
 		/**
 		 * Modifier for experience drops.
 		 */
-		EXPERIENCE_MODIFIER("experience_modifier"),
+		EXPERIENCE_MODIFIER("experience_modifier", false),
 
 		/**
 		 * Modifier to {@link DamageTypes#SONIC_BOOM} damage.
@@ -404,12 +404,18 @@ public class AccessoryItem extends Item {
 		/**
 		 * Modifier to the looting level of the player.
 		 */
-		LOOTING_LEVEL("looting_level");
+		LOOTING_LEVEL("looting_level", false);
 
 		public final String name;
+		public final boolean clamp;
 
 		EffectType(String name) {
+			this(name, true);
+		}
+
+		EffectType(String name, boolean clamp) {
 			this.name = createTranslation(name);
+			this.clamp = clamp;
 		}
 
 		private String createTranslation(String name) {

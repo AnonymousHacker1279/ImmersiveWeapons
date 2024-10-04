@@ -31,6 +31,7 @@ import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.MusketItem;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.BulletEntityDebugPayload;
+import tech.anonymoushacker1279.immersiveweapons.network.payload.GunShotBloodParticlePayload;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
@@ -177,14 +178,11 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 		super.doWhenHitEntity(entity);
 
 		if (level() instanceof ServerLevel serverLevel) {
-			serverLevel.sendParticles(
-					ParticleTypesRegistry.BLOOD_PARTICLE.get(),
-					position().x, position().y, position().z,
-					IWConfigs.CLIENT.gunShotBloodParticles.get(),
-					GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
-					GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
-					GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
-					GeneralUtilities.getRandomNumber(0.01d, 0.05d));
+			PacketDistributor.sendToPlayersTrackingChunk(serverLevel, chunkPosition(),
+					new GunShotBloodParticlePayload(
+							ParticleTypesRegistry.BLOOD_PARTICLE.get(),
+							position().x, position().y, position().z
+					));
 		}
 	}
 
