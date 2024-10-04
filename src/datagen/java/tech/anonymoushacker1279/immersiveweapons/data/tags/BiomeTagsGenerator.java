@@ -109,9 +109,4 @@ public class BiomeTagsGenerator extends BiomeTagsProvider {
 		tag(IWWorldGenTagGroups.HAS_COMMANDER_OUTPOST)
 				.add(IWBiomes.BATTLEFIELD);
 	}
-
-	@Override
-	public String getName() {
-		return "Biome Tags";
-	}
 }

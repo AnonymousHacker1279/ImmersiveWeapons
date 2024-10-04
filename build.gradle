@@ -162,8 +162,6 @@ dependencies {
 	// Include WTHIT and badpackets
 	runtimeOnly "mcp.mobius.waila:wthit:neo-${wthit_version}"
 	runtimeOnly "lol.bai:badpackets:neo-${badpackets_version}"
-	// Include AttributeFix
-	// implementation "curse.maven:attributefix-280510:${attributefix_version}"
 }
 
 tasks.named('processResources', ProcessResources).configure {

@@ -78,6 +78,7 @@ public class CustomDataGenerator {
 		generator.addProvider(event.includeServer(), new ItemTagsGenerator(output, lookupProvider, blockTagsGenerator, existingFileHelper));
 		generator.addProvider(event.includeServer(), new EntityTypeTagsGenerator(output, lookupProvider, existingFileHelper));
 		generator.addProvider(event.includeServer(), new GameEventTagsGenerator(output, lookupProvider, existingFileHelper));
+		generator.addProvider(event.includeServer(), new EnchantmentTagsGenerator(output, lookupProvider, existingFileHelper));
 		generator.addProvider(event.includeServer(), new DataMapsGenerator(output, lookupProvider));
 		generator.addProvider(event.includeServer(), new GlobalLootModifierGenerator(output, lookupProvider));
 		generator.addProvider(event.includeServer(), new StructureUpdater(existingFileHelper, output));
