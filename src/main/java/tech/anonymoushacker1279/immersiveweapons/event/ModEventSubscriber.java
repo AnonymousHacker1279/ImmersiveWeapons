@@ -105,7 +105,7 @@ public class ModEventSubscriber {
 		event.register(EntityRegistry.ROCK_SPIDER_ENTITY.get(), SpawnPlacementTypes.ON_GROUND, Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules, Operation.REPLACE);
 		event.register(EntityRegistry.LAVA_REVENANT_ENTITY.get(), SpawnPlacementTypes.ON_GROUND, Types.MOTION_BLOCKING_NO_LEAVES, LavaRevenantEntity::checkMobSpawnRules, Operation.REPLACE);
 		event.register(EntityRegistry.CELESTIAL_TOWER_ENTITY.get(), SpawnPlacementTypes.ON_GROUND, Types.MOTION_BLOCKING_NO_LEAVES, CelestialTowerEntity::checkMonsterSpawnRules, Operation.REPLACE);
-		event.register(EntityRegistry.EVIL_EYE_ENTITY.get(), SpawnPlacementTypes.NO_RESTRICTIONS, Types.MOTION_BLOCKING_NO_LEAVES, EvilEyeEntity::checkMobSpawnRules, Operation.REPLACE);
+		event.register(EntityRegistry.EVIL_EYE_ENTITY.get(), SpawnPlacementTypes.NO_RESTRICTIONS, Types.MOTION_BLOCKING_NO_LEAVES, EvilEyeEntity::checkSpawnRules, Operation.REPLACE);
 		event.register(EntityRegistry.STAR_WOLF_ENTITY.get(), SpawnPlacementTypes.ON_GROUND, Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules, Operation.REPLACE);
 		event.register(EntityRegistry.FIREFLY_ENTITY.get(), SpawnPlacementTypes.ON_GROUND, Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules, Operation.REPLACE);
 	}

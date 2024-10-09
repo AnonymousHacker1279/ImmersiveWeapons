@@ -261,6 +261,36 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		tag(IWItemTagGroups.CURSED_SIGHT_STAFFS).add(ItemRegistry.CURSED_SIGHT_STAFF.get());
 
 		// Armor tags
+		tag(IWItemTagGroups.MOLTEN_ARMOR).add(
+				ItemRegistry.MOLTEN_HELMET.get(),
+				ItemRegistry.MOLTEN_CHESTPLATE.get(),
+				ItemRegistry.MOLTEN_LEGGINGS.get(),
+				ItemRegistry.MOLTEN_BOOTS.get());
+
+		tag(IWItemTagGroups.TESLA_ARMOR).add(
+				ItemRegistry.TESLA_HELMET.get(),
+				ItemRegistry.TESLA_CHESTPLATE.get(),
+				ItemRegistry.TESLA_LEGGINGS.get(),
+				ItemRegistry.TESLA_BOOTS.get());
+
+		tag(IWItemTagGroups.VENTUS_ARMOR).add(
+				ItemRegistry.VENTUS_HELMET.get(),
+				ItemRegistry.VENTUS_CHESTPLATE.get(),
+				ItemRegistry.VENTUS_LEGGINGS.get(),
+				ItemRegistry.VENTUS_BOOTS.get());
+
+		tag(IWItemTagGroups.ASTRAL_ARMOR).add(
+				ItemRegistry.ASTRAL_HELMET.get(),
+				ItemRegistry.ASTRAL_CHESTPLATE.get(),
+				ItemRegistry.ASTRAL_LEGGINGS.get(),
+				ItemRegistry.ASTRAL_BOOTS.get());
+
+		tag(IWItemTagGroups.STARSTORM_ARMOR).add(
+				ItemRegistry.STARSTORM_HELMET.get(),
+				ItemRegistry.STARSTORM_CHESTPLATE.get(),
+				ItemRegistry.STARSTORM_LEGGINGS.get(),
+				ItemRegistry.STARSTORM_BOOTS.get());
+
 		tag(IWItemTagGroups.PADDED_LEATHER).add(
 				ItemRegistry.PADDED_LEATHER_HELMET.get(),
 				ItemRegistry.PADDED_LEATHER_CHESTPLATE.get(),
@@ -271,6 +301,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 	/**
 	 * Add tags under the Minecraft namespace
 	 */
+	@SuppressWarnings("unchecked")
 	private void addMinecraftTags() {
 		// Copy item tags from block tags
 		copy(BlockTags.FENCES, ItemTags.FENCES);
@@ -339,5 +370,16 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 
 		// Enchantable items tag
 		tag(ItemTags.BOW_ENCHANTABLE).addTag(Tags.Items.TOOLS_BOW);
+		tag(ItemTags.DURABILITY_ENCHANTABLE).addTags(
+				IWItemTagGroups.PIKES,
+				IWItemTagGroups.GAUNTLETS,
+				IWItemTagGroups.FIREARMS
+		);
+		tag(ItemTags.SHARP_WEAPON_ENCHANTABLE).addTag(IWItemTagGroups.PIKES);
+		tag(ItemTags.WEAPON_ENCHANTABLE).addTags(
+				IWItemTagGroups.PIKES,
+				IWItemTagGroups.GAUNTLETS,
+				IWItemTagGroups.FIREARMS
+		);
 	}
 }

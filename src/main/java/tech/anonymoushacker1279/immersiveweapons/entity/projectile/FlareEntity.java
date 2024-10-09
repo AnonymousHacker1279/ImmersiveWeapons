@@ -47,7 +47,7 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 		if (!isOnFire()) {
 			igniteForSeconds(300);
 
-			entityData.set(USE_LEGACY_LIGHTING, !PluginHandler.isPluginActive("iwcompatbridge:lucent_plugin"));
+			entityData.set(USE_LEGACY_LIGHTING, !PluginHandler.isPluginActive("iwcompatbridge:ryoamiclights_plugin"));
 		}
 
 		double x = getX();

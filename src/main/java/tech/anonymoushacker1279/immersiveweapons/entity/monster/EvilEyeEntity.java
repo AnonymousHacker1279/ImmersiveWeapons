@@ -1,11 +1,13 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.monster;
 
 import net.minecraft.commands.arguments.EntityAnchorArgument;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.*;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.*;
@@ -16,8 +18,9 @@ import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.*;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
@@ -309,5 +312,13 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 
 	public boolean summonedByStaff() {
 		return entityData.get(SUMMONED_BY_STAFF);
+	}
+
+	public static boolean checkSpawnRules(EntityType<? extends Mob> type, LevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random) {
+		boolean validSpawn = checkMobSpawnRules(type, level, spawnType, pos, random);
+		boolean notUnderground = level.getBlockStates(new AABB(pos)
+						.expandTowards(0, 25, 0))
+				.allMatch((state) -> state.is(Blocks.CAVE_AIR) || state.is(Blocks.AIR));
+		return validSpawn && notUnderground;
 	}
 }

@@ -161,4 +161,17 @@ public class FieldMedicEntity extends SoldierEntity {
 	protected AccessoryItem getAggroAccessory() {
 		return ItemRegistry.MEDAL_OF_DISHONOR.get();
 	}
+
+	@Override
+	protected boolean canTargetPlayer(LivingEntity entity) {
+		if (entity instanceof Player player) {
+			if (AccessoryItem.isAccessoryActive(player, getPeaceAccessory())) {
+				return false;
+			}
+
+			return !player.isCreative() && AccessoryItem.isAccessoryActive(player, getAggroAccessory());
+		}
+
+		return false;
+	}
 }

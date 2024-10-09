@@ -3,6 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.entity.monster;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
@@ -109,5 +110,18 @@ public class DyingSoldierEntity extends RangedSoldierEntity {
 		if (magicValue > 0.5F) {
 			this.noActionTime += 2;
 		}
+	}
+
+	@Override
+	protected boolean canTargetPlayer(LivingEntity entity) {
+		if (entity instanceof Player player) {
+			if (AccessoryItem.isAccessoryActive(player, getPeaceAccessory())) {
+				return false;
+			}
+
+			return !player.isCreative() || AccessoryItem.isAccessoryActive(player, getAggroAccessory());
+		}
+
+		return false;
 	}
 }
