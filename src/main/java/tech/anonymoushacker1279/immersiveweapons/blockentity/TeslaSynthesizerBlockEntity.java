@@ -13,7 +13,8 @@ import net.minecraft.world.entity.player.*;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.EntityBlock;
@@ -23,6 +24,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.TeslaSynthesizerRecipe;
+import tech.anonymoushacker1279.immersiveweapons.item.crafting.TeslaSynthesizerRecipeInput;
 import tech.anonymoushacker1279.immersiveweapons.menu.TeslaSynthesizerMenu;
 
 import java.util.Map;
@@ -500,24 +502,5 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 		for (ItemStack itemStack : items) {
 			helper.accountStack(itemStack);
 		}
-	}
-}
-
-record TeslaSynthesizerRecipeInput(ItemStack material1, ItemStack material2,
-                                   ItemStack material3) implements RecipeInput {
-
-	@Override
-	public ItemStack getItem(int index) {
-		return switch (index) {
-			case 0 -> material1;
-			case 1 -> material2;
-			case 2 -> material3;
-			default -> ItemStack.EMPTY;
-		};
-	}
-
-	@Override
-	public int size() {
-		return 3;
 	}
 }
