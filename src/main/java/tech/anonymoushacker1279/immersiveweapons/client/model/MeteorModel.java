@@ -40,6 +40,6 @@ public class MeteorModel<T extends MeteorEntity> extends EntityModel<T> {
 
 	@Override
 	public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
-		main.render(poseStack, buffer, packedLight, packedOverlay, color);
+		main.render(poseStack, buffer, packedLight, packedOverlay);
 	}
 }

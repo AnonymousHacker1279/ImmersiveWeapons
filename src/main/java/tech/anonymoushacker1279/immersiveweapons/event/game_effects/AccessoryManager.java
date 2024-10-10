@@ -43,7 +43,7 @@ public class AccessoryManager {
 				}
 			}
 		}
-		
+
 		return type.clamp ? Mth.clamp(effectValue, 0, 1) : effectValue;
 	}
 

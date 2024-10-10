@@ -66,7 +66,9 @@ community describe an interest in it (This excludes versions listed as **N/A - B
 
 | MC Version | Immersive Weapons Latest Version                                                                             |
 |------------|--------------------------------------------------------------------------------------------------------------|
-| 1.20.4     | [Latest](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases)                                   |
+| 1.21.1     | [Latest](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases)                                   |
+| 1.20.6     | [N/A - Build From Source](https://github.com/AnonymousHacker1279/ImmersiveWeapons/tree/1.20.6-dev)           |
+| 1.20.4     | [1.29.2](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.29.2)                       |
 | 1.20.2     | [1.28.0](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.28.0)                       |
 | 1.20.1     | [1.27.6](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.27.6)                       |
 | 1.19.4     | [1.23.2](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.23.2)                       |
@@ -123,12 +125,3 @@ looking for was merged into a newer release.
 Immersive Weapons is [MIT licensed](https://github.com/AnonymousHacker1279/ImmersiveWeapons/blob/master/LICENSE),
 excluding its assets, which
 are [CC-BY-NC-SA licensed](https://github.com/AnonymousHacker1279/ImmersiveWeapons/blob/master/src/main/resources/assets/immersiveweapons/LICENSE).
-
-## Translations
-
-Some translations (`es_es` and `ru_ru`) were generated automatically using
-my (now decrepit) [Mr. Worldwide](https://github.com/AnonymousHacker1279/MrWorldwide) toolkit. They are probably not too
-accurate, and I don't have the time to fix them. I have not generated any other translations in a long time as the
-toolkit proved to be too unreliable.
-
-If you want to clean up the translations then please go ahead and make a contribution. I appreciate it.

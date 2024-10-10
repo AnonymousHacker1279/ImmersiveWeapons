@@ -38,5 +38,12 @@ versionRange = "[0.4.1,)"
 ordering = "NONE"
 side = "BOTH"
 
+[[dependencies.immersiveweapons]]
+modId = "cpapireforged"
+type = "required"
+versionRange = "[1.0.10,)"
+ordering = "NONE"
+side = "BOTH"
+
 [[mixins]]
 config = "mixins.immersiveweapons.json"
