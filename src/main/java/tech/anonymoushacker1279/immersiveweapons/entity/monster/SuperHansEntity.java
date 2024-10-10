@@ -6,10 +6,10 @@ import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.*;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.BossEvent.BossBarColor;
 import net.minecraft.world.BossEvent.BossBarOverlay;
@@ -44,8 +44,7 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 	public final ServerBossEvent bossEvent = new ServerBossEvent(getDisplayName(), BossBarColor.PURPLE,
 			BossBarOverlay.PROGRESS);
 
-	public static final ResourceKey<Structure> championTowerKey = ResourceKey.create(Registries.STRUCTURE,
-			new ResourceLocation(ImmersiveWeapons.MOD_ID, "champion_tower"));
+	public static final TagKey<Structure> championTowerKey = TagKey.create(Registries.STRUCTURE, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "champion_tower"));
 	private boolean spawnedInChampionTower = false;
 	@Nullable
 	private BoundingBox championTowerBounds;
@@ -79,7 +78,7 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 	}
 
 	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag dataTag) {
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData) {
 		bossEvent.setProgress(1.0f);
 
 		switch (difficulty.getDifficulty()) {
@@ -96,7 +95,7 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 			default -> xpReward = 150;
 		}
 
-		return super.finalizeSpawn(level, difficulty, reason, spawnData, dataTag);
+		return super.finalizeSpawn(level, difficulty, reason, spawnData);
 	}
 
 	@Override
@@ -165,7 +164,7 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 					int duration = (int) Math.min((20 * Math.pow((getHealth() / getMaxHealth()), -1)) * 4, 900);
 					int amplifier = (int) Math.min((Math.pow((getHealth() / getMaxHealth()), -1)), 5);
 					livingEntity.addEffect(
-							new MobEffectInstance(EffectRegistry.BLEEDING_EFFECT.get(), duration, amplifier, false, true)
+							new MobEffectInstance(EffectRegistry.BLEEDING_EFFECT, duration, amplifier, false, true)
 					);
 				}
 			}

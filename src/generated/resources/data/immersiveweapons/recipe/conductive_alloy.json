@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "conductive_alloy",
+  "key": {
+    "a": {
+      "tag": "c:ingots/copper"
+    },
+    "b": {
+      "tag": "c:ingots/gold"
+    }
+  },
+  "pattern": [
+    "ab"
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:conductive_alloy"
+  }
+}

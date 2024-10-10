@@ -21,7 +21,7 @@ public class AlcoholItem extends CustomPotionItem {
 	@Override
 	protected List<MobEffectInstance> getEffects() {
 		List<MobEffectInstance> effectInstances = new ArrayList<>(1);
-		effectInstances.add(new MobEffectInstance(EffectRegistry.ALCOHOL_EFFECT.get(),
+		effectInstances.add(new MobEffectInstance(EffectRegistry.ALCOHOL_EFFECT,
 				600, 0, false, true));
 		return effectInstances;
 	}

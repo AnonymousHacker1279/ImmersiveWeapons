@@ -1,57 +1,35 @@
 package tech.anonymoushacker1279.immersiveweapons.item.crafting;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.util.ExtraCodecs;
-import net.minecraft.world.Container;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 
-public class TeslaSynthesizerRecipe implements Recipe<Container> {
-
-	protected final Ingredient blockIngredient;
-	protected final Ingredient material1;
-	protected final Ingredient material2;
-	protected final ItemStack result;
-	protected final int cookTime;
-	protected final String group;
-
-	public TeslaSynthesizerRecipe(String group, Ingredient blockIngredient, Ingredient material1, Ingredient material2, ItemStack result, int cookTime) {
-		this.blockIngredient = blockIngredient;
-		this.material1 = material1;
-		this.material2 = material2;
-		this.result = result;
-		this.cookTime = cookTime;
-		this.group = group;
-	}
-
+public record TeslaSynthesizerRecipe(String group, Ingredient blockIngredient, Ingredient material1,
+                                     Ingredient material2, ItemStack result,
+                                     int cookTime) implements Recipe<RecipeInput> {
 
 	@Override
-	public boolean matches(Container container, Level level) {
-		return blockIngredient.test(container.getItem(0))
-				&& material1.test(container.getItem(1))
-				&& material2.test(container.getItem(2));
+	public boolean matches(RecipeInput input, Level level) {
+		return blockIngredient.test(input.getItem(0))
+				&& material1.test(input.getItem(1))
+				&& material2.test(input.getItem(2));
 	}
 
 	@Override
-	public ItemStack assemble(Container container, RegistryAccess registryAccess) {
-		ItemStack resultStack = result.copy();
-		CompoundTag compoundTag = container.getItem(4).getTag();
-		if (compoundTag != null) {
-			resultStack.setTag(compoundTag.copy());
-		}
-
-		return resultStack;
+	public ItemStack assemble(RecipeInput input, Provider registries) {
+		return result;
 	}
 
 	@Override
-	public ItemStack getResultItem(RegistryAccess registryAccess) {
+	public ItemStack getResultItem(Provider provider) {
 		return result.copy();
 	}
 
@@ -102,50 +80,52 @@ public class TeslaSynthesizerRecipe implements Recipe<Container> {
 		T create(String group, Ingredient blockIngredient, Ingredient material1, Ingredient material2, ItemStack result, int cookTime);
 	}
 
-	public static class Serializer<T extends TeslaSynthesizerRecipe> implements RecipeSerializer<T> {
+	public static class Serializer implements RecipeSerializer<TeslaSynthesizerRecipe> {
 
-		private final TeslaSynthesizerRecipe.Factory<T> factory;
-		private final Codec<T> codec;
+		private static final MapCodec<TeslaSynthesizerRecipe> CODEC = RecordCodecBuilder.mapCodec(
+				instance -> instance.group(
+								Codec.STRING.optionalFieldOf("group", "").forGetter(recipe -> recipe.group),
+								Ingredient.CODEC.fieldOf("block").forGetter(recipe -> recipe.blockIngredient),
+								Ingredient.CODEC.fieldOf("material1").forGetter(recipe -> recipe.material1),
+								Ingredient.CODEC.fieldOf("material2").forGetter(recipe -> recipe.material2),
+								ItemStack.SINGLE_ITEM_CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
+								Codec.INT.fieldOf("cookTime").forGetter(recipe -> recipe.cookTime)
+						)
+						.apply(instance, TeslaSynthesizerRecipe::new)
+		);
 
-		public Serializer(TeslaSynthesizerRecipe.Factory<T> factory) {
-			this.factory = factory;
-			this.codec = RecordCodecBuilder.create(
-					instance -> instance.group(
-									ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(recipe -> recipe.group),
-									Ingredient.CODEC.fieldOf("block").forGetter(recipe -> recipe.blockIngredient),
-									Ingredient.CODEC.fieldOf("material1").forGetter(recipe -> recipe.material1),
-									Ingredient.CODEC.fieldOf("material2").forGetter(recipe -> recipe.material2),
-									ItemStack.SINGLE_ITEM_CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
-									Codec.INT.fieldOf("cookTime").forGetter(recipe -> recipe.cookTime)
-							)
-							.apply(instance, factory::create)
-			);
+		private static final StreamCodec<RegistryFriendlyByteBuf, TeslaSynthesizerRecipe> STREAM_CODEC = StreamCodec.of(
+				TeslaSynthesizerRecipe.Serializer::toNetwork, TeslaSynthesizerRecipe.Serializer::fromNetwork
+		);
+
+		@Override
+		public MapCodec<TeslaSynthesizerRecipe> codec() {
+			return CODEC;
 		}
 
 		@Override
-		public Codec<T> codec() {
-			return codec;
+		public StreamCodec<RegistryFriendlyByteBuf, TeslaSynthesizerRecipe> streamCodec() {
+			return STREAM_CODEC;
 		}
 
-		@Override
-		public T fromNetwork(FriendlyByteBuf byteBuf) {
-			String group = byteBuf.readUtf();
-			Ingredient blockIngredient = Ingredient.fromNetwork(byteBuf);
-			Ingredient material1 = Ingredient.fromNetwork(byteBuf);
-			Ingredient material2 = Ingredient.fromNetwork(byteBuf);
-			int cookTime = byteBuf.readInt();
-			ItemStack result = byteBuf.readItem();
+		private static TeslaSynthesizerRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
+			String group = buffer.readUtf();
+			Ingredient blockIngredient = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
+			Ingredient material1 = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
+			Ingredient material2 = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
+			int cookTime = buffer.readInt();
+			ItemStack result = ItemStack.STREAM_CODEC.decode(buffer);
 
-			return factory.create(group, blockIngredient, material1, material2, result, cookTime);
+			return new TeslaSynthesizerRecipe(group, blockIngredient, material1, material2, result, cookTime);
 		}
 
-		@Override
-		public void toNetwork(FriendlyByteBuf buffer, TeslaSynthesizerRecipe recipe) {
+		private static void toNetwork(RegistryFriendlyByteBuf buffer, TeslaSynthesizerRecipe recipe) {
 			buffer.writeUtf(recipe.group);
-			recipe.blockIngredient.toNetwork(buffer);
-			recipe.material1.toNetwork(buffer);
-			recipe.material2.toNetwork(buffer);
-			buffer.writeItem(recipe.result);
+			Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.blockIngredient);
+			Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.material1);
+			Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.material2);
+			buffer.writeInt(recipe.cookTime);
+			ItemStack.STREAM_CODEC.encode(buffer, recipe.result);
 		}
 	}
 }

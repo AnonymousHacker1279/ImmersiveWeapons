@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "a": {
+      "tag": "c:nuggets/gold"
+    },
+    "b": {
+      "tag": "c:ingots/gold"
+    }
+  },
+  "pattern": [
+    "a",
+    "b"
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:golden_pike_head"
+  }
+}

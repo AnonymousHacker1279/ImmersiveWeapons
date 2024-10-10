@@ -6,6 +6,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -46,7 +47,6 @@ public class BarrelTapBlock extends BasicOrientableBlock implements SimpleWaterl
 	}
 
 	@Override
-	@SuppressWarnings("deprecation")
 	public boolean canSurvive(BlockState state, LevelReader reader, BlockPos pos) {
 		// Ensure it is placed with the opposite facing direction contacting a Barrel block
 		Direction facingDirection = state.getValue(FACING);
@@ -62,7 +62,6 @@ public class BarrelTapBlock extends BasicOrientableBlock implements SimpleWaterl
 	 * @param state the <code>BlockState</code> of the block
 	 * @return FluidState
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
@@ -77,7 +76,6 @@ public class BarrelTapBlock extends BasicOrientableBlock implements SimpleWaterl
 	 * @param collisionContext the <code>CollisionContext</code> of the block
 	 * @return VoxelShape
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext collisionContext) {
 		return switch (state.getValue(FACING)) {
@@ -110,16 +108,12 @@ public class BarrelTapBlock extends BasicOrientableBlock implements SimpleWaterl
 		return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
-	public InteractionResult use(BlockState state, Level level, BlockPos pos,
-	                             Player player, InteractionHand hand,
-	                             BlockHitResult hitResult) {
-
+	protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
 		Direction facingDirection = state.getValue(FACING);
 
 		if (level.isClientSide) {
-			return InteractionResult.SUCCESS;
+			return ItemInteractionResult.SUCCESS;
 		} else {
 			BlockEntity blockEntity = level.getBlockEntity(pos.relative(facingDirection.getOpposite()));
 
@@ -148,14 +142,15 @@ public class BarrelTapBlock extends BasicOrientableBlock implements SimpleWaterl
 											1.0F
 									);
 
-									return InteractionResult.CONSUME;
+									return ItemInteractionResult.CONSUME;
 								}
 							}
 						}
 					}
 				}
 			}
-			return InteractionResult.PASS;
+
+			return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 		}
 	}
 }

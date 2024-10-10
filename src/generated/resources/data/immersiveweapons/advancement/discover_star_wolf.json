@@ -1,0 +1,40 @@
+{
+  "parent": "immersiveweapons:entity_discovery",
+  "criteria": {
+    "discover": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "immersiveweapons:star_wolf"
+            }
+          }
+        ]
+      },
+      "trigger": "immersiveweapons:entity_discovered"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersiveweapons.discover_star_wolf.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "minecraft:bone"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.discover_star_wolf.title"
+    }
+  },
+  "requirements": [
+    [
+      "discover"
+    ]
+  ],
+  "rewards": {
+    "experience": 20
+  },
+  "sends_telemetry_event": true
+}

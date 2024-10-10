@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "pedestal_augments",
+  "key": {
+    "a": {
+      "item": "immersiveweapons:hansium_ingot"
+    },
+    "b": {
+      "tag": "c:ingots/gold"
+    },
+    "c": {
+      "tag": "c:dyes/red"
+    },
+    "d": {
+      "item": "minecraft:iron_helmet"
+    }
+  },
+  "pattern": [
+    "acb",
+    "cdc",
+    "bca"
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:pedestal_augment_armor"
+  }
+}

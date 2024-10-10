@@ -15,14 +15,14 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod.EventBusSubscriber;
-import net.neoforged.fml.common.Mod.EventBusSubscriber.Bus;
-import net.neoforged.neoforge.event.entity.living.LivingHurtEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.common.EventBusSubscriber.Bus;
+import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
+import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
-@EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.FORGE)
+@EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.GAME)
 public class RecoveryStaffItem extends Item implements SummoningStaff {
 
 	private float healAmount = 4.0f;
@@ -87,7 +87,7 @@ public class RecoveryStaffItem extends Item implements SummoningStaff {
 
 	@Override
 	public int getMaxRange() {
-		return CommonConfig.recoveryStaffMaxUseRange;
+		return IWConfigs.SERVER.recoveryStaffMaxUseRange.getAsInt();
 	}
 
 	@Override
@@ -109,13 +109,13 @@ public class RecoveryStaffItem extends Item implements SummoningStaff {
 	}
 
 	@SubscribeEvent
-	public static void livingHurtEvent(LivingHurtEvent event) {
+	public static void livingHurtEvent(LivingDamageEvent.Post event) {
 		if (event.getEntity() instanceof Player player) {
 			player.getInventory().items.stream()
 					.filter(stack -> stack.getItem() instanceof RecoveryStaffItem)
 					.findFirst().ifPresent(stack -> {
 						RecoveryStaffItem staff = (RecoveryStaffItem) stack.getItem();
-						staff.setHealAmount((event.getAmount() / 2) + 4);
+						staff.setHealAmount((event.getNewDamage() / 2) + 4);
 					});
 		}
 	}

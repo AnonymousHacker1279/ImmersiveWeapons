@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "molten",
+  "ingredients": [
+    {
+      "item": "immersiveweapons:molten_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "immersiveweapons:molten_ingot"
+  }
+}

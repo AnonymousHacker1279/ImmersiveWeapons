@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "stained_bulletproof_glass",
+  "key": {
+    "a": {
+      "item": "immersiveweapons:bulletproof_glass"
+    },
+    "b": {
+      "tag": "c:dyes/brown"
+    }
+  },
+  "pattern": [
+    "aaa",
+    "aba",
+    "aaa"
+  ],
+  "result": {
+    "count": 8,
+    "id": "immersiveweapons:brown_stained_bulletproof_glass"
+  }
+}

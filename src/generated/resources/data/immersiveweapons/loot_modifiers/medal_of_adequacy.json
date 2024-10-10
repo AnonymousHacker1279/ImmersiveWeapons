@@ -18,8 +18,7 @@
     }
   ],
   "item": {
-    "Count": 1,
+    "count": 1,
     "id": "immersiveweapons:medal_of_adequacy"
-  },
-  "mob_type": ""
+  }
 }

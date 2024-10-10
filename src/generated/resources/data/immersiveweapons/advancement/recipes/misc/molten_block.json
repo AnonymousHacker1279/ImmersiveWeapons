@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "immersiveweapons:molten_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "molten_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#immersiveweapons:ingots/molten"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "molten_ingot"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:molten_block"
+    ]
+  }
+}

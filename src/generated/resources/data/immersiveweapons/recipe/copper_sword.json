@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "a": {
+      "tag": "c:ingots/copper"
+    },
+    "b": {
+      "tag": "c:rods/wooden"
+    }
+  },
+  "pattern": [
+    "a",
+    "a",
+    "b"
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:copper_sword"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "immersiveweapons:mre"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "mre_items": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:carrot"
+          },
+          {
+            "items": "minecraft:potato"
+          },
+          {
+            "items": "minecraft:beetroot"
+          },
+          {
+            "items": "minecraft:cooked_chicken"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "mre_items"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:mre"
+    ]
+  }
+}

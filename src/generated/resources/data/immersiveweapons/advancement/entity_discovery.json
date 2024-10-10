@@ -1,0 +1,296 @@
+{
+  "parent": "immersiveweapons:root",
+  "criteria": {
+    "discover_celestial_tower": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "immersiveweapons:celestial_tower"
+            }
+          }
+        ]
+      },
+      "trigger": "immersiveweapons:entity_discovered"
+    },
+    "discover_dying_soldier": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "immersiveweapons:dying_soldier"
+            }
+          }
+        ]
+      },
+      "trigger": "immersiveweapons:entity_discovered"
+    },
+    "discover_evil_eye": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "immersiveweapons:evil_eye"
+            }
+          }
+        ]
+      },
+      "trigger": "immersiveweapons:entity_discovered"
+    },
+    "discover_field_medic": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "immersiveweapons:field_medic"
+            }
+          }
+        ]
+      },
+      "trigger": "immersiveweapons:entity_discovered"
+    },
+    "discover_hans": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "immersiveweapons:hans"
+            }
+          }
+        ]
+      },
+      "trigger": "immersiveweapons:entity_discovered"
+    },
+    "discover_lava_revenant": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "immersiveweapons:lava_revenant"
+            }
+          }
+        ]
+      },
+      "trigger": "immersiveweapons:entity_discovered"
+    },
+    "discover_minuteman": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "immersiveweapons:minuteman"
+            }
+          }
+        ]
+      },
+      "trigger": "immersiveweapons:entity_discovered"
+    },
+    "discover_rock_spider": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "immersiveweapons:rock_spider"
+            }
+          }
+        ]
+      },
+      "trigger": "immersiveweapons:entity_discovered"
+    },
+    "discover_skeleton_merchant": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "immersiveweapons:skeleton_merchant"
+            }
+          }
+        ]
+      },
+      "trigger": "immersiveweapons:entity_discovered"
+    },
+    "discover_skygazer": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "immersiveweapons:skygazer"
+            }
+          }
+        ]
+      },
+      "trigger": "immersiveweapons:entity_discovered"
+    },
+    "discover_star_wolf": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "immersiveweapons:star_wolf"
+            }
+          }
+        ]
+      },
+      "trigger": "immersiveweapons:entity_discovered"
+    },
+    "discover_starmite": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "immersiveweapons:starmite"
+            }
+          }
+        ]
+      },
+      "trigger": "immersiveweapons:entity_discovered"
+    },
+    "discover_storm_creeper": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "immersiveweapons:storm_creeper"
+            }
+          }
+        ]
+      },
+      "trigger": "immersiveweapons:entity_discovered"
+    },
+    "discover_super_hans": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "immersiveweapons:super_hans"
+            }
+          }
+        ]
+      },
+      "trigger": "immersiveweapons:entity_discovered"
+    },
+    "discover_the_commander": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "immersiveweapons:the_commander"
+            }
+          }
+        ]
+      },
+      "trigger": "immersiveweapons:entity_discovered"
+    },
+    "discover_wandering_warrior": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "immersiveweapons:wandering_warrior"
+            }
+          }
+        ]
+      },
+      "trigger": "immersiveweapons:entity_discovered"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersiveweapons.entity_discovery.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "minecraft:creeper_head"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.entity_discovery.title"
+    }
+  },
+  "requirements": [
+    [
+      "discover_minuteman"
+    ],
+    [
+      "discover_field_medic"
+    ],
+    [
+      "discover_dying_soldier"
+    ],
+    [
+      "discover_the_commander"
+    ],
+    [
+      "discover_wandering_warrior"
+    ],
+    [
+      "discover_hans"
+    ],
+    [
+      "discover_super_hans"
+    ],
+    [
+      "discover_lava_revenant"
+    ],
+    [
+      "discover_rock_spider"
+    ],
+    [
+      "discover_celestial_tower"
+    ],
+    [
+      "discover_starmite"
+    ],
+    [
+      "discover_storm_creeper"
+    ],
+    [
+      "discover_evil_eye"
+    ],
+    [
+      "discover_star_wolf"
+    ],
+    [
+      "discover_skygazer"
+    ],
+    [
+      "discover_skeleton_merchant"
+    ]
+  ],
+  "rewards": {
+    "experience": 150
+  },
+  "sends_telemetry_event": true
+}

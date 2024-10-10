@@ -9,7 +9,7 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.StarmiteEntity;
 
 public class StarmiteRenderer extends MobRenderer<StarmiteEntity, EndermiteModel<StarmiteEntity>> {
-	private static final ResourceLocation TEXTURE_LOCATION = new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/starmite/starmite.png");
+	private static final ResourceLocation TEXTURE_LOCATION = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/entity/starmite/starmite.png");
 
 	public StarmiteRenderer(EntityRendererProvider.Context context) {
 		super(context, new EndermiteModel<>(context.bakeLayer(ModelLayers.ENDERMITE)), 0.3F);

@@ -1,6 +1,8 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.ai.goal;
 
+import net.minecraft.core.HolderGetter;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -12,8 +14,9 @@ import net.minecraft.world.entity.monster.Skeleton;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
-import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
+import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.CelestialTowerEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.RockSpiderEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
@@ -33,7 +36,7 @@ public class CelestialTowerSummonGoal extends WaveSummonGoal<CelestialTowerEntit
 	protected void doWaveSpawnBehavior() {
 		// Get the total number of mobs to be spawned
 		int mobsToSpawn = (mob.getRandom().nextIntBetweenInclusive(8, 12 + mob.getWavesSpawned())) * mob.getDifficultyWaveSizeModifier();
-		mobsToSpawn = (int) (mobsToSpawn * CommonConfig.celestialTowerWaveSizeModifier);
+		mobsToSpawn = (int) (mobsToSpawn * IWConfigs.SERVER.celestialTowerWaveSizeModifier.getAsDouble());
 
 		// 30% of the mob spawns will be "fodder" mobs
 		int fodderMobsToSpawn = (int) (mobsToSpawn * 0.3f);
@@ -42,6 +45,8 @@ public class CelestialTowerSummonGoal extends WaveSummonGoal<CelestialTowerEntit
 		// 20% of the mob spawns will be "power" mobs, if over halfway through the waves
 		int powerMobsToSpawn = isWavesPastHalf() ? (int) (mobsToSpawn * 0.2f) : 0;
 		mobsToSpawn = mobsToSpawn - powerMobsToSpawn;
+
+		HolderGetter<Enchantment> enchantmentGetter = mob.registryAccess().lookup(Registries.ENCHANTMENT).orElseThrow();
 
 		for (int i = fodderMobsToSpawn; i > 0; i--) {
 			RockSpiderEntity rockSpider = new RockSpiderEntity(EntityRegistry.ROCK_SPIDER_ENTITY.get(), mob.level());
@@ -52,9 +57,9 @@ public class CelestialTowerSummonGoal extends WaveSummonGoal<CelestialTowerEntit
 			Zombie zombie = new Zombie(EntityType.ZOMBIE, mob.level());
 
 			ItemStack sword = new ItemStack(Items.IRON_SWORD);
-			sword.enchant(Enchantments.SHARPNESS, mob.getRandom().nextIntBetweenInclusive(2, 3 + mob.getWavesSpawned()));
-			sword.enchant(Enchantments.KNOCKBACK, mob.getRandom().nextIntBetweenInclusive(1, 2 + mob.getWavesSpawned()));
-			sword.enchant(Enchantments.FIRE_ASPECT, mob.getRandom().nextIntBetweenInclusive(1, 2 + mob.getWavesSpawned()));
+			sword.enchant(enchantmentGetter.getOrThrow(Enchantments.SHARPNESS), mob.getRandom().nextIntBetweenInclusive(2, 3 + mob.getWavesSpawned()));
+			sword.enchant(enchantmentGetter.getOrThrow(Enchantments.KNOCKBACK), mob.getRandom().nextIntBetweenInclusive(1, 2 + mob.getWavesSpawned()));
+			sword.enchant(enchantmentGetter.getOrThrow(Enchantments.FIRE_ASPECT), mob.getRandom().nextIntBetweenInclusive(1, 2 + mob.getWavesSpawned()));
 
 			zombie.setItemSlot(EquipmentSlot.HEAD, new ItemStack(Items.IRON_HELMET));
 			zombie.setItemSlot(EquipmentSlot.CHEST, new ItemStack(Items.IRON_CHESTPLATE));
@@ -74,8 +79,8 @@ public class CelestialTowerSummonGoal extends WaveSummonGoal<CelestialTowerEntit
 			Skeleton skeleton = new Skeleton(EntityType.SKELETON, mob.level());
 
 			ItemStack bow = new ItemStack(Items.BOW);
-			bow.enchant(Enchantments.POWER_ARROWS, mob.getRandom().nextIntBetweenInclusive(1, 3 + mob.getWavesSpawned()));
-			bow.enchant(Enchantments.PUNCH_ARROWS, mob.getRandom().nextIntBetweenInclusive(1, 2 + mob.getWavesSpawned()));
+			bow.enchant(enchantmentGetter.getOrThrow(Enchantments.POWER), mob.getRandom().nextIntBetweenInclusive(1, 3 + mob.getWavesSpawned()));
+			bow.enchant(enchantmentGetter.getOrThrow(Enchantments.PUNCH), mob.getRandom().nextIntBetweenInclusive(1, 2 + mob.getWavesSpawned()));
 
 			skeleton.setItemSlot(EquipmentSlot.HEAD, new ItemStack(Items.IRON_HELMET));
 			Objects.requireNonNull(skeleton.getAttribute(Attributes.MAX_HEALTH))

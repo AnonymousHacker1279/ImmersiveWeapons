@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "flag",
+  "key": {
+    "a": {
+      "item": "immersiveweapons:flag_pole"
+    },
+    "b": {
+      "item": "minecraft:yellow_wool"
+    },
+    "c": {
+      "item": "minecraft:black_wool"
+    },
+    "d": {
+      "item": "minecraft:green_wool"
+    }
+  },
+  "pattern": [
+    "bcb",
+    "bdb",
+    "a  "
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:gadsden_flag"
+  }
+}

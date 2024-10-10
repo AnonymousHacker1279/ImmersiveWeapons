@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "cobalt",
+  "key": {
+    "a": {
+      "tag": "c:ingots/cobalt"
+    }
+  },
+  "pattern": [
+    "aaa",
+    "aaa",
+    "aaa"
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:cobalt_block"
+  }
+}

@@ -1,19 +1,17 @@
 package tech.anonymoushacker1279.immersiveweapons.world.level.loot;
 
 import com.google.common.base.Suppliers;
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeManager;
-import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -28,8 +26,8 @@ import java.util.function.Supplier;
 
 public class ToolSmeltingModifierHandler extends LootModifier {
 
-	public static final Supplier<Codec<ToolSmeltingModifierHandler>> CODEC = Suppliers.memoize(() ->
-			RecordCodecBuilder.create(inst -> codecStart(inst).and(
+	public static final Supplier<MapCodec<ToolSmeltingModifierHandler>> CODEC = Suppliers.memoize(() ->
+			RecordCodecBuilder.mapCodec(inst -> codecStart(inst).and(
 							TagKey.codec(Registries.ITEM).fieldOf("toolsTag").forGetter(m -> m.tools))
 					.apply(inst, ToolSmeltingModifierHandler::new))
 	);
@@ -53,10 +51,11 @@ public class ToolSmeltingModifierHandler extends LootModifier {
 				BlockState state = context.getParamOrNull(LootContextParams.BLOCK_STATE);
 				if (state != null) {
 					ItemStack blockItemStack = state.getBlock().asItem().getDefaultInstance();
-					if (manager.getRecipeFor(RecipeType.SMELTING, new SimpleContainer(blockItemStack), player.level()).isPresent()) {
+					SingleRecipeInput input = new SingleRecipeInput(blockItemStack);
+					if (manager.getRecipeFor(RecipeType.SMELTING, input, player.level()).isPresent()) {
 						// Get the smelted item
-						ItemStack smeltedItem = manager.getRecipeFor(RecipeType.SMELTING, new SimpleContainer(blockItemStack), player.level())
-								.get().value().assemble(new SimpleContainer(blockItemStack), player.level().registryAccess());
+						ItemStack smeltedItem = manager.getRecipeFor(RecipeType.SMELTING, input, player.level())
+								.get().value().assemble(input, player.level().registryAccess());
 
 						// Drop the smelted item
 						Vec3 origin = context.getParamOrNull(LootContextParams.ORIGIN);
@@ -75,7 +74,7 @@ public class ToolSmeltingModifierHandler extends LootModifier {
 	}
 
 	@Override
-	public Codec<? extends IGlobalLootModifier> codec() {
+	public MapCodec<? extends IGlobalLootModifier> codec() {
 		return CODEC.get();
 	}
 }

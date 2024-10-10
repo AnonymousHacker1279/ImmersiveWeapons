@@ -2,6 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.block.decoration;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.Entity;
@@ -51,21 +52,9 @@ public class AstralCrystalBlock extends AmethystClusterBlock implements EntityBl
 		RECIPES = level.getRecipeManager().getAllRecipesFor(RecipeTypeRegistry.ASTRAL_CRYSTAL_RECIPE_TYPE.get());
 	}
 
-	/**
-	 * Runs when the block is activated.
-	 * Allows the block to respond to user interaction.
-	 *
-	 * @param state     the <code>BlockState</code> of the block
-	 * @param level     the <code>Level</code> the block is in
-	 * @param pos       the <code>BlockPos</code> the block is at
-	 * @param player    the <code>Player</code> interacting with the block
-	 * @param hand      the <code>InteractionHand</code> the Player used
-	 * @param hitResult the <code>BlockHitResult</code> of the interaction
-	 * @return InteractionResult
-	 */
-	@SuppressWarnings("deprecation")
+
 	@Override
-	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+	protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
 		if (isBuiltOnPlatform(level, pos)) {
 			BlockEntity blockEntity = level.getBlockEntity(pos);
 			if (blockEntity instanceof AstralCrystalBlockEntity crystalBlockEntity) {
@@ -73,17 +62,21 @@ public class AstralCrystalBlock extends AmethystClusterBlock implements EntityBl
 				if (itemStack.isEmpty()) {
 					// If not holding anything, remove the last added item
 					crystalBlockEntity.removeItem();
-					return InteractionResult.SUCCESS;
+					return ItemInteractionResult.SUCCESS;
 				}
 				if (!level.isClientSide) {
 					crystalBlockEntity.addItem(player.isCreative() ? itemStack.copy() : itemStack);
-					return InteractionResult.SUCCESS;
+
+					return ItemInteractionResult.SUCCESS;
 				}
-				return InteractionResult.CONSUME;
+
+				return ItemInteractionResult.CONSUME;
 			}
-			return InteractionResult.PASS;
+
+			return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 		}
-		return InteractionResult.FAIL;
+
+		return ItemInteractionResult.FAIL;
 	}
 
 	/**
@@ -95,7 +88,6 @@ public class AstralCrystalBlock extends AmethystClusterBlock implements EntityBl
 	 * @param newState the <code>BlockState</code> the block now has
 	 * @param isMoving determines if the block is moving
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (!state.is(newState.getBlock())) {
@@ -134,7 +126,7 @@ public class AstralCrystalBlock extends AmethystClusterBlock implements EntityBl
 	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
 		if (entity instanceof ItemEntity itemEntity && isBuiltOnPlatform(level, pos)) {
 			if (level.getBlockEntity(pos) instanceof AstralCrystalBlockEntity crystalBlockEntity) {
-				if (!level.isClientSide) {
+				if (level instanceof ServerLevel serverLevel) {
 					for (RecipeHolder<AstralCrystalRecipe> recipe : RECIPES) {
 						int primaryMaterialInInventory = crystalBlockEntity.getInventory().stream()
 								.map(ItemStack::getItem)
@@ -143,16 +135,15 @@ public class AstralCrystalBlock extends AmethystClusterBlock implements EntityBl
 						if (primaryMaterialInInventory == 4) {
 							ItemStack itemStack = itemEntity.getItem();
 							if (recipe.value().getSecondaryMaterial().test(itemStack)) {
-								level.addFreshEntity(new ItemEntity(level,
+								serverLevel.addFreshEntity(new ItemEntity(serverLevel,
 										itemEntity.getX(), itemEntity.getY() + 0.5f, itemEntity.getZ(),
-										recipe.value().getResultItem(level.registryAccess())));
+										recipe.value().getResultItem(serverLevel.registryAccess())));
 
 								crystalBlockEntity.getInventory().clear();
-								level.destroyBlock(pos, false);
+								serverLevel.destroyBlock(pos, false);
 
 								// Send a packet to the client, so it can clear its inventory and add effects
-								PacketDistributor.TRACKING_CHUNK.with(level.getChunkAt(pos))
-										.send(new AstralCrystalPayload(pos));
+								PacketDistributor.sendToPlayersTrackingChunk(serverLevel, entity.chunkPosition(), new AstralCrystalPayload(pos));
 
 								itemEntity.remove(RemovalReason.DISCARDED);
 							}

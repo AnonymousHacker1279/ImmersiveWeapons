@@ -5,12 +5,13 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.BiomeTagsProvider;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.level.biome.Biomes;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeWorldGenTagGroups;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWWorldGenTagGroups;
+import tech.anonymoushacker1279.immersiveweapons.data.groups.common.CommonWorldGenTagGroups;
+import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWWorldGenTagGroups;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -25,13 +26,10 @@ public class BiomeTagsGenerator extends BiomeTagsProvider {
 	protected void addTags(Provider provider) {
 
 		// Biome tags
-		tag(ForgeWorldGenTagGroups.IS_PLAINS)
-				.add(Biomes.PLAINS, Biomes.SNOWY_PLAINS, Biomes.SUNFLOWER_PLAINS);
-
-		tag(ForgeWorldGenTagGroups.IS_WET_CAVE)
+		tag(CommonWorldGenTagGroups.IS_WET_CAVE)
 				.add(Biomes.DRIPSTONE_CAVES, Biomes.LUSH_CAVES);
 
-		tag(ForgeWorldGenTagGroups.IS_LUSH_CAVE)
+		tag(CommonWorldGenTagGroups.IS_LUSH_CAVE)
 				.add(Biomes.LUSH_CAVES);
 
 		tag(BiomeTags.IS_OVERWORLD)
@@ -56,29 +54,29 @@ public class BiomeTagsGenerator extends BiomeTagsProvider {
 
 		// Structure tags
 		tag(IWWorldGenTagGroups.HAS_ABANDONED_FACTORY)
-				.addTags(ForgeWorldGenTagGroups.IS_PLAINS, BiomeTags.IS_FOREST);
+				.addTags(Tags.Biomes.IS_PLAINS, Tags.Biomes.IS_SNOWY_PLAINS, BiomeTags.IS_FOREST);
 
 		tag(IWWorldGenTagGroups.HAS_PITFALL_TRAP)
 				.addTag(BiomeTags.IS_JUNGLE);
 
 		tag(IWWorldGenTagGroups.HAS_BEAR_TRAP)
-				.addTags(ForgeWorldGenTagGroups.IS_PLAINS, BiomeTags.IS_FOREST);
+				.addTags(Tags.Biomes.IS_PLAINS, Tags.Biomes.IS_SNOWY_PLAINS, BiomeTags.IS_FOREST);
 
 		tag(IWWorldGenTagGroups.HAS_LANDMINE_TRAP)
 				.add(Biomes.DESERT);
 
 		tag(IWWorldGenTagGroups.HAS_UNDERGROUND_BUNKER)
-				.addTags(ForgeWorldGenTagGroups.IS_PLAINS, BiomeTags.IS_FOREST);
+				.addTags(Tags.Biomes.IS_PLAINS, Tags.Biomes.IS_SNOWY_PLAINS, BiomeTags.IS_FOREST);
 
 		tag(IWWorldGenTagGroups.HAS_CLOUD_ISLAND)
 				.addTag(BiomeTags.IS_TAIGA);
 
 		tag(IWWorldGenTagGroups.HAS_CAMPSITE)
-				.addTag(ForgeWorldGenTagGroups.IS_PLAINS)
+				.addTags(Tags.Biomes.IS_PLAINS, Tags.Biomes.IS_SNOWY_PLAINS)
 				.add(Biomes.DESERT);
 
 		tag(IWWorldGenTagGroups.HAS_WATER_TOWER)
-				.addTag(ForgeWorldGenTagGroups.IS_PLAINS);
+				.addTags(Tags.Biomes.IS_PLAINS, Tags.Biomes.IS_SNOWY_PLAINS);
 
 		tag(IWWorldGenTagGroups.HAS_HANS_HUT)
 				.add(Biomes.LUSH_CAVES)
@@ -106,14 +104,9 @@ public class BiomeTagsGenerator extends BiomeTagsProvider {
 				.add(IWBiomes.STARLIGHT_PLAINS);
 
 		tag(IWWorldGenTagGroups.HAS_CHAMPION_TOWER)
-				.addTag(ForgeWorldGenTagGroups.IS_PLAINS);
+				.addTags(Tags.Biomes.IS_PLAINS, Tags.Biomes.IS_SNOWY_PLAINS);
 
 		tag(IWWorldGenTagGroups.HAS_COMMANDER_OUTPOST)
 				.add(IWBiomes.BATTLEFIELD);
-	}
-
-	@Override
-	public String getName() {
-		return "Biome Tags";
 	}
 }

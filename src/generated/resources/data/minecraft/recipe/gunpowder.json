@@ -1,0 +1,38 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "gunpowder",
+  "ingredients": [
+    {
+      "tag": "minecraft:coals"
+    },
+    {
+      "tag": "minecraft:coals"
+    },
+    {
+      "tag": "c:dusts/sulfur"
+    },
+    {
+      "tag": "c:dusts/sulfur"
+    },
+    {
+      "item": "immersiveweapons:potassium_nitrate"
+    },
+    {
+      "item": "immersiveweapons:potassium_nitrate"
+    },
+    {
+      "item": "immersiveweapons:potassium_nitrate"
+    },
+    {
+      "item": "immersiveweapons:potassium_nitrate"
+    },
+    {
+      "item": "immersiveweapons:mortar_and_pestle"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "id": "minecraft:gunpowder"
+  }
+}

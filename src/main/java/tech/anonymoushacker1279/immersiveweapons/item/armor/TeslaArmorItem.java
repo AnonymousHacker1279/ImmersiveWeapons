@@ -1,6 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.item.armor;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.StringRepresentable;
@@ -9,22 +10,21 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.PacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
-import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
+import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.TeslaArmorPayload;
 
 import java.util.List;
 
-public class TeslaArmorItem extends BasicArmorItem {
+public class TeslaArmorItem extends ArmorItem {
 
 	private int noiseCooldown = 0;
 
-	public TeslaArmorItem(ArmorMaterial material, Type armorType, Properties properties) {
+	public TeslaArmorItem(Holder<ArmorMaterial> material, Type armorType, Properties properties) {
 		super(material, armorType, properties);
 	}
 
@@ -42,7 +42,7 @@ public class TeslaArmorItem extends BasicArmorItem {
 
 						// Send packet to server
 						state = state.getNext();
-						PacketDistributor.SERVER.noArg().send(new TeslaArmorPayload(state));
+						PacketDistributor.sendToServer(new TeslaArmorPayload(state));
 
 						if (state == EffectState.DISABLED) {
 							level.playSound(player,
@@ -121,7 +121,7 @@ public class TeslaArmorItem extends BasicArmorItem {
 	 * @param player the <code>Player</code> instance
 	 */
 	private void effectNoise(Level level, Player player) {
-		if (noiseCooldown == 0 && ClientConfig.teslaArmorEffectSound) {
+		if (noiseCooldown == 0 && IWConfigs.CLIENT.teslaArmorEffectSound.getAsBoolean()) {
 			level.playSound(player,
 					player.blockPosition(),
 					SoundEventRegistry.TESLA_ARMOR_EFFECT.get(),

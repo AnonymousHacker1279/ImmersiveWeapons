@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "ring",
+  "key": {
+    "a": {
+      "tag": "c:ingots/gold"
+    },
+    "b": {
+      "item": "immersiveweapons:cobalt_ring"
+    }
+  },
+  "pattern": [
+    " a ",
+    "aba",
+    " a "
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:golden_ring"
+  }
+}

@@ -1,21 +1,25 @@
 package tech.anonymoushacker1279.immersiveweapons.item.projectile;
 
+import net.minecraft.core.*;
+import net.minecraft.core.Holder.Reference;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.AbstractArrow.Pickup;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils.HitEffect;
+import tech.anonymoushacker1279.immersiveweapons.util.ArrowKnockbackAccessor;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.annotation.Nullable;
+import java.util.*;
 import java.util.function.Supplier;
 
 public class CustomArrowItem<T extends CustomArrowEntity> extends ArrowItem {
@@ -50,16 +54,19 @@ public class CustomArrowItem<T extends CustomArrowEntity> extends ArrowItem {
 	}
 
 	@Override
-	public AbstractArrow createArrow(Level level, ItemStack stack, LivingEntity shooter) {
-		CustomArrowEntity arrowEntity = new CustomArrowEntity(entitySupplier.get(), shooter, level);
+	public AbstractArrow createArrow(Level level, ItemStack ammo, LivingEntity shooter, @Nullable ItemStack weapon) {
+		CustomArrowEntity arrowEntity = new CustomArrowEntity(entitySupplier.get(), shooter, level, weapon);
 		setCommonArrowCharacteristics(arrowEntity);
 
 		return arrowEntity;
 	}
 
-	public AbstractArrow createArrow(Level level) {
+	@Override
+	public Projectile asProjectile(Level level, Position pos, ItemStack stack, Direction direction) {
 		CustomArrowEntity arrowEntity = new CustomArrowEntity(entitySupplier.get(), level);
+		arrowEntity.pickup = Pickup.ALLOWED;
 		setCommonArrowCharacteristics(arrowEntity);
+		arrowEntity.setPos(pos.x(), pos.y(), pos.z());
 
 		return arrowEntity;
 	}
@@ -67,11 +74,12 @@ public class CustomArrowItem<T extends CustomArrowEntity> extends ArrowItem {
 	private void setCommonArrowCharacteristics(CustomArrowEntity arrowEntity) {
 		arrowEntity.setPierceLevel((byte) pierceLevel);
 		arrowEntity.setBaseDamage(damage);
-		arrowEntity.setKnockback(knockbackStrength);
+		((ArrowKnockbackAccessor) arrowEntity).immersiveWeapons$setBaseKnockback(knockbackStrength);
 		arrowEntity.gravityModifier = gravityModifier;
 		arrowEntity.shootingVectorInputs = shootingVectorInputs;
 		arrowEntity.hitEffect = hitEffect;
 		arrowEntity.color = color;
+		arrowEntity.referenceItem = this;
 
 		if (color != -1) {
 			arrowEntity.pickup = Pickup.DISALLOWED;
@@ -85,14 +93,21 @@ public class CustomArrowItem<T extends CustomArrowEntity> extends ArrowItem {
 	 * Check if the arrow is infinite. A more flexible check than Vanilla provides.
 	 * Restricts the ability to lower level arrows, for balance.
 	 *
-	 * @param arrow  the arrow being checked
-	 * @param bow    the bow firing the arrow
-	 * @param player the player firing the bow
+	 * @param arrow   the arrow being checked
+	 * @param bow     the bow firing the arrow
+	 * @param shooter the entity firing the bow
 	 * @return boolean
 	 */
 	@Override
-	public boolean isInfinite(ItemStack arrow, ItemStack bow, Player player) {
-		int enchant = EnchantmentHelper.getTagEnchantmentLevel(Enchantments.INFINITY_ARROWS, bow);
+	public boolean isInfinite(ItemStack arrow, ItemStack bow, LivingEntity shooter) {
+		HolderGetter<Enchantment> enchantmentGetter = shooter.registryAccess().lookup(Registries.ENCHANTMENT).orElseThrow();
+		Optional<Reference<Enchantment>> infinity = enchantmentGetter.get(Enchantments.INFINITY);
+
+		int enchant = 0;
+		if (infinity.isPresent()) {
+			enchant = bow.getEnchantmentLevel(infinity.get());
+		}
+
 		return canBeInfinite() && enchant > 0;
 	}
 

@@ -1,12 +1,9 @@
 package tech.anonymoushacker1279.immersiveweapons.client.gui.overlays;
 
-import com.google.common.collect.Multimap;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.MobType;
-import net.minecraft.world.entity.ai.attributes.*;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryManager;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
@@ -20,8 +17,6 @@ import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
 public class DebugTracingData {
 
 	public static boolean isDebugTracingEnabled = false;
-
-	public static float meleeItemDamage = 0;
 
 	public static float lastDamageDealt = 0;
 	public static float lastDamageTaken = 0;
@@ -45,22 +40,7 @@ public class DebugTracingData {
 
 	public static void handleTracing(Player player) {
 		if (player.tickCount % 20 == 0) {
-			// Get the melee damage attribute of the currently held item
 			ItemStack heldItem = player.getMainHandItem();
-			Multimap<Attribute, AttributeModifier> modifiers = heldItem.getAttributeModifiers(EquipmentSlot.MAINHAND);
-
-			if (modifiers.isEmpty()) {
-				meleeItemDamage = 0;
-			} else {
-				modifiers.forEach((attribute, modifier) -> {
-					if (attribute.equals(Attributes.ATTACK_DAMAGE)) {
-						double damage = modifier.getAmount() + 1;
-						damage += EnchantmentHelper.getDamageBonus(heldItem, MobType.UNDEFINED);
-						meleeItemDamage = (float) damage;
-					}
-				});
-			}
-
 			if (heldItem.getItem() instanceof AbstractGunItem gunItem) {
 				// Round to nearest 0.1
 				gunBaseVelocity = Math.round(gunItem.getBaseFireVelocity() * 10.0f) / 10.0f;
@@ -105,7 +85,7 @@ public class DebugTracingData {
 			GENERAL_DAMAGE_RESISTANCE = AccessoryManager.collectEffects(EffectType.DAMAGE_RESISTANCE, player);
 			KNOCKBACK_RESISTANCE = player.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE);
 
-			if (player.hasEffect(EffectRegistry.CELESTIAL_PROTECTION_EFFECT.get())) {
+			if (player.hasEffect(EffectRegistry.CELESTIAL_PROTECTION_EFFECT)) {
 				GENERAL_DAMAGE_RESISTANCE += 0.05d;
 
 				if (!player.getPersistentData().isEmpty()) {

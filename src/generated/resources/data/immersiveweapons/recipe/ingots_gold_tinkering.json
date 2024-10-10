@@ -1,0 +1,12 @@
+{
+  "type": "immersiveweapons:small_parts",
+  "craftables": [
+    "immersiveweapons:wide_golden_barrel",
+    "immersiveweapons:trigger_assembly",
+    "immersiveweapons:scope_mount"
+  ],
+  "group": "small_parts",
+  "material": {
+    "tag": "c:ingots/gold"
+  }
+}

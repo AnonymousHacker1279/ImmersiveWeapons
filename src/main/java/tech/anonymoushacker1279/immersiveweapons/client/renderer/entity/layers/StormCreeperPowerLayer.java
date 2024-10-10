@@ -11,7 +11,7 @@ import tech.anonymoushacker1279.immersiveweapons.entity.monster.StormCreeperEnti
 
 public class StormCreeperPowerLayer extends EnergySwirlLayer<StormCreeperEntity, CreeperModel<StormCreeperEntity>> {
 
-	private static final ResourceLocation POWER_LOCATION = new ResourceLocation("textures/entity/creeper/creeper_armor.png");
+	private static final ResourceLocation POWER_LOCATION = ResourceLocation.withDefaultNamespace("textures/entity/creeper/creeper_armor.png");
 	private final CreeperModel<StormCreeperEntity> model;
 
 	public StormCreeperPowerLayer(RenderLayerParent<StormCreeperEntity, CreeperModel<StormCreeperEntity>> pRenderer, EntityModelSet modelSet) {

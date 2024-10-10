@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "smoke_grenade",
+  "ingredients": [
+    {
+      "item": "immersiveweapons:mortar_and_pestle"
+    },
+    {
+      "item": "minecraft:gunpowder"
+    },
+    {
+      "tag": "minecraft:coals"
+    },
+    {
+      "tag": "minecraft:leaves"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "id": "immersiveweapons:smoke_powder"
+  }
+}

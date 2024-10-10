@@ -1,6 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.blockentity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
@@ -9,6 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.EquipmentSlot.Type;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -35,7 +37,7 @@ public abstract class AbstractStatueBlockEntity<T extends SoldierEntity> extends
 	protected float armorSpawnChance = 0.0f;
 	protected float gearEnchantChance = 0.0f;
 
-	protected static final ResourceKey<Biome> BATTLEFIELD = ResourceKey.create(Registries.BIOME, new ResourceLocation(ImmersiveWeapons.MOD_ID, "battlefield"));
+	protected static final ResourceKey<Biome> BATTLEFIELD = ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "battlefield"));
 
 	public AbstractStatueBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState, int maxNearbyEntities) {
 		super(type, pos, blockState);
@@ -80,7 +82,7 @@ public abstract class AbstractStatueBlockEntity<T extends SoldierEntity> extends
 			if (entity != null) {
 				if (entity.getRandom().nextFloat() <= armorSpawnChance) {
 					for (EquipmentSlot equipmentslot : EquipmentSlot.values()) {
-						if (equipmentslot.getType() == EquipmentSlot.Type.ARMOR) {
+						if (equipmentslot.getType() == Type.HUMANOID_ARMOR) {
 							ItemStack itemstack = entity.getItemBySlot(equipmentslot);
 
 							int armorTier = 0;
@@ -114,7 +116,7 @@ public abstract class AbstractStatueBlockEntity<T extends SoldierEntity> extends
 		for (i = 0; i < 5; i++) {
 			BlockPos randomPositionInArea = getRandomPositionInArea();
 			if (level != null && level.getBlockState(randomPositionInArea) == Blocks.AIR.defaultBlockState()) {
-				entity.finalizeSpawn((ServerLevel) level, level.getCurrentDifficultyAt(randomPositionInArea), MobSpawnType.SPAWNER, null, null);
+				entity.finalizeSpawn((ServerLevel) level, level.getCurrentDifficultyAt(randomPositionInArea), MobSpawnType.SPAWNER, null);
 				entity.moveTo(randomPositionInArea, 0.0F, 0.0F);
 				level.addFreshEntity(entity);
 				spawnParticles();
@@ -167,14 +169,14 @@ public abstract class AbstractStatueBlockEntity<T extends SoldierEntity> extends
 	protected abstract T createEntity(Level level);
 
 	@Override
-	protected void saveAdditional(CompoundTag pTag) {
-		super.saveAdditional(pTag);
-		pTag.putInt("scanCooldown", cooldown);
+	protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+		super.saveAdditional(tag, provider);
+		tag.putInt("scanCooldown", cooldown);
 	}
 
 	@Override
-	public void load(CompoundTag nbt) {
-		super.load(nbt);
-		cooldown = nbt.getInt("scanCooldown");
+	public void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+		super.loadAdditional(tag, provider);
+		cooldown = tag.getInt("scanCooldown");
 	}
 }

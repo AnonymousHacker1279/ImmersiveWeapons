@@ -10,7 +10,7 @@ public abstract class IWLanguageProvider extends LanguageProvider {
 	}
 
 	public void addPotion(String name, String type, String translation) {
-		add("item.immersiveweapons." + type + "." + name, translation);
+		add("item.minecraft." + type + ".effect." + name, translation);
 	}
 
 	public void addContainer(String name, String translation) {
@@ -45,8 +45,12 @@ public abstract class IWLanguageProvider extends LanguageProvider {
 		add("advancements.immersiveweapons." + name, translation);
 	}
 
+	public void addEnchantment(String name, String translation) {
+		add("enchantment." + name, translation);
+	}
+
 	public void addConfigField(String name, String translation) {
-		add("immersiveweapons.cobaltconfig." + name, translation);
+		add("immersiveweapons.configuration." + name, translation);
 	}
 
 	public void addNetworkingFailure(String name, String translation) {

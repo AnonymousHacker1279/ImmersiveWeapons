@@ -2,6 +2,8 @@ package tech.anonymoushacker1279.immersiveweapons.item;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderGetter;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -9,10 +11,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
-import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
+import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
+import tech.anonymoushacker1279.immersiveweapons.data.IWEnchantments;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MeteorEntity;
-import tech.anonymoushacker1279.immersiveweapons.init.EnchantmentRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
 public class MeteorStaffItem extends Item implements SummoningStaff {
@@ -23,15 +26,16 @@ public class MeteorStaffItem extends Item implements SummoningStaff {
 
 	// Summon a meteor entity at the location the player is looking at on right-click
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level level, Player player,
-	                                              InteractionHand hand) {
+	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
 
 		BlockPos lookingAt = getBlockLookingAt(player, level, getMaxRange());
 		ItemStack itemInHand = player.getItemInHand(hand);
 
 		if (!level.isClientSide) {
 			if (lookingAt != null) {
-				int enchantmentLevel = itemInHand.getEnchantmentLevel(EnchantmentRegistry.CELESTIAL_FURY.get());
+				HolderGetter<Enchantment> enchantmentGetter = player.registryAccess().lookup(Registries.ENCHANTMENT).orElseThrow();
+
+				int enchantmentLevel = itemInHand.getEnchantmentLevel(enchantmentGetter.getOrThrow(IWEnchantments.CELESTIAL_FURY));
 
 				if (enchantmentLevel > 0 && player.isCrouching()) {
 					for (int i = 0; i < 3; i++) {
@@ -74,7 +78,7 @@ public class MeteorStaffItem extends Item implements SummoningStaff {
 
 	@Override
 	public int getMaxRange() {
-		return CommonConfig.meteorStaffMaxUseRange;
+		return IWConfigs.SERVER.meteorStaffMaxUseRange.getAsInt();
 	}
 
 	@Override

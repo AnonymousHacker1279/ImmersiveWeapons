@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1.3,
+  "group": "tesla",
+  "ingredient": {
+    "item": "immersiveweapons:electric_ore"
+  },
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:electric_ingot"
+  }
+}

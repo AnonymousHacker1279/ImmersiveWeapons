@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "molten",
+  "key": {
+    "a": {
+      "tag": "immersiveweapons:ingots/molten"
+    }
+  },
+  "pattern": [
+    "aaa",
+    "aaa",
+    "aaa"
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:molten_block"
+  }
+}

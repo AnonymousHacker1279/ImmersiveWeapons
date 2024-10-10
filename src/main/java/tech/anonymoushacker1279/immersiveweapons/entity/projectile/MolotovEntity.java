@@ -1,14 +1,10 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.projectile;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -20,52 +16,22 @@ import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MolotovEntity extends ThrowableItemProjectile {
+public class MolotovEntity extends AdvancedThrowableItemProjectile {
 
 	private static final byte VANILLA_IMPACT_STATUS_ID = 3;
 	static final BlockState airState = Blocks.AIR.defaultBlockState();
 	static final BlockState fireState = Blocks.FIRE.defaultBlockState();
 
-	/**
-	 * Constructor for MolotovEntity.
-	 *
-	 * @param entityType the <code>EntityType</code> instance; must extend MolotovEntity
-	 * @param world      the <code>World</code> the entity is in
-	 */
-	public MolotovEntity(EntityType<? extends MolotovEntity> entityType, Level world) {
-		super(entityType, world);
+	public MolotovEntity(EntityType<? extends MolotovEntity> entityType, Level level) {
+		super(entityType, level);
 	}
 
-	/**
-	 * Constructor for MolotovEntity.
-	 *
-	 * @param world        the <code>World</code> the entity is in
-	 * @param livingEntity the <code>LivingEntity</code> throwing the entity
-	 */
-	public MolotovEntity(Level world, LivingEntity livingEntity) {
-		super(EntityRegistry.MOLOTOV_COCKTAIL_ENTITY.get(), livingEntity, world);
+	public MolotovEntity(Level level, LivingEntity livingEntity) {
+		super(EntityRegistry.MOLOTOV_COCKTAIL_ENTITY.get(), livingEntity, level);
 	}
 
-	/**
-	 * Constructor for MolotovEntity.
-	 *
-	 * @param world the <code>World</code> the entity is in
-	 * @param x     the X position
-	 * @param y     the Y position
-	 * @param z     the Z position
-	 */
-	public MolotovEntity(Level world, double x, double y, double z) {
-		super(EntityRegistry.MOLOTOV_COCKTAIL_ENTITY.get(), x, y, z, world);
-	}
-
-	/**
-	 * Get the entity spawn packet.
-	 *
-	 * @return IPacket
-	 */
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket() {
-		return new ClientboundAddEntityPacket(this);
+	public MolotovEntity(Level level, double x, double y, double z) {
+		super(EntityRegistry.MOLOTOV_COCKTAIL_ENTITY.get(), level, x, y, z);
 	}
 
 	/**

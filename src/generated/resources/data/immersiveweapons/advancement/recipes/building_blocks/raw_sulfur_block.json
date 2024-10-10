@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "immersiveweapons:raw_sulfur_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "sulfur": {
+      "conditions": {
+        "items": [
+          {
+            "items": "immersiveweapons:sulfur"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "sulfur"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:raw_sulfur_block"
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "tables",
+  "key": {
+    "a": {
+      "item": "minecraft:crimson_slab"
+    },
+    "b": {
+      "item": "minecraft:crimson_fence"
+    }
+  },
+  "pattern": [
+    "a",
+    "b"
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:crimson_table"
+  }
+}

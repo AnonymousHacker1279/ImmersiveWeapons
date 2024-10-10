@@ -1,6 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.feature.treedecorators;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator;
@@ -12,8 +13,9 @@ import tech.anonymoushacker1279.immersiveweapons.init.TreeDecoratorRegistry;
 
 public class BurnedBranchDecorator extends TreeDecorator {
 
-	public static final Codec<BurnedBranchDecorator> CODEC = Codec.floatRange(0.0F, 1.0F).fieldOf("probability")
-			.xmap(BurnedBranchDecorator::new, (decorator) -> decorator.probability).codec();
+	public static final MapCodec<BurnedBranchDecorator> CODEC = Codec.floatRange(0.0F, 1.0F)
+			.fieldOf("probability")
+			.xmap(BurnedBranchDecorator::new, (decorator) -> decorator.probability);
 	private final float probability;
 
 	public BurnedBranchDecorator(float chance) {

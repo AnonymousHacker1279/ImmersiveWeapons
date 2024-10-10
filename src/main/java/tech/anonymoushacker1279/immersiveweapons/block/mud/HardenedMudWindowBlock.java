@@ -32,7 +32,6 @@ public class HardenedMudWindowBlock extends BasicOrientableBlock implements Simp
 		registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false));
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext selectionContext) {
 		if (state.getValue(FACING) == Direction.NORTH || state.getValue(FACING) == Direction.SOUTH) {
@@ -47,13 +46,11 @@ public class HardenedMudWindowBlock extends BasicOrientableBlock implements Simp
 		builder.add(FACING, WATERLOGGED);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public float getShadeBrightness(BlockState state, BlockGetter reader, BlockPos pos) {
 		return 1.0F;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);

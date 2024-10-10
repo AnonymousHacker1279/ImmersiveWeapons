@@ -9,8 +9,8 @@ import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.CustomDataGenerator;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeBlockTagGroups;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWBlockTagGroups;
+import tech.anonymoushacker1279.immersiveweapons.data.groups.common.CommonBlockTagGroups;
+import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWBlockTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
 
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 	 */
 	@Override
 	protected void addTags(Provider provider) {
-		addForgeTags();
+		addCommonTags();
 		addImmersiveWeaponsTags();
 		addMinecraftTags();
 		addMiningBlockTags();
@@ -39,35 +39,35 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 	 * Add tags under the Forge namespace
 	 */
 	@SuppressWarnings("unchecked")
-	private void addForgeTags() {
+	private void addCommonTags() {
 		// Bulletproof glass tag
 		for (Block block : CustomDataGenerator.ALL_BLOCKS) {
 			if (block.getDescriptionId().contains("bulletproof_glass")) {
-				tag(ForgeBlockTagGroups.BULLETPROOF_GLASS).add(block);
+				tag(CommonBlockTagGroups.BULLETPROOF_GLASS).add(block);
 			}
 		}
 
 		// Glass tag
-		tag(Blocks.GLASS).addTag(ForgeBlockTagGroups.BULLETPROOF_GLASS);
+		tag(Blocks.GLASS_BLOCKS).addTag(CommonBlockTagGroups.BULLETPROOF_GLASS);
 
 		// Stained glass tag
 		for (Block block : CustomDataGenerator.ALL_BLOCKS) {
 			if (block.getDescriptionId().contains("stained_bulletproof_glass")) {
-				tag(ForgeBlockTagGroups.STAINED_GLASS).add(block);
+				tag(CommonBlockTagGroups.STAINED_GLASS).add(block);
 			}
 		}
 
 		// Ore tags
-		tag(ForgeBlockTagGroups.COBALT_ORES).add(
+		tag(CommonBlockTagGroups.COBALT_ORES).add(
 				BlockRegistry.COBALT_ORE.get(),
 				BlockRegistry.DEEPSLATE_COBALT_ORE.get());
-		tag(ForgeBlockTagGroups.SULFUR_ORES).add(
+		tag(CommonBlockTagGroups.SULFUR_ORES).add(
 				BlockRegistry.SULFUR_ORE.get(),
 				BlockRegistry.DEEPSLATE_SULFUR_ORE.get(),
 				BlockRegistry.NETHER_SULFUR_ORE.get());
 		tag(Blocks.ORES).addTags(
-				ForgeBlockTagGroups.COBALT_ORES,
-				ForgeBlockTagGroups.SULFUR_ORES);
+				CommonBlockTagGroups.COBALT_ORES,
+				CommonBlockTagGroups.SULFUR_ORES);
 	}
 
 	/**
@@ -87,6 +87,27 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 				BlockRegistry.STARDUST_WOOD.get(),
 				BlockRegistry.STRIPPED_STARDUST_LOG.get(),
 				BlockRegistry.STRIPPED_STARDUST_WOOD.get());
+
+		// Tool tags
+		tag(IWBlockTagGroups.INCORRECT_FOR_COPPER_TOOL)
+				.addTag(BlockTags.NEEDS_DIAMOND_TOOL)
+				.addTag(Blocks.NEEDS_NETHERITE_TOOL)
+				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL);
+		tag(IWBlockTagGroups.INCORRECT_FOR_COBALT_TOOL)
+				.addTag(BlockTags.NEEDS_DIAMOND_TOOL)
+				.addTag(Blocks.NEEDS_NETHERITE_TOOL)
+				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL);
+		tag(IWBlockTagGroups.INCORRECT_FOR_MOLTEN_TOOL)
+				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL);
+		tag(IWBlockTagGroups.INCORRECT_FOR_TESLA_TOOL)
+				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL);
+		tag(IWBlockTagGroups.INCORRECT_FOR_VENTUS_TOOL)
+				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL);
+		tag(IWBlockTagGroups.INCORRECT_FOR_STARSTORM_TOOL);
+		tag(IWBlockTagGroups.INCORRECT_FOR_ASTRAL_TOOL);
+		tag(IWBlockTagGroups.INCORRECT_FOR_HANSIUM_TOOL);
+
+		tag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL);
 	}
 
 	/**
@@ -187,6 +208,25 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 
 		// Smelts-to-glass tag
 		tag(BlockTags.SMELTS_TO_GLASS).add(BlockRegistry.BLOOD_SAND.get());
+
+		// Incorrect for X tool tags
+		tag(BlockTags.INCORRECT_FOR_WOODEN_TOOL)
+				.addTag(Blocks.NEEDS_NETHERITE_TOOL)
+				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL);
+		tag(BlockTags.INCORRECT_FOR_STONE_TOOL)
+				.addTag(Blocks.NEEDS_NETHERITE_TOOL)
+				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL);
+		tag(BlockTags.INCORRECT_FOR_GOLD_TOOL)
+				.addTag(Blocks.NEEDS_NETHERITE_TOOL)
+				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL);
+		tag(BlockTags.INCORRECT_FOR_IRON_TOOL)
+				.addTag(Blocks.NEEDS_NETHERITE_TOOL)
+				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL);
+		tag(BlockTags.INCORRECT_FOR_DIAMOND_TOOL)
+				.addTag(Blocks.NEEDS_NETHERITE_TOOL)
+				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL);
+		tag(BlockTags.INCORRECT_FOR_NETHERITE_TOOL)
+				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL);
 	}
 
 	/**

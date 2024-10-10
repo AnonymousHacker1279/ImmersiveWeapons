@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "immersiveweapons:padded_leather_helmet"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "leather_helmet": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:leather_helmet"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "leather_helmet"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:padded_leather_helmet"
+    ]
+  }
+}

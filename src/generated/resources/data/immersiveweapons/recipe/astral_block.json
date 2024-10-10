@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "astral",
+  "key": {
+    "a": {
+      "tag": "immersiveweapons:ingots/astral"
+    }
+  },
+  "pattern": [
+    "aaa",
+    "aaa",
+    "aaa"
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:astral_block"
+  }
+}

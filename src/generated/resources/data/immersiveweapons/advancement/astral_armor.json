@@ -1,0 +1,46 @@
+{
+  "parent": "immersiveweapons:astral_ingot",
+  "criteria": {
+    "hold": {
+      "conditions": {
+        "items": [
+          {
+            "items": "immersiveweapons:astral_helmet"
+          },
+          {
+            "items": "immersiveweapons:astral_chestplate"
+          },
+          {
+            "items": "immersiveweapons:astral_leggings"
+          },
+          {
+            "items": "immersiveweapons:astral_boots"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersiveweapons.astral_armor.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "immersiveweapons:astral_helmet"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.astral_armor.title"
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

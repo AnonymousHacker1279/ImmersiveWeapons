@@ -1,7 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.network.handler;
 
 import net.minecraft.network.chat.Component;
-import net.neoforged.neoforge.network.handling.PlayPayloadContext;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeGrenadeEntity;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.SmokeGrenadePayload;
 
@@ -13,14 +13,10 @@ public class SmokeGrenadePayloadHandler {
 		return INSTANCE;
 	}
 
-	public void handleData(final SmokeGrenadePayload data, final PlayPayloadContext context) {
-		context.workHandler().submitAsync(() -> {
-					if (context.level().isPresent()) {
-						SmokeGrenadeEntity.runOnClientImpact(data.x(), data.y(), data.z(), data.color(), context.level().get(), data.forcedParticleCount());
-					}
-				})
+	public void handleData(final SmokeGrenadePayload data, final IPayloadContext context) {
+		context.enqueueWork(() -> SmokeGrenadeEntity.runOnClientImpact(data.x(), data.y(), data.z(), data.color(), context.player().level(), data.forcedParticleCount()))
 				.exceptionally(e -> {
-					context.packetHandler().disconnect(Component.translatable("immersiveweapons.networking.failure.generic", e.getMessage()));
+					context.disconnect(Component.translatable("immersiveweapons.networking.failure.generic", e.getMessage()));
 					return null;
 				});
 	}

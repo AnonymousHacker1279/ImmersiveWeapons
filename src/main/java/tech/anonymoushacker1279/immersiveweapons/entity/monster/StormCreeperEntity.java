@@ -26,7 +26,7 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.*;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
@@ -86,11 +86,11 @@ public class StormCreeperEntity extends Creeper implements GrantAdvancementOnDis
 	}
 
 	@Override
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-		entityData.define(DATA_SWELL_DIR, -1);
-		entityData.define(DATA_IS_POWERED, false);
-		entityData.define(DATA_IS_IGNITED, false);
+	protected void defineSynchedData(SynchedEntityData.Builder builder) {
+		super.defineSynchedData(builder);
+		builder.define(DATA_SWELL_DIR, -1);
+		builder.define(DATA_IS_POWERED, false);
+		builder.define(DATA_IS_IGNITED, false);
 	}
 
 	@Override
@@ -183,16 +183,15 @@ public class StormCreeperEntity extends Creeper implements GrantAdvancementOnDis
 	}
 
 	@Override
-	protected void dropCustomDeathLoot(DamageSource pSource, int pLooting, boolean pRecentlyHit) {
-		super.dropCustomDeathLoot(pSource, pLooting, pRecentlyHit);
-		Entity entity = pSource.getEntity();
-		if (entity instanceof StormCreeperEntity creeper) {
+	protected void dropCustomDeathLoot(ServerLevel level, DamageSource damageSource, boolean recentlyHit) {
+		super.dropCustomDeathLoot(level, damageSource, recentlyHit);
+
+		if (damageSource.getEntity() instanceof StormCreeperEntity creeper) {
 			if (creeper.canDropMobsSkull()) {
 				creeper.increaseDroppedSkulls();
 				spawnAtLocation(Items.CREEPER_HEAD);
 			}
 		}
-
 	}
 
 	@Override
@@ -233,7 +232,7 @@ public class StormCreeperEntity extends Creeper implements GrantAdvancementOnDis
 			level().playSound(pPlayer, getX(), getY(), getZ(), soundEvent, getSoundSource(), 1.0F, random.nextFloat() * 0.4F + 0.8F);
 			if (!level().isClientSide) {
 				ignite();
-				itemInHand.hurtAndBreak(1, pPlayer, (player) -> player.broadcastBreakEvent(pHand));
+				itemInHand.hurtAndBreak(1, pPlayer, EquipmentSlot.MAINHAND);
 			}
 
 			return InteractionResult.sidedSuccess(level().isClientSide);
@@ -272,7 +271,6 @@ public class StormCreeperEntity extends Creeper implements GrantAdvancementOnDis
 
 			level().addFreshEntity(effectCloud);
 		}
-
 	}
 
 	@Override
@@ -285,11 +283,6 @@ public class StormCreeperEntity extends Creeper implements GrantAdvancementOnDis
 		entityData.set(DATA_IS_IGNITED, true);
 	}
 
-	/**
-	 * Returns {@code true} if an entity is able to drop its skull due to being blown up by this creeper.
-	 * <p>
-	 * Does not test if this creeper is charged, the caller must do that. However, does test the doMobLoot gamerule.
-	 */
 	@Override
 	public boolean canDropMobsSkull() {
 		return isPowered() && droppedSkulls < 1;
@@ -301,25 +294,8 @@ public class StormCreeperEntity extends Creeper implements GrantAdvancementOnDis
 	}
 
 	@Override
-	public int getExperienceReward() {
+	public int getBaseExperienceReward() {
 		xpReward = 5 + level().random.nextInt(5);
-		return super.getExperienceReward();
-	}
-
-	@Override
-	public boolean checkSpawnRules(LevelAccessor pLevel, MobSpawnType pSpawnReason) {
-		boolean walkTargetAboveZero = super.checkSpawnRules(pLevel, pSpawnReason);
-		boolean isValidSpawn = pLevel.getBlockState(blockPosition().below()).isValidSpawn(pLevel, blockPosition(), getType());
-		boolean isDarkEnough = isDarkEnoughToSpawn((ServerLevelAccessor) pLevel, blockPosition(), pLevel.getRandom());
-
-		if (pSpawnReason == MobSpawnType.SPAWN_EGG) {
-			return true;
-		}
-
-		if (pSpawnReason == MobSpawnType.NATURAL) {
-			return walkTargetAboveZero && isValidSpawn && isDarkEnough;
-		} else {
-			return walkTargetAboveZero && isValidSpawn;
-		}
+		return super.getBaseExperienceReward();
 	}
 }

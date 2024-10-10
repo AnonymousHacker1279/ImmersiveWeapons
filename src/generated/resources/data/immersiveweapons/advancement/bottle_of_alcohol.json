@@ -1,0 +1,33 @@
+{
+  "parent": "immersiveweapons:root",
+  "criteria": {
+    "hold": {
+      "conditions": {
+        "items": [
+          {
+            "items": "immersiveweapons:bottle_of_alcohol"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersiveweapons.bottle_of_alcohol.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "immersiveweapons:bottle_of_alcohol"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.bottle_of_alcohol.title"
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

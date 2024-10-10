@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "flag",
+  "key": {
+    "a": {
+      "item": "immersiveweapons:flag_pole"
+    },
+    "b": {
+      "item": "minecraft:black_wool"
+    },
+    "c": {
+      "item": "minecraft:golden_sword"
+    },
+    "d": {
+      "item": "minecraft:blue_wool"
+    }
+  },
+  "pattern": [
+    "bcb",
+    "bdb",
+    "a  "
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:immersive_weapons_flag"
+  }
+}

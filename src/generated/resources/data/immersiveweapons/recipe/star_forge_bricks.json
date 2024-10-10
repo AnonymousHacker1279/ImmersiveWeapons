@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "star_forge",
+  "key": {
+    "a": {
+      "item": "immersiveweapons:moonglow"
+    },
+    "b": {
+      "tag": "c:ingots/cobalt"
+    },
+    "c": {
+      "item": "minecraft:bricks"
+    }
+  },
+  "pattern": [
+    "bcb",
+    "cac",
+    "bcb"
+  ],
+  "result": {
+    "count": 4,
+    "id": "immersiveweapons:star_forge_bricks"
+  }
+}

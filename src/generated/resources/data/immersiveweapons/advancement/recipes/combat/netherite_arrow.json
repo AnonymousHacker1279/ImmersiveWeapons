@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "immersiveweapons:netherite_arrow"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "netherite_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:ingots/netherite"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "netherite_ingot"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:netherite_arrow"
+    ]
+  }
+}

@@ -1,0 +1,49 @@
+modLoader = "javafml"
+loaderVersion = "${loader_version_range}"
+license = "MIT"
+issueTrackerURL = "https://github.com/AnonymousHacker1279/ImmersiveWeapons/issues"
+
+[[mods]]
+modId = "immersiveweapons"
+version = "${mod_version}"
+displayName = "Immersive Weapons"
+displayURL = "https://www.curseforge.com/minecraft/mc-mods/immersive-weapons"
+updateJSONURL = "https://raw.githubusercontent.com/AnonymousHacker1279/ImmersiveWeapons/master/update.json"
+logoFile = "logo.png"
+credits = "Written by AnonymousHacker1279 - Visually designed with the help of Jonny-fox and gamingwarrior68 - Sound designed with the help of RandomDev and Jonny-fox"
+authors = "AnonymousHacker1279"
+description = '''
+Immersive Weapons is more than just a weapons mod aiming to spice up your combat skills.
+'''
+enumExtensions = "META-INF/enumextensions.json"
+
+[[dependencies.immersiveweapons]]
+modId = "neoforge"
+type = "required"
+versionRange = "${neoforge_version_range}"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.immersiveweapons]]
+modId = "minecraft"
+type = "required"
+versionRange = "${minecraft_version_range}"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.immersiveweapons]]
+modId = "biomesquisher"
+type = "required"
+versionRange = "[0.4.1,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.immersiveweapons]]
+modId = "cpapireforged"
+type = "required"
+versionRange = "[1.0.10,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[mixins]]
+config = "mixins.immersiveweapons.json"

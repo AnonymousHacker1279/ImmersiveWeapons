@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "wooden_pressure_plate",
+  "key": {
+    "a": {
+      "item": "immersiveweapons:burned_oak_planks"
+    }
+  },
+  "pattern": [
+    "aa"
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:burned_oak_pressure_plate"
+  }
+}

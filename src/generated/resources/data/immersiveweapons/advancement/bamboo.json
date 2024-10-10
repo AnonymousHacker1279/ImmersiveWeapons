@@ -1,0 +1,33 @@
+{
+  "parent": "immersiveweapons:root",
+  "criteria": {
+    "hold": {
+      "conditions": {
+        "items": [
+          {
+            "items": "minecraft:bamboo"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersiveweapons.bamboo.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "minecraft:bamboo"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.bamboo.title"
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

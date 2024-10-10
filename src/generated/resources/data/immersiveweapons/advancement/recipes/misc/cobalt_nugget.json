@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "cobalt_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:ingots/cobalt"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "immersiveweapons:cobalt_nugget"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "cobalt_ingot"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:cobalt_nugget"
+    ]
+  }
+}

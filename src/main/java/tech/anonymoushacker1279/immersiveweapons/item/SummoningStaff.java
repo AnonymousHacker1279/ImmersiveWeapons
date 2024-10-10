@@ -2,6 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.item;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ClipContext;
@@ -47,7 +48,7 @@ public interface SummoningStaff {
 	default void handleCooldown(Item item, @Nullable BlockPos lookingAt, Player player, InteractionHand hand, int cooldown) {
 		if (lookingAt != null) {
 			if (!player.isCreative()) {
-				player.getItemInHand(hand).hurtAndBreak(1, player, (entity) -> entity.broadcastBreakEvent(player.getUsedItemHand()));
+				player.getItemInHand(hand).hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
 
 				// Add a cooldown to the item
 				player.getCooldowns().addCooldown(item, cooldown);

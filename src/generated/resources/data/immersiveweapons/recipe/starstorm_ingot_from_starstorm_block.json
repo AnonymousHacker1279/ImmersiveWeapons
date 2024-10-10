@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "starstorm",
+  "ingredients": [
+    {
+      "item": "immersiveweapons:starstorm_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "immersiveweapons:starstorm_ingot"
+  }
+}

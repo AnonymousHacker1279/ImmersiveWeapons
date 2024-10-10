@@ -21,7 +21,7 @@ public class BranchBlock extends BasicOrientableBlock {
 	private static final VoxelShape SHAPE_EAST = Block.box(13.0D, 0.0D, 4.0D, 16.0D, 5.0D, 12.0D);
 	private static final VoxelShape SHAPE_WEST = Block.box(0.0D, 0.0D, 4.0D, 3.0D, 5.0D, 12.0D);
 
-	public static final TagKey<Block> BURNED_OAK_LOGS = BlockTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID, "burned_oak_logs"));
+	public static final TagKey<Block> BURNED_OAK_LOGS = BlockTags.create(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "burned_oak_logs"));
 
 	/**
 	 * Constructor for BranchBlock.
@@ -32,7 +32,6 @@ public class BranchBlock extends BasicOrientableBlock {
 		super(properties);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos,
 	                           CollisionContext collisionContext) {
@@ -45,14 +44,12 @@ public class BranchBlock extends BasicOrientableBlock {
 		};
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader reader, BlockPos pos) {
 		BlockState blockstate = reader.getBlockState(pos.relative(state.getValue(FACING)));
 		return blockstate.is(BURNED_OAK_LOGS);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState,
 	                              LevelAccessor level, BlockPos pos, BlockPos neighborPos) {

@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.Pools;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -39,10 +39,10 @@ public class StructureTemplatePoolGenerator {
 	public static final ResourceKey<StructureTemplatePool> WATER_TOWER = createKey("water_tower");
 
 	private static ResourceKey<StructureTemplatePool> createKey(String name) {
-		return ResourceKey.create(Registries.TEMPLATE_POOL, new ResourceLocation(ImmersiveWeapons.MOD_ID, name));
+		return ResourceKey.create(Registries.TEMPLATE_POOL, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, name));
 	}
 
-	public static void bootstrap(BootstapContext<StructureTemplatePool> context) {
+	public static void bootstrap(BootstrapContext<StructureTemplatePool> context) {
 		HolderGetter<StructureTemplatePool> templatePoolHolderGetter = context.lookup(Registries.TEMPLATE_POOL);
 		HolderGetter<StructureProcessorList> processorListsHolderGetter = context.lookup(Registries.PROCESSOR_LIST);
 
@@ -195,7 +195,7 @@ public class StructureTemplatePoolGenerator {
 				Projection.RIGID));
 	}
 
-	protected static void register(BootstapContext<StructureTemplatePool> context, ResourceKey<StructureTemplatePool> key, StructureTemplatePool pool) {
+	protected static void register(BootstrapContext<StructureTemplatePool> context, ResourceKey<StructureTemplatePool> key, StructureTemplatePool pool) {
 		context.register(key, pool);
 	}
 }

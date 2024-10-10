@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "a": {
+      "tag": "c:ingots/metal"
+    },
+    "b": {
+      "item": "minecraft:furnace"
+    },
+    "c": {
+      "item": "minecraft:smooth_stone"
+    }
+  },
+  "pattern": [
+    "aaa",
+    "aba",
+    "ccc"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:blast_furnace"
+  }
+}

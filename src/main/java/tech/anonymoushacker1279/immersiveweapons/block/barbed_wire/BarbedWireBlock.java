@@ -40,7 +40,6 @@ public class BarbedWireBlock extends DamageableBlock implements BarbedWireUtils 
 	 * @param pos    the <code>BlockPos</code> the block is at
 	 * @param entity the <code>Entity</code> passing through the block
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
 		handleEntityContact(state, level, pos, entity);

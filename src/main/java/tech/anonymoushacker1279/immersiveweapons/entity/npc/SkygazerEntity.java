@@ -1,5 +1,9 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.npc;
 
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup.RegistryLookup;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -15,7 +19,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.StarmiteEntity;
@@ -24,8 +28,7 @@ import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
-import java.util.*;
-import java.util.Map.Entry;
+import java.util.Objects;
 
 public class SkygazerEntity extends AbstractMerchantEntity {
 
@@ -41,8 +44,8 @@ public class SkygazerEntity extends AbstractMerchantEntity {
 				player.awardStat(Stats.TALKED_TO_VILLAGER);
 			}
 
-			if (!getOffers().isEmpty()) {
-				if (!level().isClientSide) {
+			if (!level().isClientSide) {
+				if (!getOffers().isEmpty()) {
 					// An offer is always added to add enchanting levels from a book to an item in the player's inventory
 					setupAddItemEnchantsTrade(player);
 
@@ -79,7 +82,8 @@ public class SkygazerEntity extends AbstractMerchantEntity {
 			EnchantItemForItems trade = new EnchantItemForItems(enchantableItem, ItemRegistry.CELESTIAL_FRAGMENT.get(), 1);
 			MerchantOffer offer = trade.getOffer(this, player.getRandom());
 
-			if (trade.getTotalEnchantmentLevels() > GeneralUtilities.getTotalEnchantmentLevels(enchantableItem)) {
+			RegistryLookup<Enchantment> enchantmentLookup = player.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
+			if (trade.getTotalEnchantmentLevels() > GeneralUtilities.getTotalEnchantmentLevels(enchantmentLookup, enchantableItem)) {
 				getOffers().add(offer);
 			}
 		}
@@ -112,12 +116,17 @@ public class SkygazerEntity extends AbstractMerchantEntity {
 
 		// Check the enchants on the two items. If the book has the same level or lower, remove the offer
 		if (!enchantableItem.isEmpty() && !enchantableBook.isEmpty()) {
-			Map<Enchantment, Integer> existingEnchantments = enchantableItem.getAllEnchantments();
-			Map<Enchantment, Integer> enchantmentsFromBook = new HashMap<>(EnchantmentHelper.getEnchantments(enchantableBook));
-			for (Entry<Enchantment, Integer> entry : enchantmentsFromBook.entrySet()) {
-				Enchantment enchantment = entry.getKey();
-				if (existingEnchantments.containsKey(enchantment) && existingEnchantments.get(enchantment) >= entry.getValue()) {
-					return;
+			ItemEnchantments existingEnchantments = enchantableItem.getAllEnchantments(player.registryAccess().lookupOrThrow(Registries.ENCHANTMENT));
+			ItemEnchantments bookEnchantments = enchantableBook.getOrDefault(DataComponents.STORED_ENCHANTMENTS, ItemEnchantments.EMPTY);
+
+			for (Holder<Enchantment> enchantment : bookEnchantments.keySet()) {
+				int bookLevel = bookEnchantments.getLevel(enchantment);
+				int existingLevel = existingEnchantments.getLevel(enchantment);
+
+				if (existingLevel >= bookLevel) {
+					getOffers().removeIf(offer -> (offer instanceof IdentifiableMerchantOffer identifiableMerchantOffer
+							&& identifiableMerchantOffer.getId().equals("enchant_item_with_enchanting_books")));
+					break;
 				}
 			}
 		}
@@ -127,7 +136,8 @@ public class SkygazerEntity extends AbstractMerchantEntity {
 			EnchantItemWithEnchantingBooks trade = new EnchantItemWithEnchantingBooks(enchantableItem, enchantableBook, 1);
 			MerchantOffer offer = trade.getOffer(this, player.getRandom());
 
-			if (trade.getTotalEnchantmentLevels() > GeneralUtilities.getTotalEnchantmentLevels(enchantableItem)) {
+			RegistryLookup<Enchantment> enchantmentLookup = player.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
+			if (trade.getTotalEnchantmentLevels() > GeneralUtilities.getTotalEnchantmentLevels(enchantmentLookup, enchantableItem)) {
 				getOffers().add(offer);
 			}
 		}

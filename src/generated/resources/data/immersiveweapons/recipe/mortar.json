@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "artillery",
+  "key": {
+    "a": {
+      "tag": "c:ingots/metal"
+    },
+    "b": {
+      "tag": "c:stones"
+    }
+  },
+  "pattern": [
+    "b b",
+    "aba"
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:mortar"
+  }
+}

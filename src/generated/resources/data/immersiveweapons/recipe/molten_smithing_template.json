@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "molten",
+  "key": {
+    "a": {
+      "tag": "immersiveweapons:ingots/molten"
+    },
+    "b": {
+      "tag": "c:obsidians"
+    }
+  },
+  "pattern": [
+    " a ",
+    "aba",
+    " a "
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:molten_smithing_template"
+  }
+}

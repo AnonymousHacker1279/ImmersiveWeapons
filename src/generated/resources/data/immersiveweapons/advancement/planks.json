@@ -1,0 +1,33 @@
+{
+  "parent": "immersiveweapons:root",
+  "criteria": {
+    "hold": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#minecraft:planks"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersiveweapons.planks.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "minecraft:oak_planks"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.planks.title"
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "boat",
+  "key": {
+    "a": {
+      "item": "immersiveweapons:burned_oak_planks"
+    }
+  },
+  "pattern": [
+    "a a",
+    "aaa"
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:burned_oak_boat"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "astral",
+  "ingredients": [
+    {
+      "tag": "immersiveweapons:ingots/astral"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "immersiveweapons:astral_nugget"
+  }
+}

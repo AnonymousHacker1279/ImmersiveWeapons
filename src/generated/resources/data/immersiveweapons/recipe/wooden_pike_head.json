@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "a": {
+      "tag": "immersiveweapons:shards/wood"
+    },
+    "b": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "pattern": [
+    "a",
+    "b"
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:wooden_pike_head"
+  }
+}

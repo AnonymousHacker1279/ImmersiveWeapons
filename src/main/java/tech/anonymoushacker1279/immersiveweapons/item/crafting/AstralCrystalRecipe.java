@@ -1,43 +1,32 @@
 package tech.anonymoushacker1279.immersiveweapons.item.crafting;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.util.ExtraCodecs;
-import net.minecraft.world.Container;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 
-public class AstralCrystalRecipe implements Recipe<Container> {
-
-	protected final Ingredient primaryMaterial;
-	protected final Ingredient secondaryMaterial;
-	protected final ItemStack result;
-	protected final String group;
-
-	public AstralCrystalRecipe(String group, Ingredient primaryMaterial, Ingredient secondaryMaterial, ItemStack itemStack) {
-		this.primaryMaterial = primaryMaterial;
-		this.secondaryMaterial = secondaryMaterial;
-		this.result = itemStack;
-		this.group = group;
-	}
+public record AstralCrystalRecipe(String group, Ingredient primaryMaterial, Ingredient secondaryMaterial,
+                                  ItemStack result) implements Recipe<RecipeInput> {
 
 	@Override
-	public boolean matches(Container container, Level level) {
+	public boolean matches(RecipeInput input, Level level) {
 		return false;
 	}
 
 	@Override
-	public ItemStack assemble(Container container, RegistryAccess registryAccess) {
+	public ItemStack assemble(RecipeInput input, Provider registries) {
 		return result;
 	}
 
 	@Override
-	public ItemStack getResultItem(RegistryAccess registryAccess) {
+	public ItemStack getResultItem(Provider provider) {
 		return result.copy();
 	}
 
@@ -101,45 +90,46 @@ public class AstralCrystalRecipe implements Recipe<Container> {
 		T create(String group, Ingredient primaryMaterial, Ingredient secondaryMaterial, ItemStack result);
 	}
 
-	public static class Serializer<T extends AstralCrystalRecipe> implements RecipeSerializer<T> {
+	public static class Serializer implements RecipeSerializer<AstralCrystalRecipe> {
 
-		private final AstralCrystalRecipe.Factory<T> factory;
-		private final Codec<T> codec;
+		private static final MapCodec<AstralCrystalRecipe> CODEC = RecordCodecBuilder.mapCodec(
+				instance -> instance.group(
+								Codec.STRING.optionalFieldOf("group", "").forGetter(recipe -> recipe.group),
+								Ingredient.CODEC.fieldOf("primaryMaterial").forGetter(recipe -> recipe.primaryMaterial),
+								Ingredient.CODEC.fieldOf("secondaryMaterial").forGetter(recipe -> recipe.secondaryMaterial),
+								ItemStack.SINGLE_ITEM_CODEC.fieldOf("result").forGetter(recipe -> recipe.result)
+						)
+						.apply(instance, AstralCrystalRecipe::new)
+		);
 
-		public Serializer(AstralCrystalRecipe.Factory<T> factory) {
-			this.factory = factory;
-			this.codec = RecordCodecBuilder.create(
-					instance -> instance.group(
-									ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(recipe -> recipe.group),
-									Ingredient.CODEC.fieldOf("primaryMaterial").forGetter(recipe -> recipe.primaryMaterial),
-									Ingredient.CODEC.fieldOf("secondaryMaterial").forGetter(recipe -> recipe.secondaryMaterial),
-									ItemStack.ITEM_WITH_COUNT_CODEC.fieldOf("result").forGetter(recipe -> recipe.result)
-							)
-							.apply(instance, factory::create)
-			);
+		private static final StreamCodec<RegistryFriendlyByteBuf, AstralCrystalRecipe> STREAM_CODEC = StreamCodec.of(
+				AstralCrystalRecipe.Serializer::toNetwork, AstralCrystalRecipe.Serializer::fromNetwork
+		);
+
+		@Override
+		public MapCodec<AstralCrystalRecipe> codec() {
+			return CODEC;
 		}
 
 		@Override
-		public Codec<T> codec() {
-			return codec;
+		public StreamCodec<RegistryFriendlyByteBuf, AstralCrystalRecipe> streamCodec() {
+			return STREAM_CODEC;
 		}
 
-		@Override
-		public T fromNetwork(FriendlyByteBuf buffer) {
+		private static AstralCrystalRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
 			String group = buffer.readUtf();
-			Ingredient primaryMaterial = Ingredient.fromNetwork(buffer);
-			Ingredient secondaryMaterial = Ingredient.fromNetwork(buffer);
-			ItemStack result = buffer.readItem();
+			Ingredient primaryMaterial = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
+			Ingredient secondaryMaterial = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
+			ItemStack result = ItemStack.STREAM_CODEC.decode(buffer);
 
-			return factory.create(group, primaryMaterial, secondaryMaterial, result);
+			return new AstralCrystalRecipe(group, primaryMaterial, secondaryMaterial, result);
 		}
 
-		@Override
-		public void toNetwork(FriendlyByteBuf buffer, AstralCrystalRecipe recipe) {
+		private static void toNetwork(RegistryFriendlyByteBuf buffer, AstralCrystalRecipe recipe) {
 			buffer.writeUtf(recipe.group);
-			recipe.primaryMaterial.toNetwork(buffer);
-			recipe.secondaryMaterial.toNetwork(buffer);
-			buffer.writeItem(recipe.result);
+			Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.primaryMaterial);
+			Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.secondaryMaterial);
+			ItemStack.STREAM_CODEC.encode(buffer, recipe.result);
 		}
 	}
 }

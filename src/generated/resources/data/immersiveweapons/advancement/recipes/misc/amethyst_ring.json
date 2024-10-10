@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "amethyst_ring": {
+      "conditions": {
+        "items": [
+          {
+            "items": "immersiveweapons:golden_ring"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "immersiveweapons:amethyst_ring"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "amethyst_ring"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:amethyst_ring"
+    ]
+  }
+}

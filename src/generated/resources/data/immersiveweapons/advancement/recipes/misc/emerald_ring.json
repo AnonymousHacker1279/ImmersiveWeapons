@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "emerald_ring": {
+      "conditions": {
+        "items": [
+          {
+            "items": "immersiveweapons:golden_ring"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "immersiveweapons:emerald_ring"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "emerald_ring"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:emerald_ring"
+    ]
+  }
+}

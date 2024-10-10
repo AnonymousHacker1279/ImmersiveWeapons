@@ -433,6 +433,12 @@
     ],
     "subtitle": "subtitles.immersiveweapons.armor.tesla.power_up"
   },
+  "tiltros_portal_whoosh": {
+    "sounds": [
+      "immersiveweapons:block/tiltros_portal/whoosh/whoosh"
+    ],
+    "subtitle": "subtitles.immersiveweapons.block.tiltros_portal.whoosh"
+  },
   "tiltros_wastes_music": {
     "sounds": [
       {

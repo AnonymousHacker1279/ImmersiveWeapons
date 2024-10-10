@@ -4,8 +4,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.network.syncher.*;
+import net.minecraft.server.level.ServerEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
@@ -23,7 +23,7 @@ import net.neoforged.neoforge.common.Tags.EntityTypes;
 import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
+import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.SmokeGrenadePayload;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
@@ -44,17 +44,18 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 	public boolean isExplosive = false;
 	private boolean hasExploded = false;
 
-	public static final EntityDataAccessor<Float> GRAVITY_MODIFIER_ACCESSOR = SynchedEntityData.defineId(CustomArrowEntity.class,
-			EntityDataSerializers.FLOAT);
+	public static final EntityDataAccessor<Float> GRAVITY_MODIFIER_ACCESSOR = SynchedEntityData.defineId(CustomArrowEntity.class, EntityDataSerializers.FLOAT);
 
 	public CustomArrowEntity(EntityType<? extends Arrow> type, Level level) {
 		super(type, level);
 	}
 
-	public CustomArrowEntity(EntityType<? extends Arrow> type, LivingEntity shooter, Level level) {
+	public CustomArrowEntity(EntityType<? extends Arrow> type, LivingEntity shooter, Level level, @Nullable ItemStack weapon) {
 		this(type, level);
-		setPos(shooter.getX(), shooter.getY() + shooter.getEyeHeight() - 0.1, shooter.getZ());
+		setPos(shooter.getX(), shooter.getY() + shooter.getEyeHeight() - 0.1f, shooter.getZ());
 		setOwner(shooter);
+		firedFromWeapon = weapon;
+
 		if (shooter instanceof Player) {
 			pickup = Pickup.ALLOWED;
 		}
@@ -84,14 +85,14 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 	}
 
 	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket() {
-		return new ClientboundAddEntityPacket(this);
+	public Packet<ClientGamePacketListener> getAddEntityPacket(ServerEntity entity) {
+		return super.getAddEntityPacket(entity);
 	}
 
 	@Override
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-		entityData.define(GRAVITY_MODIFIER_ACCESSOR, 1.0f);
+	protected void defineSynchedData(SynchedEntityData.Builder builder) {
+		super.defineSynchedData(builder);
+		builder.define(GRAVITY_MODIFIER_ACCESSOR, 1.0f);
 	}
 
 	@Override
@@ -262,7 +263,7 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 
 		if (color != -1 && inGroundTime > 0) {
 			if (level() instanceof ServerLevel serverLevel && tickCount % 2 == 0) {
-				serverLevel.getEntities(this, getBoundingBox().inflate(CommonConfig.smokeGrenadeEffectRange))
+				serverLevel.getEntities(this, getBoundingBox().inflate(IWConfigs.SERVER.smokeGrenadeEffectRange.getAsDouble()))
 						.stream()
 						.filter(entity -> !entity.isSpectator())
 						.forEach(entity -> {
@@ -280,9 +281,8 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 	protected void onHit(HitResult result) {
 		super.onHit(result);
 
-		if (color != -1 && !level().isClientSide) {
-			PacketDistributor.TRACKING_CHUNK.with(level().getChunkAt(blockPosition()))
-					.send(new SmokeGrenadePayload(getX(), getY(), getZ(), color, CommonConfig.forceSmokeGrenadeParticles));
+		if (color != -1 && level() instanceof ServerLevel serverLevel) {
+			PacketDistributor.sendToPlayersTrackingChunk(serverLevel, chunkPosition(), new SmokeGrenadePayload(getX(), getY(), getZ(), color, IWConfigs.SERVER.forceSmokeGrenadeParticles.getAsInt()));
 		}
 
 		if (isExplosive && !hasExploded) {

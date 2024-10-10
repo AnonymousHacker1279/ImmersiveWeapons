@@ -19,12 +19,12 @@ public class GameEventTagsGenerator extends GameEventTagsProvider {
 	@Override
 	protected void addTags(Provider pProvider) {
 		tag(GameEventTags.VIBRATIONS).add(
-				GameEventRegistry.FLASHBANG_EXPLODE.get(),
-				GameEventRegistry.SMOKE_GRENADE_HISS.get(),
-				GameEventRegistry.PANIC_ALARM_TRIGGER.get());
+				GameEventRegistry.FLASHBANG_EXPLODE.getKey(),
+				GameEventRegistry.SMOKE_GRENADE_HISS.getKey(),
+				GameEventRegistry.PANIC_ALARM_TRIGGER.getKey());
 
 		tag(GameEventTags.IGNORE_VIBRATIONS_SNEAKING).add(
-				GameEventRegistry.FLASHBANG_EXPLODE.get(),
-				GameEventRegistry.SMOKE_GRENADE_HISS.get());
+				GameEventRegistry.FLASHBANG_EXPLODE.getKey(),
+				GameEventRegistry.SMOKE_GRENADE_HISS.getKey());
 	}
 }

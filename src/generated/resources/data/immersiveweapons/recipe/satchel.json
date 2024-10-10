@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "satchel",
+  "key": {
+    "a": {
+      "tag": "c:leathers"
+    },
+    "b": {
+      "tag": "c:strings"
+    },
+    "c": {
+      "tag": "c:chests/wooden"
+    }
+  },
+  "pattern": [
+    " b ",
+    "aca",
+    " a "
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:satchel"
+  }
+}

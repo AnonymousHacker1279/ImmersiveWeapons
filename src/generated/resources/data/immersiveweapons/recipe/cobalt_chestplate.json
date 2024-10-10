@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "a": {
+      "tag": "c:ingots/cobalt"
+    }
+  },
+  "pattern": [
+    "a a",
+    "aaa",
+    "aaa"
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:cobalt_chestplate"
+  }
+}

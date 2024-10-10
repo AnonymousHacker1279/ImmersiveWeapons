@@ -1,0 +1,34 @@
+{
+  "parent": "immersiveweapons:battlefield",
+  "criteria": {
+    "hold": {
+      "conditions": {
+        "items": [
+          {
+            "items": "immersiveweapons:medic_statue"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersiveweapons.medic_statue.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "immersiveweapons:medic_statue"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.medic_statue.title"
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

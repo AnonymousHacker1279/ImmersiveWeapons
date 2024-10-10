@@ -1,6 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.blockentity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
@@ -41,7 +42,7 @@ public class BiodomeLifeSupportUnitBlockEntity extends BlockEntity implements En
 			// Get all players in a radius of 5 blocks
 			serverLevel.getEntitiesOfClass(Player.class, new AABB(pos).inflate(5), player -> true).forEach(player -> {
 				// Grant the Celestial Protection effect
-				player.addEffect(new MobEffectInstance(EffectRegistry.CELESTIAL_PROTECTION_EFFECT.get(), 360, 0, true, true));
+				player.addEffect(new MobEffectInstance(EffectRegistry.CELESTIAL_PROTECTION_EFFECT, 360, 0, true, true));
 			});
 
 			// Spawn particles in a circle around the block
@@ -68,18 +69,18 @@ public class BiodomeLifeSupportUnitBlockEntity extends BlockEntity implements En
 	}
 
 	@Override
-	protected void saveAdditional(CompoundTag pTag) {
-		super.saveAdditional(pTag);
+	protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+		super.saveAdditional(tag, provider);
 
-		pTag.putInt("cooldown", cooldown);
-		pTag.putBoolean("isPowered", isPowered);
+		tag.putInt("cooldown", cooldown);
+		tag.putBoolean("isPowered", isPowered);
 	}
 
 	@Override
-	public void load(CompoundTag nbt) {
-		super.load(nbt);
+	public void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+		super.loadAdditional(tag, provider);
 
-		cooldown = nbt.getInt("cooldown");
-		isPowered = nbt.getBoolean("isPowered");
+		cooldown = tag.getInt("cooldown");
+		isPowered = tag.getBoolean("isPowered");
 	}
 }

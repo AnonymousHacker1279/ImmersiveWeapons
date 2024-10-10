@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "traps",
+  "key": {
+    "a": {
+      "tag": "c:ingots/metal"
+    },
+    "b": {
+      "item": "minecraft:heavy_weighted_pressure_plate"
+    },
+    "c": {
+      "item": "minecraft:tnt"
+    }
+  },
+  "pattern": [
+    " b ",
+    "aca"
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:landmine"
+  }
+}

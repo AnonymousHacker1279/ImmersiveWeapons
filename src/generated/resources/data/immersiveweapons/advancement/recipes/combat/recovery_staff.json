@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "bloated_heart": {
+      "conditions": {
+        "items": [
+          {
+            "items": "immersiveweapons:bloated_heart"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "immersiveweapons:recovery_staff"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "bloated_heart"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:recovery_staff"
+    ]
+  }
+}

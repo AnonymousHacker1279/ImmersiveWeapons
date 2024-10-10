@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "hand_of_doom",
+  "ingredients": [
+    {
+      "item": "immersiveweapons:melee_masters_molten_glove"
+    },
+    {
+      "item": "immersiveweapons:iron_fist"
+    },
+    {
+      "item": "immersiveweapons:glove_of_rapid_swinging"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:hand_of_doom"
+  }
+}

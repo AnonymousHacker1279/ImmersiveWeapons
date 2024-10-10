@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "smoke_grenade",
+  "key": {
+    "a": {
+      "item": "minecraft:arrow"
+    },
+    "b": {
+      "item": "immersiveweapons:smoke_powder"
+    },
+    "c": {
+      "tag": "c:dyes/blue"
+    }
+  },
+  "pattern": [
+    "aab",
+    "aac"
+  ],
+  "result": {
+    "count": 4,
+    "id": "immersiveweapons:smoke_grenade_arrow_blue"
+  }
+}

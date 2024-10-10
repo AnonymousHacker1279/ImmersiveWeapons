@@ -1,0 +1,34 @@
+{
+  "parent": "immersiveweapons:bandage",
+  "criteria": {
+    "hold": {
+      "conditions": {
+        "items": [
+          {
+            "items": "immersiveweapons:first_aid_kit"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersiveweapons.first_aid_kit.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "immersiveweapons:first_aid_kit"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.first_aid_kit.title"
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

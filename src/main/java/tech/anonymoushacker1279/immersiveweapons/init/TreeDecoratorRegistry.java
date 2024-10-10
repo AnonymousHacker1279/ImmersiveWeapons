@@ -8,7 +8,6 @@ import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.feature.tr
 
 import java.util.function.Supplier;
 
-@SuppressWarnings({"unused"})
 public class TreeDecoratorRegistry {
 
 	// Tree Decorator Type Register

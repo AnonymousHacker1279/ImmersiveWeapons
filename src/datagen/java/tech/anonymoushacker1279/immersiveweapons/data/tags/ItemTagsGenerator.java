@@ -13,13 +13,16 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.CustomDataGenerator;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeBlockTagGroups;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeItemTagGroups;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWBlockTagGroups;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWItemTagGroups;
+import tech.anonymoushacker1279.immersiveweapons.data.groups.common.CommonBlockTagGroups;
+import tech.anonymoushacker1279.immersiveweapons.data.groups.common.CommonItemTagGroups;
+import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWBlockTagGroups;
+import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
+import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
+import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
+import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -31,7 +34,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 
 	@Override
 	protected void addTags(Provider provider) {
-		addForgeTags();
+		addCommonTags();
 		addImmersiveWeaponsTags();
 		addMinecraftTags();
 	}
@@ -40,22 +43,21 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 	 * Add tags under the Forge namespace
 	 */
 	@SuppressWarnings("unchecked")
-	private void addForgeTags() {
+	private void addCommonTags() {
 		// Copy item tags from block tags
-		copy(Blocks.STAINED_GLASS, Tags.Items.STAINED_GLASS);
-		copy(ForgeBlockTagGroups.COBALT_ORES, ForgeItemTagGroups.COBALT_ORES);
-		copy(ForgeBlockTagGroups.SULFUR_ORES, ForgeItemTagGroups.SULFUR_ORES);
+		copy(CommonBlockTagGroups.COBALT_ORES, CommonItemTagGroups.COBALT_ORES);
+		copy(CommonBlockTagGroups.SULFUR_ORES, CommonItemTagGroups.SULFUR_ORES);
 		copy(Blocks.ORES, Tags.Items.ORES);
 
 		// Ingot tags
-		tag(ForgeItemTagGroups.COBALT_INGOTS).add(ItemRegistry.COBALT_INGOT.get());
+		tag(CommonItemTagGroups.COBALT_INGOTS).add(ItemRegistry.COBALT_INGOT.get());
 		tag(Tags.Items.INGOTS_COPPER).add(Items.COPPER_INGOT);
-		tag(ForgeItemTagGroups.METAL_INGOTS).addTags(
-				ForgeItemTagGroups.COBALT_INGOTS,
+		tag(CommonItemTagGroups.METAL_INGOTS).addTags(
+				CommonItemTagGroups.COBALT_INGOTS,
 				Tags.Items.INGOTS_COPPER,
 				Tags.Items.INGOTS_IRON,
 				Tags.Items.INGOTS_GOLD);
-		tag(Tags.Items.INGOTS).addTag(ForgeItemTagGroups.METAL_INGOTS);
+		tag(Tags.Items.INGOTS).addTag(CommonItemTagGroups.METAL_INGOTS);
 		tag(Tags.Items.INGOTS).addTag(IWItemTagGroups.MOLTEN_INGOTS);
 		tag(Tags.Items.INGOTS).addTag(IWItemTagGroups.ELECTRIC_INGOTS);
 		tag(Tags.Items.INGOTS).addTag(IWItemTagGroups.TESLA_INGOTS);
@@ -63,19 +65,19 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		tag(Tags.Items.INGOTS).addTag(IWItemTagGroups.ASTRAL_INGOTS);
 
 		// Nugget tags
-		tag(ForgeItemTagGroups.COBALT_NUGGETS).add(ItemRegistry.COBALT_NUGGET.get());
-		tag(ForgeItemTagGroups.COPPER_NUGGETS).add(ItemRegistry.COPPER_NUGGET.get());
-		tag(ForgeItemTagGroups.METAL_NUGGETS).addTags(
-				ForgeItemTagGroups.COBALT_NUGGETS,
-				ForgeItemTagGroups.COPPER_NUGGETS,
+		tag(CommonItemTagGroups.COBALT_NUGGETS).add(ItemRegistry.COBALT_NUGGET.get());
+		tag(CommonItemTagGroups.COPPER_NUGGETS).add(ItemRegistry.COPPER_NUGGET.get());
+		tag(CommonItemTagGroups.METAL_NUGGETS).addTags(
+				CommonItemTagGroups.COBALT_NUGGETS,
+				CommonItemTagGroups.COPPER_NUGGETS,
 				Tags.Items.NUGGETS_IRON,
 				Tags.Items.NUGGETS_GOLD);
-		tag(Tags.Items.NUGGETS).addTag(ForgeItemTagGroups.METAL_NUGGETS);
+		tag(Tags.Items.NUGGETS).addTag(CommonItemTagGroups.METAL_NUGGETS);
 		tag(Tags.Items.NUGGETS).addTag(IWItemTagGroups.TESLA_NUGGETS);
 		tag(Tags.Items.NUGGETS).addTag(IWItemTagGroups.ASTRAL_NUGGETS);
 
 		// Dust tags
-		tag(ForgeItemTagGroups.SULFUR_DUSTS).add(ItemRegistry.SULFUR_DUST.get());
+		tag(CommonItemTagGroups.SULFUR_DUSTS).add(ItemRegistry.SULFUR_DUST.get());
 
 		// Loop through the registry and add groups of items to a tag
 		for (Item item : CustomDataGenerator.ALL_ITEMS) {
@@ -90,23 +92,23 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 			} else if (item.getDescriptionId().contains("hoe")) {
 				tag(ItemTags.HOES).add(item);
 			} else if (item.getDescriptionId().contains("helmet")) {
-				tag(Tags.Items.ARMORS_HELMETS).add(item);
+				tag(ItemTags.HEAD_ARMOR).add(item);
 			} else if (item.getDescriptionId().contains("chestplate")) {
-				tag(Tags.Items.ARMORS_CHESTPLATES).add(item);
+				tag(ItemTags.CHEST_ARMOR).add(item);
 			} else if (item.getDescriptionId().contains("leggings")) {
-				tag(Tags.Items.ARMORS_LEGGINGS).add(item);
+				tag(ItemTags.LEG_ARMOR).add(item);
 			} else if (item.getDescriptionId().contains("boots")) {
-				tag(Tags.Items.ARMORS_BOOTS).add(item);
+				tag(ItemTags.FOOT_ARMOR).add(item);
 			}
 		}
 
-		tag(Tags.Items.TOOLS_BOWS).add(
+		tag(Tags.Items.TOOLS_BOW).add(
 				ItemRegistry.ICE_BOW.get(),
 				ItemRegistry.DRAGONS_BREATH_BOW.get(),
 				ItemRegistry.AURORA_BOW.get());
 
 		// Head tags
-		tag(Tags.Items.HEADS).add(
+		tag(ItemTags.SKULLS).add(
 				BlockItemRegistry.MINUTEMAN_HEAD_ITEM.get(),
 				BlockItemRegistry.FIELD_MEDIC_HEAD_ITEM.get(),
 				BlockItemRegistry.DYING_SOLDIER_HEAD_ITEM.get(),
@@ -217,36 +219,18 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 				ItemRegistry.STARSTORM_HOE.get());
 
 		// Pike tags
-		tag(IWItemTagGroups.PIKES).add(
-				ItemRegistry.WOODEN_PIKE.get(),
-				ItemRegistry.STONE_PIKE.get(),
-				ItemRegistry.GOLDEN_PIKE.get(),
-				ItemRegistry.COPPER_PIKE.get(),
-				ItemRegistry.IRON_PIKE.get(),
-				ItemRegistry.COBALT_PIKE.get(),
-				ItemRegistry.DIAMOND_PIKE.get(),
-				ItemRegistry.NETHERITE_PIKE.get(),
-				ItemRegistry.MOLTEN_PIKE.get(),
-				ItemRegistry.TESLA_PIKE.get(),
-				ItemRegistry.VENTUS_PIKE.get(),
-				ItemRegistry.ASTRAL_PIKE.get(),
-				ItemRegistry.STARSTORM_PIKE.get());
+		for (DeferredHolder<Item, ? extends Item> item : ItemRegistry.ITEMS.getEntries()) {
+			if (item.get() instanceof PikeItem pike) {
+				tag(IWItemTagGroups.PIKES).add(pike);
+			}
+		}
 
 		// Gauntlet tags
-		tag(IWItemTagGroups.GAUNTLETS).add(
-				ItemRegistry.WOODEN_GAUNTLET.get(),
-				ItemRegistry.STONE_GAUNTLET.get(),
-				ItemRegistry.GOLDEN_GAUNTLET.get(),
-				ItemRegistry.COPPER_GAUNTLET.get(),
-				ItemRegistry.IRON_GAUNTLET.get(),
-				ItemRegistry.COBALT_GAUNTLET.get(),
-				ItemRegistry.DIAMOND_GAUNTLET.get(),
-				ItemRegistry.NETHERITE_GAUNTLET.get(),
-				ItemRegistry.MOLTEN_GAUNTLET.get(),
-				ItemRegistry.TESLA_GAUNTLET.get(),
-				ItemRegistry.VENTUS_GAUNTLET.get(),
-				ItemRegistry.ASTRAL_GAUNTLET.get(),
-				ItemRegistry.STARSTORM_GAUNTLET.get());
+		for (DeferredHolder<Item, ? extends Item> item : ItemRegistry.ITEMS.getEntries()) {
+			if (item.get() instanceof GauntletItem gauntlet) {
+				tag(IWItemTagGroups.GAUNTLETS).add(gauntlet);
+			}
+		}
 
 		// Commander Pedestal Augment tags
 		tag(IWItemTagGroups.COMMANDER_PEDESTAL_AUGMENTS).add(
@@ -254,11 +238,70 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 				ItemRegistry.PEDESTAL_AUGMENT_ARMOR.get(),
 				ItemRegistry.PEDESTAL_AUGMENT_ENCHANTMENT.get(),
 				ItemRegistry.PEDESTAL_AUGMENT_CAPACITY.get());
+
+		// Firearm tags
+		for (DeferredHolder<Item, ? extends Item> item : ItemRegistry.ITEMS.getEntries()) {
+			if (item.get() instanceof AbstractGunItem gun) {
+				tag(IWItemTagGroups.FIREARMS).add(gun);
+			}
+		}
+
+		// Ranged weapon tags
+		tag(IWItemTagGroups.RANGED_WEAPONS)
+				.addTag(IWItemTagGroups.FIREARMS)
+				.addTag(Tags.Items.TOOLS_BOW);
+
+		// Weapon and tools tags
+		tag(IWItemTagGroups.WEAPONS_AND_TOOLS)
+				.addTag(Tags.Items.TOOLS)
+				.addTag(IWItemTagGroups.RANGED_WEAPONS);
+
+		// Staff tags
+		tag(IWItemTagGroups.METEOR_STAFFS).add(ItemRegistry.METEOR_STAFF.get());
+		tag(IWItemTagGroups.CURSED_SIGHT_STAFFS).add(ItemRegistry.CURSED_SIGHT_STAFF.get());
+
+		// Armor tags
+		tag(IWItemTagGroups.MOLTEN_ARMOR).add(
+				ItemRegistry.MOLTEN_HELMET.get(),
+				ItemRegistry.MOLTEN_CHESTPLATE.get(),
+				ItemRegistry.MOLTEN_LEGGINGS.get(),
+				ItemRegistry.MOLTEN_BOOTS.get());
+
+		tag(IWItemTagGroups.TESLA_ARMOR).add(
+				ItemRegistry.TESLA_HELMET.get(),
+				ItemRegistry.TESLA_CHESTPLATE.get(),
+				ItemRegistry.TESLA_LEGGINGS.get(),
+				ItemRegistry.TESLA_BOOTS.get());
+
+		tag(IWItemTagGroups.VENTUS_ARMOR).add(
+				ItemRegistry.VENTUS_HELMET.get(),
+				ItemRegistry.VENTUS_CHESTPLATE.get(),
+				ItemRegistry.VENTUS_LEGGINGS.get(),
+				ItemRegistry.VENTUS_BOOTS.get());
+
+		tag(IWItemTagGroups.ASTRAL_ARMOR).add(
+				ItemRegistry.ASTRAL_HELMET.get(),
+				ItemRegistry.ASTRAL_CHESTPLATE.get(),
+				ItemRegistry.ASTRAL_LEGGINGS.get(),
+				ItemRegistry.ASTRAL_BOOTS.get());
+
+		tag(IWItemTagGroups.STARSTORM_ARMOR).add(
+				ItemRegistry.STARSTORM_HELMET.get(),
+				ItemRegistry.STARSTORM_CHESTPLATE.get(),
+				ItemRegistry.STARSTORM_LEGGINGS.get(),
+				ItemRegistry.STARSTORM_BOOTS.get());
+
+		tag(IWItemTagGroups.PADDED_LEATHER).add(
+				ItemRegistry.PADDED_LEATHER_HELMET.get(),
+				ItemRegistry.PADDED_LEATHER_CHESTPLATE.get(),
+				ItemRegistry.PADDED_LEATHER_LEGGINGS.get(),
+				ItemRegistry.PADDED_LEATHER_BOOTS.get());
 	}
 
 	/**
 	 * Add tags under the Minecraft namespace
 	 */
+	@SuppressWarnings("unchecked")
 	private void addMinecraftTags() {
 		// Copy item tags from block tags
 		copy(BlockTags.FENCES, ItemTags.FENCES);
@@ -317,12 +360,26 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 				ItemRegistry.ASTRAL_INGOT.get(),
 				ItemRegistry.STARSTORM_INGOT.get());
 
-		// Music discs
-		for (DeferredHolder<Item, ? extends Item> item : ItemRegistry.ITEMS.getEntries()) {
-			if (item.get() instanceof RecordItem record) {
-				tag(ItemTags.MUSIC_DISCS).add(record);
-			}
-		}
+		// Dyeable items tag
+		tag(ItemTags.DYEABLE).add(
+				ItemRegistry.PADDED_LEATHER_HELMET.get(),
+				ItemRegistry.PADDED_LEATHER_CHESTPLATE.get(),
+				ItemRegistry.PADDED_LEATHER_LEGGINGS.get(),
+				ItemRegistry.PADDED_LEATHER_BOOTS.get()
+		);
 
+		// Enchantable items tag
+		tag(ItemTags.BOW_ENCHANTABLE).addTag(Tags.Items.TOOLS_BOW);
+		tag(ItemTags.DURABILITY_ENCHANTABLE).addTags(
+				IWItemTagGroups.PIKES,
+				IWItemTagGroups.GAUNTLETS,
+				IWItemTagGroups.FIREARMS
+		);
+		tag(ItemTags.SHARP_WEAPON_ENCHANTABLE).addTag(IWItemTagGroups.PIKES);
+		tag(ItemTags.WEAPON_ENCHANTABLE).addTags(
+				IWItemTagGroups.PIKES,
+				IWItemTagGroups.GAUNTLETS,
+				IWItemTagGroups.FIREARMS
+		);
 	}
 }

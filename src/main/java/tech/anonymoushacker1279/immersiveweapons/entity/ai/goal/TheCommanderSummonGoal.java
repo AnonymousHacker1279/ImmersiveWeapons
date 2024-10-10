@@ -5,7 +5,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
+import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.DyingSoldierEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.TheCommanderEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
@@ -23,7 +23,7 @@ public class TheCommanderSummonGoal extends WaveSummonGoal<TheCommanderEntity> {
 	protected void doWaveSpawnBehavior() {
 		// Get the total number of mobs to be spawned
 		int regularSoldiers = (mob.getRandom().nextIntBetweenInclusive(4, 8 + mob.getWavesSpawned())) * mob.getDifficultyWaveSizeModifier();
-		regularSoldiers = (int) (regularSoldiers * CommonConfig.theCommanderWaveSizeModifier);
+		regularSoldiers = (int) (regularSoldiers * IWConfigs.SERVER.theCommanderWaveSizeModifier.getAsDouble());
 
 		// 20% of the soldiers will have full leather armor
 		int leatherArmorSoldiers = (int) (regularSoldiers * 0.2f);

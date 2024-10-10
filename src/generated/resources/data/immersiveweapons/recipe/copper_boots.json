@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "a": {
+      "tag": "c:ingots/copper"
+    }
+  },
+  "pattern": [
+    "a a",
+    "a a"
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:copper_boots"
+  }
+}

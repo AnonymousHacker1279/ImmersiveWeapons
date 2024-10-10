@@ -113,7 +113,7 @@ public class StarForgeBlockEntity extends BaseContainerBlockEntity implements En
 			float temperatureModifier = 1.0f + (biomeTemperature * 5);
 			temperature = Mth.clamp((int) (temperature + (hasSolarEnergy ? 1 : -1) * temperatureModifier), 0, 1000);
 
-			if (temperature == 1000 && !inventory.get(0).isEmpty()) {
+			if (temperature == 1000 && !inventory.getFirst().isEmpty()) {
 				if (!state.getValue(StarForgeControllerBlock.LIT)) {
 					level.setBlock(pos, state.setValue(StarForgeControllerBlock.LIT, true), 3);
 				}
@@ -147,11 +147,11 @@ public class StarForgeBlockEntity extends BaseContainerBlockEntity implements En
 	}
 
 	@Override
-	public void load(CompoundTag tag) {
-		super.load(tag);
+	public void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+		super.loadAdditional(tag, provider);
 
 		inventory.clear();
-		ContainerHelper.loadAllItems(tag, inventory);
+		ContainerHelper.loadAllItems(tag, inventory, provider);
 		hasSolarEnergy = tag.getBoolean("hasSolarEnergy");
 		temperature = tag.getInt("temperature");
 		smeltTime = tag.getInt("smeltTime");
@@ -159,7 +159,7 @@ public class StarForgeBlockEntity extends BaseContainerBlockEntity implements En
 		ListTag availableRecipesTag = tag.getList("availableRecipes", 10);
 		for (int i = 0; i < availableRecipesTag.size(); i++) {
 			CompoundTag recipeTag = availableRecipesTag.getCompound(i);
-			ResourceLocation recipeId = new ResourceLocation(recipeTag.getString("recipeId"));
+			ResourceLocation recipeId = ResourceLocation.parse(recipeTag.getString("recipeId"));
 			savedRecipes.add(recipeId);
 		}
 	}
@@ -184,10 +184,10 @@ public class StarForgeBlockEntity extends BaseContainerBlockEntity implements En
 	}
 
 	@Override
-	protected void saveAdditional(CompoundTag tag) {
-		super.saveAdditional(tag);
+	protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+		super.saveAdditional(tag, provider);
 
-		ContainerHelper.saveAllItems(tag, inventory);
+		ContainerHelper.saveAllItems(tag, inventory, provider);
 		tag.putBoolean("hasSolarEnergy", hasSolarEnergy);
 		tag.putInt("temperature", temperature);
 		tag.putInt("smeltTime", smeltTime);
@@ -202,9 +202,9 @@ public class StarForgeBlockEntity extends BaseContainerBlockEntity implements En
 	}
 
 	@Override
-	public CompoundTag getUpdateTag() {
-		CompoundTag tag = super.getUpdateTag();
-		saveAdditional(tag);
+	public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
+		CompoundTag tag = super.getUpdateTag(provider);
+		saveAdditional(tag, provider);
 		return tag;
 	}
 
@@ -216,6 +216,18 @@ public class StarForgeBlockEntity extends BaseContainerBlockEntity implements En
 	@Override
 	protected Component getDefaultName() {
 		return Component.translatable("container.immersiveweapons.star_forge");
+	}
+
+	@Override
+	protected NonNullList<ItemStack> getItems() {
+		return inventory;
+	}
+
+	@Override
+	protected void setItems(NonNullList<ItemStack> stacks) {
+		for (int i = 0; i < Math.min(stacks.size(), inventory.size()); i++) {
+			inventory.set(i, stacks.get(i));
+		}
 	}
 
 	@Override

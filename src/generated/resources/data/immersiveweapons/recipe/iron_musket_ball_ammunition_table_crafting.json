@@ -1,0 +1,23 @@
+{
+  "type": "immersiveweapons:ammunition_table",
+  "group": "ammunition_table",
+  "materials": [
+    {
+      "base_multiplier": 1.3,
+      "density": 0.79,
+      "ingredient": {
+        "tag": "c:ingots/iron"
+      }
+    },
+    {
+      "base_multiplier": 0.14,
+      "density": 0.09,
+      "ingredient": {
+        "tag": "c:nuggets/iron"
+      }
+    }
+  ],
+  "result": {
+    "id": "immersiveweapons:iron_musket_ball"
+  }
+}

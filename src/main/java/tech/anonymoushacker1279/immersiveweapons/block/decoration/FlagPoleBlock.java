@@ -66,7 +66,6 @@ public class FlagPoleBlock extends Block implements SimpleWaterloggedBlock {
 	 * @param collisionContext the <code>CollisionContext</code> of the block
 	 * @return VoxelShape
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos,
 	                           CollisionContext collisionContext) {
@@ -78,7 +77,6 @@ public class FlagPoleBlock extends Block implements SimpleWaterloggedBlock {
 		}
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);

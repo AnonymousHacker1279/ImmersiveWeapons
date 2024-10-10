@@ -1,0 +1,38 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "group": "mud",
+  "ingredients": [
+    {
+      "item": "minecraft:water_bucket"
+    },
+    {
+      "item": "minecraft:dirt"
+    },
+    {
+      "item": "minecraft:dirt"
+    },
+    {
+      "item": "minecraft:dirt"
+    },
+    {
+      "item": "minecraft:dirt"
+    },
+    {
+      "item": "minecraft:dirt"
+    },
+    {
+      "item": "minecraft:dirt"
+    },
+    {
+      "item": "minecraft:dirt"
+    },
+    {
+      "item": "minecraft:dirt"
+    }
+  ],
+  "result": {
+    "count": 8,
+    "id": "immersiveweapons:mud"
+  }
+}

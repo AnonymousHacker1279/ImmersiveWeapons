@@ -24,7 +24,7 @@ import java.util.List;
 
 public class SmallPartsTableScreen extends AbstractContainerScreen<SmallPartsMenu> {
 
-	private static final ResourceLocation BG_LOCATION = new ResourceLocation(ImmersiveWeapons.MOD_ID + ":textures/gui/container/small_parts_table.png");
+	private static final ResourceLocation BG_LOCATION = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/gui/container/small_parts_table.png");
 	private static int TOTAL_PATTERN_ROWS = 0;
 	private static final int SCROLLER_WIDTH = 12;
 	private static final int SCROLLER_HEIGHT = 15;

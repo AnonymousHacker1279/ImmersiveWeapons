@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "diamond": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:gems/diamond"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "immersiveweapons:diamond_shard"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "diamond"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:diamond_shard"
+    ]
+  }
+}

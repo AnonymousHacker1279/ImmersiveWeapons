@@ -1,6 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.blockentity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -37,20 +38,20 @@ public class ShelfBlockEntity extends AbstractInventoryBlockEntity {
 	}
 
 	@Override
-	protected void saveAdditional(CompoundTag tag) {
-		super.saveAdditional(tag);
+	protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+		super.saveAdditional(tag, provider);
 		tag.putBoolean("isLocked", isLocked);
 	}
 
 	@Override
-	public void load(CompoundTag tag) {
-		super.load(tag);
+	public void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+		super.loadAdditional(tag, provider);
 		isLocked = tag.getBoolean("isLocked");
 	}
 
 	@Override
-	public CompoundTag getUpdateTag() {
-		CompoundTag tag = super.getUpdateTag();
+	public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
+		CompoundTag tag = super.getUpdateTag(provider);
 		tag.putBoolean("isLocked", isLocked);
 		return tag;
 	}

@@ -106,8 +106,8 @@ public abstract class AbstractFortitudeItem extends Item {
 	}
 
 	public void setEffects(LivingEntity entity) {
-		if (entity.hasEffect(EffectRegistry.BLEEDING_EFFECT.get())) {
-			entity.removeEffect(EffectRegistry.BLEEDING_EFFECT.get());
+		if (entity.hasEffect(EffectRegistry.BLEEDING_EFFECT)) {
+			entity.removeEffect(EffectRegistry.BLEEDING_EFFECT);
 		}
 
 		for (MobEffectInstance effect : effects()) {

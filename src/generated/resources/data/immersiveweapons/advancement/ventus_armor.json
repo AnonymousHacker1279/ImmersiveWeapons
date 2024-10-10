@@ -1,0 +1,46 @@
+{
+  "parent": "immersiveweapons:ventus_shard",
+  "criteria": {
+    "hold": {
+      "conditions": {
+        "items": [
+          {
+            "items": "immersiveweapons:ventus_helmet"
+          },
+          {
+            "items": "immersiveweapons:ventus_chestplate"
+          },
+          {
+            "items": "immersiveweapons:ventus_leggings"
+          },
+          {
+            "items": "immersiveweapons:ventus_boots"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersiveweapons.ventus_armor.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "immersiveweapons:ventus_helmet"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.ventus_armor.title"
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

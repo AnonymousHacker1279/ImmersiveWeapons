@@ -11,7 +11,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.Tags.EntityTypes;
 import net.neoforged.neoforge.network.PacketDistributor;
-import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
+import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.DisorientedWanderingGoal;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.PlayerSoundPayload;
@@ -46,20 +46,19 @@ public class FlashbangEntity extends AdvancedThrowableItemProjectile {
 					0.0D
 			);
 
-			gameEvent(GameEventRegistry.FLASHBANG_EXPLODE.get(), getOwner());
+			gameEvent(GameEventRegistry.FLASHBANG_EXPLODE, getOwner());
 
-			serverLevel.getEntities(this, getBoundingBox().inflate(CommonConfig.flashbangEffectRange))
+			serverLevel.getEntities(this, getBoundingBox().inflate(IWConfigs.SERVER.flashbangEffectRange.getAsDouble()))
 					.stream()
 					.filter(entity -> !entity.isSpectator())
 					.forEach(entity -> {
 						if (entity instanceof ServerPlayer player) {
 							if (canSee(player, this, false)) {
-								PacketDistributor.PLAYER.with(player)
-										.send(new PlayerSoundPayload(SoundEventRegistry.FLASHBANG_RINGING.get().getLocation(),
-												1.0f, level().getRandom().nextFloat() * 0.05f + 1.0f));
+								PacketDistributor.sendToPlayer(player, new PlayerSoundPayload(SoundEventRegistry.FLASHBANG_RINGING.get().getLocation(),
+										1.0f, level().getRandom().nextFloat() * 0.05f + 1.0f));
 
 								if (canSee(player, this, true)) {
-									player.addEffect(new MobEffectInstance(EffectRegistry.FLASHBANG_EFFECT.get(),
+									player.addEffect(new MobEffectInstance(EffectRegistry.FLASHBANG_EFFECT,
 											200, 0, true, false, false));
 									player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN,
 											200, 0, true, false, false));
@@ -67,7 +66,7 @@ public class FlashbangEntity extends AdvancedThrowableItemProjectile {
 							}
 						} else if (entity instanceof Mob mob && !mob.getType().is(EntityTypes.BOSSES)) {
 							if (canSee(mob, this, false)) {
-								mob.goalSelector.addGoal(1, new DisorientedWanderingGoal(mob, CommonConfig.flashbangDisorientTime * 20));
+								mob.goalSelector.addGoal(1, new DisorientedWanderingGoal(mob, IWConfigs.SERVER.flashbangDisorientTime.getAsInt() * 20));
 								mob.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN,
 										200, 0, true, false, false));
 							}

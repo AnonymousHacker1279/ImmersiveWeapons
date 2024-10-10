@@ -2,25 +2,29 @@ package tech.anonymoushacker1279.immersiveweapons.entity.projectile;
 
 import net.minecraft.commands.arguments.EntityAnchorArgument.Anchor;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderGetter;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.Level.ExplosionInteraction;
 import net.minecraft.world.phys.*;
 import net.neoforged.neoforge.event.EventHooks;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
-import tech.anonymoushacker1279.immersiveweapons.init.EnchantmentRegistry;
+import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
+import tech.anonymoushacker1279.immersiveweapons.data.IWEnchantments;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
@@ -71,13 +75,15 @@ public class MeteorEntity extends Projectile {
 
 			// Handle any enchantments
 			if (staff != null) {
-				int enchantLevel = staff.getEnchantmentLevel(EnchantmentRegistry.HEAVY_COMET.get());
+				HolderGetter<Enchantment> enchantmentGetter = meteorEntity.registryAccess().lookup(Registries.ENCHANTMENT).orElseThrow();
+
+				int enchantLevel = staff.getEnchantmentLevel(enchantmentGetter.getOrThrow(IWEnchantments.HEAVY_COMET));
 				if (enchantLevel > 0) {
 					// Increase the explosion radius, capping at +2 blocks
 					meteorEntity.explosionRadiusModifier = (float) Math.min(enchantLevel * 0.5, 2);
 				}
 
-				enchantLevel = staff.getEnchantmentLevel(EnchantmentRegistry.BURNING_HEAT.get());
+				enchantLevel = staff.getEnchantmentLevel(enchantmentGetter.getOrThrow(IWEnchantments.BURNING_HEAT));
 				if (enchantLevel > 0) {
 					meteorEntity.catchFire = true;
 				}
@@ -188,7 +194,7 @@ public class MeteorEntity extends Projectile {
 
 		// Explode on impact
 
-		ExplosionInteraction explosionInteraction = CommonConfig.meteorStaffExplosionBreakBlocks ? ExplosionInteraction.MOB : ExplosionInteraction.NONE;
+		ExplosionInteraction explosionInteraction = IWConfigs.SERVER.meteorStaffExplosionBreakBlocks.getAsBoolean() ? ExplosionInteraction.MOB : ExplosionInteraction.NONE;
 
 		if (!level().isClientSide) {
 			if (getOwner() != null) {
@@ -196,7 +202,7 @@ public class MeteorEntity extends Projectile {
 						IWDamageSources.meteor(this, getOwner()),
 						null,
 						position().subtract(0, 1.5, 0),
-						CommonConfig.meteorStaffExplosionRadius + explosionRadiusModifier,
+						(float) (IWConfigs.SERVER.meteorStaffExplosionRadius.getAsDouble() + explosionRadiusModifier),
 						catchFire,
 						explosionInteraction);
 			}
@@ -223,7 +229,7 @@ public class MeteorEntity extends Projectile {
 	}
 
 	@Override
-	protected void defineSynchedData() {
+	protected void defineSynchedData(SynchedEntityData.Builder builder) {
 	}
 
 	@Override
@@ -251,7 +257,7 @@ public class MeteorEntity extends Projectile {
 	}
 
 	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket() {
-		return new ClientboundAddEntityPacket(this);
+	public Packet<ClientGamePacketListener> getAddEntityPacket(ServerEntity entity) {
+		return super.getAddEntityPacket(entity);
 	}
 }

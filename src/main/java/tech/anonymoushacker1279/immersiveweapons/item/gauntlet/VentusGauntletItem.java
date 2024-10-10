@@ -8,8 +8,8 @@ import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
 
 public class VentusGauntletItem extends GauntletItem implements HitEffectUtils {
 
-	public VentusGauntletItem(Tier tier, int damageBonus, float attackSpeed, Properties properties, float bleedChance, int bleedLevel, Ingredient repairIngredient) {
-		super(tier, damageBonus, attackSpeed, properties, bleedChance, bleedLevel, repairIngredient);
+	public VentusGauntletItem(Tier tier, Properties properties, float bleedChance, int bleedLevel, Ingredient repairIngredient) {
+		super(tier, properties, bleedChance, bleedLevel, repairIngredient);
 	}
 
 	@Override
@@ -18,6 +18,7 @@ public class VentusGauntletItem extends GauntletItem implements HitEffectUtils {
 			addVentusEffects(target);
 			return true;
 		}
+
 		return false;
 	}
 }

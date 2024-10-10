@@ -1,29 +1,46 @@
 package tech.anonymoushacker1279.immersiveweapons.data.loot;
 
 import net.minecraft.advancements.critereon.*;
+import net.minecraft.core.HolderGetter;
+import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.TagKey;
+import net.minecraft.tags.*;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootContext.EntityTarget;
+import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.predicates.*;
 import net.neoforged.neoforge.common.data.GlobalLootModifierProvider;
 import net.neoforged.neoforge.common.loot.LootTableIdCondition;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWItemTagGroups;
+import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.world.level.loot.*;
 
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+
 public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 
-	public GlobalLootModifierGenerator(PackOutput output) {
-		super(output, ImmersiveWeapons.MOD_ID);
+	private final Provider registries;
+
+	public GlobalLootModifierGenerator(PackOutput output, CompletableFuture<Provider> lookupProvider) {
+		super(output, lookupProvider, ImmersiveWeapons.MOD_ID);
+
+		Provider provider;
+		try {
+			provider = lookupProvider.get();
+		} catch (InterruptedException | ExecutionException e) {
+			throw new RuntimeException(e);
+		}
+
+		registries = provider;
 	}
 
 	@Override
@@ -91,7 +108,7 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 		add("copper_ring", new SimpleDropModifierHandler(
 				simpleDropCondition(0.05f, 0.02f),
 				ItemRegistry.COPPER_RING.get().getDefaultInstance(),
-				"undead"));
+				Optional.of(EntityTypeTags.UNDEAD)));
 
 		add("log_shards", new LogShardsLootModifierHandler(
 				matchToolCondition(ItemTags.PICKAXES),
@@ -135,8 +152,8 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 	 * @param lootTable the loot table to use
 	 * @return the loot item condition
 	 */
-	private LootItemCondition[] singleLootTableCondition(ResourceLocation lootTable) {
-		return new LootItemCondition[]{LootTableIdCondition.builder(lootTable).build()};
+	private LootItemCondition[] singleLootTableCondition(ResourceKey<LootTable> lootTable) {
+		return new LootItemCondition[]{LootTableIdCondition.builder(lootTable.location()).build()};
 	}
 
 	/**
@@ -145,11 +162,14 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 	 * @param lootTables the loot tables to use
 	 * @return the loot item condition
 	 */
-	private LootItemCondition[] multipleLootTablesCondition(ResourceLocation... lootTables) {
+	@SafeVarargs
+	private LootItemCondition[] multipleLootTablesCondition(ResourceKey<LootTable>... lootTables) {
 		LootItemCondition[] conditions = new LootItemCondition[lootTables.length];
+
 		for (int i = 0; i < lootTables.length; i++) {
-			conditions[i] = LootTableIdCondition.builder(lootTables[i]).build();
+			conditions[i] = LootTableIdCondition.builder(lootTables[i].location()).build();
 		}
+
 		return conditions;
 	}
 
@@ -161,7 +181,7 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 	 */
 	private LootItemCondition[] simpleDropCondition(float chance, float lootingMultiplier) {
 		return new LootItemCondition[]{
-				LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(chance, lootingMultiplier)
+				LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(registries, chance, lootingMultiplier)
 						.and(LootItemKilledByPlayerCondition.killedByPlayer())
 						.build()};
 	}
@@ -196,7 +216,7 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 								EntityPredicate.Builder.entity()
 										.of(entityType)
 										.build())
-						.and(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(chance, lootingMultiplier))
+						.and(LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(registries, chance, lootingMultiplier))
 						.and(LootItemKilledByPlayerCondition.killedByPlayer())
 						.build()};
 	}
@@ -228,8 +248,10 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 	 * @return the loot item condition
 	 */
 	private LootItemCondition[] inBiomeDungeonCondition(ResourceKey<Biome> biome) {
-		return new LootItemCondition[]{LootTableIdCondition.builder(BuiltInLootTables.SIMPLE_DUNGEON)
-				.and(LocationCheck.checkLocation(LocationPredicate.Builder.inBiome(biome)))
+		HolderGetter<Biome> holderGetter = registries.lookupOrThrow(Registries.BIOME);
+
+		return new LootItemCondition[]{LootTableIdCondition.builder(BuiltInLootTables.SIMPLE_DUNGEON.location())
+				.and(LocationCheck.checkLocation(LocationPredicate.Builder.inBiome(holderGetter.getOrThrow(biome))))
 				.build()};
 	}
 }

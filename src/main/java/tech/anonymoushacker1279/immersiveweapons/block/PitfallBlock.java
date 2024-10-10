@@ -23,23 +23,16 @@ public class PitfallBlock extends Block {
 		super(properties);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos,
-	                           CollisionContext collisionContext) {
-
+	public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext collisionContext) {
 		return SHAPE;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
-	public VoxelShape getCollisionShape(BlockState state, BlockGetter getter,
-	                                    BlockPos pos, CollisionContext collisionContext) {
-
+	public VoxelShape getCollisionShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext collisionContext) {
 		return Shapes.empty();
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState,
 	                              LevelAccessor levelAccessor, BlockPos currentPos,
@@ -49,7 +42,6 @@ public class PitfallBlock extends Block {
 				: super.updateShape(state, direction, neighborState, levelAccessor, currentPos, neighborPos);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader reader, BlockPos pos) {
 		for (Direction facing : new Direction[]{Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH}) {
@@ -60,10 +52,10 @@ public class PitfallBlock extends Block {
 				return true;
 			}
 		}
+
 		return false;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
 		if (entity instanceof LivingEntity && !level.isClientSide) {

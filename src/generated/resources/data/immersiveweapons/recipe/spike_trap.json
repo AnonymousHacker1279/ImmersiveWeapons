@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "traps",
+  "key": {
+    "a": {
+      "tag": "c:dusts/redstone"
+    },
+    "b": {
+      "tag": "c:ingots/iron"
+    },
+    "c": {
+      "tag": "c:nuggets/iron"
+    }
+  },
+  "pattern": [
+    "ccc",
+    "bbb",
+    " a "
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:spike_trap"
+  }
+}

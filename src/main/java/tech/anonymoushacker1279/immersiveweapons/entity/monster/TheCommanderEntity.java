@@ -70,7 +70,7 @@ public class TheCommanderEntity extends DyingSoldierEntity implements AttackerTr
 	}
 
 	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag dataTag) {
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData) {
 		bossEvent.setProgress(0f);
 
 		totalWavesToSpawn = 3;
@@ -99,7 +99,7 @@ public class TheCommanderEntity extends DyingSoldierEntity implements AttackerTr
 			default -> xpReward = 50;
 		}
 
-		return super.finalizeSpawn(level, difficulty, reason, spawnData, dataTag);
+		return super.finalizeSpawn(level, difficulty, reason, spawnData);
 	}
 
 	@Override

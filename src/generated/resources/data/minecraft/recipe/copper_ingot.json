@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "copper_ingot",
+  "key": {
+    "a": {
+      "tag": "c:nuggets/copper"
+    }
+  },
+  "pattern": [
+    "aaa",
+    "aaa",
+    "aaa"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:copper_ingot"
+  }
+}

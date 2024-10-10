@@ -12,7 +12,6 @@ import tech.anonymoushacker1279.immersiveweapons.blockentity.*;
 
 import java.util.function.Supplier;
 
-@SuppressWarnings({"unused"})
 public class BlockEntityRegistry {
 
 	// Block Entity Register
@@ -34,7 +33,6 @@ public class BlockEntityRegistry {
 	public static final Supplier<BlockEntityType<DamageableBlockEntity>> DAMAGEABLE_BLOCK_ENTITY = BLOCK_ENTITIES.register("damageable_block", () -> new BlockEntityType<>(DamageableBlockEntity::new, Sets.newHashSet(BlockRegistry.WOODEN_SPIKES.get(), BlockRegistry.BARBED_WIRE.get()), null));
 	public static final Supplier<BlockEntityType<AmmunitionTableBlockEntity>> AMMUNITION_TABLE_BLOCK_ENTITY = BLOCK_ENTITIES.register("ammunition_table", () -> new BlockEntityType<>(AmmunitionTableBlockEntity::new, Sets.newHashSet(BlockRegistry.AMMUNITION_TABLE.get()), null));
 	public static final Supplier<BlockEntityType<StarForgeBlockEntity>> STAR_FORGE_BLOCK_ENTITY = BLOCK_ENTITIES.register("star_forge", () -> new BlockEntityType<>(StarForgeBlockEntity::new, Sets.newHashSet(BlockRegistry.STAR_FORGE_CONTROLLER.get()), null));
-	public static final Supplier<BlockEntityType<TiltrosPortalBlockEntity>> TILTROS_PORTAL_BLOCK_ENTITY = BLOCK_ENTITIES.register("tiltros_portal", () -> new BlockEntityType<>(TiltrosPortalBlockEntity::new, Sets.newHashSet(BlockRegistry.TILTROS_PORTAL.get()), null));
 	public static final Supplier<BlockEntityType<CommanderPedestalBlockEntity>> COMMANDER_PEDESTAL_BLOCK_ENTITY = BLOCK_ENTITIES.register("commander_pedestal", () -> new BlockEntityType<>(CommanderPedestalBlockEntity::new, Sets.newHashSet(BlockRegistry.COMMANDER_PEDESTAL.get()), null));
 
 	private static Block[] getSkullBlocks() {

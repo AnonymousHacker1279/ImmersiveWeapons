@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "ventus",
+  "key": {
+    "a": {
+      "tag": "immersiveweapons:shards/ventus"
+    },
+    "b": {
+      "tag": "c:gems/diamond"
+    }
+  },
+  "pattern": [
+    "aaa",
+    "aba",
+    "aaa"
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:ventus_staff_core"
+  }
+}

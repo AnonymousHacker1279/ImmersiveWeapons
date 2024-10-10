@@ -1,0 +1,33 @@
+{
+  "parent": "immersiveweapons:root",
+  "criteria": {
+    "hold": {
+      "conditions": {
+        "items": [
+          {
+            "items": "immersiveweapons:wooden_tool_rod"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersiveweapons.tool_rod.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "immersiveweapons:wooden_tool_rod"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.tool_rod.title"
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "immersiveweapons:pliers"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "small_parts_metal_tool": {
+      "conditions": {
+        "items": [
+          {
+            "items": "immersiveweapons:tool_joint"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "small_parts_metal_tool"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:pliers"
+    ]
+  }
+}

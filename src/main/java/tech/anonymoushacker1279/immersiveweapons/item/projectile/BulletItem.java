@@ -1,21 +1,23 @@
 package tech.anonymoushacker1279.immersiveweapons.item.projectile;
 
+import net.minecraft.core.Holder.Reference;
+import net.minecraft.core.HolderGetter;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow.Pickup;
 import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
-import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
+import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
+import tech.anonymoushacker1279.immersiveweapons.data.IWEnchantments;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.*;
-import tech.anonymoushacker1279.immersiveweapons.init.EnchantmentRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils.HitEffect;
+import tech.anonymoushacker1279.immersiveweapons.util.ArrowKnockbackAccessor;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.function.Supplier;
 
 public class BulletItem<T extends BulletEntity> extends ArrowItem {
@@ -48,22 +50,22 @@ public class BulletItem<T extends BulletEntity> extends ArrowItem {
 		this.isExplosive = isExplosive;
 	}
 
-	public BulletEntity createBullet(Level level, LivingEntity shooter) {
-		BulletEntity bulletEntity = new BulletEntity(entitySupplier.get(), shooter, level);
+	public BulletEntity createBullet(Level level, LivingEntity shooter, ItemStack gun) {
+		BulletEntity bulletEntity = new BulletEntity(entitySupplier.get(), shooter, level, gun);
 		setCommonBulletCharacteristics(bulletEntity);
 
 		return bulletEntity;
 	}
 
-	public FlareEntity createFlare(Level level, LivingEntity shooter) {
-		FlareEntity flareEntity = new FlareEntity(entitySupplier.get(), shooter, level);
+	public FlareEntity createFlare(Level level, LivingEntity shooter, ItemStack gun) {
+		FlareEntity flareEntity = new FlareEntity(entitySupplier.get(), shooter, level, gun);
 		setCommonBulletCharacteristics(flareEntity);
 
 		return flareEntity;
 	}
 
-	public CannonballEntity createCannonball(Level level, LivingEntity shooter) {
-		CannonballEntity cannonballEntity = new CannonballEntity(shooter, level);
+	public CannonballEntity createCannonball(Level level, LivingEntity shooter, ItemStack gun) {
+		CannonballEntity cannonballEntity = new CannonballEntity(shooter, level, gun);
 		setCommonBulletCharacteristics(cannonballEntity);
 		cannonballEntity.isExplosive = isExplosive;
 
@@ -75,7 +77,7 @@ public class BulletItem<T extends BulletEntity> extends ArrowItem {
 		bulletEntity.setSoundEvent(SoundEventRegistry.BULLET_WHIZZ.get());
 		bulletEntity.setPierceLevel((byte) pierceLevel);
 		bulletEntity.setBaseDamage(damage);
-		bulletEntity.setKnockback(knockbackStrength);
+		((ArrowKnockbackAccessor) bulletEntity).immersiveWeapons$setBaseKnockback(knockbackStrength);
 		bulletEntity.gravityModifier = gravityModifier;
 		bulletEntity.shootingVectorInputs = shootingVectorInputs;
 		bulletEntity.hitEffect = hitEffect;
@@ -85,18 +87,24 @@ public class BulletItem<T extends BulletEntity> extends ArrowItem {
 	}
 
 	/**
-	 * Check if the bullet is infinite. A more flexible check than Vanilla provides.
-	 * Restricts the ability to lower level bullets, for balance.
+	 * Check if the bullet is infinite. Restricts the ability to lower level bullets, for balance.
 	 *
-	 * @param bullet the bullet being checked
-	 * @param gun    the gun firing the bullet
-	 * @param player the player firing the gun
+	 * @param bullet  the bullet being checked
+	 * @param gun     the gun firing the bullet
+	 * @param shooter the entity firing the gun
 	 * @return boolean
 	 */
 	@Override
-	public boolean isInfinite(ItemStack bullet, ItemStack gun, Player player) {
-		int enchant = EnchantmentHelper.getTagEnchantmentLevel(EnchantmentRegistry.ENDLESS_MUSKET_POUCH.get(), gun);
-		return (CommonConfig.infiniteAmmoOnAllTiers || canBeInfinite) && enchant > 0;
+	public boolean isInfinite(ItemStack bullet, ItemStack gun, LivingEntity shooter) {
+		HolderGetter<Enchantment> enchantmentGetter = shooter.registryAccess().lookup(Registries.ENCHANTMENT).orElseThrow();
+		Optional<Reference<Enchantment>> endlessMusketPouch = enchantmentGetter.get(IWEnchantments.ENDLESS_MUSKET_POUCH);
+
+		int enchantmentLevel = 0;
+		if (endlessMusketPouch.isPresent()) {
+			enchantmentLevel = gun.getEnchantmentLevel(endlessMusketPouch.get());
+		}
+
+		return (IWConfigs.SERVER.infiniteAmmoOnAllTiers.getAsBoolean() || canBeInfinite) && enchantmentLevel > 0;
 	}
 
 	public static class BulletBuilder<T extends BulletEntity> {

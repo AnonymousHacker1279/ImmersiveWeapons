@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "shard",
+  "ingredients": [
+    {
+      "item": "minecraft:obsidian"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "immersiveweapons:obsidian_shard"
+  }
+}

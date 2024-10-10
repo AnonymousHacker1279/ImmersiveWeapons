@@ -1,0 +1,33 @@
+{
+  "parent": "immersiveweapons:tool_rod",
+  "criteria": {
+    "hold": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#immersiveweapons:weapons/pikes"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersiveweapons.pike.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "immersiveweapons:iron_pike"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.pike.title"
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

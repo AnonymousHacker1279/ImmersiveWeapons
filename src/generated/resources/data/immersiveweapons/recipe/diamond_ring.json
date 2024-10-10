@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "ring",
+  "key": {
+    "a": {
+      "tag": "c:gems/diamond"
+    },
+    "b": {
+      "item": "immersiveweapons:golden_ring"
+    }
+  },
+  "pattern": [
+    " a ",
+    " b "
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:diamond_ring"
+  }
+}

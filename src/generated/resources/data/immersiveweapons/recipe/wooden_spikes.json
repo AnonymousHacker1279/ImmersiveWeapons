@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "traps",
+  "key": {
+    "a": {
+      "tag": "minecraft:planks"
+    },
+    "b": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "b b",
+    " a ",
+    "b b"
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:wooden_spikes"
+  }
+}

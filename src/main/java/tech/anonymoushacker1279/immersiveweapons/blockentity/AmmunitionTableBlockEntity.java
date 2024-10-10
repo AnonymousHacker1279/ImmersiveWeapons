@@ -1,11 +1,14 @@
 package tech.anonymoushacker1279.immersiveweapons.blockentity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.component.DataComponentType;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.util.Mth;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -13,40 +16,51 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.init.BlockEntityRegistry;
-import tech.anonymoushacker1279.immersiveweapons.init.RecipeTypeRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.AmmunitionTableRecipe;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.AmmunitionTableRecipe.MaterialGroup;
 import tech.anonymoushacker1279.immersiveweapons.menu.AmmunitionTableMenu;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity implements EntityBlock {
 
 	protected final NonNullList<ItemStack> inventory = NonNullList.withSize(7, ItemStack.EMPTY);
 	protected float densityModifier = 0.0f;
+	public int excessStackSize = 0;
+	public ItemStack excessStack = ItemStack.EMPTY;
 	protected final NonNullList<Integer> slotCosts = NonNullList.withSize(7, 0);
+
+	final DataComponentType<Float> DENSITY_MODIFIER = DataComponentTypeRegistry.DENSITY_MODIFIER.get();
 
 	public final ContainerData containerData = new ContainerData() {
 		@Override
 		public int get(int index) {
-			return (int) (densityModifier * 100);
+			return switch (index) {
+				case 0 -> (int) (densityModifier * 100);
+				case 1 -> excessStackSize;
+				default -> throw new IllegalStateException("Unexpected value: " + index);
+			};
 		}
 
 		@Override
 		public void set(int index, int value) {
-			densityModifier = value / 100.0f;
+			switch (index) {
+				case 0 -> densityModifier = value / 100.0f;
+				case 1 -> excessStackSize = value;
+				default -> throw new IllegalStateException("Unexpected value: " + index);
+			}
 		}
 
 		@Override
 		public int getCount() {
-			return 1;
+			return 2;
 		}
 	};
 
@@ -60,6 +74,18 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 	}
 
 	@Override
+	protected NonNullList<ItemStack> getItems() {
+		return inventory;
+	}
+
+	@Override
+	protected void setItems(NonNullList<ItemStack> stacks) {
+		for (int i = 0; i < Math.min(stacks.size(), inventory.size()); i++) {
+			inventory.set(i, stacks.get(i));
+		}
+	}
+
+	@Override
 	protected AbstractContainerMenu createMenu(int id, Inventory inventory) {
 		return new AmmunitionTableMenu(id, inventory, this, containerData);
 	}
@@ -70,29 +96,29 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 		return new AmmunitionTableBlockEntity(blockPos, blockState);
 	}
 
-	/**
-	 * Load NBT data.
-	 *
-	 * @param nbt the <code>CompoundNBT</code> to load
-	 */
 	@Override
-	public void load(CompoundTag nbt) {
-		super.load(nbt);
+	public void loadAdditional(CompoundTag tag, Provider provider) {
+		super.loadAdditional(tag, provider);
 		inventory.clear();
-		ContainerHelper.loadAllItems(nbt, inventory);
-		densityModifier = nbt.getFloat("densityModifier");
+		ContainerHelper.loadAllItems(tag, inventory, provider);
+		densityModifier = tag.getFloat("densityModifier");
+		containerData.set(1, tag.getInt("excessStackSize"));
+
+		if (tag.contains("excessStack")) {
+			String itemName = tag.getString("excessStack");
+			excessStack = BuiltInRegistries.ITEM.get(ResourceLocation.parse(itemName)).getDefaultInstance();
+			excessStack.setCount(Math.clamp(containerData.get(1), 0, 99));
+			excessStack.set(DENSITY_MODIFIER, densityModifier);
+		}
 	}
 
-	/**
-	 * Save NBT data.
-	 *
-	 * @param pTag the <code>CompoundNBT</code> to save
-	 */
 	@Override
-	protected void saveAdditional(CompoundTag pTag) {
-		super.saveAdditional(pTag);
-		ContainerHelper.saveAllItems(pTag, inventory);
-		pTag.putFloat("densityModifier", densityModifier);
+	protected void saveAdditional(CompoundTag tag, Provider provider) {
+		super.saveAdditional(tag, provider);
+		ContainerHelper.saveAllItems(tag, inventory, provider);
+		tag.putFloat("densityModifier", densityModifier);
+		tag.putInt("excessStackSize", excessStackSize);
+		tag.putString("excessStack", excessStack.getItemHolder().getRegisteredName());
 	}
 
 	/**
@@ -164,23 +190,23 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 	@Override
 	public void setItem(int index, ItemStack stack) {
 		inventory.set(index, stack);
-		if (stack.getCount() > getMaxStackSize()) {
-			stack.setCount(getMaxStackSize());
-		}
-
-		setChanged();
-		if (level != null) {
-			level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
-		}
 	}
 
 	@Override
-	public CompoundTag getUpdateTag() {
+	public CompoundTag getUpdateTag(Provider provider) {
 		CompoundTag tag = new CompoundTag();
-		super.saveAdditional(tag);
-		ContainerHelper.saveAllItems(tag, inventory, true);
+		super.saveAdditional(tag, provider);
+		ContainerHelper.saveAllItems(tag, inventory, provider);
 		tag.putFloat("densityModifier", densityModifier);
 		return tag;
+	}
+
+	@Override
+	public void setChanged() {
+		super.setChanged();
+		if (level != null) {
+			level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 3);
+		}
 	}
 
 	public NonNullList<ItemStack> getInventory() {
@@ -205,127 +231,140 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 		inventory.clear();
 	}
 
-	@Override
-	public void setChanged() {
-		super.setChanged();
-		calculateOutput();
+	/**
+	 * Try to find a valid recipe based on the first item in the inventory.
+	 *
+	 * @param level the <code>Level</code> instance
+	 * @return RecipeHolder
+	 */
+	private @Nullable RecipeHolder<AmmunitionTableRecipe> getValidRecipe(Level level) {
+		List<RecipeHolder<AmmunitionTableRecipe>> recipes = level.getRecipeManager()
+				.getAllRecipesFor(RecipeTypeRegistry.AMMUNITION_TABLE_RECIPE_TYPE.get());
+
+		ItemStack firstStack = inventory.stream().filter(stack -> stack != ItemStack.EMPTY).findFirst().orElse(ItemStack.EMPTY);
+
+		return recipes.stream()
+				.filter(r -> r.value().getIngredients().stream().anyMatch(ingredient -> ingredient.test(firstStack)))
+				.findFirst()
+				.orElse(null);
 	}
 
 	/**
-	 * Calculate the crafting result based on the input items and the density modifier.
-	 * <p>
-	 * One ingot produces 2.6 musket balls, and nuggets/shards produce 0.28.
-	 * A higher density modifier increases the amount of resources required. Each input item has its own density.
+	 * Calculates the output size based on the current recipe and available inventory materials. It will additionally set
+	 * slot costs for each input item.
+	 *
+	 * @param materialGroups the list of <code>MaterialGroup</code> instances
+	 * @return int
 	 */
-	private void calculateOutput() {
+	private int calculateOutputSize(List<MaterialGroup> materialGroups) {
+		NonNullList<Integer> outputPerSlot = NonNullList.withSize(6, 0);
+
+		for (int i = 0; i < 6; i++) {
+			ItemStack stack = inventory.get(i);
+			if (!stack.isEmpty()) {
+				for (MaterialGroup materialGroup : materialGroups) {
+					if (materialGroup.getIngredient().test(stack)) {
+						int output = (int) Math.floor(((stack.getCount() * (1.0f + materialGroup.getDensity())) * materialGroup.baseMultiplier()) / (1.0f + densityModifier));
+						outputPerSlot.set(i, output);
+
+						slotCosts.set(i, stack.getCount());
+					}
+				}
+			}
+		}
+
+		return outputPerSlot.stream().mapToInt(Integer::intValue).sum();
+	}
+
+	/**
+	 * Calculate the output item based on the given inputs.
+	 */
+	public void calculateOutput(boolean didCraft) {
 		if (level == null || remove) {
 			return;
 		}
 
-		List<RecipeHolder<AmmunitionTableRecipe>> recipes = level.getRecipeManager()
-				.getAllRecipesFor(RecipeTypeRegistry.AMMUNITION_TABLE_RECIPE_TYPE.get());
-
-		// Select a recipe that matches based on the first input item
-		// Determine the first non-air item in the table's inventory
-		ItemStack firstStack = inventory.stream().filter(stack -> stack != ItemStack.EMPTY).findFirst().orElse(ItemStack.EMPTY);
-
-		RecipeHolder<AmmunitionTableRecipe> recipe = recipes.stream()
-				.filter(r -> r.value().getIngredients().stream().anyMatch(ingredient -> ingredient.test(firstStack)))
-				.findFirst().orElse(null);
+		RecipeHolder<AmmunitionTableRecipe> recipe = getValidRecipe(level);
 
 		if (recipe == null) {
-			inventory.set(6, ItemStack.EMPTY);
+			if (excessStack != ItemStack.EMPTY && didCraft) {
+				inventory.set(6, excessStack);
+				handleExcess();
+			} else {
+				inventory.set(6, ItemStack.EMPTY);
+				containerData.set(1, 0);
+			}
+
 			return;
 		}
 
 		List<MaterialGroup> recipeMaterials = recipe.value().getMaterials();
-
-		List<ItemStack> materialList = recipeMaterials.stream().collect(
-				ArrayList::new,
-				(list, group) -> list.addAll(List.of(group.getIngredient().getItems())),
-				ArrayList::addAll
-		);
-		List<Float> densityList = recipeMaterials.stream().collect(
-				ArrayList::new,
-				(list, group) -> list.add(group.getDensity()),
-				ArrayList::addAll
-		);
-		List<Float> baseMultiplierList = recipeMaterials.stream().collect(
-				ArrayList::new,
-				(list, group) -> list.add(group.getBaseMultiplier()),
-				ArrayList::addAll
-		);
-
 		ItemStack result = recipe.value().getResultItem(level.registryAccess());
 
-		// The size of the output stack is calculated here
-		float outputSize = 0.0f;
-		// The cost list stores the cost of the output, for each slot
 		slotCosts.clear();
+		int outputSize = calculateOutputSize(recipeMaterials);
 
-		// First, determine the maximum crafts possible with a density modifier of zero
-		// So check the inventory, multiply all ingots by 2.6, and all nuggets/shards by 0.28
-		int inventoryIndex = 0;
-		for (ItemStack stack : inventory) {
-			if (stack != ItemStack.EMPTY) {
-				int materialListIndex = 0;
-				for (ItemStack material : materialList) {
-					if (material.getItem() == stack.getItem()) {
-						float modifier = baseMultiplierList.get(materialListIndex) * stack.getCount();
+		if (outputSize > 99) {
+			containerData.set(1, outputSize - 99);
+			outputSize = 99;
+			excessStack = result.copyWithCount(outputSize);
 
-						outputSize += modifier;
-
-						int slotCost = Mth.ceil(modifier / baseMultiplierList.get(materialListIndex));
-						slotCosts.set(inventoryIndex, slotCost);
-					}
-
-					materialListIndex++;
-				}
+			if (densityModifier > 0) {
+				excessStack.set(DENSITY_MODIFIER, densityModifier);
 			}
-
-			inventoryIndex++;
+		} else {
+			containerData.set(1, 0);
 		}
 
 		if (densityModifier > 0) {
-			// Adjust the output size and slot costs. Higher densities consume more material. Pull the density values
-			// from the material map.
-			inventoryIndex = 0;
-			for (ItemStack inventoryStack : inventory) {
-				if (inventoryStack != ItemStack.EMPTY) {
-					int materialListIndex = 0;
-					for (ItemStack material : materialList) {
-						if (material.getItem() == inventoryStack.getItem()) {
-							float modifier = densityList.get(materialListIndex) * inventoryStack.getCount() * densityModifier;
-
-							outputSize -= modifier;
-
-							int slotCost = Mth.ceil((modifier / densityList.get(materialListIndex)));
-							slotCosts.set(inventoryIndex, slotCosts.get(inventoryIndex) + slotCost);
-						}
-
-						materialListIndex++;
-					}
-				}
-
-				inventoryIndex++;
-			}
-
-			result.getOrCreateTag().putFloat("densityModifier", densityModifier);
+			result.set(DENSITY_MODIFIER, densityModifier);
 		}
 
-		result.setCount(Mth.floor(Mth.clamp(outputSize, 0, 64)));
+		result.setCount(outputSize);
 		inventory.set(6, result);
 	}
 
 	/**
 	 * Runs after a result stack has been taken. Decreases the stack size of each input item by the amount specified in the slotCosts list.
 	 */
-	public void completeCraft() {
+	public void depleteMaterials() {
 		for (int i = 0; i < 6; i++) {
 			ItemStack stack = inventory.get(i);
 			if (!stack.isEmpty()) {
 				stack.shrink(slotCosts.get(i));
 			}
 		}
+	}
+
+	/**
+	 * Handle excess output that cannot fit in the output slot.
+	 */
+	public void handleExcess() {
+		int excess = containerData.get(1);
+		if (excess > 0) {
+			int stackSize = Math.clamp(excess, 0, 99);
+			excessStack.setCount(stackSize);
+			containerData.set(1, excess - stackSize);
+		} else {
+			excessStack = ItemStack.EMPTY;
+		}
+	}
+
+	/**
+	 * Checks if there is an excess amount of output.
+	 *
+	 * @return boolean
+	 */
+	public boolean hasExcess() {
+		return containerData.get(1) > 0;
+	}
+
+	/**
+	 * Checks if there are no materials present (first six slots)
+	 *
+	 * @return boolean
+	 */
+	public boolean hasNoMaterials() {
+		return inventory.stream().limit(6).allMatch(ItemStack::isEmpty);
 	}
 }

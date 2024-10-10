@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "group": "wooden_button",
+  "ingredients": [
+    {
+      "item": "immersiveweapons:burned_oak_planks"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:burned_oak_button"
+  }
+}

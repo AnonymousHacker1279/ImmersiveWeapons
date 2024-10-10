@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "bloody_sacrifice",
+  "key": {
+    "a": {
+      "item": "minecraft:spider_eye"
+    },
+    "b": {
+      "item": "minecraft:porkchop"
+    },
+    "c": {
+      "item": "minecraft:mutton"
+    }
+  },
+  "pattern": [
+    "bbb",
+    "bac",
+    "ccc"
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:bloody_sacrifice"
+  }
+}

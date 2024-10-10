@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "ammunition_table",
+  "key": {
+    "a": {
+      "tag": "c:ingots/iron"
+    },
+    "b": {
+      "tag": "minecraft:planks"
+    },
+    "c": {
+      "tag": "minecraft:stone_crafting_materials"
+    },
+    "d": {
+      "tag": "c:gunpowders"
+    }
+  },
+  "pattern": [
+    "aaa",
+    "bdb",
+    "cbc"
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:ammunition_table"
+  }
+}

@@ -2,7 +2,6 @@ package tech.anonymoushacker1279.immersiveweapons.block.decoration;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -37,7 +36,6 @@ public class CampChairBlock extends BasicOrientableBlock implements SimpleWaterl
 		registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, Boolean.FALSE));
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext selectionContext) {
 		return SHAPE;
@@ -53,15 +51,13 @@ public class CampChairBlock extends BasicOrientableBlock implements SimpleWaterl
 		return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite()).setValue(WATERLOGGED, Boolean.FALSE);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
-	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
 		if (level.isClientSide) {
 			return InteractionResult.SUCCESS;
 		} else {

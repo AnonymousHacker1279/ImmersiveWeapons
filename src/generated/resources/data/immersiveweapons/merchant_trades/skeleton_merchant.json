@@ -6,21 +6,24 @@
         {
           "emerald_cost": 1,
           "item": {
-            "item": "immersiveweapons:bandage"
+            "count": 1,
+            "id": "immersiveweapons:bandage"
           },
           "max_uses": 8
         },
         {
           "emerald_cost": 2,
           "item": {
-            "item": "immersiveweapons:painkillers"
+            "count": 1,
+            "id": "immersiveweapons:painkillers"
           },
           "max_uses": 8
         },
         {
           "emerald_cost": 2,
           "item": {
-            "item": "immersiveweapons:iron_ring"
+            "count": 1,
+            "id": "immersiveweapons:iron_ring"
           },
           "max_uses": 6
         },
@@ -28,7 +31,7 @@
           "emerald_cost": 2,
           "item": {
             "count": 8,
-            "item": "immersiveweapons:iron_musket_ball"
+            "id": "immersiveweapons:iron_musket_ball"
           },
           "max_uses": 12
         },
@@ -36,28 +39,31 @@
           "emerald_cost": 1,
           "item": {
             "count": 8,
-            "item": "immersiveweapons:iron_arrow"
+            "id": "immersiveweapons:iron_arrow"
           },
           "max_uses": 12
         },
         {
           "emerald_cost": 16,
           "item": {
-            "item": "immersiveweapons:satchel"
+            "count": 1,
+            "id": "immersiveweapons:satchel"
           },
           "max_uses": 3
         },
         {
           "emerald_cost": 16,
           "item": {
-            "item": "immersiveweapons:powder_horn"
+            "count": 1,
+            "id": "immersiveweapons:powder_horn"
           },
           "max_uses": 3
         },
         {
           "emerald_cost": 5,
           "item": {
-            "item": "immersiveweapons:bloody_sacrifice"
+            "count": 1,
+            "id": "immersiveweapons:bloody_sacrifice"
           },
           "max_uses": 1
         },
@@ -65,7 +71,7 @@
           "emerald_cost": 2,
           "item": {
             "count": 3,
-            "item": "immersiveweapons:mortar_shell"
+            "id": "immersiveweapons:mortar_shell"
           },
           "max_uses": 6
         }
@@ -77,21 +83,24 @@
         {
           "emerald_cost": 6,
           "item": {
-            "item": "immersiveweapons:bloated_heart"
+            "count": 1,
+            "id": "immersiveweapons:bloated_heart"
           },
           "max_uses": 3
         },
         {
           "emerald_cost": 5,
           "item": {
-            "item": "immersiveweapons:cobalt_ring"
+            "count": 1,
+            "id": "immersiveweapons:cobalt_ring"
           },
           "max_uses": 3
         },
         {
           "emerald_cost": 0,
           "item": {
-            "item": "immersiveweapons:cobalt_pike"
+            "count": 1,
+            "id": "immersiveweapons:cobalt_pike"
           },
           "max_uses": 3
         },
@@ -99,7 +108,7 @@
           "emerald_cost": 6,
           "item": {
             "count": 2,
-            "item": "immersiveweapons:molotov_cocktail"
+            "id": "immersiveweapons:molotov_cocktail"
           },
           "max_uses": 4
         },
@@ -107,7 +116,7 @@
           "emerald_cost": 3,
           "item": {
             "count": 2,
-            "item": "immersiveweapons:smoke_grenade"
+            "id": "immersiveweapons:smoke_grenade"
           },
           "max_uses": 6
         },
@@ -115,14 +124,15 @@
           "emerald_cost": 3,
           "item": {
             "count": 2,
-            "item": "immersiveweapons:smoke_grenade_arrow"
+            "id": "immersiveweapons:smoke_grenade_arrow"
           },
           "max_uses": 6
         },
         {
           "emerald_cost": 16,
           "item": {
-            "item": "minecraft:recovery_compass"
+            "count": 1,
+            "id": "minecraft:recovery_compass"
           },
           "max_uses": 2
         }
@@ -134,49 +144,56 @@
         {
           "emerald_cost": 32,
           "item": {
-            "item": "immersiveweapons:deadeye_pendant"
+            "count": 1,
+            "id": "immersiveweapons:deadeye_pendant"
           },
           "max_uses": 1
         },
         {
           "emerald_cost": 32,
           "item": {
-            "item": "immersiveweapons:melee_masters_molten_glove"
+            "count": 1,
+            "id": "immersiveweapons:melee_masters_molten_glove"
           },
           "max_uses": 1
         },
         {
           "emerald_cost": 24,
           "item": {
-            "item": "immersiveweapons:netherite_shield"
+            "count": 1,
+            "id": "immersiveweapons:netherite_shield"
           },
           "max_uses": 1
         },
         {
           "emerald_cost": 28,
           "item": {
-            "item": "immersiveweapons:berserkers_amulet"
+            "count": 1,
+            "id": "immersiveweapons:berserkers_amulet"
           },
           "max_uses": 1
         },
         {
           "emerald_cost": 28,
           "item": {
-            "item": "immersiveweapons:amethyst_ring"
+            "count": 1,
+            "id": "immersiveweapons:amethyst_ring"
           },
           "max_uses": 1
         },
         {
           "emerald_cost": 28,
           "item": {
-            "item": "immersiveweapons:emerald_ring"
+            "count": 1,
+            "id": "immersiveweapons:emerald_ring"
           },
           "max_uses": 1
         },
         {
           "emerald_cost": 30,
           "item": {
-            "item": "minecraft:totem_of_undying"
+            "count": 1,
+            "id": "minecraft:totem_of_undying"
           },
           "max_uses": 1
         }

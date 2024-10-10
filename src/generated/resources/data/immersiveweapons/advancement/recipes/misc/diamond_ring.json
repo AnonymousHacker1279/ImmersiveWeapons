@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "golden_ring": {
+      "conditions": {
+        "items": [
+          {
+            "items": "immersiveweapons:golden_ring"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "immersiveweapons:diamond_ring"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "golden_ring"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:diamond_ring"
+    ]
+  }
+}

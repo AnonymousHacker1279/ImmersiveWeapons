@@ -45,7 +45,7 @@ public class CustomBoatRenderer extends BoatRenderer {
 
 	private static ResourceLocation getTextureLocation(CustomBoatType type, boolean hasChest) {
 		String path = hasChest ? "textures/entity/chest_boat/" + type.getName() + ".png" : "textures/entity/boat/" + type.getName() + ".png";
-		return new ResourceLocation(ImmersiveWeapons.MOD_ID, path);
+		return ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, path);
 	}
 
 	private ListModel<Boat> createBoatModel(EntityRendererProvider.Context context, CustomBoatType type, boolean hasChest) {
@@ -64,6 +64,6 @@ public class CustomBoatRenderer extends BoatRenderer {
 	}
 
 	private static ModelLayerLocation createLocation(String path) {
-		return new ModelLayerLocation(new ResourceLocation(ImmersiveWeapons.MOD_ID, path), "main");
+		return new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, path), "main");
 	}
 }

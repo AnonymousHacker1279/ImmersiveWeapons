@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "a": {
+      "item": "immersiveweapons:cloud_marble_bricks"
+    }
+  },
+  "pattern": [
+    "a",
+    "a"
+  ],
+  "result": {
+    "count": 4,
+    "id": "immersiveweapons:cloud_marble_pillar"
+  }
+}

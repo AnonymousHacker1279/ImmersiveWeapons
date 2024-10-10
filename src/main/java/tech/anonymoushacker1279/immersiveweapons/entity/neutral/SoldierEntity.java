@@ -47,11 +47,10 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 
 	@Override
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor levelAccessor, DifficultyInstance difficultyInstance,
-	                                    MobSpawnType mobSpawnType, @Nullable SpawnGroupData groupData,
-	                                    @Nullable CompoundTag compoundTag) {
+	                                    MobSpawnType mobSpawnType, @Nullable SpawnGroupData groupData) {
 
 		populateDefaultEquipmentSlots(random, difficultyInstance);
-		populateDefaultEquipmentEnchantments(random, difficultyInstance);
+		populateDefaultEquipmentEnchantments(levelAccessor, random, difficultyInstance);
 		prepareForCombat();
 		setCanPickUpLoot(true);
 
@@ -67,7 +66,7 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 			}
 		}
 
-		return super.finalizeSpawn(levelAccessor, difficultyInstance, mobSpawnType, groupData, compoundTag);
+		return super.finalizeSpawn(levelAccessor, difficultyInstance, mobSpawnType, groupData);
 	}
 
 	@Override
@@ -126,8 +125,9 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
-		return 1.74F;
+	protected EntityDimensions getDefaultDimensions(Pose pose) {
+		EntityDimensions dimensions = super.getDefaultDimensions(pose);
+		return dimensions.withEyeHeight(1.74f);
 	}
 
 	@Override
@@ -196,11 +196,31 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 	}
 
 	@Override
-	public boolean canBeLeashed(Player pPlayer) {
+	public boolean canBeLeashed() {
 		return false;
 	}
 
 	protected abstract void prepareForCombat();
 
 	protected abstract AccessoryItem getPeaceAccessory();
+
+	protected abstract AccessoryItem getAggroAccessory();
+
+	protected boolean canTargetEntityWhenHurt(LivingEntity entity) {
+		if (entity instanceof Player player) {
+			return !player.isCreative()
+					&& ((isAngryAt(player) || AccessoryItem.isAccessoryActive(player, getAggroAccessory()))
+					&& !AccessoryItem.isAccessoryActive(player, getPeaceAccessory()));
+		} else {
+			for (Class<? extends Entity> clazz : ignoresDamageFrom) {
+				if (clazz.isInstance(entity)) {
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
+
+	protected abstract boolean canTargetPlayer(LivingEntity entity);
 }

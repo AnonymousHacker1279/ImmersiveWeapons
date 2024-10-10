@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 0.8,
+  "group": "cobalt",
+  "ingredient": {
+    "item": "immersiveweapons:raw_cobalt"
+  },
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:cobalt_ingot"
+  }
+}

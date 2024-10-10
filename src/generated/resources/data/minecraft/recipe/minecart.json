@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "a": {
+      "tag": "c:ingots/metal"
+    }
+  },
+  "pattern": [
+    "a a",
+    "aaa"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:minecart"
+  }
+}

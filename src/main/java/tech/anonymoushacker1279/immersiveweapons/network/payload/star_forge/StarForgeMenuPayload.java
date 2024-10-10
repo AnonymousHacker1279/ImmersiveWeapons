@@ -1,6 +1,8 @@
 package tech.anonymoushacker1279.immersiveweapons.network.payload.star_forge;
 
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
@@ -8,21 +10,20 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 public record StarForgeMenuPayload(int containerId, int menuSelectionIndex,
                                    boolean beginCrafting) implements CustomPacketPayload {
 
-	public static final ResourceLocation ID = new ResourceLocation(ImmersiveWeapons.MOD_ID, "star_forge_menu");
+	public static final Type<StarForgeMenuPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "star_forge_menu"));
 
-	public StarForgeMenuPayload(final FriendlyByteBuf buffer) {
-		this(buffer.readInt(), buffer.readInt(), buffer.readBoolean());
-	}
+	public static final StreamCodec<FriendlyByteBuf, StarForgeMenuPayload> STREAM_CODEC = StreamCodec.composite(
+			ByteBufCodecs.INT,
+			StarForgeMenuPayload::containerId,
+			ByteBufCodecs.INT,
+			StarForgeMenuPayload::menuSelectionIndex,
+			ByteBufCodecs.BOOL,
+			StarForgeMenuPayload::beginCrafting,
+			StarForgeMenuPayload::new
+	);
 
 	@Override
-	public void write(FriendlyByteBuf buffer) {
-		buffer.writeInt(containerId);
-		buffer.writeInt(menuSelectionIndex);
-		buffer.writeBoolean(beginCrafting);
-	}
-
-	@Override
-	public ResourceLocation id() {
-		return ID;
+	public Type<? extends CustomPacketPayload> type() {
+		return TYPE;
 	}
 }

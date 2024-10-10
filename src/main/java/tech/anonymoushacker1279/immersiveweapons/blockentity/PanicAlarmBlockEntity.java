@@ -1,6 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.blockentity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -11,7 +12,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
+import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 
 public class PanicAlarmBlockEntity extends BlockEntity implements EntityBlock {
@@ -33,11 +34,11 @@ public class PanicAlarmBlockEntity extends BlockEntity implements EntityBlock {
 
 		if (isPowered && cooldown-- <= 0) {
 			for (ServerPlayer serverPlayer : ((ServerLevel) level).getPlayers(player -> player.blockPosition()
-					.distSqr(blockPos) <= Math.pow(CommonConfig.panicAlarmRange, 2))) {
+					.distSqr(blockPos) <= Math.pow(IWConfigs.SERVER.panicAlarmRange.getAsInt(), 2))) {
 
 				serverPlayer.playNotifySound(SoundEventRegistry.PANIC_ALARM_SOUND.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
 
-				level.gameEvent(GameEventRegistry.PANIC_ALARM_TRIGGER.get(), blockPos, GameEvent.Context.of(getBlockState()));
+				level.gameEvent(GameEventRegistry.PANIC_ALARM_TRIGGER, blockPos, GameEvent.Context.of(getBlockState()));
 			}
 
 			setCooldown(40);
@@ -79,29 +80,19 @@ public class PanicAlarmBlockEntity extends BlockEntity implements EntityBlock {
 		setChanged();
 	}
 
-	/**
-	 * Save NBT data.
-	 *
-	 * @param pTag the <code>CompoundNBT</code> to save
-	 */
 	@Override
-	protected void saveAdditional(CompoundTag pTag) {
-		super.saveAdditional(pTag);
+	protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+		super.saveAdditional(tag, provider);
 
-		pTag.putInt("cooldown", cooldown);
-		pTag.putBoolean("isPowered", isPowered);
+		tag.putInt("cooldown", cooldown);
+		tag.putBoolean("isPowered", isPowered);
 	}
 
-	/**
-	 * Load NBT data.
-	 *
-	 * @param nbt the <code>CompoundNBT</code> to load
-	 */
 	@Override
-	public void load(CompoundTag nbt) {
-		super.load(nbt);
+	public void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+		super.loadAdditional(tag, provider);
 
-		cooldown = nbt.getInt("cooldown");
-		isPowered = nbt.getBoolean("isPowered");
+		cooldown = tag.getInt("cooldown");
+		isPowered = tag.getBoolean("isPowered");
 	}
 }

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "iron_panel",
+  "key": {
+    "a": {
+      "tag": "c:storage_blocks/iron"
+    }
+  },
+  "pattern": [
+    "aaa"
+  ],
+  "result": {
+    "count": 8,
+    "id": "immersiveweapons:iron_panel"
+  }
+}

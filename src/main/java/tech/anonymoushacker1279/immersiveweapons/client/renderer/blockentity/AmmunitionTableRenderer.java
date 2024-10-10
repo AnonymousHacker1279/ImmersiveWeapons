@@ -76,8 +76,8 @@ public class AmmunitionTableRenderer implements BlockEntityRenderer<AmmunitionTa
 					for (int i = 0; i < stack.getCount(); i++) {
 						// Render the items in an Archimede spiral
 						float theta = i * 0.5f;
-						float x = (float) (theta * 0.03f * Math.cos(theta));
-						float z = (float) (theta * 0.03f * Math.sin(theta));
+						float x = (float) (theta * 0.0235f * Math.cos(theta));
+						float z = (float) (theta * 0.0235f * Math.sin(theta));
 
 						poseStack.translate(x - prevX, 0.00001D, z - prevZ);
 

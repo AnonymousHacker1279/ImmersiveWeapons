@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "bulletproof_glass",
+  "key": {
+    "a": {
+      "item": "minecraft:glass"
+    },
+    "b": {
+      "tag": "c:ingots/iron"
+    }
+  },
+  "pattern": [
+    "aaa",
+    "aba",
+    "aaa"
+  ],
+  "result": {
+    "count": 8,
+    "id": "immersiveweapons:bulletproof_glass"
+  }
+}

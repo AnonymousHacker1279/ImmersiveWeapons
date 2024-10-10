@@ -6,7 +6,6 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
-@SuppressWarnings("unused")
 public class GameEventRegistry {
 
 	// Game Event Register

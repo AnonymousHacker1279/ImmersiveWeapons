@@ -1,0 +1,11 @@
+{
+  "type": "immersiveweapons:barrel_tap",
+  "group": "barrel_tap",
+  "material": {
+    "item": "minecraft:sweet_berries"
+  },
+  "materialCount": 12,
+  "result": {
+    "id": "immersiveweapons:bottle_of_wine"
+  }
+}

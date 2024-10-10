@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "a": {
+      "item": "immersiveweapons:blood_sandstone"
+    }
+  },
+  "pattern": [
+    "aa",
+    "aa"
+  ],
+  "result": {
+    "count": 4,
+    "id": "immersiveweapons:cut_blood_sandstone"
+  }
+}

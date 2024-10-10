@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "a": {
+      "tag": "c:ingots/iron"
+    },
+    "b": {
+      "item": "minecraft:stick"
+    },
+    "c": {
+      "item": "minecraft:feather"
+    }
+  },
+  "pattern": [
+    "a",
+    "b",
+    "c"
+  ],
+  "result": {
+    "count": 4,
+    "id": "immersiveweapons:iron_arrow"
+  }
+}

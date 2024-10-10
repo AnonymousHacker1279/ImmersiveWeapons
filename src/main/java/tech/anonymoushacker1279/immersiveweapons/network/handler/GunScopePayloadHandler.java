@@ -1,7 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.network.handler;
 
 import net.minecraft.network.chat.Component;
-import net.neoforged.neoforge.network.handling.PlayPayloadContext;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.data.GunData;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.GunScopePayload;
 
@@ -13,13 +13,13 @@ public class GunScopePayloadHandler {
 		return INSTANCE;
 	}
 
-	public void handleData(final GunScopePayload data, final PlayPayloadContext context) {
-		context.workHandler().submitAsync(() -> {
+	public void handleData(final GunScopePayload data, final IPayloadContext context) {
+		context.enqueueWork(() -> {
 					GunData.playerFOV = data.playerFOV();
 					GunData.changingPlayerFOV = data.changingPlayerFOV();
 				})
 				.exceptionally(e -> {
-					context.packetHandler().disconnect(Component.translatable("immersiveweapons.networking.failure.generic", e.getMessage()));
+					context.disconnect(Component.translatable("immersiveweapons.networking.failure.generic", e.getMessage()));
 					return null;
 				});
 	}

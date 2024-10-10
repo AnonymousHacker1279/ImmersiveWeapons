@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "a": {
+      "tag": "immersiveweapons:nuggets/tesla"
+    },
+    "b": {
+      "tag": "immersiveweapons:ingots/tesla"
+    }
+  },
+  "pattern": [
+    "a",
+    "b"
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:tesla_pike_head"
+  }
+}

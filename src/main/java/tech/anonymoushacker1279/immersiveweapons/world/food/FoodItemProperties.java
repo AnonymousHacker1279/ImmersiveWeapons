@@ -6,11 +6,11 @@ public class FoodItemProperties {
 
 	public static final FoodProperties CHOCOLATE_BAR = new FoodProperties.Builder()
 			.nutrition(2)
-			.saturationMod(0.2F)
+			.saturationModifier(0.2F)
 			.fast()
 			.build();
 	public static final FoodProperties MRE = new FoodProperties.Builder()
 			.nutrition(11)
-			.saturationMod(12.6f)
+			.saturationModifier(12.6f)
 			.build();
 }

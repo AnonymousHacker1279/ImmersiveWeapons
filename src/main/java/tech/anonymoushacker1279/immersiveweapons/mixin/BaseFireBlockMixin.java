@@ -18,11 +18,10 @@ import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
 /**
- * Handles the respawning of Super Hans when tossing a Hans' Blessing into a fire block. Simply injects a check
- * into the end of {@link BaseFireBlock#entityInside(BlockState, Level, BlockPos, Entity)}.
+ * Handles the respawning of Super Hans when tossing a Hans' Blessing into a fire block.
  */
 @Mixin(BaseFireBlock.class)
-public class BaseFireBlockMixin {
+public abstract class BaseFireBlockMixin {
 
 	@Inject(method = "entityInside", at = @At("RETURN"))
 	private void checkForSuperHansSpawn(BlockState pState, Level pLevel, BlockPos pPos, Entity pEntity, CallbackInfo ci) {
@@ -34,7 +33,7 @@ public class BaseFireBlockMixin {
 				if (structureStart.isValid()) {
 					SuperHansEntity superHans = new SuperHansEntity(EntityRegistry.SUPER_HANS_ENTITY.get(), pLevel);
 					superHans.setPos(pEntity.position());
-					superHans.finalizeSpawn(serverLevel, pLevel.getCurrentDifficultyAt(pPos), MobSpawnType.TRIGGERED, null, null);
+					superHans.finalizeSpawn(serverLevel, pLevel.getCurrentDifficultyAt(pPos), MobSpawnType.TRIGGERED, null);
 					pLevel.addFreshEntity(superHans);
 
 					// Destroy the item

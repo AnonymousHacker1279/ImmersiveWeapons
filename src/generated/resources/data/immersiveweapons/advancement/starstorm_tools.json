@@ -1,0 +1,50 @@
+{
+  "parent": "immersiveweapons:starstorm_ingot",
+  "criteria": {
+    "have_advancements": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type_specific": {
+                "type": "minecraft:player",
+                "advancements": {
+                  "immersiveweapons:starstorm_axe": true,
+                  "immersiveweapons:starstorm_hoe": true,
+                  "immersiveweapons:starstorm_pickaxe": true,
+                  "immersiveweapons:starstorm_shovel": true,
+                  "immersiveweapons:starstorm_sword": true
+                }
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersiveweapons.starstorm_tools.description"
+    },
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "immersiveweapons:starstorm_block"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.starstorm_tools.title"
+    }
+  },
+  "requirements": [
+    [
+      "have_advancements"
+    ]
+  ],
+  "rewards": {
+    "experience": 150
+  },
+  "sends_telemetry_event": true
+}

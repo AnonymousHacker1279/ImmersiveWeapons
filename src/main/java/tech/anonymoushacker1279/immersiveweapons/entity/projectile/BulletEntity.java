@@ -14,22 +14,24 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.phys.*;
 import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.Tags.Blocks;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact.BulletImpactParticleOptions;
-import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
-import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
+import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.MusketItem;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.BulletEntityDebugPayload;
+import tech.anonymoushacker1279.immersiveweapons.network.payload.GunShotBloodParticlePayload;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
@@ -44,16 +46,14 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 	public List<Double> shootingVectorInputs = List.of(0.0025d, 0.2d, 1.1d);
 	public HitEffect hitEffect = HitEffect.NONE;
 	public boolean flameTrail = false;
-	private static final TagKey<Block> BULLETPROOF_GLASS = BlockTags.create(new ResourceLocation("forge", "bulletproof_glass"));
+	private static final TagKey<Block> BULLETPROOF_GLASS = BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "bulletproof_glass"));
 
 	public BulletEntity(EntityType<? extends Arrow> entityType, Level level) {
 		super(entityType, level);
 	}
 
-	public BulletEntity(EntityType<? extends BulletEntity> entityType, LivingEntity shooter, Level level) {
-		this(entityType, level);
-		setOwner(shooter);
-		setPos(shooter.getX(), shooter.getEyeY() - 0.1f, shooter.getZ());
+	public BulletEntity(EntityType<? extends BulletEntity> entityType, LivingEntity shooter, Level level, @Nullable ItemStack firedFromWeapon) {
+		super(entityType, shooter, level, firedFromWeapon);
 		initialPos = shooter.position();
 	}
 
@@ -135,9 +135,9 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 		}
 
 		// Check if glass can be broken, and if it hasn't already broken glass
-		if (CommonConfig.bulletsBreakGlass && !hasAlreadyBrokeGlass
+		if (IWConfigs.SERVER.bulletsBreakGlass.getAsBoolean() && !hasAlreadyBrokeGlass
 				&& !lastState.is(BULLETPROOF_GLASS)
-				&& (lastState.is(Tags.Blocks.GLASS) || lastState.is(Tags.Blocks.GLASS_PANES))) {
+				&& (lastState.is(Blocks.GLASS_BLOCKS) || lastState.is(Tags.Blocks.GLASS_PANES))) {
 
 			level().destroyBlock(hitResult.getBlockPos(), false);
 			hasAlreadyBrokeGlass = true;
@@ -164,7 +164,7 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 			double distance = Math.sqrt(Math.pow(location.x - initialPos.x, 2) + Math.pow(location.y - initialPos.y, 2) + Math.pow(location.z - initialPos.z, 2));
 
 			if (distance > 200 && player.getServer() != null) {
-				AdvancementHolder advancement = player.getServer().getAdvancements().get(new ResourceLocation(ImmersiveWeapons.MOD_ID, "firearm_long_range"));
+				AdvancementHolder advancement = player.getServer().getAdvancements().get(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "firearm_long_range"));
 
 				if (advancement != null) {
 					player.getAdvancements().award(advancement, "");
@@ -178,14 +178,11 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 		super.doWhenHitEntity(entity);
 
 		if (level() instanceof ServerLevel serverLevel) {
-			serverLevel.sendParticles(
-					ParticleTypesRegistry.BLOOD_PARTICLE.get(),
-					position().x, position().y, position().z,
-					ClientConfig.gunShotBloodParticles,
-					GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
-					GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
-					GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
-					GeneralUtilities.getRandomNumber(0.01d, 0.05d));
+			PacketDistributor.sendToPlayersTrackingChunk(serverLevel, chunkPosition(),
+					new GunShotBloodParticlePayload(
+							ParticleTypesRegistry.BLOOD_PARTICLE.get(),
+							position().x, position().y, position().z
+					));
 		}
 	}
 
@@ -214,8 +211,7 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 	protected void doWhileTicking() {
 		if (tickCount % 10 == 0 && !inGround && getOwner() instanceof ServerPlayer player) {
 			if (!level().isClientSide) {
-				PacketDistributor.PLAYER.with(player)
-						.send(new BulletEntityDebugPayload(calculateDamage(), isCritArrow()));
+				PacketDistributor.sendToPlayer(player, new BulletEntityDebugPayload(calculateDamage(), isCritArrow()));
 			}
 		}
 

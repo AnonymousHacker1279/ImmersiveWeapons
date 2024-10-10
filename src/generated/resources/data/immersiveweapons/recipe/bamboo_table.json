@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "tables",
+  "key": {
+    "a": {
+      "item": "minecraft:bamboo_slab"
+    },
+    "b": {
+      "item": "minecraft:bamboo_fence"
+    }
+  },
+  "pattern": [
+    "a",
+    "b"
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:bamboo_table"
+  }
+}

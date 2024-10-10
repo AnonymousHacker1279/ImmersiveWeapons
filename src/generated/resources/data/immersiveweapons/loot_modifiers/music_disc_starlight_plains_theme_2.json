@@ -12,14 +12,14 @@
         {
           "condition": "minecraft:location_check",
           "predicate": {
-            "biome": "immersiveweapons:starlight_plains"
+            "biomes": "immersiveweapons:starlight_plains"
           }
         }
       ]
     }
   ],
   "item": {
-    "Count": 1,
+    "count": 1,
     "id": "immersiveweapons:music_disc_starlight_plains_theme_2"
   },
   "max_enchant_levels": 0,

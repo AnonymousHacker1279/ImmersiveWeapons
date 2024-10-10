@@ -5,7 +5,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.Tags.EntityTypes;
-import net.neoforged.neoforge.event.entity.living.LivingHurtEvent;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
@@ -17,8 +17,8 @@ import java.util.Objects;
 public class EnvironmentEffects {
 
 	// Handle stuff for the celestial protection effect
-	public static void celestialProtectionEffect(LivingHurtEvent event, LivingEntity damagedEntity) {
-		if (damagedEntity.hasEffect(EffectRegistry.CELESTIAL_PROTECTION_EFFECT.get())) {
+	public static void celestialProtectionEffect(LivingIncomingDamageEvent event, LivingEntity damagedEntity) {
+		if (damagedEntity.hasEffect(EffectRegistry.CELESTIAL_PROTECTION_EFFECT)) {
 			float damage = event.getAmount();
 			float celestialProtectionChanceForNoDamage = 0.0f;
 
@@ -49,8 +49,7 @@ public class EnvironmentEffects {
 
 			// Re-sync persistent data to client for debug tracing
 			if (damagedEntity instanceof ServerPlayer serverPlayer) {
-				PacketDistributor.PLAYER.with(serverPlayer)
-						.send(new SyncPlayerDataPayload(serverPlayer.getPersistentData(), serverPlayer.getUUID()));
+				PacketDistributor.sendToPlayer(serverPlayer, new SyncPlayerDataPayload(serverPlayer.getPersistentData(), serverPlayer.getUUID()));
 			}
 
 			event.setAmount(damage);
@@ -58,9 +57,9 @@ public class EnvironmentEffects {
 	}
 
 	// Handle stuff for the damage vulnerability effect
-	public static void damageVulnerabilityEffect(LivingHurtEvent event, LivingEntity damagedEntity) {
-		if (damagedEntity.hasEffect(EffectRegistry.DAMAGE_VULNERABILITY_EFFECT.get())) {
-			int level = Objects.requireNonNull(damagedEntity.getEffect(EffectRegistry.DAMAGE_VULNERABILITY_EFFECT.get()))
+	public static void damageVulnerabilityEffect(LivingIncomingDamageEvent event, LivingEntity damagedEntity) {
+		if (damagedEntity.hasEffect(EffectRegistry.DAMAGE_VULNERABILITY_EFFECT)) {
+			int level = Objects.requireNonNull(damagedEntity.getEffect(EffectRegistry.DAMAGE_VULNERABILITY_EFFECT))
 					.getAmplifier();
 			float damage = event.getAmount();
 
@@ -76,7 +75,7 @@ public class EnvironmentEffects {
 	}
 
 	// Handle stuff for the Starstorm Armor set bonus
-	public static void starstormArmorSetBonus(LivingHurtEvent event, @Nullable LivingEntity sourceEntity) {
+	public static void starstormArmorSetBonus(LivingIncomingDamageEvent event, @Nullable LivingEntity sourceEntity) {
 		if (sourceEntity != null) {
 			if (ArmorUtils.isWearingStarstormArmor(sourceEntity)) {
 				float damage = event.getAmount();
@@ -87,7 +86,7 @@ public class EnvironmentEffects {
 	}
 
 	// Handle stuff for the Molten armor set bonus
-	public static void moltenArmorSetBonus(LivingHurtEvent event, @Nullable LivingEntity sourceEntity, LivingEntity damagedEntity) {
+	public static void moltenArmorSetBonus(LivingIncomingDamageEvent event, @Nullable LivingEntity sourceEntity, LivingEntity damagedEntity) {
 		if (sourceEntity != null) {
 			if (ArmorUtils.isWearingMoltenArmor(sourceEntity)) {
 				// If in the Nether, increase all outgoing damage by 20%
@@ -107,7 +106,7 @@ public class EnvironmentEffects {
 
 			if (ArmorUtils.isWearingMoltenArmor(damagedEntity)) {
 				// Inflict Hellfire on the attacking entity
-				sourceEntity.addEffect(new MobEffectInstance(EffectRegistry.HELLFIRE_EFFECT.get(), 200, 0, false, false));
+				sourceEntity.addEffect(new MobEffectInstance(EffectRegistry.HELLFIRE_EFFECT, 200, 0, false, false));
 			}
 		}
 	}

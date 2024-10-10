@@ -1,16 +1,17 @@
 package tech.anonymoushacker1279.immersiveweapons.item;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import tech.anonymoushacker1279.immersiveweapons.init.DataComponentTypeRegistry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,7 @@ public class CursedItem extends Item {
 
 	private final String name;
 	public static float CURSE_EFFECT_FADE = 1.0f;
+	final DataComponentType<Boolean> AT_MAX_CHARGE = DataComponentTypeRegistry.AT_MAX_CHARGE.get();
 
 	/**
 	 * Cursed items cannot be removed once used. Their effects are permanent in survival mode, even persisting through death.
@@ -56,7 +58,7 @@ public class CursedItem extends Item {
 	}
 
 	@Override
-	public int getUseDuration(ItemStack stack) {
+	public int getUseDuration(ItemStack stack, LivingEntity entity) {
 		return 20;
 	}
 
@@ -93,11 +95,9 @@ public class CursedItem extends Item {
 	public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
 		super.inventoryTick(stack, level, entity, slotId, isSelected);
 
-		if (stack.getTag() != null) {
-			if (!stack.getTag().contains("max_charge")) {
-				stack.setDamageValue(100);
-				stack.getOrCreateTag().putBoolean("max_charge", false);
-			}
+		if (stack.get(AT_MAX_CHARGE) == null) {
+			stack.set(AT_MAX_CHARGE, false);
+			stack.setDamageValue(100);
 		}
 
 		if (entity instanceof Player player) {
@@ -166,7 +166,7 @@ public class CursedItem extends Item {
 			}
 
 			if (!player.isCreative()) {
-				stack.hurtAndBreak(100, player, (entity) -> entity.broadcastBreakEvent(livingEntity.getUsedItemHand()));
+				stack.hurtAndBreak(100, player, EquipmentSlot.MAINHAND);
 			}
 		}
 	}

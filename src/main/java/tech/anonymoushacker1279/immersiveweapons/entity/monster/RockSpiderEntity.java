@@ -6,8 +6,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.Spider;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
-import net.neoforged.neoforge.common.NeoForgeMod;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 
 
@@ -23,7 +21,7 @@ public class RockSpiderEntity extends Spider implements GrantAdvancementOnDiscov
 				.add(Attributes.MOVEMENT_SPEED, 0.35F)
 				.add(Attributes.ATTACK_DAMAGE, 2.0D)
 				.add(Attributes.ARMOR, 2.0D)
-				.add(NeoForgeMod.STEP_HEIGHT.value(), -0.3d);
+				.add(Attributes.STEP_HEIGHT, -0.3d);
 	}
 
 	@Override
@@ -33,15 +31,8 @@ public class RockSpiderEntity extends Spider implements GrantAdvancementOnDiscov
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose pPose, EntityDimensions pSize) {
-		return 0.15F;
-	}
-
-	@Override
-	public boolean checkSpawnRules(LevelAccessor pLevel, MobSpawnType pSpawnReason) {
-		boolean notInWater = pLevel.getBlockState(blockPosition().below()).getFluidState().isEmpty();
-		boolean onGround = !pLevel.getBlockState(blockPosition().below()).isAir();
-
-		return notInWater && onGround;
+	protected EntityDimensions getDefaultDimensions(Pose pose) {
+		EntityDimensions dimensions = super.getDefaultDimensions(pose);
+		return dimensions.withEyeHeight(0.15f);
 	}
 }

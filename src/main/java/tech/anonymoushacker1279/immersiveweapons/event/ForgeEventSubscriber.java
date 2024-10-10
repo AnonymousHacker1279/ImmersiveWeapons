@@ -1,8 +1,8 @@
 package tech.anonymoushacker1279.immersiveweapons.event;
 
 import net.minecraft.advancements.AdvancementHolder;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
+import net.minecraft.core.*;
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -14,16 +14,21 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.CaveSpider;
+import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.alchemy.PotionBrewing;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.biome.Biome;
@@ -34,25 +39,26 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.neoforged.bus.api.Event.Result;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod.EventBusSubscriber;
-import net.neoforged.fml.common.Mod.EventBusSubscriber.Bus;
-import net.neoforged.neoforge.common.NeoForgeMod;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.common.EventBusSubscriber.Bus;
 import net.neoforged.neoforge.event.*;
-import net.neoforged.neoforge.event.TickEvent.PlayerTickEvent;
+import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.entity.player.CriticalHitEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
-import net.neoforged.neoforge.event.level.LevelEvent;
 import net.neoforged.neoforge.event.level.PistonEvent;
 import net.neoforged.neoforge.event.level.PistonEvent.PistonMoveType;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.api.events.ComputeEnchantedLootBonusEvent;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.StarstormCrystalBlock;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
+import tech.anonymoushacker1279.immersiveweapons.data.IWEnchantments;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.StarmiteEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.npc.trading.MerchantTrades;
 import tech.anonymoushacker1279.immersiveweapons.entity.npc.trading.TradeLoader;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MeteorEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MudBallEntity;
@@ -60,36 +66,32 @@ import tech.anonymoushacker1279.immersiveweapons.event.game_effects.*;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.*;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.PistonCrushingRecipe;
-import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
-import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
-import tech.anonymoushacker1279.immersiveweapons.network.payload.DebugDataPayload;
-import tech.anonymoushacker1279.immersiveweapons.network.payload.SyncPlayerDataPayload;
+import tech.anonymoushacker1279.immersiveweapons.network.payload.*;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map.Entry;
+import java.util.Optional;
 
-@EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.FORGE)
+@EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.GAME)
 public class ForgeEventSubscriber {
 
-	public static final UUID ATTACK_REACH_MODIFIER = UUID.fromString("9f470b49-0445-4341-ae85-55b9e5ec2a1c");
-
 	public static final AttributeModifier JONNYS_CURSE_SPEED_MODIFIER = new AttributeModifier(
-			UUID.fromString("c74619c0-b953-4ee7-a3d7-adf974c22d7d"),
-			"Jonny's Curse speed modifier", -0.25d, Operation.MULTIPLY_BASE);
+			ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "jonnys_curse_speed_modifier"), -0.25d, Operation.ADD_MULTIPLIED_BASE);
 
-	private static final ResourceKey<Biome> DEADMANS_DESERT = ResourceKey.create(Registries.BIOME, new ResourceLocation(ImmersiveWeapons.MOD_ID, "deadmans_desert"));
+	private static final ResourceKey<Biome> DEADMANS_DESERT = ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "deadmans_desert"));
 
 	@SubscribeEvent
-	public static void playerTickEvent(PlayerTickEvent event) {
+	public static void playerTickEvent(PlayerTickEvent.Post event) {
 		// Passive damage from the Deadman's Desert biome
-		Player player = event.player;
+		Player player = event.getEntity();
 		// Only check every 8 ticks, and make sure the player is not in creative mode
 		if (player.tickCount % 8 == 0 && !player.isCreative()) {
 			if (player.level().getBiome(player.blockPosition()).is(DEADMANS_DESERT)) {
 				// If the player is under the effects of Celestial Protection, they are immune to damage
-				if (!player.hasEffect(EffectRegistry.CELESTIAL_PROTECTION_EFFECT.get())) {
-					player.hurt(IWDamageSources.DEADMANS_DESERT_ATMOSPHERE, 1);
+				if (!player.hasEffect(EffectRegistry.CELESTIAL_PROTECTION_EFFECT)) {
+					player.hurt(IWDamageSources.deadmansDesertAtmosphere(player.level().registryAccess()), 1);
 				}
 			}
 		}
@@ -98,8 +100,8 @@ public class ForgeEventSubscriber {
 			// Make KB resist a syncable attribute for debug tracing
 			AttributeInstance kbResistAttribute = player.getAttributes().getInstance(Attributes.KNOCKBACK_RESISTANCE);
 			if (kbResistAttribute != null) {
-				if (!kbResistAttribute.getAttribute().isClientSyncable()) {
-					kbResistAttribute.getAttribute().setSyncable(true);
+				if (!kbResistAttribute.getAttribute().value().isClientSyncable()) {
+					kbResistAttribute.getAttribute().value().setSyncable(true);
 				}
 			}
 
@@ -122,14 +124,13 @@ public class ForgeEventSubscriber {
 
 				AttributeInstance attributeInstance = player.getAttributes().getInstance(Attributes.MOVEMENT_SPEED);
 				if (attributeInstance != null) {
-					if (!attributeInstance.hasModifier(JONNYS_CURSE_SPEED_MODIFIER)) {
+					if (!attributeInstance.hasModifier(JONNYS_CURSE_SPEED_MODIFIER.id())) {
 						if (GeneralUtilities.notJonny(player.getUUID())) {
 							attributeInstance.addTransientModifier(JONNYS_CURSE_SPEED_MODIFIER);
 						} else {
-							AttributeModifier newModifier = new AttributeModifier(JONNYS_CURSE_SPEED_MODIFIER.getId(),
-									JONNYS_CURSE_SPEED_MODIFIER.name,
+							AttributeModifier newModifier = new AttributeModifier(JONNYS_CURSE_SPEED_MODIFIER.id(),
 									0.25d,
-									JONNYS_CURSE_SPEED_MODIFIER.getOperation());
+									JONNYS_CURSE_SPEED_MODIFIER.operation());
 
 							attributeInstance.addTransientModifier(newModifier);
 						}
@@ -182,13 +183,12 @@ public class ForgeEventSubscriber {
 		}
 		if (player.tickCount % 100 == 0 && player instanceof ServerPlayer serverPlayer) {
 			int ticksSinceRest = serverPlayer.getStats().getValue(Stats.CUSTOM.get(Stats.TIME_SINCE_REST));
-			PacketDistributor.PLAYER.with(serverPlayer)
-					.send(new DebugDataPayload(player.getUUID(), -1f, -1f, ticksSinceRest));
+			PacketDistributor.sendToPlayer(serverPlayer, new DebugDataPayload(player.getUUID(), -1f, -1f, ticksSinceRest));
 		}
 	}
 
 	@SubscribeEvent
-	public static void livingHurtEvent(LivingHurtEvent event) {
+	public static void livingIncomingDamageEvent(LivingIncomingDamageEvent event) {
 		LivingEntity damagedEntity = event.getEntity();
 		LivingEntity source = null;
 
@@ -237,7 +237,7 @@ public class ForgeEventSubscriber {
 		if (source instanceof ServerPlayer serverPlayer && serverPlayer.getServer() != null) {
 			// If a Mud Ball was thrown, add an advancement
 			if (event.getSource().getDirectEntity() instanceof MudBallEntity) {
-				AdvancementHolder advancement = serverPlayer.getServer().getAdvancements().get(new ResourceLocation(ImmersiveWeapons.MOD_ID, "mud_ball"));
+				AdvancementHolder advancement = serverPlayer.getServer().getAdvancements().get(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "mud_ball"));
 
 				if (advancement != null) {
 					serverPlayer.getAdvancements().award(advancement, "");
@@ -247,7 +247,7 @@ public class ForgeEventSubscriber {
 	}
 
 	@SubscribeEvent
-	public static void livingDamageEvent(LivingDamageEvent event) {
+	public static void preLivingDamageEvent(LivingDamageEvent.Pre event) {
 		LivingEntity damagedEntity = event.getEntity();
 		LivingEntity source = null;
 
@@ -264,19 +264,20 @@ public class ForgeEventSubscriber {
 				weapon = tridentEntity.getPickupItem();
 			}
 
-			int enchantmentLevel = weapon.getEnchantmentLevel(EnchantmentRegistry.REGENERATIVE_ASSAULT.get());
+			HolderGetter<Enchantment> enchantmentGetter = damagedEntity.registryAccess().lookup(Registries.ENCHANTMENT).orElseThrow();
+			int enchantmentLevel = weapon.getEnchantmentLevel(enchantmentGetter.getOrThrow(IWEnchantments.REGENERATIVE_ASSAULT));
 
 			// Heal the player for 10% of all damage dealt per level
 			if (enchantmentLevel > 0) {
-				player.heal(event.getAmount() * 0.1f * enchantmentLevel);
+				player.heal(event.getNewDamage() * 0.1f * enchantmentLevel);
 				player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1.0f, 1.0f);
 			}
 
 
 			if (player instanceof ServerPlayer serverPlayer && serverPlayer.getServer() != null) {
 				// If over 175 damage was dealt, add an advancement
-				if (event.getAmount() >= 175.0f) {
-					AdvancementHolder advancement = serverPlayer.getServer().getAdvancements().get(new ResourceLocation(ImmersiveWeapons.MOD_ID, "overkill"));
+				if (event.getNewDamage() >= 175.0f) {
+					AdvancementHolder advancement = serverPlayer.getServer().getAdvancements().get(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "overkill"));
 
 					if (advancement != null) {
 						serverPlayer.getAdvancements().award(advancement, "");
@@ -284,37 +285,37 @@ public class ForgeEventSubscriber {
 				}
 
 				// Handle debug tracing
-				PacketDistributor.PLAYER.with(serverPlayer)
-						.send(new DebugDataPayload(player.getUUID(), event.getAmount(), -1f, -1));
+				PacketDistributor.sendToPlayer(serverPlayer, new DebugDataPayload(player.getUUID(), event.getNewDamage(), -1f, -1));
 			}
 		}
 
 		if (damagedEntity instanceof ServerPlayer serverPlayer) {
 			// Handle debug tracing
-			PacketDistributor.PLAYER.with(serverPlayer)
-					.send(new DebugDataPayload(serverPlayer.getUUID(), -1f, event.getAmount(), -1));
+			PacketDistributor.sendToPlayer(serverPlayer, new DebugDataPayload(serverPlayer.getUUID(), -1f, event.getNewDamage(), -1));
 		}
 	}
 
 	@SubscribeEvent
 	public static void livingDeathEvent(LivingDeathEvent event) {
 		LivingEntity dyingEntity = event.getEntity();
+		DataComponentType<Boolean> AT_MAX_CHARGE = DataComponentTypeRegistry.AT_MAX_CHARGE.get();
 
 		if (event.getSource().getEntity() instanceof Player player) {
 			// Handle charging of cursed accessories on kill
 			List<ItemStack> curses = CursedItem.getCurses(player);
 			for (ItemStack curse : curses) {
-				if (!curse.getOrCreateTag().getBoolean("max_charge")) {
-					if (!curse.isDamaged()) {
+				Boolean maxCharge = curse.get(AT_MAX_CHARGE);
+				if (maxCharge != null) {
+					if (!curse.isDamaged() && !maxCharge) {
 						curse.setDamageValue(100);
 					}
 
-					if (curse.getDamageValue() <= 100 && curse.getDamageValue() >= 0) {
+					if (curse.getDamageValue() <= 100 && curse.getDamageValue() > 0) {
 						curse.setDamageValue(curse.getDamageValue() - 1);
 
 						// If at max charge, set a tag, so it will no longer charge
 						if (curse.getDamageValue() == 0) {
-							curse.getOrCreateTag().putBoolean("max_charge", true);
+							curse.set(AT_MAX_CHARGE, true);
 						}
 					}
 				}
@@ -323,7 +324,7 @@ public class ForgeEventSubscriber {
 			// Handle kill count weapons
 			ItemStack weapon = player.getItemInHand(player.getUsedItemHand());
 			if (KillCountWeapon.hasKillCount(weapon)) {
-				KillCountWeapon.incrementKillCount(weapon);
+				KillCountWeapon.increment(weapon);
 			}
 		}
 
@@ -345,8 +346,7 @@ public class ForgeEventSubscriber {
 		// Sync player data from server to client
 		if (event.getEntity() instanceof ServerPlayer player) {
 			// Send update packet
-			PacketDistributor.PLAYER.with(player)
-					.send(new SyncPlayerDataPayload(player.getPersistentData(), player.getUUID()));
+			PacketDistributor.sendToPlayer(player, new SyncPlayerDataPayload(player.getPersistentData(), player.getUUID()));
 		}
 
 		// Handle the Velocity enchantment on bows (guns are handled in the gun code)
@@ -356,13 +356,25 @@ public class ForgeEventSubscriber {
 					|| player.getItemInHand(player.getUsedItemHand()).getItem() instanceof CrossbowItem)) {
 
 				ItemStack bow = player.getItemInHand(player.getUsedItemHand());
+				HolderGetter<Enchantment> enchantmentGetter = player.registryAccess().lookup(Registries.ENCHANTMENT).orElseThrow();
 				// If the bow is not empty, and has the enchantment, apply its effect
-				int enchantLevel = bow.getEnchantmentLevel(EnchantmentRegistry.VELOCITY.get());
+				int enchantLevel = bow.getEnchantmentLevel(enchantmentGetter.get(IWEnchantments.VELOCITY).orElseThrow());
 				if (!bow.isEmpty() && enchantLevel > 0) {
 					// Each level increases velocity by 10%
 					arrow.setDeltaMovement(arrow.getDeltaMovement().scale(1 + (0.1f * enchantLevel)));
 				}
 			}
+		}
+
+		// Handle Big Slime in the Champion Tower, because size is overridden during finalizeSpawn...
+		if (event.getEntity() instanceof Slime slime && slime.getTags().contains("ChampionTowerMiniboss")) {
+			slime.setSize(4, true);
+			slime.getAttribute(Attributes.MAX_HEALTH).setBaseValue(150.0d);
+			slime.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(50.0d);
+			slime.getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(10.0d);
+			slime.getAttribute(Attributes.ATTACK_KNOCKBACK).setBaseValue(5.0d);
+			slime.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0.7d);
+			slime.heal(150);
 		}
 	}
 
@@ -370,64 +382,6 @@ public class ForgeEventSubscriber {
 	public static void playerCloneEvent(PlayerEvent.Clone event) {
 		// Copy old persistent data to the new player
 		event.getEntity().getPersistentData().merge(event.getOriginal().getPersistentData());
-	}
-
-	@SubscribeEvent
-	public static void itemAttributeModifierEvent(ItemAttributeModifierEvent event) {
-		// Add reach distance attributes to pikes
-		if (event.getItemStack().getItem() instanceof PikeItem pike && event.getSlotType() == EquipmentSlot.MAINHAND) {
-			double damage = pike.damage;
-			int enchantmentLevel = event.getItemStack().getEnchantmentLevel(EnchantmentRegistry.SHARPENED_HEAD.get());
-			if (enchantmentLevel > 0) {
-				damage += 1.0d + Math.max(0, enchantmentLevel - 1) * 0.5d;
-			}
-
-			event.addModifier(Attributes.ATTACK_DAMAGE,
-					new AttributeModifier(Item.BASE_ATTACK_DAMAGE_UUID,
-							"Attack damage",
-							damage,
-							Operation.ADDITION));
-
-			event.addModifier(Attributes.ATTACK_SPEED,
-					new AttributeModifier(Item.BASE_ATTACK_SPEED_UUID,
-							"Attack speed",
-							pike.attackSpeed,
-							Operation.ADDITION));
-
-			double distance = 0.5d;
-			enchantmentLevel = event.getItemStack().getEnchantmentLevel(EnchantmentRegistry.EXTENDED_REACH.get());
-
-			if (enchantmentLevel > 0) {
-				distance += 0.5d * enchantmentLevel;
-			}
-
-			event.addModifier(NeoForgeMod.ENTITY_REACH.value(),
-					new AttributeModifier(ATTACK_REACH_MODIFIER,
-							"Reach distance",
-							distance,
-							Operation.ADDITION));
-		}
-
-		// Add reach distance attributes to gauntlets
-		if (event.getItemStack().getItem() instanceof GauntletItem gauntlet && event.getSlotType() == EquipmentSlot.MAINHAND) {
-			event.addModifier(Attributes.ATTACK_DAMAGE,
-					new AttributeModifier(Item.BASE_ATTACK_DAMAGE_UUID,
-							"Attack damage",
-							gauntlet.damage,
-							Operation.ADDITION));
-
-			event.addModifier(Attributes.ATTACK_SPEED,
-					new AttributeModifier(Item.BASE_ATTACK_SPEED_UUID,
-							"Attack speed",
-							gauntlet.attackSpeed,
-							Operation.ADDITION));
-
-			event.addModifier(NeoForgeMod.ENTITY_REACH.value(),
-					new AttributeModifier(ATTACK_REACH_MODIFIER,
-							"Weapon modifier",
-							-2.0d,
-							Operation.ADDITION));
-		}
 	}
 
 	@SubscribeEvent
@@ -471,13 +425,7 @@ public class ForgeEventSubscriber {
 	}
 
 	@SubscribeEvent
-	public static void levelLoadEvent(LevelEvent.Load event) {
-		// Initialize custom damage sources
-		IWDamageSources.init(event.getLevel().registryAccess());
-	}
-
-	@SubscribeEvent
-	public static void lootingLevelEvent(LootingLevelEvent event) {
+	public static void computeEnchantedLootBonusEvent(ComputeEnchantedLootBonusEvent event) {
 		if (event.getDamageSource() == null) {
 			return;
 		}
@@ -485,7 +433,7 @@ public class ForgeEventSubscriber {
 		if (event.getDamageSource().getEntity() instanceof Player player) {
 			// Increase the looting level by 3 with the Bloody Sacrifice curse
 			if (player.getPersistentData().getBoolean("used_curse_accessory_bloody_sacrifice")) {
-				event.setLootingLevel(event.getLootingLevel() + 3);
+				event.setEnchantmentLevel(event.getEnchantmentLevel() + 3);
 			}
 
 			// Increase the looting level from accessories
@@ -499,19 +447,19 @@ public class ForgeEventSubscriber {
 			// 25% chance to drop items a second time with the Bloody Sacrifice curse
 			if (player.getPersistentData().getBoolean("used_curse_accessory_bloody_sacrifice")) {
 				if (player.getRandom().nextFloat() <= 0.25f) {
-					ResourceLocation lootTable = event.getEntity().getLootTable();
+					ResourceKey<LootTable> lootTable = event.getEntity().getLootTable();
 					MinecraftServer server = event.getEntity().level().getServer();
 
 					if (server != null) {
-						LootTable table = server.getLootData().getLootTable(lootTable);
+						LootTable table = server.reloadableRegistries().getLootTable(lootTable);
 
 						table.getRandomItems(new LootParams.Builder((ServerLevel) event.getEntity().level())
 										.withParameter(LootContextParams.THIS_ENTITY, event.getEntity())
 										.withParameter(LootContextParams.ORIGIN, event.getEntity().position())
 										.withParameter(LootContextParams.DAMAGE_SOURCE, event.getSource())
-										.withParameter(LootContextParams.KILLER_ENTITY, player)
+										.withParameter(LootContextParams.ATTACKING_ENTITY, player)
 										.withParameter(LootContextParams.LAST_DAMAGE_PLAYER, player)
-										.withParameter(LootContextParams.DIRECT_KILLER_ENTITY, player)
+										.withParameter(LootContextParams.DIRECT_ATTACKING_ENTITY, player)
 										.withParameter(LootContextParams.BLOCK_STATE, Blocks.AIR.defaultBlockState())
 										.withParameter(LootContextParams.TOOL, ItemStack.EMPTY)
 										.withParameter(LootContextParams.EXPLOSION_RADIUS, 0.0f)
@@ -561,15 +509,10 @@ public class ForgeEventSubscriber {
 
 	@SubscribeEvent
 	public static void criticalHitEvent(CriticalHitEvent event) {
-		LivingEntity entity = event.getEntity();
+		Player player = event.getEntity();
 
-		if (entity instanceof Player player) {
-			AccessoryEffects.meleeCritChanceEffects(event, player);
-
-			if (event.getResult() == Result.DEFAULT || event.getResult() == Result.ALLOW) {
-				AccessoryEffects.meleeCritDamageBonusEffects(event, player);
-			}
-		}
+		AccessoryEffects.meleeCritChanceEffects(event, player);
+		AccessoryEffects.meleeCritDamageBonusEffects(event, player);
 	}
 
 	@SubscribeEvent
@@ -585,7 +528,9 @@ public class ForgeEventSubscriber {
 	public static void anvilUpdateEvent(AnvilUpdateEvent event) {
 		// Kill Counter recipe
 		if (event.getRight().is(ItemRegistry.KILL_COUNTER.get()) && !KillCountWeapon.hasKillCount(event.getLeft())) {
-			event.setOutput(KillCountWeapon.initialize(event.getLeft().copy(), 0));
+			ItemStack output = event.getLeft().copy();
+			KillCountWeapon.initialize(output);
+			event.setOutput(output);
 			event.setCost(5);
 		}
 	}
@@ -593,5 +538,73 @@ public class ForgeEventSubscriber {
 	@SubscribeEvent
 	public static void addReloadListenerEvent(AddReloadListenerEvent event) {
 		event.addListener(new TradeLoader());
+	}
+
+	@SubscribeEvent
+	public static void registerBrewingRecipesEvent(RegisterBrewingRecipesEvent event) {
+		ImmersiveWeapons.LOGGER.info("Registering brewing recipes");
+
+		PotionBrewing.Builder builder = event.getBuilder();
+
+		// Celestial potions
+		builder.addMix(
+				Potions.AWKWARD,
+				BlockItemRegistry.MOONGLOW_ITEM.get(),
+				PotionRegistry.CELESTIAL_BREW_POTION);
+		builder.addMix(
+				PotionRegistry.CELESTIAL_BREW_POTION,
+				Items.REDSTONE,
+				PotionRegistry.LONG_CELESTIAL_BREW_POTION);
+
+		// Death potions
+		builder.addMix(
+				Potions.AWKWARD,
+				BlockItemRegistry.DEATHWEED_ITEM.get(),
+				PotionRegistry.DEATH_POTION);
+		builder.addMix(
+				PotionRegistry.DEATH_POTION,
+				Items.GLOWSTONE_DUST,
+				PotionRegistry.STRONG_DEATH_POTION);
+		builder.addMix(
+				PotionRegistry.DEATH_POTION,
+				Items.REDSTONE,
+				PotionRegistry.LONG_DEATH_POTION);
+		builder.addMix(
+				Potions.STRENGTH,
+				Items.FERMENTED_SPIDER_EYE,
+				PotionRegistry.DEATH_POTION);
+		builder.addMix(
+				Potions.STRONG_STRENGTH,
+				Items.FERMENTED_SPIDER_EYE,
+				PotionRegistry.STRONG_DEATH_POTION);
+		builder.addMix(
+				Potions.LONG_STRENGTH,
+				Items.FERMENTED_SPIDER_EYE,
+				PotionRegistry.LONG_DEATH_POTION);
+
+		// Broken Armor potions
+		builder.addMix(
+				Potions.AWKWARD,
+				Items.PRISMARINE_SHARD,
+				PotionRegistry.BROKEN_ARMOR_POTION);
+		builder.addMix(
+				PotionRegistry.BROKEN_ARMOR_POTION,
+				Items.GLOWSTONE_DUST,
+				PotionRegistry.STRONG_BROKEN_ARMOR_POTION);
+		builder.addMix(
+				PotionRegistry.BROKEN_ARMOR_POTION,
+				Items.REDSTONE,
+				PotionRegistry.LONG_BROKEN_ARMOR_POTION);
+	}
+
+
+	@SubscribeEvent
+	public static void onDatapackSyncEvent(OnDatapackSyncEvent event) {
+		ImmersiveWeapons.LOGGER.info("Syncing datapack objects");
+
+		for (Entry<EntityType<?>, MerchantTrades> entry : TradeLoader.TRADES.entrySet()) {
+			SyncMerchantTradesPayload payload = new SyncMerchantTradesPayload(entry.getKey(), entry.getValue());
+			PacketDistributor.sendToAllPlayers(payload);
+		}
 	}
 }

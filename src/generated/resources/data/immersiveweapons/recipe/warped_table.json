@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "tables",
+  "key": {
+    "a": {
+      "item": "minecraft:warped_slab"
+    },
+    "b": {
+      "item": "minecraft:warped_fence"
+    }
+  },
+  "pattern": [
+    "a",
+    "b"
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:warped_table"
+  }
+}

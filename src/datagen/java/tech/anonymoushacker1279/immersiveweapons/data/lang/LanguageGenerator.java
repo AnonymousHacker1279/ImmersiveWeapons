@@ -1,5 +1,8 @@
 package tech.anonymoushacker1279.immersiveweapons.data.lang;
 
+import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.core.HolderLookup.RegistryLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
@@ -8,19 +11,21 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.config.ClientConfig;
-import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
+import tech.anonymoushacker1279.immersiveweapons.config.ServerConfig;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import tech.anonymoushacker1279.immersiveweapons.util.markers.DatagenExclusionMarker;
 import tech.anonymoushacker1279.immersiveweapons.util.markers.DatagenExclusionMarker.Type;
 import tech.anonymoushacker1279.immersiveweapons.util.markers.LanguageEntryOverride;
-import tech.anonymoushacker1729.cobaltconfig.config.ConfigEntry;
 
 import java.lang.reflect.Field;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 import java.util.stream.Stream;
 
 /**
@@ -32,10 +37,18 @@ public class LanguageGenerator extends IWLanguageProvider {
 
 	private static final Map<LanguageCategory, List<DeferredHolder<?, ?>>> LANGUAGE_EXCLUSIONS = new HashMap<>(50);
 	private static final Map<LanguageCategory, Map<DeferredHolder<?, ?>, String>> LANGUAGE_OVERRIDES = new HashMap<>(50);
-	private static final List<Class<?>> REGISTRY_CLASSES = List.of(BlockRegistry.class, ItemRegistry.class, EffectRegistry.class, EnchantmentRegistry.class, EntityRegistry.class, PotionRegistry.class);
+	private static final List<Class<?>> REGISTRY_CLASSES = List.of(BlockRegistry.class, ItemRegistry.class, EffectRegistry.class, EntityRegistry.class, PotionRegistry.class);
 
-	public LanguageGenerator(PackOutput output) {
+	private final RegistryLookup<Enchantment> enchantmentProvider;
+
+	public LanguageGenerator(PackOutput output, CompletableFuture<Provider> lookupProvider) {
 		super(output, ImmersiveWeapons.MOD_ID);
+
+		try {
+			enchantmentProvider = lookupProvider.get().lookupOrThrow(Registries.ENCHANTMENT);
+		} catch (InterruptedException | ExecutionException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	@Override
@@ -109,7 +122,6 @@ public class LanguageGenerator extends IWLanguageProvider {
 		BLOCKS(BlockRegistry.class),
 		ITEMS(ItemRegistry.class),
 		EFFECTS(EffectRegistry.class),
-		ENCHANTMENTS(EnchantmentRegistry.class),
 		ENTITIES(EntityRegistry.class),
 		POTIONS(PotionRegistry.class);
 
@@ -328,6 +340,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addSubtitle("block.spike_trap.retract", "Spike trap retracts");
 		addSubtitle("block.panic_alarm.alarm", "Alarm sounds");
 		addSubtitle("block.mortar.fire", "Mortar fires");
+		addSubtitle("block.tiltros_portal.whoosh", "Portal whooshes");
 
 		// Entity
 		addSubtitle("entity.soldier.ambient", "Soldier speaking");
@@ -947,6 +960,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("hansium_ingot.description", "Obtain a Hansium Ingot, dropped by the mighty Super Hans");
 		addAdvancement("the_sword.title", "The Sword of All Time");
 		addAdvancement("the_sword.description", "Obtain The Sword, a powerful combination of several swords");
+		addAdvancement("recovery_staff.title", "What Hurts Me Can Also Heal Me");
+		addAdvancement("recovery_staff.description", "Obtain a Recovery Staff, allowing you to heal yourself based on incoming damage");
 
 		// Player utility
 		addAdvancement("bottle_of_alcohol.title", "mmmmm alacol");
@@ -1050,9 +1065,48 @@ public class LanguageGenerator extends IWLanguageProvider {
 	}
 
 	private void addConfigDescriptions() {
-		// Config classes uses annotations on fields, loop through declared fields that have a ConfigEntry annotation and pull the field name
+		addConfigField("title", "Immersive Weapons Configuration");
+		addConfigField("general", "General Settings");
+		addConfigField("general.tooltip", "General, miscellaneous settings");
+		addConfigField("entity", "Entity Settings");
+		addConfigField("entity.tooltip", "Entity-specific settings");
+		addConfigField("celestial_tower", "Celestial Tower Settings");
+		addConfigField("celestial_tower.tooltip", "Celestial Tower settings");
+		addConfigField("skygazer", "Skygazer Settings");
+		addConfigField("skygazer.tooltip", "Skygazer settings");
+		addConfigField("the_commander", "The Commander Settings");
+		addConfigField("the_commander.tooltip", "The Commander settings");
+		addConfigField("weapons", "Weapon Settings");
+		addConfigField("weapons.tooltip", "Weapon-specific settings");
+		addConfigField("flintlock_pistol", "Flintlock Pistol Settings");
+		addConfigField("flintlock_pistol.tooltip", "Flintlock Pistol settings");
+		addConfigField("blunderbuss", "Blunderbuss Settings");
+		addConfigField("blunderbuss.tooltip", "Blunderbuss settings");
+		addConfigField("flare_gun", "Flare Gun Settings");
+		addConfigField("flare_gun.tooltip", "Flare Gun settings");
+		addConfigField("musket", "Musket Settings");
+		addConfigField("musket.tooltip", "Musket settings");
+		addConfigField("hand_cannon", "Hand Cannon Settings");
+		addConfigField("hand_cannon.tooltip", "Hand Cannon settings");
+		addConfigField("ventus_staff", "Ventus Staff Settings");
+		addConfigField("ventus_staff.tooltip", "Ventus Staff settings");
+		addConfigField("meteor_staff", "Meteor Staff Settings");
+		addConfigField("meteor_staff.tooltip", "Meteor Staff settings");
+		addConfigField("cursed_sight_staff", "Cursed Sight Staff Settings");
+		addConfigField("cursed_sight_staff.tooltip", "Cursed Sight Staff settings");
+		addConfigField("sculk_staff", "Sculk Staff Settings");
+		addConfigField("sculk_staff.tooltip", "Sculk Staff settings");
+		addConfigField("recovery_staff", "Recovery Staff Settings");
+		addConfigField("recovery_staff.tooltip", "Recovery Staff settings");
+		addConfigField("throwables", "Throwable Settings");
+		addConfigField("throwables.tooltip", "Throwable-specific settings");
+		addConfigField("smoke_grenade", "Smoke Grenade Settings");
+		addConfigField("smoke_grenade.tooltip", "Smoke Grenade settings");
+		addConfigField("flashbang", "Flashbang Settings");
+		addConfigField("flashbang.tooltip", "Flashbang settings");
+
 		for (Field field : ClientConfig.class.getDeclaredFields()) {
-			if (field.isAnnotationPresent(ConfigEntry.class)) {
+			if (field.getType().getDeclaringClass() == ModConfigSpec.class) {
 				// Insert a space before each uppercase letter, then trim the result to remove leading spaces
 				String spacedFieldName = field.getName().replaceAll("(?<!^)(?=[A-Z])", " ").trim();
 				// Convert the spaced field name to a sentence
@@ -1060,9 +1114,12 @@ public class LanguageGenerator extends IWLanguageProvider {
 				addConfigField(field.getName(), description);
 			}
 		}
-		for (Field field : CommonConfig.class.getDeclaredFields()) {
-			if (field.isAnnotationPresent(ConfigEntry.class)) {
+
+		for (Field field : ServerConfig.class.getDeclaredFields()) {
+			if (field.getType().getDeclaringClass() == ModConfigSpec.class) {
+				// Insert a space before each uppercase letter, then trim the result to remove leading spaces
 				String spacedFieldName = field.getName().replaceAll("(?<!^)(?=[A-Z])", " ").trim();
+				// Convert the spaced field name to a sentence
 				String description = capitalizeWords(spacedFieldName);
 				addConfigField(field.getName(), description);
 			}
@@ -1070,31 +1127,20 @@ public class LanguageGenerator extends IWLanguageProvider {
 	}
 
 	private void addEnchantments() {
-		Stream<DeferredHolder<Enchantment, ? extends Enchantment>> enchantments = EnchantmentRegistry.ENCHANTMENTS
-				.getEntries()
-				.stream()
-				.filter(item -> !LANGUAGE_EXCLUSIONS.getOrDefault(LanguageCategory.ENCHANTMENTS, Collections.emptyList())
-						.contains(item));
+		enchantmentProvider.listElements()
+				.filter(reference -> reference.key().location().getNamespace().equals(ImmersiveWeapons.MOD_ID))
+				.forEach(reference -> {
+					// Get the reference name
+					String enchantmentName = reference.key().location().getPath();
 
-		// Get a list of all items, and convert their registry names to proper names
-		// Turn underscores into spaces, and capitalize the first letter of each word
-		enchantments.forEach(enchantment -> {
-			// Get the enchantment name
-			String enchantmentName = enchantment.getKey().location().getPath();
+					// Convert underscores to spaces
+					enchantmentName = enchantmentName.replace("_", " ");
+					// Capitalize the first letter of all words
+					enchantmentName = capitalizeWords(enchantmentName);
 
-			// Convert underscores to spaces
-			enchantmentName = enchantmentName.replace("_", " ");
-			// Capitalize the first letter of all words
-			enchantmentName = capitalizeWords(enchantmentName);
-
-			// Add the item to the language file
-			addEnchantment(enchantment, enchantmentName);
-		});
-
-		// Add entries with overrides
-		for (DeferredHolder<?, ?> holder : LANGUAGE_OVERRIDES.getOrDefault(LanguageCategory.ENCHANTMENTS, Collections.emptyMap()).keySet()) {
-			add((Enchantment) holder.get(), LANGUAGE_OVERRIDES.get(LanguageCategory.ENTITIES).get(holder));
-		}
+					// Add the item to the language file
+					addEnchantment(reference.key().location().toLanguageKey(), enchantmentName);
+				});
 	}
 
 	private void addNetworkingFailures() {
@@ -1109,6 +1155,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		add("loot.immersiveweapons.entity.hans.iron_sword", "The Grand Blade of Hans");
 		add("loot.immersiveweapons.entity.super_hans.super_healing_potion", "Super Potion of Healing");
 		add("loot.immersiveweapons.entity.super_hans.super_regeneration_potion", "Super Potion of Regeneration");
+		add("loot.immersiveweapons.entity.super_hans.ultra_healing_potion", "Ultra Potion of Healing");
+		add("loot.immersiveweapons.entity.super_hans.ultra_regeneration_potion", "Ultra Potion of Regeneration");
 		add("immersiveweapons.boss.celestial_tower.waves", "Celestial Tower: Wave %s of %s");
 		add("immersiveweapons.boss.the_commander.waves", "The Commander: Wave %s of %s");
 		add("itemGroup.immersiveweapons.creative_tab", "Immersive Weapons");
@@ -1141,11 +1189,30 @@ public class LanguageGenerator extends IWLanguageProvider {
 		add("immersiveweapons.kill_count_weapon.tier.hans_worthy", "Hans-Worthy");
 
 		// Music disc descriptions
+		add("jukebox_song.immersiveweapons.starlight_plains_theme_1", "Starlight Plains Theme 1");
+		add("jukebox_song.immersiveweapons.starlight_plains_theme_2", "Starlight Plains Theme 2");
+		add("jukebox_song.immersiveweapons.tiltros_wastes_theme", "Tiltros Wastes Theme");
+		add("jukebox_song.immersiveweapons.deadmans_desert_theme_1", "Deadman's Desert Theme 1");
+		add("jukebox_song.immersiveweapons.deadmans_desert_theme_2", "Deadman's Desert Theme 2");
 		add("item.immersiveweapons.music_disc_starlight_plains_theme_1.desc", "RandomDev - Starlight Plains Theme 1");
 		add("item.immersiveweapons.music_disc_starlight_plains_theme_2.desc", "RandomDev - Starlight Plains Theme 2");
 		add("item.immersiveweapons.music_disc_tiltros_wastes_theme.desc", "RandomDev - Tiltros Wastes Theme");
 		add("item.immersiveweapons.music_disc_deadmans_desert_theme_1.desc", "AnonymousHacker1279 - Deadman's Desert Theme 1");
 		add("item.immersiveweapons.music_disc_deadmans_desert_theme_2.desc", "AnonymousHacker1279 - Deadman's Desert Theme 2");
+
+		// Accessory slots
+		add("tooltip.immersiveweapons.accessory.slot.head", "Head");
+		add("tooltip.immersiveweapons.accessory.slot.body", "Body");
+		add("tooltip.immersiveweapons.accessory.slot.necklace", "Necklace");
+		add("tooltip.immersiveweapons.accessory.slot.hand", "Hand");
+		add("tooltip.immersiveweapons.accessory.slot.bracelet", "Bracelet");
+		add("tooltip.immersiveweapons.accessory.slot.ring", "Ring");
+		add("tooltip.immersiveweapons.accessory.slot.belt", "Belt");
+		add("tooltip.immersiveweapons.accessory.slot.charm", "Charm");
+		add("tooltip.immersiveweapons.accessory.slot.spirit", "Spirit");
+
+		// Attributes
+		add("immersiveweapons.attribute.armor_breach", "Armor Breach");
 
 		// IWCB strings
 		add("tooltip.iwcompatbridge.accessory_note", "Equip this in a Curios slot to gain the effect.");

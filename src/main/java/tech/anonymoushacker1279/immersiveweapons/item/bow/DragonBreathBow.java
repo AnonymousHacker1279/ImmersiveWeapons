@@ -14,14 +14,14 @@ public class DragonBreathBow extends BowItem {
 	}
 
 	@Override
-	public AbstractArrow customArrow(AbstractArrow abstractArrow, ItemStack stack) {
+	public AbstractArrow customArrow(AbstractArrow abstractArrow, ItemStack projectileStack, ItemStack weaponStack) {
 		if (abstractArrow instanceof CustomArrowEntity customArrowEntity) {
 			customArrowEntity.isExplosive = true;
 
 			return customArrowEntity;
 		} else if (abstractArrow.getOwner() instanceof LivingEntity owner) {
 			// Create a new CustomArrowEntity
-			CustomArrowEntity customArrowEntity = new CustomArrowEntity(EntityType.ARROW, owner, abstractArrow.level());
+			CustomArrowEntity customArrowEntity = new CustomArrowEntity(EntityType.ARROW, owner, abstractArrow.level(), weaponStack);
 			customArrowEntity.isExplosive = true;
 			customArrowEntity.gravityModifier = 0.05d;
 

@@ -12,7 +12,7 @@ import tech.anonymoushacker1279.immersiveweapons.entity.monster.RockSpiderEntity
 
 public class RockSpiderRenderer<T extends RockSpiderEntity> extends MobRenderer<T, SpiderModel<T>> {
 
-	private static final ResourceLocation TEXTURE_LOCATION = new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/rock_spider/rock_spider.png");
+	private static final ResourceLocation TEXTURE_LOCATION = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/entity/rock_spider/rock_spider.png");
 
 	public RockSpiderRenderer(EntityRendererProvider.Context context) {
 		super(context, new SpiderModel<>(context.bakeLayer(ModelLayers.SPIDER)), 0.25F);

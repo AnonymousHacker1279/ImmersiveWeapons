@@ -12,7 +12,7 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 public class EvilEyeModel<T extends Entity> extends EntityModel<T> {
 
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(
-			new ResourceLocation(ImmersiveWeapons.MOD_ID, "evil_eye"),
+			ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "evil_eye"),
 			"main");
 	private final ModelPart main;
 
@@ -61,11 +61,10 @@ public class EvilEyeModel<T extends Entity> extends EntityModel<T> {
 
 	@Override
 	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-
 	}
 
 	@Override
-	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-		main.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+	public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
+		main.render(poseStack, buffer, packedLight, packedOverlay);
 	}
 }

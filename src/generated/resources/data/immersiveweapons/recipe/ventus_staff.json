@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "ventus",
+  "key": {
+    "a": {
+      "item": "immersiveweapons:ventus_staff_core"
+    },
+    "b": {
+      "item": "immersiveweapons:obsidian_rod"
+    }
+  },
+  "pattern": [
+    " a ",
+    " b ",
+    " b "
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:ventus_staff"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "traps",
+  "key": {
+    "a": {
+      "item": "minecraft:stick"
+    },
+    "b": {
+      "item": "minecraft:short_grass"
+    },
+    "c": {
+      "tag": "minecraft:leaves"
+    }
+  },
+  "pattern": [
+    "bcb",
+    "aaa"
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:pitfall"
+  }
+}

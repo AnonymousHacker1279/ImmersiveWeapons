@@ -13,7 +13,7 @@ import tech.anonymoushacker1279.immersiveweapons.entity.monster.lava_revenant.La
 
 public class LavaRevenantRenderer extends MobRenderer<LavaRevenantEntity, LavaRevenantModel<LavaRevenantEntity>> {
 
-	private static final ResourceLocation TEXTURE_LOCATION = new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/lava_revenant/lava_revenant.png");
+	private static final ResourceLocation TEXTURE_LOCATION = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/entity/lava_revenant/lava_revenant.png");
 
 	public LavaRevenantRenderer(EntityRendererProvider.Context context) {
 		super(context, new LavaRevenantModel<>(context.bakeLayer(ModelLayers.PHANTOM)), 0.75F);
@@ -29,16 +29,16 @@ public class LavaRevenantRenderer extends MobRenderer<LavaRevenantEntity, LavaRe
 	}
 
 	@Override
-	protected void scale(LavaRevenantEntity pLivingEntity, PoseStack pMatrixStack, float pPartialTickTime) {
-		int i = pLivingEntity.getSize();
-		float f = 1.0F + 5.0F * (float) i;
-		pMatrixStack.scale(f, f, f);
-		pMatrixStack.translate(0.0D, 1.3125D, 0.1875D);
+	protected void scale(LavaRevenantEntity entity, PoseStack poseStack, float partialTick) {
+		int size = entity.getSize();
+		float sizeModifier = 1.0F + 5.0F * (float) size;
+		poseStack.scale(sizeModifier, sizeModifier, sizeModifier);
+		poseStack.translate(0.0D, 1.3125D, 0.1875D);
 	}
 
 	@Override
-	protected void setupRotations(LavaRevenantEntity pEntityLiving, PoseStack pMatrixStack, float pAgeInTicks, float pRotationYaw, float pPartialTicks) {
-		super.setupRotations(pEntityLiving, pMatrixStack, pAgeInTicks, pRotationYaw, pPartialTicks);
-		pMatrixStack.mulPose(Axis.XP.rotationDegrees(pEntityLiving.getXRot()));
+	protected void setupRotations(LavaRevenantEntity entity, PoseStack pMatrixStack, float age, float yaw, float partialTick, float scale) {
+		super.setupRotations(entity, pMatrixStack, age, yaw, partialTick, scale);
+		pMatrixStack.mulPose(Axis.XP.rotationDegrees(entity.getXRot()));
 	}
 }

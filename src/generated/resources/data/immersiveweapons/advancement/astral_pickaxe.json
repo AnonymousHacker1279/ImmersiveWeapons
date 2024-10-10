@@ -1,0 +1,37 @@
+{
+  "parent": "immersiveweapons:astral_ingot",
+  "criteria": {
+    "hold": {
+      "conditions": {
+        "items": [
+          {
+            "items": "immersiveweapons:astral_pickaxe"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersiveweapons.astral_pickaxe.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "immersiveweapons:astral_pickaxe"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.astral_pickaxe.title"
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ],
+  "rewards": {
+    "experience": 35
+  },
+  "sends_telemetry_event": true
+}

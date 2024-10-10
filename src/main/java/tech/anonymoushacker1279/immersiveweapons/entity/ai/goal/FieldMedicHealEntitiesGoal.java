@@ -78,7 +78,7 @@ public class FieldMedicHealEntitiesGoal extends Goal {
 
 		if (!nearbyEntities.isEmpty()) {
 			if (healTarget == null) {
-				healTarget = nearbyEntities.get(0);
+				healTarget = nearbyEntities.getFirst();
 			}
 		} else {
 			healTarget = null;

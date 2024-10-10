@@ -8,8 +8,8 @@ import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
 
 public class VentusPikeItem extends PikeItem implements HitEffectUtils {
 
-	public VentusPikeItem(Tier tier, Properties properties, double damageBonus, double attackSpeed, Ingredient repairIngredient) {
-		super(tier, properties, damageBonus, attackSpeed, repairIngredient);
+	public VentusPikeItem(Tier tier, Properties properties, Ingredient repairIngredient) {
+		super(tier, properties, repairIngredient);
 	}
 
 	@Override
@@ -18,6 +18,7 @@ public class VentusPikeItem extends PikeItem implements HitEffectUtils {
 			addVentusEffects(target);
 			return true;
 		}
+
 		return false;
 	}
 }

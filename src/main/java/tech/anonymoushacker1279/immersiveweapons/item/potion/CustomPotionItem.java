@@ -47,8 +47,8 @@ public abstract class CustomPotionItem extends Item {
 
 		if (!pLevel.isClientSide) {
 			for (MobEffectInstance effectInstance : getEffects()) {
-				if (effectInstance.getEffect().isInstantenous()) {
-					effectInstance.getEffect().applyInstantenousEffect(player, player, pEntityLiving, effectInstance.getAmplifier(), 1.0D);
+				if (effectInstance.getEffect().value().isInstantenous()) {
+					effectInstance.getEffect().value().applyInstantenousEffect(player, player, pEntityLiving, effectInstance.getAmplifier(), 1.0D);
 				} else {
 					pEntityLiving.addEffect(new MobEffectInstance(effectInstance));
 				}
@@ -76,11 +76,8 @@ public abstract class CustomPotionItem extends Item {
 		return pStack;
 	}
 
-	/**
-	 * How long it takes to use or consume an item
-	 */
 	@Override
-	public int getUseDuration(ItemStack pStack) {
+	public int getUseDuration(ItemStack stack, LivingEntity entity) {
 		return 32;
 	}
 

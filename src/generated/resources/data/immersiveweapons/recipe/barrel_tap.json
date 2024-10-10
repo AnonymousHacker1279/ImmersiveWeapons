@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "barrel_tap",
+  "key": {
+    "a": {
+      "tag": "c:ingots/iron"
+    },
+    "b": {
+      "tag": "c:nuggets/metal"
+    }
+  },
+  "pattern": [
+    "  b",
+    "aaa",
+    "  a"
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:barrel_tap"
+  }
+}

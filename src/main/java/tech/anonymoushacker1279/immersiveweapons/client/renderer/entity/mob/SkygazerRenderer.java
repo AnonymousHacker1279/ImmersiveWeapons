@@ -13,7 +13,7 @@ import tech.anonymoushacker1279.immersiveweapons.entity.npc.SkygazerEntity;
 
 public class SkygazerRenderer extends MobRenderer<SkygazerEntity, VillagerModel<SkygazerEntity>> {
 
-	private static final ResourceLocation TEXTURE_LOCATION = new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/skygazer/skygazer.png");
+	private static final ResourceLocation TEXTURE_LOCATION = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/entity/skygazer/skygazer.png");
 
 	public SkygazerRenderer(EntityRendererProvider.Context context) {
 		super(context, new VillagerModel<>(context.bakeLayer(ModelLayers.WANDERING_TRADER)), 0.5F);

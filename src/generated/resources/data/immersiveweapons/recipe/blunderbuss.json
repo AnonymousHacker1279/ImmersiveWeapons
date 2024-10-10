@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "firearm",
+  "key": {
+    "a": {
+      "item": "immersiveweapons:heavy_wooden_stock"
+    },
+    "b": {
+      "item": "immersiveweapons:flintlock_assembly"
+    },
+    "c": {
+      "item": "immersiveweapons:trigger_assembly"
+    },
+    "d": {
+      "item": "immersiveweapons:wide_golden_barrel"
+    }
+  },
+  "pattern": [
+    "abd",
+    " c "
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:blunderbuss"
+  }
+}

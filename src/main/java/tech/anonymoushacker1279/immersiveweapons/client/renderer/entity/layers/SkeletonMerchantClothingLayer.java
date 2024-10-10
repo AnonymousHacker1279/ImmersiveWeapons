@@ -14,7 +14,7 @@ import tech.anonymoushacker1279.immersiveweapons.entity.npc.SkeletonMerchantEnti
 
 public class SkeletonMerchantClothingLayer<T extends SkeletonMerchantEntity, M extends EntityModel<T>> extends RenderLayer<T, M> {
 
-	private static final ResourceLocation STRAY_CLOTHES_LOCATION = new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/skeleton_merchant/skeleton_merchant_overlay.png");
+	private static final ResourceLocation CLOTHES_LOCATION = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/entity/skeleton_merchant/skeleton_merchant_overlay.png");
 	private final SkeletonMerchantModel<T> layerModel;
 
 	public SkeletonMerchantClothingLayer(RenderLayerParent<T, M> pRenderer, EntityModelSet pModelSet) {
@@ -22,12 +22,25 @@ public class SkeletonMerchantClothingLayer<T extends SkeletonMerchantEntity, M e
 		this.layerModel = new SkeletonMerchantModel<>(pModelSet.bakeLayer(ModelLayers.STRAY_OUTER_LAYER));
 	}
 
-	public void render(PoseStack pMatrixStack, MultiBufferSource pBuffer, int pPackedLight,
-	                   T pLivingEntity, float pLimbSwing, float pLimbSwingAmount,
-	                   float pPartialTicks, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
+	public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, T livingEntity,
+	                   float limbSwing, float limbSwingAmount, float partialTick, float ageInTicks,
+	                   float netHeadYaw, float headPitch) {
 
-		coloredCutoutModelCopyLayerRender(this.getParentModel(), this.layerModel, STRAY_CLOTHES_LOCATION, pMatrixStack,
-				pBuffer, pPackedLight, pLivingEntity, pLimbSwing, pLimbSwingAmount, pAgeInTicks, pNetHeadYaw,
-				pHeadPitch, pPartialTicks, 1.0F, 1.0F, 1.0F);
+		coloredCutoutModelCopyLayerRender(
+				this.getParentModel(),
+				this.layerModel,
+				CLOTHES_LOCATION,
+				poseStack,
+				bufferSource,
+				packedLight,
+				livingEntity,
+				limbSwing,
+				limbSwingAmount,
+				ageInTicks,
+				netHeadYaw,
+				headPitch,
+				partialTick,
+				-1
+		);
 	}
 }

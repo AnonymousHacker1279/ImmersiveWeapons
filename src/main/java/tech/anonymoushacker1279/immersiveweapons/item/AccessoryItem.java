@@ -1,5 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.item;
 
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -26,7 +27,6 @@ public class AccessoryItem extends Item {
 	private final List<MobEffectInstance> mobEffects;
 
 	private static final Map<AttributeModifier, Attribute> GLOBAL_ATTRIBUTE_MODIFIER_MAP = new HashMap<>(5);
-	private static final List<AccessoryItem> ACCESSORY_ITEMS = new ArrayList<>(30);
 
 	/**
 	 * AccessoryItems provide various effects when equipped. There are specific categories they may be placed in, and only
@@ -50,8 +50,6 @@ public class AccessoryItem extends Item {
 		for (Map<AttributeModifier, Attribute> map : dynamicAttributeModifiers.keySet()) {
 			GLOBAL_ATTRIBUTE_MODIFIER_MAP.putAll(map);
 		}
-
-		ACCESSORY_ITEMS.add(this);
 	}
 
 	public AccessorySlot getSlot() {
@@ -115,7 +113,7 @@ public class AccessoryItem extends Item {
 		}
 
 		// If there are multiple accessories of the same type, only the first one is active.
-		return accessories.get(0) == stack;
+		return accessories.getFirst() == stack;
 	}
 
 	/**
@@ -302,15 +300,25 @@ public class AccessoryItem extends Item {
 	 * An enum of accessory slots.
 	 */
 	public enum AccessorySlot {
-		HEAD,
-		BODY,
-		NECKLACE,
-		HAND,
-		BRACELET,
-		RING,
-		BELT,
-		CHARM,
-		SPIRIT
+		HEAD("head"),
+		BODY("body"),
+		NECKLACE("necklace"),
+		HAND("hand"),
+		BRACELET("bracelet"),
+		RING("ring"),
+		BELT("belt"),
+		CHARM("charm"),
+		SPIRIT("spirit");
+
+		private final String name;
+
+		AccessorySlot(String name) {
+			this.name = name;
+		}
+
+		public Component getComponent() {
+			return Component.translatable("tooltip.immersiveweapons.accessory.slot." + name);
+		}
 	}
 
 	/**
@@ -325,22 +333,22 @@ public class AccessoryItem extends Item {
 		/**
 		 * Modifier for reload time for firearms.
 		 */
-		FIREARM_RELOAD_SPEED("firearm_reload_speed"),
+		FIREARM_RELOAD_SPEED("firearm_reload_speed", false),
 
 		/**
 		 * Modifier for melee damage.
 		 */
-		MELEE_DAMAGE("melee_damage"),
+		MELEE_DAMAGE("melee_damage", false),
 
 		/**
 		 * Modifier for projectile damage.
 		 */
-		PROJECTILE_DAMAGE("projectile_damage"),
+		PROJECTILE_DAMAGE("projectile_damage", false),
 
 		/**
 		 * Modifier to all outgoing damage sources.
 		 */
-		GENERAL_DAMAGE("general_damage"),
+		GENERAL_DAMAGE("general_damage", false),
 
 		/**
 		 * Modifier to all incoming damage sources.
@@ -350,7 +358,7 @@ public class AccessoryItem extends Item {
 		/**
 		 * Modifier to melee knockback.
 		 */
-		MELEE_KNOCKBACK("melee_knockback"),
+		MELEE_KNOCKBACK("melee_knockback", false),
 
 		/**
 		 * Chance for melee attacks to inflict {@link BleedingEffect}.
@@ -361,7 +369,7 @@ public class AccessoryItem extends Item {
 		 * Modifier to melee critical damage. Additive with vanilla critical damage, which is 50% by default.
 		 * For example, a value of 0.5d will result in 100% critical damage.
 		 */
-		MELEE_CRIT_DAMAGE_BONUS("melee_crit_damage_bonus"),
+		MELEE_CRIT_DAMAGE_BONUS("melee_crit_damage_bonus", false),
 
 		/**
 		 * Chance for any melee attack to become critical, regardless of vanilla critical hit conditions.
@@ -386,7 +394,7 @@ public class AccessoryItem extends Item {
 		/**
 		 * Modifier for experience drops.
 		 */
-		EXPERIENCE_MODIFIER("experience_modifier"),
+		EXPERIENCE_MODIFIER("experience_modifier", false),
 
 		/**
 		 * Modifier to {@link DamageTypes#SONIC_BOOM} damage.
@@ -396,12 +404,18 @@ public class AccessoryItem extends Item {
 		/**
 		 * Modifier to the looting level of the player.
 		 */
-		LOOTING_LEVEL("looting_level");
+		LOOTING_LEVEL("looting_level", false);
 
 		public final String name;
+		public final boolean clamp;
 
 		EffectType(String name) {
+			this(name, true);
+		}
+
+		EffectType(String name, boolean clamp) {
 			this.name = createTranslation(name);
+			this.clamp = clamp;
 		}
 
 		private String createTranslation(String name) {

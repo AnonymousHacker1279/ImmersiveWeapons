@@ -1,13 +1,21 @@
 package tech.anonymoushacker1279.immersiveweapons.item.tool.molten;
 
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.HoeItem;
+import net.minecraft.world.item.ItemStack;
+import tech.anonymoushacker1279.immersiveweapons.item.materials.CustomTiers;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
 
 public class MoltenHoe extends HoeItem implements HitEffectUtils {
 
-	public MoltenHoe(Tier tier, int attackDamage, float attackSpeed, Properties properties) {
-		super(tier, attackDamage, attackSpeed, properties);
+	public MoltenHoe() {
+		super(CustomTiers.MOLTEN,
+				new Properties()
+						.attributes(createAttributes(
+								CustomTiers.MOLTEN, -5, 0.0f)
+						)
+						.fireResistant()
+		);
 	}
 
 	@Override

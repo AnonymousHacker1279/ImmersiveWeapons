@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "recovery_staff",
+  "key": {
+    "a": {
+      "item": "immersiveweapons:bloated_heart"
+    },
+    "b": {
+      "item": "immersiveweapons:hansium_ingot"
+    },
+    "c": {
+      "item": "immersiveweapons:obsidian_rod"
+    },
+    "d": {
+      "item": "minecraft:amethyst_shard"
+    }
+  },
+  "pattern": [
+    "bab",
+    "dcd",
+    " c "
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:recovery_staff"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "lights",
+  "key": {
+    "a": {
+      "tag": "c:nuggets/iron"
+    },
+    "b": {
+      "tag": "c:glass_panes"
+    },
+    "c": {
+      "item": "immersiveweapons:celestial_fragment"
+    }
+  },
+  "pattern": [
+    "aba",
+    "bcb",
+    "aba"
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:celestial_lantern"
+  }
+}

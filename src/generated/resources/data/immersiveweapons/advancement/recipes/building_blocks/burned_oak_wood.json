@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_burned_oak_log": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#immersiveweapons:burned_oak_logs"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "immersiveweapons:burned_oak_wood"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_burned_oak_log"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:burned_oak_wood"
+    ]
+  }
+}

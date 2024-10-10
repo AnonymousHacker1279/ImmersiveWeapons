@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "wooden_fence_gate",
+  "key": {
+    "a": {
+      "item": "immersiveweapons:stardust_planks"
+    },
+    "b": {
+      "tag": "c:rods/wooden"
+    }
+  },
+  "pattern": [
+    "bab",
+    "bab"
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:stardust_fence_gate"
+  }
+}

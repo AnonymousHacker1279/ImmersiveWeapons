@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:killed_by_player"
+        },
+        {
+          "condition": "minecraft:random_chance_with_enchanted_bonus",
+          "enchanted_chance": {
+            "type": "minecraft:linear",
+            "base": 0.09,
+            "per_level_above_first": 0.02
+          },
+          "enchantment": "minecraft:looting",
+          "unenchanted_chance": 0.07
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "immersiveweapons:starstorm_shard"
+        }
+      ],
+      "name": "starstorm_shard",
+      "rolls": {
+        "type": "immersiveweapons:entity_killers"
+      }
+    }
+  ],
+  "random_sequence": "immersiveweapons:entities/starmite"
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "immersiveweapons:syringe"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "iron_nugget": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:nuggets/iron"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "iron_nugget"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:syringe"
+    ]
+  }
+}

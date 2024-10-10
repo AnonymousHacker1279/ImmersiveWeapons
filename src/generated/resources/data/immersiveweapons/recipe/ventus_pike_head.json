@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "a": {
+      "tag": "immersiveweapons:shards/ventus"
+    },
+    "b": {
+      "tag": "immersiveweapons:shards/ventus"
+    }
+  },
+  "pattern": [
+    "a",
+    "b"
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:ventus_pike_head"
+  }
+}

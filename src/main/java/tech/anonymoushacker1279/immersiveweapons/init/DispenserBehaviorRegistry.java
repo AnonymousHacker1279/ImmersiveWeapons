@@ -3,16 +3,17 @@ package tech.anonymoushacker1279.immersiveweapons.init;
 import net.minecraft.core.*;
 import net.minecraft.core.dispenser.*;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ProjectileItem;
+import net.minecraft.world.item.ProjectileItem.DispenseConfig;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.phys.Vec3;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.*;
 import tech.anonymoushacker1279.immersiveweapons.entity.vehicle.*;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.CustomArrowItem;
+import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem;
 
 public class DispenserBehaviorRegistry implements DispenseItemBehavior {
 
@@ -25,87 +26,11 @@ public class DispenserBehaviorRegistry implements DispenseItemBehavior {
 		// Iterate through all registry items of the CustomArrowItem type and register a dispenser behavior for each
 		ItemRegistry.ITEMS.getEntries().stream()
 				.filter(item -> item.get() instanceof CustomArrowItem<?>)
-				.forEach(arrow -> DispenserBlock.registerBehavior(arrow.get(), new AbstractProjectileDispenseBehavior() {
-					@Override
-					protected Projectile getProjectile(Level level, Position position, ItemStack stack) {
-						CustomArrowItem<?> customArrowItem = (CustomArrowItem<?>) stack.getItem();
-						AbstractArrow arrowEntity = customArrowItem.createArrow(level);
-						arrowEntity.setPos(position.x(), position.y(), position.z());
+				.forEach(arrow -> DispenserBlock.registerBehavior(arrow.get(), new ProjectileDispenseBehavior(arrow.get())));
 
-						return arrowEntity;
-					}
-				}));
-
-		DispenserBlock.registerBehavior(ItemRegistry.SMOKE_GRENADE.get(), new AbstractProjectileDispenseBehavior() {
-			@Override
-			protected Projectile getProjectile(Level level, Position position, ItemStack stack) {
-				SmokeGrenadeEntity smokeGrenadeEntity = new SmokeGrenadeEntity(level, position.x(), position.y(), position.z());
-				smokeGrenadeEntity.push(5, 5, 5);
-				smokeGrenadeEntity.setColor(0);
-				return smokeGrenadeEntity;
-			}
-		});
-		DispenserBlock.registerBehavior(ItemRegistry.SMOKE_GRENADE_RED.get(), new AbstractProjectileDispenseBehavior() {
-			@Override
-			protected Projectile getProjectile(Level level, Position position, ItemStack stack) {
-				SmokeGrenadeEntity smokeGrenadeEntity = new SmokeGrenadeEntity(level, position.x(), position.y(), position.z());
-				smokeGrenadeEntity.push(5, 5, 5);
-				smokeGrenadeEntity.setColor(1);
-				return smokeGrenadeEntity;
-			}
-		});
-		DispenserBlock.registerBehavior(ItemRegistry.SMOKE_GRENADE_GREEN.get(), new AbstractProjectileDispenseBehavior() {
-			@Override
-			protected Projectile getProjectile(Level level, Position position, ItemStack stack) {
-				SmokeGrenadeEntity smokeGrenadeEntity = new SmokeGrenadeEntity(level, position.x(), position.y(), position.z());
-				smokeGrenadeEntity.push(5, 5, 5);
-				smokeGrenadeEntity.setColor(2);
-				return smokeGrenadeEntity;
-			}
-		});
-		DispenserBlock.registerBehavior(ItemRegistry.SMOKE_GRENADE_BLUE.get(), new AbstractProjectileDispenseBehavior() {
-			@Override
-			protected Projectile getProjectile(Level level, Position position, ItemStack stack) {
-				SmokeGrenadeEntity smokeGrenadeEntity = new SmokeGrenadeEntity(level, position.x(), position.y(), position.z());
-				smokeGrenadeEntity.push(5, 5, 5);
-				smokeGrenadeEntity.setColor(3);
-				return smokeGrenadeEntity;
-			}
-		});
-		DispenserBlock.registerBehavior(ItemRegistry.SMOKE_GRENADE_PURPLE.get(), new AbstractProjectileDispenseBehavior() {
-			@Override
-			protected Projectile getProjectile(Level level, Position position, ItemStack stack) {
-				SmokeGrenadeEntity smokeGrenadeEntity = new SmokeGrenadeEntity(level, position.x(), position.y(), position.z());
-				smokeGrenadeEntity.push(5, 5, 5);
-				smokeGrenadeEntity.setColor(4);
-				return smokeGrenadeEntity;
-			}
-		});
-		DispenserBlock.registerBehavior(ItemRegistry.SMOKE_GRENADE_YELLOW.get(), new AbstractProjectileDispenseBehavior() {
-			@Override
-			protected Projectile getProjectile(Level level, Position position, ItemStack stack) {
-				SmokeGrenadeEntity smokeGrenadeEntity = new SmokeGrenadeEntity(level, position.x(), position.y(), position.z());
-				smokeGrenadeEntity.push(5, 5, 5);
-				smokeGrenadeEntity.setColor(5);
-				return smokeGrenadeEntity;
-			}
-		});
-		DispenserBlock.registerBehavior(ItemRegistry.FLASHBANG.get(), new AbstractProjectileDispenseBehavior() {
-			@Override
-			protected Projectile getProjectile(Level level, Position position, ItemStack stack) {
-				FlashbangEntity flashbangEntity = new FlashbangEntity(level, position.x(), position.y(), position.z());
-				flashbangEntity.push(5, 5, 5);
-				return flashbangEntity;
-			}
-		});
-		DispenserBlock.registerBehavior(ItemRegistry.MOLOTOV_COCKTAIL.get(), new AbstractProjectileDispenseBehavior() {
-			@Override
-			protected Projectile getProjectile(Level level, Position position, ItemStack stack) {
-				MolotovEntity molotovEntity = new MolotovEntity(level, position.x(), position.y(), position.z());
-				molotovEntity.push(5, 5, 5);
-				return molotovEntity;
-			}
-		});
+		ItemRegistry.ITEMS.getEntries().stream()
+				.filter(item -> item.get() instanceof ThrowableItem)
+				.forEach(throwable -> DispenserBlock.registerBehavior(throwable.get(), new ThrowableItemDispenseBehavior((ThrowableItem) throwable.get())));
 
 		// Register behavior for boats
 		DispenserBlock.registerBehavior(ItemRegistry.BURNED_OAK_BOAT.get(), new CustomBoatDispenseBehavior(CustomBoatType.BURNED_OAK));
@@ -166,6 +91,37 @@ public class DispenserBehaviorRegistry implements DispenseItemBehavior {
 
 			boat.setPos(x, y + yModifier, z);
 			level.addFreshEntity(boat);
+			stack.shrink(1);
+			return stack;
+		}
+	}
+
+	public static class ThrowableItemDispenseBehavior extends DefaultDispenseItemBehavior {
+
+		private final ThrowableItem throwableItem;
+		private final ProjectileItem.DispenseConfig dispenseConfig;
+
+		public ThrowableItemDispenseBehavior(ThrowableItem throwable) {
+			this.throwableItem = throwable;
+			this.dispenseConfig = DispenseConfig.DEFAULT;
+		}
+
+		@Override
+		public ItemStack execute(BlockSource blockSource, ItemStack stack) {
+			Level level = blockSource.level();
+			Direction direction = blockSource.state().getValue(DispenserBlock.FACING);
+			Position position = this.dispenseConfig.positionFunction().getDispensePosition(blockSource, direction);
+
+			ThrowableItemProjectile throwable;
+			switch (throwableItem.type) {
+				case SMOKE_GRENADE ->
+						throwable = throwableItem.createSmokeGrenade(stack, level, position, direction, 0.5F);
+				case FLASHBANG -> throwable = throwableItem.createFlashbang(stack, level, position, direction, 0.5F);
+				case MOLOTOV -> throwable = throwableItem.createMolotov(stack, level, position, direction);
+				default -> throwable = throwableItem.createMudBall(stack, level, position, direction);
+			}
+
+			level.addFreshEntity(throwable);
 			stack.shrink(1);
 			return stack;
 		}

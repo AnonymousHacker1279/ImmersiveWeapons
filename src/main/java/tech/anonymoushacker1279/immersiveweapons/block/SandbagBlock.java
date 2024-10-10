@@ -3,8 +3,9 @@ package tech.anonymoushacker1279.immersiveweapons.block;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -64,10 +65,7 @@ public class SandbagBlock extends BasicOrientableBlock {
 	}
 
 	@Override
-	public InteractionResult use(BlockState state, Level level, BlockPos pos,
-	                             Player player, InteractionHand hand,
-	                             BlockHitResult hitResult) {
-
+	protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
 		if (player.getMainHandItem().getItem() == BlockItemRegistry.SANDBAG_ITEM.get()) {
 			int bags = state.getValue(BAGS);
 			if (bags < 3) {
@@ -75,9 +73,11 @@ public class SandbagBlock extends BasicOrientableBlock {
 				if (!player.isCreative()) {
 					player.getMainHandItem().shrink(1);
 				}
-				return InteractionResult.CONSUME;
+
+				return ItemInteractionResult.CONSUME;
 			}
 		}
-		return InteractionResult.PASS;
+
+		return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 	}
 }

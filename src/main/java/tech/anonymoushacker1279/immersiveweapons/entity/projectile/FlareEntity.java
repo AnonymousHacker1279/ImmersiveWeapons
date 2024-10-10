@@ -13,6 +13,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
 import tech.anonymoushacker1279.immersiveweapons.entity.neutral.MinutemanEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
@@ -37,16 +38,16 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 		gravityModifier = 0.005d;
 	}
 
-	public FlareEntity(EntityType<? extends BulletEntity> entityType, LivingEntity shooter, Level level) {
-		super(entityType, shooter, level);
+	public FlareEntity(EntityType<? extends BulletEntity> entityType, LivingEntity shooter, Level level, @Nullable ItemStack firedFromWeapon) {
+		super(entityType, shooter, level, firedFromWeapon);
 	}
 
 	@Override
 	protected void doWhileTicking() {
 		if (!isOnFire()) {
-			setSecondsOnFire(300);
+			igniteForSeconds(300);
 
-			entityData.set(USE_LEGACY_LIGHTING, !PluginHandler.isPluginActive("iwcompatbridge:lucent_plugin"));
+			entityData.set(USE_LEGACY_LIGHTING, !PluginHandler.isPluginActive("iwcompatbridge:ryoamiclights_plugin"));
 		}
 
 		double x = getX();
@@ -124,7 +125,7 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 	protected void doWhenHitEntity(Entity entity) {
 		super.doWhenHitEntity(entity);
 		hasHitEntity = true;
-		entity.setSecondsOnFire(6);
+		entity.igniteForSeconds(6);
 		aggroNearbyMinutemen();
 	}
 
@@ -191,9 +192,9 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 	}
 
 	@Override
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-		entityData.define(USE_LEGACY_LIGHTING, false);
+	protected void defineSynchedData(SynchedEntityData.Builder builder) {
+		super.defineSynchedData(builder);
+		builder.define(USE_LEGACY_LIGHTING, false);
 	}
 
 	@Override

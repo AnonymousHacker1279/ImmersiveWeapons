@@ -12,7 +12,7 @@ import tech.anonymoushacker1279.immersiveweapons.entity.monster.HansEntity;
 
 public class HansRenderer extends HumanoidMobRenderer<HansEntity, PlayerModel<HansEntity>> {
 
-	private static final ResourceLocation HANS_TEXTURE = new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/hans/hans.png");
+	private static final ResourceLocation HANS_TEXTURE = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/entity/hans/hans.png");
 
 	/**
 	 * Constructor for HansRenderer.

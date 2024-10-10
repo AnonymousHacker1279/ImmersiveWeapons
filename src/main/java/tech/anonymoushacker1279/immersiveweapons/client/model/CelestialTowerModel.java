@@ -12,7 +12,7 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 public class CelestialTowerModel<T extends Entity> extends EntityModel<T> {
 
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(
-			new ResourceLocation(ImmersiveWeapons.MOD_ID, "celestial_tower"),
+			ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "celestial_tower"),
 			"main");
 	private final ModelPart base;
 
@@ -40,15 +40,11 @@ public class CelestialTowerModel<T extends Entity> extends EntityModel<T> {
 	}
 
 	@Override
-	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw,
-	                      float headPitch) {
-
+	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 	}
 
 	@Override
-	public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight,
-	                           int packedOverlay, float red, float green, float blue, float alpha) {
-
+	public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
 		base.render(poseStack, buffer, packedLight, packedOverlay);
 	}
 }

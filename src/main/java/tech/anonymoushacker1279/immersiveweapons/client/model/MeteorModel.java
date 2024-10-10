@@ -12,7 +12,7 @@ import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MeteorEntity;
 public class MeteorModel<T extends MeteorEntity> extends EntityModel<T> {
 
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(
-			new ResourceLocation(ImmersiveWeapons.MOD_ID, "meteor"),
+			ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "meteor"),
 			"main");
 
 	private final ModelPart main;
@@ -39,7 +39,7 @@ public class MeteorModel<T extends MeteorEntity> extends EntityModel<T> {
 	}
 
 	@Override
-	public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-		main.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
+	public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
+		main.render(poseStack, buffer, packedLight, packedOverlay);
 	}
 }

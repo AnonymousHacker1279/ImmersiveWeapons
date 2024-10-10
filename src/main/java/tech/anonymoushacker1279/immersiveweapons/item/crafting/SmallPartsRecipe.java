@@ -1,14 +1,15 @@
 package tech.anonymoushacker1279.immersiveweapons.item.crafting;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.ExtraCodecs;
-import net.minecraft.world.Container;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
@@ -17,20 +18,21 @@ import tech.anonymoushacker1279.immersiveweapons.init.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public record SmallPartsRecipe(String group, Ingredient material, List<Item> craftables) implements Recipe<Container> {
+public record SmallPartsRecipe(String group, Ingredient material,
+                               List<Item> craftables) implements Recipe<RecipeInput> {
 
 	@Override
-	public boolean matches(Container container, Level level) {
+	public boolean matches(RecipeInput input, Level level) {
 		return false;
 	}
 
 	@Override
-	public ItemStack assemble(Container container, RegistryAccess registryAccess) {
+	public ItemStack assemble(RecipeInput input, Provider registries) {
 		return new ItemStack(Items.AIR);
 	}
 
 	@Override
-	public ItemStack getResultItem(RegistryAccess registryAccess) {
+	public ItemStack getResultItem(Provider provider) {
 		return new ItemStack(Items.AIR);
 	}
 
@@ -75,65 +77,64 @@ public record SmallPartsRecipe(String group, Ingredient material, List<Item> cra
 		T create(String group, Ingredient material, List<Item> craftables);
 	}
 
-	public static class Serializer<T extends SmallPartsRecipe> implements RecipeSerializer<T> {
+	public static class Serializer implements RecipeSerializer<SmallPartsRecipe> {
 
-		private final SmallPartsRecipe.Factory<T> factory;
-		private final Codec<T> codec;
+		private static final MapCodec<SmallPartsRecipe> CODEC = RecordCodecBuilder.mapCodec(
+				instance -> instance.group(
+						Codec.STRING.optionalFieldOf("group", "").forGetter(recipe -> recipe.group),
+						Ingredient.CODEC.fieldOf("material").forGetter(recipe -> recipe.material),
+						Codec.list(ResourceLocation.CODEC).fieldOf("craftables").forGetter(recipe -> {
+							List<ResourceLocation> craftables = new ArrayList<>(recipe.craftables.size());
+							for (Item item : recipe.craftables) {
+								craftables.add(BuiltInRegistries.ITEM.getKey(item));
+							}
 
-		public Serializer(SmallPartsRecipe.Factory<T> factory) {
-			this.factory = factory;
-			this.codec = RecordCodecBuilder.create(
-					instance -> instance.group(
-							ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(SmallPartsRecipe::group),
-							Ingredient.CODEC.fieldOf("material").forGetter(SmallPartsRecipe::material),
-							Codec.list(Codec.STRING).fieldOf("craftables").forGetter(recipe -> {
-								List<String> craftables = new ArrayList<>(recipe.craftables().size());
-								for (Item item : recipe.craftables()) {
-									craftables.add(BuiltInRegistries.ITEM.getKey(item).toString());
-								}
-								return craftables;
-							})
-					).apply(instance, (group, material, craftables) -> {
-						List<Item> craftables1 = new ArrayList<>(craftables.size());
-						for (String s : craftables) {
-							craftables1.add(BuiltInRegistries.ITEM.get(ResourceLocation.tryParse(s)));
-						}
-						return factory.create(group, material, craftables1);
-					})
-			);
-		}
+							return craftables;
+						})
+				).apply(instance, (group, material, craftables) -> {
+					List<Item> items = new ArrayList<>(craftables.size());
+					for (ResourceLocation id : craftables) {
+						items.add(BuiltInRegistries.ITEM.get(id));
+					}
 
-		@Override
-		public Codec<T> codec() {
-			return codec;
-		}
+					return new SmallPartsRecipe(group, material, items);
+				})
+		);
+
+		private static final StreamCodec<RegistryFriendlyByteBuf, SmallPartsRecipe> STREAM_CODEC = StreamCodec.of(
+				SmallPartsRecipe.Serializer::toNetwork, SmallPartsRecipe.Serializer::fromNetwork
+		);
 
 		@Override
-		public T fromNetwork(FriendlyByteBuf buffer) {
+		public MapCodec<SmallPartsRecipe> codec() {
+			return CODEC;
+		}
+
+		public StreamCodec<RegistryFriendlyByteBuf, SmallPartsRecipe> streamCodec() {
+			return STREAM_CODEC;
+		}
+
+		private static SmallPartsRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
 			String group = buffer.readUtf();
-			Ingredient material = Ingredient.fromNetwork(buffer);
-
-			String craft = buffer.readUtf();
-			String s = craft.replace("[", "").replace("]", "").replace(" ", "");
-			String[] s1 = s.split(",");
-
-			List<Item> craftables = new ArrayList<>(s1.length);
-			for (String s2 : s1) {
-				craftables.add(BuiltInRegistries.ITEM.get(ResourceLocation.tryParse(s2)));
+			Ingredient material = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
+			List<ResourceLocation> resourceLocations = ResourceLocation.STREAM_CODEC.apply(ByteBufCodecs.list()).decode(buffer);
+			List<Item> items = new ArrayList<>(resourceLocations.size());
+			for (ResourceLocation id : resourceLocations) {
+				items.add(BuiltInRegistries.ITEM.get(id));
 			}
 
-			return factory.create(group, material, craftables);
+			return new SmallPartsRecipe(group, material, items);
 		}
 
-		@Override
-		public void toNetwork(FriendlyByteBuf buffer, SmallPartsRecipe recipe) {
+		private static void toNetwork(RegistryFriendlyByteBuf buffer, SmallPartsRecipe recipe) {
 			buffer.writeUtf(recipe.group);
-			recipe.material.toNetwork(buffer);
-			List<ResourceLocation> craftables = new ArrayList<>(recipe.craftables.size());
+			Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.material);
+			List<ResourceLocation> resourceLocations = new ArrayList<>(recipe.craftables.size());
 			for (Item item : recipe.craftables) {
-				craftables.add(BuiltInRegistries.ITEM.getKey(item));
+				resourceLocations.add(BuiltInRegistries.ITEM.getKey(item));
 			}
-			buffer.writeUtf(craftables.toString());
+
+			ResourceLocation.STREAM_CODEC.apply(ByteBufCodecs.list()).encode(buffer, resourceLocations);
 		}
 	}
 }

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "shard",
+  "ingredients": [
+    {
+      "item": "minecraft:diamond"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "id": "immersiveweapons:diamond_shard"
+  }
+}

@@ -2,6 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.item.armor;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
@@ -10,20 +11,19 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.PacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.VentusArmorPayload;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
-public class VentusArmorItem extends BasicArmorItem {
+public class VentusArmorItem extends ArmorItem {
 
 	private int windShieldCooldown = 0;
 	private int windShieldDuration = 0;
 
-	public VentusArmorItem(ArmorMaterial material, Type armorType, Properties properties) {
+	public VentusArmorItem(Holder<ArmorMaterial> material, Type armorType, Properties properties) {
 		super(material, armorType, properties);
 	}
 
@@ -39,7 +39,7 @@ public class VentusArmorItem extends BasicArmorItem {
 						player.getPersistentData().putBoolean("VentusArmorEffectEnabled", !effectEnabled);
 
 						// Send packet to server
-						PacketDistributor.SERVER.noArg().send(new VentusArmorPayload(PacketTypes.CHANGE_STATE, !effectEnabled));
+						PacketDistributor.sendToServer(new VentusArmorPayload(PacketTypes.CHANGE_STATE, !effectEnabled));
 
 						if (effectEnabled) {
 							player.displayClientMessage(Component.translatable("immersiveweapons.armor_effects.disabled")
@@ -70,7 +70,7 @@ public class VentusArmorItem extends BasicArmorItem {
 					if (windShieldCooldown > 0) {
 						if (windShieldDuration > 0) {
 							handleProjectileReflection(level, player);
-							PacketDistributor.SERVER.noArg().send(new VentusArmorPayload(PacketTypes.HANDLE_PROJECTILE_REFLECTION, effectEnabled));
+							PacketDistributor.sendToServer(new VentusArmorPayload(PacketTypes.HANDLE_PROJECTILE_REFLECTION, effectEnabled));
 
 							windShieldDuration--;
 						}

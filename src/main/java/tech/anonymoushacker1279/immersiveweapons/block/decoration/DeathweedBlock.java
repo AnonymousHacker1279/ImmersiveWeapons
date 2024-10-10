@@ -1,6 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.block.decoration;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
@@ -9,16 +10,13 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.FlowerBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.PlantType;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
-import java.util.function.Supplier;
-
 public class DeathweedBlock extends FlowerBlock {
 
-	public DeathweedBlock(Supplier<MobEffect> mobEffect, int effectDuration, Properties properties) {
+	public DeathweedBlock(Holder<MobEffect> mobEffect, int effectDuration, Properties properties) {
 		super(mobEffect, effectDuration, properties);
 	}
 
@@ -28,20 +26,15 @@ public class DeathweedBlock extends FlowerBlock {
 	}
 
 	@Override
-	public PlantType getPlantType(BlockGetter level, BlockPos pos) {
-		return PlantType.DESERT;
-	}
-
-	@Override
 	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
 		if (entity instanceof LivingEntity livingEntity) {
 			if (!level.isClientSide) {
 				float chance = livingEntity.getRandom().nextFloat();
 				if (livingEntity.tickCount % 8 == 0 && chance <= 0.65f) {
-					livingEntity.hurt(IWDamageSources.DEATHWEED, 1.0f);
+					livingEntity.hurt(IWDamageSources.deathweed(level.registryAccess()), 1.0f);
 
 					if (chance <= 0.25f) {
-						livingEntity.addEffect(new MobEffectInstance(EffectRegistry.DAMAGE_VULNERABILITY_EFFECT.get(), 200));
+						livingEntity.addEffect(new MobEffectInstance(EffectRegistry.DAMAGE_VULNERABILITY_EFFECT, 200));
 					}
 				}
 			}

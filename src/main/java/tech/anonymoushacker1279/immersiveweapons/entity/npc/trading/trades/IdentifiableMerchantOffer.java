@@ -1,7 +1,10 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.npc.trading.trades;
 
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.trading.ItemCost;
 import net.minecraft.world.item.trading.MerchantOffer;
+
+import java.util.Optional;
 
 public class IdentifiableMerchantOffer extends MerchantOffer {
 
@@ -10,8 +13,8 @@ public class IdentifiableMerchantOffer extends MerchantOffer {
 	/**
 	 * Constructor for IdentifiableMerchantOffer. It allows an ID to be specified so that offers can be easily identified.
 	 */
-	public IdentifiableMerchantOffer(ItemStack pBaseCostA, ItemStack pResult, ItemStack newEnchantableItem, int pMaxUses, int pXp, float pPriceMultiplier) {
-		super(pBaseCostA, pResult, newEnchantableItem, pMaxUses, pXp, pPriceMultiplier);
+	public IdentifiableMerchantOffer(ItemCost baseCostA, Optional<ItemCost> costB, ItemStack result, int maxUses, int xp, float priceMultiplier) {
+		super(baseCostA, costB, result, maxUses, xp, priceMultiplier);
 	}
 
 	public void setId(String id) {

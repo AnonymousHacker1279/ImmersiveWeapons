@@ -11,7 +11,7 @@ import tech.anonymoushacker1279.immersiveweapons.menu.TeslaSynthesizerMenu;
 
 public class TeslaSynthesizerScreen extends AbstractContainerScreen<TeslaSynthesizerMenu> {
 
-	private static final ResourceLocation GUI_TEXTURE = new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/gui/container/tesla_synthesizer.png");
+	private static final ResourceLocation GUI_TEXTURE = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/gui/container/tesla_synthesizer.png");
 
 
 	public TeslaSynthesizerScreen(TeslaSynthesizerMenu container, Inventory playerInventory, Component title) {

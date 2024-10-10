@@ -1,0 +1,38 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "food",
+  "ingredients": [
+    {
+      "item": "immersiveweapons:chocolate_bar"
+    },
+    {
+      "item": "immersiveweapons:chocolate_bar"
+    },
+    {
+      "item": "immersiveweapons:chocolate_bar"
+    },
+    {
+      "item": "immersiveweapons:chocolate_bar"
+    },
+    {
+      "item": "immersiveweapons:chocolate_bar"
+    },
+    {
+      "item": "immersiveweapons:chocolate_bar"
+    },
+    {
+      "item": "immersiveweapons:chocolate_bar"
+    },
+    {
+      "item": "immersiveweapons:chocolate_bar"
+    },
+    {
+      "item": "minecraft:tnt"
+    }
+  ],
+  "result": {
+    "count": 8,
+    "id": "immersiveweapons:explosive_chocolate_bar"
+  }
+}

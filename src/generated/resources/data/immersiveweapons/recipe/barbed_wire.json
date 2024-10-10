@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "barbed_wire",
+  "key": {
+    "a": {
+      "tag": "c:ingots/iron"
+    },
+    "b": {
+      "tag": "c:nuggets/metal"
+    }
+  },
+  "pattern": [
+    "bab",
+    "aba",
+    "bab"
+  ],
+  "result": {
+    "count": 3,
+    "id": "immersiveweapons:barbed_wire"
+  }
+}

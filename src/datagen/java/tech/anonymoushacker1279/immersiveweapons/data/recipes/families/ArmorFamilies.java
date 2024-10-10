@@ -5,8 +5,8 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.*;
 import net.neoforged.neoforge.common.Tags;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.forge.ForgeItemTagGroups;
-import tech.anonymoushacker1279.immersiveweapons.data.tags.groups.immersiveweapons.IWItemTagGroups;
+import tech.anonymoushacker1279.immersiveweapons.data.groups.common.CommonItemTagGroups;
+import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
 import java.util.function.Supplier;
@@ -33,7 +33,7 @@ public record ArmorFamilies(TagKey<Item> material,
 	);
 
 	public static final ArmorFamilies COBALT = new ArmorFamilies(
-			ForgeItemTagGroups.COBALT_INGOTS,
+			CommonItemTagGroups.COBALT_INGOTS,
 			ItemRegistry.COBALT_HELMET,
 			ItemRegistry.COBALT_CHESTPLATE,
 			ItemRegistry.COBALT_LEGGINGS,

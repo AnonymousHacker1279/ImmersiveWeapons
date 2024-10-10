@@ -36,7 +36,6 @@ public class PanelBlock extends Block implements SimpleWaterloggedBlock {
 				.setValue(FACING, Direction.NORTH));
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext selectionContext) {
 		return switch (state.getValue(FACING)) {
@@ -61,7 +60,6 @@ public class PanelBlock extends Block implements SimpleWaterloggedBlock {
 				.setValue(FACING, context.getClickedFace());
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);

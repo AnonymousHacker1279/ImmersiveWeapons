@@ -1,0 +1,33 @@
+{
+  "parent": "immersiveweapons:cobalt_ingot",
+  "criteria": {
+    "hold": {
+      "conditions": {
+        "items": [
+          {
+            "items": "immersiveweapons:cobalt_pickaxe"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersiveweapons.cobalt_pickaxe.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "immersiveweapons:cobalt_pickaxe"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.cobalt_pickaxe.title"
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

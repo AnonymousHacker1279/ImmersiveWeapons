@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "padded_leather_armor",
+  "key": {
+    "a": {
+      "item": "minecraft:leather_chestplate"
+    },
+    "b": {
+      "tag": "minecraft:wool"
+    }
+  },
+  "pattern": [
+    "bbb",
+    "bab",
+    "bbb"
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:padded_leather_chestplate"
+  }
+}

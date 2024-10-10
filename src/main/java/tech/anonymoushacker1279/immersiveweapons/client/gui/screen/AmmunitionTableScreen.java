@@ -12,7 +12,7 @@ import tech.anonymoushacker1279.immersiveweapons.menu.AmmunitionTableMenu;
 
 public class AmmunitionTableScreen extends AbstractContainerScreen<AmmunitionTableMenu> {
 
-	private static final ResourceLocation GUI_TEXTURE = new ResourceLocation(ImmersiveWeapons.MOD_ID + ":textures/gui/container/ammunition_table.png");
+	private static final ResourceLocation GUI_TEXTURE = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/gui/container/ammunition_table.png");
 
 	public AmmunitionTableScreen(AmmunitionTableMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
 		super(pMenu, pPlayerInventory, pTitle);
@@ -47,6 +47,22 @@ public class AmmunitionTableScreen extends AbstractContainerScreen<AmmunitionTab
 				DisplayMode.NORMAL,
 				0,
 				15728880);
+
+		// Render the excess stack size below the result slot
+		int excess = menu.getExcessStackSize();
+		if (excess > 0) {
+			String excessStackSize = "+" + excess;
+			font.drawInBatch(excessStackSize,
+					leftPos + 145,
+					topPos + 55,
+					0x000000,
+					false,
+					guiGraphics.pose().last().pose(),
+					guiGraphics.bufferSource(),
+					DisplayMode.NORMAL,
+					0,
+					15728880);
+		}
 	}
 
 	@Override

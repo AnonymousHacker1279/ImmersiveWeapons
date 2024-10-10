@@ -4,7 +4,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
+import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
@@ -39,15 +39,20 @@ public class HandCannonItem extends SimplePistolItem {
 
 	@Override
 	public float getBaseFireVelocity() {
-		return CommonConfig.handCannonFireVelocity;
+		return (float) IWConfigs.SERVER.handCannonFireVelocity.getAsDouble();
 	}
 
 	@Override
-	public void prepareBulletForFire(ItemStack gun, BulletEntity bulletEntity, LivingEntity livingEntity, float powderModifier) {
-		bulletEntity.shootFromRotation(livingEntity, livingEntity.getXRot(), livingEntity.getYRot(),
+	public float getInaccuracy() {
+		return (float) IWConfigs.SERVER.handCannonFireInaccuracy.getAsDouble();
+	}
+
+	@Override
+	public void prepareBulletForFire(ItemStack gun, BulletEntity bulletEntity, LivingEntity shooter, float powderModifier) {
+		bulletEntity.shootFromRotation(shooter, shooter.getXRot(), shooter.getYRot(),
 				0.0F,
-				getFireVelocity(gun, powderModifier),
-				CommonConfig.handCannonFireInaccuracy);
+				getFireVelocity(gun, powderModifier, shooter),
+				getInaccuracy());
 	}
 
 	@Override

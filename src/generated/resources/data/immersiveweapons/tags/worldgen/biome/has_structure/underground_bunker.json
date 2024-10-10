@@ -1,6 +1,7 @@
 {
   "values": [
-    "#forge:is_plains",
+    "#c:is_plains",
+    "#c:is_snowy_plains",
     "#minecraft:is_forest"
   ]
 }

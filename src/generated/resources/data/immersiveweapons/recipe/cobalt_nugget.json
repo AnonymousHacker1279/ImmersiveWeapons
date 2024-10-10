@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "cobalt",
+  "ingredients": [
+    {
+      "tag": "c:ingots/cobalt"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "immersiveweapons:cobalt_nugget"
+  }
+}

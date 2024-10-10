@@ -1,6 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.blockentity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.entity.player.Player;
@@ -10,6 +11,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockEntityRegistry;
 
 public class DamageableBlockEntity extends BlockEntity {
@@ -31,29 +33,19 @@ public class DamageableBlockEntity extends BlockEntity {
 		super(BlockEntityRegistry.DAMAGEABLE_BLOCK_ENTITY.get(), blockPos, blockState);
 	}
 
-	/**
-	 * Load NBT data.
-	 *
-	 * @param nbt the <code>CompoundNBT</code> to load
-	 */
 	@Override
-	public void load(CompoundTag nbt) {
-		super.load(nbt);
+	public void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+		super.loadAdditional(tag, provider);
 
-		maxHealth = nbt.getInt("maxHealth");
-		health = nbt.getInt("health");
-		stages = nbt.getInt("stages");
-		currentStage = nbt.getInt("currentStage");
+		maxHealth = tag.getInt("maxHealth");
+		health = tag.getInt("health");
+		stages = tag.getInt("stages");
+		currentStage = tag.getInt("currentStage");
 	}
 
-	/**
-	 * Save NBT data.
-	 *
-	 * @param tag the <code>CompoundNBT</code> to save
-	 */
 	@Override
-	protected void saveAdditional(CompoundTag tag) {
-		super.saveAdditional(tag);
+	protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+		super.saveAdditional(tag, provider);
 
 		tag.putInt("maxHealth", maxHealth);
 		tag.putInt("health", health);
@@ -77,9 +69,9 @@ public class DamageableBlockEntity extends BlockEntity {
 	 * @return CompoundTag
 	 */
 	@Override
-	public CompoundTag getUpdateTag() {
+	public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
 		CompoundTag tag = new CompoundTag();
-		saveAdditional(tag);
+		saveAdditional(tag, provider);
 		return tag;
 	}
 
@@ -91,7 +83,7 @@ public class DamageableBlockEntity extends BlockEntity {
 	 * @param pos   the <code>BlockPos</code> the block is at
 	 */
 	public void takeDamage(BlockState state, Level level, BlockPos pos, IntegerProperty damageStage) {
-		if (level.isClientSide) {
+		if (level.isClientSide || !IWConfigs.SERVER.blockDecay.getAsBoolean()) {
 			return;
 		}
 

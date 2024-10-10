@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "alarms",
+  "key": {
+    "a": {
+      "tag": "c:ingots/metal"
+    },
+    "b": {
+      "item": "minecraft:note_block"
+    }
+  },
+  "pattern": [
+    "aba"
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:panic_alarm"
+  }
+}

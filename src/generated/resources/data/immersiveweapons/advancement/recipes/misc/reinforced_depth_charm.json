@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "depth_charm": {
+      "conditions": {
+        "items": [
+          {
+            "items": "immersiveweapons:depth_charm"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "immersiveweapons:reinforced_depth_charm"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "depth_charm"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:reinforced_depth_charm"
+    ]
+  }
+}

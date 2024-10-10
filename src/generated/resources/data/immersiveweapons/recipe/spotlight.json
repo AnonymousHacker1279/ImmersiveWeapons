@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "lights",
+  "key": {
+    "a": {
+      "item": "minecraft:redstone_lamp"
+    },
+    "b": {
+      "item": "minecraft:black_concrete"
+    },
+    "c": {
+      "tag": "c:ingots/metal"
+    }
+  },
+  "pattern": [
+    "bab",
+    "c c"
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:spotlight"
+  }
+}

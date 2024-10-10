@@ -1,11 +1,10 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.projectile;
 
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.level.Level;
@@ -34,11 +33,6 @@ public abstract class AdvancedThrowableItemProjectile extends ThrowableItemProje
 
 	public AdvancedThrowableItemProjectile(EntityType<? extends ThrowableItemProjectile> entityType, Level level, double x, double y, double z) {
 		super(entityType, x, y, z, level);
-	}
-
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket() {
-		return new ClientboundAddEntityPacket(this);
 	}
 
 	@Override
@@ -73,7 +67,7 @@ public abstract class AdvancedThrowableItemProjectile extends ThrowableItemProje
 
 			setDeltaMovement(x, y, z);
 
-			level().playLocalSound(this, SoundEvents.METAL_HIT, SoundSource.NEUTRAL, 1.0f, 0.6F / (GeneralUtilities.getRandomNumber(0.2f, 0.6f) + 0.8F));
+			level().playLocalSound(this, SoundEvents.METAL_HIT, SoundSource.NEUTRAL, 1.0f, 0.6f / (GeneralUtilities.getRandomNumber(0.2f, 0.6f) + 0.8f));
 
 			if (getDeltaMovement().lengthSqr() < 0.1d) {
 				stopMoving = true;
@@ -97,7 +91,7 @@ public abstract class AdvancedThrowableItemProjectile extends ThrowableItemProje
 			if (inBlockState.isAir()) {
 				if (stopMoving) {
 					// Keep falling until it hits the ground
-					setDeltaMovement(getDeltaMovement().x(), getDeltaMovement().y() - getGravity(), getDeltaMovement().z());
+					setDeltaMovement(getDeltaMovement().x(), getDeltaMovement().y() - getGravity() - 0.001f, getDeltaMovement().z());
 					inBlockState = level().getBlockState(blockPosition());
 				}
 			} else {
@@ -118,6 +112,31 @@ public abstract class AdvancedThrowableItemProjectile extends ThrowableItemProje
 		}
 	}
 
+	public void shootFromDirection(Direction direction, float velocity, float inaccuracy) {
+		float x;
+		float y;
+		float z;
+
+		switch (direction) {
+			case EAST, WEST -> {
+				x = 0;
+				y = direction.toYRot();
+				z = 0;
+			}
+			default -> {
+				x = direction.toYRot();
+				y = 0;
+				z = 0;
+			}
+		}
+
+		float newX = -Mth.sin(y * (float) (Math.PI / 180.0f)) * Mth.cos(x * (float) (Math.PI / 180.0f));
+		float newY = -Mth.sin((x + z) * (float) (Math.PI / 180.0f));
+		float newZ = Mth.cos(y * (float) (Math.PI / 180.0f)) * Mth.cos(x * (float) (Math.PI / 180.0f));
+
+		this.shoot(newX, newY, newZ, velocity, inaccuracy);
+	}
+
 	public static boolean canSee(LivingEntity livingEntity, Entity entity, boolean lookingAt) {
 		if (livingEntity.hasLineOfSight(entity)) {
 			if (!lookingAt) {
@@ -129,7 +148,7 @@ public abstract class AdvancedThrowableItemProjectile extends ThrowableItemProje
 
 			double dotProduct = lookVec.dot(toEntity);
 			double maxCosine = Math.cos(Math.toRadians(90));
-			double angleToGround = 180 - (Math.acos(lookVec.y) * (180.0 / Math.PI));
+			double angleToGround = 180 - (Math.acos(lookVec.y) * (180.0f / Math.PI));
 			return dotProduct > maxCosine || angleToGround < 30;
 		}
 

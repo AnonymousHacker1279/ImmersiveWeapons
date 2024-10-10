@@ -12,6 +12,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
@@ -39,7 +40,7 @@ public class VentusStaff extends Item {
 	@Override
 	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
 		ItemStack itemInHand = player.getItemInHand(hand);
-		List<Entity> entities = level.getEntities(player, player.getBoundingBox().inflate(3, 2, 3));
+		List<Entity> entities = level.getEntities(player, player.getBoundingBox().inflate(IWConfigs.SERVER.ventusStaffRadius.getAsInt()));
 
 		if (!entities.isEmpty()) {
 			for (Entity entity : entities) {
@@ -86,7 +87,7 @@ public class VentusStaff extends Item {
 
 		if (!player.isCreative()) {
 			player.getCooldowns().addCooldown(this, 100);
-			itemInHand.hurtAndBreak(1, player, (player1) -> player1.broadcastBreakEvent(EquipmentSlot.MAINHAND));
+			itemInHand.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
 		}
 	}
 

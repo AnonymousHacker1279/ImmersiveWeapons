@@ -1,0 +1,37 @@
+{
+  "parent": "immersiveweapons:ventus_staff_core",
+  "criteria": {
+    "hold": {
+      "conditions": {
+        "items": [
+          {
+            "items": "immersiveweapons:ventus_staff"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersiveweapons.ventus_staff.description"
+    },
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "immersiveweapons:ventus_staff"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.ventus_staff.title"
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ],
+  "rewards": {
+    "experience": 35
+  },
+  "sends_telemetry_event": true
+}

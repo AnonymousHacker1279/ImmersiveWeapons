@@ -1,31 +1,22 @@
 package tech.anonymoushacker1279.immersiveweapons.item.tool.tesla;
 
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SwordItem;
+import tech.anonymoushacker1279.immersiveweapons.item.materials.CustomTiers;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
 
 public class TeslaSword extends SwordItem implements HitEffectUtils {
 
-	/**
-	 * Constructor for TeslaSword.
-	 *
-	 * @param tier           the <code>Tier</code>
-	 * @param attackDamageIn attack damage
-	 * @param attackSpeedIn  attack speed
-	 * @param properties     the <code>Properties</code> for the item
-	 */
-	public TeslaSword(Tier tier, int attackDamageIn, float attackSpeedIn, Properties properties) {
-		super(tier, attackDamageIn, attackSpeedIn, properties);
+	public TeslaSword() {
+		super(CustomTiers.TESLA,
+				new Properties()
+						.attributes(createAttributes(
+								CustomTiers.TESLA, 3, -2.4f)
+						)
+		);
 	}
 
-	/**
-	 * Runs when an entity is hit.
-	 *
-	 * @param itemStack the <code>ItemStack</code> instance
-	 * @param target    the <code>LivingEntity</code> attacking
-	 * @param attacker  the <code>LivingEntity</code> being hit
-	 * @return boolean
-	 */
 	@Override
 	public boolean hurtEnemy(ItemStack itemStack, LivingEntity target, LivingEntity attacker) {
 		addTeslaEffects(target);

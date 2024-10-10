@@ -7,8 +7,8 @@ import tech.anonymoushacker1279.immersiveweapons.world.level.CustomBlockSetTypes
 
 public class WoodTypes {
 
-	public static final WoodType BURNED_OAK = WoodType.register(new WoodType(new ResourceLocation(ImmersiveWeapons.MOD_ID, "burned_oak").toString(), CustomBlockSetTypes.BURNED_OAK));
-	public static final WoodType STARDUST = WoodType.register(new WoodType(new ResourceLocation(ImmersiveWeapons.MOD_ID, "stardust").toString(), CustomBlockSetTypes.STARDUST));
+	public static final WoodType BURNED_OAK = WoodType.register(new WoodType(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "burned_oak").toString(), CustomBlockSetTypes.BURNED_OAK));
+	public static final WoodType STARDUST = WoodType.register(new WoodType(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "stardust").toString(), CustomBlockSetTypes.STARDUST));
 
 	public static void init() {
 	}

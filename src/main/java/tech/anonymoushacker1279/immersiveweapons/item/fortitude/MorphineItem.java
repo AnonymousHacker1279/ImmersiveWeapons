@@ -34,7 +34,7 @@ public class MorphineItem extends AbstractFortitudeItem {
 	public List<MobEffectInstance> effects() {
 		List<MobEffectInstance> effects = new ArrayList<>(2);
 
-		effects.add(new MobEffectInstance(EffectRegistry.MORPHINE_EFFECT.get(), 1800, 0, false, true));
+		effects.add(new MobEffectInstance(EffectRegistry.MORPHINE_EFFECT, 1800, 0, false, true));
 
 		return effects;
 	}

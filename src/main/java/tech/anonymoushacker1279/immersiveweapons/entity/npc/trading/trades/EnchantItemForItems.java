@@ -1,19 +1,20 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.npc.trading.trades;
 
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.HolderLookup.RegistryLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.*;
+import net.minecraft.world.item.trading.ItemCost;
 import net.minecraft.world.item.trading.MerchantOffer;
-import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
+import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
+import tech.anonymoushacker1279.immersiveweapons.config.ServerConfig;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
-import java.util.Map;
+import java.util.Optional;
 
 public class EnchantItemForItems implements VillagerTrades.ItemListing {
 	private final ItemStack enchantableItem;
@@ -34,50 +35,32 @@ public class EnchantItemForItems implements VillagerTrades.ItemListing {
 		// If there are any enchantments on the item, increase the enchantment level by 1
 		ItemStack newEnchantableItem = enchantableItem.copy();
 		if (newEnchantableItem.isEnchanted()) {
-			Map<Enchantment, Integer> enchantments = newEnchantableItem.getAllEnchantments();
+			ItemEnchantments enchantments = newEnchantableItem.getTagEnchantments();
 
-			// Remove the old enchantments
-			newEnchantableItem.removeTagKey("Enchantments");
+			enchantments.keySet().forEach(enchantmentHolder -> {
+				int maxLevel = ServerConfig.getEnchantCap(enchantmentHolder.getRegisteredName());
+				int currentLevel = enchantments.getLevel(enchantmentHolder);
 
-			enchantments.forEach((enchantment, level) -> {
-				// Levels above 255 cannot exist because the game clamps levels upon reading
-				if (level >= 255) {
-					GeneralUtilities.unrestrictedEnchant(newEnchantableItem, enchantment, 255);
-					return;
-				}
-
-				// Get the max level for this enchantment
-				ResourceLocation enchantmentLocation = BuiltInRegistries.ENCHANTMENT.getKey(enchantment);
-
-				if (enchantmentLocation == null) {
-					ImmersiveWeapons.LOGGER.error("Failed to locate enchantment {} in registry", enchantment);
-					return;
-				}
-
-				int maxLevel = CommonConfig.skygazerEnchantCaps.getOrDefault(enchantmentLocation.toString(), -1);
-
-				// If the level is -1, it's uncapped
 				if (maxLevel == -1) {
-					GeneralUtilities.unrestrictedEnchant(newEnchantableItem, enchantment, level + 1);
-				}
-				// Otherwise, cap it at the max level
-				else {
-					GeneralUtilities.unrestrictedEnchant(newEnchantableItem, enchantment, Math.min(level + 1, maxLevel));
+					EnchantmentHelper.updateEnchantments(newEnchantableItem, mutable -> mutable.upgrade(enchantmentHolder, currentLevel + 1));
+				} else {
+					EnchantmentHelper.updateEnchantments(newEnchantableItem, mutable -> mutable.upgrade(enchantmentHolder, Math.min(currentLevel + 1, maxLevel)));
 				}
 			});
 
 			// Add up the total levels of all enchantments
-			totalEnchantmentLevels = GeneralUtilities.getTotalEnchantmentLevels(newEnchantableItem);
+			RegistryLookup<Enchantment> enchantmentLookup = trader.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
+			totalEnchantmentLevels = GeneralUtilities.getTotalEnchantmentLevels(enchantmentLookup, newEnchantableItem);
 
 			// The item cost rises exponentially with higher enchantment levels
 			// It caps at 32
-			itemCost = Math.min(CommonConfig.skygazerMaxEnchantUpgradeCost, (int) Math.pow(1.3, ((float) totalEnchantmentLevels / 2)));
+			itemCost = Math.min(IWConfigs.SERVER.skygazerMaxEnchantUpgradeCost.getAsInt(), (int) Math.pow(1.3, ((float) totalEnchantmentLevels / 2)));
 
 			// Give XP based on the total levels of all enchantments
 			villagerXP = randomSource.nextIntBetweenInclusive(totalEnchantmentLevels / 2, totalEnchantmentLevels);
 		}
 
-		IdentifiableMerchantOffer offer = new IdentifiableMerchantOffer(enchantableItem, new ItemStack(tradingItem, itemCost), newEnchantableItem, maxUses, villagerXP, 0);
+		IdentifiableMerchantOffer offer = new IdentifiableMerchantOffer(new ItemCost(enchantableItem.getItem()), Optional.of(new ItemCost(tradingItem, itemCost)), newEnchantableItem, maxUses, villagerXP, 0);
 		offer.setId("enchant_item_for_items");
 		return offer;
 	}

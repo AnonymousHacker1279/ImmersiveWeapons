@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "tables",
+  "key": {
+    "a": {
+      "item": "minecraft:jungle_slab"
+    },
+    "b": {
+      "item": "minecraft:jungle_fence"
+    }
+  },
+  "pattern": [
+    "a",
+    "b"
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:jungle_table"
+  }
+}

@@ -6,7 +6,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -80,7 +80,6 @@ public class MortarBlock extends BasicOrientableBlock {
 	 * @param collisionContext the <code>CollisionContext</code> of the block
 	 * @return VoxelShape
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos,
 	                           CollisionContext collisionContext) {
@@ -88,22 +87,8 @@ public class MortarBlock extends BasicOrientableBlock {
 		return SHAPE;
 	}
 
-	/**
-	 * Runs when the block is activated.
-	 * Allows the block to respond to user interaction.
-	 *
-	 * @param state     the <code>BlockState</code> of the block
-	 * @param level     the <code>Level</code> the block is in
-	 * @param pos       the <code>BlockPos</code> the block is at
-	 * @param player    the <code>PlayerEntity</code> interacting with the block
-	 * @param hand      the <code>InteractionHand</code> the PlayerEntity used
-	 * @param hitResult the <code>BlockHitResult</code> of the interaction
-	 * @return ActionResultType
-	 */
-	@SuppressWarnings("deprecation")
 	@Override
-	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-
+	protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
 		if (!level.isClientSide && hand.equals(InteractionHand.MAIN_HAND)) {
 			ItemStack itemStack = player.getMainHandItem();
 			// If the mortar is loaded and the player is holding flint and steel, fire the shell
@@ -111,16 +96,19 @@ public class MortarBlock extends BasicOrientableBlock {
 				if (!player.isCreative()) {
 					itemStack.setDamageValue(itemStack.getDamageValue() - 1);
 				}
+
 				fire(level, pos, state, player);
-				return InteractionResult.CONSUME;
+				return ItemInteractionResult.CONSUME;
 
 				// If the mortar is not loaded and the player is holding a mortar shell	, load the mortar
 			} else if (!state.getValue(LOADED) && itemStack.getItem() == ItemRegistry.MORTAR_SHELL.get()) {
 				level.setBlock(pos, state.setValue(LOADED, true), 3);
+
 				if (!player.isCreative()) {
 					itemStack.shrink(1);
 				}
-				return InteractionResult.CONSUME;
+
+				return ItemInteractionResult.CONSUME;
 
 				// If the player is crouching, not holding anything, and the mortar is loaded, remove the shell
 				// and give it to the player
@@ -128,8 +116,10 @@ public class MortarBlock extends BasicOrientableBlock {
 				if (!player.isCreative()) {
 					player.getInventory().add(new ItemStack(ItemRegistry.MORTAR_SHELL.get()));
 				}
+
 				level.setBlock(pos, state.setValue(LOADED, false), 3);
-				return InteractionResult.SUCCESS;
+
+				return ItemInteractionResult.SUCCESS;
 
 				// If the player isn't holding anything, cycle through the rotations
 			} else if (itemStack.getItem() == Items.AIR) {
@@ -140,10 +130,10 @@ public class MortarBlock extends BasicOrientableBlock {
 				}
 			}
 
-			return InteractionResult.SUCCESS;
+			return ItemInteractionResult.SUCCESS;
 		}
 
-		return InteractionResult.CONSUME_PARTIAL;
+		return ItemInteractionResult.CONSUME_PARTIAL;
 	}
 
 	/**
@@ -156,7 +146,6 @@ public class MortarBlock extends BasicOrientableBlock {
 	 * @param fromPos  the <code>BlockPos</code> of the changing block
 	 * @param isMoving determines if the block is moving
 	 */
-	@SuppressWarnings("deprecation")
 	@Override
 	public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
 
@@ -175,13 +164,12 @@ public class MortarBlock extends BasicOrientableBlock {
 	 * @param state the <code>BlockState</code> of the block
 	 */
 	private void fire(Level level, BlockPos pos, BlockState state, @Nullable Player player) {
-		PacketDistributor.TRACKING_CHUNK.with(level.getChunkAt(pos))
-				.send(new LocalSoundPayload(pos, SoundEventRegistry.MORTAR_FIRE.get().getLocation(),
-						SoundSource.BLOCKS, 1.0f, 1.0f, true));
-
 		if (level instanceof ServerLevel serverLevel) {
 			serverLevel.sendParticles(ParticleTypes.LARGE_SMOKE, pos.getX(), pos.getY(), pos.getZ(),
 					3, 0.0f, 0.2f, 0.0f, 0.0f);
+
+			PacketDistributor.sendToPlayersTrackingChunk(serverLevel, level.getChunkAt(pos).getPos(), new LocalSoundPayload(pos, SoundEventRegistry.MORTAR_FIRE.get().getLocation(),
+					SoundSource.BLOCKS, 1.0f, 1.0f, true));
 		}
 
 		level.setBlock(pos, state.setValue(LOADED, false), 3);

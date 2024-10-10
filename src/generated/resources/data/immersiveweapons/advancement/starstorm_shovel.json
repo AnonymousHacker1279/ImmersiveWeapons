@@ -1,0 +1,36 @@
+{
+  "parent": "immersiveweapons:starstorm_ingot",
+  "criteria": {
+    "hold": {
+      "conditions": {
+        "items": [
+          {
+            "items": "immersiveweapons:starstorm_shovel"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersiveweapons.starstorm_shovel.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "immersiveweapons:starstorm_shovel"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.starstorm_shovel.title"
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ],
+  "rewards": {
+    "experience": 35
+  },
+  "sends_telemetry_event": true
+}

@@ -18,7 +18,7 @@ public class DeferredRegistryHandler {
 			.icon(() -> ItemRegistry.TESLA_SWORD.get().getDefaultInstance())
 			.title(Component.translatable("itemGroup.immersiveweapons.creative_tab"))
 			.withSearchBar(65)
-			.withBackgroundLocation(new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/gui/container/creative_inventory_tab.png"))
+			.backgroundTexture(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/gui/container/creative_inventory_tab.png"))
 			.build());
 
 	/**
@@ -68,9 +68,6 @@ public class DeferredRegistryHandler {
 		ImmersiveWeapons.LOGGER.info("Initializing deferred registry for potions");
 		PotionRegistry.POTIONS.register(modEventBus);
 
-		ImmersiveWeapons.LOGGER.info("Initializing deferred registry for enchantments");
-		EnchantmentRegistry.ENCHANTMENTS.register(modEventBus);
-
 		ImmersiveWeapons.LOGGER.info("Initializing deferred registry for number providers");
 		NumberProviderRegistry.NUMBER_PROVIDERS.register(modEventBus);
 
@@ -79,5 +76,14 @@ public class DeferredRegistryHandler {
 
 		ImmersiveWeapons.LOGGER.info("Initializing deferred registry for game events");
 		GameEventRegistry.GAME_EVENTS.register(modEventBus);
+
+		ImmersiveWeapons.LOGGER.info("Initializing deferred registry for data component types");
+		DataComponentTypeRegistry.DATA_COMPONENT_TYPES.register(modEventBus);
+
+		ImmersiveWeapons.LOGGER.info("Initializing deferred registry for armor materials");
+		ArmorMaterialRegistry.ARMOR_MATERIALS.register(modEventBus);
+
+		ImmersiveWeapons.LOGGER.info("Initializing deferred registry for attributes");
+		AttributeRegistry.ATTRIBUTES.register(modEventBus);
 	}
 }

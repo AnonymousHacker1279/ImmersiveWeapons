@@ -1,0 +1,20 @@
+{
+  "anvil_cost": 5,
+  "description": {
+    "translate": "enchantment.immersiveweapons.malevolent_gaze"
+  },
+  "max_cost": {
+    "base": 21,
+    "per_level_above_first": 25
+  },
+  "max_level": 3,
+  "min_cost": {
+    "base": 20,
+    "per_level_above_first": 20
+  },
+  "slots": [
+    "hand"
+  ],
+  "supported_items": "#immersiveweapons:weapons/cursed_sight_staffs",
+  "weight": 2
+}

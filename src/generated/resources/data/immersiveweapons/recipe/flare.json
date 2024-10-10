@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "firearm",
+  "key": {
+    "a": {
+      "tag": "c:nuggets/copper"
+    },
+    "b": {
+      "item": "minecraft:paper"
+    },
+    "c": {
+      "item": "immersiveweapons:smoke_powder"
+    }
+  },
+  "pattern": [
+    " a ",
+    " b ",
+    " c "
+  ],
+  "result": {
+    "count": 3,
+    "id": "immersiveweapons:flare"
+  }
+}

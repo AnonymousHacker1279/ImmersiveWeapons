@@ -51,8 +51,7 @@ public class FieldMedicEntity extends SoldierEntity {
 		goalSelector.addGoal(4, new MoveThroughVillageGoal(this, 1.0D, false, 6, () -> true));
 		goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0F));
 		goalSelector.addGoal(7, new RandomLookAroundGoal(this));
-		targetSelector.addGoal(1, new HurtByTargetWithPredicateGoal(this, (initialPredicate) ->
-				!(initialPredicate instanceof Player player) || !AccessoryItem.isAccessoryActive(player, getPeaceAccessory()), MinutemanEntity.class, IronGolem.class)
+		targetSelector.addGoal(1, new HurtByTargetWithPredicateGoal(this, this::canTargetEntityWhenHurt, MinutemanEntity.class, IronGolem.class)
 				.setAlertOthers());
 	}
 
@@ -99,8 +98,10 @@ public class FieldMedicEntity extends SoldierEntity {
 					AABB.unitCubeFromLowerCorner(position()).inflate(followDistance, 10.0, followDistance));
 
 			for (MinutemanEntity minutemanEntity : nearbyMinutemen) {
-				minutemanEntity.setTarget(livingEntity);
-				minutemanEntity.setPersistentAngerTarget(livingEntity.getUUID());
+				if (minutemanEntity.canTargetEntityWhenHurt(livingEntity)) {
+					minutemanEntity.setTarget(livingEntity);
+					minutemanEntity.setPersistentAngerTarget(livingEntity.getUUID());
+				}
 			}
 		}
 
@@ -123,7 +124,7 @@ public class FieldMedicEntity extends SoldierEntity {
 
 				// Hepatitis chance
 				if (randomNumber <= 0.3f) {
-					entity.hurt(IWDamageSources.USED_SYRINGE, 8.0F);
+					entity.hurt(IWDamageSources.usedSyringe(level().registryAccess()), 8.0F);
 				}
 			}
 		}
@@ -154,5 +155,23 @@ public class FieldMedicEntity extends SoldierEntity {
 	@Override
 	protected AccessoryItem getPeaceAccessory() {
 		return ItemRegistry.MEDAL_OF_HONOR.get();
+	}
+
+	@Override
+	protected AccessoryItem getAggroAccessory() {
+		return ItemRegistry.MEDAL_OF_DISHONOR.get();
+	}
+
+	@Override
+	protected boolean canTargetPlayer(LivingEntity entity) {
+		if (entity instanceof Player player) {
+			if (AccessoryItem.isAccessoryActive(player, getPeaceAccessory())) {
+				return false;
+			}
+
+			return !player.isCreative() && AccessoryItem.isAccessoryActive(player, getAggroAccessory());
+		}
+
+		return false;
 	}
 }

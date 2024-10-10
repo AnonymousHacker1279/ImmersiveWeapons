@@ -2,7 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.data.features;
 
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
@@ -21,10 +21,10 @@ public class IWConfiguredCarvers {
 	public static final ResourceKey<ConfiguredWorldCarver<?>> TILTROS_WASTES = createKey("tiltros_wastes");
 
 	private static ResourceKey<ConfiguredWorldCarver<?>> createKey(String name) {
-		return ResourceKey.create(Registries.CONFIGURED_CARVER, new ResourceLocation(ImmersiveWeapons.MOD_ID, name));
+		return ResourceKey.create(Registries.CONFIGURED_CARVER, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, name));
 	}
 
-	public static void bootstrap(BootstapContext<ConfiguredWorldCarver<?>> context) {
+	public static void bootstrap(BootstrapContext<ConfiguredWorldCarver<?>> context) {
 		HolderGetter<Block> blocks = context.lookup(Registries.BLOCK);
 
 		context.register(TRENCH, new ConfiguredWorldCarver<>(WorldCarver.CANYON,

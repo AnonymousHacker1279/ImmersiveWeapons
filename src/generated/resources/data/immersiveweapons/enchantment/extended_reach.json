@@ -1,0 +1,30 @@
+{
+  "anvil_cost": 3,
+  "description": {
+    "translate": "enchantment.immersiveweapons.extended_reach"
+  },
+  "effects": {
+    "minecraft:attributes": [
+      {
+        "amount": 0.5,
+        "attribute": "minecraft:player.entity_interaction_range",
+        "id": "immersiveweapons:enchantment.extended_reach",
+        "operation": "add_value"
+      }
+    ]
+  },
+  "max_cost": {
+    "base": 30,
+    "per_level_above_first": 0
+  },
+  "max_level": 1,
+  "min_cost": {
+    "base": 15,
+    "per_level_above_first": 0
+  },
+  "slots": [
+    "hand"
+  ],
+  "supported_items": "#immersiveweapons:weapons/pikes",
+  "weight": 2
+}

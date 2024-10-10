@@ -2,9 +2,10 @@ package tech.anonymoushacker1279.immersiveweapons.block.core;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -63,15 +64,16 @@ public abstract class DamageableBlock extends BasicOrientableBlock implements Si
 	}
 
 	@Override
-	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+	protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
 		// Handle repairs
 		if (hand == InteractionHand.MAIN_HAND) {
 			if (level.getBlockEntity(pos) instanceof DamageableBlockEntity damageable) {
 				boolean didRepair = damageable.repair(player.getItemInHand(hand), repairItem, state, level, pos, player, damageStage);
-				return didRepair ? InteractionResult.sidedSuccess(level.isClientSide) : InteractionResult.PASS;
+				return didRepair ? ItemInteractionResult.sidedSuccess(level.isClientSide) : ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 			}
 		}
-		return InteractionResult.PASS;
+
+		return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 	}
 
 	@Override

@@ -24,8 +24,8 @@ public class SkeletonMerchantEntity extends AbstractMerchantEntity {
 				player.awardStat(Stats.TALKED_TO_VILLAGER);
 			}
 
-			if (!getOffers().isEmpty()) {
-				if (!level().isClientSide) {
+			if (!level().isClientSide) {
+				if (!getOffers().isEmpty()) {
 					setTradingPlayer(player);
 					openTradingScreen(player, getDisplayName(), 1);
 				}

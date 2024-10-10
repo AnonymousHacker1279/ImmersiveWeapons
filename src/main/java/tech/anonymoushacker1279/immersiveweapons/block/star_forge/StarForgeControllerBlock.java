@@ -54,15 +54,11 @@ public class StarForgeControllerBlock extends BasicOrientableBlock implements En
 	}
 
 	@Override
-	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+	protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
 		if (level.isClientSide) {
-			return InteractionResult.SUCCESS;
+			return ItemInteractionResult.SUCCESS;
 		} else {
 			if (level.getBlockEntity(pos) instanceof StarForgeBlockEntity blockEntity && player instanceof ServerPlayer serverPlayer) {
-				if (blockEntity.isInUse()) {
-					return InteractionResult.FAIL;
-				}
-
 				if (player.isHolding(Items.LAVA_BUCKET)) {
 					blockEntity.raiseTemperature(150);
 
@@ -71,6 +67,10 @@ public class StarForgeControllerBlock extends BasicOrientableBlock implements En
 						player.getInventory().add(new ItemStack(Items.BUCKET));
 					}
 				} else {
+					if (blockEntity.isInUse()) {
+						return ItemInteractionResult.FAIL;
+					}
+
 					serverPlayer.openMenu(new SimpleMenuProvider((id, inventory, player1) -> new StarForgeMenu(id, inventory, blockEntity, blockEntity.containerData), CONTAINER_NAME), buffer -> {
 						List<ResourceLocation> recipeLocations = blockEntity.getAvailableRecipeIds();
 						buffer.writeVarInt(recipeLocations.size());
@@ -79,10 +79,11 @@ public class StarForgeControllerBlock extends BasicOrientableBlock implements En
 							buffer.writeResourceLocation(location);
 						}
 					});
+
 				}
 			}
 
-			return InteractionResult.CONSUME;
+			return ItemInteractionResult.CONSUME;
 		}
 	}
 

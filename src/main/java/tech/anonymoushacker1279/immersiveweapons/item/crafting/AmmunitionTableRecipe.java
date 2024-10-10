@@ -1,13 +1,13 @@
 package tech.anonymoushacker1279.immersiveweapons.item.crafting;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.RegistryAccess;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.tags.TagKey;
-import net.minecraft.util.ExtraCodecs;
-import net.minecraft.world.Container;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
@@ -17,36 +17,27 @@ import tech.anonymoushacker1279.immersiveweapons.init.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AmmunitionTableRecipe implements Recipe<Container> {
-
-	protected final List<MaterialGroup> materials;
-	protected final ItemStack result;
-	protected final String group;
-
-	public AmmunitionTableRecipe(String group, List<MaterialGroup> materialGroups, ItemStack itemStack) {
-		this.materials = materialGroups;
-		this.result = itemStack;
-		this.group = group;
-	}
+public record AmmunitionTableRecipe(String group, List<MaterialGroup> materials,
+                                    ItemStack result) implements Recipe<RecipeInput> {
 
 	@Override
-	public boolean matches(Container container, Level level) {
+	public boolean matches(RecipeInput input, Level level) {
 		return false;
 	}
 
 	@Override
-	public ItemStack assemble(Container container, RegistryAccess registryAccess) {
+	public ItemStack assemble(RecipeInput input, Provider registries) {
 		return result;
-	}
-
-	@Override
-	public ItemStack getResultItem(RegistryAccess registryAccess) {
-		return result.copy();
 	}
 
 	@Override
 	public boolean canCraftInDimensions(int width, int height) {
 		return false;
+	}
+
+	@Override
+	public ItemStack getResultItem(Provider provider) {
+		return result.copy();
 	}
 
 	public List<MaterialGroup> getMaterials() {
@@ -91,58 +82,59 @@ public class AmmunitionTableRecipe implements Recipe<Container> {
 		T create(String group, List<MaterialGroup> materials, ItemStack result);
 	}
 
-	public static class Serializer<T extends AmmunitionTableRecipe> implements RecipeSerializer<T> {
+	public static class Serializer implements RecipeSerializer<AmmunitionTableRecipe> {
 
-		private final AmmunitionTableRecipe.Factory<T> factory;
-		private final Codec<T> codec;
+		private static final MapCodec<AmmunitionTableRecipe> CODEC = RecordCodecBuilder.mapCodec(
+				instance -> instance.group(
+								Codec.STRING.optionalFieldOf("group", "").forGetter(recipe -> recipe.group),
+								Codec.list(MaterialGroup.CODEC).fieldOf("materials").forGetter(recipe -> recipe.materials),
+								ItemStack.SINGLE_ITEM_CODEC.fieldOf("result").forGetter(recipe -> recipe.result)
+						)
+						.apply(instance, AmmunitionTableRecipe::new)
+		);
 
-		public Serializer(AmmunitionTableRecipe.Factory<T> factory) {
-			this.factory = factory;
-			this.codec = RecordCodecBuilder.create(
-					instance -> instance.group(
-									ExtraCodecs.strictOptionalField(Codec.STRING, "group", "").forGetter(recipe -> recipe.group),
-									Codec.list(MaterialGroup.getCodec()).fieldOf("materials").forGetter(recipe -> recipe.materials),
-									ItemStack.SINGLE_ITEM_CODEC.fieldOf("result").forGetter(recipe -> recipe.result)
-							)
-							.apply(instance, factory::create)
-			);
+		private static final StreamCodec<RegistryFriendlyByteBuf, AmmunitionTableRecipe> STREAM_CODEC = StreamCodec.of(
+				AmmunitionTableRecipe.Serializer::toNetwork, AmmunitionTableRecipe.Serializer::fromNetwork
+		);
+
+		@Override
+		public MapCodec<AmmunitionTableRecipe> codec() {
+			return CODEC;
 		}
 
 		@Override
-		public Codec<T> codec() {
-			return codec;
+		public StreamCodec<RegistryFriendlyByteBuf, AmmunitionTableRecipe> streamCodec() {
+			return STREAM_CODEC;
 		}
 
-		@Override
-		public T fromNetwork(FriendlyByteBuf buffer) {
+		private static AmmunitionTableRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
 			String group = buffer.readUtf();
 
 			List<MaterialGroup> materials = new ArrayList<>(5);
 			int materialCount = buffer.readInt();
 			for (int i = 0; i < materialCount; i++) {
-				Ingredient ingredient = Ingredient.fromNetwork(buffer);
+				Ingredient ingredient = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
 				float density = buffer.readFloat();
 				float baseMultiplier = buffer.readFloat();
 
 				materials.add(new MaterialGroup(ingredient, density, baseMultiplier));
 			}
 
-			ItemStack result = buffer.readItem();
+			ItemStack result = ItemStack.STREAM_CODEC.decode(buffer);
 
-			return factory.create(group, materials, result);
+			return new AmmunitionTableRecipe(group, materials, result);
 		}
 
-		@Override
-		public void toNetwork(FriendlyByteBuf buffer, AmmunitionTableRecipe recipe) {
+		private static void toNetwork(RegistryFriendlyByteBuf buffer, AmmunitionTableRecipe recipe) {
 			buffer.writeUtf(recipe.group);
 			buffer.writeInt(recipe.materials.size());
 			recipe.materials.forEach(materialGroup -> {
-				materialGroup.getIngredient().toNetwork(buffer);
+				Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, materialGroup.getIngredient());
 				buffer.writeFloat(materialGroup.getDensity());
 				buffer.writeFloat(materialGroup.getBaseMultiplier());
 			});
 
-			buffer.writeItem(recipe.result);
+			ItemStack.STREAM_CODEC.encode(buffer, recipe.result);
 		}
 	}
 
@@ -183,10 +175,6 @@ public class AmmunitionTableRecipe implements Recipe<Container> {
 
 		public float getBaseMultiplier() {
 			return baseMultiplier;
-		}
-
-		public static Codec<MaterialGroup> getCodec() {
-			return CODEC;
 		}
 	}
 }

@@ -11,9 +11,9 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import javax.annotation.Nullable;
 
 public class StarWolfRenderer extends WolfRenderer {
-	private static final ResourceLocation TEXTURE_LOCATION = new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/star_wolf/star_wolf.png");
-	private static final ResourceLocation TEXTURE_LOCATION_TAMED = new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/star_wolf/star_wolf_tame.png");
-	private static final ResourceLocation TEXTURE_LOCATION_ANGRY = new ResourceLocation(ImmersiveWeapons.MOD_ID, "textures/entity/star_wolf/star_wolf_angry.png");
+	private static final ResourceLocation TEXTURE_LOCATION = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/entity/star_wolf/star_wolf.png");
+	private static final ResourceLocation TEXTURE_LOCATION_TAMED = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/entity/star_wolf/star_wolf_tame.png");
+	private static final ResourceLocation TEXTURE_LOCATION_ANGRY = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/entity/star_wolf/star_wolf_angry.png");
 
 	public StarWolfRenderer(Context context) {
 		super(context);

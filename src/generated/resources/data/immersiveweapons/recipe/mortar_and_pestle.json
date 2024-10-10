@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "mortar_and_pestle",
+  "key": {
+    "a": {
+      "item": "minecraft:bowl"
+    },
+    "b": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    " b ",
+    "a  "
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:mortar_and_pestle"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "rods",
+  "key": {
+    "a": {
+      "item": "minecraft:obsidian"
+    }
+  },
+  "pattern": [
+    " a ",
+    " a "
+  ],
+  "result": {
+    "count": 16,
+    "id": "immersiveweapons:obsidian_rod"
+  }
+}

@@ -33,7 +33,7 @@ public class ChocolateBarItem extends Item {
 	@Override
 	public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
 		if (isExplosive) {
-			level.explode(null, IWDamageSources.EXPLOSIVE_CHOCOLATE_BAR, null, entity.position().x, entity.position().y,
+			level.explode(null, IWDamageSources.explosiveChocolateBar(level.registryAccess()), null, entity.position().x, entity.position().y,
 					entity.position().z, 2.0F, false, ExplosionInteraction.NONE);
 		}
 

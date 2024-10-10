@@ -11,6 +11,7 @@ import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
 import tech.anonymoushacker1279.immersiveweapons.data.damage_types.DamageTypesGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.dimensions.DimensionGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.dimensions.DimensionTypeGenerator;
+import tech.anonymoushacker1279.immersiveweapons.data.enchantments.EnchantmentsGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.features.*;
 import tech.anonymoushacker1279.immersiveweapons.data.modifiers.IWBiomeModifiers;
 import tech.anonymoushacker1279.immersiveweapons.data.structures.*;
@@ -32,7 +33,9 @@ public class DatapackRegistriesGenerator extends DatapackBuiltinEntriesProvider 
 			.add(Registries.PROCESSOR_LIST, StructureProcessorListGenerator::bootstrap)
 			.add(Registries.TEMPLATE_POOL, StructureTemplatePoolGenerator::bootstrap)
 			.add(Registries.STRUCTURE, StructureGenerator::bootstrap)
-			.add(Registries.STRUCTURE_SET, StructureSetGenerator::bootstrap);
+			.add(Registries.STRUCTURE_SET, StructureSetGenerator::bootstrap)
+			.add(Registries.ENCHANTMENT, EnchantmentsGenerator::bootstrap)
+			.add(Registries.JUKEBOX_SONG, IWJukeboxSongs::bootstrap);
 
 	public DatapackRegistriesGenerator(PackOutput output, CompletableFuture<Provider> registries) {
 		super(output, registries, BUILDER, Collections.singleton(ImmersiveWeapons.MOD_ID));

@@ -1,9 +1,10 @@
 package tech.anonymoushacker1279.immersiveweapons.item.gun;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.model.HumanoidModel.ArmPose;
-import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.core.Holder.Reference;
+import net.minecraft.core.HolderGetter;
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -16,15 +17,14 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
-import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.client.model.CustomArmPoses;
-import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
+import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
+import tech.anonymoushacker1279.immersiveweapons.data.IWEnchantments;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
 import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryManager;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
@@ -35,15 +35,17 @@ import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.GunScopePayload;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
-import java.util.function.Consumer;
+import java.util.Optional;
 import java.util.function.Predicate;
 
-public abstract class AbstractGunItem extends Item implements Vanishable {
+public abstract class AbstractGunItem extends Item {
 
-	protected static final Predicate<ItemStack> MUSKET_BALLS = (stack) -> stack.is(ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID, "projectiles/musket_balls")));
-	protected static final Predicate<ItemStack> FLARES = (stack) -> stack.is(ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID, "projectiles/flares")));
-	protected static final Predicate<ItemStack> CANNONBALLS = (stack) -> stack.is(ItemTags.create(new ResourceLocation(ImmersiveWeapons.MOD_ID, "projectiles/cannonballs")));
+	protected static final Predicate<ItemStack> MUSKET_BALLS = (stack) -> stack.is(ItemTags.create(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "projectiles/musket_balls")));
+	protected static final Predicate<ItemStack> FLARES = (stack) -> stack.is(ItemTags.create(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "projectiles/flares")));
+	protected static final Predicate<ItemStack> CANNONBALLS = (stack) -> stack.is(ItemTags.create(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "projectiles/cannonballs")));
 	protected static final Predicate<ItemStack> FLAMMABLE_POWDERS = (stack) -> isPowder(stack.getItem());
+
+	final DataComponentType<Float> DENSITY_MODIFIER = DataComponentTypeRegistry.DENSITY_MODIFIER.get();
 
 	/**
 	 * Constructor for AbstractGunItem.
@@ -91,14 +93,14 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 
 					handleAmmoStack(gun, ammo, bulletsToFire, player);
 					handlePowderStack(powder, player);
+
 					if (!isCreative) {
-						gun.hurtAndBreak(5, player, (entity) ->
-								entity.broadcastBreakEvent(entity.getUsedItemHand()));
+						gun.hurtAndBreak(5, player, EquipmentSlot.MAINHAND);
 					}
 				}
 			}
 
-			if (getUseDuration(gun) < 0) {
+			if (getUseDuration(gun, player) < 0) {
 				return;
 			}
 
@@ -123,11 +125,11 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 						BulletEntity bulletEntity;
 
 						if (MUSKET_BALLS.test(ammo)) {
-							bulletEntity = bulletItem.createBullet(level, player);
+							bulletEntity = bulletItem.createBullet(level, player, gun);
 						} else if (FLARES.test(ammo)) {
-							bulletEntity = bulletItem.createFlare(level, player);
+							bulletEntity = bulletItem.createFlare(level, player, gun);
 						} else {
-							bulletEntity = bulletItem.createCannonball(level, player);
+							bulletEntity = bulletItem.createCannonball(level, player, gun);
 						}
 
 						setupFire(player, bulletEntity, gun, ammo, powderType);
@@ -147,11 +149,17 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 				handlePowderStack(powder, player);
 
 				if (!player.isCreative()) {
+					HolderGetter<Enchantment> enchantmentGetter = player.registryAccess().lookup(Registries.ENCHANTMENT).orElseThrow();
+					Optional<Reference<Enchantment>> rapidFire = enchantmentGetter.get(IWEnchantments.RAPID_FIRE);
+
 					// Reduce cooldown in certain conditions
 					float reductionFactor = (float) AccessoryManager.collectEffects(EffectType.FIREARM_RELOAD_SPEED, player);
 
-					int rapidFireLevel = gun.getEnchantmentLevel(EnchantmentRegistry.RAPID_FIRE.get());
-					reductionFactor += (0.05f * rapidFireLevel);
+					int rapidFireLevel;
+					if (rapidFire.isPresent()) {
+						rapidFireLevel = gun.getEnchantmentLevel(rapidFire.get());
+						reductionFactor += (0.05f * rapidFireLevel);
+					}
 
 					// Calculate the cooldown
 					int cooldown = (int) (getCooldown() * (1f - reductionFactor));
@@ -165,7 +173,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	public ItemStack findAmmo(ItemStack gun, LivingEntity livingEntity) {
 		if (gun.getItem() instanceof AbstractGunItem gunItem) {
 			if (livingEntity instanceof Player player) {
-				Predicate<ItemStack> ammoPredicate = (gunItem).getInventoryAmmoPredicate();
+				Predicate<ItemStack> ammoPredicate = gunItem.getInventoryAmmoPredicate();
 				ItemStack heldAmmo = AbstractGunItem.getHeldPredicate(player, ammoPredicate);
 				if (!heldAmmo.isEmpty()) {
 					return heldAmmo;
@@ -221,17 +229,10 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	}
 
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level level, Player player,
-	                                              InteractionHand hand) {
+	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
 
 		ItemStack itemInHand = player.getItemInHand(hand);
 		boolean hasAmmo = !findAmmo(itemInHand, player).isEmpty();
-
-		InteractionResultHolder<ItemStack> resultHolder = EventHooks.onArrowNock(itemInHand, level, player,
-				hand, hasAmmo);
-		if (resultHolder != null) {
-			return resultHolder;
-		}
 
 		if (!player.isCreative() && !hasAmmo) {
 			return InteractionResultHolder.fail(itemInHand);
@@ -246,8 +247,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 		super.onUseTick(level, livingEntity, stack, remainingUseDuration);
 
 		if (!level.isClientSide && canScope() && livingEntity instanceof ServerPlayer serverPlayer) {
-			PacketDistributor.PLAYER.with(serverPlayer)
-					.send(new GunScopePayload(GunData.playerFOV, 15.0d, GunData.scopeScale));
+			PacketDistributor.sendToPlayer(serverPlayer, new GunScopePayload(GunData.playerFOV, 15.0d, GunData.scopeScale));
 		}
 	}
 
@@ -263,8 +263,7 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 
 	@Override
 	public boolean onDroppedByPlayer(ItemStack item, Player player) {
-		PacketDistributor.PLAYER.with((ServerPlayer) player)
-				.send(new GunScopePayload(GunData.playerFOV, -1, 0.5f));
+		PacketDistributor.sendToPlayer((ServerPlayer) player, new GunScopePayload(GunData.playerFOV, -1, 0.5f));
 
 		return super.onDroppedByPlayer(item, player);
 	}
@@ -272,36 +271,6 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 	@Override
 	public UseAnim getUseAnimation(ItemStack pStack) {
 		return UseAnim.CUSTOM;
-	}
-
-	@Override
-	public void initializeClient(Consumer<IClientItemExtensions> consumer) {
-		// Handle arm posing for holding the weapons
-		consumer.accept(new IClientItemExtensions() {
-
-			@Override
-			public ArmPose getArmPose(LivingEntity entity, InteractionHand hand, ItemStack itemStack) {
-				return CustomArmPoses.getFirearmPose(entity, hand, itemStack);
-			}
-
-			@Override
-			public boolean applyForgeHandTransform(PoseStack poseStack, LocalPlayer player, HumanoidArm arm,
-			                                       ItemStack itemInHand, float partialTick, float equipProcess, float swingProcess) {
-
-				// Don't use custom transform until it is fully equipped
-				if (equipProcess < 1.0f && !player.isUsingItem()) {
-					return false;
-				}
-
-				applyItemArmTransform(poseStack, arm);
-				return true;
-			}
-
-			private void applyItemArmTransform(PoseStack poseStack, HumanoidArm arm) {
-				int i = arm == HumanoidArm.RIGHT ? 1 : -1;
-				poseStack.translate(i * 0.56F, -0.52F, -0.72F);
-			}
-		});
 	}
 
 	/**
@@ -350,14 +319,8 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 		return Items.GUNPOWDER;
 	}
 
-	/**
-	 * Get the use duration.
-	 *
-	 * @param stack the <code>ItemStack</code> to check
-	 * @return int
-	 */
 	@Override
-	public int getUseDuration(ItemStack stack) {
+	public int getUseDuration(ItemStack pStack, LivingEntity livingEntity) {
 		return Integer.MAX_VALUE;
 	}
 
@@ -414,18 +377,24 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 		return false;
 	}
 
-	public float getFireVelocity(ItemStack gun, float powderModifier) {
-		int velocityLevel = gun.getEnchantmentLevel(EnchantmentRegistry.VELOCITY.get());
+	public float getFireVelocity(ItemStack gun, float powderModifier, LivingEntity shooter) {
+		HolderGetter<Enchantment> enchantmentGetter = shooter.registryAccess().lookup(Registries.ENCHANTMENT).orElseThrow();
+		Optional<Reference<Enchantment>> velocity = enchantmentGetter.get(IWEnchantments.VELOCITY);
+
+		int velocityLevel = 0;
+		if (velocity.isPresent()) {
+			velocityLevel = gun.getEnchantmentLevel(velocity.get());
+		}
 		// Each level increases velocity by 10%
 		return getBaseFireVelocity() * (1.0f + (0.1f * velocityLevel)) * (1.0f + powderModifier);
 	}
 
 	public float getBaseFireVelocity() {
-		return CommonConfig.flintlockPistolFireVelocity;
+		return (float) IWConfigs.SERVER.flintlockPistolFireVelocity.getAsDouble();
 	}
 
 	public float getInaccuracy() {
-		return CommonConfig.flintlockPistolFireInaccuracy;
+		return (float) IWConfigs.SERVER.flintlockPistolFireInaccuracy.getAsDouble();
 	}
 
 	public int getKnockbackLevel() {
@@ -452,33 +421,34 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 		}
 
 		// Roll for random crits
-		if (shooter.getRandom().nextFloat() <= CommonConfig.gunCritChance) {
+		if (shooter.getRandom().nextFloat() <= IWConfigs.SERVER.gunCritChance.getAsDouble()) {
 			bullet.setCritArrow(true);
 		}
 
 		// Handle enchants
-		int enchantmentLevel = gun.getEnchantmentLevel(EnchantmentRegistry.FIREPOWER.get());
-		if (enchantmentLevel > 0) {
-			bullet.setBaseDamage(bullet.getBaseDamage() + (double) enchantmentLevel * 0.5D + 0.5D);
+		HolderGetter<Enchantment> enchantmentGetter = shooter.registryAccess().lookup(Registries.ENCHANTMENT).orElseThrow();
+		Optional<Reference<Enchantment>> firepower = enchantmentGetter.get(IWEnchantments.FIREPOWER);
+		Optional<Reference<Enchantment>> scorchShot = enchantmentGetter.get(IWEnchantments.SCORCH_SHOT);
+
+		int enchantmentLevel;
+		if (firepower.isPresent()) {
+			enchantmentLevel = gun.getEnchantmentLevel(firepower.get());
+			if (enchantmentLevel > 0) {
+				bullet.setBaseDamage(bullet.getBaseDamage() + (double) enchantmentLevel * 0.5D + 0.5D);
+			}
 		}
 
-		enchantmentLevel = gun.getEnchantmentLevel(EnchantmentRegistry.IMPACT.get());
-		int kb = getKnockbackLevel() + bullet.getKnockback();
-		if (enchantmentLevel > 0) {
-			kb += enchantmentLevel;
-		}
-		bullet.setKnockback(kb);
-
-		enchantmentLevel = gun.getEnchantmentLevel(EnchantmentRegistry.SCORCH_SHOT.get());
-		if (enchantmentLevel > 0) {
-			bullet.setSecondsOnFire(enchantmentLevel * 100);
+		if (scorchShot.isPresent()) {
+			enchantmentLevel = gun.getEnchantmentLevel(scorchShot.get());
+			if (enchantmentLevel > 0) {
+				bullet.igniteForSeconds(enchantmentLevel * 100);
+			}
 		}
 
 		// Handle bullet density modifiers
 		if (ammo != null) {
-			if (ammo.getTag() != null && ammo.getTag().contains("densityModifier")) {
-				float densityModifier = ammo.getTag().getFloat("densityModifier");
-
+			float densityModifier = ammo.getOrDefault(DENSITY_MODIFIER, 0f);
+			if (densityModifier > 0) {
 				// A full 100% value is +20% damage
 				bullet.setBaseDamage(bullet.getBaseDamage() + (bullet.getBaseDamage() * (densityModifier * 0.2f)));
 
@@ -493,17 +463,16 @@ public abstract class AbstractGunItem extends Item implements Vanishable {
 		}
 
 		int weaponDamage = powderType.getWeaponDamageAmount();
-		gun.hurtAndBreak(weaponDamage, shooter, (entity) ->
-				entity.broadcastBreakEvent(shooter.getUsedItemHand()));
+		gun.hurtAndBreak(weaponDamage, shooter, EquipmentSlot.MAINHAND);
 
 		prepareBulletForFire(gun, bullet, shooter, powderVelocityModifier);
 		handleMuzzleFlash(shooter.level(), shooter, powderType);
 	}
 
-	public void prepareBulletForFire(ItemStack gun, BulletEntity bulletEntity, LivingEntity livingEntity, float powderModifier) {
-		bulletEntity.shootFromRotation(livingEntity, livingEntity.getXRot(), livingEntity.getYRot(),
+	public void prepareBulletForFire(ItemStack gun, BulletEntity bulletEntity, LivingEntity shooter, float powderModifier) {
+		bulletEntity.shootFromRotation(shooter, shooter.getXRot(), shooter.getYRot(),
 				0.0F,
-				getFireVelocity(gun, powderModifier),
+				getFireVelocity(gun, powderModifier, shooter),
 				getInaccuracy());
 	}
 

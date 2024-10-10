@@ -1,0 +1,45 @@
+{
+  "parent": "immersiveweapons:small_parts_table",
+  "criteria": {
+    "hold": {
+      "conditions": {
+        "items": [
+          {
+            "items": "immersiveweapons:musket"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "hold1": {
+      "conditions": {
+        "items": [
+          {
+            "items": "immersiveweapons:musket_scope"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersiveweapons.musket.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "immersiveweapons:musket"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.musket.title"
+    }
+  },
+  "requirements": [
+    [
+      "hold",
+      "hold1"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

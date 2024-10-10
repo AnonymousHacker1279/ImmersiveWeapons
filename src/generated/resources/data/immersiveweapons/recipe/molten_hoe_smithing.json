@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "tag": "immersiveweapons:ingots/molten"
+  },
+  "base": {
+    "item": "minecraft:netherite_hoe"
+  },
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:molten_hoe"
+  },
+  "template": {
+    "item": "immersiveweapons:molten_smithing_template"
+  }
+}

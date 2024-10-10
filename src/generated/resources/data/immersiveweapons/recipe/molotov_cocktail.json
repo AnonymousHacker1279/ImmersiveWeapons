@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "molotov_cocktail",
+  "key": {
+    "a": {
+      "tag": "c:strings"
+    },
+    "b": {
+      "item": "immersiveweapons:bottle_of_alcohol"
+    }
+  },
+  "pattern": [
+    " a ",
+    " b "
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:molotov_cocktail"
+  }
+}

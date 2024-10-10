@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "firearm",
+  "key": {
+    "a": {
+      "item": "immersiveweapons:wooden_pistol_handle"
+    },
+    "b": {
+      "item": "immersiveweapons:flintlock_assembly"
+    },
+    "c": {
+      "item": "immersiveweapons:trigger_assembly"
+    },
+    "d": {
+      "item": "immersiveweapons:short_iron_barrel"
+    },
+    "e": {
+      "item": "minecraft:string"
+    }
+  },
+  "pattern": [
+    " e ",
+    "abd",
+    " c "
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:hand_cannon"
+  }
+}

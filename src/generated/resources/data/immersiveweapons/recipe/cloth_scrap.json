@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "cloth_scrap",
+  "key": {
+    "a": {
+      "tag": "c:strings"
+    },
+    "b": {
+      "item": "minecraft:short_grass"
+    }
+  },
+  "pattern": [
+    "bbb",
+    "bab",
+    "bbb"
+  ],
+  "result": {
+    "count": 4,
+    "id": "immersiveweapons:cloth_scrap"
+  }
+}

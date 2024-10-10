@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "count": 1,
-  "ingredient": {
-    "item": "immersiveweapons:hardened_mud"
-  },
-  "result": "immersiveweapons:hardened_mud_stairs"
-}

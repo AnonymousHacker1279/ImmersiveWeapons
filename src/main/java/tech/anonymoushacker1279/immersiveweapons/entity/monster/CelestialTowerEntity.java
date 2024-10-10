@@ -5,8 +5,7 @@ import net.minecraft.core.Vec3i;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerBossEvent;
-import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.level.*;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.BossEvent.BossBarColor;
 import net.minecraft.world.BossEvent.BossBarOverlay;
@@ -21,12 +20,12 @@ import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.*;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.block.decoration.CelestialLanternBlock;
-import tech.anonymoushacker1279.immersiveweapons.config.CommonConfig;
+import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.entity.*;
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.*;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
+import tech.anonymoushacker1279.immersiveweapons.world.level.saveddata.IWSavedData;
 
 import java.util.*;
 
@@ -80,17 +79,17 @@ public class CelestialTowerEntity extends Monster implements AttackerTracker, Gr
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose pPose, EntityDimensions pSize) {
-		return 9F;
+	protected EntityDimensions getDefaultDimensions(Pose pose) {
+		EntityDimensions dimensions = super.getDefaultDimensions(pose);
+		return dimensions.withEyeHeight(9);
 	}
 
 	@Nullable
 	@Override
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty,
-	                                    MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData,
-	                                    @Nullable CompoundTag pDataTag) {
+	                                    MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData) {
 
-		pSpawnData = super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
+		pSpawnData = super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData);
 
 		teleportTo(getX(), getY() + 2, getZ());
 		ALL_TOWERS.add(this);
@@ -241,10 +240,15 @@ public class CelestialTowerEntity extends Monster implements AttackerTracker, Gr
 
 		int nearbyLanterns = 0;
 
-		for (BlockPos lanternPos : CelestialLanternBlock.ALL_TILTROS_LANTERNS) {
-			if (nearbyLanterns < 3) {
-				if (lanternPos.distManhattan(new Vec3i(blockPosition().getX(), blockPosition().getY(), blockPosition().getZ())) < CommonConfig.celestialTowerSpawnCheckingRadius) {
+
+		if (pLevel instanceof ServerLevel serverLevel) {
+			for (BlockPos lanternPos : IWSavedData.getData(serverLevel.getServer()).getAllLanterns()) {
+				if (lanternPos.distManhattan(new Vec3i(blockPosition().getX(), blockPosition().getY(), blockPosition().getZ())) < IWConfigs.SERVER.celestialTowerSpawnCheckingRadius.getAsInt()) {
 					nearbyLanterns++;
+
+					if (nearbyLanterns >= 3) {
+						break;
+					}
 				}
 			}
 		}

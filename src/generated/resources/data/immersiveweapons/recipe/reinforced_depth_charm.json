@@ -1,0 +1,38 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "reinforced_depth_charm",
+  "ingredients": [
+    {
+      "item": "immersiveweapons:depth_charm"
+    },
+    {
+      "item": "immersiveweapons:warden_heart"
+    },
+    {
+      "item": "minecraft:deepslate"
+    },
+    {
+      "item": "minecraft:deepslate"
+    },
+    {
+      "item": "minecraft:deepslate"
+    },
+    {
+      "item": "minecraft:deepslate"
+    },
+    {
+      "item": "minecraft:deepslate"
+    },
+    {
+      "item": "minecraft:deepslate"
+    },
+    {
+      "item": "minecraft:deepslate"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:reinforced_depth_charm"
+  }
+}

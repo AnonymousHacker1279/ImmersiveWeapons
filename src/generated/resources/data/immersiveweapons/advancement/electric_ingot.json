@@ -1,0 +1,33 @@
+{
+  "parent": "immersiveweapons:conductive_alloy",
+  "criteria": {
+    "hold": {
+      "conditions": {
+        "items": [
+          {
+            "items": "immersiveweapons:electric_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersiveweapons.electric_ingot.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "immersiveweapons:electric_ingot"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.electric_ingot.title"
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
