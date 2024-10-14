@@ -15,7 +15,6 @@ public class CannonballEntity extends BulletEntity implements ItemSupplier {
 
 	public CannonballEntity(EntityType<? extends Arrow> entityType, Level level) {
 		super(entityType, level);
-		gravityModifier = 0.055d;
 	}
 
 	public CannonballEntity(LivingEntity shooter, Level level, @Nullable ItemStack firedFromWeapon) {

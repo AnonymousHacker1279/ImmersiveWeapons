@@ -336,9 +336,9 @@ public class ItemRegistry {
 	public static final Supplier<BulletItem<?>> ASTRAL_MUSKET_BALL = ITEMS.register("astral_musket_ball", () -> new BulletBuilder<>(new Properties().stacksTo(99), 6.25d, EntityRegistry.ASTRAL_MUSKET_BALL_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.001d).shootingVector(0.001d, 0.1d, 0.2d).build());
 	public static final Supplier<BulletItem<?>> STARSTORM_MUSKET_BALL = ITEMS.register("starstorm_musket_ball", () -> new BulletBuilder<>(new Properties().stacksTo(99), 8.65d, EntityRegistry.STARSTORM_MUSKET_BALL_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.002d).shootingVector(0.002d, 0.2d, 0.5d).build());
 	@DatagenExclusionMarker(Type.MODEL_GENERATOR_ITEM)
-	public static final Supplier<BulletItem<?>> FLARE = ITEMS.register("flare", () -> new BulletBuilder<>(new Properties(), 0.1d, EntityRegistry.FLARE_ENTITY).gravityModifier(0.005d).build());
+	public static final Supplier<BulletItem<?>> FLARE = ITEMS.register("flare", () -> new BulletBuilder<>(new Properties(), 0.1d, EntityRegistry.FLARE_ENTITY).gravityModifier(0.06d).build());
 	@DatagenExclusionMarker(Type.MODEL_GENERATOR_ITEM)
-	public static final Supplier<BulletItem<?>> CANNONBALL = ITEMS.register("cannonball", () -> new BulletItem.BulletBuilder<>(new Properties(), 6.0d, EntityRegistry.CANNONBALL_ENTITY).build());
+	public static final Supplier<BulletItem<?>> CANNONBALL = ITEMS.register("cannonball", () -> new BulletItem.BulletBuilder<>(new Properties(), 6.0d, EntityRegistry.CANNONBALL_ENTITY).gravityModifier(0.055d).build());
 	@DatagenExclusionMarker(Type.MODEL_GENERATOR_ITEM)
 	public static final Supplier<BulletItem<?>> EXPLOSIVE_CANNONBALL = ITEMS.register("explosive_cannonball", () -> new BulletItem.BulletBuilder<>(new Properties(), 6.0d, EntityRegistry.CANNONBALL_ENTITY).isExplosive(true).build());
 	@DatagenExclusionMarker(Type.MODEL_GENERATOR_ITEM)

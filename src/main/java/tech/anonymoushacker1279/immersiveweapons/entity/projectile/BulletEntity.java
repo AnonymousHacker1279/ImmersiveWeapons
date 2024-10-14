@@ -28,7 +28,6 @@ import tech.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact.B
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
-import tech.anonymoushacker1279.immersiveweapons.item.gun.MusketItem;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.BulletEntityDebugPayload;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.GunShotBloodParticlePayload;
@@ -77,11 +76,6 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 
 	public void setFiringItem(Item stack) {
 		firingItem = stack;
-	}
-
-	@Override
-	public double getGravityModifier() {
-		return firingItem instanceof MusketItem ? gravityModifier / 4 : gravityModifier;
 	}
 
 	public float calculateDamage() {

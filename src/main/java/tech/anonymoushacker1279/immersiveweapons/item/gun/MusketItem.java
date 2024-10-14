@@ -1,8 +1,13 @@
 package tech.anonymoushacker1279.immersiveweapons.item.gun;
 
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
+import tech.anonymoushacker1279.immersiveweapons.util.ArrowAttributeAccessor;
 
 public class MusketItem extends AbstractGunItem {
 
@@ -56,5 +61,11 @@ public class MusketItem extends AbstractGunItem {
 	@Override
 	public float getInaccuracy() {
 		return (float) IWConfigs.SERVER.musketFireInaccuracy.getAsDouble();
+	}
+
+	@Override
+	public void setupFire(LivingEntity shooter, BulletEntity bullet, ItemStack gun, @Nullable ItemStack ammo, PowderType powderType) {
+		super.setupFire(shooter, bullet, gun, ammo, powderType);
+		((ArrowAttributeAccessor) bullet).immersiveWeapons$setGravity(bullet.getGravity() / 4);
 	}
 }
