@@ -274,13 +274,11 @@ if (file("RELEASE_NOTES.md").exists()) {
 		addAdditionalFile(javadocJar, sourcesJar)
 
 		curseDepends {
-			required 'cobalt-config'
 			optional "immersive-weapons-compatibility-bridge", "attributefix"
-			embedded 'custom-portal-api-reforged'   // BiomeSquisher is not on CF
+			embedded 'biomesquisher', 'custom-portal-api-reforged'
 		}
 
 		modrinthDepends {
-			required 'cobaltconfig'
 			optional "immersive-weapons-compatibility-bridge", "attributefix"
 			embedded 'biomesquisher', 'custom-portal-api-reforged'
 		}
