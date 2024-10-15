@@ -13,10 +13,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.CustomArrowEntity;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils.HitEffect;
-import tech.anonymoushacker1279.immersiveweapons.util.ArrowKnockbackAccessor;
+import tech.anonymoushacker1279.immersiveweapons.util.ArrowAttributeAccessor;
 
 import javax.annotation.Nullable;
 import java.util.*;
@@ -74,8 +73,8 @@ public class CustomArrowItem<T extends CustomArrowEntity> extends ArrowItem {
 	private void setCommonArrowCharacteristics(CustomArrowEntity arrowEntity) {
 		arrowEntity.setPierceLevel((byte) pierceLevel);
 		arrowEntity.setBaseDamage(damage);
-		((ArrowKnockbackAccessor) arrowEntity).immersiveWeapons$setBaseKnockback(knockbackStrength);
-		arrowEntity.gravityModifier = gravityModifier;
+		((ArrowAttributeAccessor) arrowEntity).immersiveWeapons$setBaseKnockback(knockbackStrength);
+		((ArrowAttributeAccessor) arrowEntity).immersiveWeapons$setGravity(gravityModifier);
 		arrowEntity.shootingVectorInputs = shootingVectorInputs;
 		arrowEntity.hitEffect = hitEffect;
 		arrowEntity.color = color;
@@ -84,9 +83,6 @@ public class CustomArrowItem<T extends CustomArrowEntity> extends ArrowItem {
 		if (color != -1) {
 			arrowEntity.pickup = Pickup.DISALLOWED;
 		}
-
-		// Add data to entity accessors so the client is aware
-		arrowEntity.getEntityData().set(BulletEntity.GRAVITY_MODIFIER_ACCESSOR, (float) gravityModifier);
 	}
 
 	/**

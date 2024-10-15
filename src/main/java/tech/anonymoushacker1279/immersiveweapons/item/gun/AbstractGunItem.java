@@ -33,6 +33,7 @@ import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectType;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.data.GunData;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.GunScopePayload;
+import tech.anonymoushacker1279.immersiveweapons.util.ArrowAttributeAccessor;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.Optional;
@@ -453,7 +454,7 @@ public abstract class AbstractGunItem extends Item {
 				bullet.setBaseDamage(bullet.getBaseDamage() + (bullet.getBaseDamage() * (densityModifier * 0.2f)));
 
 				// Higher density slightly increases the gravity modifier
-				bullet.gravityModifier += (densityModifier * 0.015f);
+				((ArrowAttributeAccessor) bullet).immersiveWeapons$setGravity(bullet.getGravity() + (densityModifier * 0.015f));
 			}
 		}
 

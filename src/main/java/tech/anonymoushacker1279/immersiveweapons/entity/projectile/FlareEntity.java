@@ -7,6 +7,7 @@ import net.minecraft.network.syncher.*;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.entity.projectile.ItemSupplier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -33,9 +34,8 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 	private static final EntityDataAccessor<Boolean> USE_LEGACY_LIGHTING = SynchedEntityData.defineId(FlareEntity.class,
 			EntityDataSerializers.BOOLEAN);
 
-	public FlareEntity(EntityType<FlareEntity> entityType, Level level) {
+	public FlareEntity(EntityType<? extends Arrow> entityType, Level level) {
 		super(entityType, level);
-		gravityModifier = 0.005d;
 	}
 
 	public FlareEntity(EntityType<? extends BulletEntity> entityType, LivingEntity shooter, Level level, @Nullable ItemStack firedFromWeapon) {
@@ -127,11 +127,6 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 		hasHitEntity = true;
 		entity.igniteForSeconds(6);
 		aggroNearbyMinutemen();
-	}
-
-	@Override
-	protected float getDefaultInertia() {
-		return 0.85f;
 	}
 
 	/**

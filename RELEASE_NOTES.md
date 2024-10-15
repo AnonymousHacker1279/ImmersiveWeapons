@@ -1,12 +1,13 @@
-This major update ports to MC 1.21.1. Not much in the way of new features, but a few bugfixes and improvements.
+This minor update fixes a few bugs and tweaks some features.
 
 ### Feature Changes / Additions
 
-- Starmites now have a rare chance to drop Starstorm Shards when killed
-- Improve spawn checks for Evil Eyes
-	- Must have 25 blocks of open space above the spawn point
+- Soldier-type XP drops are now based on factors including local difficulty, worn armor, and armor/weapon enchantments
+- Increase XP drops for berserk Wandering Warriors
+- Add Skygazer enchantment caps for Density (5), Wind Burst (10), and Breach (4).
 
 ### Bugfixes
 
-- Prevent clamping of certain accessory effect types where it doesn't make sense (such as looting bonuses)
-- Fix the mob category for Star Wolves being monster instead of creature
+- Fix soldier-type entities not dropping XP at all
+- Fix various parity issues between custom arrow entities and vanilla arrows (for example, fixing the Flame enchantment
+  on Aurora and Dragon's Breath bows)

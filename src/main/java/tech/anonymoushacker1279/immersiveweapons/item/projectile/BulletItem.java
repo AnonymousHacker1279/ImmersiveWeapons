@@ -15,7 +15,7 @@ import tech.anonymoushacker1279.immersiveweapons.data.IWEnchantments;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.*;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils.HitEffect;
-import tech.anonymoushacker1279.immersiveweapons.util.ArrowKnockbackAccessor;
+import tech.anonymoushacker1279.immersiveweapons.util.ArrowAttributeAccessor;
 
 import java.util.*;
 import java.util.function.Supplier;
@@ -77,13 +77,10 @@ public class BulletItem<T extends BulletEntity> extends ArrowItem {
 		bulletEntity.setSoundEvent(SoundEventRegistry.BULLET_WHIZZ.get());
 		bulletEntity.setPierceLevel((byte) pierceLevel);
 		bulletEntity.setBaseDamage(damage);
-		((ArrowKnockbackAccessor) bulletEntity).immersiveWeapons$setBaseKnockback(knockbackStrength);
-		bulletEntity.gravityModifier = gravityModifier;
+		((ArrowAttributeAccessor) bulletEntity).immersiveWeapons$setBaseKnockback(knockbackStrength);
+		((ArrowAttributeAccessor) bulletEntity).immersiveWeapons$setGravity(gravityModifier);
 		bulletEntity.shootingVectorInputs = shootingVectorInputs;
 		bulletEntity.hitEffect = hitEffect;
-
-		// Add data to entity accessors so the client is aware
-		bulletEntity.getEntityData().set(BulletEntity.GRAVITY_MODIFIER_ACCESSOR, (float) gravityModifier);
 	}
 
 	/**

@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.Mth;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.DifficultyInstance;
@@ -46,11 +47,10 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 	}
 
 	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor levelAccessor, DifficultyInstance difficultyInstance,
-	                                    MobSpawnType mobSpawnType, @Nullable SpawnGroupData groupData) {
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData) {
 
-		populateDefaultEquipmentSlots(random, difficultyInstance);
-		populateDefaultEquipmentEnchantments(levelAccessor, random, difficultyInstance);
+		populateDefaultEquipmentSlots(random, difficulty);
+		populateDefaultEquipmentEnchantments(level, random, difficulty);
 		prepareForCombat();
 		setCanPickUpLoot(true);
 
@@ -66,7 +66,35 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 			}
 		}
 
-		return super.finalizeSpawn(levelAccessor, difficultyInstance, mobSpawnType, groupData);
+		xpReward = calculateXPDropAmount(difficulty.getSpecialMultiplier());
+
+		return super.finalizeSpawn(level, difficulty, reason, spawnData);
+	}
+
+	private int calculateXPDropAmount(float difficultyMultiplier) {
+		int baseXP = Mth.ceil(100 * difficultyMultiplier);
+
+		int armorXP = 0;
+		for (ItemStack stack : getArmorSlots()) {
+			if (!stack.isEmpty()) {
+				armorXP += 2 + random.nextInt(3);
+
+				if (stack.isEnchanted()) {
+					armorXP += 2 + random.nextInt(3);
+				}
+			}
+		}
+
+		int weaponXP = 0;
+		if (!getMainHandItem().isEmpty()) {
+			weaponXP += 2 + random.nextInt(3);
+
+			if (getMainHandItem().isEnchanted()) {
+				weaponXP += 2 + random.nextInt(3);
+			}
+		}
+
+		return baseXP + armorXP + weaponXP;
 	}
 
 	@Override

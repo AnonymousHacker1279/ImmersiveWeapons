@@ -94,6 +94,7 @@ public class ModEventSubscriber {
 		registrar.playToClient(GunShotBloodParticlePayload.TYPE, GunShotBloodParticlePayload.STREAM_CODEC, GunShotBloodParticlePayloadHandler.getInstance()::handleData);
 		registrar.playToClient(PlayerSoundPayload.TYPE, PlayerSoundPayload.STREAM_CODEC, PlayerSoundPayloadHandler.getInstance()::handleData);
 		registrar.playToClient(SyncMerchantTradesPayload.TYPE, SyncMerchantTradesPayload.STREAM_CODEC, SyncMerchantTradesPayloadHandler.getInstance()::handleData);
+		registrar.playToClient(ArrowGravityPayload.TYPE, ArrowGravityPayload.STREAM_CODEC, ArrowGravityPayloadHandler.getInstance()::handleData);
 	}
 
 	@SubscribeEvent

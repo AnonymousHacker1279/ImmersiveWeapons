@@ -23,7 +23,6 @@ public class DragonBreathBow extends BowItem {
 			// Create a new CustomArrowEntity
 			CustomArrowEntity customArrowEntity = new CustomArrowEntity(EntityType.ARROW, owner, abstractArrow.level(), weaponStack);
 			customArrowEntity.isExplosive = true;
-			customArrowEntity.gravityModifier = 0.05d;
 
 			return customArrowEntity;
 		}
