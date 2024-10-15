@@ -345,6 +345,9 @@ public class ServerConfig {
 		enchantCaps.put("minecraft:swift_sneak", 5);
 		enchantCaps.put("minecraft:lure", 5);
 		enchantCaps.put("minecraft:aqua_affinity", 1);
+		enchantCaps.put("minecraft:density", 5);
+		enchantCaps.put("minecraft:wind_burst", 10);
+		enchantCaps.put("minecraft:breach", 4);
 		enchantCaps.put("immersiveweapons:extended_reach", 1);
 		enchantCaps.put("immersiveweapons:endless_musket_pouch", 1);
 		enchantCaps.put("immersiveweapons:scorch_shot", 3);
