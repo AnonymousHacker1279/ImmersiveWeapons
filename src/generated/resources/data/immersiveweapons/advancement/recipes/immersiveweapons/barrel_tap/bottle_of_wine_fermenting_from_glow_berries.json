@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:bottle_of_alcohol_fermenting"
+        "recipe": "immersiveweapons:bottle_of_wine_fermenting_from_glow_berries"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "immersiveweapons:bottle_of_alcohol_fermenting"
+      "immersiveweapons:bottle_of_wine_fermenting_from_glow_berries"
     ]
   }
 }

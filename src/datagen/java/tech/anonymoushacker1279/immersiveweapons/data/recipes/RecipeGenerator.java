@@ -527,6 +527,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 	private void createBarrelTapItems() {
 		barrelTapFermenting(Items.WHEAT, 12, ItemRegistry.BOTTLE_OF_ALCOHOL.get());
 		barrelTapFermenting(Items.SWEET_BERRIES, 12, ItemRegistry.BOTTLE_OF_WINE.get());
+		barrelTapFermenting(Items.GLOW_BERRIES, 8, ItemRegistry.BOTTLE_OF_WINE.get());
 	}
 
 	private void createAstralCrystalSorceryItems() {
@@ -1962,7 +1963,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 	private static void barrelTapFermenting(ItemLike material, int materialCount, ItemLike result) {
 		BarrelTapRecipeBuilder.fermenting(Ingredient.of(material), materialCount, result.asItem())
 				.unlockedBy("barrel_tap", has(BlockItemRegistry.BARREL_TAP_ITEM.get()))
-				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_fermenting");
+				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_fermenting_from_" + getItemName(material));
 	}
 
 	private static void astralCrystalSorcery(ItemLike primaryMaterial, ItemLike secondaryMaterial, ItemStack result) {

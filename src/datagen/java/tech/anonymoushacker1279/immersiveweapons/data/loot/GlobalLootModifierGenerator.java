@@ -69,7 +69,10 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 						BuiltInLootTables.UNDERWATER_RUIN_SMALL,
 						BuiltInLootTables.WOODLAND_MANSION,
 						BuiltInLootTables.ANCIENT_CITY,
-						BuiltInLootTables.TRAIL_RUINS_ARCHAEOLOGY_RARE
+						BuiltInLootTables.TRAIL_RUINS_ARCHAEOLOGY_RARE,
+						BuiltInLootTables.TRIAL_CHAMBERS_SUPPLY,
+						BuiltInLootTables.DESERT_PYRAMID_ARCHAEOLOGY,
+						BuiltInLootTables.DESERT_WELL_ARCHAEOLOGY
 				),
 				1, 2, 0.25f,
 				ItemRegistry.AZUL_KEYSTONE_FRAGMENT.get().getDefaultInstance()));
@@ -144,6 +147,51 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 				inBiomeDungeonCondition(IWBiomes.DEADMANS_DESERT),
 				1, 1, 0.2f,
 				ItemRegistry.MUSIC_DISC_DEADMANS_DESERT_THEME_2.get().getDefaultInstance()));
+
+		add("golden_ring", new SimpleChestModifierHandler(
+				singleLootTableCondition(BuiltInLootTables.TRIAL_CHAMBERS_REWARD),
+				1, 1, 0.05f,
+				ItemRegistry.GOLDEN_RING.get().getDefaultInstance()));
+
+		add("cobalt_ring", new SimpleChestModifierHandler(
+				singleLootTableCondition(BuiltInLootTables.TRIAL_CHAMBERS_REWARD),
+				1, 1, 0.06f,
+				ItemRegistry.COBALT_RING.get().getDefaultInstance()));
+
+		add("iron_ring", new SimpleChestModifierHandler(
+				singleLootTableCondition(BuiltInLootTables.TRIAL_CHAMBERS_REWARD),
+				1, 1, 0.07f,
+				ItemRegistry.IRON_RING.get().getDefaultInstance()));
+
+		add("iron_arrow", new SimpleChestModifierHandler(
+				singleLootTableCondition(BuiltInLootTables.TRIAL_CHAMBERS_REWARD),
+				2, 6, 0.25f,
+				ItemRegistry.IRON_ARROW.get().getDefaultInstance()));
+
+		add("cobalt_arrow", new SimpleChestModifierHandler(
+				singleLootTableCondition(BuiltInLootTables.TRIAL_CHAMBERS_REWARD),
+				2, 4, 0.2f,
+				ItemRegistry.COBALT_ARROW.get().getDefaultInstance()));
+
+		add("agility_bracelet", new SimpleChestModifierHandler(
+				singleLootTableCondition(BuiltInLootTables.TRIAL_CHAMBERS_REWARD),
+				1, 1, 0.1f,
+				ItemRegistry.AGILITY_BRACELET.get().getDefaultInstance()));
+
+		add("azul_keystone", new SimpleChestModifierHandler(
+				singleLootTableCondition(BuiltInLootTables.TRIAL_CHAMBERS_REWARD_OMINOUS),
+				1, 1, 0.2f,
+				ItemRegistry.AZUL_KEYSTONE.get().getDefaultInstance()));
+
+		add("diamond_arrow", new SimpleChestModifierHandler(
+				singleLootTableCondition(BuiltInLootTables.TRIAL_CHAMBERS_REWARD_OMINOUS),
+				4, 10, 0.25f,
+				ItemRegistry.DIAMOND_ARROW.get().getDefaultInstance()));
+
+		add("kill_counter", new SimpleChestModifierHandler(
+				singleLootTableCondition(BuiltInLootTables.TRIAL_CHAMBERS_REWARD_OMINOUS),
+				1, 1, 0.1f,
+				ItemRegistry.KILL_COUNTER.get().getDefaultInstance()));
 	}
 
 	/**
@@ -164,13 +212,13 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 	 */
 	@SafeVarargs
 	private LootItemCondition[] multipleLootTablesCondition(ResourceKey<LootTable>... lootTables) {
-		LootItemCondition[] conditions = new LootItemCondition[lootTables.length];
+		LootItemCondition.Builder[] builders = new LootItemCondition.Builder[lootTables.length];
 
 		for (int i = 0; i < lootTables.length; i++) {
-			conditions[i] = LootTableIdCondition.builder(lootTables[i].location()).build();
+			builders[i] = LootTableIdCondition.builder(lootTables[i].location());
 		}
 
-		return conditions;
+		return new LootItemCondition[]{AnyOfCondition.anyOf(builders).build()};
 	}
 
 	/**
