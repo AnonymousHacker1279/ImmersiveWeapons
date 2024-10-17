@@ -1,0 +1,18 @@
+{
+  "type": "immersiveweapons:simple_chest",
+  "allow_treasure": false,
+  "conditions": [
+    {
+      "condition": "neoforge:loot_table_id",
+      "loot_table_id": "minecraft:chests/trial_chambers/reward"
+    }
+  ],
+  "item": {
+    "count": 1,
+    "id": "immersiveweapons:iron_arrow"
+  },
+  "max_enchant_levels": 0,
+  "max_quantity": 6,
+  "min_quantity": 2,
+  "roll_chance": 0.25
+}
