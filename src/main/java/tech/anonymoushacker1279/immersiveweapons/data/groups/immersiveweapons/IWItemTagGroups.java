@@ -43,6 +43,10 @@ public class IWItemTagGroups {
 	public static final TagKey<Item> WEAPONS_AND_TOOLS = createItemTag("weapons_and_tools");
 	public static final TagKey<Item> METEOR_STAFFS = createItemTag("weapons/meteor_staffs");
 	public static final TagKey<Item> CURSED_SIGHT_STAFFS = createItemTag("weapons/cursed_sight_staffs");
+	public static final TagKey<Item> SCULK_STAFFS = createItemTag("weapons/sculk_staffs");
+	public static final TagKey<Item> RECOVERY_STAFFS = createItemTag("weapons/recovery_staffs");
+	public static final TagKey<Item> VENTUS_STAFFS = createItemTag("weapons/ventus_staffs");
+	public static final TagKey<Item> STAFFS = createItemTag("weapons/staffs");
 	public static final TagKey<Item> MOLTEN_ARMOR = createItemTag("armor/molten");
 	public static final TagKey<Item> TESLA_ARMOR = createItemTag("armor/tesla");
 	public static final TagKey<Item> VENTUS_ARMOR = createItemTag("armor/ventus");

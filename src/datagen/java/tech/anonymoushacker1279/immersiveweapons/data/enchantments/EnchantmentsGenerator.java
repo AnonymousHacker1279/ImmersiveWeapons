@@ -80,7 +80,7 @@ public class EnchantmentsGenerator {
 						2,
 						1,
 						Enchantment.constantCost(20),
-						Enchantment.constantCost(50),
+						Enchantment.constantCost(35),
 						8,
 						EquipmentSlotGroup.HAND
 				)));
@@ -91,8 +91,8 @@ public class EnchantmentsGenerator {
 						itemGetter.getOrThrow(IWItemTagGroups.FIREARMS),
 						5,
 						3,
-						Enchantment.dynamicCost(10, 15),
-						Enchantment.dynamicCost(16, 15),
+						Enchantment.dynamicCost(10, 5),
+						Enchantment.dynamicCost(15, 5),
 						5,
 						EquipmentSlotGroup.HAND
 				)));
@@ -103,8 +103,8 @@ public class EnchantmentsGenerator {
 						itemGetter.getOrThrow(IWItemTagGroups.RANGED_WEAPONS),
 						5,
 						3,
-						Enchantment.dynamicCost(15, 20),
-						Enchantment.dynamicCost(25, 20),
+						Enchantment.dynamicCost(10, 7),
+						Enchantment.dynamicCost(15, 7),
 						5,
 						EquipmentSlotGroup.HAND
 				)));
@@ -116,7 +116,7 @@ public class EnchantmentsGenerator {
 								2,
 								1,
 								Enchantment.constantCost(15),
-								Enchantment.constantCost(30),
+								Enchantment.constantCost(25),
 								3,
 								EquipmentSlotGroup.HAND
 						))
@@ -150,8 +150,8 @@ public class EnchantmentsGenerator {
 						itemGetter.getOrThrow(IWItemTagGroups.GAUNTLETS),
 						2,
 						3,
-						Enchantment.dynamicCost(10, 15),
-						Enchantment.dynamicCost(16, 15),
+						Enchantment.dynamicCost(10, 5),
+						Enchantment.dynamicCost(15, 5),
 						3,
 						EquipmentSlotGroup.HAND
 				)));
@@ -162,8 +162,8 @@ public class EnchantmentsGenerator {
 						itemGetter.getOrThrow(IWItemTagGroups.GAUNTLETS),
 						2,
 						2,
-						Enchantment.dynamicCost(20, 20),
-						Enchantment.dynamicCost(21, 20),
+						Enchantment.dynamicCost(10, 5),
+						Enchantment.dynamicCost(15, 5),
 						4,
 						EquipmentSlotGroup.HAND
 				)));
@@ -174,8 +174,8 @@ public class EnchantmentsGenerator {
 						itemGetter.getOrThrow(IWItemTagGroups.WEAPONS_AND_TOOLS),
 						1,
 						3,
-						Enchantment.dynamicCost(20, 20),
-						Enchantment.dynamicCost(25, 20),
+						Enchantment.dynamicCost(10, 5),
+						Enchantment.dynamicCost(15, 5),
 						6,
 						EquipmentSlotGroup.HAND
 				)));
@@ -186,8 +186,8 @@ public class EnchantmentsGenerator {
 						itemGetter.getOrThrow(IWItemTagGroups.METEOR_STAFFS),
 						2,
 						2,
-						Enchantment.dynamicCost(20, 20),
-						Enchantment.dynamicCost(21, 20),
+						Enchantment.dynamicCost(10, 5),
+						Enchantment.dynamicCost(15, 5),
 						4,
 						EquipmentSlotGroup.HAND
 				)));
@@ -199,7 +199,7 @@ public class EnchantmentsGenerator {
 						2,
 						1,
 						Enchantment.constantCost(25),
-						Enchantment.constantCost(50),
+						Enchantment.constantCost(30),
 						3,
 						EquipmentSlotGroup.HAND
 				)));
@@ -210,8 +210,8 @@ public class EnchantmentsGenerator {
 						itemGetter.getOrThrow(IWItemTagGroups.METEOR_STAFFS),
 						1,
 						1,
+						Enchantment.constantCost(25),
 						Enchantment.constantCost(35),
-						Enchantment.constantCost(50),
 						5,
 						EquipmentSlotGroup.HAND
 				)));
@@ -222,8 +222,8 @@ public class EnchantmentsGenerator {
 						itemGetter.getOrThrow(IWItemTagGroups.CURSED_SIGHT_STAFFS),
 						5,
 						7,
-						Enchantment.dynamicCost(10, 10),
-						Enchantment.dynamicCost(15, 15),
+						Enchantment.dynamicCost(10, 7),
+						Enchantment.dynamicCost(15, 7),
 						3,
 						EquipmentSlotGroup.HAND
 				)));
@@ -234,8 +234,8 @@ public class EnchantmentsGenerator {
 						itemGetter.getOrThrow(IWItemTagGroups.CURSED_SIGHT_STAFFS),
 						2,
 						3,
-						Enchantment.dynamicCost(20, 20),
-						Enchantment.dynamicCost(21, 25),
+						Enchantment.dynamicCost(10, 5),
+						Enchantment.dynamicCost(15, 5),
 						5,
 						EquipmentSlotGroup.HAND
 				)));

@@ -1,11 +1,10 @@
-This minor update fixes a bug and adds some new items to loot tables.
+This minor update fixes a critical bug.
 
 ### Feature Changes / Additions
 
-- Add more loot table options for Azul Keystone Fragments to generate in
-- Add some IW items to the loot tables for trial chamber vaults
-- Add a second recipe for the Bottle of Wine that uses glow berries
+- Rebalance some enchantment levels to make them easier to find in enchanting tables
 
 ### Bugfixes
 
-- Fix Azul Keystone Fragments being unable to generate in any loot tables
+- Fix two crashes with the Skygazer when attempting to refresh trades
+- Fix some enchants not being accessible at all in enchanting tables

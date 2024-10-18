@@ -4,13 +4,13 @@
     "translate": "enchantment.immersiveweapons.velocity"
   },
   "max_cost": {
-    "base": 25,
-    "per_level_above_first": 20
+    "base": 15,
+    "per_level_above_first": 7
   },
   "max_level": 3,
   "min_cost": {
-    "base": 15,
-    "per_level_above_first": 20
+    "base": 10,
+    "per_level_above_first": 7
   },
   "slots": [
     "hand"
