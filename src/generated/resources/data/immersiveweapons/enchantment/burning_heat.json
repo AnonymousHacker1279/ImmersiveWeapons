@@ -4,7 +4,7 @@
     "translate": "enchantment.immersiveweapons.burning_heat"
   },
   "max_cost": {
-    "base": 50,
+    "base": 30,
     "per_level_above_first": 0
   },
   "max_level": 1,

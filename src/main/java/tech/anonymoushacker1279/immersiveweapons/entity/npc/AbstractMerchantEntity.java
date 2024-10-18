@@ -1,7 +1,10 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.npc;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.*;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.npc.AbstractVillager;
@@ -9,6 +12,7 @@ import net.minecraft.world.entity.npc.VillagerTrades.ItemListing;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 import tech.anonymoushacker1279.immersiveweapons.entity.npc.trading.TradeGroup;
 import tech.anonymoushacker1279.immersiveweapons.entity.npc.trading.TradeLoader;
@@ -19,12 +23,11 @@ import java.util.List;
 
 public abstract class AbstractMerchantEntity extends AbstractVillager implements GrantAdvancementOnDiscovery {
 
-	private int timeUntilRefreshTrades;
+	private static final EntityDataAccessor<Integer> TRADE_REFRESH_TIME = SynchedEntityData.defineId(AbstractMerchantEntity.class,
+			EntityDataSerializers.INT);
 
 	public AbstractMerchantEntity(EntityType<? extends AbstractVillager> entityType, Level level) {
 		super(entityType, level);
-
-		timeUntilRefreshTrades = TradeLoader.TRADES.get(getType()).tradeRefreshTime();
 	}
 
 	/**
@@ -33,7 +36,7 @@ public abstract class AbstractMerchantEntity extends AbstractVillager implements
 	 */
 	@SuppressWarnings("unused")
 	public int getTradeRefreshTime() {
-		return timeUntilRefreshTrades;
+		return entityData.get(TRADE_REFRESH_TIME);
 	}
 
 	public Int2ObjectMap<ItemListing[]> getTrades() {
@@ -52,6 +55,12 @@ public abstract class AbstractMerchantEntity extends AbstractVillager implements
 	}
 
 	@Override
+	protected void defineSynchedData(SynchedEntityData.Builder builder) {
+		super.defineSynchedData(builder);
+		builder.define(TRADE_REFRESH_TIME, 24000);
+	}
+
+	@Override
 	public boolean showProgressBar() {
 		return false;
 	}
@@ -67,12 +76,20 @@ public abstract class AbstractMerchantEntity extends AbstractVillager implements
 		super.tick();
 
 		// Lower the trade refresh cooldown
-		if (timeUntilRefreshTrades > 0) {
-			timeUntilRefreshTrades--;
+		if (entityData.get(TRADE_REFRESH_TIME) > 0) {
+			entityData.set(TRADE_REFRESH_TIME, entityData.get(TRADE_REFRESH_TIME) - 1);
 		} else {
-			updateTrades();
-			timeUntilRefreshTrades = TradeLoader.TRADES.get(getType()).tradeRefreshTime();
+			if (!level().isClientSide) {
+				updateTrades();
+				entityData.set(TRADE_REFRESH_TIME, TradeLoader.TRADES.get(getType()).tradeRefreshTime());
+			}
 		}
+	}
+
+	@Override
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData) {
+		entityData.set(TRADE_REFRESH_TIME, TradeLoader.TRADES.get(getType()).tradeRefreshTime());
+		return super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData);
 	}
 
 	@Override
@@ -118,5 +135,19 @@ public abstract class AbstractMerchantEntity extends AbstractVillager implements
 	@Override
 	public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob otherParent) {
 		return null;
+	}
+
+	@Override
+	public void addAdditionalSaveData(CompoundTag compound) {
+		super.addAdditionalSaveData(compound);
+
+		compound.putInt("tradeRefreshTime", entityData.get(TRADE_REFRESH_TIME));
+	}
+
+	@Override
+	public void load(CompoundTag compound) {
+		super.load(compound);
+
+		entityData.set(TRADE_REFRESH_TIME, compound.getInt("tradeRefreshTime"));
 	}
 }

@@ -4,13 +4,13 @@
     "translate": "enchantment.immersiveweapons.regenerative_assault"
   },
   "max_cost": {
-    "base": 25,
-    "per_level_above_first": 20
+    "base": 15,
+    "per_level_above_first": 5
   },
   "max_level": 3,
   "min_cost": {
-    "base": 20,
-    "per_level_above_first": 20
+    "base": 10,
+    "per_level_above_first": 5
   },
   "slots": [
     "hand"

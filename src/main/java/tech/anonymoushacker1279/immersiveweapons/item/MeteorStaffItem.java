@@ -83,6 +83,6 @@ public class MeteorStaffItem extends Item implements SummoningStaff {
 
 	@Override
 	public int getEnchantmentValue(ItemStack stack) {
-		return 1;
+		return 3;
 	}
 }

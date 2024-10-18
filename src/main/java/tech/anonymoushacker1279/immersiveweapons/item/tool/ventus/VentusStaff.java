@@ -102,4 +102,9 @@ public class VentusStaff extends Item {
 	public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
 		return repair.getItem() == ItemRegistry.VENTUS_SHARD.get();
 	}
+
+	@Override
+	public int getEnchantmentValue(ItemStack stack) {
+		return 1;
+	}
 }

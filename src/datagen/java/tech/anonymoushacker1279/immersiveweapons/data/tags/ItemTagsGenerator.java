@@ -259,6 +259,15 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		// Staff tags
 		tag(IWItemTagGroups.METEOR_STAFFS).add(ItemRegistry.METEOR_STAFF.get());
 		tag(IWItemTagGroups.CURSED_SIGHT_STAFFS).add(ItemRegistry.CURSED_SIGHT_STAFF.get());
+		tag(IWItemTagGroups.SCULK_STAFFS).add(ItemRegistry.SCULK_STAFF.get());
+		tag(IWItemTagGroups.RECOVERY_STAFFS).add(ItemRegistry.RECOVERY_STAFF.get());
+		tag(IWItemTagGroups.VENTUS_STAFFS).add(ItemRegistry.VENTUS_STAFF.get());
+		tag(IWItemTagGroups.STAFFS)
+				.addTag(IWItemTagGroups.METEOR_STAFFS)
+				.addTag(IWItemTagGroups.CURSED_SIGHT_STAFFS)
+				.addTag(IWItemTagGroups.SCULK_STAFFS)
+				.addTag(IWItemTagGroups.RECOVERY_STAFFS)
+				.addTag(IWItemTagGroups.VENTUS_STAFFS);
 
 		// Armor tags
 		tag(IWItemTagGroups.MOLTEN_ARMOR).add(
@@ -373,13 +382,15 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		tag(ItemTags.DURABILITY_ENCHANTABLE).addTags(
 				IWItemTagGroups.PIKES,
 				IWItemTagGroups.GAUNTLETS,
-				IWItemTagGroups.FIREARMS
+				IWItemTagGroups.FIREARMS,
+				IWItemTagGroups.STAFFS
 		);
 		tag(ItemTags.SHARP_WEAPON_ENCHANTABLE).addTag(IWItemTagGroups.PIKES);
 		tag(ItemTags.WEAPON_ENCHANTABLE).addTags(
 				IWItemTagGroups.PIKES,
 				IWItemTagGroups.GAUNTLETS,
-				IWItemTagGroups.FIREARMS
+				IWItemTagGroups.FIREARMS,
+				IWItemTagGroups.STAFFS
 		);
 	}
 }

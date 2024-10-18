@@ -2,6 +2,7 @@
   "values": [
     "#immersiveweapons:weapons/pikes",
     "#immersiveweapons:weapons/gauntlets",
-    "#immersiveweapons:weapons/firearms"
+    "#immersiveweapons:weapons/firearms",
+    "#immersiveweapons:weapons/staffs"
   ]
 }
