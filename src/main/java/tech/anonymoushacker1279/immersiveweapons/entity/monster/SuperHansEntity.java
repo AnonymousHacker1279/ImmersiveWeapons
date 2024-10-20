@@ -9,7 +9,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.*;
 import net.minecraft.tags.DamageTypeTags;
-import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.BossEvent.BossBarColor;
 import net.minecraft.world.BossEvent.BossBarOverlay;
@@ -44,7 +43,7 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 	public final ServerBossEvent bossEvent = new ServerBossEvent(getDisplayName(), BossBarColor.PURPLE,
 			BossBarOverlay.PROGRESS);
 
-	public static final TagKey<Structure> championTowerKey = TagKey.create(Registries.STRUCTURE, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "champion_tower"));
+	public static final ResourceLocation CHAMPION_TOWER_KEY = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "champion_tower");
 	private boolean spawnedInChampionTower = false;
 	@Nullable
 	private BoundingBox championTowerBounds;
@@ -178,10 +177,14 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 		// This has to run before the super call otherwise firstTick is always false
 		if (firstTick) {
 			if (level() instanceof ServerLevel serverLevel) {
-				StructureStart structureStart = serverLevel.structureManager().getStructureWithPieceAt(blockPosition(), championTowerKey);
-				spawnedInChampionTower = structureStart.isValid();
-				if (spawnedInChampionTower) {
-					championTowerBounds = structureStart.getBoundingBox();
+				Structure structure = serverLevel.structureManager().registryAccess().registryOrThrow(Registries.STRUCTURE).get(CHAMPION_TOWER_KEY);
+
+				if (structure != null) {
+					StructureStart structureStart = serverLevel.structureManager().getStructureAt(blockPosition(), structure);
+					spawnedInChampionTower = structureStart.isValid();
+					if (spawnedInChampionTower) {
+						championTowerBounds = structureStart.getBoundingBox();
+					}
 				}
 			}
 		}
