@@ -47,7 +47,7 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 	@Override
 	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
 		if (!level.isClientSide && level.getBlockEntity(pos) instanceof BearTrapBlockEntity blockEntity) {
-			if (state.getValue(TRIGGERED) && !blockEntity.hasTrappedEntity()) {
+			if (state.getValue(TRIGGERED) && blockEntity.getTrappedEntity() == null) {
 				level.setBlock(pos, state.setValue(TRIGGERED, false).setValue(VINES, false), 3);
 				level.gameEvent(GameEvent.BLOCK_DEACTIVATE, pos, GameEvent.Context.of(state));
 
@@ -120,27 +120,30 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 			if (state.getValue(TRIGGERED)) {
 				if (bearTrapBlockEntity.getTrappedEntity() == entity) {
 					entity.makeStuckInBlock(state, new Vec3(0.0F, 0.0D, 0.0F));
+
 					if ((entity.xOld != entity.getX() || entity.zOld != entity.getZ())) {
-						double d0 = Math.abs(entity.getX() - entity.xOld);
-						double d1 = Math.abs(entity.getZ() - entity.zOld);
-						if (d0 >= (double) 0.003F || d1 >= (double) 0.003F) {
+						double dx = Math.abs(entity.getX() - entity.xOld);
+						double dz = Math.abs(entity.getZ() - entity.zOld);
+						if (dx >= (double) 0.003F || dz >= (double) 0.003F) {
 							entity.hurt(IWDamageSources.bearTrap(level.registryAccess()), 1.0F);
 						}
 					}
+
+					entity.makeStuckInBlock(state, new Vec3(0.0F, 0.0D, 0.0F));
 				}
+
 				return;
 			}
 
 			if (entity instanceof LivingEntity livingEntity) {
-				level.setBlock(pos, state.setValue(TRIGGERED, true).setValue(VINES, !state.getValue(VINES)), 3);
-
 				level.setBlock(pos, state.setValue(TRIGGERED, true), 3);
+				
 				level.gameEvent(GameEvent.BLOCK_ACTIVATE, pos, GameEvent.Context.of(state));
-				livingEntity.hurt(IWDamageSources.bearTrap(level.registryAccess()), 2.0F);
 				level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventRegistry.BEAR_TRAP_CLOSE.get(),
 						SoundSource.BLOCKS, 1f, 1f, false);
 
-				bearTrapBlockEntity.setTrappedEntity(livingEntity);
+				livingEntity.hurt(IWDamageSources.bearTrap(level.registryAccess()), 2.0F);
+				bearTrapBlockEntity.trapEntity(livingEntity);
 			}
 		}
 	}
