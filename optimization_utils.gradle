@@ -14,12 +14,13 @@ static def calculateMD5Hash(File file) {
 
 // Load cache with file hashes, to avoid re-optimizing files that are untouched
 def getOrCreateCache(String cacheFileName) {
-	def cache = [:]
+	LinkedHashMap<?, ?> cache = [:]
 	if (file(cacheFileName).exists()) {
-		cache = new JsonSlurper().parse(file(cacheFileName))
-		println("Loaded " + cache.size() + " entries from cache.")
+		cache = new JsonSlurper().parse(file(cacheFileName)) as LinkedHashMap<?, ?>
+		println("Loaded %s entries from cache (%s).".formatted(cache.size(), cacheFileName))
 	} else {
 		file(cacheFileName).createNewFile()
+		println("Created new cache file: %s".formatted(cacheFileName))
 	}
 
 	return cache
@@ -28,164 +29,120 @@ def getOrCreateCache(String cacheFileName) {
 processResources {
 	// Minify JSON files
 	doLast {
-		def minifyStart = System.currentTimeMillis()
-		def filesMinified = 0
-		def bytesSaved = 0
+		long minifyStart = System.currentTimeMillis()
+		int filesMinified = 0
+		int bytesSaved = 0
+		int bytesProcessed = 0
 
-		fileTree(dir: outputs.files.asPath, include: '**/*.json').each {
+		println("Discovering JSON files in %s...".formatted(outputs.files.asPath))
+		ConfigurableFileTree jsonFiles = fileTree(dir: outputs.files.asPath, include: '**/*.json')
+		int totalFiles = jsonFiles.size()
+		println("Found %s JSON files in %sms.".formatted(totalFiles, (System.currentTimeMillis() - minifyStart)))
+		int processedFiles = 0
+
+		jsonFiles.each {
 			File file = it
 			filesMinified++
-			def oldLength = file.length()
+			long oldLength = file.length()
+			bytesProcessed += oldLength
 			file.text = JsonOutput.toJson(new JsonSlurper().parse(file))
 			bytesSaved += (oldLength - file.length())
+			processedFiles++
+
+			int progress = (int) Math.ceil((processedFiles * 100) / totalFiles)
+			print("\rMinifying JSON files... %s%% (%s KB processed)".formatted(progress, (bytesProcessed / 1024).round()))
+			System.out.flush() // Ensure the output is flushed
 		}
 
-		// Format the bytes saved to KB, and add commas
-		bytesSaved = String.format("%,d", (bytesSaved / 1024).toLong())
-
-		println('Minified ' + filesMinified + ' JSON files, saving ' + bytesSaved + ' KB. Took ' + (System.currentTimeMillis() - minifyStart) + 'ms.')
+		println("\nFinished minifying %s files, saving %s KB in %sms.".formatted(filesMinified, (bytesSaved / 1024).round(), (System.currentTimeMillis() - minifyStart)))
 	}
 }
 
-void optimizePNGFile(File file) {
+tasks.named('jar', Jar).configure {
+	// Run optimize tasks
+	dependsOn('optimizePng')
+	dependsOn('optimizeOgg')
+}
+
+void optimizeFile(File file, String command, List<String> args, File tempDir = null) {
 	long size = file.length()
+	File tempFile = tempDir ? new File(tempDir, file.name) : file
 
 	exec {
-		executable "optipng"
-		args "-q", "-o7", "-zm1-9", "-strip", "all", file
+		executable command
+		args args + [file, tempFile]
 	}
 
-	long newSize = file.length()
-	if (newSize < size) {
-		System.out.format("Reduced file size of %s from %d bytes to %d bytes (reduced by %.2f%%)\n",
-				file, size, newSize, ((double) (size - newSize)) / ((double) size) * 100.0)
+	if (tempDir && tempFile.length() < size) {
+		Files.move(tempFile.toPath(), file.toPath(), StandardCopyOption.REPLACE_EXISTING)
+	}
+}
+
+void optimizeFiles(String fileType, String command, List<String> args, String cacheFileName, String includePattern) {
+	try {
+		exec {
+			commandLine command, "--version"
+		}
+
+		println("\nBeginning optimization of %s files...".formatted(fileType))
+
+		long minifyStart = System.currentTimeMillis()
+		int originalSize = 0
+		int newSize = 0
+		int filesOptimized = 0
+
+		println("Discovering %s files in %s...".formatted(fileType, sourceSets.main.resources.srcDirs[0]))
+		ConfigurableFileTree files = fileTree(dir: sourceSets.main.resources.srcDirs[0], include: includePattern)
+		int totalFiles = files.size()
+		println("Found %s %s files in %sms.".formatted(totalFiles, fileType, (System.currentTimeMillis() - minifyStart)))
+		LinkedHashMap<?, ?> cache = getOrCreateCache(cacheFileName)
+		File tempDir = fileType == "OGG" ? Files.createTempDirectory("optimizeOgg").toFile() : null
+		int processedFiles = 0
+
+		files.each {
+			originalSize += it.length()
+
+			int progress = (int) Math.ceil((processedFiles * 100) / totalFiles)
+			print("\rOptimizing %s files... %s%% (%s KB processed)".formatted(fileType, progress, (originalSize / 1024).round()))
+			System.out.flush()
+			processedFiles++
+
+			if (cache.containsKey(it.path) && cache[it.path] == calculateMD5Hash(it)) {
+				newSize += it.length()
+				return
+			} else {
+				filesOptimized++
+				optimizeFile(it, command, args, tempDir)
+				newSize += it.length()
+				cache.put(it.path, calculateMD5Hash(it))
+			}
+		}
+
+		if (tempDir) {
+			tempDir.delete()
+		}
+
+		println("\nFinished optimizing %s files, saving %s KB in %sms.".formatted(filesOptimized, ((originalSize - newSize) / 1024).toLong(), (System.currentTimeMillis() - minifyStart)))
+
+		if (filesOptimized > 0) {
+			file(cacheFileName).text = JsonOutput.toJson(cache)
+			println("Saved " + cache.size() + " entries to cache.")
+		}
+	} catch (Exception e) {
+		println("An error occurred while attempting to optimize %s files.".formatted(fileType))
+		println("%s may not be available. Please consider installing %s, and ensure it is added to your PATH.".formatted(command, command))
+		e.printStackTrace()
 	}
 }
 
 tasks.register('optimizePng').configure {
 	doLast {
-		try {
-			exec {
-				commandLine "optipng", "-v"
-			}
-			// OptiPNG is available, continue with the task
-			def pngPatterns = ["**/*.png"]
-			def cache = getOrCreateCache(".optimizePngCache")
-
-			// Minimize any PNGs found
-			def originalSize = 0
-			def newSize = 0
-			def imagesMinimized = 0
-
-			for (dir in sourceSets.main.resources.srcDirs) {
-				fileTree(dir: dir, includes: pngPatterns).each {
-					// Skip files that are already optimized
-					if (cache.containsKey(it.path) && cache[it.path] == calculateMD5Hash(it)) {
-						return
-					} else {
-						imagesMinimized++
-						originalSize += it.length()
-						optimizePNGFile(it)
-						newSize += it.length()
-
-						// Update the cache with the new file hash
-						cache[it.path] = calculateMD5Hash(it)
-					}
-				}
-			}
-
-			if (imagesMinimized > 0) {
-				// Format the bytes saved to KB, and add commas
-				def bytesSaved = String.format("%,d", ((originalSize - newSize) / 1024).toLong())
-				println("Minimized " + imagesMinimized + " PNGs, saving " + bytesSaved + " KB.")
-
-				// Save the cache
-				file(".optimizePngCache").text = JsonOutput.toJson(cache)
-				println("Saved " + cache.size() + " entries to cache.")
-			} else {
-				println("No PNGs were optimized.")
-			}
-		} catch (Exception e) {
-			// OptiPNG is not available
-			println("An error occurred while attempting to optimize PNGs.")
-			println("OptiPNG may not be available. Please consider installing OptiPNG, and ensure it is added to your PATH.")
-			println("https://optipng.sourceforge.net/")
-
-			e.printStackTrace()
-		}
-	}
-}
-
-void optimizeOGGFile(File file, File tempDir) {
-	long size = file.length()
-	File tempFile = new File(tempDir, file.name)
-
-	exec {
-		executable "optivorbis"
-		args "-q", file, tempFile
-	}
-
-	long newSize = tempFile.length()
-	if (newSize < size) {
-		System.out.format("Reduced file size of %s from %d bytes to %d bytes (reduced by %.2f%%)\n",
-				file, size, newSize, ((double) (size - newSize)) / ((double) size) * 100.0)
-
-		// Copy the optimized file back to the original location
-		Files.move(tempFile.toPath(), file.toPath(), StandardCopyOption.REPLACE_EXISTING)
+		optimizeFiles("PNG", "optipng", ["-q", "-o7", "-zm1-9", "-strip", "all"], ".optimizePngCache", '**/*.png')
 	}
 }
 
 tasks.register('optimizeOgg').configure {
 	doLast {
-		try {
-			def oggPatterns = ["**/*.ogg"]
-			def cache = getOrCreateCache(".optimizeOggCache")
-
-			// Create a temporary directory
-			File tempDir = Files.createTempDirectory("optimizeOgg").toFile()
-
-			// Minimize any OGGs found
-			def originalSize = 0
-			def newSize = 0
-			def soundsMinimized = 0
-
-			for (dir in sourceSets.main.resources.srcDirs) {
-				fileTree(dir: dir, includes: oggPatterns).each {
-					// Skip files that are already optimized
-					if (cache.containsKey(it.path) && cache[it.path] == calculateMD5Hash(it)) {
-						return
-					} else {
-						soundsMinimized++
-						originalSize += it.length()
-						optimizeOGGFile(it, tempDir)
-						newSize += it.length()
-
-						// Update the cache with the new file hash
-						cache[it.path] = calculateMD5Hash(it)
-					}
-				}
-			}
-
-			tempDir.delete()
-
-			if (soundsMinimized > 0) {
-				// Format the bytes saved to KB, and add commas
-				def bytesSaved = String.format("%,d", ((originalSize - newSize) / 1024).toLong())
-				println("Minimized " + soundsMinimized + " OGGs, saving " + bytesSaved + " KB.")
-
-				// Save the cache
-				file(".optimizeOggCache").text = JsonOutput.toJson(cache)
-				println("Saved " + cache.size() + " entries to cache.")
-			} else {
-				println("No OGGs were optimized.")
-			}
-		} catch (Exception e) {
-			// OptiVorbis is not available
-			println("An error occurred while attempting to optimize OGGs.")
-			println("OptiVorbis may not be available. Please consider installing OptiVorbis, and ensure it is added to your PATH.")
-			println("https://github.com/OptiVorbis/OptiVorbis")
-
-			e.printStackTrace()
-		}
+		optimizeFiles("OGG", "optivorbis", ["-q"], ".optimizeOggCache", '**/*.ogg')
 	}
 }

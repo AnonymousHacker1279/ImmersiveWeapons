@@ -111,27 +111,6 @@ public class ItemModelGenerator extends ItemModelProvider implements DataGenUtil
 	}
 
 	/**
-	 * Generate a handheld item.
-	 *
-	 * @param item the <code>Item</code> to generate a model for
-	 */
-	private void handheldItem(Item item) {
-		getBuilder(item.toString())
-				.parent(new ModelFile.UncheckedModelFile("item/handheld"))
-				.texture("layer0", getItemLocation(item));
-	}
-
-	/**
-	 * Generate a spawn egg item.
-	 *
-	 * @param item the <code>Item</code> to generate a model for
-	 */
-	private void spawnEggItem(Item item) {
-		getBuilder(item.toString())
-				.parent(new ModelFile.UncheckedModelFile("item/template_spawn_egg"));
-	}
-
-	/**
 	 * Generate a skull item.
 	 *
 	 * @param item the <code>Item</code> to generate a model for
