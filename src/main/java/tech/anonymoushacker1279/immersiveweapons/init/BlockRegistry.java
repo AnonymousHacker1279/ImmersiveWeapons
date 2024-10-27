@@ -185,6 +185,7 @@ public class BlockRegistry {
 	public static final Supplier<WoodenTableBlock> STARDUST_TABLE = BLOCKS.register("stardust_table", () -> new WoodenTableBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(3.0f).sound(SoundType.WOOD).noOcclusion()));
 	// Stone tier
 	public static final Supplier<WoodenSpikesBlock> WOODEN_SPIKES = BLOCKS.register("wooden_spikes", () -> new WoodenSpikesBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(3.0f).sound(SoundType.WOOD).requiresCorrectToolForDrops().noOcclusion()));
+	public static final Supplier<CelestialAltarBlock> CELESTIAL_ALTAR = BLOCKS.register("celestial_altar", () -> new CelestialAltarBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(3.0f).sound(SoundType.WOOD).requiresCorrectToolForDrops().noOcclusion()));
 
 	// Breakable via shovel
 	// Wood tier

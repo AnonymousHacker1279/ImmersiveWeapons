@@ -4,76 +4,103 @@
       "entries": 3,
       "trades": [
         {
-          "emerald_cost": 1,
-          "item": {
+          "item_1": {
+            "count": 1,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 8,
+          "result": {
             "count": 1,
             "id": "immersiveweapons:bandage"
-          },
-          "max_uses": 8
+          }
         },
         {
-          "emerald_cost": 2,
-          "item": {
+          "item_1": {
+            "count": 2,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 8,
+          "result": {
             "count": 1,
             "id": "immersiveweapons:painkillers"
-          },
-          "max_uses": 8
+          }
         },
         {
-          "emerald_cost": 2,
-          "item": {
+          "item_1": {
+            "count": 2,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 6,
+          "result": {
             "count": 1,
             "id": "immersiveweapons:iron_ring"
-          },
-          "max_uses": 6
+          }
         },
         {
-          "emerald_cost": 2,
-          "item": {
+          "item_1": {
+            "count": 2,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 12,
+          "result": {
             "count": 8,
             "id": "immersiveweapons:iron_musket_ball"
-          },
-          "max_uses": 12
+          }
         },
         {
-          "emerald_cost": 1,
-          "item": {
+          "item_1": {
+            "count": 1,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 12,
+          "result": {
             "count": 8,
             "id": "immersiveweapons:iron_arrow"
-          },
-          "max_uses": 12
+          }
         },
         {
-          "emerald_cost": 16,
-          "item": {
+          "item_1": {
+            "count": 16,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 3,
+          "result": {
             "count": 1,
             "id": "immersiveweapons:satchel"
-          },
-          "max_uses": 3
+          }
         },
         {
-          "emerald_cost": 16,
-          "item": {
+          "item_1": {
+            "count": 16,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 3,
+          "result": {
             "count": 1,
             "id": "immersiveweapons:powder_horn"
-          },
-          "max_uses": 3
+          }
         },
         {
-          "emerald_cost": 5,
-          "item": {
+          "item_1": {
+            "count": 5,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 1,
+          "result": {
             "count": 1,
             "id": "immersiveweapons:bloody_sacrifice"
-          },
-          "max_uses": 1
+          }
         },
         {
-          "emerald_cost": 2,
-          "item": {
+          "item_1": {
+            "count": 2,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 6,
+          "result": {
             "count": 3,
             "id": "immersiveweapons:mortar_shell"
-          },
-          "max_uses": 6
+          }
         }
       ]
     },
@@ -81,60 +108,81 @@
       "entries": 1,
       "trades": [
         {
-          "emerald_cost": 6,
-          "item": {
+          "item_1": {
+            "count": 6,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 3,
+          "result": {
             "count": 1,
             "id": "immersiveweapons:bloated_heart"
-          },
-          "max_uses": 3
+          }
         },
         {
-          "emerald_cost": 5,
-          "item": {
+          "item_1": {
+            "count": 5,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 3,
+          "result": {
             "count": 1,
             "id": "immersiveweapons:cobalt_ring"
-          },
-          "max_uses": 3
+          }
         },
         {
-          "emerald_cost": 0,
-          "item": {
+          "item_1": {
+            "count": 7,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 3,
+          "result": {
             "count": 1,
             "id": "immersiveweapons:cobalt_pike"
-          },
-          "max_uses": 3
+          }
         },
         {
-          "emerald_cost": 6,
-          "item": {
+          "item_1": {
+            "count": 6,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 4,
+          "result": {
             "count": 2,
             "id": "immersiveweapons:molotov_cocktail"
-          },
-          "max_uses": 4
+          }
         },
         {
-          "emerald_cost": 3,
-          "item": {
+          "item_1": {
+            "count": 3,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 6,
+          "result": {
             "count": 2,
             "id": "immersiveweapons:smoke_grenade"
-          },
-          "max_uses": 6
+          }
         },
         {
-          "emerald_cost": 3,
-          "item": {
+          "item_1": {
+            "count": 3,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 6,
+          "result": {
             "count": 2,
             "id": "immersiveweapons:smoke_grenade_arrow"
-          },
-          "max_uses": 6
+          }
         },
         {
-          "emerald_cost": 16,
-          "item": {
+          "item_1": {
+            "count": 16,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 2,
+          "result": {
             "count": 1,
             "id": "minecraft:recovery_compass"
-          },
-          "max_uses": 2
+          }
         }
       ]
     },
@@ -142,60 +190,88 @@
       "entries": 1,
       "trades": [
         {
-          "emerald_cost": 32,
-          "item": {
+          "item_1": {
+            "count": 32,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 1,
+          "result": {
             "count": 1,
             "id": "immersiveweapons:deadeye_pendant"
           },
-          "max_uses": 1
+          "xp_reward": 7
         },
         {
-          "emerald_cost": 32,
-          "item": {
+          "item_1": {
+            "count": 32,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 1,
+          "result": {
             "count": 1,
             "id": "immersiveweapons:melee_masters_molten_glove"
           },
-          "max_uses": 1
+          "xp_reward": 7
         },
         {
-          "emerald_cost": 24,
-          "item": {
+          "item_1": {
+            "count": 24,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 1,
+          "result": {
             "count": 1,
             "id": "immersiveweapons:netherite_shield"
           },
-          "max_uses": 1
+          "xp_reward": 5
         },
         {
-          "emerald_cost": 28,
-          "item": {
+          "item_1": {
+            "count": 28,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 1,
+          "result": {
             "count": 1,
             "id": "immersiveweapons:berserkers_amulet"
           },
-          "max_uses": 1
+          "xp_reward": 5
         },
         {
-          "emerald_cost": 28,
-          "item": {
+          "item_1": {
+            "count": 28,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 1,
+          "result": {
             "count": 1,
             "id": "immersiveweapons:amethyst_ring"
           },
-          "max_uses": 1
+          "xp_reward": 3
         },
         {
-          "emerald_cost": 28,
-          "item": {
+          "item_1": {
+            "count": 28,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 1,
+          "result": {
             "count": 1,
             "id": "immersiveweapons:emerald_ring"
           },
-          "max_uses": 1
+          "xp_reward": 3
         },
         {
-          "emerald_cost": 30,
-          "item": {
+          "item_1": {
+            "count": 30,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 1,
+          "result": {
             "count": 1,
             "id": "minecraft:totem_of_undying"
           },
-          "max_uses": 1
+          "xp_reward": 5
         }
       ]
     }

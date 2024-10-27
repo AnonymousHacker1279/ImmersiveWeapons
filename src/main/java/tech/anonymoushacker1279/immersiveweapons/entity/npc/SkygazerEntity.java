@@ -1,12 +1,5 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.npc;
 
-import net.minecraft.core.Holder;
-import net.minecraft.core.HolderLookup.RegistryLookup;
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.stats.Stats;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -15,18 +8,11 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.npc.AbstractVillager;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.ItemEnchantments;
-import net.minecraft.world.item.trading.MerchantOffer;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.StarmiteEntity;
-import tech.anonymoushacker1279.immersiveweapons.entity.npc.trading.trades.*;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.Objects;
 
@@ -37,110 +23,8 @@ public class SkygazerEntity extends AbstractMerchantEntity {
 	}
 
 	@Override
-	public InteractionResult mobInteract(Player player, InteractionHand hand) {
-		ItemStack itemInHand = player.getItemInHand(hand);
-		if (!itemInHand.is(ItemRegistry.SKYGAZER_SPAWN_EGG.get()) && isAlive() && !isTrading() && !isBaby()) {
-			if (hand == InteractionHand.MAIN_HAND) {
-				player.awardStat(Stats.TALKED_TO_VILLAGER);
-			}
-
-			if (!level().isClientSide) {
-				if (!getOffers().isEmpty()) {
-					// An offer is always added to add enchanting levels from a book to an item in the player's inventory
-					setupAddItemEnchantsTrade(player);
-
-					// An offer is always added to increase the enchantment levels on an item in the player's inventory
-					setupRaiseItemEnchantsTrade(player);
-
-					setTradingPlayer(player);
-					openTradingScreen(player, getDisplayName(), 1);
-				}
-			}
-			return InteractionResult.sidedSuccess(level().isClientSide);
-		} else {
-			return super.mobInteract(player, hand);
-		}
-	}
-
-	private void setupRaiseItemEnchantsTrade(Player player) {
-		// Remove any other offers
-		getOffers().removeIf(offer -> (offer instanceof IdentifiableMerchantOffer identifiableMerchantOffer
-				&& identifiableMerchantOffer.getId().equals("enchant_item_for_items")));
-
-		// Get the first enchanted item from the player's inventory
-		ItemStack enchantableItem = ItemStack.EMPTY;
-		for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
-			ItemStack stack = player.getInventory().getItem(i);
-			if (stack.isEnchanted()) {
-				enchantableItem = stack;
-				break;
-			}
-		}
-
-		// If the player has an enchanted item, add an offer to increase the enchantment level
-		if (!enchantableItem.isEmpty()) {
-			EnchantItemForItems trade = new EnchantItemForItems(enchantableItem, ItemRegistry.CELESTIAL_FRAGMENT.get(), 1);
-			MerchantOffer offer = trade.getOffer(this, player.getRandom());
-
-			RegistryLookup<Enchantment> enchantmentLookup = player.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
-			if (trade.getTotalEnchantmentLevels() > GeneralUtilities.getTotalEnchantmentLevels(enchantmentLookup, enchantableItem)) {
-				getOffers().add(offer);
-			}
-		}
-	}
-
-	private void setupAddItemEnchantsTrade(Player player) {
-		// Remove any other offers
-		getOffers().removeIf(offer -> (offer instanceof IdentifiableMerchantOffer identifiableMerchantOffer
-				&& identifiableMerchantOffer.getId().equals("enchant_item_with_enchanting_books")));
-
-		// Get the first enchanted item from the player's inventory
-		ItemStack enchantableItem = ItemStack.EMPTY;
-		for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
-			ItemStack stack = player.getInventory().getItem(i);
-			if (stack.isEnchanted()) {
-				enchantableItem = stack;
-				break;
-			}
-		}
-
-		// Get the first enchanted book from the player's inventory
-		ItemStack enchantableBook = ItemStack.EMPTY;
-		for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
-			ItemStack stack = player.getInventory().getItem(i);
-			if (stack.is(Items.ENCHANTED_BOOK)) {
-				enchantableBook = stack;
-				break;
-			}
-		}
-
-		// Check the enchants on the two items. If the book has the same level or lower, remove the offer
-		if (!enchantableItem.isEmpty() && !enchantableBook.isEmpty()) {
-			ItemEnchantments existingEnchantments = enchantableItem.getAllEnchantments(player.registryAccess().lookupOrThrow(Registries.ENCHANTMENT));
-			ItemEnchantments bookEnchantments = enchantableBook.getOrDefault(DataComponents.STORED_ENCHANTMENTS, ItemEnchantments.EMPTY);
-
-			for (Holder<Enchantment> enchantment : bookEnchantments.keySet()) {
-				int bookLevel = bookEnchantments.getLevel(enchantment);
-				int existingLevel = existingEnchantments.getLevel(enchantment);
-
-				if (existingLevel >= bookLevel) {
-					getOffers().removeIf(offer -> (offer instanceof IdentifiableMerchantOffer identifiableMerchantOffer
-							&& identifiableMerchantOffer.getId().equals("enchant_item_with_enchanting_books")));
-					break;
-				}
-			}
-		}
-
-		// If the player has an enchanted book, add an offer to add the enchantments to an item
-		if (!enchantableBook.isEmpty()) {
-			EnchantItemWithEnchantingBooks trade = new EnchantItemWithEnchantingBooks(enchantableItem, enchantableBook, 1);
-			MerchantOffer offer = trade.getOffer(this, player.getRandom());
-
-			RegistryLookup<Enchantment> enchantmentLookup = player.registryAccess().lookupOrThrow(Registries.ENCHANTMENT);
-			if (trade.getTotalEnchantmentLevels() > GeneralUtilities.getTotalEnchantmentLevels(enchantmentLookup, enchantableItem)) {
-				getOffers().add(offer);
-			}
-		}
+	protected Item getSpawnEgg() {
+		return ItemRegistry.SKYGAZER_SPAWN_EGG.get();
 	}
 
 	@Override

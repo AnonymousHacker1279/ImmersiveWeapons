@@ -24,11 +24,8 @@ import java.util.*;
 public class StarForgeMenu extends AbstractContainerMenu {
 
 	public final Container container;
-	public final ContainerData containerData;
-	public final Player player;
-
-	public final Slot ingotInputSlot;
-	public final Slot secondaryInputSlot;
+	private final ContainerData containerData;
+	private final Player player;
 
 	public List<StarForgeRecipe> availableRecipes = new ArrayList<>(25);
 
@@ -44,7 +41,7 @@ public class StarForgeMenu extends AbstractContainerMenu {
 		player = inventory.player;
 
 		// Primary input slot at (8, 52)
-		ingotInputSlot = addSlot(new Slot(container, 0, 8, 52) {
+		addSlot(new Slot(container, 0, 8, 52) {
 			@Override
 			public void setChanged() {
 				super.setChanged();
@@ -53,7 +50,7 @@ public class StarForgeMenu extends AbstractContainerMenu {
 		});
 
 		// Secondary input slot at (34, 52)
-		secondaryInputSlot = addSlot(new Slot(container, 1, 34, 52) {
+		addSlot(new Slot(container, 1, 34, 52) {
 			@Override
 			public void setChanged() {
 				super.setChanged();

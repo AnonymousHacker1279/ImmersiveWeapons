@@ -1,6 +1,7 @@
 {
   "values": [
     "#immersiveweapons:weapons/firearms",
+    "#immersiveweapons:weapons/staffs",
     "#c:tools/bow"
   ]
 }

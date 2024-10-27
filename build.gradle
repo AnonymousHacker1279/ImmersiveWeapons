@@ -57,7 +57,7 @@ jarJar.enable()
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
-println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
+println('Java: ' + System.getProperty('java.version') + ' | JVM: ' + System.getProperty('java.vm.version') + ' (' + System.getProperty('java.vendor') + ') | Arch: ' + System.getProperty('os.arch'))
 
 minecraft.accessTransformers.file rootProject.file('src/main/resources/META-INF/accesstransformer.cfg')
 
@@ -94,7 +94,7 @@ runs {
 		systemProperty 'forge.logging.markers', 'REGISTRIES'
 		systemProperty 'forge.logging.console.level', 'debug'
 
-		jvmArguments.addAll '-Xmx6G'
+		jvmArguments.addAll '-Xmx6G', '-XX:NonProfiledCodeHeapSize=512M'
 
 		// If the selected toolchain is a JBR, enable DCEVM for improved hotswapping
 		if (it.project.javaToolchains.launcherFor(java.toolchain).map { it.metadata.vendor }.getOrElse("").contains("JetBrains")) {
@@ -165,7 +165,7 @@ dependencies {
 }
 
 tasks.named('processResources', ProcessResources).configure {
-	def replaceProperties = [
+	LinkedHashMap<String, String> replaceProperties = [
 			minecraft_version   : minecraft_version, minecraft_version_range: minecraft_version_range,
 			neoforge_version    : neoforge_version, neoforge_version_range: neoforge_version_range,
 			loader_version_range: loader_version_range, mod_version: mod_version
@@ -232,7 +232,7 @@ publishing {
 		maven {
 			name "AnonymousHacker1279"
 
-			def baseMavenUrl = "https://maven.anonymoushacker1279.tech/"
+			String baseMavenUrl = "https://maven.anonymoushacker1279.tech/"
 			url mod_version.contains("SNAPSHOT") ? baseMavenUrl + "snapshots" : baseMavenUrl + "releases"
 
 			credentials(PasswordCredentials)
@@ -247,7 +247,7 @@ if (file("RELEASE_NOTES.md").exists()) {
 	publisher {
 		apiKeys {
 			// Load API keys from tokens.properties file
-			def tokens = new Properties()
+			Properties tokens = new Properties()
 			file("tokens.properties").withInputStream {
 				stream -> tokens.load(stream)
 			}
@@ -298,4 +298,11 @@ tasks.named('javadoc', Javadoc).configure {
 tasks.withType(JavaCompile).configureEach {
 	options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
 	options.fork = true // Use a separate JVM process for Java compilation
+}
+
+idea {
+	module {
+		downloadSources = true
+		downloadJavadoc = true
+	}
 }

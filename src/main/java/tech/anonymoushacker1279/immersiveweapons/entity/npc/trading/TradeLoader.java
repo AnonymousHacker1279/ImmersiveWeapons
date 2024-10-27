@@ -13,7 +13,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.npc.VillagerTrades.ItemListing;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
-import tech.anonymoushacker1279.immersiveweapons.entity.npc.trading.trades.ItemsForEmeralds;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.SyncMerchantTradesPayload;
 
 import java.util.*;
@@ -57,14 +56,16 @@ public class TradeLoader extends SimpleJsonResourceReloadListener {
 		List<TradeGroup> tradeGroups = TRADES.get(type).tradeGroups();
 
 		for (TradeGroup tradeGroup : tradeGroups) {
-			List<ItemsForEmeralds> trades = tradeGroup.trades();
+			List<SimpleItemListing> trades = tradeGroup.trades();
 			ItemListing[] itemListingArray = trades.stream()
-					.map(trade -> (ItemListing) new ItemsForEmeralds(
-							trade.itemStack(),
-							trade.emeraldCost(),
+					.map(trade -> (ItemListing) new SimpleItemListing(
+							trade.item1(),
+							trade.item2(),
+							trade.result(),
 							trade.maxUses(),
 							trade.xpReward(),
-							trade.priceMultiplier()))
+							trade.priceMultiplier()
+					))
 					.toArray(ItemListing[]::new);
 			tradesMap.put(tradeGroup.entries(), itemListingArray);
 		}

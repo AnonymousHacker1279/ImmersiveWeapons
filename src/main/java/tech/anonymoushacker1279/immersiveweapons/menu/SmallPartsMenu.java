@@ -24,12 +24,11 @@ public class SmallPartsMenu extends AbstractContainerMenu {
 	private static final int USE_ROW_SLOT_END = 38;
 	public static final List<Pair<Item, Item>> ALL_CRAFTABLES = new ArrayList<>(15);
 	private final ContainerLevelAccess access;
-	final DataSlot selectedPartsPatternIndex = DataSlot.standalone();
-	Runnable slotUpdateListener = () -> {
-	};
-	final Slot materialSlot;
+	private final DataSlot selectedPartsPatternIndex = DataSlot.standalone();
+	private Runnable slotUpdateListener = () -> {};
+	private final Slot materialSlot;
 	private final Slot resultSlot;
-	long lastSoundTime;
+	private long lastSoundTime;
 
 	private final Container inputContainer = new SimpleContainer(1) {
 		@Override

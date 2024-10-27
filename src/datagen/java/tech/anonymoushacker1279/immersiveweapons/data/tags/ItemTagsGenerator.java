@@ -249,11 +249,14 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		// Ranged weapon tags
 		tag(IWItemTagGroups.RANGED_WEAPONS)
 				.addTag(IWItemTagGroups.FIREARMS)
+				.addTags(IWItemTagGroups.STAFFS)
 				.addTag(Tags.Items.TOOLS_BOW);
 
 		// Weapon and tools tags
 		tag(IWItemTagGroups.WEAPONS_AND_TOOLS)
 				.addTag(Tags.Items.TOOLS)
+				.addTags(IWItemTagGroups.PIKES)
+				.addTags(IWItemTagGroups.GAUNTLETS)
 				.addTag(IWItemTagGroups.RANGED_WEAPONS);
 
 		// Staff tags
