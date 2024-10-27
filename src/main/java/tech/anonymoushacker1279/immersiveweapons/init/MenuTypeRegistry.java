@@ -31,4 +31,5 @@ public class MenuTypeRegistry {
 
 		return new StarForgeMenu(id, inv, availableRecipes);
 	}));
+	public static final Supplier<MenuType<CelestialAltarMenu>> CELESTIAL_ALTAR_MENU = MENU_TYPES.register("celestial_altar", () -> IMenuTypeExtension.create((id, inv, data) -> new CelestialAltarMenu(id, inv, inv.player.registryAccess().lookupOrThrow(Registries.ENCHANTMENT))));
 }

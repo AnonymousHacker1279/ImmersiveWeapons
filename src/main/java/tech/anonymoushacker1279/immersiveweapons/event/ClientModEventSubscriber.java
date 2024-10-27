@@ -90,6 +90,7 @@ public class ClientModEventSubscriber {
 		event.register(MenuTypeRegistry.TESLA_SYNTHESIZER_MENU.get(), TeslaSynthesizerScreen::new);
 		event.register(MenuTypeRegistry.AMMUNITION_TABLE_MENU.get(), AmmunitionTableScreen::new);
 		event.register(MenuTypeRegistry.STAR_FORGE_MENU.get(), StarForgeScreen::new);
+		event.register(MenuTypeRegistry.CELESTIAL_ALTAR_MENU.get(), CelestialAltarScreen::new);
 	}
 
 	@SubscribeEvent

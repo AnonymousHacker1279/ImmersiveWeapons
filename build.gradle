@@ -94,7 +94,7 @@ runs {
 		systemProperty 'forge.logging.markers', 'REGISTRIES'
 		systemProperty 'forge.logging.console.level', 'debug'
 
-		jvmArguments.addAll '-Xmx6G'
+		jvmArguments.addAll '-Xmx6G', '-XX:NonProfiledCodeHeapSize=512M'
 
 		// If the selected toolchain is a JBR, enable DCEVM for improved hotswapping
 		if (it.project.javaToolchains.launcherFor(java.toolchain).map { it.metadata.vendor }.getOrElse("").contains("JetBrains")) {

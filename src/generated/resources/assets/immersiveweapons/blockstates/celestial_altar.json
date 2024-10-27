@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "immersiveweapons:block/celestial_altar",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "immersiveweapons:block/celestial_altar"
+    },
+    "facing=south": {
+      "model": "immersiveweapons:block/celestial_altar",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "immersiveweapons:block/celestial_altar",
+      "y": 270
+    }
+  }
+}

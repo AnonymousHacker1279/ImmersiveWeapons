@@ -4,21 +4,22 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.*;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.DifficultyInstance;
+import net.minecraft.stats.Stats;
+import net.minecraft.world.*;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.npc.AbstractVillager;
 import net.minecraft.world.entity.npc.VillagerTrades.ItemListing;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
-import tech.anonymoushacker1279.immersiveweapons.entity.npc.trading.TradeGroup;
-import tech.anonymoushacker1279.immersiveweapons.entity.npc.trading.TradeLoader;
-import tech.anonymoushacker1279.immersiveweapons.entity.npc.trading.trades.ItemsForEmeralds;
+import tech.anonymoushacker1279.immersiveweapons.entity.npc.trading.*;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public abstract class AbstractMerchantEntity extends AbstractVillager implements GrantAdvancementOnDiscovery {
@@ -101,6 +102,32 @@ public abstract class AbstractMerchantEntity extends AbstractVillager implements
 	}
 
 	@Override
+	public InteractionResult mobInteract(Player player, InteractionHand hand) {
+		if (player.isSecondaryUseActive()) {
+			return InteractionResult.PASS;
+		}
+
+		ItemStack itemInHand = player.getItemInHand(hand);
+		if (!itemInHand.is(getSpawnEgg()) && isAlive() && !isTrading() && !isBaby()) {
+			if (hand == InteractionHand.MAIN_HAND) {
+				player.awardStat(Stats.TALKED_TO_VILLAGER);
+			}
+
+			if (!level().isClientSide) {
+				if (!getOffers().isEmpty()) {
+					setTradingPlayer(player);
+					openTradingScreen(player, getDisplayName(), 1);
+				}
+			}
+			return InteractionResult.sidedSuccess(level().isClientSide);
+		} else {
+			return super.mobInteract(player, hand);
+		}
+	}
+
+	abstract protected Item getSpawnEgg();
+
+	@Override
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
 		return false;
 	}
@@ -119,12 +146,14 @@ public abstract class AbstractMerchantEntity extends AbstractVillager implements
 		for (TradeGroup group : tradeGroups) {
 			int entries = group.entries();
 			ItemListing[] trades = group.trades().stream()
-					.map(trade -> (ItemListing) new ItemsForEmeralds(
-							trade.itemStack(),
-							trade.emeraldCost(),
+					.map(trade -> (ItemListing) new SimpleItemListing(
+							trade.item1(),
+							trade.item2(),
+							trade.result(),
 							trade.maxUses(),
 							trade.xpReward(),
-							trade.priceMultiplier()))
+							trade.priceMultiplier()
+					))
 					.toArray(ItemListing[]::new);
 
 			addOffersFromItemListings(getOffers(), trades, entries);
@@ -139,6 +168,8 @@ public abstract class AbstractMerchantEntity extends AbstractVillager implements
 
 	@Override
 	public void addAdditionalSaveData(CompoundTag compound) {
+		// Before saving, remove any IdentifiableMerchantOffers
+
 		super.addAdditionalSaveData(compound);
 
 		compound.putInt("tradeRefreshTime", entityData.get(TRADE_REFRESH_TIME));

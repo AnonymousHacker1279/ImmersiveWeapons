@@ -4,76 +4,103 @@
       "entries": 3,
       "trades": [
         {
-          "emerald_cost": 1,
-          "item": {
+          "item_1": {
+            "count": 1,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 8,
+          "result": {
             "count": 1,
             "id": "immersiveweapons:bandage"
-          },
-          "max_uses": 8
+          }
         },
         {
-          "emerald_cost": 3,
-          "item": {
+          "item_1": {
+            "count": 3,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 8,
+          "result": {
             "count": 1,
             "id": "immersiveweapons:first_aid_kit"
-          },
-          "max_uses": 8
+          }
         },
         {
-          "emerald_cost": 2,
-          "item": {
+          "item_1": {
+            "count": 2,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 8,
+          "result": {
             "count": 1,
             "id": "immersiveweapons:painkillers"
-          },
-          "max_uses": 8
+          }
         },
         {
-          "emerald_cost": 1,
-          "item": {
+          "item_1": {
+            "count": 1,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 12,
+          "result": {
             "count": 8,
             "id": "immersiveweapons:cobalt_musket_ball"
-          },
-          "max_uses": 12
+          }
         },
         {
-          "emerald_cost": 2,
-          "item": {
+          "item_1": {
+            "count": 2,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 12,
+          "result": {
             "count": 8,
             "id": "immersiveweapons:diamond_musket_ball"
-          },
-          "max_uses": 12
+          }
         },
         {
-          "emerald_cost": 1,
-          "item": {
+          "item_1": {
+            "count": 1,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 12,
+          "result": {
             "count": 8,
             "id": "immersiveweapons:cobalt_arrow"
-          },
-          "max_uses": 12
+          }
         },
         {
-          "emerald_cost": 2,
-          "item": {
+          "item_1": {
+            "count": 2,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 12,
+          "result": {
             "count": 8,
             "id": "immersiveweapons:diamond_arrow"
-          },
-          "max_uses": 12
+          }
         },
         {
-          "emerald_cost": 4,
-          "item": {
+          "item_1": {
+            "count": 4,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 2,
+          "result": {
             "count": 1,
             "id": "immersiveweapons:azul_locator"
-          },
-          "max_uses": 2
+          }
         },
         {
-          "emerald_cost": 3,
-          "item": {
+          "item_1": {
+            "count": 3,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 2,
+          "result": {
             "count": 1,
             "id": "minecraft:spyglass"
-          },
-          "max_uses": 2
+          }
         }
       ]
     },
@@ -81,68 +108,95 @@
       "entries": 1,
       "trades": [
         {
-          "emerald_cost": 12,
-          "item": {
+          "item_1": {
+            "count": 12,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 4,
+          "result": {
             "count": 1,
             "id": "immersiveweapons:starstorm_crystal"
-          },
-          "max_uses": 4
+          }
         },
         {
-          "emerald_cost": 12,
-          "item": {
+          "item_1": {
+            "count": 12,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 4,
+          "result": {
             "count": 1,
             "id": "immersiveweapons:astral_crystal"
-          },
-          "max_uses": 4
+          }
         },
         {
-          "emerald_cost": 6,
-          "item": {
+          "item_1": {
+            "count": 6,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 3,
+          "result": {
             "count": 1,
             "id": "immersiveweapons:flintlock_pistol"
-          },
-          "max_uses": 3
+          }
         },
         {
-          "emerald_cost": 7,
-          "item": {
+          "item_1": {
+            "count": 7,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 3,
+          "result": {
             "count": 1,
             "id": "immersiveweapons:blunderbuss"
-          },
-          "max_uses": 3
+          }
         },
         {
-          "emerald_cost": 8,
-          "item": {
+          "item_1": {
+            "count": 8,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 3,
+          "result": {
             "count": 1,
             "id": "immersiveweapons:musket"
-          },
-          "max_uses": 3
+          }
         },
         {
-          "emerald_cost": 28,
-          "item": {
+          "item_1": {
+            "count": 28,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 1,
+          "result": {
             "count": 1,
             "id": "immersiveweapons:meteor_staff"
           },
-          "max_uses": 1
+          "xp_reward": 5
         },
         {
-          "emerald_cost": 28,
-          "item": {
+          "item_1": {
+            "count": 28,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 1,
+          "result": {
             "count": 1,
             "id": "immersiveweapons:cursed_sight_staff"
           },
-          "max_uses": 1
+          "xp_reward": 5
         },
         {
-          "emerald_cost": 32,
-          "item": {
+          "item_1": {
+            "count": 32,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 1,
+          "result": {
             "count": 1,
             "id": "immersiveweapons:night_vision_goggles"
           },
-          "max_uses": 1
+          "xp_reward": 6
         }
       ]
     },
@@ -150,44 +204,85 @@
       "entries": 1,
       "trades": [
         {
-          "emerald_cost": 30,
-          "item": {
+          "item_1": {
+            "count": 30,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 1,
+          "result": {
             "count": 1,
             "id": "immersiveweapons:tesla_sword"
           },
-          "max_uses": 1
+          "xp_reward": 12
         },
         {
-          "emerald_cost": 30,
-          "item": {
+          "item_1": {
+            "count": 30,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 1,
+          "result": {
             "count": 1,
             "id": "immersiveweapons:molten_sword"
           },
-          "max_uses": 1
+          "xp_reward": 12
         },
         {
-          "emerald_cost": 30,
-          "item": {
+          "item_1": {
+            "count": 30,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 1,
+          "result": {
             "count": 1,
             "id": "immersiveweapons:ventus_sword"
           },
-          "max_uses": 1
+          "xp_reward": 12
         },
         {
-          "emerald_cost": 30,
-          "item": {
+          "item_1": {
+            "count": 30,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 1,
+          "result": {
             "count": 1,
             "id": "immersiveweapons:astral_sword"
           },
-          "max_uses": 1
+          "xp_reward": 12
         },
         {
-          "emerald_cost": 30,
-          "item": {
+          "item_1": {
+            "count": 30,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 1,
+          "result": {
             "count": 1,
             "id": "immersiveweapons:starstorm_sword"
           },
-          "max_uses": 1
+          "xp_reward": 12
+        }
+      ]
+    },
+    {
+      "entries": 1,
+      "trades": [
+        {
+          "item_1": {
+            "count": 1,
+            "id": "minecraft:lectern"
+          },
+          "item_2": {
+            "count": 16,
+            "id": "immersiveweapons:celestial_fragment"
+          },
+          "max_uses": 1,
+          "result": {
+            "count": 1,
+            "id": "immersiveweapons:celestial_altar"
+          },
+          "xp_reward": 24
         }
       ]
     }

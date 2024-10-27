@@ -658,6 +658,8 @@ public class BlockStateGenerator extends BlockStateProvider {
 				models().getExistingFile(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "solar_lens")));
 		simpleBlock(BlockRegistry.COMMANDER_PEDESTAL.get(),
 				models().getExistingFile(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "commander_pedestal")));
+		horizontalBlock(BlockRegistry.CELESTIAL_ALTAR.get(),
+				models().getExistingFile(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "celestial_altar")));
 
 		// Tiltros Portal and Frame
 		getVariantBuilder(BlockRegistry.TILTROS_PORTAL.get())
