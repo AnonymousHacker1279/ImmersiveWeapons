@@ -64,13 +64,18 @@ tasks.named('jar', Jar).configure {
 	dependsOn('optimizeOgg')
 }
 
-void optimizeFile(File file, String command, List<String> args, File tempDir = null) {
+void optimizeFile(File file, String command, File tempDir = null) {
 	long size = file.length()
 	File tempFile = tempDir ? new File(tempDir, file.name) : file
 
-	exec {
-		executable command
-		args args + [file, tempFile]
+	if (command == "optipng") {
+		exec {
+			commandLine command, "-q", "-o7", "-zm1-9", "-strip", "all", file
+		}
+	} else if (command == "optivorbis") {
+		exec {
+			commandLine command, "-q", file, tempFile
+		}
 	}
 
 	if (tempDir && tempFile.length() < size) {
@@ -78,7 +83,7 @@ void optimizeFile(File file, String command, List<String> args, File tempDir = n
 	}
 }
 
-void optimizeFiles(String fileType, String command, List<String> args, String cacheFileName, String includePattern) {
+void optimizeFiles(String fileType, String command, String cacheFileName, String includePattern) {
 	try {
 		exec {
 			commandLine command, "--version"
@@ -112,7 +117,7 @@ void optimizeFiles(String fileType, String command, List<String> args, String ca
 				return
 			} else {
 				filesOptimized++
-				optimizeFile(it, command, args, tempDir)
+				optimizeFile(it, command, tempDir)
 				newSize += it.length()
 				cache.put(it.path, calculateMD5Hash(it))
 			}
@@ -137,12 +142,12 @@ void optimizeFiles(String fileType, String command, List<String> args, String ca
 
 tasks.register('optimizePng').configure {
 	doLast {
-		optimizeFiles("PNG", "optipng", ["-q", "-o7", "-zm1-9", "-strip", "all"], ".optimizePngCache", '**/*.png')
+		optimizeFiles("PNG", "optipng", ".optimizePngCache", '**/*.png')
 	}
 }
 
 tasks.register('optimizeOgg').configure {
 	doLast {
-		optimizeFiles("OGG", "optivorbis", ["-q"], ".optimizeOggCache", '**/*.ogg')
+		optimizeFiles("OGG", "optivorbis", ".optimizeOggCache", '**/*.ogg')
 	}
 }
