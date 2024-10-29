@@ -35,7 +35,7 @@ processResources {
 		int bytesProcessed = 0
 
 		println("Discovering JSON files in %s...".formatted(outputs.files.asPath))
-		ConfigurableFileTree jsonFiles = fileTree(dir: outputs.files.asPath, include: '**/*.json')
+		ConfigurableFileTree jsonFiles = fileTree(dir: outputs.files.asPath, include: ['**/*.json', '**/*.mcmeta'])
 		int totalFiles = jsonFiles.size()
 		println("Found %s JSON files in %sms.".formatted(totalFiles, (System.currentTimeMillis() - minifyStart)))
 		int processedFiles = 0
