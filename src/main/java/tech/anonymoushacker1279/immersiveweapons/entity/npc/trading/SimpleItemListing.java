@@ -43,7 +43,7 @@ public record SimpleItemListing(ItemStack item1, ItemStack item2, ItemStack resu
 	public static final StreamCodec<RegistryFriendlyByteBuf, SimpleItemListing> STREAM_CODEC = StreamCodec.composite(
 			ItemStack.STREAM_CODEC,
 			SimpleItemListing::item1,
-			ItemStack.STREAM_CODEC,
+			ItemStack.OPTIONAL_STREAM_CODEC,
 			SimpleItemListing::item2,
 			ItemStack.STREAM_CODEC,
 			SimpleItemListing::result,
