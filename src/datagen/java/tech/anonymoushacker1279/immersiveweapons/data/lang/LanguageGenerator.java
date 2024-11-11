@@ -625,10 +625,10 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("bloody_sacrifice_effect_5", "- 25% chance to roll a second loot drop entirely");
 
 		addTooltip("jonnys_curse_1", "It's like the wrath of gods, Egyptian pharaohs, Chinese monks, and Hans himself.");
-		addTooltip("jonnys_curse_2", "Ping me if you want more textures, because I probably wont respond.");
+		addTooltip("jonnys_curse_2", "Ping me if you want more textures, because I probably won't respond.");
 		addTooltip("jonnys_curse_3", "Hrnnnnnggggg soup.");
 		addTooltip("jonnys_curse_4", "I don't even think Hans would be able to withstand such pain.");
-		addTooltip("jonnys_curse_5", "Imagine stubbing your toe into a lego brick that has a tack stuck through the middle.");
+		addTooltip("jonnys_curse_5", "Imagine stubbing your toe into a Lego brick that has a tack stuck through the middle.");
 		addTooltip("jonnys_curse_6", "Exist in the life of a furry on 4chan!");
 		addTooltip("jonnys_curse_7", "This is what happens when you nuke yourself in Garry's mod.");
 		addTooltip("jonnys_curse_8", "The true for the worthy play through.");

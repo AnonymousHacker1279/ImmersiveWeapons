@@ -21,6 +21,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.registries.datamaps.DataMapType;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
@@ -36,15 +37,22 @@ import tech.anonymoushacker1279.immersiveweapons.network.payload.GunScopePayload
 import tech.anonymoushacker1279.immersiveweapons.util.ArrowAttributeAccessor;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
 
 public abstract class AbstractGunItem extends Item {
 
+	public static final DataMapType<Item, FlammablePowder> POWDER_TYPE = DataMapType.builder(
+					ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "flammable_powder"),
+					Registries.ITEM, FlammablePowder.CODEC)
+			.synced(FlammablePowder.CODEC, true)
+			.build();
+
 	protected static final Predicate<ItemStack> MUSKET_BALLS = (stack) -> stack.is(ItemTags.create(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "projectiles/musket_balls")));
 	protected static final Predicate<ItemStack> FLARES = (stack) -> stack.is(ItemTags.create(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "projectiles/flares")));
 	protected static final Predicate<ItemStack> CANNONBALLS = (stack) -> stack.is(ItemTags.create(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "projectiles/cannonballs")));
-	protected static final Predicate<ItemStack> FLAMMABLE_POWDERS = (stack) -> isPowder(stack.getItem());
+	protected static final Predicate<ItemStack> FLAMMABLE_POWDERS = (stack) -> stack.getItemHolder().getData(POWDER_TYPE) != null;
 
 	final DataComponentType<Float> DENSITY_MODIFIER = DataComponentTypeRegistry.DENSITY_MODIFIER.get();
 
@@ -69,7 +77,7 @@ public abstract class AbstractGunItem extends Item {
 			boolean isCreative = player.isCreative();
 			boolean misfire = false;
 			ItemStack ammo = findAmmo(gun, livingEntity);
-			ItemStack powder = findPowder(gun, livingEntity);
+			PowderType powder = findPowder(gun, livingEntity);
 
 			// Determine number of bullets to fire
 			int bulletsToFire = isCreative ? getMaxBulletsToFire() : getBulletsToFire(ammo);
@@ -106,18 +114,16 @@ public abstract class AbstractGunItem extends Item {
 			}
 
 			// Check if the gun can be fired
-			if (!misfire && ((!ammo.isEmpty() && !powder.isEmpty()) || isCreative)) {
+			if (!misfire && ((!ammo.isEmpty() && powder != null) || isCreative)) {
 				// If the ammunition stack is empty, set it to the default.
 				// This happens when the player is in creative mode but has no ammunition.
 				if (ammo.isEmpty()) {
 					ammo = new ItemStack(defaultAmmo());
 				}
 
-				if (powder.isEmpty()) {
-					powder = new ItemStack(defaultPowder());
+				if (powder == null) {
+					powder = new PowderType(new ItemStack(defaultPowder()));
 				}
-
-				PowderType powderType = getPowderFromItem(powder.getItem());
 
 				if (!level.isClientSide) {
 					BulletItem<?> bulletItem = (BulletItem<?>) (ammo.getItem() instanceof BulletItem<?> ? ammo.getItem() : defaultAmmo());
@@ -133,7 +139,7 @@ public abstract class AbstractGunItem extends Item {
 							bulletEntity = bulletItem.createCannonball(level, player, gun);
 						}
 
-						setupFire(player, bulletEntity, gun, ammo, powderType);
+						setupFire(player, bulletEntity, gun, ammo, powder);
 						level.addFreshEntity(bulletEntity);
 					}
 				} else {
@@ -194,25 +200,27 @@ public abstract class AbstractGunItem extends Item {
 		return ItemStack.EMPTY;
 	}
 
-	public ItemStack findPowder(ItemStack gun, LivingEntity livingEntity) {
+	@Nullable
+	public PowderType findPowder(ItemStack gun, LivingEntity livingEntity) {
 		if (gun.getItem() instanceof AbstractGunItem) {
 			if (livingEntity instanceof Player player) {
-				ItemStack heldAmmo = AbstractGunItem.getHeldPredicate(player, FLAMMABLE_POWDERS);
-				if (!heldAmmo.isEmpty()) {
-					return heldAmmo;
+				ItemStack heldPowder = AbstractGunItem.getHeldPredicate(player, FLAMMABLE_POWDERS);
+				if (!heldPowder.isEmpty()) {
+					return new PowderType(heldPowder);
 				} else {
 					for (int i = 0; i < player.getInventory().getContainerSize(); ++i) {
-						ItemStack powderItem = player.getInventory().getItem(i);
-						if (isPowder(powderItem.getItem())) {
-							return powderItem;
+						ItemStack powder = player.getInventory().getItem(i);
+						if (FLAMMABLE_POWDERS.test(powder)) {
+							return new PowderType(powder);
 						}
 					}
 
-					return player.isCreative() ? new ItemStack(defaultPowder()) : ItemStack.EMPTY;
+					return player.isCreative() ? new PowderType(defaultPowder().getDefaultInstance()) : null;
 				}
 			}
 		}
-		return ItemStack.EMPTY;
+
+		return null;
 	}
 
 	@Override
@@ -405,7 +413,7 @@ public abstract class AbstractGunItem extends Item {
 	public void setupFire(LivingEntity shooter, BulletEntity bullet, ItemStack gun, @Nullable ItemStack ammo, PowderType powderType) {
 		bullet.setFiringItem(this);
 
-		float powderVelocityModifier = powderType.getVelocityModifier();
+		float powderVelocityModifier = powderType.data.velocityModifier();
 		if (shooter instanceof Player player) {
 			// Check for any scenarios where the powder would become wet
 			// Having the Powder Horn accessory reduces the effects slightly
@@ -458,12 +466,9 @@ public abstract class AbstractGunItem extends Item {
 			}
 		}
 
-		// Handle particle trails for blaze powder
-		if (powderType == PowderType.BLAZE_POWDER) {
-			bullet.flameTrail = true;
-		}
+		bullet.flameTrail = powderType.data.hasFlameTrail();
 
-		int weaponDamage = powderType.getWeaponDamageAmount();
+		int weaponDamage = powderType.data.weaponDamageAmount();
 		gun.hurtAndBreak(weaponDamage, shooter, EquipmentSlot.MAINHAND);
 
 		prepareBulletForFire(gun, bullet, shooter, powderVelocityModifier);
@@ -504,7 +509,7 @@ public abstract class AbstractGunItem extends Item {
 					serverLevel.getRandom().nextGaussian() * 0.05d,
 					0.01d);
 
-			int smokeParticles = 3 * powderType.getDirtiness();
+			int smokeParticles = 3 * powderType.data.dirtiness();
 			for (int j = 0; j < smokeParticles; ++j) {
 				serverLevel.sendParticles(ParticleTypes.SMOKE,
 						particlePosition.x, particlePosition.y, particlePosition.z,
@@ -536,11 +541,14 @@ public abstract class AbstractGunItem extends Item {
 		}
 	}
 
-	protected void handlePowderStack(ItemStack powder, Player player) {
+	protected void handlePowderStack(@Nullable PowderType powderType, Player player) {
 		if (!player.isCreative()) {
-			PowderType type = getPowderFromItem(powder.getItem());
 
-			float consumeChance = type.getConsumeChance();
+			if (powderType == null) {
+				return;
+			}
+
+			float consumeChance = powderType.data.consumeChance();
 			if (!player.level().isClientSide) {
 				if (player.getRandom().nextFloat() <= consumeChance) {
 					player.getInventory().setChanged(); // Resync the inventory because the client may not roll the same number
@@ -548,71 +556,17 @@ public abstract class AbstractGunItem extends Item {
 				}
 			}
 
-			powder.shrink(1);
-			if (powder.isEmpty()) {
-				player.getInventory().removeItem(powder);
+			powderType.powder.shrink(1);
+			if (powderType.powder.isEmpty()) {
+				player.getInventory().removeItem(powderType.powder);
 			}
 		}
 	}
 
-	public static boolean isPowder(Item item) {
-		for (PowderType type : PowderType.values()) {
-			if (type.getItem() == item) {
-				return true;
-			}
-		}
+	public record PowderType(ItemStack powder, FlammablePowder data) {
 
-		return false;
-	}
-
-	public static PowderType getPowderFromItem(Item item) {
-		for (PowderType type : PowderType.values()) {
-			if (type.getItem() == item) {
-				return type;
-			}
-		}
-
-		return PowderType.GUNPOWDER;
-	}
-
-	public enum PowderType {
-		BLAZE_POWDER(Items.BLAZE_POWDER, 0.25f, 0.1f, 1, 0),
-		GUNPOWDER(Items.GUNPOWDER, 0.33f, 0.05f, 1, 1),
-		BLACKPOWDER(ItemRegistry.BLACKPOWDER.get(), 0.75f, 0.025f, 2, 2),
-		SULFUR_DUST(ItemRegistry.SULFUR_DUST.get(), 0.90f, -0.05f, 2, 3);
-
-		private final Item item;
-		private final float consumeChance;
-		private final float velocityModifier;
-		private final int weaponDamageAmount;
-		private final int dirtiness;
-
-		PowderType(Item item, float consumeChance, float velocityModifier, int weaponDamageAmount, int dirtiness) {
-			this.item = item;
-			this.consumeChance = consumeChance;
-			this.velocityModifier = velocityModifier;
-			this.weaponDamageAmount = weaponDamageAmount;
-			this.dirtiness = dirtiness;
-		}
-
-		public Item getItem() {
-			return item;
-		}
-
-		public float getConsumeChance() {
-			return consumeChance;
-		}
-
-		public float getVelocityModifier() {
-			return velocityModifier;
-		}
-
-		public int getWeaponDamageAmount() {
-			return weaponDamageAmount;
-		}
-
-		public int getDirtiness() {
-			return dirtiness;
+		public PowderType(ItemStack powder) {
+			this(powder, Objects.requireNonNull(powder.getItemHolder().getData(POWDER_TYPE)));
 		}
 	}
 }

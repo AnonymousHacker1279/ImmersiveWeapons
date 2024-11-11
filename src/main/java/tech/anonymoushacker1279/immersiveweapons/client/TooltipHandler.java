@@ -113,19 +113,20 @@ public class TooltipHandler {
 				shiftTooltipInfo.add(Component.translatable("tooltip.immersiveweapons.gun.meta.base_knockback", abstractGunItem.getKnockbackLevel()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
 			}
 
-			ItemStack powder = abstractGunItem.findPowder(stack, event.getEntity());
-			String powderName = powder == ItemStack.EMPTY ? "None" : powder.getHoverName().getString();
-			String velocityModifier = "0%";
+			PowderType powderType = abstractGunItem.findPowder(stack, event.getEntity());
+
 			ChatFormatting powderColor = ChatFormatting.GRAY;
-			if (powder != ItemStack.EMPTY) {
-				PowderType type = AbstractGunItem.getPowderFromItem(powder.getItem());
-				velocityModifier = (float) Math.round(type.getVelocityModifier() * 1000f) / 10f + "%";
+			String powderName = "None";
+			String velocityModifier = "0%";
+			if (powderType != null) {
+				ItemStack powder = powderType.powder();
+				powderName = powder.getHoverName().getString();
+				velocityModifier = (float) Math.round(powderType.data().velocityModifier() * 1000f) / 10f + "%";
 			} else {
 				powderColor = ChatFormatting.RED;
 			}
 
 			shiftTooltipInfo.add(Component.translatable("tooltip.immersiveweapons.gun.meta.selected_powder", powderName, velocityModifier).withStyle(powderColor, ChatFormatting.ITALIC));
-
 
 			ItemStack ammo = abstractGunItem.findAmmo(stack, event.getEntity());
 			String ammoName = ammo == ItemStack.EMPTY ? "None" : ammo.getHoverName().getString();

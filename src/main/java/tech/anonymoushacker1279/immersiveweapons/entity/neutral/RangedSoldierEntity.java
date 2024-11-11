@@ -103,7 +103,7 @@ public abstract class RangedSoldierEntity extends SoldierEntity implements Range
 	protected abstract BulletItem<?> getDefaultBulletItem();
 
 	protected PowderType getPowderType() {
-		return AbstractGunItem.getPowderFromItem(ItemRegistry.BLACKPOWDER.get());
+		return new PowderType(ItemRegistry.BLACKPOWDER.get().getDefaultInstance());
 	}
 
 	protected abstract RangedGunAttackGoal<? extends SoldierEntity> getRangedGunAttackGoal();
