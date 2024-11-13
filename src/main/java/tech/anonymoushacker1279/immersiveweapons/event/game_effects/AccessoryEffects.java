@@ -10,10 +10,8 @@ import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.entity.player.CriticalHitEvent;
 import tech.anonymoushacker1279.immersiveweapons.api.events.ComputeEnchantedLootBonusEvent;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MeteorEntity;
-import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
-import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
-import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
-import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectType;
+import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
@@ -21,7 +19,7 @@ public class AccessoryEffects {
 
 	public static void damageResistanceEffects(LivingIncomingDamageEvent event, Player player) {
 		// Get the total damage resistance from all items
-		double damageReduction = AccessoryManager.collectEffects(EffectType.DAMAGE_RESISTANCE, player);
+		double damageReduction = AccessoryManager.collectEffects(AccessoryEffectTypeRegistry.DAMAGE_RESISTANCE.get(), player);
 
 		// Apply the damage resistance
 		event.setAmount((float) (event.getAmount() * (1 - damageReduction)));
@@ -30,7 +28,7 @@ public class AccessoryEffects {
 	public static void bleedResistanceEffects(LivingIncomingDamageEvent event, Player player) {
 		if (event.getSource().is(IWDamageSources.BLEEDING_KEY)) {
 			// Get the total bleed resistance from all items
-			double bleedResistance = AccessoryManager.collectEffects(EffectType.BLEED_RESISTANCE, player);
+			double bleedResistance = AccessoryManager.collectEffects(AccessoryEffectTypeRegistry.BLEED_RESISTANCE.get(), player);
 
 			// Apply the bleed resistance
 			event.setAmount((float) (event.getAmount() * (1 - bleedResistance)));
@@ -40,7 +38,7 @@ public class AccessoryEffects {
 	public static void bleedCancelEffects(LivingIncomingDamageEvent event, Player player) {
 		if (event.getSource().is(IWDamageSources.BLEEDING_KEY)) {
 			// Get the total bleed cancel chance from all items
-			double bleedCancelChance = AccessoryManager.collectEffects(EffectType.BLEED_CANCEL_CHANCE, player);
+			double bleedCancelChance = AccessoryManager.collectEffects(AccessoryEffectTypeRegistry.BLEED_CANCEL_CHANCE.get(), player);
 
 			// Roll for bleed cancel
 			if (player.getRandom().nextFloat() <= bleedCancelChance) {
@@ -51,7 +49,7 @@ public class AccessoryEffects {
 
 	public static void meleeDamageEffects(LivingIncomingDamageEvent event, Player player) {
 		// Get the total melee damage from all items
-		double meleeDamage = AccessoryManager.collectEffects(EffectType.MELEE_DAMAGE, player);
+		double meleeDamage = AccessoryManager.collectEffects(AccessoryEffectTypeRegistry.MELEE_DAMAGE.get(), player);
 
 		if (event.getSource().is(DamageTypes.PLAYER_ATTACK)) {
 			// Apply the melee damage
@@ -61,7 +59,7 @@ public class AccessoryEffects {
 
 	public static void projectileDamageEffects(LivingIncomingDamageEvent event, Player player) {
 		// Get the total projectile damage from all items
-		double projectileDamage = AccessoryManager.collectEffects(EffectType.PROJECTILE_DAMAGE, player);
+		double projectileDamage = AccessoryManager.collectEffects(AccessoryEffectTypeRegistry.PROJECTILE_DAMAGE.get(), player);
 
 		if (event.getSource().is(DamageTypeTags.IS_PROJECTILE)) {
 			// Apply the projectile damage
@@ -71,7 +69,7 @@ public class AccessoryEffects {
 
 	public static void generalDamageEffects(LivingIncomingDamageEvent event, Player player) {
 		// Get the total general damage from all items
-		double generalDamage = AccessoryManager.collectEffects(EffectType.GENERAL_DAMAGE, player);
+		double generalDamage = AccessoryManager.collectEffects(AccessoryEffectTypeRegistry.GENERAL_DAMAGE.get(), player);
 
 		// Apply the general damage
 		event.setAmount((float) (event.getAmount() * (1 + generalDamage)));
@@ -79,7 +77,7 @@ public class AccessoryEffects {
 
 	public static void meleeBleedChanceEffects(LivingIncomingDamageEvent event, Player player, LivingEntity damagedEntity) {
 		// Get the total bleed chance from all items
-		double bleedChance = AccessoryManager.collectEffects(EffectType.MELEE_BLEED_CHANCE, player);
+		double bleedChance = AccessoryManager.collectEffects(AccessoryEffectTypeRegistry.MELEE_BLEED_CHANCE.get(), player);
 
 		// Roll for bleeding
 		if (event.getSource().is(DamageTypes.PLAYER_ATTACK) && player.getRandom().nextFloat() <= bleedChance) {
@@ -96,7 +94,7 @@ public class AccessoryEffects {
 
 	public static void meleeKnockbackEffects(LivingKnockBackEvent event, Player player) {
 		// Get the total melee knockback from all items
-		double meleeKnockback = AccessoryManager.collectEffects(EffectType.MELEE_KNOCKBACK, player);
+		double meleeKnockback = AccessoryManager.collectEffects(AccessoryEffectTypeRegistry.MELEE_KNOCKBACK.get(), player);
 
 		LivingEntity entity = event.getEntity();
 
@@ -108,7 +106,7 @@ public class AccessoryEffects {
 
 	public static void meleeCritDamageBonusEffects(CriticalHitEvent event, Player player) {
 		// Get the total melee critical damage from all items
-		double meleeCritDamageBonus = AccessoryManager.collectEffects(EffectType.MELEE_CRIT_DAMAGE_BONUS, player);
+		double meleeCritDamageBonus = AccessoryManager.collectEffects(AccessoryEffectTypeRegistry.MELEE_CRIT_DAMAGE_BONUS.get(), player);
 
 		// Apply the melee critical damage
 		event.setDamageMultiplier((float) (event.getDamageMultiplier() + meleeCritDamageBonus));
@@ -116,7 +114,7 @@ public class AccessoryEffects {
 
 	public static void meleeCritChanceEffects(CriticalHitEvent event, Player player) {
 		// Get the total melee critical chance from all items
-		double meleeCritChance = AccessoryManager.collectEffects(EffectType.MELEE_CRIT_CHANCE, player);
+		double meleeCritChance = AccessoryManager.collectEffects(AccessoryEffectTypeRegistry.MELEE_CRIT_CHANCE.get(), player);
 
 		// Roll for critical hit
 		if (player.getRandom().nextFloat() <= meleeCritChance) {
@@ -126,7 +124,7 @@ public class AccessoryEffects {
 
 	public static void generalWitherChanceEffects(Player player, LivingEntity damagedEntity) {
 		// Get the total general withering chance from all items
-		double witherChance = AccessoryManager.collectEffects(EffectType.GENERAL_WITHER_CHANCE, player);
+		double witherChance = AccessoryManager.collectEffects(AccessoryEffectTypeRegistry.GENERAL_WITHER_CHANCE.get(), player);
 
 		// Roll for wither
 		if (player.getRandom().nextFloat() <= witherChance) {
@@ -137,7 +135,7 @@ public class AccessoryEffects {
 
 	public static void experienceEffects(LivingExperienceDropEvent event, Player player) {
 		// Get the total experience boost from all items
-		double experienceBoost = AccessoryManager.collectEffects(EffectType.EXPERIENCE_MODIFIER, player);
+		double experienceBoost = AccessoryManager.collectEffects(AccessoryEffectTypeRegistry.EXPERIENCE_MODIFIER.get(), player);
 
 		// Apply the experience boost
 		event.setDroppedExperience((int) (event.getDroppedExperience() * (1 + experienceBoost)));
@@ -185,7 +183,7 @@ public class AccessoryEffects {
 
 	public static void celestialSpiritEffect(Player player, LivingEntity sourceEntity) {
 		// 15% chance to summon meteor
-		if (AccessoryItem.isAccessoryActive(player, ItemRegistry.CELESTIAL_SPIRIT.get()) && player.getRandom().nextFloat() <= 0.15f) {
+		if (Accessory.isAccessoryActive(player, ItemRegistry.CELESTIAL_SPIRIT.get()) && player.getRandom().nextFloat() <= 0.15f) {
 			if (player != sourceEntity) {
 				MeteorEntity.create(player.level(), player, null, player.blockPosition(), sourceEntity);
 			}
@@ -195,7 +193,7 @@ public class AccessoryEffects {
 	public static void holyMantleEffect(LivingIncomingDamageEvent event, LivingEntity damagedEntity) {
 		// Completely negates damage, incurs 30s cooldown
 		if (damagedEntity instanceof Player player) {
-			if (AccessoryItem.isAccessoryActive(player, ItemRegistry.HOLY_MANTLE.get())) {
+			if (Accessory.isAccessoryActive(player, ItemRegistry.HOLY_MANTLE.get())) {
 				if (!player.getCooldowns().isOnCooldown(ItemRegistry.HOLY_MANTLE.get())) {
 					player.getCooldowns().addCooldown(ItemRegistry.HOLY_MANTLE.get(), 600);
 					event.setCanceled(true);
@@ -207,7 +205,7 @@ public class AccessoryEffects {
 	public static void sonicBoomResistanceEffects(LivingIncomingDamageEvent event, Player player) {
 		if (event.getSource().is(DamageTypes.SONIC_BOOM)) {
 			// Get the total sonic boom resistance from all items
-			double sonicBoomResistance = AccessoryManager.collectEffects(EffectType.SONIC_BOOM_RESISTANCE, player);
+			double sonicBoomResistance = AccessoryManager.collectEffects(AccessoryEffectTypeRegistry.SONIC_BOOM_RESISTANCE.get(), player);
 
 			// Apply the sonic boom resistance
 			event.setAmount((float) (event.getAmount() * (1 - sonicBoomResistance)));
@@ -216,7 +214,7 @@ public class AccessoryEffects {
 
 	public static void lootingEffects(ComputeEnchantedLootBonusEvent event, Player player) {
 		// Get the total looting level from all items
-		double lootingLevel = AccessoryManager.collectEffects(EffectType.LOOTING_LEVEL, player);
+		double lootingLevel = AccessoryManager.collectEffects(AccessoryEffectTypeRegistry.LOOTING_LEVEL.get(), player);
 
 		// Apply the looting level
 		event.setEnchantmentLevel(event.getEnchantmentLevel() + (int) lootingLevel);

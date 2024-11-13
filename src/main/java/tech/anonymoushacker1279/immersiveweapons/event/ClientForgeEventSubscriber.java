@@ -24,8 +24,8 @@ import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracin
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
-import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
 import tech.anonymoushacker1279.immersiveweapons.item.CursedItem;
+import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.ArmorUtils;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.data.GunData;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem;
@@ -53,7 +53,7 @@ public class ClientForgeEventSubscriber {
 			}
 		}
 
-		if (AccessoryItem.isAccessoryActive(player, ItemRegistry.LAVA_GOGGLES.get())) {
+		if (Accessory.isAccessoryActive(player, ItemRegistry.LAVA_GOGGLES.get())) {
 			if (player.isInLava()) {
 				if (event.getBlockState() == Blocks.FIRE.defaultBlockState()) {
 					event.setCanceled(true);
@@ -77,7 +77,7 @@ public class ClientForgeEventSubscriber {
 		}
 
 		if (player.isInLava()) {
-			boolean hasLavaGoggles = AccessoryItem.isAccessoryActive(player, ItemRegistry.LAVA_GOGGLES.get());
+			boolean hasLavaGoggles = Accessory.isAccessoryActive(player, ItemRegistry.LAVA_GOGGLES.get());
 			if (ArmorUtils.isWearingMoltenArmor(player)) {
 				if (minecraft.level != null) {
 					BlockState state = minecraft.level.getBlockState(new BlockPos(player.blockPosition().above(1)));
@@ -195,7 +195,7 @@ public class ClientForgeEventSubscriber {
 	public static void keyInputEvent(InputEvent.Key event) {
 		// Double jump ability with the Venstral Jar accessory
 		Player player = minecraft.player;
-		if (player != null && AccessoryItem.isAccessoryActive(player, ItemRegistry.VENSTRAL_JAR.get())) {
+		if (player != null && Accessory.isAccessoryActive(player, ItemRegistry.VENSTRAL_JAR.get())) {
 			// Check if the jump key is pressed
 			if (event.getKey() == minecraft.options.keyJump.getKey().getValue() && event.getAction() == InputConstants.PRESS) {
 				if (!player.onGround()) {

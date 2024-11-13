@@ -29,8 +29,7 @@ import tech.anonymoushacker1279.immersiveweapons.data.IWEnchantments;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
 import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryManager;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
-import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
-import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectType;
+import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.data.GunData;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.GunScopePayload;
@@ -160,7 +159,7 @@ public abstract class AbstractGunItem extends Item {
 					Optional<Reference<Enchantment>> rapidFire = enchantmentGetter.get(IWEnchantments.RAPID_FIRE);
 
 					// Reduce cooldown in certain conditions
-					float reductionFactor = (float) AccessoryManager.collectEffects(EffectType.FIREARM_RELOAD_SPEED, player);
+					float reductionFactor = (float) AccessoryManager.collectEffects(AccessoryEffectTypeRegistry.FIREARM_RELOAD_SPEED.get(), player);
 
 					int rapidFireLevel;
 					if (rapidFire.isPresent()) {
@@ -417,7 +416,7 @@ public abstract class AbstractGunItem extends Item {
 		if (shooter instanceof Player player) {
 			// Check for any scenarios where the powder would become wet
 			// Having the Powder Horn accessory reduces the effects slightly
-			boolean hasPowderHorn = AccessoryItem.isAccessoryActive(player, ItemRegistry.POWDER_HORN.get());
+			boolean hasPowderHorn = Accessory.isAccessoryActive(player, ItemRegistry.POWDER_HORN.get());
 			if (player.level().isRainingAt(player.blockPosition())) {
 				powderVelocityModifier -= hasPowderHorn ? 0.15f : 0.3f;
 			}
@@ -525,7 +524,7 @@ public abstract class AbstractGunItem extends Item {
 	protected void handleAmmoStack(ItemStack gun, ItemStack ammo, int bulletsToFire, Player player) {
 		if (!player.isCreative() && ammo.getItem() instanceof BulletItem<?> bulletItem) {
 			if (!bulletItem.isInfinite(ammo, gun, player)) {
-				float ammoConservationChance = (float) AccessoryManager.collectEffects(EffectType.FIREARM_AMMO_CONSERVATION_CHANCE, player);
+				float ammoConservationChance = (float) AccessoryManager.collectEffects(AccessoryEffectTypeRegistry.FIREARM_AMMO_CONSERVATION_CHANCE.get(), player);
 				if (!player.level().isClientSide) {
 					if (player.getRandom().nextFloat() <= ammoConservationChance) {
 						player.getInventory().setChanged(); // Resync the inventory because the client may not roll the same number

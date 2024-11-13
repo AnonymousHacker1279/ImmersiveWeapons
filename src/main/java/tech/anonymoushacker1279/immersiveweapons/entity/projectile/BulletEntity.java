@@ -27,7 +27,7 @@ import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracin
 import tech.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact.BulletImpactParticleOptions;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
-import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
+import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.BulletEntityDebugPayload;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.GunShotBloodParticlePayload;
@@ -93,7 +93,7 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 		// If the entity is a player and has an active Deadeye Pendant, add a damage modifier which increases with distance to the target
 		// This modifier increases damage up to a maximum of +20% at 100 meters range
 		if (getOwner() instanceof Player player) {
-			if (AccessoryItem.isAccessoryActive(player, ItemRegistry.DEADEYE_PENDANT.get())) {
+			if (Accessory.isAccessoryActive(player, ItemRegistry.DEADEYE_PENDANT.get())) {
 				double distance = player.distanceToSqr(getX(), getY(), getZ());
 				double modifier = Math.min(distance / 100d, 1);
 				damage = (int) Math.round(damage * (1 + modifier * 0.2f));

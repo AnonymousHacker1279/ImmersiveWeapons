@@ -1,0 +1,920 @@
+{
+  "values": {
+    "immersiveweapons:agility_bracelet": {
+      "attribute_modifiers": [
+        {
+          "attribute": "minecraft:generic.movement_speed",
+          "modifier": {
+            "amount": 0.05,
+            "id": "immersiveweapons:agility_bracelet_speed_modifier",
+            "operation": "add_multiplied_base"
+          }
+        },
+        {
+          "attribute": "minecraft:generic.step_height",
+          "modifier": {
+            "amount": 0.5,
+            "id": "immersiveweapons:agility_bracelet_step_height_modifier",
+            "operation": "add_value"
+          }
+        }
+      ],
+      "dynamic_attribute_modifiers": [],
+      "effect_scaling_types": {},
+      "effects": [],
+      "mob_effects": [],
+      "slot": "bracelet"
+    },
+    "immersiveweapons:amethyst_ring": {
+      "attribute_modifiers": [],
+      "dynamic_attribute_modifiers": [],
+      "effect_scaling_types": {
+        "looting_level": {
+          "name": "none"
+        }
+      },
+      "effects": [
+        {
+          "type": {
+            "clamp": false,
+            "name": "looting_level"
+          },
+          "value": 2.0
+        }
+      ],
+      "mob_effects": [],
+      "slot": "ring"
+    },
+    "immersiveweapons:ancient_scroll": {
+      "attribute_modifiers": [],
+      "dynamic_attribute_modifiers": [],
+      "effect_scaling_types": {
+        "experience_modifier": {
+          "name": "none"
+        }
+      },
+      "effects": [
+        {
+          "type": {
+            "clamp": false,
+            "name": "experience_modifier"
+          },
+          "value": 0.35
+        }
+      ],
+      "mob_effects": [],
+      "slot": "charm"
+    },
+    "immersiveweapons:berserkers_amulet": {
+      "attribute_modifiers": [],
+      "dynamic_attribute_modifiers": [],
+      "effect_scaling_types": {
+        "damage_resistance": {
+          "name": "none"
+        },
+        "melee_damage": {
+          "name": "none"
+        },
+        "projectile_damage": {
+          "name": "none"
+        }
+      },
+      "effects": [
+        {
+          "type": {
+            "clamp": false,
+            "name": "melee_damage"
+          },
+          "value": 0.2
+        },
+        {
+          "type": {
+            "clamp": false,
+            "name": "projectile_damage"
+          },
+          "value": 0.1
+        },
+        {
+          "type": {
+            "clamp": true,
+            "name": "damage_resistance"
+          },
+          "value": -0.2
+        }
+      ],
+      "mob_effects": [],
+      "slot": "charm"
+    },
+    "immersiveweapons:blademaster_emblem": {
+      "attribute_modifiers": [],
+      "dynamic_attribute_modifiers": [],
+      "effect_scaling_types": {
+        "melee_bleed_chance": {
+          "name": "none"
+        },
+        "melee_damage": {
+          "name": "none"
+        }
+      },
+      "effects": [
+        {
+          "type": {
+            "clamp": false,
+            "name": "melee_damage"
+          },
+          "value": 0.1
+        },
+        {
+          "type": {
+            "clamp": true,
+            "name": "melee_bleed_chance"
+          },
+          "value": 0.3
+        }
+      ],
+      "mob_effects": [],
+      "slot": "charm"
+    },
+    "immersiveweapons:bloated_heart": {
+      "attribute_modifiers": [
+        {
+          "attribute": "minecraft:generic.max_health",
+          "modifier": {
+            "amount": 4.0,
+            "id": "immersiveweapons:bloated_heart_health_modifier",
+            "operation": "add_value"
+          }
+        }
+      ],
+      "dynamic_attribute_modifiers": [],
+      "effect_scaling_types": {},
+      "effects": [],
+      "mob_effects": [],
+      "slot": "body"
+    },
+    "immersiveweapons:bloody_cloth": {
+      "attribute_modifiers": [],
+      "dynamic_attribute_modifiers": [],
+      "effect_scaling_types": {
+        "bleed_cancel_chance": {
+          "name": "none"
+        },
+        "bleed_resistance": {
+          "name": "none"
+        }
+      },
+      "effects": [
+        {
+          "type": {
+            "clamp": true,
+            "name": "bleed_cancel_chance"
+          },
+          "value": 0.15
+        },
+        {
+          "type": {
+            "clamp": true,
+            "name": "bleed_resistance"
+          },
+          "value": 0.3
+        }
+      ],
+      "mob_effects": [],
+      "slot": "head"
+    },
+    "immersiveweapons:celestial_spirit": {
+      "attribute_modifiers": [],
+      "dynamic_attribute_modifiers": [],
+      "effect_scaling_types": {},
+      "effects": [],
+      "mob_effects": [],
+      "slot": "spirit"
+    },
+    "immersiveweapons:cobalt_ring": {
+      "attribute_modifiers": [],
+      "dynamic_attribute_modifiers": [],
+      "effect_scaling_types": {
+        "damage_resistance": {
+          "name": "none"
+        },
+        "general_damage": {
+          "name": "none"
+        }
+      },
+      "effects": [
+        {
+          "type": {
+            "clamp": false,
+            "name": "general_damage"
+          },
+          "value": 0.025
+        },
+        {
+          "type": {
+            "clamp": true,
+            "name": "damage_resistance"
+          },
+          "value": 0.025
+        }
+      ],
+      "mob_effects": [],
+      "slot": "ring"
+    },
+    "immersiveweapons:copper_ring": {
+      "attribute_modifiers": [],
+      "dynamic_attribute_modifiers": [],
+      "effect_scaling_types": {
+        "damage_resistance": {
+          "name": "none"
+        },
+        "general_damage": {
+          "name": "none"
+        }
+      },
+      "effects": [
+        {
+          "type": {
+            "clamp": false,
+            "name": "general_damage"
+          },
+          "value": 0.01
+        },
+        {
+          "type": {
+            "clamp": true,
+            "name": "damage_resistance"
+          },
+          "value": 0.01
+        }
+      ],
+      "mob_effects": [],
+      "slot": "ring"
+    },
+    "immersiveweapons:deadeye_pendant": {
+      "attribute_modifiers": [],
+      "dynamic_attribute_modifiers": [],
+      "effect_scaling_types": {},
+      "effects": [],
+      "mob_effects": [],
+      "slot": "necklace"
+    },
+    "immersiveweapons:death_gem_ring": {
+      "attribute_modifiers": [],
+      "dynamic_attribute_modifiers": [],
+      "effect_scaling_types": {
+        "general_wither_chance": {
+          "name": "none"
+        }
+      },
+      "effects": [
+        {
+          "type": {
+            "clamp": true,
+            "name": "general_wither_chance"
+          },
+          "value": 1.0
+        }
+      ],
+      "mob_effects": [],
+      "slot": "ring"
+    },
+    "immersiveweapons:depth_charm": {
+      "attribute_modifiers": [],
+      "dynamic_attribute_modifiers": [],
+      "effect_scaling_types": {
+        "damage_resistance": {
+          "name": "depth"
+        },
+        "general_damage": {
+          "name": "depth"
+        },
+        "melee_knockback": {
+          "name": "depth"
+        }
+      },
+      "effects": [
+        {
+          "type": {
+            "clamp": true,
+            "name": "damage_resistance"
+          },
+          "value": 0.003
+        },
+        {
+          "type": {
+            "clamp": false,
+            "name": "general_damage"
+          },
+          "value": 0.002
+        },
+        {
+          "type": {
+            "clamp": false,
+            "name": "melee_knockback"
+          },
+          "value": 0.001
+        }
+      ],
+      "mob_effects": [],
+      "slot": "charm"
+    },
+    "immersiveweapons:diamond_ring": {
+      "attribute_modifiers": [],
+      "dynamic_attribute_modifiers": [],
+      "effect_scaling_types": {
+        "damage_resistance": {
+          "name": "none"
+        },
+        "general_damage": {
+          "name": "none"
+        }
+      },
+      "effects": [
+        {
+          "type": {
+            "clamp": false,
+            "name": "general_damage"
+          },
+          "value": 0.04
+        },
+        {
+          "type": {
+            "clamp": true,
+            "name": "damage_resistance"
+          },
+          "value": 0.04
+        }
+      ],
+      "mob_effects": [],
+      "slot": "ring"
+    },
+    "immersiveweapons:emerald_ring": {
+      "attribute_modifiers": [],
+      "dynamic_attribute_modifiers": [],
+      "effect_scaling_types": {},
+      "effects": [],
+      "mob_effects": [
+        {
+          "ambient": true,
+          "duration": 60,
+          "id": "minecraft:hero_of_the_village",
+          "neoforge:cures": [
+            "protected_by_totem",
+            "milk"
+          ],
+          "show_icon": true
+        }
+      ],
+      "slot": "ring"
+    },
+    "immersiveweapons:glove_of_rapid_swinging": {
+      "attribute_modifiers": [
+        {
+          "attribute": "minecraft:generic.attack_speed",
+          "modifier": {
+            "amount": 0.25,
+            "id": "immersiveweapons:glove_of_rapid_swinging_attack_speed_modifier",
+            "operation": "add_value"
+          }
+        }
+      ],
+      "dynamic_attribute_modifiers": [],
+      "effect_scaling_types": {},
+      "effects": [],
+      "mob_effects": [],
+      "slot": "hand"
+    },
+    "immersiveweapons:goggles": {
+      "attribute_modifiers": [],
+      "dynamic_attribute_modifiers": [],
+      "effect_scaling_types": {
+        "projectile_damage": {
+          "name": "none"
+        }
+      },
+      "effects": [
+        {
+          "type": {
+            "clamp": false,
+            "name": "projectile_damage"
+          },
+          "value": 0.03
+        }
+      ],
+      "mob_effects": [],
+      "slot": "head"
+    },
+    "immersiveweapons:golden_ring": {
+      "attribute_modifiers": [],
+      "dynamic_attribute_modifiers": [],
+      "effect_scaling_types": {
+        "damage_resistance": {
+          "name": "none"
+        },
+        "general_damage": {
+          "name": "none"
+        }
+      },
+      "effects": [
+        {
+          "type": {
+            "clamp": false,
+            "name": "general_damage"
+          },
+          "value": 0.03
+        },
+        {
+          "type": {
+            "clamp": true,
+            "name": "damage_resistance"
+          },
+          "value": 0.03
+        }
+      ],
+      "mob_effects": [],
+      "slot": "ring"
+    },
+    "immersiveweapons:hand_of_doom": {
+      "attribute_modifiers": [
+        {
+          "attribute": "minecraft:generic.attack_speed",
+          "modifier": {
+            "amount": 0.25,
+            "id": "immersiveweapons:glove_of_rapid_swinging_attack_speed_modifier",
+            "operation": "add_value"
+          }
+        }
+      ],
+      "dynamic_attribute_modifiers": [],
+      "effect_scaling_types": {
+        "melee_crit_chance": {
+          "name": "none"
+        },
+        "melee_crit_damage_bonus": {
+          "name": "none"
+        },
+        "melee_damage": {
+          "name": "none"
+        },
+        "melee_knockback": {
+          "name": "none"
+        }
+      },
+      "effects": [
+        {
+          "type": {
+            "clamp": false,
+            "name": "melee_damage"
+          },
+          "value": 0.1
+        },
+        {
+          "type": {
+            "clamp": false,
+            "name": "melee_knockback"
+          },
+          "value": 0.75
+        },
+        {
+          "type": {
+            "clamp": false,
+            "name": "melee_crit_damage_bonus"
+          },
+          "value": 0.25
+        },
+        {
+          "type": {
+            "clamp": true,
+            "name": "melee_crit_chance"
+          },
+          "value": 0.15
+        }
+      ],
+      "mob_effects": [],
+      "slot": "hand"
+    },
+    "immersiveweapons:hans_blessing": {
+      "attribute_modifiers": [],
+      "dynamic_attribute_modifiers": [],
+      "effect_scaling_types": {
+        "damage_resistance": {
+          "name": "none"
+        }
+      },
+      "effects": [
+        {
+          "type": {
+            "clamp": true,
+            "name": "damage_resistance"
+          },
+          "value": 0.15
+        }
+      ],
+      "mob_effects": [],
+      "slot": "spirit"
+    },
+    "immersiveweapons:holy_mantle": {
+      "attribute_modifiers": [],
+      "dynamic_attribute_modifiers": [],
+      "effect_scaling_types": {},
+      "effects": [],
+      "mob_effects": [],
+      "slot": "belt"
+    },
+    "immersiveweapons:insomnia_amulet": {
+      "attribute_modifiers": [],
+      "dynamic_attribute_modifiers": [],
+      "effect_scaling_types": {
+        "general_damage": {
+          "name": "insomnia"
+        }
+      },
+      "effects": [
+        {
+          "type": {
+            "clamp": false,
+            "name": "general_damage"
+          },
+          "value": 0.003
+        }
+      ],
+      "mob_effects": [],
+      "slot": "necklace"
+    },
+    "immersiveweapons:iron_fist": {
+      "attribute_modifiers": [],
+      "dynamic_attribute_modifiers": [],
+      "effect_scaling_types": {
+        "melee_crit_chance": {
+          "name": "none"
+        },
+        "melee_crit_damage_bonus": {
+          "name": "none"
+        }
+      },
+      "effects": [
+        {
+          "type": {
+            "clamp": false,
+            "name": "melee_crit_damage_bonus"
+          },
+          "value": 0.25
+        },
+        {
+          "type": {
+            "clamp": true,
+            "name": "melee_crit_chance"
+          },
+          "value": 0.15
+        }
+      ],
+      "mob_effects": [],
+      "slot": "hand"
+    },
+    "immersiveweapons:iron_ring": {
+      "attribute_modifiers": [],
+      "dynamic_attribute_modifiers": [],
+      "effect_scaling_types": {
+        "damage_resistance": {
+          "name": "none"
+        },
+        "general_damage": {
+          "name": "none"
+        }
+      },
+      "effects": [
+        {
+          "type": {
+            "clamp": false,
+            "name": "general_damage"
+          },
+          "value": 0.02
+        },
+        {
+          "type": {
+            "clamp": true,
+            "name": "damage_resistance"
+          },
+          "value": 0.02
+        }
+      ],
+      "mob_effects": [],
+      "slot": "ring"
+    },
+    "immersiveweapons:lava_goggles": {
+      "attribute_modifiers": [],
+      "dynamic_attribute_modifiers": [],
+      "effect_scaling_types": {},
+      "effects": [],
+      "mob_effects": [],
+      "slot": "head"
+    },
+    "immersiveweapons:medal_of_adequacy": {
+      "attribute_modifiers": [],
+      "dynamic_attribute_modifiers": [],
+      "effect_scaling_types": {
+        "damage_resistance": {
+          "name": "none"
+        }
+      },
+      "effects": [
+        {
+          "type": {
+            "clamp": true,
+            "name": "damage_resistance"
+          },
+          "value": 0.01
+        }
+      ],
+      "mob_effects": [],
+      "slot": "necklace"
+    },
+    "immersiveweapons:medal_of_dishonor": {
+      "attribute_modifiers": [],
+      "dynamic_attribute_modifiers": [],
+      "effect_scaling_types": {
+        "general_damage": {
+          "name": "none"
+        }
+      },
+      "effects": [
+        {
+          "type": {
+            "clamp": false,
+            "name": "general_damage"
+          },
+          "value": 0.05
+        }
+      ],
+      "mob_effects": [],
+      "slot": "charm"
+    },
+    "immersiveweapons:medal_of_honor": {
+      "attribute_modifiers": [],
+      "dynamic_attribute_modifiers": [],
+      "effect_scaling_types": {
+        "damage_resistance": {
+          "name": "none"
+        }
+      },
+      "effects": [
+        {
+          "type": {
+            "clamp": true,
+            "name": "damage_resistance"
+          },
+          "value": 0.05
+        }
+      ],
+      "mob_effects": [],
+      "slot": "charm"
+    },
+    "immersiveweapons:melee_masters_molten_glove": {
+      "attribute_modifiers": [],
+      "dynamic_attribute_modifiers": [],
+      "effect_scaling_types": {
+        "melee_damage": {
+          "name": "none"
+        },
+        "melee_knockback": {
+          "name": "none"
+        }
+      },
+      "effects": [
+        {
+          "type": {
+            "clamp": false,
+            "name": "melee_damage"
+          },
+          "value": 0.1
+        },
+        {
+          "type": {
+            "clamp": false,
+            "name": "melee_knockback"
+          },
+          "value": 0.75
+        }
+      ],
+      "mob_effects": [],
+      "slot": "hand"
+    },
+    "immersiveweapons:netherite_ring": {
+      "attribute_modifiers": [],
+      "dynamic_attribute_modifiers": [],
+      "effect_scaling_types": {
+        "damage_resistance": {
+          "name": "none"
+        },
+        "general_damage": {
+          "name": "none"
+        }
+      },
+      "effects": [
+        {
+          "type": {
+            "clamp": false,
+            "name": "general_damage"
+          },
+          "value": 0.05
+        },
+        {
+          "type": {
+            "clamp": true,
+            "name": "damage_resistance"
+          },
+          "value": 0.05
+        }
+      ],
+      "mob_effects": [],
+      "slot": "ring"
+    },
+    "immersiveweapons:netherite_shield": {
+      "attribute_modifiers": [],
+      "dynamic_attribute_modifiers": [
+        {
+          "attributeOperation": {
+            "attribute": "minecraft:generic.knockback_resistance",
+            "modifier": {
+              "amount": 0.0,
+              "id": "immersiveweapons:netherite_shield_knockback_resistance",
+              "operation": "add_value"
+            }
+          },
+          "targetValue": 1.0
+        }
+      ],
+      "effect_scaling_types": {
+        "damage_resistance": {
+          "name": "none"
+        }
+      },
+      "effects": [
+        {
+          "type": {
+            "clamp": true,
+            "name": "damage_resistance"
+          },
+          "value": 0.03
+        }
+      ],
+      "mob_effects": [],
+      "slot": "body"
+    },
+    "immersiveweapons:night_vision_goggles": {
+      "attribute_modifiers": [],
+      "dynamic_attribute_modifiers": [],
+      "effect_scaling_types": {},
+      "effects": [],
+      "mob_effects": [
+        {
+          "ambient": true,
+          "duration": 220,
+          "id": "minecraft:night_vision",
+          "neoforge:cures": [
+            "protected_by_totem",
+            "milk"
+          ],
+          "show_icon": true
+        }
+      ],
+      "slot": "head"
+    },
+    "immersiveweapons:powder_horn": {
+      "attribute_modifiers": [],
+      "dynamic_attribute_modifiers": [],
+      "effect_scaling_types": {
+        "firearm_reload_speed": {
+          "name": "none"
+        }
+      },
+      "effects": [
+        {
+          "type": {
+            "clamp": false,
+            "name": "firearm_reload_speed"
+          },
+          "value": 0.15
+        }
+      ],
+      "mob_effects": [],
+      "slot": "body"
+    },
+    "immersiveweapons:reinforced_depth_charm": {
+      "attribute_modifiers": [],
+      "dynamic_attribute_modifiers": [],
+      "effect_scaling_types": {
+        "damage_resistance": {
+          "name": "depth"
+        },
+        "general_damage": {
+          "name": "depth"
+        },
+        "melee_knockback": {
+          "name": "depth"
+        },
+        "sonic_boom_resistance": {
+          "name": "none"
+        }
+      },
+      "effects": [
+        {
+          "type": {
+            "clamp": true,
+            "name": "damage_resistance"
+          },
+          "value": 0.003
+        },
+        {
+          "type": {
+            "clamp": false,
+            "name": "general_damage"
+          },
+          "value": 0.002
+        },
+        {
+          "type": {
+            "clamp": false,
+            "name": "melee_knockback"
+          },
+          "value": 0.001
+        },
+        {
+          "type": {
+            "clamp": true,
+            "name": "sonic_boom_resistance"
+          },
+          "value": 0.5
+        }
+      ],
+      "mob_effects": [],
+      "slot": "charm"
+    },
+    "immersiveweapons:satchel": {
+      "attribute_modifiers": [],
+      "dynamic_attribute_modifiers": [],
+      "effect_scaling_types": {
+        "firearm_ammo_conservation_chance": {
+          "name": "none"
+        }
+      },
+      "effects": [
+        {
+          "type": {
+            "clamp": true,
+            "name": "firearm_ammo_conservation_chance"
+          },
+          "value": 0.1
+        }
+      ],
+      "mob_effects": [],
+      "slot": "belt"
+    },
+    "immersiveweapons:super_blanket_cape": {
+      "attribute_modifiers": [
+        {
+          "attribute": "minecraft:generic.movement_speed",
+          "modifier": {
+            "amount": 0.05,
+            "id": "immersiveweapons:super_blanket_cape_speed_modifier",
+            "operation": "add_multiplied_base"
+          }
+        }
+      ],
+      "dynamic_attribute_modifiers": [],
+      "effect_scaling_types": {},
+      "effects": [],
+      "mob_effects": [
+        {
+          "ambient": true,
+          "duration": 60,
+          "id": "minecraft:jump_boost",
+          "neoforge:cures": [
+            "protected_by_totem",
+            "milk"
+          ],
+          "show_icon": true
+        },
+        {
+          "ambient": true,
+          "duration": 60,
+          "id": "minecraft:slow_falling",
+          "neoforge:cures": [
+            "protected_by_totem",
+            "milk"
+          ],
+          "show_icon": true
+        }
+      ],
+      "slot": "body"
+    },
+    "immersiveweapons:venstral_jar": {
+      "attribute_modifiers": [],
+      "dynamic_attribute_modifiers": [],
+      "effect_scaling_types": {},
+      "effects": [],
+      "mob_effects": [],
+      "slot": "belt"
+    }
+  }
+}

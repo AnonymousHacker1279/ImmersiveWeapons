@@ -19,7 +19,6 @@ import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IW
 import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
-import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
 import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
 import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
@@ -169,11 +168,44 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		tag(IWItemTagGroups.OBSIDIAN_RODS).add(ItemRegistry.OBSIDIAN_ROD.get());
 
 		// Accessory tags
-		for (DeferredHolder<Item, ? extends Item> item : ItemRegistry.ITEMS.getEntries()) {
-			if (item.get() instanceof AccessoryItem accessory) {
-				tag(IWItemTagGroups.ACCESSORIES).add(accessory);
-			}
-		}
+		tag(IWItemTagGroups.ACCESSORIES).add(
+				ItemRegistry.SATCHEL.get(),
+				ItemRegistry.POWDER_HORN.get(),
+				ItemRegistry.BERSERKERS_AMULET.get(),
+				ItemRegistry.HANS_BLESSING.get(),
+				ItemRegistry.CELESTIAL_SPIRIT.get(),
+				ItemRegistry.BLADEMASTER_EMBLEM.get(),
+				ItemRegistry.DEADEYE_PENDANT.get(),
+				ItemRegistry.BLOATED_HEART.get(),
+				ItemRegistry.NETHERITE_SHIELD.get(),
+				ItemRegistry.MELEE_MASTERS_MOLTEN_GLOVE.get(),
+				ItemRegistry.IRON_FIST.get(),
+				ItemRegistry.GLOVE_OF_RAPID_SWINGING.get(),
+				ItemRegistry.HAND_OF_DOOM.get(),
+				ItemRegistry.COPPER_RING.get(),
+				ItemRegistry.IRON_RING.get(),
+				ItemRegistry.COBALT_RING.get(),
+				ItemRegistry.GOLDEN_RING.get(),
+				ItemRegistry.AMETHYST_RING.get(),
+				ItemRegistry.EMERALD_RING.get(),
+				ItemRegistry.DIAMOND_RING.get(),
+				ItemRegistry.NETHERITE_RING.get(),
+				ItemRegistry.DEATH_GEM_RING.get(),
+				ItemRegistry.MEDAL_OF_ADEQUACY.get(),
+				ItemRegistry.DEPTH_CHARM.get(),
+				ItemRegistry.REINFORCED_DEPTH_CHARM.get(),
+				ItemRegistry.INSOMNIA_AMULET.get(),
+				ItemRegistry.GOGGLES.get(),
+				ItemRegistry.LAVA_GOGGLES.get(),
+				ItemRegistry.NIGHT_VISION_GOGGLES.get(),
+				ItemRegistry.AGILITY_BRACELET.get(),
+				ItemRegistry.BLOODY_CLOTH.get(),
+				ItemRegistry.ANCIENT_SCROLL.get(),
+				ItemRegistry.HOLY_MANTLE.get(),
+				ItemRegistry.VENSTRAL_JAR.get(),
+				ItemRegistry.SUPER_BLANKET_CAPE.get(),
+				ItemRegistry.MEDAL_OF_HONOR.get(),
+				ItemRegistry.MEDAL_OF_DISHONOR.get());
 
 		// Smoke grenade tags
 		for (Item item : CustomDataGenerator.ALL_ITEMS) {

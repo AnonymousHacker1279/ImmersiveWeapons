@@ -13,6 +13,7 @@ import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -21,7 +22,7 @@ import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.FieldMedicHealEn
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.HurtByTargetWithPredicateGoal;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
-import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
+import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
 import java.util.List;
@@ -153,23 +154,23 @@ public class FieldMedicEntity extends SoldierEntity {
 	}
 
 	@Override
-	protected AccessoryItem getPeaceAccessory() {
+	protected Item getPeaceAccessory() {
 		return ItemRegistry.MEDAL_OF_HONOR.get();
 	}
 
 	@Override
-	protected AccessoryItem getAggroAccessory() {
+	protected Item getAggroAccessory() {
 		return ItemRegistry.MEDAL_OF_DISHONOR.get();
 	}
 
 	@Override
 	protected boolean canTargetPlayer(LivingEntity entity) {
 		if (entity instanceof Player player) {
-			if (AccessoryItem.isAccessoryActive(player, getPeaceAccessory())) {
+			if (Accessory.isAccessoryActive(player, getPeaceAccessory())) {
 				return false;
 			}
 
-			return !player.isCreative() && AccessoryItem.isAccessoryActive(player, getAggroAccessory());
+			return !player.isCreative() && Accessory.isAccessoryActive(player, getAggroAccessory());
 		}
 
 		return false;
