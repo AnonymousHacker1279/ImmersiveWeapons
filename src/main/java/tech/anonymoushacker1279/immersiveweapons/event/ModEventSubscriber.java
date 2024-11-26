@@ -14,6 +14,8 @@ import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent.Operation;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
+import net.neoforged.neoforge.registries.NewRegistryEvent;
+import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent;
 import net.neoforged.neoforgespi.language.IModInfo;
 import org.apache.maven.artifact.versioning.ArtifactVersion;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
@@ -25,7 +27,9 @@ import tech.anonymoushacker1279.immersiveweapons.entity.neutral.FieldMedicEntity
 import tech.anonymoushacker1279.immersiveweapons.entity.neutral.MinutemanEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.npc.SkeletonMerchantEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.npc.SkygazerEntity;
-import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
+import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
 import tech.anonymoushacker1279.immersiveweapons.network.handler.*;
 import tech.anonymoushacker1279.immersiveweapons.network.handler.star_forge.StarForgeMenuPayloadHandler;
 import tech.anonymoushacker1279.immersiveweapons.network.handler.star_forge.StarForgeUpdateRecipesPayloadHandler;
@@ -99,6 +103,7 @@ public class ModEventSubscriber {
 
 	@SubscribeEvent
 	public static void registerSpawnPlacementsEvent(RegisterSpawnPlacementsEvent event) {
+		ImmersiveWeapons.LOGGER.info("Registering spawn placements");
 		event.register(EntityRegistry.DYING_SOLDIER_ENTITY.get(), SpawnPlacementTypes.ON_GROUND, Types.MOTION_BLOCKING_NO_LEAVES, DyingSoldierEntity::checkMobSpawnRules, Operation.REPLACE);
 		event.register(EntityRegistry.WANDERING_WARRIOR_ENTITY.get(), SpawnPlacementTypes.ON_GROUND, Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules, Operation.REPLACE);
 		event.register(EntityRegistry.HANS_ENTITY.get(), SpawnPlacementTypes.ON_GROUND, Types.MOTION_BLOCKING_NO_LEAVES, Monster::checkMonsterSpawnRules, Operation.REPLACE);
@@ -109,5 +114,19 @@ public class ModEventSubscriber {
 		event.register(EntityRegistry.EVIL_EYE_ENTITY.get(), SpawnPlacementTypes.NO_RESTRICTIONS, Types.MOTION_BLOCKING_NO_LEAVES, EvilEyeEntity::checkSpawnRules, Operation.REPLACE);
 		event.register(EntityRegistry.STAR_WOLF_ENTITY.get(), SpawnPlacementTypes.ON_GROUND, Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules, Operation.REPLACE);
 		event.register(EntityRegistry.FIREFLY_ENTITY.get(), SpawnPlacementTypes.ON_GROUND, Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules, Operation.REPLACE);
+	}
+
+	@SubscribeEvent
+	public static void registerDataMapsEvent(RegisterDataMapTypesEvent event) {
+		ImmersiveWeapons.LOGGER.info("Registering custom data maps");
+		event.register(AbstractGunItem.POWDER_TYPE);
+		event.register(Accessory.ACCESSORY);
+	}
+
+	@SubscribeEvent
+	public static void registerRegistryEvent(NewRegistryEvent event) {
+		ImmersiveWeapons.LOGGER.info("Registering custom registries");
+		event.register(AccessoryEffectTypeRegistry.ACCESSORY_EFFECT_TYPE_REGISTRY);
+		event.register(AccessoryEffectScalingTypeRegistry.ACCESSORY_EFFECT_SCALING_TYPE_REGISTRY);
 	}
 }

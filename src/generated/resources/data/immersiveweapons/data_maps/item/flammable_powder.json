@@ -1,0 +1,32 @@
+{
+  "values": {
+    "immersiveweapons:blackpowder": {
+      "consume_chance": 0.75,
+      "dirtiness": 2,
+      "has_flame_trail": false,
+      "velocity_modifier": 0.025,
+      "weapon_damage_amount": 2
+    },
+    "immersiveweapons:sulfur_dust": {
+      "consume_chance": 0.9,
+      "dirtiness": 3,
+      "has_flame_trail": false,
+      "velocity_modifier": -0.05,
+      "weapon_damage_amount": 2
+    },
+    "minecraft:blaze_powder": {
+      "consume_chance": 0.25,
+      "dirtiness": 0,
+      "has_flame_trail": true,
+      "velocity_modifier": 0.1,
+      "weapon_damage_amount": 1
+    },
+    "minecraft:gunpowder": {
+      "consume_chance": 0.33,
+      "dirtiness": 1,
+      "has_flame_trail": false,
+      "velocity_modifier": 0.05,
+      "weapon_damage_amount": 1
+    }
+  }
+}

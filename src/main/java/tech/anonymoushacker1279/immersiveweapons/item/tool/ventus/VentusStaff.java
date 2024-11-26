@@ -8,6 +8,7 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.entity.projectile.windcharge.WindCharge;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -20,26 +21,36 @@ import java.util.List;
 
 public class VentusStaff extends Item {
 
-	/**
-	 * Constructor for VentusStaff.
-	 *
-	 * @param properties the <code>Properties</code> for the item
-	 */
 	public VentusStaff(Properties properties) {
 		super(properties);
 	}
 
-	/**
-	 * Runs when the player right-clicks.
-	 *
-	 * @param level  the <code>Level</code> the player is in
-	 * @param player the <code>Player</code> performing the action
-	 * @param hand   the <code>Hand</code> the player is using
-	 * @return InteractionResultHolder extending ItemStack
-	 */
 	@Override
 	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
 		ItemStack itemInHand = player.getItemInHand(hand);
+		if (player.isShiftKeyDown()) {
+			launchWindCharge(level, player, itemInHand);
+		} else {
+			pushEntities(level, player, itemInHand);
+		}
+
+		return InteractionResultHolder.sidedSuccess(itemInHand, level.isClientSide());
+	}
+
+	private void spawnParticles(Entity entity, Level level) {
+		level.addParticle(ParticleTypes.CLOUD,
+				entity.getX(),
+				entity.getY() + 0.3d,
+				entity.getZ(),
+				GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
+				GeneralUtilities.getRandomNumber(0.0d, 0.03d),
+				GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
+	}
+
+	/**
+	 * Get nearby entities and push them away from the player.
+	 */
+	private void pushEntities(Level level, Player player, ItemStack itemInHand) {
 		List<Entity> entities = level.getEntities(player, player.getBoundingBox().inflate(IWConfigs.SERVER.ventusStaffRadius.getAsInt()));
 
 		if (!entities.isEmpty()) {
@@ -65,39 +76,34 @@ public class VentusStaff extends Item {
 				}
 			}
 
-			postPush(player, level, itemInHand);
-		}
-
-		return InteractionResultHolder.sidedSuccess(itemInHand, level.isClientSide());
-	}
-
-	private void spawnParticles(Entity entity, Level level) {
-		level.addParticle(ParticleTypes.CLOUD,
-				entity.getX(),
-				entity.getY() + 0.3d,
-				entity.getZ(),
-				GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
-				GeneralUtilities.getRandomNumber(0.0d, 0.03d),
-				GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
-	}
-
-	private void postPush(Player player, Level level, ItemStack itemInHand) {
-		level.playLocalSound(player.getX(), player.getY(), player.getZ(),
-				SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.PLAYERS, 0.4f, 1.0f, true);
-
-		if (!player.isCreative()) {
-			player.getCooldowns().addCooldown(this, 100);
-			itemInHand.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
+			postUse(player, level, itemInHand, 60);
 		}
 	}
 
 	/**
-	 * Check for a valid repair item.
-	 *
-	 * @param toRepair the <code>ItemStack</code> being repaired
-	 * @param repair   the <code>ItemStack</code> to repair the first one
-	 * @return boolean
+	 * Summon a {@link WindCharge} entity in the direction the player is looking.
 	 */
+	private void launchWindCharge(Level level, Player player, ItemStack itemInHand) {
+		if (!level.isClientSide()) {
+			WindCharge windCharge = new WindCharge(player, level, player.position().x(), player.getEyePosition().y(), player.position().z());
+			windCharge.setOwner(player);
+			windCharge.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0f, 1.5f, 0.0f);
+			level.addFreshEntity(windCharge);
+
+			postUse(player, level, itemInHand, 20);
+		}
+	}
+
+	private void postUse(Player player, Level level, ItemStack itemInHand, int cooldown) {
+		level.playLocalSound(player.getX(), player.getY(), player.getZ(),
+				SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.PLAYERS, 0.4f, 1.0f, true);
+
+		if (!player.isCreative()) {
+			player.getCooldowns().addCooldown(this, cooldown);
+			itemInHand.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
+		}
+	}
+
 	@Override
 	public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
 		return repair.getItem() == ItemRegistry.VENTUS_SHARD.get();

@@ -64,7 +64,9 @@ import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MeteorEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MudBallEntity;
 import tech.anonymoushacker1279.immersiveweapons.event.game_effects.*;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
-import tech.anonymoushacker1279.immersiveweapons.item.*;
+import tech.anonymoushacker1279.immersiveweapons.item.CursedItem;
+import tech.anonymoushacker1279.immersiveweapons.item.KillCountWeapon;
+import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.PistonCrushingRecipe;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.*;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
@@ -144,7 +146,7 @@ public class ForgeEventSubscriber {
 
 		// Handle random debuffs with the Insomnia Amulet after 7 days of no sleep
 		if (player.tickCount % 600 == 0 && player instanceof ServerPlayer serverPlayer) {
-			if (AccessoryItem.isAccessoryActive(player, ItemRegistry.INSOMNIA_AMULET.get())) {
+			if (Accessory.isAccessoryActive(player, ItemRegistry.INSOMNIA_AMULET.get())) {
 				int timeSinceRest = serverPlayer.getStats().getValue(Stats.CUSTOM.get(Stats.TIME_SINCE_REST));
 				if (timeSinceRest > 168000) {
 					float chance = player.getRandom().nextFloat();
@@ -167,7 +169,7 @@ public class ForgeEventSubscriber {
 		}
 
 		// Handle the temporary fire resistance effect on the Super Blanket Cape accessory
-		if (AccessoryItem.isAccessoryActive(player, ItemRegistry.SUPER_BLANKET_CAPE.get())) {
+		if (Accessory.isAccessoryActive(player, ItemRegistry.SUPER_BLANKET_CAPE.get())) {
 			if (!player.isInLava() && !player.isOnFire()) {
 				if (!player.hasEffect(MobEffects.FIRE_RESISTANCE)) {
 					player.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 140, 0, true, true));

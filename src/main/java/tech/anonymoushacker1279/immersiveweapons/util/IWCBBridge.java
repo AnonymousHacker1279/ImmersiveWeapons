@@ -1,15 +1,14 @@
 package tech.anonymoushacker1279.immersiveweapons.util;
 
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
-import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
-import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectType;
+import net.minecraft.world.item.ItemStack;
+import tech.anonymoushacker1279.immersiveweapons.item.accessory.AccessoryEffectType;
+import tech.anonymoushacker1279.immersiveweapons.item.accessory.scaling.AttributeOperation;
+import tech.anonymoushacker1279.immersiveweapons.item.accessory.scaling.DynamicAttributeOperationInstance;
 import tech.anonymoushacker1279.iwcompatbridge.plugin.curios.AccessoryBridge;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * This class is used to access IWCB methods. It is in a separate class to avoid classloading issues when IWCB is not
@@ -17,15 +16,15 @@ import java.util.Map;
  */
 public class IWCBBridge {
 
-	public static double collectEffects(EffectType type, Player player) {
+	public static double collectEffects(AccessoryEffectType type, Player player) {
 		return AccessoryBridge.collectEffects(type, player);
 	}
 
-	public static Map<AttributeModifier, Attribute> collectStandardAttributes(Player player) {
+	public static List<AttributeOperation> collectStandardAttributes(Player player) {
 		return AccessoryBridge.collectStandardAttributes(player);
 	}
 
-	public static Map<Map<AttributeModifier, Attribute>, Double> collectDynamicAttributes(Player player) {
+	public static List<DynamicAttributeOperationInstance> collectDynamicAttributes(Player player) {
 		return AccessoryBridge.collectDynamicAttributes(player);
 	}
 
@@ -33,7 +32,7 @@ public class IWCBBridge {
 		return AccessoryBridge.collectMobEffects(player);
 	}
 
-	public static boolean isAccessoryActive(Player player, AccessoryItem item) {
-		return AccessoryBridge.isAccessoryActive(player, item);
+	public static boolean isAccessoryActive(Player player, ItemStack stack) {
+		return AccessoryBridge.isAccessoryActive(player, stack);
 	}
 }

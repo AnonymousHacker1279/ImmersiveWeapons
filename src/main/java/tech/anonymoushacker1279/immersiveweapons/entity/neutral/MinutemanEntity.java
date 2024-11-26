@@ -11,12 +11,13 @@ import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.*;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.DyingSoldierEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
-import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
+import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem;
 
@@ -89,23 +90,23 @@ public class MinutemanEntity extends RangedSoldierEntity {
 	}
 
 	@Override
-	protected AccessoryItem getPeaceAccessory() {
+	protected Item getPeaceAccessory() {
 		return ItemRegistry.MEDAL_OF_HONOR.get();
 	}
 
 	@Override
-	protected AccessoryItem getAggroAccessory() {
+	protected Item getAggroAccessory() {
 		return ItemRegistry.MEDAL_OF_DISHONOR.get();
 	}
 
 	@Override
 	protected boolean canTargetPlayer(LivingEntity entity) {
 		if (entity instanceof Player player) {
-			if (AccessoryItem.isAccessoryActive(player, getPeaceAccessory())) {
+			if (Accessory.isAccessoryActive(player, getPeaceAccessory())) {
 				return false;
 			}
 
-			return !player.isCreative() && AccessoryItem.isAccessoryActive(player, getAggroAccessory());
+			return !player.isCreative() && Accessory.isAccessoryActive(player, getAggroAccessory());
 		}
 
 		return false;

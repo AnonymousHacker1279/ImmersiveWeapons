@@ -111,8 +111,7 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 		add("copper_ring", new SimpleDropModifierHandler(
 				simpleDropCondition(0.05f, 0.02f),
 				ItemRegistry.COPPER_RING.get().getDefaultInstance(),
-				Optional.of(EntityTypeTags.UNDEAD),
-				1, 1));
+				Optional.of(EntityTypeTags.UNDEAD)));
 
 		add("log_shards", new LogShardsLootModifierHandler(
 				matchToolCondition(ItemTags.PICKAXES),
@@ -207,6 +206,11 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 				simpleEntityDropCondition(EntityType.ENDER_DRAGON),
 				ItemRegistry.ENDER_ESSENCE.get().getDefaultInstance(),
 				8, 12));
+
+		add("ventus_shard", new SimpleDropModifierHandler(
+				simpleEntityDropCondition(EntityType.BREEZE, 0.05f, 0.01f),
+				1, 3,
+				ItemRegistry.VENTUS_SHARD.get().getDefaultInstance()));
 	}
 
 	/**

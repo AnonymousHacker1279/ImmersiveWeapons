@@ -1,0 +1,31 @@
+{
+  "parent": "immersiveweapons:discover_super_hans",
+  "criteria": {
+    "": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersiveweapons.rapid_reflexes.description"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "count": 1,
+      "id": "minecraft:mace"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.rapid_reflexes.title"
+    }
+  },
+  "requirements": [
+    [
+      ""
+    ]
+  ],
+  "rewards": {
+    "experience": 200
+  },
+  "sends_telemetry_event": true
+}

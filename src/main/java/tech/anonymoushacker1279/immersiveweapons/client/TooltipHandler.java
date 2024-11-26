@@ -6,7 +6,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.ai.attributes.*;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DiggerItem;
 import net.minecraft.world.item.ItemStack;
@@ -21,8 +21,9 @@ import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.*;
-import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectBuilder.EffectScalingType;
-import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectType;
+import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
+import tech.anonymoushacker1279.immersiveweapons.item.accessory.AccessoryEffectInstance;
+import tech.anonymoushacker1279.immersiveweapons.item.accessory.scaling.*;
 import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem.PowderType;
@@ -30,8 +31,8 @@ import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.*;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem.ThrowableType;
 
-import java.util.*;
-import java.util.Map.Entry;
+import java.util.ArrayList;
+import java.util.List;
 
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.GAME, value = Dist.CLIENT)
 public class TooltipHandler {
@@ -113,19 +114,20 @@ public class TooltipHandler {
 				shiftTooltipInfo.add(Component.translatable("tooltip.immersiveweapons.gun.meta.base_knockback", abstractGunItem.getKnockbackLevel()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
 			}
 
-			ItemStack powder = abstractGunItem.findPowder(stack, event.getEntity());
-			String powderName = powder == ItemStack.EMPTY ? "None" : powder.getHoverName().getString();
-			String velocityModifier = "0%";
+			PowderType powderType = abstractGunItem.findPowder(stack, event.getEntity());
+
 			ChatFormatting powderColor = ChatFormatting.GRAY;
-			if (powder != ItemStack.EMPTY) {
-				PowderType type = AbstractGunItem.getPowderFromItem(powder.getItem());
-				velocityModifier = (float) Math.round(type.getVelocityModifier() * 1000f) / 10f + "%";
+			String powderName = "None";
+			String velocityModifier = "0%";
+			if (powderType != null) {
+				ItemStack powder = powderType.powder();
+				powderName = powder.getHoverName().getString();
+				velocityModifier = (float) Math.round(powderType.data().velocityModifier() * 1000f) / 10f + "%";
 			} else {
 				powderColor = ChatFormatting.RED;
 			}
 
 			shiftTooltipInfo.add(Component.translatable("tooltip.immersiveweapons.gun.meta.selected_powder", powderName, velocityModifier).withStyle(powderColor, ChatFormatting.ITALIC));
-
 
 			ItemStack ammo = abstractGunItem.findAmmo(stack, event.getEntity());
 			String ammoName = ammo == ItemStack.EMPTY ? "None" : ammo.getHoverName().getString();
@@ -352,7 +354,8 @@ public class TooltipHandler {
 		}
 
 		// Accessories
-		if (event.getEntity() != null && stack.getItem() instanceof AccessoryItem item) {
+		Accessory accessory = stack.getItemHolder().getData(Accessory.ACCESSORY);
+		if (event.getEntity() != null && accessory != null) {
 			if (stack.getItem() == ItemRegistry.SATCHEL.get()) {
 				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.satchel").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
 			}
@@ -389,7 +392,7 @@ public class TooltipHandler {
 				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.melee_masters_molten_glove").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
 			}
 			// Regex check for "immersiveweapons:X_ring" where X is any string
-			ResourceLocation path = BuiltInRegistries.ITEM.getKey(item.asItem());
+			ResourceLocation path = BuiltInRegistries.ITEM.getKey(stack.getItem().asItem());
 			if (path.toString().matches("immersiveweapons:.+_ring")) {
 				// Get the name of the ring
 				String ringName = path.toString().substring(17);
@@ -451,7 +454,7 @@ public class TooltipHandler {
 				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.super_blanket_cape_2").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
 			}
 
-			addAccessoryTooltips(item, event.getEntity(), stack, event.getToolTip());
+			addAccessoryTooltips(accessory, event.getEntity(), stack, event.getToolTip());
 		} else if (stack.getItem() instanceof CursedItem) {
 			if (stack.getItem() == ItemRegistry.BLOODY_SACRIFICE.get()) {
 				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.bloody_sacrifice").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
@@ -553,19 +556,19 @@ public class TooltipHandler {
 	/**
 	 * Add accessory-specific tooltips (typically for use inside {@link #addShiftTooltip(List, List)})
 	 *
-	 * @param item   the accessory item
-	 * @param player the player holding the item
+	 * @param accessory the accessory to add tooltips for
+	 * @param player    the player holding the item
 	 */
-	private static void addAccessoryTooltips(AccessoryItem item, Player player, ItemStack stack, List<Component> existingTooltips) {
+	private static void addAccessoryTooltips(Accessory accessory, Player player, ItemStack stack, List<Component> existingTooltips) {
 		List<Component> shiftTooltips = new ArrayList<>(5);
 		List<Component> altTooltips = new ArrayList<>(10);
 
 		if (ImmersiveWeapons.IWCB_LOADED && PluginHandler.isPluginActive("iwcompatbridge:curios_plugin")) {
 			shiftTooltips.add(Component.translatable("tooltip.iwcompatbridge.accessory_note").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
 		} else {
-			shiftTooltips.add(Component.translatable("tooltip.immersiveweapons.accessory_slot", item.getSlot().getComponent()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+			shiftTooltips.add(Component.translatable("tooltip.immersiveweapons.accessory_slot", accessory.slot().getComponent()).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
 
-			if (item.isActive(player, stack)) {
+			if (accessory.isActive(player, stack, accessory.slot())) {
 				shiftTooltips.add(Component.translatable("tooltip.immersiveweapons.accessory_note").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
 			} else {
 				shiftTooltips.add(Component.translatable("tooltip.immersiveweapons.accessory_inactive").withStyle(ChatFormatting.RED, ChatFormatting.ITALIC));
@@ -574,55 +577,53 @@ public class TooltipHandler {
 
 		addShiftTooltip(existingTooltips, shiftTooltips);
 
-		if (!item.getEffects().isEmpty() || !item.getStandardAttributeModifiers().isEmpty() || !item.getDynamicAttributeModifiers().isEmpty()) {
+		if (!accessory.effects().isEmpty() || !accessory.attributeModifiers().isEmpty() || !accessory.dynamicAttributeModifiers().isEmpty()) {
 			altTooltips.add(CommonComponents.EMPTY);
 
 			// Add basic effects
-			if (!item.getEffects().isEmpty()) {
+			if (!accessory.effects().isEmpty()) {
 				altTooltips.add(Component.translatable("tooltip.immersiveweapons.accessory.effects").withStyle(ChatFormatting.GOLD, ChatFormatting.ITALIC));
-				for (Entry<EffectType, Double> entry : item.getEffects().entrySet()) {
+				for (AccessoryEffectInstance entry : accessory.effects()) {
 					String value;
 
-					if (entry.getKey() == EffectType.LOOTING_LEVEL) {
-						value = entry.getValue().intValue() + " levels";
+					if (entry.type() == AccessoryEffectTypeRegistry.LOOTING_LEVEL.get()) {
+						value = entry.value() + " levels";
 					} else {
-						value = (float) Math.round(entry.getValue() * 1000f) / 10f + "%";
+						value = (float) Math.round(entry.value() * 1000f) / 10f + "%";
 					}
 
-					EffectScalingType scalingType = item.getEffectScalingTypes().get(entry.getKey());
+					AccessoryEffectScalingType scalingType = accessory.effectScalingTypes().get(entry.type().name());
 
-					if (scalingType != null && scalingType != EffectScalingType.NO_SCALING) {
-						Component scaling = Component.translatable(item.getEffectScalingTypes().get(entry.getKey()).name);
-						altTooltips.add(Component.translatable(entry.getKey().name, value).append(" ").append(scaling).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+					if (scalingType != null && !scalingType.getName().equals(AccessoryEffectScalingTypeRegistry.NONE.get().getName())) {
+						Component scaling = Component.translatable(accessory.effectScalingTypes().get(entry.type().name()).createTranslation());
+						altTooltips.add(Component.translatable(entry.type().createTranslation(), value).append(" ").append(scaling).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
 					} else {
-						altTooltips.add(Component.translatable(entry.getKey().name, value).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+						altTooltips.add(Component.translatable(entry.type().createTranslation(), value).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
 					}
 				}
 			}
 
 			// Add attribute modifier effects
-			if (!item.getStandardAttributeModifiers().isEmpty()) {
+			if (!accessory.attributeModifiers().isEmpty()) {
 				altTooltips.add(Component.translatable("tooltip.immersiveweapons.accessory.attribute_modifier").withStyle(ChatFormatting.GOLD, ChatFormatting.ITALIC));
-				for (Entry<AttributeModifier, Attribute> entry : item.getStandardAttributeModifiers().entrySet()) {
+				for (AttributeOperation entry : accessory.attributeModifiers()) {
 					String amount;
 
-					if (entry.getValue() == Attributes.MAX_HEALTH.value()) {
+					if (entry.attribute() == Attributes.MAX_HEALTH.value()) {
 						// Convert to hearts
-						amount = (float) Math.round(entry.getKey().amount() / 2f) + " hearts";
+						amount = (float) Math.round(entry.modifier().amount() / 2f) + " hearts";
 					} else {
-						amount = (float) Math.round(entry.getKey().amount() * 1000f) / 10f + "%";
+						amount = (float) Math.round(entry.modifier().amount() * 1000f) / 10f + "%";
 					}
 
-					altTooltips.add(Component.translatable(entry.getValue().getDescriptionId()).append(": " + amount).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+					altTooltips.add(Component.translatable(entry.attribute().value().getDescriptionId()).append(": " + amount).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
 				}
 			}
-			if (!item.getDynamicAttributeModifiers().isEmpty()) {
+			if (!accessory.dynamicAttributeModifiers().isEmpty()) {
 				altTooltips.add(Component.translatable("tooltip.immersiveweapons.accessory.dynamic_attribute_modifier").withStyle(ChatFormatting.GOLD, ChatFormatting.ITALIC));
-				for (Entry<Map<AttributeModifier, Attribute>, Double> entry : item.getDynamicAttributeModifiers().entrySet()) {
-					for (Entry<AttributeModifier, Attribute> entry2 : entry.getKey().entrySet()) {
-						String amount = (float) Math.round(entry.getValue() * 1000f) / 10f + "%";
-						altTooltips.add(Component.translatable(entry2.getValue().getDescriptionId()).append(": " + amount).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
-					}
+				for (DynamicAttributeOperationInstance entry : accessory.dynamicAttributeModifiers()) {
+					String amount = (float) Math.round(entry.targetValue() * 1000f) / 10f + "%";
+					altTooltips.add(Component.translatable(entry.attributeOperation().attribute().value().getDescriptionId()).append(": " + amount).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
 				}
 			}
 

@@ -625,10 +625,10 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("bloody_sacrifice_effect_5", "- 25% chance to roll a second loot drop entirely");
 
 		addTooltip("jonnys_curse_1", "It's like the wrath of gods, Egyptian pharaohs, Chinese monks, and Hans himself.");
-		addTooltip("jonnys_curse_2", "Ping me if you want more textures, because I probably wont respond.");
+		addTooltip("jonnys_curse_2", "Ping me if you want more textures, because I probably won't respond.");
 		addTooltip("jonnys_curse_3", "Hrnnnnnggggg soup.");
 		addTooltip("jonnys_curse_4", "I don't even think Hans would be able to withstand such pain.");
-		addTooltip("jonnys_curse_5", "Imagine stubbing your toe into a lego brick that has a tack stuck through the middle.");
+		addTooltip("jonnys_curse_5", "Imagine stubbing your toe into a Lego brick that has a tack stuck through the middle.");
 		addTooltip("jonnys_curse_6", "Exist in the life of a furry on 4chan!");
 		addTooltip("jonnys_curse_7", "This is what happens when you nuke yourself in Garry's mod.");
 		addTooltip("jonnys_curse_8", "The true for the worthy play through.");
@@ -975,6 +975,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		// Super Hans
 		addAdvancement("hansium_ingot.title", "Raw Strength in an Ingot");
 		addAdvancement("hansium_ingot.description", "Obtain a Hansium Ingot, dropped by the mighty Super Hans");
+		addAdvancement("rapid_reflexes.title", "Rapid Reflexes");
+		addAdvancement("rapid_reflexes.description", "Land a mace smash attack on Super Hans quickly after a dodge");
 		addAdvancement("the_sword.title", "The Sword of All Time");
 		addAdvancement("the_sword.description", "Obtain The Sword, a powerful combination of several swords");
 		addAdvancement("recovery_staff.title", "What Hurts Me Can Also Heal Me");
@@ -1089,8 +1091,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addConfigField("entity.tooltip", "Entity-specific settings");
 		addConfigField("celestial_tower", "Celestial Tower Settings");
 		addConfigField("celestial_tower.tooltip", "Celestial Tower settings");
-		addConfigField("skygazer", "Skygazer Settings");
-		addConfigField("skygazer.tooltip", "Skygazer settings");
+		addConfigField("celestial_altar", "Celestial Altar Settings");
+		addConfigField("celestial_altar.tooltip", "Celestial Altar settings");
 		addConfigField("the_commander", "The Commander Settings");
 		addConfigField("the_commander.tooltip", "The Commander settings");
 		addConfigField("weapons", "Weapon Settings");

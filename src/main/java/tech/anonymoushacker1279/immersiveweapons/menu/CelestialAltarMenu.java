@@ -224,7 +224,7 @@ public class CelestialAltarMenu extends AbstractContainerMenu {
 		int totalEnchantmentLevels = GeneralUtilities.getTotalEnchantmentLevels(enchantmentLookup, result);
 
 		// The item cost rises exponentially with higher enchantment levels
-		containerData.set(0, Math.min(IWConfigs.SERVER.skygazerMaxEnchantUpgradeCost.getAsInt(), (int) Math.pow(1.3, ((float) totalEnchantmentLevels / 2))));
+		containerData.set(0, Math.min(IWConfigs.SERVER.celestialAltarMaxEnchantUpgradeCost.getAsInt(), (int) Math.pow(1.3, ((float) totalEnchantmentLevels / 2))));
 
 		return fragment.getCount() >= containerData.get(0);
 	}
