@@ -1,3 +1,6 @@
 {
-  "values": []
+  "values": [
+    "#immersiveweapons:needs_void_tool",
+    "#immersiveweapons:needs_hansium_tool"
+  ]
 }

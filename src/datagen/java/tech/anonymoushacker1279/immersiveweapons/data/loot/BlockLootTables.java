@@ -155,6 +155,7 @@ public class BlockLootTables extends BlockLootSubProvider {
 		dropSelf(BlockRegistry.TILTROS_PORTAL_FRAME.get());
 		dropSelf(BlockRegistry.COMMANDER_PEDESTAL.get());
 		dropSelf(BlockRegistry.CELESTIAL_ALTAR.get());
+		dropSelf(BlockRegistry.VOID_ORE.get());
 
 		blocks.stream().filter(WoodenTableBlock.class::isInstance).forEach(this::dropSelf);
 		blocks.stream().filter(CustomSkullBlock.class::isInstance).forEach(this::dropSelf);

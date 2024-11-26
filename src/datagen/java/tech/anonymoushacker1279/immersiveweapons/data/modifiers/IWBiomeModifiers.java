@@ -70,6 +70,13 @@ public class IWBiomeModifiers {
 						Decoration.UNDERGROUND_ORES
 				));
 
+		biomeModifier(context, new ResourceLocation(ImmersiveWeapons.MOD_ID, "void_ore"),
+				new BiomeModifiers.AddFeaturesBiomeModifier(
+						context.lookup(Registries.BIOME).getOrThrow(BiomeTags.IS_END),
+						HolderSet.direct(context.lookup(Registries.PLACED_FEATURE).getOrThrow(IWPlacedFeatures.VOID_ORE)),
+						Decoration.UNDERGROUND_ORES
+				));
+
 		// Spawns
 		biomeModifier(context, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "wandering_warrior_spawn"),
 				AddSpawnsBiomeModifier.singleSpawn(

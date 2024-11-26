@@ -24,5 +24,7 @@
     "count": 1,
     "id": "immersiveweapons:copper_ring"
   },
+  "max_drops": 1,
+  "min_drops": 1,
   "mob_type": "minecraft:undead"
 }

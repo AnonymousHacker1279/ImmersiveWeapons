@@ -67,6 +67,8 @@ public class ItemModelGenerator extends ItemModelProvider implements DataGenUtil
 				ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/custom/astral"));
 		pikeMaterialMap.put(ItemRegistry.STARSTORM_PIKE.get(),
 				ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/custom/starstorm"));
+		pikeMaterialMap.put(ItemRegistry.VOID_PIKE.get(),
+				ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/custom/void"));
 
 		// Make a map of gauntlets to material textures
 
@@ -96,6 +98,8 @@ public class ItemModelGenerator extends ItemModelProvider implements DataGenUtil
 				ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/custom/astral"));
 		gauntletMaterialMap.put(ItemRegistry.STARSTORM_GAUNTLET.get(),
 				ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/custom/starstorm"));
+		gauntletMaterialMap.put(ItemRegistry.VOID_GAUNTLET.get(),
+				ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/custom/void"));
 
 		// Make a list of trim materials
 		trimMaterials.add(TrimMaterials.QUARTZ);

@@ -111,7 +111,8 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 		add("copper_ring", new SimpleDropModifierHandler(
 				simpleDropCondition(0.05f, 0.02f),
 				ItemRegistry.COPPER_RING.get().getDefaultInstance(),
-				Optional.of(EntityTypeTags.UNDEAD)));
+				Optional.of(EntityTypeTags.UNDEAD),
+				1, 1));
 
 		add("log_shards", new LogShardsLootModifierHandler(
 				matchToolCondition(ItemTags.PICKAXES),
@@ -192,6 +193,20 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 				singleLootTableCondition(BuiltInLootTables.TRIAL_CHAMBERS_REWARD_OMINOUS),
 				1, 1, 0.1f,
 				ItemRegistry.KILL_COUNTER.get().getDefaultInstance()));
+
+		add("ender_essence_enderman", new SimpleDropModifierHandler(
+				simpleEntityDropCondition(EntityType.ENDERMAN, 0.005f, 0.001f),
+				ItemRegistry.ENDER_ESSENCE.get().getDefaultInstance()));
+
+		add("ender_essence_shulker", new SimpleDropModifierHandler(
+				simpleEntityDropCondition(EntityType.SHULKER, 0.03f, 0.005f),
+				ItemRegistry.ENDER_ESSENCE.get().getDefaultInstance(),
+				1, 2));
+
+		add("ender_essence_ender_dragon", new SimpleDropModifierHandler(
+				simpleEntityDropCondition(EntityType.ENDER_DRAGON),
+				ItemRegistry.ENDER_ESSENCE.get().getDefaultInstance(),
+				8, 12));
 	}
 
 	/**

@@ -2,6 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.world.level.loot;
 
 import com.google.common.base.Suppliers;
 import com.google.gson.JsonParseException;
+import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -27,22 +28,33 @@ public class SimpleDropModifierHandler extends LootModifier {
 			RecordCodecBuilder.mapCodec(inst -> codecStart(inst).and(
 							inst.group(
 									ItemStack.CODEC.fieldOf("item").forGetter(m -> m.itemStack),
-									TagKey.codec(Registries.ENTITY_TYPE).optionalFieldOf("mob_type").forGetter(m -> m.mobType)
+									TagKey.codec(Registries.ENTITY_TYPE).optionalFieldOf("mob_type").forGetter(m -> m.mobType),
+									Codec.INT.fieldOf("min_drops").forGetter(m -> m.minDrops),
+									Codec.INT.fieldOf("max_drops").forGetter(m -> m.maxDrops)
 							))
 					.apply(inst, SimpleDropModifierHandler::new)
 			));
 
 	private final ItemStack itemStack;
 	private final Optional<TagKey<EntityType<?>>> mobType;
+	private final int minDrops;
+	private final int maxDrops;
 
 	public SimpleDropModifierHandler(LootItemCondition[] itemConditions, ItemStack itemStack) {
-		this(itemConditions, itemStack, Optional.empty());
+		this(itemConditions, itemStack, Optional.empty(), 1, 1);
 	}
 
-	public SimpleDropModifierHandler(LootItemCondition[] itemConditions, ItemStack itemStack, Optional<TagKey<EntityType<?>>> type) {
+	public SimpleDropModifierHandler(LootItemCondition[] itemConditions, ItemStack itemStack, int minDrops, int maxDrops) {
+		this(itemConditions, itemStack, Optional.empty(), minDrops, maxDrops);
+	}
+
+
+	public SimpleDropModifierHandler(LootItemCondition[] itemConditions, ItemStack itemStack, Optional<TagKey<EntityType<?>>> type, int minDrops, int maxDrops) {
 		super(itemConditions);
 		this.itemStack = itemStack;
 		this.mobType = type;
+		this.minDrops = minDrops;
+		this.maxDrops = maxDrops;
 
 		if (!BuiltInRegistries.ITEM.containsValue(itemStack.getItem())) {
 			throw new JsonParseException("item must exist in the registry");
@@ -51,12 +63,15 @@ public class SimpleDropModifierHandler extends LootModifier {
 
 	@Override
 	protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
+		int dropCount = context.getRandom().nextInt(maxDrops - minDrops + 1) + minDrops;
+		ItemStack stack = itemStack.copyWithCount(dropCount);
+
 		if (mobType.isPresent()) {
 			if (context.getParamOrNull(LootContextParams.THIS_ENTITY) instanceof Mob mob && mob.getType().is(mobType.get())) {
-				generatedLoot.add(itemStack);
+				generatedLoot.add(stack);
 			}
 		} else {
-			generatedLoot.add(itemStack);
+			generatedLoot.add(stack);
 		}
 
 		return generatedLoot;

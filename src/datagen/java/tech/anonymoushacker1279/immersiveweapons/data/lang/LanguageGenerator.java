@@ -383,7 +383,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("astral_sword", "Fast Hands");
 		addTooltip("starstorm_sword", "Inflict the wrath of the stars");
 		addTooltip("the_sword_1", "Truly one of the greatest swords of all time");
-		addTooltip("the_sword_2", "Combines the effects of Molten, Tesla, Ventus, Astral, and Starstorm swords");
+		addTooltip("the_sword_2", "Combines the effects of Molten, Tesla, Ventus, and Void swords");
 
 		// Tier specific
 		addTooltip("molten_tool", "Crouching while mining blocks will automatically smelt them");
@@ -853,6 +853,22 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("starstorm_tools.description", "Obtain every Starstorm tool");
 		addAdvancement("starstorm_armor.title", "Celestial Wrath");
 		addAdvancement("starstorm_armor.description", "Wear a full set of Starstorm armor");
+
+		// Void advancements
+		addAdvancement("ender_essence.title", "The Essence of End Creatures");
+		addAdvancement("ender_essence.description", "Obtain a sample of Ender Essence");
+		addAdvancement("void_ingot.title", "The Absence of Matter");
+		addAdvancement("void_ingot.description", "Obtain a Void ingot, where the absence of matter suddenly gains physical form");
+		addAdvancement("void_sword.title", "Violent Anti-Matter");
+		addAdvancement("void_sword.description", "Craft a Void sword");
+		addAdvancement("void_pickaxe.title", "Void Tools: Pickaxe");
+		addAdvancement("void_pickaxe.description", "Craft a Void pickaxe");
+		addAdvancement("void_axe.title", "Void Tools: Axe");
+		addAdvancement("void_axe.description", "Craft a Void axe");
+		addAdvancement("void_shovel.title", "Void Tools: Shovel");
+		addAdvancement("void_shovel.description", "Craft a Void shovel");
+		addAdvancement("void_hoe.title", "Void Tools: Hoe");
+		addAdvancement("void_hoe.description", "Craft a Void hoe");
 
 		// Copper advancements
 		addAdvancement("copper_ingot.title", "Simple Metals: Copper");

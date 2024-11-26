@@ -30,5 +30,7 @@
   "item": {
     "count": 1,
     "id": "immersiveweapons:night_vision_goggles"
-  }
+  },
+  "max_drops": 1,
+  "min_drops": 1
 }

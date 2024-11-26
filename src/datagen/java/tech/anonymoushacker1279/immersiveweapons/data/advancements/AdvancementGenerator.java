@@ -615,6 +615,74 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 				.rewards(AdvancementRewards.Builder.experience(100))
 				.save(consumer, prefixString("starstorm_armor"));
 
+		AdvancementHolder obtainEnderEssence = Builder.advancement().parent(root)
+				.display(ItemRegistry.ENDER_ESSENCE.get(),
+						createTitle("ender_essence"),
+						createDescription("ender_essence"),
+						null, AdvancementType.TASK, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.ENDER_ESSENCE.get()))
+				.save(consumer, prefixString("ender_essence"));
+
+		AdvancementHolder obtainVoidIngot = Builder.advancement().parent(obtainEnderEssence)
+				.display(ItemRegistry.VOID_INGOT.get(),
+						createTitle("void_ingot"),
+						createDescription("void_ingot"),
+						null, AdvancementType.TASK, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VOID_INGOT.get()))
+				.save(consumer, prefixString("void_ingot"));
+
+		Builder.advancement().parent(obtainVoidIngot)
+				.display(ItemRegistry.VOID_SWORD.get(),
+						createTitle("void_sword"),
+						createDescription("void_sword"),
+						null, AdvancementType.TASK, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VOID_SWORD.get()))
+				.rewards(AdvancementRewards.Builder.experience(50))
+				.save(consumer, prefixString("void_sword"));
+
+		Builder.advancement().parent(obtainVoidIngot)
+				.display(ItemRegistry.VOID_PICKAXE.get(),
+						createTitle("void_pickaxe"),
+						createDescription("void_pickaxe"),
+						null, AdvancementType.TASK, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VOID_PICKAXE.get()))
+				.rewards(AdvancementRewards.Builder.experience(50))
+				.save(consumer, prefixString("void_pickaxe"));
+
+		Builder.advancement().parent(obtainVoidIngot)
+				.display(ItemRegistry.VOID_AXE.get(),
+						createTitle("void_axe"),
+						createDescription("void_axe"),
+						null, AdvancementType.TASK, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VOID_AXE.get()))
+				.rewards(AdvancementRewards.Builder.experience(50))
+				.save(consumer, prefixString("void_axe"));
+
+		Builder.advancement().parent(obtainVoidIngot)
+				.display(ItemRegistry.VOID_SHOVEL.get(),
+						createTitle("void_shovel"),
+						createDescription("void_shovel"),
+						null, AdvancementType.TASK, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VOID_SHOVEL.get()))
+				.rewards(AdvancementRewards.Builder.experience(50))
+				.save(consumer, prefixString("void_shovel"));
+
+		Builder.advancement().parent(obtainVoidIngot)
+				.display(ItemRegistry.VOID_HOE.get(),
+						createTitle("void_hoe"),
+						createDescription("void_hoe"),
+						null, AdvancementType.CHALLENGE, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VOID_HOE.get()))
+				.rewards(AdvancementRewards.Builder.experience(75))
+				.save(consumer, prefixString("void_hoe"));
+
 		// Padded Leather advancements
 		Builder.advancement().parent(root)
 				.display(ItemRegistry.PADDED_LEATHER_HELMET.get(),

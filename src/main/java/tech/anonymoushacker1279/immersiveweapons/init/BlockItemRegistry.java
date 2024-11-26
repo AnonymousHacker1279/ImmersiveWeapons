@@ -173,4 +173,5 @@ public class BlockItemRegistry {
 	public static final Supplier<BlockItem> CHAMPION_BRICKS_ITEM = ItemRegistry.ITEMS.register("champion_bricks", () -> new BlockItem(BlockRegistry.CHAMPION_BRICKS.get(), new Properties()));
 	public static final Supplier<BlockItem> CHAMPION_BASE_ITEM = ItemRegistry.ITEMS.register("champion_base", () -> new BlockItem(BlockRegistry.CHAMPION_BASE.get(), new Properties()));
 	public static final Supplier<BlockItem> CHAMPION_KEYCARD_BRICKS_ITEM = ItemRegistry.ITEMS.register("champion_keycard_bricks", () -> new BlockItem(BlockRegistry.CHAMPION_KEYCARD_BRICKS.get(), new Properties()));
+	public static final Supplier<BlockItem> VOID_ORE_ITEM = ItemRegistry.ITEMS.register("void_ore", () -> new BlockItem(BlockRegistry.VOID_ORE.get(), new Properties()));
 }

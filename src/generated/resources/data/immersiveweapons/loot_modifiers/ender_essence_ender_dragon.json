@@ -1,0 +1,26 @@
+{
+  "type": "immersiveweapons:simple_drop",
+  "conditions": [
+    {
+      "condition": "minecraft:all_of",
+      "terms": [
+        {
+          "condition": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "type": "minecraft:ender_dragon"
+          }
+        },
+        {
+          "condition": "minecraft:killed_by_player"
+        }
+      ]
+    }
+  ],
+  "item": {
+    "count": 1,
+    "id": "immersiveweapons:ender_essence"
+  },
+  "max_drops": 12,
+  "min_drops": 8
+}

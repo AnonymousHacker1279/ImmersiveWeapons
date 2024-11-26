@@ -28,6 +28,7 @@ public class IWItemTagGroups {
 	public static final TagKey<Item> ASTRAL_NUGGETS = createItemTag("nuggets/astral");
 	public static final TagKey<Item> STARSTORM_INGOTS = createItemTag("ingots/starstorm");
 	public static final TagKey<Item> STARSTORM_SHARDS = createItemTag("shards/starstorm");
+	public static final TagKey<Item> VOID_INGOTS = createItemTag("ingots/void");
 	public static final TagKey<Item> ACCESSORIES = createItemTag("accessories");
 	public static final TagKey<Item> SMOKE_GRENADES = createItemTag("smoke_grenades");
 	public static final TagKey<Item> MOLTEN_TOOLS = createItemTag("tools/molten");
@@ -35,6 +36,7 @@ public class IWItemTagGroups {
 	public static final TagKey<Item> VENTUS_TOOLS = createItemTag("tools/ventus");
 	public static final TagKey<Item> ASTRAL_TOOLS = createItemTag("tools/astral");
 	public static final TagKey<Item> STARSTORM_TOOLS = createItemTag("tools/starstorm");
+	public static final TagKey<Item> VOID_TOOLS = createItemTag("tools/void");
 	public static final TagKey<Item> PIKES = createItemTag("weapons/pikes");
 	public static final TagKey<Item> GAUNTLETS = createItemTag("weapons/gauntlets");
 	public static final TagKey<Item> COMMANDER_PEDESTAL_AUGMENTS = createItemTag("commander_pedestal_augments");

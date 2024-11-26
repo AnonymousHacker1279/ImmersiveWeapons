@@ -144,6 +144,26 @@ public class ItemRegistry {
 	public static final Supplier<HoeItem> STARSTORM_HOE = ITEMS.register("starstorm_hoe", () -> new HoeItem(CustomTiers.STARSTORM, new Properties().attributes(
 			HoeItem.createAttributes(CustomTiers.STARSTORM, -7, 0.0f)
 	)));
+	@TextureMetadataMarker(frameTime = 25, interpolate = true)
+	public static final Supplier<SwordItem> VOID_SWORD = ITEMS.register("void_sword", () -> new SwordItem(CustomTiers.COBALT, new Properties().attributes(
+			SwordItem.createAttributes(CustomTiers.VOID, 3, -1.3f)
+	)));
+	@TextureMetadataMarker(frameTime = 25, interpolate = true)
+	public static final Supplier<PickaxeItem> VOID_PICKAXE = ITEMS.register("void_pickaxe", () -> new PickaxeItem(CustomTiers.COBALT, new Properties().attributes(
+			PickaxeItem.createAttributes(CustomTiers.VOID, 1, -1.7f)
+	)));
+	@TextureMetadataMarker(frameTime = 25, interpolate = true)
+	public static final Supplier<AxeItem> VOID_AXE = ITEMS.register("void_axe", () -> new AxeItem(CustomTiers.COBALT, new Properties().attributes(
+			AxeItem.createAttributes(CustomTiers.VOID, 5, -1.9f)
+	)));
+	@TextureMetadataMarker(frameTime = 25, interpolate = true)
+	public static final Supplier<ShovelItem> VOID_SHOVEL = ITEMS.register("void_shovel", () -> new ShovelItem(CustomTiers.COBALT, new Properties().attributes(
+			ShovelItem.createAttributes(CustomTiers.VOID, 1.5f, -1.9f)
+	)));
+	@TextureMetadataMarker(frameTime = 25, interpolate = true)
+	public static final Supplier<HoeItem> VOID_HOE = ITEMS.register("void_hoe", () -> new HoeItem(CustomTiers.COBALT, new Properties().attributes(
+			HoeItem.createAttributes(CustomTiers.VOID, -9, 1.1f)
+	)));
 	public static final Supplier<TheSword> THE_SWORD = ITEMS.register("the_sword", TheSword::new);
 
 	// Weapons
@@ -186,6 +206,9 @@ public class ItemRegistry {
 	public static final Supplier<PikeItem> STARSTORM_PIKE = ITEMS.register("starstorm_pike", () -> new PikeItem(CustomTiers.STARSTORM, new Properties().attributes(
 			PikeItem.createAttributes(CustomTiers.STARSTORM, -2.6f)
 	), Ingredient.of(IWItemTagGroups.STARSTORM_INGOTS)));
+	public static final Supplier<PikeItem> VOID_PIKE = ITEMS.register("void_pike", () -> new PikeItem(CustomTiers.VOID, new Properties().attributes(
+			PikeItem.createAttributes(CustomTiers.VOID, -1.5f)
+	), Ingredient.of(IWItemTagGroups.VOID_INGOTS)));
 	@DatagenExclusionMarker(Type.MODEL_GENERATOR_ITEM)
 	public static final Supplier<SimplePistolItem> FLINTLOCK_PISTOL = ITEMS.register("flintlock_pistol", () -> new SimplePistolItem(new Properties().durability(499)));
 	@DatagenExclusionMarker(Type.MODEL_GENERATOR_ITEM)
@@ -238,6 +261,9 @@ public class ItemRegistry {
 	public static final Supplier<GauntletItem> STARSTORM_GAUNTLET = ITEMS.register("starstorm_gauntlet", () -> new GauntletItem(CustomTiers.STARSTORM, new Properties().attributes(
 			GauntletItem.createAttributes(CustomTiers.STARSTORM, -2.3f)
 	), 0.95f, 2, Ingredient.of(IWItemTagGroups.STARSTORM_INGOTS)));
+	public static final Supplier<GauntletItem> VOID_GAUNTLET = ITEMS.register("void_gauntlet", () -> new GauntletItem(CustomTiers.VOID, new Properties().attributes(
+			GauntletItem.createAttributes(CustomTiers.VOID, -1.2f)
+	), 0.95f, 3, Ingredient.of(IWItemTagGroups.VOID_INGOTS)));
 	public static final Supplier<MeteorStaffItem> METEOR_STAFF = ITEMS.register("meteor_staff", () -> new MeteorStaffItem(new Properties().durability(199)));
 	public static final Supplier<CursedSightStaffItem> CURSED_SIGHT_STAFF = ITEMS.register("cursed_sight_staff", () -> new CursedSightStaffItem(new Properties().durability(149)));
 	@TextureMetadataMarker(frameTime = 3)
@@ -275,6 +301,9 @@ public class ItemRegistry {
 	public static final Supplier<Item> CONDUCTIVE_ALLOY = ITEMS.register("conductive_alloy", () -> new Item(new Properties()));
 	public static final Supplier<Item> MOLTEN_INGOT = ITEMS.register("molten_ingot", () -> new FuelItem(new Properties().fireResistant(), 24000));
 	public static final Supplier<Item> MOLTEN_SMITHING_TEMPLATE = ITEMS.register("molten_smithing_template", () -> new Item(new Properties().fireResistant()));
+	public static final Supplier<Item> ENDER_ESSENCE = ITEMS.register("ender_essence", () -> new Item(new Properties()));
+	@TextureMetadataMarker(frameTime = 25, interpolate = true)
+	public static final Supplier<Item> VOID_INGOT = ITEMS.register("void_ingot", () -> new Item(new Properties()));
 	public static final Supplier<Item> HANSIUM_INGOT = ITEMS.register("hansium_ingot", () -> new Item(new Properties()));
 	public static final Supplier<Item> BLACKPOWDER = ITEMS.register("blackpowder", () -> new Item(new Properties()));
 	public static final Supplier<Item> SULFUR = ITEMS.register("sulfur", () -> new Item(new Properties()));

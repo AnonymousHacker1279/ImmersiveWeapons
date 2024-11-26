@@ -34,6 +34,7 @@ public class IWPlacedFeatures {
 	public static final ResourceKey<PlacedFeature> DEEPSLATE_COBALT_ORE = createKey("deepslate_cobalt_ore");
 	public static final ResourceKey<PlacedFeature> COBALT_ORE = createKey("cobalt_ore");
 	public static final ResourceKey<PlacedFeature> POTASSIUM_NITRATE_ORE = createKey("potassium_nitrate_ore");
+	public static final ResourceKey<PlacedFeature> VOID_ORE = createKey("void_ore");
 
 	private static ResourceKey<PlacedFeature> createKey(String name) {
 		return ResourceKey.create(Registries.PLACED_FEATURE, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, name));
@@ -146,6 +147,14 @@ public class IWPlacedFeatures {
 						BiomeFilter.biome(),
 						InSquarePlacement.spread(),
 						CountPlacement.of(8)
+				));
+
+		register(context, VOID_ORE, configuredFeatures.getOrThrow(IWConfiguredFeatures.VOID_ORE_CONFIGURATION),
+				List.of(HeightRangePlacement.triangle(VerticalAnchor.absolute(16),
+								VerticalAnchor.absolute(112)),
+						BiomeFilter.biome(),
+						InSquarePlacement.spread(),
+						CountPlacement.of(5)
 				));
 	}
 

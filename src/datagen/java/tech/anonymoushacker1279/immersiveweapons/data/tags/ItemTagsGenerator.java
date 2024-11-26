@@ -63,6 +63,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		tag(Tags.Items.INGOTS).addTag(IWItemTagGroups.TESLA_INGOTS);
 		tag(Tags.Items.INGOTS).addTag(IWItemTagGroups.STARSTORM_INGOTS);
 		tag(Tags.Items.INGOTS).addTag(IWItemTagGroups.ASTRAL_INGOTS);
+		tag(Tags.Items.INGOTS).addTag(IWItemTagGroups.VOID_INGOTS);
 
 		// Nugget tags
 		tag(CommonItemTagGroups.COBALT_NUGGETS).add(ItemRegistry.COBALT_NUGGET.get());
@@ -145,6 +146,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		tag(IWItemTagGroups.TESLA_INGOTS).add(ItemRegistry.TESLA_INGOT.get());
 		tag(IWItemTagGroups.ASTRAL_INGOTS).add(ItemRegistry.ASTRAL_INGOT.get());
 		tag(IWItemTagGroups.STARSTORM_INGOTS).add(ItemRegistry.STARSTORM_INGOT.get());
+		tag(IWItemTagGroups.VOID_INGOTS).add(ItemRegistry.VOID_INGOT.get());
 
 		// Shard tags
 		tag(IWItemTagGroups.MOLTEN_SHARDS).add(ItemRegistry.MOLTEN_SHARD.get());
@@ -217,6 +219,13 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 				ItemRegistry.STARSTORM_AXE.get(),
 				ItemRegistry.STARSTORM_SHOVEL.get(),
 				ItemRegistry.STARSTORM_HOE.get());
+
+		tag(IWItemTagGroups.VOID_TOOLS).add(
+				ItemRegistry.VOID_SWORD.get(),
+				ItemRegistry.VOID_PICKAXE.get(),
+				ItemRegistry.VOID_AXE.get(),
+				ItemRegistry.VOID_SHOVEL.get(),
+				ItemRegistry.VOID_HOE.get());
 
 		// Pike tags
 		for (DeferredHolder<Item, ? extends Item> item : ItemRegistry.ITEMS.getEntries()) {

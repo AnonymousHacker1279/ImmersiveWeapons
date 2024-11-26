@@ -127,6 +127,9 @@ public class BlockRegistry {
 	public static final Supplier<AmethystClusterBlock> STARSTORM_CRYSTAL = BLOCKS.register("starstorm_crystal", () -> new StarstormCrystalBlock(7, 3, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).randomTicks().strength(0.4f).sound(SoundType.AMETHYST_CLUSTER).requiresCorrectToolForDrops().lightLevel((blockState) -> 6)));
 	@TextureMetadataMarker(frameTime = 24, interpolate = true, frames = {0, 1, 2, 3, 2, 1})
 	public static final Supplier<Block> STARSTORM_BLOCK = BLOCKS.register("starstorm_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).strength(30.0f).sound(SoundType.AMETHYST).requiresCorrectToolForDrops()));
+	// Astral / Starstorm tier
+	@TextureMetadataMarker(frameTime = 36, interpolate = true)
+	public static final Supplier<Block> VOID_ORE = BLOCKS.register("void_ore", () -> new DropExperienceBlock(ConstantInt.of(0), BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLACK).instrument(NoteBlockInstrument.BASEDRUM).strength(8.0f, 10.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 
 	// Breakable via axe
 	// Wood tier

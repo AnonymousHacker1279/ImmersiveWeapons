@@ -58,6 +58,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		createTeslaItems();
 		createAstralItems();
 		createStarstormItems();
+		createVoidItems();
 		createSmithingItems();
 		createSmallPartsItems();
 		createBarrelTapItems();
@@ -445,6 +446,16 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		createArrow(ItemRegistry.STARSTORM_ARROW.get(), IWItemTagGroups.STARSTORM_SHARDS);
 	}
 
+	private void createVoidItems() {
+		createVoidUpgrade(ItemRegistry.STARSTORM_SWORD.get(), ItemRegistry.ASTRAL_SWORD.get(), ItemRegistry.VOID_SWORD.get());
+		createVoidUpgrade(ItemRegistry.STARSTORM_PICKAXE.get(), ItemRegistry.ASTRAL_PICKAXE.get(), ItemRegistry.VOID_PICKAXE.get());
+		createVoidUpgrade(ItemRegistry.STARSTORM_AXE.get(), ItemRegistry.ASTRAL_AXE.get(), ItemRegistry.VOID_AXE.get());
+		createVoidUpgrade(ItemRegistry.STARSTORM_SHOVEL.get(), ItemRegistry.ASTRAL_SHOVEL.get(), ItemRegistry.VOID_SHOVEL.get());
+		createVoidUpgrade(ItemRegistry.STARSTORM_HOE.get(), ItemRegistry.ASTRAL_HOE.get(), ItemRegistry.VOID_HOE.get());
+		createVoidUpgrade(ItemRegistry.STARSTORM_PIKE.get(), ItemRegistry.ASTRAL_PIKE.get(), ItemRegistry.VOID_PIKE.get());
+		createVoidUpgrade(ItemRegistry.STARSTORM_GAUNTLET.get(), ItemRegistry.ASTRAL_GAUNTLET.get(), ItemRegistry.VOID_GAUNTLET.get());
+	}
+
 	private void createSmithingItems() {
 		// Netherite arrow
 		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ItemRegistry.NETHERITE_ARROW.get(), 8)
@@ -592,6 +603,8 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		starForgeSmelting(IWItemTagGroups.STARSTORM_INGOTS, 4, ItemRegistry.STARSTORM_BOOTS.get(), 600);
 		starForgeSmelting(IWItemTagGroups.STARSTORM_INGOTS, 5, ItemRegistry.GAUNTLET_SCAFFOLDING.get(), 1, ItemRegistry.STARSTORM_GAUNTLET.get(), 300);
 		starForgeSmelting(IWItemTagGroups.STARSTORM_INGOTS, 3, ItemRegistry.WOODEN_TOOL_ROD.get(), 1, ItemRegistry.STARSTORM_PIKE.get(), 300);
+
+		starForgeSmelting(BlockItemRegistry.VOID_ORE_ITEM.get(), 1, ItemRegistry.ENDER_ESSENCE.get(), 3, ItemRegistry.VOID_INGOT.get(), 900);
 	}
 
 	private void createGrenades() {
@@ -1098,10 +1111,10 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		// The Sword
 		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ItemRegistry.THE_SWORD.get())
 				.define('a', ItemRegistry.MOLTEN_SWORD.get())
-				.define('b', ItemRegistry.TESLA_SWORD.get())
+				.define('b', ItemRegistry.VOID_INGOT.get())
 				.define('c', ItemRegistry.VENTUS_SWORD.get())
-				.define('d', ItemRegistry.ASTRAL_SWORD.get())
-				.define('e', ItemRegistry.STARSTORM_SWORD.get())
+				.define('d', ItemRegistry.TESLA_SWORD.get())
+				.define('e', ItemRegistry.VOID_SWORD.get())
 				.define('f', ItemRegistry.HANS_BLESSING.get())
 				.define('g', ItemRegistry.HANSIUM_INGOT.get())
 				.pattern("abc")
@@ -1896,6 +1909,21 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.save(output);
 	}
 
+	public static void createVoidUpgrade(ItemLike starstormItem, ItemLike astralItem, ItemLike voidItem) {
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, voidItem)
+				.define('a', starstormItem)
+				.define('b', astralItem)
+				.define('c', IWItemTagGroups.STARSTORM_INGOTS)
+				.define('d', IWItemTagGroups.ASTRAL_INGOTS)
+				.define('e', IWItemTagGroups.VOID_INGOTS)
+				.pattern("ced")
+				.pattern("aeb")
+				.pattern("ced")
+				.group("void")
+				.unlockedBy("void_ingot", has(IWItemTagGroups.VOID_INGOTS))
+				.save(output);
+	}
+
 	public static void createSmeltingRecipe(List<ItemLike> ingredients, ItemLike result, float experience, int cookTime, @Nullable String group) {
 		for (ItemLike itemlike : ingredients) {
 			SimpleCookingRecipeBuilder.smelting(Ingredient.of(itemlike), RecipeCategory.MISC, result, experience, cookTime)
@@ -1949,6 +1977,12 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 	}
 
 	private static void starForgeSmelting(TagKey<Item> ingot, int ingotCount, Item secondaryMaterial, int secondaryMaterialCount, Item result, int smeltTime) {
+		StarForgeRecipeBuilder.forge(Ingredient.of(ingot), ingotCount, Ingredient.of(secondaryMaterial), secondaryMaterialCount, result, smeltTime)
+				.unlockedBy("star_forge_controller", has(BlockRegistry.STAR_FORGE_CONTROLLER.get()))
+				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_star_forge_smelting");
+	}
+
+	private static void starForgeSmelting(ItemLike ingot, int ingotCount, Item secondaryMaterial, int secondaryMaterialCount, Item result, int smeltTime) {
 		StarForgeRecipeBuilder.forge(Ingredient.of(ingot), ingotCount, Ingredient.of(secondaryMaterial), secondaryMaterialCount, result, smeltTime)
 				.unlockedBy("star_forge_controller", has(BlockRegistry.STAR_FORGE_CONTROLLER.get()))
 				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_star_forge_smelting");
