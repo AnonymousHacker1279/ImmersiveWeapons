@@ -3,7 +3,7 @@
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
 		"AbstractArrowMixin", "BaseFireBlockMixin", "ClientboundSetEntityMotionPacketMixin", "CombatRulesMixin", "EnchantmentMixin", "EntityMixin", "ProjectileMixin",
-		"loot.EnchantedCountIncreaseFunctionMixin", "loot.EnchantmentHelperMixin", "loot.LootItemRandomChanceWithEnchantedBonusConditionMixin"
+		"WindChargeMixin", "loot.EnchantedCountIncreaseFunctionMixin", "loot.EnchantmentHelperMixin", "loot.LootItemRandomChanceWithEnchantedBonusConditionMixin"
 	],
 	"client": [
 		"EnchantmentMixin"

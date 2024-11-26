@@ -192,6 +192,11 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 				singleLootTableCondition(BuiltInLootTables.TRIAL_CHAMBERS_REWARD_OMINOUS),
 				1, 1, 0.1f,
 				ItemRegistry.KILL_COUNTER.get().getDefaultInstance()));
+
+		add("ventus_shard", new SimpleDropModifierHandler(
+				simpleEntityDropCondition(EntityType.BREEZE, 0.05f, 0.01f),
+				1, 3,
+				ItemRegistry.VENTUS_SHARD.get().getDefaultInstance()));
 	}
 
 	/**

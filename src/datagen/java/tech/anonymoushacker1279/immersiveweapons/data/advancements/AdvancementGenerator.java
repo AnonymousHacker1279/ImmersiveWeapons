@@ -1140,7 +1140,7 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, prefixString("discover_hans"));
 
-		Builder.advancement().parent(entityDiscovery)
+		AdvancementHolder superHansDiscovery = Builder.advancement().parent(entityDiscovery)
 				.display(BlockItemRegistry.HANS_HEAD_ITEM.get(),
 						createTitle("discover_super_hans"),
 						createDescription("discover_super_hans"),
@@ -1448,7 +1448,7 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 				.save(consumer, prefixString("reinforced_depth_charm"));
 
 		// Super Hans advancements
-		AdvancementHolder hansiumIngot = Builder.advancement().parent(root)
+		AdvancementHolder hansiumIngot = Builder.advancement().parent(superHansDiscovery)
 				.display(ItemRegistry.HANSIUM_INGOT.get(),
 						createTitle("hansium_ingot"),
 						createDescription("hansium_ingot"),
@@ -1457,6 +1457,15 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.HANSIUM_INGOT.get()))
 				.rewards(AdvancementRewards.Builder.experience(100))
 				.save(consumer, prefixString("hansium_ingot"));
+
+		Builder.advancement().parent(superHansDiscovery)
+				.display(Items.MACE,
+						createTitle("rapid_reflexes"),
+						createDescription("rapid_reflexes"),
+						null, AdvancementType.CHALLENGE, true, true, true)
+				.addCriterion("", CriteriaTriggers.IMPOSSIBLE.createCriterion(new ImpossibleTrigger.TriggerInstance()))
+				.rewards(AdvancementRewards.Builder.experience(200))
+				.save(consumer, prefixString("rapid_reflexes"));
 
 		Builder.advancement().parent(hansiumIngot)
 				.display(ItemRegistry.THE_SWORD.get(),

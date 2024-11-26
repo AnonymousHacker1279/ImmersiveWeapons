@@ -959,6 +959,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		// Super Hans
 		addAdvancement("hansium_ingot.title", "Raw Strength in an Ingot");
 		addAdvancement("hansium_ingot.description", "Obtain a Hansium Ingot, dropped by the mighty Super Hans");
+		addAdvancement("rapid_reflexes.title", "Rapid Reflexes");
+		addAdvancement("rapid_reflexes.description", "Land a mace smash attack on Super Hans quickly after a dodge");
 		addAdvancement("the_sword.title", "The Sword of All Time");
 		addAdvancement("the_sword.description", "Obtain The Sword, a powerful combination of several swords");
 		addAdvancement("recovery_staff.title", "What Hurts Me Can Also Heal Me");
@@ -1073,8 +1075,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addConfigField("entity.tooltip", "Entity-specific settings");
 		addConfigField("celestial_tower", "Celestial Tower Settings");
 		addConfigField("celestial_tower.tooltip", "Celestial Tower settings");
-		addConfigField("skygazer", "Skygazer Settings");
-		addConfigField("skygazer.tooltip", "Skygazer settings");
+		addConfigField("celestial_altar", "Celestial Altar Settings");
+		addConfigField("celestial_altar.tooltip", "Celestial Altar settings");
 		addConfigField("the_commander", "The Commander Settings");
 		addConfigField("the_commander.tooltip", "The Commander settings");
 		addConfigField("weapons", "Weapon Settings");

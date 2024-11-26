@@ -1,5 +1,5 @@
 {
-  "parent": "immersiveweapons:root",
+  "parent": "immersiveweapons:discover_super_hans",
   "criteria": {
     "hold": {
       "conditions": {

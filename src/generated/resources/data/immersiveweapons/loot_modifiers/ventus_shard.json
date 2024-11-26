@@ -8,18 +8,18 @@
           "condition": "minecraft:entity_properties",
           "entity": "this",
           "predicate": {
-            "type": "minecraft:enderman"
+            "type": "minecraft:breeze"
           }
         },
         {
           "condition": "minecraft:random_chance_with_enchanted_bonus",
           "enchanted_chance": {
             "type": "minecraft:linear",
-            "base": 0.03,
-            "per_level_above_first": 0.02
+            "base": 0.060000002,
+            "per_level_above_first": 0.01
           },
           "enchantment": "minecraft:looting",
-          "unenchanted_chance": 0.01
+          "unenchanted_chance": 0.05
         },
         {
           "condition": "minecraft:killed_by_player"
@@ -29,8 +29,8 @@
   ],
   "item": {
     "count": 1,
-    "id": "immersiveweapons:night_vision_goggles"
+    "id": "immersiveweapons:ventus_shard"
   },
-  "max_quantity": 1,
+  "max_quantity": 3,
   "min_quantity": 1
 }

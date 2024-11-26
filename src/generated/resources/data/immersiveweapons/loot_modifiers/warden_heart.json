@@ -20,5 +20,7 @@
   "item": {
     "count": 1,
     "id": "immersiveweapons:warden_heart"
-  }
+  },
+  "max_quantity": 1,
+  "min_quantity": 1
 }
