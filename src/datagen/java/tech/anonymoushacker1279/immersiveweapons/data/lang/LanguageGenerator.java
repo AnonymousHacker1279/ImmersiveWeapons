@@ -496,6 +496,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("ventus_gauntlet", "Has a 95% chance to inflict Bleeding.");
 		addTooltip("astral_gauntlet", "Has a 95% chance to inflict Bleeding.");
 		addTooltip("starstorm_gauntlet", "Has a 95% chance to inflict Bleeding.");
+		addTooltip("void_gauntlet", "Has a 95% chance to inflict Bleeding.");
 
 		// Staffs
 		addTooltip("ventus_staff", "Teach your enemies the importance of personal space");

@@ -21,6 +21,6 @@
     "count": 1,
     "id": "immersiveweapons:medal_of_adequacy"
   },
-  "max_drops": 1,
-  "min_drops": 1
+  "max_quantity": 1,
+  "min_quantity": 1
 }

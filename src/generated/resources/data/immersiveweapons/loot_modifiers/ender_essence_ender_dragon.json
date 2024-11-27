@@ -21,6 +21,6 @@
     "count": 1,
     "id": "immersiveweapons:ender_essence"
   },
-  "max_drops": 12,
-  "min_drops": 8
+  "max_quantity": 12,
+  "min_quantity": 8
 }

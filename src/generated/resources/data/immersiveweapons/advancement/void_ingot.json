@@ -1,0 +1,33 @@
+{
+  "parent": "immersiveweapons:ender_essence",
+  "criteria": {
+    "hold": {
+      "conditions": {
+        "items": [
+          {
+            "items": "immersiveweapons:void_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersiveweapons.void_ingot.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "immersiveweapons:void_ingot"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.void_ingot.title"
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

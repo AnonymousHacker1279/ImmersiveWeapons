@@ -149,9 +149,9 @@ public class BlockStateGenerator extends BlockStateProvider {
 				.texture("overlay", ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/astral_ore"))
 				.renderType("minecraft:cutout_mipped"));
 		simpleBlock(BlockRegistry.VOID_ORE.get(), models().withExistingParent(Objects.requireNonNull(BuiltInRegistries.BLOCK.getKey(BlockRegistry.VOID_ORE.get())).getPath(),
-						new ResourceLocation(ImmersiveWeapons.MOD_ID, "simple_overlay"))
+						ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "simple_overlay"))
 				.texture("all", "minecraft:block/end_stone")
-				.texture("overlay", new ResourceLocation(ImmersiveWeapons.MOD_ID, "block/"
+				.texture("overlay", ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/"
 						+ Objects.requireNonNull(BuiltInRegistries.BLOCK.getKey(BlockRegistry.VOID_ORE.get())).getPath()))
 				.renderType("minecraft:cutout_mipped"));
 

@@ -144,23 +144,23 @@ public class ItemRegistry {
 			HoeItem.createAttributes(CustomTiers.STARSTORM, -7, 0.0f)
 	)));
 	@TextureMetadataMarker(frameTime = 25, interpolate = true)
-	public static final Supplier<SwordItem> VOID_SWORD = ITEMS.register("void_sword", () -> new SwordItem(CustomTiers.COBALT, new Properties().attributes(
+	public static final Supplier<SwordItem> VOID_SWORD = ITEMS.register("void_sword", () -> new SwordItem(CustomTiers.VOID, new Properties().attributes(
 			SwordItem.createAttributes(CustomTiers.VOID, 3, -1.3f)
 	)));
 	@TextureMetadataMarker(frameTime = 25, interpolate = true)
-	public static final Supplier<PickaxeItem> VOID_PICKAXE = ITEMS.register("void_pickaxe", () -> new PickaxeItem(CustomTiers.COBALT, new Properties().attributes(
+	public static final Supplier<PickaxeItem> VOID_PICKAXE = ITEMS.register("void_pickaxe", () -> new PickaxeItem(CustomTiers.VOID, new Properties().attributes(
 			PickaxeItem.createAttributes(CustomTiers.VOID, 1, -1.7f)
 	)));
 	@TextureMetadataMarker(frameTime = 25, interpolate = true)
-	public static final Supplier<AxeItem> VOID_AXE = ITEMS.register("void_axe", () -> new AxeItem(CustomTiers.COBALT, new Properties().attributes(
+	public static final Supplier<AxeItem> VOID_AXE = ITEMS.register("void_axe", () -> new AxeItem(CustomTiers.VOID, new Properties().attributes(
 			AxeItem.createAttributes(CustomTiers.VOID, 5, -1.9f)
 	)));
 	@TextureMetadataMarker(frameTime = 25, interpolate = true)
-	public static final Supplier<ShovelItem> VOID_SHOVEL = ITEMS.register("void_shovel", () -> new ShovelItem(CustomTiers.COBALT, new Properties().attributes(
+	public static final Supplier<ShovelItem> VOID_SHOVEL = ITEMS.register("void_shovel", () -> new ShovelItem(CustomTiers.VOID, new Properties().attributes(
 			ShovelItem.createAttributes(CustomTiers.VOID, 1.5f, -1.9f)
 	)));
 	@TextureMetadataMarker(frameTime = 25, interpolate = true)
-	public static final Supplier<HoeItem> VOID_HOE = ITEMS.register("void_hoe", () -> new HoeItem(CustomTiers.COBALT, new Properties().attributes(
+	public static final Supplier<HoeItem> VOID_HOE = ITEMS.register("void_hoe", () -> new HoeItem(CustomTiers.VOID, new Properties().attributes(
 			HoeItem.createAttributes(CustomTiers.VOID, -9, 1.1f)
 	)));
 	public static final Supplier<TheSword> THE_SWORD = ITEMS.register("the_sword", TheSword::new);

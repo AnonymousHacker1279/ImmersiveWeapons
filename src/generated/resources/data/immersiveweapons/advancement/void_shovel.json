@@ -1,0 +1,36 @@
+{
+  "parent": "immersiveweapons:void_ingot",
+  "criteria": {
+    "hold": {
+      "conditions": {
+        "items": [
+          {
+            "items": "immersiveweapons:void_shovel"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersiveweapons.void_shovel.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "immersiveweapons:void_shovel"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.void_shovel.title"
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ],
+  "rewards": {
+    "experience": 50
+  },
+  "sends_telemetry_event": true
+}

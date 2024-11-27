@@ -359,8 +359,8 @@
           "duration": 60,
           "id": "minecraft:hero_of_the_village",
           "neoforge:cures": [
-            "milk",
-            "protected_by_totem"
+            "protected_by_totem",
+            "milk"
           ],
           "show_icon": true
         }
@@ -772,8 +772,8 @@
           "duration": 220,
           "id": "minecraft:night_vision",
           "neoforge:cures": [
-            "milk",
-            "protected_by_totem"
+            "protected_by_totem",
+            "milk"
           ],
           "show_icon": true
         }
@@ -890,8 +890,8 @@
           "duration": 60,
           "id": "minecraft:jump_boost",
           "neoforge:cures": [
-            "milk",
-            "protected_by_totem"
+            "protected_by_totem",
+            "milk"
           ],
           "show_icon": true
         },
@@ -900,8 +900,8 @@
           "duration": 60,
           "id": "minecraft:slow_falling",
           "neoforge:cures": [
-            "milk",
-            "protected_by_totem"
+            "protected_by_totem",
+            "milk"
           ],
           "show_icon": true
         }

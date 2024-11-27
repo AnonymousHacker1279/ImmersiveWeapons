@@ -199,13 +199,13 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 
 		add("ender_essence_shulker", new SimpleDropModifierHandler(
 				simpleEntityDropCondition(EntityType.SHULKER, 0.03f, 0.005f),
-				ItemRegistry.ENDER_ESSENCE.get().getDefaultInstance(),
-				1, 2));
+				1, 2,
+				ItemRegistry.ENDER_ESSENCE.get().getDefaultInstance()));
 
 		add("ender_essence_ender_dragon", new SimpleDropModifierHandler(
 				simpleEntityDropCondition(EntityType.ENDER_DRAGON),
-				ItemRegistry.ENDER_ESSENCE.get().getDefaultInstance(),
-				8, 12));
+				8, 12,
+				ItemRegistry.ENDER_ESSENCE.get().getDefaultInstance()));
 
 		add("ventus_shard", new SimpleDropModifierHandler(
 				simpleEntityDropCondition(EntityType.BREEZE, 0.05f, 0.01f),
