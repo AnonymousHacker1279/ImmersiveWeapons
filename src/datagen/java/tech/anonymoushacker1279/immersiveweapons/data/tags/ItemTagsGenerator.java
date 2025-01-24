@@ -5,7 +5,9 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.Tags.Blocks;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
@@ -349,6 +351,12 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 				ItemRegistry.PADDED_LEATHER_CHESTPLATE.get(),
 				ItemRegistry.PADDED_LEATHER_LEGGINGS.get(),
 				ItemRegistry.PADDED_LEATHER_BOOTS.get());
+
+		tag(IWItemTagGroups.VOID_ARMOR).add(
+				ItemRegistry.VOID_HELMET.get(),
+				ItemRegistry.VOID_CHESTPLATE.get(),
+				ItemRegistry.VOID_LEGGINGS.get(),
+				ItemRegistry.VOID_BOOTS.get());
 	}
 
 	/**

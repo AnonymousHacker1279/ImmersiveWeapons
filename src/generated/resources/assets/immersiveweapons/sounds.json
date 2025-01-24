@@ -455,6 +455,14 @@
     ],
     "subtitle": "subtitles.immersiveweapons.armor.ventus.equip"
   },
+  "void_armor_equip": {
+    "sounds": [
+      "immersiveweapons:armor/equip/void/equip_0",
+      "immersiveweapons:armor/equip/void/equip_1",
+      "immersiveweapons:armor/equip/void/equip_2"
+    ],
+    "subtitle": "subtitles.immersiveweapons.armor.void.equip"
+  },
   "wandering_warrior_ambient": {
     "sounds": [
       "immersiveweapons:entity/wandering_warrior/ambient/ambient_0",

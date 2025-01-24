@@ -11,7 +11,10 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.ArrowItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -25,10 +28,15 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.DataGenUtils;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.common.CommonItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWItemTagGroups;
-import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.PotionRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.AmmunitionTableRecipe.MaterialGroup;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
 public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
@@ -454,6 +462,13 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		createVoidUpgrade(ItemRegistry.STARSTORM_HOE.get(), ItemRegistry.ASTRAL_HOE.get(), ItemRegistry.VOID_HOE.get());
 		createVoidUpgrade(ItemRegistry.STARSTORM_PIKE.get(), ItemRegistry.ASTRAL_PIKE.get(), ItemRegistry.VOID_PIKE.get());
 		createVoidUpgrade(ItemRegistry.STARSTORM_GAUNTLET.get(), ItemRegistry.ASTRAL_GAUNTLET.get(), ItemRegistry.VOID_GAUNTLET.get());
+		createVoidUpgrade(ItemRegistry.STARSTORM_HELMET.get(), ItemRegistry.ASTRAL_HELMET.get(), ItemRegistry.VOID_HELMET.get());
+		createVoidUpgrade(ItemRegistry.STARSTORM_CHESTPLATE.get(), ItemRegistry.ASTRAL_CHESTPLATE.get(), ItemRegistry.VOID_CHESTPLATE.get());
+		createVoidUpgrade(ItemRegistry.STARSTORM_LEGGINGS.get(), ItemRegistry.ASTRAL_LEGGINGS.get(), ItemRegistry.VOID_LEGGINGS.get());
+		createVoidUpgrade(ItemRegistry.STARSTORM_BOOTS.get(), ItemRegistry.ASTRAL_BOOTS.get(), ItemRegistry.VOID_BOOTS.get());
+
+		// Arrow
+		createArrow(ItemRegistry.VOID_ARROW.get(), IWItemTagGroups.VOID_INGOTS);
 	}
 
 	private void createSmithingItems() {
@@ -1094,6 +1109,11 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.ASTRAL_INGOTS, 0.6f, 1.3f));
 		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.ASTRAL_NUGGETS, 0.06f, 0.14f));
 		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.ASTRAL_MUSKET_BALL.get());
+
+		// Void
+		musketBallMaterials.clear();
+		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.VOID_INGOTS, 0.03f, 1.3f));
+		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.VOID_MUSKET_BALL.get());
 
 		// Ammunition Table
 		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, BlockItemRegistry.AMMUNITION_TABLE_ITEM.get())

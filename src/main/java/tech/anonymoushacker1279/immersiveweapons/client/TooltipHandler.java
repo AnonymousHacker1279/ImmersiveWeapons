@@ -20,15 +20,21 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
-import tech.anonymoushacker1279.immersiveweapons.item.*;
+import tech.anonymoushacker1279.immersiveweapons.item.CursedItem;
+import tech.anonymoushacker1279.immersiveweapons.item.KillCountWeapon;
+import tech.anonymoushacker1279.immersiveweapons.item.RecoveryStaffItem;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.AccessoryEffectInstance;
-import tech.anonymoushacker1279.immersiveweapons.item.accessory.scaling.*;
+import tech.anonymoushacker1279.immersiveweapons.item.accessory.scaling.AccessoryEffectScalingType;
+import tech.anonymoushacker1279.immersiveweapons.item.accessory.scaling.AttributeOperation;
+import tech.anonymoushacker1279.immersiveweapons.item.accessory.scaling.DynamicAttributeOperationInstance;
 import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem.PowderType;
 import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
-import tech.anonymoushacker1279.immersiveweapons.item.projectile.*;
+import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem;
+import tech.anonymoushacker1279.immersiveweapons.item.projectile.CustomArrowItem;
+import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem.ThrowableType;
 
 import java.util.ArrayList;
@@ -73,6 +79,9 @@ public class TooltipHandler {
 		}
 		if (stack.getItem() == ItemRegistry.STARSTORM_SWORD.get()) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.starstorm_sword").withStyle(ChatFormatting.RED, ChatFormatting.ITALIC));
+		}
+		if (stack.getItem() == ItemRegistry.VOID_SWORD.get()) {
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.void_sword").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
 		}
 		if (stack.getItem() == ItemRegistry.THE_SWORD.get()) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.the_sword_1").withStyle(ChatFormatting.GOLD, ChatFormatting.ITALIC));
@@ -217,6 +226,9 @@ public class TooltipHandler {
 		}
 		if (stack.is(IWItemTagGroups.PADDED_LEATHER)) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.padded_leather_armor").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		}
+		if (stack.is(IWItemTagGroups.VOID_ARMOR)) {
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.void_armor").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
 
 		// Throwables

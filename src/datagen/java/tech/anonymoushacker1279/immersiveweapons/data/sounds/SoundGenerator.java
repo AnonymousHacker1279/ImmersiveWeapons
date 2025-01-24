@@ -125,6 +125,18 @@ public class SoundGenerator extends SoundDefinitionsProvider {
 								"armor/equip/starstorm/equip_2"),
 						SoundType.SOUND)));
 
+		add(SoundEventRegistry.VOID_ARMOR_EQUIP.get(), definition()
+				.subtitle("subtitles.immersiveweapons.armor.void.equip")
+				.with(Sound.sound(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+								"armor/equip/void/equip_0"),
+						SoundType.SOUND))
+				.with(Sound.sound(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+								"armor/equip/void/equip_1"),
+						SoundType.SOUND))
+				.with(Sound.sound(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+								"armor/equip/void/equip_2"),
+						SoundType.SOUND)));
+
 		add(SoundEventRegistry.MORTAR_FIRE.get(), definition()
 				.subtitle("subtitles.immersiveweapons.block.mortar.fire")
 				.with(Sound.sound(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,

@@ -29,9 +29,9 @@ import java.util.concurrent.ExecutionException;
 import java.util.stream.Stream;
 
 /**
- * Some language categories are automatically generated based on the contents of registries. Exclusions can be made using
- * the {@link DatagenExclusionMarker} annotation, and language entries can be overridden using the {@link LanguageEntryOverride}
- * annotation.
+ * Some language categories are automatically generated based on the contents of registries. Exclusions can be made
+ * using the {@link DatagenExclusionMarker} annotation, and language entries can be overridden using the
+ * {@link LanguageEntryOverride} annotation.
  */
 public class LanguageGenerator extends IWLanguageProvider {
 
@@ -317,6 +317,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addSubtitle("armor.cobalt.equip", "Cobalt armor clinks");
 		addSubtitle("armor.astral.equip", "Astral armor resonates");
 		addSubtitle("armor.starstorm.equip", "Starstorm armor shimmers");
+		addSubtitle("armor.void.equip", "Void armor echoes");
 
 		// Guns
 		addSubtitle("item.gun.flintlock.fire", "Flintlock pistol fires");
@@ -382,6 +383,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("ventus_sword", "Whoosh");
 		addTooltip("astral_sword", "Fast Hands");
 		addTooltip("starstorm_sword", "Inflict the wrath of the stars");
+		addTooltip("void_sword", "Ridiculously powerful and agile");
 		addTooltip("the_sword_1", "Truly one of the greatest swords of all time");
 		addTooltip("the_sword_2", "Combines the effects of Molten, Tesla, Ventus, and Void swords");
 
@@ -421,6 +423,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("ventus_arrow", "450% more powerful than normal arrows. Causes enemies to levitate on impact.");
 		addTooltip("astral_arrow", "350% more powerful than normal arrows. Extremely accurate and has minimal falloff.");
 		addTooltip("starstorm_arrow", "565% more powerful than normal arrows");
+		addTooltip("void_arrow", "600% more powerful than normal arrows. Whatever you're firing at is going to die.");
 		addTooltip("smoke_grenade_arrow", "Obscure the vision of your enemies from afar");
 
 		addTooltip("wooden_musket_ball", "Very inaccurate, and likely to cause a misfire. Why would anyone make wooden musket balls anyway?");
@@ -435,7 +438,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("tesla_musket_ball", "Made from a powerful Tesla alloy. Weakens targets.");
 		addTooltip("ventus_musket_ball", "A musket ball made from Ventus shards. Causes targets to levitate.");
 		addTooltip("astral_musket_ball", "Built using an Astral material. Extremely accurate and has little falloff.");
-		addTooltip("starstorm_musket_ball", "A musket ball made from Starstorm. Strongest caliber in terms of raw damage.");
+		addTooltip("starstorm_musket_ball", "A musket ball made from Starstorm. Second strongest caliber in terms of raw damage.");
+		addTooltip("void_musket_ball", "Somehow you managed to make a musket ball out of the absence of matter. There's no surpassing this.");
 		addTooltip("cannonball", "A heavy metal ball that can be fired from a hand cannon.");
 		addTooltip("explosive_cannonball", "Similar to the cannonball but explodes on impact.");
 		addTooltip("flare", "Brightly illuminates the area around it.");
@@ -457,6 +461,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("astral_armor", "Improves mobility and allows you to dash forward (Toggleable with your Armor Effect Toggle key)");
 		addTooltip("starstorm_armor", "Increases raw damage output by 20%");
 		addTooltip("padded_leather_armor", "Fully dampens vibrations caused by walking or running");
+		addTooltip("void_armor", "Combines and improves the effects of Astral and Starstorm armor. Crouching while dashing will summon dragon's breath clouds (Toggleable with your Armor Effect Toggle key)");
 
 		// Throwables
 		addTooltip("smoke_grenade", "Creates a thick cloud of smoke. Good for quickly escaping a situation.");
@@ -870,6 +875,10 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("void_shovel.description", "Craft a Void shovel");
 		addAdvancement("void_hoe.title", "Void Tools: Hoe");
 		addAdvancement("void_hoe.description", "Craft a Void hoe");
+		addAdvancement("void_tools.title", "The End of All Things");
+		addAdvancement("void_tools.description", "Obtain every Void tool");
+		addAdvancement("void_armor.title", "The End of All Protection");
+		addAdvancement("void_armor.description", "Wear a full set of Void armor");
 
 		// Copper advancements
 		addAdvancement("copper_ingot.title", "Simple Metals: Copper");

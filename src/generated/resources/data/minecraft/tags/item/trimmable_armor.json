@@ -31,6 +31,10 @@
     "immersiveweapons:padded_leather_helmet",
     "immersiveweapons:padded_leather_chestplate",
     "immersiveweapons:padded_leather_leggings",
-    "immersiveweapons:padded_leather_boots"
+    "immersiveweapons:padded_leather_boots",
+    "immersiveweapons:void_helmet",
+    "immersiveweapons:void_chestplate",
+    "immersiveweapons:void_leggings",
+    "immersiveweapons:void_boots"
   ]
 }

@@ -55,6 +55,7 @@ public class IWItemTagGroups {
 	public static final TagKey<Item> ASTRAL_ARMOR = createItemTag("armor/astral");
 	public static final TagKey<Item> STARSTORM_ARMOR = createItemTag("armor/starstorm");
 	public static final TagKey<Item> PADDED_LEATHER = createItemTag("armor/padded_leather");
+	public static final TagKey<Item> VOID_ARMOR = createItemTag("armor/void");
 
 	private static TagKey<Item> createItemTag(String tag) {
 		return TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, tag));

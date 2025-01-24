@@ -1,0 +1,16 @@
+{
+  "type": "immersiveweapons:ammunition_table",
+  "group": "ammunition_table",
+  "materials": [
+    {
+      "base_multiplier": 1.3,
+      "density": 0.03,
+      "ingredient": {
+        "tag": "immersiveweapons:ingots/void"
+      }
+    }
+  ],
+  "result": {
+    "id": "immersiveweapons:void_musket_ball"
+  }
+}

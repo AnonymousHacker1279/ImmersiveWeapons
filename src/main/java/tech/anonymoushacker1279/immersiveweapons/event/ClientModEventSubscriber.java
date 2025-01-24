@@ -1,9 +1,13 @@
 package tech.anonymoushacker1279.immersiveweapons.event;
 
-import net.minecraft.client.model.*;
+import net.minecraft.client.model.BoatModel;
+import net.minecraft.client.model.ChestBoatModel;
+import net.minecraft.client.model.SkullModel;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.Sheets;
-import net.minecraft.client.renderer.blockentity.*;
+import net.minecraft.client.renderer.blockentity.HangingSignRenderer;
+import net.minecraft.client.renderer.blockentity.SignRenderer;
+import net.minecraft.client.renderer.blockentity.SkullBlockRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
 import net.minecraft.client.renderer.item.ItemProperties;
@@ -27,7 +31,10 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.skull.CustomSkullTypes;
 import tech.anonymoushacker1279.immersiveweapons.block.properties.WoodTypes;
-import tech.anonymoushacker1279.immersiveweapons.client.*;
+import tech.anonymoushacker1279.immersiveweapons.client.ClientExtensions;
+import tech.anonymoushacker1279.immersiveweapons.client.CustomArmPoses;
+import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
+import tech.anonymoushacker1279.immersiveweapons.client.ModelLayerLocations;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.screen.*;
 import tech.anonymoushacker1279.immersiveweapons.client.model.*;
@@ -191,6 +198,9 @@ public class ClientModEventSubscriber {
 		event.registerEntityRenderer(EntityRegistry.STARSTORM_ARROW_ENTITY.get(), context ->
 				new CustomArrowRenderer<>(context, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 						"textures/entity/projectiles/starstorm_arrow.png")));
+		event.registerEntityRenderer(EntityRegistry.VOID_ARROW_ENTITY.get(), context ->
+				new CustomArrowRenderer<>(context, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+						"textures/entity/projectiles/void_arrow.png")));
 		event.registerEntityRenderer(EntityRegistry.SMOKE_GRENADE_ARROW_ENTITY.get(), context ->
 				new CustomArrowRenderer<>(context, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 						"textures/entity/projectiles/smoke_bomb_arrow.png")));
@@ -208,6 +218,7 @@ public class ClientModEventSubscriber {
 		event.registerEntityRenderer(EntityRegistry.VENTUS_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.ASTRAL_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.STARSTORM_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.VOID_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
 
 		event.registerEntityRenderer(EntityRegistry.FLARE_ENTITY.get(), FlareRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.CANNONBALL_ENTITY.get(), CannonballRenderer::new);

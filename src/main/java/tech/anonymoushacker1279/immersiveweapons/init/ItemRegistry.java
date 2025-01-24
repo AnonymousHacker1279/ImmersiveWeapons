@@ -14,26 +14,40 @@ import tech.anonymoushacker1279.immersiveweapons.data.groups.common.CommonItemTa
 import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.item.*;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.*;
-import tech.anonymoushacker1279.immersiveweapons.item.bow.*;
+import tech.anonymoushacker1279.immersiveweapons.item.bow.AuroraBow;
+import tech.anonymoushacker1279.immersiveweapons.item.bow.DragonBreathBow;
+import tech.anonymoushacker1279.immersiveweapons.item.bow.IceBowItem;
 import tech.anonymoushacker1279.immersiveweapons.item.fortitude.*;
-import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.*;
+import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
+import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.MoltenGauntletItem;
+import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.TeslaGauntletItem;
+import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.VentusGauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.*;
 import tech.anonymoushacker1279.immersiveweapons.item.materials.CustomTiers;
-import tech.anonymoushacker1279.immersiveweapons.item.pike.*;
+import tech.anonymoushacker1279.immersiveweapons.item.pike.MoltenPikeItem;
+import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
+import tech.anonymoushacker1279.immersiveweapons.item.pike.TeslaPikeItem;
+import tech.anonymoushacker1279.immersiveweapons.item.pike.VentusPikeItem;
 import tech.anonymoushacker1279.immersiveweapons.item.potion.AlcoholItem;
 import tech.anonymoushacker1279.immersiveweapons.item.potion.WineItem;
-import tech.anonymoushacker1279.immersiveweapons.item.projectile.*;
+import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem.BulletBuilder;
+import tech.anonymoushacker1279.immersiveweapons.item.projectile.CustomArrowItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.CustomArrowItem.ArrowBuilder;
+import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem.ThrowableType;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils.HitEffect;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.TheSword;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.molten.*;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.tesla.*;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.ventus.*;
-import tech.anonymoushacker1279.immersiveweapons.item.utility.*;
-import tech.anonymoushacker1279.immersiveweapons.util.markers.*;
+import tech.anonymoushacker1279.immersiveweapons.item.utility.BasicContainerItem;
+import tech.anonymoushacker1279.immersiveweapons.item.utility.CustomBoatItem;
+import tech.anonymoushacker1279.immersiveweapons.item.utility.FuelItem;
+import tech.anonymoushacker1279.immersiveweapons.util.markers.DatagenExclusionMarker;
 import tech.anonymoushacker1279.immersiveweapons.util.markers.DatagenExclusionMarker.Type;
+import tech.anonymoushacker1279.immersiveweapons.util.markers.LanguageEntryOverride;
+import tech.anonymoushacker1279.immersiveweapons.util.markers.TextureMetadataMarker;
 import tech.anonymoushacker1279.immersiveweapons.util.markers.TextureMetadataMarker.PredefinedGroups;
 import tech.anonymoushacker1279.immersiveweapons.world.food.FoodItemProperties;
 
@@ -338,6 +352,7 @@ public class ItemRegistry {
 	public static final Supplier<CustomArrowItem<?>> VENTUS_ARROW = ITEMS.register("ventus_arrow", () -> new ArrowBuilder<>(new Properties(), 6.5d, EntityRegistry.VENTUS_ARROW_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.0355d).shootingVector(0.0025d, 0.2d, 0.9d).hitEffect(HitEffect.VENTUS).build());
 	public static final Supplier<CustomArrowItem<?>> ASTRAL_ARROW = ITEMS.register("astral_arrow", () -> new ArrowBuilder<>(new Properties(), 5.50d, EntityRegistry.ASTRAL_ARROW_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.01d).shootingVector(0.002d, 0.1d, 0.6d).build());
 	public static final Supplier<CustomArrowItem<?>> STARSTORM_ARROW = ITEMS.register("starstorm_arrow", () -> new ArrowBuilder<>(new Properties(), 7.65d, EntityRegistry.STARSTORM_ARROW_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.0355d).shootingVector(0.0025d, 0.2d, 0.9d).build());
+	public static final Supplier<CustomArrowItem<?>> VOID_ARROW = ITEMS.register("void_arrow", () -> new ArrowBuilder<>(new Properties(), 8.0d, EntityRegistry.VOID_ARROW_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.01d).shootingVector(0.002d, 0.1d, 0.6d).build());
 	@LanguageEntryOverride("Smoke Grenade Arrow")
 	public static final Supplier<CustomArrowItem<?>> SMOKE_GRENADE_ARROW = ITEMS.register("smoke_grenade_arrow", () -> new ArrowBuilder<>(new Properties(), 2.0d, EntityRegistry.SMOKE_GRENADE_ARROW_ENTITY).color(0).build());
 	@LanguageEntryOverride("Red Smoke Grenade Arrow")
@@ -363,6 +378,7 @@ public class ItemRegistry {
 	public static final Supplier<BulletItem<?>> VENTUS_MUSKET_BALL = ITEMS.register("ventus_musket_ball", () -> new BulletBuilder<>(new Properties().stacksTo(99), 7.50d, EntityRegistry.VENTUS_MUSKET_BALL_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.002d).hitEffect(HitEffect.VENTUS).shootingVector(0.002d, 0.2d, 0.5d).build());
 	public static final Supplier<BulletItem<?>> ASTRAL_MUSKET_BALL = ITEMS.register("astral_musket_ball", () -> new BulletBuilder<>(new Properties().stacksTo(99), 6.25d, EntityRegistry.ASTRAL_MUSKET_BALL_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.001d).shootingVector(0.001d, 0.1d, 0.2d).build());
 	public static final Supplier<BulletItem<?>> STARSTORM_MUSKET_BALL = ITEMS.register("starstorm_musket_ball", () -> new BulletBuilder<>(new Properties().stacksTo(99), 8.65d, EntityRegistry.STARSTORM_MUSKET_BALL_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.002d).shootingVector(0.002d, 0.2d, 0.5d).build());
+	public static final Supplier<BulletItem<?>> VOID_MUSKET_BALL = ITEMS.register("void_musket_ball", () -> new BulletBuilder<>(new Properties().stacksTo(99), 9.0d, EntityRegistry.VOID_MUSKET_BALL_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.001d).shootingVector(0.001d, 0.1d, 0.2d).build());
 	@DatagenExclusionMarker(Type.MODEL_GENERATOR_ITEM)
 	public static final Supplier<BulletItem<?>> FLARE = ITEMS.register("flare", () -> new BulletBuilder<>(new Properties(), 0.1d, EntityRegistry.FLARE_ENTITY).gravityModifier(0.06d).build());
 	@DatagenExclusionMarker(Type.MODEL_GENERATOR_ITEM)
@@ -533,6 +549,14 @@ public class ItemRegistry {
 	@LanguageEntryOverride("Padded Leather Pants")
 	public static final Supplier<ArmorItem> PADDED_LEATHER_LEGGINGS = ITEMS.register("padded_leather_leggings", () -> new ArmorItem(ArmorMaterialRegistry.PADDED_LEATHER, ArmorItem.Type.LEGGINGS, new Item.Properties().durability(ArmorItem.Type.LEGGINGS.getDurability(6))));
 	public static final Supplier<ArmorItem> PADDED_LEATHER_BOOTS = ITEMS.register("padded_leather_boots", () -> new ArmorItem(ArmorMaterialRegistry.PADDED_LEATHER, ArmorItem.Type.BOOTS, new Item.Properties().durability(ArmorItem.Type.BOOTS.getDurability(6))));
+	@TextureMetadataMarker(frameTime = 25, interpolate = true)
+	public static final Supplier<VoidArmorItem> VOID_HELMET = ITEMS.register("void_helmet", () -> new VoidArmorItem(ArmorMaterialRegistry.VOID, ArmorItem.Type.HELMET, new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(35))));
+	@TextureMetadataMarker(frameTime = 25, interpolate = true)
+	public static final Supplier<VoidArmorItem> VOID_CHESTPLATE = ITEMS.register("void_chestplate", () -> new VoidArmorItem(ArmorMaterialRegistry.VOID, ArmorItem.Type.CHESTPLATE, new Item.Properties().durability(ArmorItem.Type.CHESTPLATE.getDurability(35))));
+	@TextureMetadataMarker(frameTime = 25, interpolate = true)
+	public static final Supplier<VoidArmorItem> VOID_LEGGINGS = ITEMS.register("void_leggings", () -> new VoidArmorItem(ArmorMaterialRegistry.VOID, ArmorItem.Type.LEGGINGS, new Item.Properties().durability(ArmorItem.Type.LEGGINGS.getDurability(35))));
+	@TextureMetadataMarker(frameTime = 25, interpolate = true)
+	public static final Supplier<VoidArmorItem> VOID_BOOTS = ITEMS.register("void_boots", () -> new VoidArmorItem(ArmorMaterialRegistry.VOID, ArmorItem.Type.BOOTS, new Item.Properties().durability(ArmorItem.Type.BOOTS.getDurability(35))));
 
 	// Spawn eggs
 	public static final Supplier<DeferredSpawnEggItem> DYING_SOLDIER_SPAWN_EGG = ITEMS.register("dying_soldier_spawn_egg", () -> new DeferredSpawnEggItem(EntityRegistry.DYING_SOLDIER_ENTITY, 0x7a6851, 0x783d22, (new Item.Properties()).stacksTo(16)));
