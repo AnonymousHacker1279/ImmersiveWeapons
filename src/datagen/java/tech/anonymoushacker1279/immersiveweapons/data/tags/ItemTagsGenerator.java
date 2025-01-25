@@ -48,6 +48,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		// Copy item tags from block tags
 		copy(CommonBlockTagGroups.COBALT_ORES, CommonItemTagGroups.COBALT_ORES);
 		copy(CommonBlockTagGroups.SULFUR_ORES, CommonItemTagGroups.SULFUR_ORES);
+		copy(CommonBlockTagGroups.POTASSIUM_NITRATE_ORES, CommonItemTagGroups.POTASSIUM_NITRATE_ORES);
 		copy(Blocks.ORES, Tags.Items.ORES);
 
 		// Ingot tags
@@ -127,6 +128,12 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		// Copy item tags from block tags
 		copy(IWBlockTagGroups.BURNED_OAK_LOGS, IWItemTagGroups.BURNED_OAK_LOGS);
 		copy(IWBlockTagGroups.STARDUST_LOGS, IWItemTagGroups.STARDUST_LOGS);
+		copy(IWBlockTagGroups.ELECTRIC_ORES, IWItemTagGroups.ELECTRIC_ORES);
+		copy(IWBlockTagGroups.MOLTEN_ORES, IWItemTagGroups.MOLTEN_ORES);
+		copy(IWBlockTagGroups.VENTUS_ORES, IWItemTagGroups.VENTUS_ORES);
+		copy(IWBlockTagGroups.ASTRAL_ORES, IWItemTagGroups.ASTRAL_ORES);
+		copy(IWBlockTagGroups.VOID_ORES, IWItemTagGroups.VOID_ORES);
+		copy(Blocks.ORES, Tags.Items.ORES);
 
 		// Projectile tags
 		tag(IWItemTagGroups.FLARES).add(ItemRegistry.FLARE.get());

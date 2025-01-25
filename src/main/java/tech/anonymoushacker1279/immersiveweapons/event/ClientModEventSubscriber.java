@@ -415,7 +415,8 @@ public class ClientModEventSubscriber {
 				ItemRegistry.TESLA_PIKE.get(),
 				ItemRegistry.VENTUS_PIKE.get(),
 				ItemRegistry.ASTRAL_PIKE.get(),
-				ItemRegistry.STARSTORM_PIKE.get());
+				ItemRegistry.STARSTORM_PIKE.get(),
+				ItemRegistry.VOID_PIKE.get());
 	}
 
 	private static void registerPropertyGetters() {

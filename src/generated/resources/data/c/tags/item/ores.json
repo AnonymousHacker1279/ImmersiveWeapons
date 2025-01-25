@@ -1,6 +1,12 @@
 {
   "values": [
     "#c:ores/cobalt",
-    "#c:ores/sulfur"
+    "#c:ores/sulfur",
+    "#c:ores/potassium_nitrate",
+    "#immersiveweapons:ores/electric",
+    "#immersiveweapons:ores/molten",
+    "#immersiveweapons:ores/ventus",
+    "#immersiveweapons:ores/astral",
+    "#immersiveweapons:ores/void"
   ]
 }

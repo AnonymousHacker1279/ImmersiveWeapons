@@ -10,6 +10,11 @@ public class IWItemTagGroups {
 
 	public static final TagKey<Item> BURNED_OAK_LOGS = createItemTag("burned_oak_logs");
 	public static final TagKey<Item> STARDUST_LOGS = createItemTag("stardust_logs");
+	public static final TagKey<Item> ELECTRIC_ORES = createItemTag("ores/electric");
+	public static final TagKey<Item> MOLTEN_ORES = createItemTag("ores/molten");
+	public static final TagKey<Item> VENTUS_ORES = createItemTag("ores/ventus");
+	public static final TagKey<Item> ASTRAL_ORES = createItemTag("ores/astral");
+	public static final TagKey<Item> VOID_ORES = createItemTag("ores/void");
 	public static final TagKey<Item> FLARES = createItemTag("projectiles/flares");
 	public static final TagKey<Item> MUSKET_BALLS = createItemTag("projectiles/musket_balls");
 	public static final TagKey<Item> CANNONBALLS = createItemTag("projectiles/cannonballs");

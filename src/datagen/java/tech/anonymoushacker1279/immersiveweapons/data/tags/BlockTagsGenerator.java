@@ -66,9 +66,17 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 				BlockRegistry.SULFUR_ORE.get(),
 				BlockRegistry.DEEPSLATE_SULFUR_ORE.get(),
 				BlockRegistry.NETHER_SULFUR_ORE.get());
+		tag(CommonBlockTagGroups.POTASSIUM_NITRATE_ORES).add(
+				BlockRegistry.POTASSIUM_NITRATE_ORE.get());
 		tag(Blocks.ORES).addTags(
 				CommonBlockTagGroups.COBALT_ORES,
-				CommonBlockTagGroups.SULFUR_ORES);
+				CommonBlockTagGroups.SULFUR_ORES,
+				CommonBlockTagGroups.POTASSIUM_NITRATE_ORES,
+				IWBlockTagGroups.ELECTRIC_ORES,
+				IWBlockTagGroups.MOLTEN_ORES,
+				IWBlockTagGroups.VENTUS_ORES,
+				IWBlockTagGroups.ASTRAL_ORES,
+				IWBlockTagGroups.VOID_ORES);
 	}
 
 	/**
@@ -88,6 +96,17 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 				BlockRegistry.STARDUST_WOOD.get(),
 				BlockRegistry.STRIPPED_STARDUST_LOG.get(),
 				BlockRegistry.STRIPPED_STARDUST_WOOD.get());
+
+		tag(IWBlockTagGroups.ELECTRIC_ORES).add(
+				BlockRegistry.ELECTRIC_ORE.get());
+		tag(IWBlockTagGroups.MOLTEN_ORES).add(
+				BlockRegistry.MOLTEN_ORE.get());
+		tag(IWBlockTagGroups.VENTUS_ORES).add(
+				BlockRegistry.VENTUS_ORE.get());
+		tag(IWBlockTagGroups.ASTRAL_ORES).add(
+				BlockRegistry.ASTRAL_ORE.get());
+		tag(IWBlockTagGroups.VOID_ORES).add(
+				BlockRegistry.VOID_ORE.get());
 	}
 
 	/**
