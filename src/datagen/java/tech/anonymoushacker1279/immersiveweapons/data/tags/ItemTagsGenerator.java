@@ -148,6 +148,8 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 				ItemRegistry.CANNONBALL.get(),
 				ItemRegistry.EXPLOSIVE_CANNONBALL.get());
 
+		tag(IWItemTagGroups.DRAGON_FIREBALLS).add(ItemRegistry.DRAGON_FIREBALL.get());
+
 		// Ingot tags
 		tag(IWItemTagGroups.MOLTEN_INGOTS).add(ItemRegistry.MOLTEN_INGOT.get());
 		tag(IWItemTagGroups.ELECTRIC_INGOTS).add(ItemRegistry.ELECTRIC_INGOT.get());

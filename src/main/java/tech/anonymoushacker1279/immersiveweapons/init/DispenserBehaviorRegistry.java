@@ -1,7 +1,12 @@
 package tech.anonymoushacker1279.immersiveweapons.init;
 
-import net.minecraft.core.*;
-import net.minecraft.core.dispenser.*;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Position;
+import net.minecraft.core.dispenser.BlockSource;
+import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
+import net.minecraft.core.dispenser.DispenseItemBehavior;
+import net.minecraft.core.dispenser.ProjectileDispenseBehavior;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.ItemStack;
@@ -11,7 +16,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.phys.Vec3;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.entity.vehicle.*;
+import tech.anonymoushacker1279.immersiveweapons.entity.vehicle.CustomBoatEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.vehicle.CustomBoatType;
+import tech.anonymoushacker1279.immersiveweapons.entity.vehicle.CustomChestBoatEntity;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.CustomArrowItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem;
 
@@ -31,6 +38,8 @@ public class DispenserBehaviorRegistry implements DispenseItemBehavior {
 		ItemRegistry.ITEMS.getEntries().stream()
 				.filter(item -> item.get() instanceof ThrowableItem)
 				.forEach(throwable -> DispenserBlock.registerBehavior(throwable.get(), new ThrowableItemDispenseBehavior((ThrowableItem) throwable.get())));
+
+		DispenserBlock.registerProjectileBehavior(ItemRegistry.DRAGON_FIREBALL.get());
 
 		// Register behavior for boats
 		DispenserBlock.registerBehavior(ItemRegistry.BURNED_OAK_BOAT.get(), new CustomBoatDispenseBehavior(CustomBoatType.BURNED_OAK));

@@ -222,6 +222,7 @@ public class ClientModEventSubscriber {
 
 		event.registerEntityRenderer(EntityRegistry.FLARE_ENTITY.get(), FlareRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.CANNONBALL_ENTITY.get(), CannonballRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.DRAGON_FIREBALL_ENTITY.get(), DragonFireballBulletRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.MORTAR_SHELL_ENTITY.get(), ThrownItemRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.SMOKE_GRENADE_ENTITY.get(), AdvancedThrowableProjectileRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.FLASHBANG_ENTITY.get(), AdvancedThrowableProjectileRenderer::new);
@@ -400,7 +401,8 @@ public class ClientModEventSubscriber {
 				ItemRegistry.MUSKET.get(),
 				ItemRegistry.MUSKET_SCOPE.get(),
 				ItemRegistry.FLARE_GUN.get(),
-				ItemRegistry.HAND_CANNON.get()
+				ItemRegistry.HAND_CANNON.get(),
+				ItemRegistry.DRAGONS_BREATH_CANNON.get()
 		);
 		event.registerItem(ClientExtensions.PIKE,
 				ItemRegistry.WOODEN_PIKE.get(),

@@ -8,14 +8,21 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.util.Unit;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Arrow;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.Level.ExplosionInteraction;
-import net.minecraft.world.phys.*;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.Tags.EntityTypes;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
@@ -130,7 +137,7 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 		}
 
 		if (isExplosive && !hasExploded) {
-			explode();
+			explode(1.5f);
 		}
 	}
 
@@ -193,34 +200,36 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 		level().broadcastEntityEvent(this, VANILLA_IMPACT_STATUS_ID);
 	}
 
-	private void explode() {
+	protected void explode(float radius) {
 		if (!level().isClientSide && getOwner() != null) {
 			level().explode(this,
 					getDamageSource(getOwner()),
 					null,
 					position(),
-					1.5f,
+					radius,
 					false,
 					ExplosionInteraction.NONE);
 
 			// Get nearby entities in the radius and apply hit effects
-			level().getEntities(this, getBoundingBox().inflate(1.5d))
-					.stream()
-					.filter(entity -> {
-						if (entity instanceof LivingEntity livingEntity) {
-							return livingEntity.hasLineOfSight(this);
-						} else {
-							return false;
-						}
-					})
-					.forEach(entity -> {
-						LivingEntity livingEntity = (LivingEntity) entity;
-						switch (hitEffect) {
-							case MOLTEN -> addMoltenEffects(livingEntity, (LivingEntity) getOwner());
-							case TESLA -> addTeslaEffects(livingEntity);
-							case VENTUS -> addVentusEffects(livingEntity);
-						}
-					});
+			if (hitEffect != HitEffect.NONE) {
+				level().getEntities(this, getBoundingBox().inflate(radius))
+						.stream()
+						.filter(entity -> {
+							if (entity instanceof LivingEntity livingEntity) {
+								return livingEntity.hasLineOfSight(this);
+							} else {
+								return false;
+							}
+						})
+						.forEach(entity -> {
+							LivingEntity livingEntity = (LivingEntity) entity;
+							switch (hitEffect) {
+								case MOLTEN -> addMoltenEffects(livingEntity, (LivingEntity) getOwner());
+								case TESLA -> addTeslaEffects(livingEntity);
+								case VENTUS -> addVentusEffects(livingEntity);
+							}
+						});
+			}
 
 			hasExploded = true;
 		}

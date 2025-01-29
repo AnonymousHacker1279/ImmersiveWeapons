@@ -118,6 +118,12 @@
       }
     ]
   },
+  "dragons_breath_cannon_fire": {
+    "sounds": [
+      "immersiveweapons:item/dragons_breath_cannon/fire/fire"
+    ],
+    "subtitle": "subtitles.immersiveweapons.item.gun.dragons_breath_cannon.fire"
+  },
   "field_medic_ambient": {
     "sounds": [
       "immersiveweapons:entity/field_medic/ambient/ambient_0",

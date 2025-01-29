@@ -469,6 +469,26 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 
 		// Arrow
 		createArrow(ItemRegistry.VOID_ARROW.get(), IWItemTagGroups.VOID_INGOTS);
+
+		// Dragon Fireball
+		ShapelessRecipeBuilder.shapeless(RecipeCategory.COMBAT, ItemRegistry.DRAGON_FIREBALL.get(), 3)
+				.requires(Items.FIRE_CHARGE, 3)
+				.requires(Items.DRAGON_BREATH)
+				.group("void")
+				.unlockedBy("dragon_breath", has(Items.DRAGON_BREATH))
+				.save(output);
+
+		// Dragon's Breath Cannon
+		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ItemRegistry.DRAGONS_BREATH_CANNON.get())
+				.define('a', ItemRegistry.HAND_CANNON.get())
+				.define('b', IWItemTagGroups.VOID_INGOTS)
+				.define('c', Items.DRAGON_BREATH)
+				.pattern("cbc")
+				.pattern("bab")
+				.pattern("cbc")
+				.group("void")
+				.unlockedBy("void_ingot", has(IWItemTagGroups.VOID_INGOTS))
+				.save(output);
 	}
 
 	private void createSmithingItems() {

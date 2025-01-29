@@ -4,7 +4,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.common.ModConfigSpec.ConfigValue;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ServerConfig {
@@ -33,6 +36,8 @@ public class ServerConfig {
 	public final ModConfigSpec.DoubleValue musketFireInaccuracy;
 	public final ModConfigSpec.DoubleValue handCannonFireVelocity;
 	public final ModConfigSpec.DoubleValue handCannonFireInaccuracy;
+	public final ModConfigSpec.DoubleValue dragonsBreathCannonFireVelocity;
+	public final ModConfigSpec.DoubleValue dragonsBreathCannonFireInaccuracy;
 	public final ModConfigSpec.IntValue ventusStaffRadius;
 	public final ModConfigSpec.IntValue meteorStaffMaxUseRange;
 	public final ModConfigSpec.DoubleValue meteorStaffExplosionRadius;
@@ -201,6 +206,19 @@ public class ServerConfig {
 		handCannonFireInaccuracy = builder
 				.comment("Set the inaccuracy modifier")
 				.defineInRange("handCannonFireInaccuracy", 1.85f, 0.0f, 10.0f);
+
+		builder.pop();
+
+		builder.comment("Dragons Breath Cannon")
+				.push("dragons_breath_cannon");
+
+		dragonsBreathCannonFireVelocity = builder
+				.comment("Set the base velocity of bullets")
+				.defineInRange("dragonsBreathCannonFireVelocity", 2.65f, 0.0f, 10.0f);
+
+		dragonsBreathCannonFireInaccuracy = builder
+				.comment("Set the inaccuracy modifier")
+				.defineInRange("dragonsBreathCannonFireInaccuracy", 1.8f, 0.0f, 10.0f);
 
 		builder.pop();
 

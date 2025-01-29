@@ -18,6 +18,7 @@ public class IWItemTagGroups {
 	public static final TagKey<Item> FLARES = createItemTag("projectiles/flares");
 	public static final TagKey<Item> MUSKET_BALLS = createItemTag("projectiles/musket_balls");
 	public static final TagKey<Item> CANNONBALLS = createItemTag("projectiles/cannonballs");
+	public static final TagKey<Item> DRAGON_FIREBALLS = createItemTag("projectiles/dragon_fireballs");
 	public static final TagKey<Item> MOLTEN_INGOTS = createItemTag("ingots/molten");
 	public static final TagKey<Item> ELECTRIC_INGOTS = createItemTag("ingots/electric");
 	public static final TagKey<Item> TESLA_INGOTS = createItemTag("ingots/tesla");

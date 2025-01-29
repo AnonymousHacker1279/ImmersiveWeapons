@@ -34,6 +34,7 @@ import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem.BulletBuilder;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.CustomArrowItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.CustomArrowItem.ArrowBuilder;
+import tech.anonymoushacker1279.immersiveweapons.item.projectile.DragonFireballItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem.ThrowableType;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils.HitEffect;
@@ -235,6 +236,9 @@ public class ItemRegistry {
 	public static final Supplier<FlareGunItem> FLARE_GUN = ITEMS.register("flare_gun", () -> new FlareGunItem(new Properties().durability(399)));
 	@DatagenExclusionMarker(Type.MODEL_GENERATOR_ITEM)
 	public static final Supplier<HandCannonItem> HAND_CANNON = ITEMS.register("hand_cannon", () -> new HandCannonItem(new Properties().durability(199)));
+	@DatagenExclusionMarker(Type.MODEL_GENERATOR_ITEM)
+	@LanguageEntryOverride("Dragon's Breath Cannon")
+	public static final Supplier<DragonsBreathCannonItem> DRAGONS_BREATH_CANNON = ITEMS.register("dragons_breath_cannon", () -> new DragonsBreathCannonItem(new Properties().durability(249)));
 	public static final Supplier<GauntletItem> WOODEN_GAUNTLET = ITEMS.register("wooden_gauntlet", () -> new GauntletItem(Tiers.WOOD, new Properties().attributes(
 			GauntletItem.createAttributes(Tiers.WOOD, -2.3f)
 	), 0.15f, 0, Ingredient.of(ItemTags.PLANKS)));
@@ -385,6 +389,7 @@ public class ItemRegistry {
 	public static final Supplier<BulletItem<?>> CANNONBALL = ITEMS.register("cannonball", () -> new BulletItem.BulletBuilder<>(new Properties(), 6.0d, EntityRegistry.CANNONBALL_ENTITY).gravityModifier(0.055d).build());
 	@DatagenExclusionMarker(Type.MODEL_GENERATOR_ITEM)
 	public static final Supplier<BulletItem<?>> EXPLOSIVE_CANNONBALL = ITEMS.register("explosive_cannonball", () -> new BulletItem.BulletBuilder<>(new Properties(), 6.0d, EntityRegistry.CANNONBALL_ENTITY).isExplosive(true).build());
+	public static final Supplier<DragonFireballItem> DRAGON_FIREBALL = ITEMS.register("dragon_fireball", () -> DragonFireballItem.createFromBulletBuilder(new BulletBuilder<>(new Properties(), 12.0d, EntityRegistry.DRAGON_FIREBALL_ENTITY).gravityModifier(0.001d).isExplosive(true)));
 	@DatagenExclusionMarker(Type.MODEL_GENERATOR_ITEM)
 	public static final Supplier<Item> MORTAR_SHELL = ITEMS.register("mortar_shell", () -> new Item(new Properties()));
 	public static final Supplier<Item> GRENADE_ASSEMBLY = ITEMS.register("grenade_assembly", () -> new Item(new Properties()));

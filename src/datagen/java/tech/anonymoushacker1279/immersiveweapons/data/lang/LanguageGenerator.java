@@ -326,6 +326,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addSubtitle("item.gun.musket.fire", "Musket fires");
 		addSubtitle("item.gun.flare_gun.fire", "Flare gun fires");
 		addSubtitle("item.gun.hand_cannon.fire", "Hand cannon fires");
+		addSubtitle("item.gun.dragons_breath_cannon.fire", "Dragon's breath cannon fires");
 		addSubtitle("item.gun.bullet_whizz", "Bullet whizzes");
 
 		// Throwable items
@@ -397,6 +398,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("flare_gun_1", "Launch bright flares into the sky");
 		addTooltip("flare_gun_2", "Flares can be used to direct Minutemen in attacking specific targets");
 		addTooltip("hand_cannon", "A powerful, but inaccurate, handheld cannon");
+		addTooltip("dragons_breath_cannon", "An upgraded hand cannon designed to launch dragon fireballs");
 		// Gun metadata
 		addTooltip("gun.meta.base_velocity", "Base Velocity: %s");
 		addTooltip("gun.meta.base_reload_time", "Base Reload Time: %s seconds");
@@ -443,6 +445,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("cannonball", "A heavy metal ball that can be fired from a hand cannon.");
 		addTooltip("explosive_cannonball", "Similar to the cannonball but explodes on impact.");
 		addTooltip("flare", "Brightly illuminates the area around it.");
+		addTooltip("dragon_fireball", "A fiery projectile that explodes on impact, leaving a toxic cloud of dragon's breath.");
 		// Projectile metadata
 		addTooltip("bullet.meta.base_damage", "Base Damage: %s");
 		addTooltip("bullet.meta.gravity_modifier", "Gravity Modifier: %s");
@@ -927,6 +930,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("musket.description", "Craft a musket");
 		addAdvancement("hand_cannon.title", "Big Boom");
 		addAdvancement("hand_cannon.description", "Craft a hand cannon");
+		addAdvancement("dragons_breath_cannon.title", "Dragon's Wrath");
+		addAdvancement("dragons_breath_cannon.description", "Craft a dragon's breath cannon");
 
 		// Other weapons
 		addAdvancement("pike.title", "Long Distance Stabbing");
@@ -1117,6 +1122,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addConfigField("musket.tooltip", "Musket settings");
 		addConfigField("hand_cannon", "Hand Cannon Settings");
 		addConfigField("hand_cannon.tooltip", "Hand Cannon settings");
+		addConfigField("dragons_breath_cannon", "Dragon's Breath Cannon Settings");
+		addConfigField("dragons_breath_cannon.tooltip", "Dragon's Breath Cannon settings");
 		addConfigField("ventus_staff", "Ventus Staff Settings");
 		addConfigField("ventus_staff.tooltip", "Ventus Staff settings");
 		addConfigField("meteor_staff", "Meteor Staff Settings");

@@ -110,6 +110,9 @@ public class TooltipHandler {
 		if (stack.getItem() == ItemRegistry.HAND_CANNON.get()) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.hand_cannon").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
 		}
+		if (stack.getItem() == ItemRegistry.DRAGONS_BREATH_CANNON.get()) {
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.dragons_breath_cannon").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		}
 		if (stack.getItem() instanceof AbstractGunItem abstractGunItem && event.getEntity() != null) {
 			List<Component> shiftTooltipInfo = new ArrayList<>(10);
 			shiftTooltipInfo.add(CommonComponents.EMPTY);

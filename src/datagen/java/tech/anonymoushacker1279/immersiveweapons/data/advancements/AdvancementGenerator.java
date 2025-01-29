@@ -2,8 +2,11 @@ package tech.anonymoushacker1279.immersiveweapons.data.advancements;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.Advancement.Builder;
-import net.minecraft.advancements.*;
+import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementRequirements.Strategy;
+import net.minecraft.advancements.AdvancementRewards;
+import net.minecraft.advancements.AdvancementType;
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup.Provider;
@@ -24,7 +27,10 @@ import tech.anonymoushacker1279.immersiveweapons.advancement.EntityDiscoveredTri
 import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
 import tech.anonymoushacker1279.immersiveweapons.data.dimensions.DimensionGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWItemTagGroups;
-import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
 import java.util.function.Consumer;
 
@@ -682,6 +688,28 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VOID_HOE.get()))
 				.rewards(AdvancementRewards.Builder.experience(75))
 				.save(consumer, prefixString("void_hoe"));
+
+		Builder.advancement().parent(obtainVoidIngot)
+				.display(ItemRegistry.VOID_HELMET.get(),
+						createTitle("void_armor"),
+						createDescription("void_armor"),
+						null, AdvancementType.GOAL, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VOID_HELMET.get(),
+								ItemRegistry.VOID_CHESTPLATE.get(), ItemRegistry.VOID_LEGGINGS.get(),
+								ItemRegistry.VOID_BOOTS.get()))
+				.rewards(AdvancementRewards.Builder.experience(100))
+				.save(consumer, prefixString("void_armor"));
+
+		Builder.advancement().parent(obtainVoidIngot)
+				.display(ItemRegistry.DRAGONS_BREATH_CANNON.get(),
+						createTitle("dragons_breath_cannon"),
+						createDescription("dragons_breath_cannon"),
+						null, AdvancementType.CHALLENGE, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.DRAGONS_BREATH_CANNON.get()))
+				.rewards(AdvancementRewards.Builder.experience(125))
+				.save(consumer, prefixString("dragons_breath_cannon"));
 
 		// Padded Leather advancements
 		Builder.advancement().parent(root)
