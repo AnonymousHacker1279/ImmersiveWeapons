@@ -1,8 +1,11 @@
 package tech.anonymoushacker1279.immersiveweapons.init;
 
 import net.minecraft.core.Direction;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.HangingSignItem;
 import net.minecraft.world.item.Item.Properties;
+import net.minecraft.world.item.SignItem;
+import net.minecraft.world.item.StandingAndWallBlockItem;
 
 import java.util.function.Supplier;
 
@@ -88,6 +91,7 @@ public class BlockItemRegistry {
 	public static final Supplier<BlockItem> MINUTEMAN_STATUE_ITEM = ItemRegistry.ITEMS.register("minuteman_statue", () -> new BlockItem(BlockRegistry.MINUTEMAN_STATUE.get(), new Properties()));
 	public static final Supplier<BlockItem> MEDIC_STATUE_ITEM = ItemRegistry.ITEMS.register("medic_statue", () -> new BlockItem(BlockRegistry.MEDIC_STATUE.get(), new Properties()));
 	public static final Supplier<BlockItem> TESLA_SYNTHESIZER_ITEM = ItemRegistry.ITEMS.register("tesla_synthesizer", () -> new BlockItem(BlockRegistry.TESLA_SYNTHESIZER.get(), new Properties()));
+	public static final Supplier<BlockItem> TELEPORTER_ITEM = ItemRegistry.ITEMS.register("teleporter", () -> new BlockItem(BlockRegistry.TELEPORTER.get(), new Properties()));
 	public static final Supplier<BlockItem> CLOUD_ITEM = ItemRegistry.ITEMS.register("cloud", () -> new BlockItem(BlockRegistry.CLOUD.get(), new Properties()));
 	public static final Supplier<BlockItem> CLOUD_MARBLE_ITEM = ItemRegistry.ITEMS.register("cloud_marble", () -> new BlockItem(BlockRegistry.CLOUD_MARBLE.get(), new Properties()));
 	public static final Supplier<BlockItem> CLOUD_MARBLE_BRICKS_ITEM = ItemRegistry.ITEMS.register("cloud_marble_bricks", () -> new BlockItem(BlockRegistry.CLOUD_MARBLE_BRICKS.get(), new Properties()));

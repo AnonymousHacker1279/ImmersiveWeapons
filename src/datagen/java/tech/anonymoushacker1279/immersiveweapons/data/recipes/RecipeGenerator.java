@@ -489,6 +489,20 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.group("void")
 				.unlockedBy("void_ingot", has(IWItemTagGroups.VOID_INGOTS))
 				.save(output);
+
+		// Teleporter
+		ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.TELEPORTER_ITEM.get())
+				.define('a', IWItemTagGroups.VOID_INGOTS)
+				.define('b', IWItemTagGroups.TESLA_INGOTS)
+				.define('c', Items.PURPUR_SLAB)
+				.define('d', Items.ENDER_EYE)
+				.define('e', Items.DRAGON_BREATH)
+				.pattern("ede")
+				.pattern("aaa")
+				.pattern("cbc")
+				.group("void")
+				.unlockedBy("void_ingot", has(IWItemTagGroups.VOID_INGOTS))
+				.save(output);
 	}
 
 	private void createSmithingItems() {

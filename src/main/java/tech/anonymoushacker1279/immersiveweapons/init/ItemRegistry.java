@@ -38,6 +38,7 @@ import tech.anonymoushacker1279.immersiveweapons.item.projectile.DragonFireballI
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem.ThrowableType;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils.HitEffect;
+import tech.anonymoushacker1279.immersiveweapons.item.tool.PliersItem;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.TheSword;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.molten.*;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.tesla.*;
@@ -428,16 +429,17 @@ public class ItemRegistry {
 	public static final Supplier<ThrowableItem> MOLOTOV_COCKTAIL = ITEMS.register("molotov_cocktail", () -> new ThrowableItem(new Properties().stacksTo(16), ThrowableType.MOLOTOV));
 	public static final Supplier<Item> SMOKE_POWDER = ITEMS.register("smoke_powder", () -> new Item(new Properties()));
 	public static final Supplier<BasicContainerItem> MORTAR_AND_PESTLE = ITEMS.register("mortar_and_pestle", () -> new BasicContainerItem(new Properties()));
+	public static final Supplier<PliersItem> PLIERS = ITEMS.register("pliers", () -> new PliersItem(new Properties().stacksTo(1)));
 	public static final Supplier<AlcoholItem> BOTTLE_OF_ALCOHOL = ITEMS.register("bottle_of_alcohol", () -> new AlcoholItem(new Properties().stacksTo(16)));
 	public static final Supplier<WineItem> BOTTLE_OF_WINE = ITEMS.register("bottle_of_wine", () -> new WineItem(new Properties().stacksTo(16)));
-	public static final Supplier<Item> PLIERS = ITEMS.register("pliers", () -> new Item(new Properties().stacksTo(1)));
 	public static final Supplier<ChocolateBarItem> CHOCOLATE_BAR = ITEMS.register("chocolate_bar", () -> new ChocolateBarItem(new Properties().food(FoodItemProperties.CHOCOLATE_BAR), false));
 	@DatagenExclusionMarker(Type.MODEL_GENERATOR_ITEM)
 	@LanguageEntryOverride("Chocolate Bar")
 	public static final Supplier<ChocolateBarItem> EXPLOSIVE_CHOCOLATE_BAR = ITEMS.register("explosive_chocolate_bar", () -> new ChocolateBarItem(new Properties().food(FoodItemProperties.CHOCOLATE_BAR), true));
-	public static final Supplier<BandageItem> BANDAGE = ITEMS.register("bandage", () -> new BandageItem(new Properties().stacksTo(16)));
 	@LanguageEntryOverride("Meal Ready-to-Eat (MRE)")
 	public static final Supplier<Item> MRE = ITEMS.register("mre", () -> new Item(new Properties().food(FoodItemProperties.MRE)));
+	public static final Supplier<Item> MOLDY_BREAD = ITEMS.register("moldy_bread", () -> new Item(new Properties().food(FoodItemProperties.MOLDY_BREAD)));
+	public static final Supplier<BandageItem> BANDAGE = ITEMS.register("bandage", () -> new BandageItem(new Properties().stacksTo(16)));
 	public static final Supplier<PainkillerItem> PAINKILLERS = ITEMS.register("painkillers", () -> new PainkillerItem(new Properties().stacksTo(24)));
 	public static final Supplier<Item> SYRINGE = ITEMS.register("syringe", () -> new Item(new Properties().stacksTo(16)));
 	public static final Supplier<MorphineItem> MORPHINE = ITEMS.register("morphine", () -> new MorphineItem(new Properties().stacksTo(16)));

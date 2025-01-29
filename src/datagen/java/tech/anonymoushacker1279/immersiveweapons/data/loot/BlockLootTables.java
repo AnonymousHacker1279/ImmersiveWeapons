@@ -24,9 +24,13 @@ import tech.anonymoushacker1279.immersiveweapons.block.WoodenSpikesBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.barbed_wire.BarbedWireBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.WoodenTableBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.skull.CustomSkullBlock;
-import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import java.util.function.Supplier;
 
 public class BlockLootTables extends BlockLootSubProvider {
@@ -156,6 +160,7 @@ public class BlockLootTables extends BlockLootSubProvider {
 		dropSelf(BlockRegistry.COMMANDER_PEDESTAL.get());
 		dropSelf(BlockRegistry.CELESTIAL_ALTAR.get());
 		dropSelf(BlockRegistry.VOID_ORE.get());
+		dropSelf(BlockRegistry.TELEPORTER.get());
 
 		blocks.stream().filter(WoodenTableBlock.class::isInstance).forEach(this::dropSelf);
 		blocks.stream().filter(CustomSkullBlock.class::isInstance).forEach(this::dropSelf);

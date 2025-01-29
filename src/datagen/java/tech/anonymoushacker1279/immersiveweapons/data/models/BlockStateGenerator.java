@@ -7,19 +7,26 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.neoforged.neoforge.client.model.generators.*;
+import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
+import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ModelBuilder.FaceRotation;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.client.model.generators.ModelFile.ExistingModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.*;
 import tech.anonymoushacker1279.immersiveweapons.block.barbed_wire.BarbedWireBlock;
-import tech.anonymoushacker1279.immersiveweapons.block.decoration.*;
+import tech.anonymoushacker1279.immersiveweapons.block.decoration.CelestialLanternBlock;
+import tech.anonymoushacker1279.immersiveweapons.block.decoration.FlagBlock;
+import tech.anonymoushacker1279.immersiveweapons.block.decoration.FlagPoleBlock;
+import tech.anonymoushacker1279.immersiveweapons.block.decoration.WoodenTableBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.star_forge.StarForgeControllerBlock;
 import tech.anonymoushacker1279.immersiveweapons.data.CustomDataGenerator;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 public class BlockStateGenerator extends BlockStateProvider {
@@ -666,6 +673,8 @@ public class BlockStateGenerator extends BlockStateProvider {
 				models().getExistingFile(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "commander_pedestal")));
 		horizontalBlock(BlockRegistry.CELESTIAL_ALTAR.get(),
 				models().getExistingFile(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "celestial_altar")));
+		simpleBlock(BlockRegistry.TELEPORTER.get(),
+				models().getExistingFile(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "teleporter")));
 
 		// Tiltros Portal and Frame
 		getVariantBuilder(BlockRegistry.TILTROS_PORTAL.get())

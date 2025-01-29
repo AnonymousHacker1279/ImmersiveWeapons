@@ -1,0 +1,37 @@
+{
+  "parent": "immersiveweapons:void_ingot",
+  "criteria": {
+    "hold": {
+      "conditions": {
+        "items": [
+          {
+            "items": "immersiveweapons:teleporter"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersiveweapons.teleporter.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "immersiveweapons:teleporter"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.teleporter.title"
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ],
+  "rewards": {
+    "experience": 100
+  },
+  "sends_telemetry_event": true
+}

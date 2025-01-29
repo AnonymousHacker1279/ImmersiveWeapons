@@ -711,6 +711,26 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 				.rewards(AdvancementRewards.Builder.experience(125))
 				.save(consumer, prefixString("dragons_breath_cannon"));
 
+		AdvancementHolder obtainTeleporter = Builder.advancement().parent(obtainVoidIngot)
+				.display(BlockItemRegistry.TELEPORTER_ITEM.get(),
+						createTitle("teleporter"),
+						createDescription("teleporter"),
+						null, AdvancementType.GOAL, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(BlockItemRegistry.TELEPORTER_ITEM.get()))
+				.rewards(AdvancementRewards.Builder.experience(100))
+				.save(consumer, prefixString("teleporter"));
+
+		Builder.advancement().parent(obtainTeleporter)
+				.display(ItemRegistry.MOLDY_BREAD.get(),
+						createTitle("moldy_bread"),
+						createDescription("moldy_bread"),
+						null, AdvancementType.CHALLENGE, true, true, true)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLDY_BREAD.get()))
+				.rewards(AdvancementRewards.Builder.experience(150))
+				.save(consumer, prefixString("moldy_bread"));
+
 		// Padded Leather advancements
 		Builder.advancement().parent(root)
 				.display(ItemRegistry.PADDED_LEATHER_HELMET.get(),

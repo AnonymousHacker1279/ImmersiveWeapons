@@ -319,6 +319,9 @@ public class TooltipHandler {
 		if (stack.getItem() == ItemRegistry.MRE.get()) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.mre").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
 		}
+		if (stack.getItem() == ItemRegistry.MOLDY_BREAD.get()) {
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.moldy_bread").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
+		}
 		if (stack.getItem() == ItemRegistry.FIRST_AID_KIT.get()) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.first_aid_kit").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
 		}
@@ -366,6 +369,9 @@ public class TooltipHandler {
 		}
 		if (stack.getItem() == ItemRegistry.KILL_COUNTER.get()) {
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.kill_counter").withStyle(ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC));
+		}
+		if (stack.getItem() == BlockItemRegistry.TELEPORTER_ITEM.get()) {
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.teleporter").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.ITALIC));
 		}
 
 		// Accessories

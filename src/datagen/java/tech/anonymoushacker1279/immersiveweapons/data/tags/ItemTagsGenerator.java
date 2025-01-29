@@ -82,42 +82,22 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		// Dust tags
 		tag(CommonItemTagGroups.SULFUR_DUSTS).add(ItemRegistry.SULFUR_DUST.get());
 
-		// Loop through the registry and add groups of items to a tag
-		for (Item item : CustomDataGenerator.ALL_ITEMS) {
-			if (item.getDescriptionId().contains("sword")) {
-				tag(ItemTags.SWORDS).add(item);
-			} else if (item.getDescriptionId().contains("pickaxe")) {
-				tag(ItemTags.PICKAXES).add(item);
-			} else if (item.getDescriptionId().contains("axe")) {
-				tag(ItemTags.AXES).add(item);
-			} else if (item.getDescriptionId().contains("shovel")) {
-				tag(ItemTags.SHOVELS).add(item);
-			} else if (item.getDescriptionId().contains("hoe")) {
-				tag(ItemTags.HOES).add(item);
-			} else if (item.getDescriptionId().contains("helmet")) {
-				tag(ItemTags.HEAD_ARMOR).add(item);
-			} else if (item.getDescriptionId().contains("chestplate")) {
-				tag(ItemTags.CHEST_ARMOR).add(item);
-			} else if (item.getDescriptionId().contains("leggings")) {
-				tag(ItemTags.LEG_ARMOR).add(item);
-			} else if (item.getDescriptionId().contains("boots")) {
-				tag(ItemTags.FOOT_ARMOR).add(item);
-			}
-		}
-
 		tag(Tags.Items.TOOLS_BOW).add(
 				ItemRegistry.ICE_BOW.get(),
 				ItemRegistry.DRAGONS_BREATH_BOW.get(),
 				ItemRegistry.AURORA_BOW.get());
 
-		// Head tags
-		tag(ItemTags.SKULLS).add(
-				BlockItemRegistry.MINUTEMAN_HEAD_ITEM.get(),
-				BlockItemRegistry.FIELD_MEDIC_HEAD_ITEM.get(),
-				BlockItemRegistry.DYING_SOLDIER_HEAD_ITEM.get(),
-				BlockItemRegistry.WANDERING_WARRIOR_HEAD_ITEM.get(),
-				BlockItemRegistry.HANS_HEAD_ITEM.get(),
-				BlockItemRegistry.STORM_CREEPER_HEAD_ITEM.get());
+		// Food tags
+		tag(Tags.Items.FOODS).add(
+				ItemRegistry.MRE.get(),
+				ItemRegistry.CHOCOLATE_BAR.get(),
+				ItemRegistry.EXPLOSIVE_CHOCOLATE_BAR.get(),
+				ItemRegistry.MOLDY_BREAD.get());
+		tag(Tags.Items.FOODS_CANDY).add(
+				ItemRegistry.CHOCOLATE_BAR.get(),
+				ItemRegistry.EXPLOSIVE_CHOCOLATE_BAR.get());
+		tag(Tags.Items.FOODS_BREAD).add(ItemRegistry.MOLDY_BREAD.get());
+		tag(Tags.Items.FOODS_FOOD_POISONING).add(ItemRegistry.MOLDY_BREAD.get());
 	}
 
 	/**
@@ -453,5 +433,37 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 				IWItemTagGroups.FIREARMS,
 				IWItemTagGroups.STAFFS
 		);
+
+		// Head tags
+		tag(ItemTags.SKULLS).add(
+				BlockItemRegistry.MINUTEMAN_HEAD_ITEM.get(),
+				BlockItemRegistry.FIELD_MEDIC_HEAD_ITEM.get(),
+				BlockItemRegistry.DYING_SOLDIER_HEAD_ITEM.get(),
+				BlockItemRegistry.WANDERING_WARRIOR_HEAD_ITEM.get(),
+				BlockItemRegistry.HANS_HEAD_ITEM.get(),
+				BlockItemRegistry.STORM_CREEPER_HEAD_ITEM.get());
+
+		// Loop through the registry and add groups of items to a tag
+		for (Item item : CustomDataGenerator.ALL_ITEMS) {
+			if (item.getDescriptionId().contains("sword")) {
+				tag(ItemTags.SWORDS).add(item);
+			} else if (item.getDescriptionId().contains("pickaxe")) {
+				tag(ItemTags.PICKAXES).add(item);
+			} else if (item.getDescriptionId().contains("axe")) {
+				tag(ItemTags.AXES).add(item);
+			} else if (item.getDescriptionId().contains("shovel")) {
+				tag(ItemTags.SHOVELS).add(item);
+			} else if (item.getDescriptionId().contains("hoe")) {
+				tag(ItemTags.HOES).add(item);
+			} else if (item.getDescriptionId().contains("helmet")) {
+				tag(ItemTags.HEAD_ARMOR).add(item);
+			} else if (item.getDescriptionId().contains("chestplate")) {
+				tag(ItemTags.CHEST_ARMOR).add(item);
+			} else if (item.getDescriptionId().contains("leggings")) {
+				tag(ItemTags.LEG_ARMOR).add(item);
+			} else if (item.getDescriptionId().contains("boots")) {
+				tag(ItemTags.FOOT_ARMOR).add(item);
+			}
+		}
 	}
 }

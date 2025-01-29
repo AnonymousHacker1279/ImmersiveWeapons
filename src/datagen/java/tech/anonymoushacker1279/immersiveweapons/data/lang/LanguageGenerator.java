@@ -519,6 +519,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("bandage", "Cover those nasty cuts and scrapes");
 		addTooltip("painkillers", "Feel no pain with a copious amount of pills");
 		addTooltip("mre", "Tastes disgusting but at least you won't be hungry for a while");
+		addTooltip("moldy_bread", "It would probably be wise to avoid eating this, unless you're really desperate");
 		addTooltip("first_aid_kit", "An effective method of healing, combining the effects of bandages and painkillers");
 
 		// Commander Pedestal Augments
@@ -549,6 +550,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("curse_cleaning_soap", "Cleanses your soul of all curses");
 		addTooltip("champion_keycard", "Unlocks levels within Champion Towers");
 		addTooltip("kill_counter", "Apply to an item to track the number of kills achieved with it");
+		addTooltip("teleporter", "Warp between linked teleporters");
 
 		// Accessories
 		addTooltip("accessory.effects", "This accessory provides the following effects:");
@@ -685,8 +687,13 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addMessage("item.jonnys_curse.using", "Are you sure you wanna become a furry?");
 		addMessage("item.jonnys_curse.canceled", "You remain normal for now...");
 		addMessage("item.jonnys_curse.used", "Its so over...");
+		addMessage("item.pliers.set_linked_teleporter", "Teleporter location set to (%s, %s, %s)");
+		addMessage("item.pliers.store_linked_teleporter", "Stored teleporter location (%s, %s, %s)");
+		addMessage("item.pliers.clear_linked_teleporter", "Cleared stored teleporter location");
 		addMessage("block.wall_shelf.locked", "This shelf has been locked");
 		addMessage("block.wall_shelf.unlocked", "This shelf has been unlocked");
+		addMessage("block.teleporter.linked_teleporter_does_not_exist", "The linked teleporter no longer exists");
+		addMessage("block.teleporter.no_linked_teleporter", "Link this teleporter to another one using pliers first");
 		addMessage("armor_effects.disabled", "Armor effects have been disabled");
 		addMessage("armor_effects.enabled", "Armor effects have been enabled");
 		addMessage("armor_effects.tesla_armor.effect_everything", "Currently effecting ALL creatures (including players)");
@@ -882,6 +889,10 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("void_tools.description", "Obtain every Void tool");
 		addAdvancement("void_armor.title", "The End of All Protection");
 		addAdvancement("void_armor.description", "Wear a full set of Void armor");
+		addAdvancement("teleporter.title", "Teleportation");
+		addAdvancement("teleporter.description", "Obtain a teleporter");
+		addAdvancement("moldy_bread.title", "I Have Done Nothing But Teleport Bread for Three Days");
+		addAdvancement("moldy_bread.description", "You told me to, Engineer");
 
 		// Copper advancements
 		addAdvancement("copper_ingot.title", "Simple Metals: Copper");
