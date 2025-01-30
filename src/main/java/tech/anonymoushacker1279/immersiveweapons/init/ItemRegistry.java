@@ -459,6 +459,7 @@ public class ItemRegistry {
 	@LanguageEntryOverride("Hans' Blessing")
 	public static final Supplier<Item> HANS_BLESSING = ITEMS.register("hans_blessing", () -> new Item(new Properties().stacksTo(1)));
 	public static final Supplier<Item> CELESTIAL_SPIRIT = ITEMS.register("celestial_spirit", () -> new Item(new Properties().stacksTo(1)));
+	public static final Supplier<Item> VOID_BLESSING = ITEMS.register("void_blessing", () -> new Item(new Properties().stacksTo(1)));
 	public static final Supplier<Item> BLADEMASTER_EMBLEM = ITEMS.register("blademaster_emblem", () -> new Item(new Properties().stacksTo(1)));
 	public static final Supplier<Item> DEADEYE_PENDANT = ITEMS.register("deadeye_pendant", () -> new Item(new Properties().stacksTo(1)));
 	public static final Supplier<Item> BLOATED_HEART = ITEMS.register("bloated_heart", () -> new Item(new Properties().stacksTo(1)));

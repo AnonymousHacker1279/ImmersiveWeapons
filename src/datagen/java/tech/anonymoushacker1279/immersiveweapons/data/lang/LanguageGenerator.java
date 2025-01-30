@@ -586,6 +586,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("hans_blessing_2", "Tis but a scratch");
 		addTooltip("celestial_spirit_1", "When taking damage, there is a 15% chance to summon a meteor");
 		addTooltip("celestial_spirit_2", "The meteor will only damage the creature that attacked you");
+		addTooltip("void_blessing", "Take less damage from all sources, and become immune to falling out of the world");
 		addTooltip("blademaster_emblem", "Increases melee damage and adds a chance to inflict Bleeding");
 		addTooltip("deadeye_pendant_1", "Increases damage over distance with firearms");
 		addTooltip("deadeye_pendant_2", "Maximum damage increase is 20% at 100 meters");

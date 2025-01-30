@@ -4,9 +4,14 @@ import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.common.data.DataMapProvider;
-import net.neoforged.neoforge.registries.datamaps.builtin.*;
-import tech.anonymoushacker1279.immersiveweapons.init.*;
-import tech.anonymoushacker1279.immersiveweapons.item.accessory.*;
+import net.neoforged.neoforge.registries.datamaps.builtin.Compostable;
+import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps;
+import net.neoforged.neoforge.registries.datamaps.builtin.VibrationFrequency;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.GameEventRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
+import tech.anonymoushacker1279.immersiveweapons.item.accessory.AccessorySlot;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.FlammablePowder;
 
@@ -47,6 +52,7 @@ public class DataMapsGenerator extends DataMapProvider {
 				.add(ItemRegistry.BERSERKERS_AMULET.get().builtInRegistryHolder(), new Accessory(AccessorySlot.CHARM, AccessoryItemEffects.BERSERKERS_AMULET), false)
 				.add(ItemRegistry.HANS_BLESSING.get().builtInRegistryHolder(), new Accessory(AccessorySlot.SPIRIT, AccessoryItemEffects.HANS_BLESSING), false)
 				.add(ItemRegistry.CELESTIAL_SPIRIT.get().builtInRegistryHolder(), new Accessory(AccessorySlot.SPIRIT, AccessoryItemEffects.CELESTIAL_SPIRIT), false)
+				.add(ItemRegistry.VOID_BLESSING.get().builtInRegistryHolder(), new Accessory(AccessorySlot.SPIRIT, AccessoryItemEffects.VOID_BLESSING), false)
 				.add(ItemRegistry.BLADEMASTER_EMBLEM.get().builtInRegistryHolder(), new Accessory(AccessorySlot.CHARM, AccessoryItemEffects.BLADEMASTER_EMBLEM), false)
 				.add(ItemRegistry.DEADEYE_PENDANT.get().builtInRegistryHolder(), new Accessory(AccessorySlot.NECKLACE, AccessoryItemEffects.DEADEYE_PENDANT), false)
 				.add(ItemRegistry.BLOATED_HEART.get().builtInRegistryHolder(), new Accessory(AccessorySlot.BODY, AccessoryItemEffects.BLOATED_HEART), false)

@@ -503,6 +503,18 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.group("void")
 				.unlockedBy("void_ingot", has(IWItemTagGroups.VOID_INGOTS))
 				.save(output);
+
+		// Void Blessing
+		ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ItemRegistry.VOID_BLESSING.get())
+				.define('a', ItemRegistry.HANS_BLESSING.get())
+				.define('b', IWItemTagGroups.VOID_INGOTS)
+				.define('c', ItemRegistry.ENDER_ESSENCE.get())
+				.pattern("cbc")
+				.pattern("bab")
+				.pattern("cbc")
+				.group("void")
+				.unlockedBy("void_ingot", has(IWItemTagGroups.VOID_INGOTS))
+				.save(output);
 	}
 
 	private void createSmithingItems() {

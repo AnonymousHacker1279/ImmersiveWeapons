@@ -396,6 +396,9 @@ public class TooltipHandler {
 				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.celestial_spirit_1").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
 				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.celestial_spirit_2").withStyle(ChatFormatting.DARK_GREEN, ChatFormatting.ITALIC));
 			}
+			if (stack.getItem() == ItemRegistry.VOID_BLESSING.get()) {
+				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.void_blessing").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));
+			}
 			if (stack.getItem() == ItemRegistry.BLADEMASTER_EMBLEM.get()) {
 				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.blademaster_emblem").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
 			}
