@@ -139,12 +139,9 @@ dependencies {
 
 	implementation "net.neoforged:neoforge:${neoforge_version}"
 
-	implementation(jarJar("dev.lukebemish:biomesquisher:[${biomesquisher_version}]")) {
+	implementation(jarJar("com.terraformersmc:biolith-neoforge:[${biolith}]")) {
 		version {
-			prefer biomesquisher_version
-		}
-		capabilities {
-			requireCapability("dev.lukebemish:biomesquisher-neoforge")
+			prefer biolith
 		}
 	}
 

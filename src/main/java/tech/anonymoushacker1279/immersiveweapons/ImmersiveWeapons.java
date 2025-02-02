@@ -2,7 +2,9 @@ package tech.anonymoushacker1279.immersiveweapons;
 
 import com.mojang.logging.LogUtils;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.*;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModList;
+import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLConstructModEvent;
@@ -12,8 +14,11 @@ import org.slf4j.Logger;
 import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
 import tech.anonymoushacker1279.immersiveweapons.block.properties.WoodTypes;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
-import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
+import tech.anonymoushacker1279.immersiveweapons.init.DispenserBehaviorRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.PostSetupHandler;
 import tech.anonymoushacker1279.immersiveweapons.world.level.CustomBlockSetTypes;
+import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.IWOverworldBiomes;
 
 @Mod(ImmersiveWeapons.MOD_ID)
 public class ImmersiveWeapons {
@@ -35,14 +40,16 @@ public class ImmersiveWeapons {
 		// Initialize deferred registry
 		DeferredRegistryHandler.init(modEventBus);
 
+		// Initialize custom overworld biomes
+		IWOverworldBiomes.init();
+
 		// Add event listeners
 		modEventBus.addListener(this::setup);
 		modEventBus.addListener(this::constructMod);
 	}
 
 	/**
-	 * Event handler for the FMLCommonSetupEvent.
-	 * Most of this is registry related.
+	 * Event handler for the FMLCommonSetupEvent. Most of this is registry related.
 	 *
 	 * @param event the <code>FMLCommonSetupEvent</code> instance
 	 */
