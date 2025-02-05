@@ -19,7 +19,8 @@ import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 import tech.anonymoushacker1279.immersiveweapons.potion.BrokenArmorEffect;
 
 /**
- * Replace the vanilla armor cap of 20 points with a configurable value. Additionally, it allows a custom armor breach attribute to be used.
+ * Replace the vanilla armor cap of 20 points with a configurable value. Additionally, it allows a custom armor breach
+ * attribute to be used.
  */
 @Mixin(CombatRules.class)
 public abstract class CombatRulesMixin {
@@ -53,43 +54,4 @@ public abstract class CombatRulesMixin {
 		damageModifier[0] = Math.max(0.0F, damageModifier[0]);
 		ci.setReturnValue(damage * (1.0F - damageModifier[0]));
 	}
-
-	/*
-	float armor = getArmorValue();
-		float armorToughness = (float) getAttributeValue(Attributes.ARMOR_TOUGHNESS);
-
-		float toughnessModifier = 2.0F + armorToughness / 4.0F;
-		float armorProtection = (float) Mth.clamp(armor - damageAmount / toughnessModifier, armor * 0.2F, CommonConfig.maxArmorProtection) / 25f;
-		// final float[] armorBreachModifier = {EnchantmentHelper.calculateArmorBreach(source.getEntity(), armorProtection)};
-
-		if (source.getEntity() instanceof LivingEntity attackingEntity) {
-			ItemStack heldItem = attackingEntity.getMainHandItem();
-
-			// Prevents being able to fire a projectile and switching to a weapon with armor breach to increase damage
-			if (source.getDirectEntity() instanceof CustomArrowEntity customArrowEntity) {
-				heldItem = customArrowEntity.firedWithStack;
-			}
-
-			if (heldItem != null) {
-				heldItem.getAttributeModifiers().forEach(EquipmentSlot.MAINHAND, (attribute, attributeModifier) -> {
-					if (attribute == AttributeRegistry.ARMOR_BREACH) {
-						// armorBreachModifier[0] -= (float) attributeModifier.amount();
-					}
-				});
-			}
-
-			// Handle Broken Armor effects
-			MobEffectInstance brokenArmorEffect = getEffect(EffectRegistry.BROKEN_ARMOR_EFFECT);
-			if (brokenArmorEffect != null) {
-				int level = brokenArmorEffect.getAmplifier();
-				// armorBreachModifier[0] -= ((BrokenArmorEffect) brokenArmorEffect.getEffect().value()).calculateArmorBreach(level);
-			}
-		}
-
-		// Ensure the modifier does not go below zero
-		// armorBreachModifier[0] = Math.max(0.0F, armorBreachModifier[0]);
-
-		// float damageModifier = 1.0F - armorBreachModifier[0];
-		return damageAmount * armorProtection;
-	 */
 }

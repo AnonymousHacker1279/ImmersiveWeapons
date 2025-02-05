@@ -1,12 +1,16 @@
 package tech.anonymoushacker1279.immersiveweapons.data.loot;
 
-import net.minecraft.advancements.critereon.*;
+import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.critereon.LocationPredicate;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.tags.*;
+import net.minecraft.tags.EntityTypeTags;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.biome.Biome;
@@ -20,9 +24,11 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
-import tech.anonymoushacker1279.immersiveweapons.world.level.loot.*;
+import tech.anonymoushacker1279.immersiveweapons.world.level.loot.LogShardsLootModifierHandler;
+import tech.anonymoushacker1279.immersiveweapons.world.level.loot.SimpleChestModifierHandler;
+import tech.anonymoushacker1279.immersiveweapons.world.level.loot.SimpleDropModifierHandler;
+import tech.anonymoushacker1279.immersiveweapons.world.level.loot.ToolSmeltingModifierHandler;
 
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -111,7 +117,7 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 		add("copper_ring", new SimpleDropModifierHandler(
 				simpleDropCondition(0.05f, 0.02f),
 				ItemRegistry.COPPER_RING.get().getDefaultInstance(),
-				Optional.of(EntityTypeTags.UNDEAD)));
+				EntityTypeTags.UNDEAD));
 
 		add("log_shards", new LogShardsLootModifierHandler(
 				matchToolCondition(ItemTags.PICKAXES),
