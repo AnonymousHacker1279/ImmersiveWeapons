@@ -2,6 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.world.level.loot;
 
 import com.google.common.base.Suppliers;
 import com.google.gson.JsonParseException;
+import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -17,6 +18,7 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import net.neoforged.neoforge.common.loot.LootModifier;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -26,23 +28,49 @@ public class SimpleDropModifierHandler extends LootModifier {
 	public static final Supplier<MapCodec<SimpleDropModifierHandler>> CODEC = Suppliers.memoize(() ->
 			RecordCodecBuilder.mapCodec(inst -> codecStart(inst).and(
 							inst.group(
+									Codec.INT.fieldOf("min_quantity").forGetter(m -> m.minQuantity),
+									Codec.INT.fieldOf("max_quantity").forGetter(m -> m.maxQuantity),
 									ItemStack.CODEC.fieldOf("item").forGetter(m -> m.itemStack),
-									TagKey.codec(Registries.ENTITY_TYPE).optionalFieldOf("mob_type").forGetter(m -> m.mobType)
+									TagKey.codec(Registries.ENTITY_TYPE).optionalFieldOf("mob_type").forGetter(m -> Optional.ofNullable(m.mobType))
 							))
-					.apply(inst, SimpleDropModifierHandler::new)
+					.apply(inst, (lootItemConditions, minQuantity, maxQuantity, itemStack, entityTypeTagKey) ->
+							new SimpleDropModifierHandler(lootItemConditions, minQuantity, maxQuantity, itemStack, entityTypeTagKey.orElse(null)))
 			));
 
+	private final int minQuantity;
+	private final int maxQuantity;
 	private final ItemStack itemStack;
-	private final Optional<TagKey<EntityType<?>>> mobType;
+	@Nullable
+	private final TagKey<EntityType<?>> mobType;
 
 	public SimpleDropModifierHandler(LootItemCondition[] itemConditions, ItemStack itemStack) {
-		this(itemConditions, itemStack, Optional.empty());
+		this(itemConditions, 1, 1, itemStack, null);
 	}
 
-	public SimpleDropModifierHandler(LootItemCondition[] itemConditions, ItemStack itemStack, Optional<TagKey<EntityType<?>>> type) {
+	public SimpleDropModifierHandler(LootItemCondition[] itemConditions, int minQuantity, int maxQuantity, ItemStack itemStack) {
+		this(itemConditions, minQuantity, maxQuantity, itemStack, null);
+	}
+
+	public SimpleDropModifierHandler(LootItemCondition[] itemConditions, ItemStack itemStack, TagKey<EntityType<?>> type) {
+		this(itemConditions, 1, 1, itemStack, type);
+	}
+
+	public SimpleDropModifierHandler(LootItemCondition[] itemConditions, int minQuantity, int maxQuantity, ItemStack itemStack, @Nullable TagKey<EntityType<?>> type) {
 		super(itemConditions);
+		this.minQuantity = minQuantity;
+		this.maxQuantity = maxQuantity;
 		this.itemStack = itemStack;
 		this.mobType = type;
+
+		if (minQuantity < 0) {
+			throw new JsonParseException("min_quantity must be >= 0");
+		}
+
+		if (maxQuantity < 0) {
+			throw new JsonParseException("max_quantity must be >= 0");
+		} else if (maxQuantity < minQuantity) {
+			throw new JsonParseException("max_quantity must be >= min_quantity");
+		}
 
 		if (!BuiltInRegistries.ITEM.containsValue(itemStack.getItem())) {
 			throw new JsonParseException("item must exist in the registry");
@@ -51,12 +79,15 @@ public class SimpleDropModifierHandler extends LootModifier {
 
 	@Override
 	protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
-		if (mobType.isPresent()) {
-			if (context.getParamOrNull(LootContextParams.THIS_ENTITY) instanceof Mob mob && mob.getType().is(mobType.get())) {
-				generatedLoot.add(itemStack);
+		int lootQuantity = context.getRandom().nextIntBetweenInclusive(minQuantity, maxQuantity);
+		ItemStack stack = itemStack.copyWithCount(lootQuantity);
+
+		if (mobType != null) {
+			if (context.getParamOrNull(LootContextParams.THIS_ENTITY) instanceof Mob mob && mob.getType().is(mobType)) {
+				generatedLoot.add(stack);
 			}
 		} else {
-			generatedLoot.add(itemStack);
+			generatedLoot.add(stack);
 		}
 
 		return generatedLoot;

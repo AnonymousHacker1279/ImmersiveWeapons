@@ -23,18 +23,32 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.*;
 import tech.anonymoushacker1279.immersiveweapons.block.barbed_wire.BarbedWireBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.barbed_wire.BarbedWireFenceBlock;
-import tech.anonymoushacker1279.immersiveweapons.block.core.*;
+import tech.anonymoushacker1279.immersiveweapons.block.core.BasicOrientableBlock;
+import tech.anonymoushacker1279.immersiveweapons.block.core.CustomSandBlock;
+import tech.anonymoushacker1279.immersiveweapons.block.core.StrippablePillarBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.crafting.*;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.*;
-import tech.anonymoushacker1279.immersiveweapons.block.decoration.skull.*;
-import tech.anonymoushacker1279.immersiveweapons.block.misc.*;
-import tech.anonymoushacker1279.immersiveweapons.block.mud.*;
+import tech.anonymoushacker1279.immersiveweapons.block.decoration.skull.CustomSkullBlock;
+import tech.anonymoushacker1279.immersiveweapons.block.decoration.skull.CustomSkullTypes;
+import tech.anonymoushacker1279.immersiveweapons.block.decoration.skull.CustomWallSkullBlock;
+import tech.anonymoushacker1279.immersiveweapons.block.misc.ChampionKeycardBlock;
+import tech.anonymoushacker1279.immersiveweapons.block.misc.MedicStatueBlock;
+import tech.anonymoushacker1279.immersiveweapons.block.misc.MinutemanStatueBlock;
+import tech.anonymoushacker1279.immersiveweapons.block.misc.TiltrosPortalBlock;
+import tech.anonymoushacker1279.immersiveweapons.block.mud.DriedMudBlock;
+import tech.anonymoushacker1279.immersiveweapons.block.mud.HardenedMudWindowBlock;
+import tech.anonymoushacker1279.immersiveweapons.block.mud.IWMudBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.properties.WoodTypes;
-import tech.anonymoushacker1279.immersiveweapons.block.sign.*;
+import tech.anonymoushacker1279.immersiveweapons.block.sign.CustomCeilingHangingSignBlock;
+import tech.anonymoushacker1279.immersiveweapons.block.sign.CustomStandingSignBlock;
+import tech.anonymoushacker1279.immersiveweapons.block.sign.CustomWallHangingSignBlock;
+import tech.anonymoushacker1279.immersiveweapons.block.sign.CustomWallSignBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.star_forge.SolarLensBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.star_forge.StarForgeControllerBlock;
-import tech.anonymoushacker1279.immersiveweapons.util.markers.*;
+import tech.anonymoushacker1279.immersiveweapons.util.markers.DatagenExclusionMarker;
 import tech.anonymoushacker1279.immersiveweapons.util.markers.DatagenExclusionMarker.Type;
+import tech.anonymoushacker1279.immersiveweapons.util.markers.LanguageEntryOverride;
+import tech.anonymoushacker1279.immersiveweapons.util.markers.TextureMetadataMarker;
 import tech.anonymoushacker1279.immersiveweapons.world.level.CustomBlockSetTypes;
 
 import java.util.Optional;
@@ -110,6 +124,7 @@ public class BlockRegistry {
 	public static final Supplier<CelestialLanternBlock> CELESTIAL_LANTERN = BLOCKS.register("celestial_lantern", () -> new CelestialLanternBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(3.5f).sound(SoundType.LANTERN).requiresCorrectToolForDrops().lightLevel((blockState) -> 15).noOcclusion()));
 	public static final Supplier<StarForgeControllerBlock> STAR_FORGE_CONTROLLER = BLOCKS.register("star_forge_controller", () -> new StarForgeControllerBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_CYAN).strength(5.0f, 10.0f).sound(SoundType.NETHER_BRICKS).requiresCorrectToolForDrops().noOcclusion()));
 	public static final Supplier<Block> STAR_FORGE_BRICKS = BLOCKS.register("star_forge_bricks", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_CYAN).strength(5.0f, 10.0f).sound(SoundType.NETHER_BRICKS).requiresCorrectToolForDrops()));
+	public static final Supplier<TeleporterBlock> TELEPORTER = BLOCKS.register("teleporter", () -> new TeleporterBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(3.5f).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion()));
 	// Diamond tier
 	@TextureMetadataMarker(frameTime = 12, interpolate = true)
 	public static final Supplier<DropExperienceBlock> MOLTEN_ORE = BLOCKS.register("molten_ore", () -> new DropExperienceBlock(UniformInt.of(5, 10), BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(6.0f, 8.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
@@ -127,6 +142,9 @@ public class BlockRegistry {
 	public static final Supplier<AmethystClusterBlock> STARSTORM_CRYSTAL = BLOCKS.register("starstorm_crystal", () -> new StarstormCrystalBlock(7, 3, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).randomTicks().strength(0.4f).sound(SoundType.AMETHYST_CLUSTER).requiresCorrectToolForDrops().lightLevel((blockState) -> 6)));
 	@TextureMetadataMarker(frameTime = 24, interpolate = true, frames = {0, 1, 2, 3, 2, 1})
 	public static final Supplier<Block> STARSTORM_BLOCK = BLOCKS.register("starstorm_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_ORANGE).strength(30.0f).sound(SoundType.AMETHYST).requiresCorrectToolForDrops()));
+	// Astral / Starstorm tier
+	@TextureMetadataMarker(frameTime = 36, interpolate = true)
+	public static final Supplier<Block> VOID_ORE = BLOCKS.register("void_ore", () -> new DropExperienceBlock(ConstantInt.of(0), BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BLACK).instrument(NoteBlockInstrument.BASEDRUM).strength(8.0f, 10.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 
 	// Breakable via axe
 	// Wood tier

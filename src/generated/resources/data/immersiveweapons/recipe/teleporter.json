@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "void",
+  "key": {
+    "a": {
+      "tag": "immersiveweapons:ingots/void"
+    },
+    "b": {
+      "tag": "immersiveweapons:ingots/tesla"
+    },
+    "c": {
+      "item": "minecraft:purpur_slab"
+    },
+    "d": {
+      "item": "minecraft:ender_eye"
+    },
+    "e": {
+      "item": "minecraft:dragon_breath"
+    }
+  },
+  "pattern": [
+    "ede",
+    "aaa",
+    "cbc"
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:teleporter"
+  }
+}

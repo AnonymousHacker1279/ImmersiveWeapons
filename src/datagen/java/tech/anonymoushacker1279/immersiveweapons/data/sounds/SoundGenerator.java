@@ -125,6 +125,18 @@ public class SoundGenerator extends SoundDefinitionsProvider {
 								"armor/equip/starstorm/equip_2"),
 						SoundType.SOUND)));
 
+		add(SoundEventRegistry.VOID_ARMOR_EQUIP.get(), definition()
+				.subtitle("subtitles.immersiveweapons.armor.void.equip")
+				.with(Sound.sound(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+								"armor/equip/void/equip_0"),
+						SoundType.SOUND))
+				.with(Sound.sound(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+								"armor/equip/void/equip_1"),
+						SoundType.SOUND))
+				.with(Sound.sound(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+								"armor/equip/void/equip_2"),
+						SoundType.SOUND)));
+
 		add(SoundEventRegistry.MORTAR_FIRE.get(), definition()
 				.subtitle("subtitles.immersiveweapons.block.mortar.fire")
 				.with(Sound.sound(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
@@ -165,6 +177,12 @@ public class SoundGenerator extends SoundDefinitionsProvider {
 				.subtitle("subtitles.immersiveweapons.item.gun.hand_cannon.fire")
 				.with(Sound.sound(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 								"item/hand_cannon/fire/fire"),
+						SoundType.SOUND)));
+
+		add(SoundEventRegistry.DRAGONS_BREATH_CANNON_FIRE.get(), definition()
+				.subtitle("subtitles.immersiveweapons.item.gun.dragons_breath_cannon.fire")
+				.with(Sound.sound(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+								"item/dragons_breath_cannon/fire/fire"),
 						SoundType.SOUND)));
 
 		add(SoundEventRegistry.BULLET_WHIZZ.get(), definition()

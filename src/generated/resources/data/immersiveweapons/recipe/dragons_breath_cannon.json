@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "void",
+  "key": {
+    "a": {
+      "item": "immersiveweapons:hand_cannon"
+    },
+    "b": {
+      "tag": "immersiveweapons:ingots/void"
+    },
+    "c": {
+      "item": "minecraft:dragon_breath"
+    }
+  },
+  "pattern": [
+    "cbc",
+    "bab",
+    "cbc"
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:dragons_breath_cannon"
+  }
+}

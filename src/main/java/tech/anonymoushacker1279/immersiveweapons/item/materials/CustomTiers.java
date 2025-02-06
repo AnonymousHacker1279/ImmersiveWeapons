@@ -15,10 +15,11 @@ public enum CustomTiers implements Tier {
 	COPPER(IWBlockTagGroups.INCORRECT_FOR_COPPER_TOOL, 180, 5.9F, 1.0F, 12, () -> Ingredient.of(Items.COPPER_INGOT)),
 	COBALT(IWBlockTagGroups.INCORRECT_FOR_COBALT_TOOL, 300, 6.2F, 2.0F, 15, () -> Ingredient.of(ItemRegistry.COBALT_INGOT.get())),
 	MOLTEN(IWBlockTagGroups.INCORRECT_FOR_MOLTEN_TOOL, 1900, 10.2F, 5.0F, 17, () -> Ingredient.of(ItemRegistry.MOLTEN_INGOT.get())),
-	TESLA(IWBlockTagGroups.INCORRECT_FOR_TESLA_TOOL, 2100, 18.0F, 6.0F, 20, () -> Ingredient.of(ItemRegistry.TESLA_INGOT.get())),
+	TESLA(IWBlockTagGroups.INCORRECT_FOR_TESLA_TOOL, 2700, 20.0F, 7.0F, 20, () -> Ingredient.of(ItemRegistry.TESLA_INGOT.get())),
 	VENTUS(IWBlockTagGroups.INCORRECT_FOR_VENTUS_TOOL, 1900, 12.6F, 5.0F, 16, () -> Ingredient.of(ItemRegistry.VENTUS_SHARD.get())),
 	ASTRAL(IWBlockTagGroups.INCORRECT_FOR_ASTRAL_TOOL, 600, 24.0F, 4.0F, 22, () -> Ingredient.of(ItemRegistry.ASTRAL_INGOT.get())),
 	STARSTORM(IWBlockTagGroups.INCORRECT_FOR_STARSTORM_TOOL, 1800, 14.0F, 7.0F, 20, () -> Ingredient.of(ItemRegistry.STARSTORM_INGOT.get())),
+	VOID(IWBlockTagGroups.INCORRECT_FOR_VOID_TOOL, 2500, 28.0f, 9.0F, 24, () -> Ingredient.of(ItemRegistry.VOID_INGOT.get())),
 	HANSIUM(IWBlockTagGroups.INCORRECT_FOR_HANSIUM_TOOL, 3000, 28.0F, 20.0F, 24, () -> Ingredient.of(ItemRegistry.HANSIUM_INGOT.get()));
 
 	private final TagKey<Block> incorrectBlocksForDrops;

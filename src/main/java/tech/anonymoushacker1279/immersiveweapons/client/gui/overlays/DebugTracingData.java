@@ -1,14 +1,13 @@
 package tech.anonymoushacker1279.immersiveweapons.client.gui.overlays;
 
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryManager;
+import tech.anonymoushacker1279.immersiveweapons.init.AccessoryEffectTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
-import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
-import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectType;
+import tech.anonymoushacker1279.immersiveweapons.item.armor.ArmorUtils;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
 
 /**
@@ -52,18 +51,10 @@ public class DebugTracingData {
 			MELEE_DAMAGE_BONUS = 0;
 			PROJECTILE_DAMAGE_BONUS = 0;
 
-			if (player.getItemBySlot(EquipmentSlot.HEAD).getItem() == ItemRegistry.STARSTORM_HELMET.get() &&
-					player.getItemBySlot(EquipmentSlot.CHEST).getItem() == ItemRegistry.STARSTORM_CHESTPLATE.get() &&
-					player.getItemBySlot(EquipmentSlot.LEGS).getItem() == ItemRegistry.STARSTORM_LEGGINGS.get() &&
-					player.getItemBySlot(EquipmentSlot.FEET).getItem() == ItemRegistry.STARSTORM_BOOTS.get()) {
-
+			if (ArmorUtils.isWearingStarstormArmor(player)) {
 				GENERAL_DAMAGE_BONUS += 0.2d;
 			}
-			if (player.getItemBySlot(EquipmentSlot.HEAD).getItem() == ItemRegistry.MOLTEN_HELMET.get() &&
-					player.getItemBySlot(EquipmentSlot.CHEST).getItem() == ItemRegistry.MOLTEN_CHESTPLATE.get() &&
-					player.getItemBySlot(EquipmentSlot.LEGS).getItem() == ItemRegistry.MOLTEN_LEGGINGS.get() &&
-					player.getItemBySlot(EquipmentSlot.FEET).getItem() == ItemRegistry.MOLTEN_BOOTS.get()) {
-
+			if (ArmorUtils.isWearingMoltenArmor(player)) {
 				double bonus = 0;
 				if (player.level().dimension() == Level.NETHER) {
 					bonus += 0.2d;
@@ -75,14 +66,17 @@ public class DebugTracingData {
 
 				GENERAL_DAMAGE_BONUS += bonus;
 			}
+			if (ArmorUtils.isWearingVoidArmor(player)) {
+				GENERAL_DAMAGE_BONUS += 0.22d;
+			}
 
-			GENERAL_DAMAGE_BONUS += AccessoryManager.collectEffects(EffectType.GENERAL_DAMAGE, player);
-			MELEE_DAMAGE_BONUS += AccessoryManager.collectEffects(EffectType.MELEE_DAMAGE, player);
-			PROJECTILE_DAMAGE_BONUS += AccessoryManager.collectEffects(EffectType.PROJECTILE_DAMAGE, player);
+			GENERAL_DAMAGE_BONUS += AccessoryManager.collectEffects(AccessoryEffectTypeRegistry.GENERAL_DAMAGE.get(), player);
+			MELEE_DAMAGE_BONUS += AccessoryManager.collectEffects(AccessoryEffectTypeRegistry.MELEE_DAMAGE.get(), player);
+			PROJECTILE_DAMAGE_BONUS += AccessoryManager.collectEffects(AccessoryEffectTypeRegistry.PROJECTILE_DAMAGE.get(), player);
 
 			ARMOR_VALUE = player.getArmorValue();
 			ARMOR_TOUGHNESS_VALUE = player.getAttributeValue(Attributes.ARMOR_TOUGHNESS);
-			GENERAL_DAMAGE_RESISTANCE = AccessoryManager.collectEffects(EffectType.DAMAGE_RESISTANCE, player);
+			GENERAL_DAMAGE_RESISTANCE = AccessoryManager.collectEffects(AccessoryEffectTypeRegistry.DAMAGE_RESISTANCE.get(), player);
 			KNOCKBACK_RESISTANCE = player.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE);
 
 			if (player.hasEffect(EffectRegistry.CELESTIAL_PROTECTION_EFFECT)) {

@@ -1,8 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.event.game_effects;
 
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.ai.attributes.*;
@@ -10,18 +8,18 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
-import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
-import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
-import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectBuilder.EffectScalingType;
-import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.EffectType;
+import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
+import tech.anonymoushacker1279.immersiveweapons.item.accessory.AccessoryEffectType;
+import tech.anonymoushacker1279.immersiveweapons.item.accessory.scaling.*;
 import tech.anonymoushacker1279.immersiveweapons.util.IWCBBridge;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AccessoryManager {
 
 	/**
-	 * Collect the value of the given effect from all {@link AccessoryItem}s in the player's inventory.
+	 * Collect the value of the given effect from all accessories in the player's inventory.
 	 * <p>
 	 * This will check to see if IWCB is loaded, and if so, defer to it for collecting effects as it will utilize Curios.
 	 *
@@ -29,78 +27,84 @@ public class AccessoryManager {
 	 * @param player the <code>Player</code> to collect from
 	 * @return the value of the effect
 	 */
-	public static double collectEffects(EffectType type, Player player) {
+	public static double collectEffects(AccessoryEffectType type, Player player) {
 		double effectValue = 0;
 		if (ImmersiveWeapons.IWCB_LOADED && PluginHandler.isPluginActive("iwcompatbridge:curios_plugin")) {
 			effectValue = IWCBBridge.collectEffects(type, player);
 		} else {
 			for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
 				ItemStack stack = player.getInventory().getItem(i);
-				if (stack.getItem() instanceof AccessoryItem accessoryItem) {
-					if (accessoryItem.isActive(player, stack)) {
-						effectValue += handleEffectScaling(accessoryItem, type, player);
+				Accessory accessory = stack.getItemHolder().getData(Accessory.ACCESSORY);
+				if (accessory != null) {
+					if (accessory.isActive(player, stack, accessory.slot())) {
+						AccessoryEffectScalingType scalingType = accessory.effectScalingTypes().get(type.name());
+						if (scalingType != null) {
+							effectValue += scalingType.getEffectValue(accessory, type, player);
+						}
 					}
 				}
 			}
 		}
 
-		return type.clamp ? Mth.clamp(effectValue, 0, 1) : effectValue;
+		return type.clamp() ? Mth.clamp(effectValue, 0, 1) : effectValue;
 	}
 
 	/**
-	 * Collect the attribute modifiers from all active {@link AccessoryItem}s in the player's inventory.
+	 * Collect the attribute modifiers from all active accessories in the player's inventory.
 	 * <p>
 	 * This will check to see if IWCB is loaded, and if so, defer to it for collecting attributes as it will utilize Curios.
 	 *
 	 * @param player the <code>Player</code> to collect from
 	 * @return a <code>Map</code> of attribute modifiers
 	 */
-	public static Map<AttributeModifier, Attribute> collectStandardAttributes(Player player) {
-		Map<AttributeModifier, Attribute> attributeMap = new HashMap<>(5);
+	public static List<AttributeOperation> collectStandardAttributes(Player player) {
+		List<AttributeOperation> attributes = new ArrayList<>(5);
 		if (ImmersiveWeapons.IWCB_LOADED && PluginHandler.isPluginActive("iwcompatbridge:curios_plugin")) {
-			attributeMap = IWCBBridge.collectStandardAttributes(player);
+			attributes = IWCBBridge.collectStandardAttributes(player);
 		} else {
 			for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
 				ItemStack stack = player.getInventory().getItem(i);
-				if (stack.getItem() instanceof AccessoryItem accessoryItem) {
-					if (accessoryItem.isActive(player, stack) && !accessoryItem.getStandardAttributeModifiers().isEmpty()) {
-						attributeMap.putAll(accessoryItem.getStandardAttributeModifiers());
+				Accessory accessory = stack.getItemHolder().getData(Accessory.ACCESSORY);
+				if (accessory != null) {
+					if (accessory.isActive(player, stack, accessory.slot())) {
+						attributes.addAll(accessory.attributeModifiers());
 					}
 				}
 			}
 		}
 
-		return attributeMap;
+		return attributes;
 	}
 
 	/**
-	 * Collect the dynamic attribute modifiers from all active {@link AccessoryItem}s in the player's inventory.
+	 * Collect the dynamic attribute modifiers from all active accessories in the player's inventory.
 	 * <p>
 	 * This will check to see if IWCB is loaded, and if so, defer to it for collecting attributes as it will utilize Curios.
 	 *
 	 * @param player the <code>Player</code> to collect from
 	 * @return a <code>Map</code> of dynamic attribute modifiers with their target values
 	 */
-	public static Map<Map<AttributeModifier, Attribute>, Double> collectDynamicAttributes(Player player) {
-		Map<Map<AttributeModifier, Attribute>, Double> attributeMap = new HashMap<>(5);
+	public static List<DynamicAttributeOperationInstance> collectDynamicAttributes(Player player) {
+		List<DynamicAttributeOperationInstance> dynamicAttributes = new ArrayList<>(5);
 		if (ImmersiveWeapons.IWCB_LOADED && PluginHandler.isPluginActive("iwcompatbridge:curios_plugin")) {
-			attributeMap = IWCBBridge.collectDynamicAttributes(player);
+			dynamicAttributes = IWCBBridge.collectDynamicAttributes(player);
 		} else {
 			for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
 				ItemStack stack = player.getInventory().getItem(i);
-				if (stack.getItem() instanceof AccessoryItem accessoryItem) {
-					if (accessoryItem.isActive(player, stack) && !accessoryItem.getDynamicAttributeModifiers().isEmpty()) {
-						attributeMap.putAll(accessoryItem.getDynamicAttributeModifiers());
+				Accessory accessory = stack.getItemHolder().getData(Accessory.ACCESSORY);
+				if (accessory != null) {
+					if (accessory.isActive(player, stack, accessory.slot())) {
+						dynamicAttributes.addAll(accessory.dynamicAttributeModifiers());
 					}
 				}
 			}
 		}
 
-		return attributeMap;
+		return dynamicAttributes;
 	}
 
 	/**
-	 * Collect the mob effect instances from all active {@link AccessoryItem}s in the player's inventory.
+	 * Collect the mob effect instances from all active accessories in the player's inventory.
 	 * <p>
 	 * This will check to see if IWCB is loaded, and if so, defer to it for collecting mob effects as it will utilize Curios.
 	 *
@@ -114,62 +118,16 @@ public class AccessoryManager {
 		} else {
 			for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
 				ItemStack stack = player.getInventory().getItem(i);
-				if (stack.getItem() instanceof AccessoryItem accessoryItem) {
-					if (accessoryItem.isActive(player, stack) && !accessoryItem.getMobEffects().isEmpty()) {
-						effectList.addAll(accessoryItem.getMobEffects());
+				Accessory accessory = stack.getItemHolder().getData(Accessory.ACCESSORY);
+				if (accessory != null) {
+					if (accessory.isActive(player, stack, accessory.slot())) {
+						effectList.addAll(accessory.mobEffectInstances());
 					}
 				}
 			}
 		}
 
 		return effectList;
-	}
-
-	/**
-	 * Handle the scaling of effects based on the accessory's scaling type.
-	 *
-	 * @param accessoryItem the <code>AccessoryItem</code> to handle for
-	 * @param type          the <code>EffectType</code> to handle for
-	 * @param player        the <code>Player</code> to handle for
-	 * @return the scaled effect value
-	 */
-	public static double handleEffectScaling(AccessoryItem accessoryItem, EffectType type, Player player) {
-		if (accessoryItem.getEffectScalingTypes().get(type) == EffectScalingType.DEPTH_SCALING) {
-			// Depth scaling increases the value inverse proportionally to the player's depth (y-level), starting at y<64
-			// Note, this should continue to the bottom of the world, which may be lower than y=0
-
-			double depth = player.getY();
-			if (depth < 64) {
-				double rawValue = accessoryItem.getEffects().getOrDefault(type, 0d);
-				int worldFloor = player.level().getMinBuildHeight();
-
-				// The scaling is inverse proportionally to the player's depth
-				double depthScaling = Mth.clamp(Math.min(1.0, ((64 - depth) / (64 - worldFloor))) * 100, 0, 100);
-				return rawValue * depthScaling;
-			}
-		} else if (accessoryItem.getEffectScalingTypes().get(type) == EffectScalingType.INSOMNIA_SCALING) {
-			// Insomnia scaling increases the value proportionally to the player's insomnia level, starting after
-			// one full day/night cycle without sleep (24000 ticks)
-
-			int timeSinceRest;
-			if (player instanceof ServerPlayer serverPlayer) {
-				timeSinceRest = serverPlayer.getStats().getValue(Stats.CUSTOM.get(Stats.TIME_SINCE_REST));
-			} else {
-				// If this is on the client, use the debug tracing data. The result here does not need to be accurate
-				// since it will only ever be used in the debug overlay
-				timeSinceRest = DebugTracingData.TICKS_SINCE_REST;
-			}
-
-			if (timeSinceRest > 24000) {
-				double rawValue = accessoryItem.getEffects().getOrDefault(type, 0d);
-				// Scaling should max out after 7 in-game days and nights (168000 ticks)
-				double insomniaScaling = Mth.clamp(Math.min(1.0, ((timeSinceRest - 24000) / 144000.0)) * 100, 0, 100);
-				return rawValue * insomniaScaling;
-			}
-		}
-
-		// If no scaling is needed, just return the effect value
-		return accessoryItem.getEffects().getOrDefault(type, 0d);
 	}
 
 	/**
@@ -192,8 +150,8 @@ public class AccessoryManager {
 	 * @param player the <code>Player</code> to handle for
 	 */
 	public static void handleAccessoryAttributes(Player player) {
-		Map<AttributeModifier, Attribute> activeStandardAttributeModifiers = handleStandardAttributeModifiers(player);
-		Map<Map<AttributeModifier, Attribute>, Double> activeDynamicAttributeModifiers = handleDynamicAttributeModifiers(player);
+		List<AttributeOperation> activeStandardAttributeModifiers = handleStandardAttributeModifiers(player);
+		List<DynamicAttributeOperationInstance> activeDynamicAttributeModifiers = handleDynamicAttributeModifiers(player);
 		handleRemovedAttributes(player, activeStandardAttributeModifiers, activeDynamicAttributeModifiers);
 	}
 
@@ -203,11 +161,11 @@ public class AccessoryManager {
 	 * @param player the <code>Player</code> to handle for
 	 * @return a <code>Map</code> of active standard attribute modifiers
 	 */
-	private static Map<AttributeModifier, Attribute> handleStandardAttributeModifiers(Player player) {
-		Map<AttributeModifier, Attribute> activeStandardAttributeModifiers = AccessoryManager.collectStandardAttributes(player);
-		for (Map.Entry<AttributeModifier, Attribute> entry : activeStandardAttributeModifiers.entrySet()) {
-			AttributeModifier modifier = entry.getKey();
-			Attribute attribute = entry.getValue();
+	private static List<AttributeOperation> handleStandardAttributeModifiers(Player player) {
+		List<AttributeOperation> activeStandardAttributeModifiers = AccessoryManager.collectStandardAttributes(player);
+		for (AttributeOperation entry : activeStandardAttributeModifiers) {
+			AttributeModifier modifier = entry.modifier();
+			Attribute attribute = entry.attribute().value();
 
 			AttributeInstance attributeInstance = player.getAttributes().getInstance(BuiltInRegistries.ATTRIBUTE.wrapAsHolder(attribute));
 			if (attributeInstance != null) {
@@ -226,32 +184,30 @@ public class AccessoryManager {
 	 * @param player the <code>Player</code> to handle for
 	 * @return a <code>Map</code> of active dynamic attribute modifiers with their target values
 	 */
-	private static Map<Map<AttributeModifier, Attribute>, Double> handleDynamicAttributeModifiers(Player player) {
-		Map<Map<AttributeModifier, Attribute>, Double> activeDynamicAttributeModifiers = AccessoryManager.collectDynamicAttributes(player);
-		for (Map.Entry<Map<AttributeModifier, Attribute>, Double> entry : activeDynamicAttributeModifiers.entrySet()) {
-			Map<AttributeModifier, Attribute> modifiers = entry.getKey();
-			double targetValue = entry.getValue();
+	private static List<DynamicAttributeOperationInstance> handleDynamicAttributeModifiers(Player player) {
+		List<DynamicAttributeOperationInstance> activeDynamicAttributeModifiers = AccessoryManager.collectDynamicAttributes(player);
+		for (DynamicAttributeOperationInstance entry : activeDynamicAttributeModifiers) {
+			AttributeOperation attributeOperation = entry.attributeOperation();
+			double targetValue = entry.targetValue();
 
-			for (Map.Entry<AttributeModifier, Attribute> modifierEntry : modifiers.entrySet()) {
-				AttributeModifier modifier = modifierEntry.getKey();
-				Attribute attribute = modifierEntry.getValue();
+			AttributeModifier modifier = attributeOperation.modifier();
+			Attribute attribute = attributeOperation.attribute().value();
 
-				AttributeInstance attributeInstance = player.getAttributes().getInstance(BuiltInRegistries.ATTRIBUTE.wrapAsHolder(attribute));
-				if (attributeInstance != null) {
-					if (!attributeInstance.hasModifier(modifier.id())) {
-						double amount = targetValue - attributeInstance.getValue();
-						AttributeModifier newModifier = new AttributeModifier(modifier.id(), amount, modifier.operation());
+			AttributeInstance attributeInstance = player.getAttributes().getInstance(BuiltInRegistries.ATTRIBUTE.wrapAsHolder(attribute));
+			if (attributeInstance != null) {
+				if (!attributeInstance.hasModifier(modifier.id())) {
+					double amount = targetValue - attributeInstance.getValue();
+					AttributeModifier newModifier = new AttributeModifier(modifier.id(), amount, modifier.operation());
 
-						attributeInstance.addTransientModifier(newModifier);
-					}
-					if (attributeInstance.getValue() != targetValue) {
-						attributeInstance.removeModifier(modifier.id());
+					attributeInstance.addTransientModifier(newModifier);
+				}
+				if (attributeInstance.getValue() != targetValue) {
+					attributeInstance.removeModifier(modifier.id());
 
-						double amount = targetValue - attributeInstance.getValue();
-						AttributeModifier newModifier = new AttributeModifier(modifier.id(), amount, modifier.operation());
+					double amount = targetValue - attributeInstance.getValue();
+					AttributeModifier newModifier = new AttributeModifier(modifier.id(), amount, modifier.operation());
 
-						attributeInstance.addTransientModifier(newModifier);
-					}
+					attributeInstance.addTransientModifier(newModifier);
 				}
 			}
 		}
@@ -266,11 +222,11 @@ public class AccessoryManager {
 	 * @param activeStandardAttributeModifiers the <code>Map</code> of active standard attribute modifiers
 	 * @param activeDynamicAttributeModifiers  the <code>Map</code> of active dynamic attribute modifiers
 	 */
-	private static void handleRemovedAttributes(Player player, Map<AttributeModifier, Attribute> activeStandardAttributeModifiers, Map<Map<AttributeModifier, Attribute>, Double> activeDynamicAttributeModifiers) {
+	private static void handleRemovedAttributes(Player player, List<AttributeOperation> activeStandardAttributeModifiers, List<DynamicAttributeOperationInstance> activeDynamicAttributeModifiers) {
 		// Remove any attribute modifiers that are no present in the activeAttributeModifiers map
-		for (Map.Entry<AttributeModifier, Attribute> entry : AccessoryItem.getGlobalAttributeModifierMap().entrySet()) {
-			AttributeModifier modifier = entry.getKey();
-			Attribute attribute = entry.getValue();
+		for (AttributeOperation entry : Accessory.getGlobalAttributeModifiers()) {
+			AttributeModifier modifier = entry.modifier();
+			Attribute attribute = entry.attribute().value();
 
 			AttributeInstance attributeInstance = player.getAttributes().getInstance(BuiltInRegistries.ATTRIBUTE.wrapAsHolder(attribute));
 			if (attributeInstance != null) {
@@ -278,16 +234,19 @@ public class AccessoryManager {
 					// Check for matching UUIDs in the activeAttributeModifiers map, rather than instances
 					boolean found = false;
 
-					Map<AttributeModifier, Attribute> allActiveModifiers = new HashMap<>(activeStandardAttributeModifiers);
-					for (Map.Entry<Map<AttributeModifier, Attribute>, Double> dynamicEntry : activeDynamicAttributeModifiers.entrySet()) {
-						allActiveModifiers.putAll(dynamicEntry.getKey());
-					}
-
-					for (Map.Entry<AttributeModifier, Attribute> activeEntry : allActiveModifiers.entrySet()) {
-						AttributeModifier activeModifier = activeEntry.getKey();
-						if (activeModifier.id().equals(modifier.id())) {
+					for (AttributeOperation activeEntry : activeStandardAttributeModifiers) {
+						if (activeEntry.modifier().id().equals(modifier.id())) {
 							found = true;
 							break;
+						}
+					}
+
+					if (!found) {
+						for (DynamicAttributeOperationInstance activeEntry : activeDynamicAttributeModifiers) {
+							if (activeEntry.attributeOperation().modifier().id().equals(modifier.id())) {
+								found = true;
+								break;
+							}
 						}
 					}
 

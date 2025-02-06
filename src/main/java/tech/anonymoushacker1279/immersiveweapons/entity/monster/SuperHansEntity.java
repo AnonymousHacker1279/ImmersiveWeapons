@@ -1,6 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.monster;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.Registries;
@@ -48,6 +49,7 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 	@Nullable
 	private BoundingBox championTowerBounds;
 	private boolean towerMinibossesAlive = false;
+	private int shadowDodgeAchievementTimer = 0;
 
 	final List<Entity> attackingEntities = new ArrayList<>(5);
 
@@ -72,7 +74,6 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 	@Override
 	protected void registerGoals() {
 		super.registerGoals();
-
 		goalSelector.addGoal(1, new SuperHansGroundSmashGoal(this));
 	}
 
@@ -147,6 +148,16 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 			if (source.getEntity() != null) {
 				attackedByEntity(source.getEntity(), attackingEntities);
 			}
+
+			if ((source.getWeaponItem() != null && source.getWeaponItem().is(Items.MACE)) && (source.getEntity() instanceof ServerPlayer serverPlayer && getServer() != null)) {
+				if ((serverPlayer.fallDistance > 1.5f) && shadowDodgeAchievementTimer > 0) {
+					AdvancementHolder advancement = getServer().getAdvancements().get(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "rapid_reflexes"));
+
+					if (advancement != null) {
+						serverPlayer.getAdvancements().award(advancement, "");
+					}
+				}
+			}
 		}
 
 		return doesHurt;
@@ -213,6 +224,27 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 			}
 
 			bossEvent.setProgress(getHealth() / getMaxHealth());
+		}
+
+		if (getTarget() instanceof Player player) {
+			boolean shouldDodgeFallingPlayers = (player.getDeltaMovement().y < -0.5D) && (player.fallDistance > 1.5f);
+			int dodgeChance = switch (level().getDifficulty()) {
+				case NORMAL -> 12;
+				case HARD -> 5;
+				default -> 30;
+			};
+
+			if (shouldDodgeFallingPlayers && random.nextInt(dodgeChance) == 0) {
+				// Dodge into a random X/Z direction
+				double dodgeX = random.nextBoolean() ? 1.0D : -1.0D;
+				double dodgeZ = random.nextBoolean() ? 1.0D : -1.0D;
+				setDeltaMovement(dodgeX, 0.0D, dodgeZ);
+				shadowDodgeAchievementTimer = 40;
+			}
+		}
+
+		if (shadowDodgeAchievementTimer > 0) {
+			shadowDodgeAchievementTimer--;
 		}
 	}
 

@@ -2,6 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.event.game_effects;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.AreaEffectCloud;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.Tags.EntityTypes;
@@ -35,7 +36,9 @@ public class EnvironmentEffects {
 			}
 
 			// Increase the chance that the next damage taken will be neutralized
-			if (ArmorUtils.isWearingAstralArmor(damagedEntity)) {
+			if (ArmorUtils.isWearingVoidArmor(damagedEntity)) {
+				celestialProtectionChanceForNoDamage += damage * 0.035f; // Void armor has a 3.5% charge rate
+			} else if (ArmorUtils.isWearingAstralArmor(damagedEntity)) {
 				celestialProtectionChanceForNoDamage += damage * 0.03f; // Astral armor has a 3% charge rate
 			} else {
 				celestialProtectionChanceForNoDamage += damage * 0.01f; // Other armor has a 1% charge rate
@@ -107,6 +110,23 @@ public class EnvironmentEffects {
 			if (ArmorUtils.isWearingMoltenArmor(damagedEntity)) {
 				// Inflict Hellfire on the attacking entity
 				sourceEntity.addEffect(new MobEffectInstance(EffectRegistry.HELLFIRE_EFFECT, 200, 0, false, false));
+			}
+		}
+	}
+
+	// Handle stuff for the Void Armor set bonus
+	public static void voidArmorSetBonus(LivingIncomingDamageEvent event, @Nullable LivingEntity sourceEntity, LivingEntity damagedEntity) {
+		if (sourceEntity != null) {
+			if (ArmorUtils.isWearingVoidArmor(sourceEntity)) {
+				float damage = event.getAmount();
+				damage *= 1.22f;
+				event.setAmount(damage);
+			}
+
+			if (ArmorUtils.isWearingVoidArmor(damagedEntity)) {
+				if (event.getSource().getDirectEntity() instanceof AreaEffectCloud && sourceEntity.is(damagedEntity)) {
+					event.setCanceled(true);
+				}
 			}
 		}
 	}

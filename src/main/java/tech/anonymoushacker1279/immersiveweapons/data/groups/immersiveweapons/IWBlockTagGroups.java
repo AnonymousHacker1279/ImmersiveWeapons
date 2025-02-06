@@ -17,8 +17,16 @@ public class IWBlockTagGroups {
 	public static final TagKey<Block> INCORRECT_FOR_VENTUS_TOOL = createBlockTag("incorrect_for_ventus_tool");
 	public static final TagKey<Block> INCORRECT_FOR_STARSTORM_TOOL = createBlockTag("incorrect_for_starstorm_tool");
 	public static final TagKey<Block> INCORRECT_FOR_ASTRAL_TOOL = createBlockTag("incorrect_for_astral_tool");
+	public static final TagKey<Block> INCORRECT_FOR_VOID_TOOL = createBlockTag("incorrect_for_void_tool");
 	public static final TagKey<Block> INCORRECT_FOR_HANSIUM_TOOL = createBlockTag("incorrect_for_hansium_tool");
 	public static final TagKey<Block> NEEDS_ASTRAL_STARSTORM_TOOL = createBlockTag("needs_astral_starstorm_tool");
+	public static final TagKey<Block> NEEDS_VOID_TOOL = createBlockTag("needs_void_tool");
+	public static final TagKey<Block> NEEDS_HANSIUM_TOOL = createBlockTag("needs_hansium_tool");
+	public static final TagKey<Block> ELECTRIC_ORES = createBlockTag("ores/electric");
+	public static final TagKey<Block> MOLTEN_ORES = createBlockTag("ores/molten");
+	public static final TagKey<Block> VENTUS_ORES = createBlockTag("ores/ventus");
+	public static final TagKey<Block> ASTRAL_ORES = createBlockTag("ores/astral");
+	public static final TagKey<Block> VOID_ORES = createBlockTag("ores/void");
 
 	private static TagKey<Block> createBlockTag(String tag) {
 		return TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, tag));

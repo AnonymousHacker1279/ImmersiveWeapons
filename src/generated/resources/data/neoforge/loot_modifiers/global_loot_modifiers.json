@@ -11,6 +11,8 @@
     "immersiveweapons:golden_ring",
     "immersiveweapons:kill_counter",
     "immersiveweapons:iron_ring",
+    "immersiveweapons:ender_essence_enderman",
+    "immersiveweapons:ventus_shard",
     "immersiveweapons:warden_heart",
     "immersiveweapons:azul_keystone",
     "immersiveweapons:dragons_breath_bow",
@@ -22,11 +24,13 @@
     "immersiveweapons:log_shards",
     "immersiveweapons:music_disc_tiltros_wastes",
     "immersiveweapons:aurora_bow",
+    "immersiveweapons:ender_essence_shulker",
     "immersiveweapons:cobalt_ring",
     "immersiveweapons:night_vision_goggles",
     "immersiveweapons:music_disc_deadmans_desert_theme_2",
     "immersiveweapons:insomnia_amulet",
-    "immersiveweapons:music_disc_deadmans_desert_theme_1"
+    "immersiveweapons:music_disc_deadmans_desert_theme_1",
+    "immersiveweapons:ender_essence_ender_dragon"
   ],
   "replace": false
 }

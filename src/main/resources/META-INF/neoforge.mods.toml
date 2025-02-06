@@ -32,9 +32,9 @@ ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.immersiveweapons]]
-modId = "biomesquisher"
+modId = "biolith"
 type = "required"
-versionRange = "[0.4.1,)"
+versionRange = "[3.0.0,)"
 ordering = "NONE"
 side = "BOTH"
 

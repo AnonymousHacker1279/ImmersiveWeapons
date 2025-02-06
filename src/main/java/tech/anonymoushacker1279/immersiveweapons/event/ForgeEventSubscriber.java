@@ -1,7 +1,9 @@
 package tech.anonymoushacker1279.immersiveweapons.event;
 
 import net.minecraft.advancements.AdvancementHolder;
-import net.minecraft.core.*;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.HolderGetter;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
@@ -12,19 +14,25 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.*;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.CaveSpider;
 import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.ThrownTrident;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.BowItem;
+import net.minecraft.world.item.CrossbowItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionBrewing;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -42,7 +50,9 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.EventBusSubscriber.Bus;
-import net.neoforged.neoforge.event.*;
+import net.neoforged.neoforge.event.AddReloadListenerEvent;
+import net.neoforged.neoforge.event.AnvilUpdateEvent;
+import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.living.*;
@@ -62,11 +72,17 @@ import tech.anonymoushacker1279.immersiveweapons.entity.npc.trading.MerchantTrad
 import tech.anonymoushacker1279.immersiveweapons.entity.npc.trading.TradeLoader;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MeteorEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MudBallEntity;
-import tech.anonymoushacker1279.immersiveweapons.event.game_effects.*;
+import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryEffects;
+import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryManager;
+import tech.anonymoushacker1279.immersiveweapons.event.game_effects.EnvironmentEffects;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
-import tech.anonymoushacker1279.immersiveweapons.item.*;
+import tech.anonymoushacker1279.immersiveweapons.item.CursedItem;
+import tech.anonymoushacker1279.immersiveweapons.item.KillCountWeapon;
+import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.PistonCrushingRecipe;
-import tech.anonymoushacker1279.immersiveweapons.network.payload.*;
+import tech.anonymoushacker1279.immersiveweapons.network.payload.DebugDataPayload;
+import tech.anonymoushacker1279.immersiveweapons.network.payload.SyncMerchantTradesPayload;
+import tech.anonymoushacker1279.immersiveweapons.network.payload.SyncPlayerDataPayload;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
@@ -144,7 +160,7 @@ public class ForgeEventSubscriber {
 
 		// Handle random debuffs with the Insomnia Amulet after 7 days of no sleep
 		if (player.tickCount % 600 == 0 && player instanceof ServerPlayer serverPlayer) {
-			if (AccessoryItem.isAccessoryActive(player, ItemRegistry.INSOMNIA_AMULET.get())) {
+			if (Accessory.isAccessoryActive(player, ItemRegistry.INSOMNIA_AMULET.get())) {
 				int timeSinceRest = serverPlayer.getStats().getValue(Stats.CUSTOM.get(Stats.TIME_SINCE_REST));
 				if (timeSinceRest > 168000) {
 					float chance = player.getRandom().nextFloat();
@@ -167,7 +183,7 @@ public class ForgeEventSubscriber {
 		}
 
 		// Handle the temporary fire resistance effect on the Super Blanket Cape accessory
-		if (AccessoryItem.isAccessoryActive(player, ItemRegistry.SUPER_BLANKET_CAPE.get())) {
+		if (Accessory.isAccessoryActive(player, ItemRegistry.SUPER_BLANKET_CAPE.get())) {
 			if (!player.isInLava() && !player.isOnFire()) {
 				if (!player.hasEffect(MobEffects.FIRE_RESISTANCE)) {
 					player.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 140, 0, true, true));
@@ -190,10 +206,10 @@ public class ForgeEventSubscriber {
 	@SubscribeEvent
 	public static void livingIncomingDamageEvent(LivingIncomingDamageEvent event) {
 		LivingEntity damagedEntity = event.getEntity();
-		LivingEntity source = null;
+		LivingEntity sourceEntity = null;
 
-		if (event.getSource().getEntity() instanceof LivingEntity sourceEntity) {
-			source = sourceEntity;
+		if (event.getSource().getEntity() instanceof LivingEntity source) {
+			sourceEntity = source;
 		}
 
 		if (event.getSource().is(IWDamageSources.METEOR_KEY) && event.getSource().getDirectEntity() instanceof MeteorEntity meteor && !meteor.getPersistentData().isEmpty()) {
@@ -206,23 +222,40 @@ public class ForgeEventSubscriber {
 		// Handle environmental effects
 		EnvironmentEffects.celestialProtectionEffect(event, damagedEntity);
 		EnvironmentEffects.damageVulnerabilityEffect(event, damagedEntity);
-		EnvironmentEffects.starstormArmorSetBonus(event, source);
-		EnvironmentEffects.moltenArmorSetBonus(event, source, damagedEntity);
+		EnvironmentEffects.starstormArmorSetBonus(event, sourceEntity);
+		EnvironmentEffects.moltenArmorSetBonus(event, sourceEntity, damagedEntity);
+		EnvironmentEffects.voidArmorSetBonus(event, sourceEntity, damagedEntity);
 
 		// Handle accessory effects
-		if (damagedEntity instanceof Player player) {
+		if (damagedEntity instanceof ServerPlayer player) {
+			if (event.getSource().is(DamageTypes.FELL_OUT_OF_WORLD) && Accessory.isAccessoryActive(player, ItemRegistry.VOID_BLESSING.get())) {
+				// Warp back to spawn
+				if (player.getServer() != null) {
+					ServerLevel targetLevel = player.getServer().getLevel(player.getRespawnDimension());
+					if (targetLevel != null) {
+						player.resetFallDistance();
+						if (player.getRespawnPosition() != null) {
+							player.teleportTo(targetLevel, player.getRespawnPosition().getX(), player.getRespawnPosition().getY(), player.getRespawnPosition().getZ(), player.getYRot(), player.getXRot());
+						} else {
+							BlockPos spawnPos = targetLevel.getSharedSpawnPos();
+							player.teleportTo(targetLevel, spawnPos.getX(), spawnPos.getY(), spawnPos.getZ(), player.getYRot(), player.getXRot());
+						}
+					}
+				}
+			}
+
 			AccessoryEffects.holyMantleEffect(event, player);
 			AccessoryEffects.damageResistanceEffects(event, player);
 			AccessoryEffects.bleedResistanceEffects(event, player);
 			AccessoryEffects.bleedCancelEffects(event, player);
 			AccessoryEffects.sonicBoomResistanceEffects(event, player);
 
-			if (source != null) {
-				AccessoryEffects.celestialSpiritEffect(player, source);
+			if (sourceEntity != null) {
+				AccessoryEffects.celestialSpiritEffect(player, sourceEntity);
 			}
 		}
 
-		if (source instanceof Player player) {
+		if (sourceEntity instanceof Player player) {
 			AccessoryEffects.meleeDamageEffects(event, player);
 			AccessoryEffects.projectileDamageEffects(event, player);
 			AccessoryEffects.generalDamageEffects(event, player);
@@ -234,7 +267,7 @@ public class ForgeEventSubscriber {
 		AccessoryEffects.jonnysCurseEffect(event, damagedEntity);
 
 
-		if (source instanceof ServerPlayer serverPlayer && serverPlayer.getServer() != null) {
+		if (sourceEntity instanceof ServerPlayer serverPlayer && serverPlayer.getServer() != null) {
 			// If a Mud Ball was thrown, add an advancement
 			if (event.getSource().getDirectEntity() instanceof MudBallEntity) {
 				AdvancementHolder advancement = serverPlayer.getServer().getAdvancements().get(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "mud_ball"));

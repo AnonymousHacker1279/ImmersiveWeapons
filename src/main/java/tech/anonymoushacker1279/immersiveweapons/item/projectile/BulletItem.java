@@ -12,12 +12,17 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.data.IWEnchantments;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.*;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.CannonballEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.DragonFireballBulletEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.FlareEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils.HitEffect;
 import tech.anonymoushacker1279.immersiveweapons.util.ArrowAttributeAccessor;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 public class BulletItem<T extends BulletEntity> extends ArrowItem {
@@ -72,6 +77,13 @@ public class BulletItem<T extends BulletEntity> extends ArrowItem {
 		return cannonballEntity;
 	}
 
+	public DragonFireballBulletEntity createDragonFireball(Level level, LivingEntity shooter, ItemStack gun) {
+		DragonFireballBulletEntity dragonFireballBulletEntity = new DragonFireballBulletEntity(shooter, level, gun);
+		setCommonBulletCharacteristics(dragonFireballBulletEntity);
+
+		return dragonFireballBulletEntity;
+	}
+
 	private void setCommonBulletCharacteristics(BulletEntity bulletEntity) {
 		bulletEntity.pickup = Pickup.DISALLOWED;
 		bulletEntity.setSoundEvent(SoundEventRegistry.BULLET_WHIZZ.get());
@@ -106,17 +118,17 @@ public class BulletItem<T extends BulletEntity> extends ArrowItem {
 
 	public static class BulletBuilder<T extends BulletEntity> {
 
-		private final Properties properties;
-		private final double damage;
-		private final Supplier<EntityType<T>> bulletEntity;
-		private int pierceLevel = 0;
-		private boolean canBeInfinite = true;
-		private float misfireChance = 0.0f;
-		private double gravityModifier = 0.035d;
-		private List<Double> shootingVectorInputs = List.of(0.0025d, 0.2d, 1.1d);
-		private int knockbackStrength = 0;
-		private HitEffect hitEffect = HitEffect.NONE;
-		private boolean isExplosive = false;
+		final Properties properties;
+		final double damage;
+		final Supplier<EntityType<T>> bulletEntity;
+		int pierceLevel = 0;
+		boolean canBeInfinite = true;
+		float misfireChance = 0.0f;
+		double gravityModifier = 0.035d;
+		List<Double> shootingVectorInputs = List.of(0.0025d, 0.2d, 1.1d);
+		int knockbackStrength = 0;
+		HitEffect hitEffect = HitEffect.NONE;
+		boolean isExplosive = false;
 
 		public BulletBuilder(Properties properties, double damage, Supplier<EntityType<T>> bulletEntity) {
 			this.properties = properties;

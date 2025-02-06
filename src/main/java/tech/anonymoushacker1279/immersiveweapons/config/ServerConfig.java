@@ -4,7 +4,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.common.ModConfigSpec.ConfigValue;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ServerConfig {
@@ -17,8 +20,8 @@ public class ServerConfig {
 	public final ModConfigSpec.IntValue discoveryAdvancementRange;
 	public final ModConfigSpec.IntValue celestialTowerSpawnCheckingRadius;
 	public final ModConfigSpec.DoubleValue celestialTowerWaveSizeModifier;
-	public final ConfigValue<List<?>> skygazerEnchantCaps;
-	public final ModConfigSpec.IntValue skygazerMaxEnchantUpgradeCost;
+	public final ConfigValue<List<?>> celestialAltarEnchantCaps;
+	public final ModConfigSpec.IntValue celestialAltarMaxEnchantUpgradeCost;
 	public final ModConfigSpec.DoubleValue theCommanderWaveSizeModifier;
 	public final ModConfigSpec.DoubleValue gunCritChance;
 	public final ModConfigSpec.BooleanValue bulletsBreakGlass;
@@ -33,6 +36,8 @@ public class ServerConfig {
 	public final ModConfigSpec.DoubleValue musketFireInaccuracy;
 	public final ModConfigSpec.DoubleValue handCannonFireVelocity;
 	public final ModConfigSpec.DoubleValue handCannonFireInaccuracy;
+	public final ModConfigSpec.DoubleValue dragonsBreathCannonFireVelocity;
+	public final ModConfigSpec.DoubleValue dragonsBreathCannonFireInaccuracy;
 	public final ModConfigSpec.IntValue ventusStaffRadius;
 	public final ModConfigSpec.IntValue meteorStaffMaxUseRange;
 	public final ModConfigSpec.DoubleValue meteorStaffExplosionRadius;
@@ -69,6 +74,28 @@ public class ServerConfig {
 				.comment("Set the maximum armor protection cap. The vanilla default is 20, but higher values allow better armor to work as intended. 25 is fully unlocked.")
 				.defineInRange("maxArmorProtection", 25.0d, 20.0d, 25.0d);
 
+		builder.comment("Celestial Altar")
+				.push("celestial_altar");
+
+		celestialAltarEnchantCaps = builder
+				.comment("Specify maximum caps on enchantments to prevent the Celestial Altar from upgrading them past a certain level. Max level enchants appear with a gold tooltip.")
+				.defineListAllowEmpty("celestialAltarEnchantCaps",
+						enchantCapMapToList(),
+						() -> "namespace:path;cap",
+						validator -> {
+							String[] split = validator.toString().split(";");
+							boolean validLocation = ResourceLocation.tryParse(split[0]) != null;
+							boolean validCap = split.length == 2 && split[1].matches("\\d+");
+
+							return validLocation && validCap;
+						});
+
+		celestialAltarMaxEnchantUpgradeCost = builder
+				.comment("Set the maximum Celestial Fragment cost for enchantment upgrades")
+				.defineInRange("celestialAltarMaxEnchantUpgradeCost", 32, 0, 64);
+
+		builder.pop();
+
 		builder.pop();
 
 		builder.comment("Entity settings")
@@ -88,28 +115,6 @@ public class ServerConfig {
 		celestialTowerWaveSizeModifier = builder
 				.comment("Multiplier to change the wave size of Celestial Tower summons")
 				.defineInRange("celestialTowerWaveSizeModifier", 1.0d, 0.0d, 5.0d);
-
-		builder.pop();
-
-		builder.comment("Skygazer")
-				.push("skygazer");
-
-		skygazerEnchantCaps = builder
-				.comment("Specify maximum caps on enchantments to prevent the Skygazer from upgrading them past a certain level. Max level enchants appear with a gold tooltip.")
-				.defineListAllowEmpty("skygazerEnchantCaps",
-						enchantCapMapToList(),
-						() -> "namespace:path;cap",
-						validator -> {
-							String[] split = validator.toString().split(";");
-							boolean validLocation = ResourceLocation.tryParse(split[0]) != null;
-							boolean validCap = split.length == 2 && split[1].matches("\\d+");
-
-							return validLocation && validCap;
-						});
-
-		skygazerMaxEnchantUpgradeCost = builder
-				.comment("Set the maximum Celestial Fragment cost for enchantment upgrades")
-				.defineInRange("skygazerMaxEnchantUpgradeCost", 32, 0, 64);
 
 		builder.pop();
 
@@ -201,6 +206,19 @@ public class ServerConfig {
 		handCannonFireInaccuracy = builder
 				.comment("Set the inaccuracy modifier")
 				.defineInRange("handCannonFireInaccuracy", 1.85f, 0.0f, 10.0f);
+
+		builder.pop();
+
+		builder.comment("Dragons Breath Cannon")
+				.push("dragons_breath_cannon");
+
+		dragonsBreathCannonFireVelocity = builder
+				.comment("Set the base velocity of bullets")
+				.defineInRange("dragonsBreathCannonFireVelocity", 2.65f, 0.0f, 10.0f);
+
+		dragonsBreathCannonFireInaccuracy = builder
+				.comment("Set the inaccuracy modifier")
+				.defineInRange("dragonsBreathCannonFireInaccuracy", 1.8f, 0.0f, 10.0f);
 
 		builder.pop();
 
@@ -298,7 +316,7 @@ public class ServerConfig {
 	 * @return the enchantment cap
 	 */
 	public static int getEnchantCap(String enchantment) {
-		List<?> caps = IWConfigs.SERVER.skygazerEnchantCaps.get();
+		List<?> caps = IWConfigs.SERVER.celestialAltarEnchantCaps.get();
 		AtomicInteger enchantCap = new AtomicInteger(-1);
 
 		caps.forEach((entry) -> {

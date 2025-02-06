@@ -29,9 +29,9 @@ import java.util.concurrent.ExecutionException;
 import java.util.stream.Stream;
 
 /**
- * Some language categories are automatically generated based on the contents of registries. Exclusions can be made using
- * the {@link DatagenExclusionMarker} annotation, and language entries can be overridden using the {@link LanguageEntryOverride}
- * annotation.
+ * Some language categories are automatically generated based on the contents of registries. Exclusions can be made
+ * using the {@link DatagenExclusionMarker} annotation, and language entries can be overridden using the
+ * {@link LanguageEntryOverride} annotation.
  */
 public class LanguageGenerator extends IWLanguageProvider {
 
@@ -317,6 +317,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addSubtitle("armor.cobalt.equip", "Cobalt armor clinks");
 		addSubtitle("armor.astral.equip", "Astral armor resonates");
 		addSubtitle("armor.starstorm.equip", "Starstorm armor shimmers");
+		addSubtitle("armor.void.equip", "Void armor echoes");
 
 		// Guns
 		addSubtitle("item.gun.flintlock.fire", "Flintlock pistol fires");
@@ -325,6 +326,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addSubtitle("item.gun.musket.fire", "Musket fires");
 		addSubtitle("item.gun.flare_gun.fire", "Flare gun fires");
 		addSubtitle("item.gun.hand_cannon.fire", "Hand cannon fires");
+		addSubtitle("item.gun.dragons_breath_cannon.fire", "Dragon's breath cannon fires");
 		addSubtitle("item.gun.bullet_whizz", "Bullet whizzes");
 
 		// Throwable items
@@ -382,8 +384,9 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("ventus_sword", "Whoosh");
 		addTooltip("astral_sword", "Fast Hands");
 		addTooltip("starstorm_sword", "Inflict the wrath of the stars");
+		addTooltip("void_sword", "Ridiculously powerful and agile");
 		addTooltip("the_sword_1", "Truly one of the greatest swords of all time");
-		addTooltip("the_sword_2", "Combines the effects of Molten, Tesla, Ventus, Astral, and Starstorm swords");
+		addTooltip("the_sword_2", "Combines the effects of Molten, Tesla, Ventus, and Void swords");
 
 		// Tier specific
 		addTooltip("molten_tool", "Crouching while mining blocks will automatically smelt them");
@@ -395,6 +398,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("flare_gun_1", "Launch bright flares into the sky");
 		addTooltip("flare_gun_2", "Flares can be used to direct Minutemen in attacking specific targets");
 		addTooltip("hand_cannon", "A powerful, but inaccurate, handheld cannon");
+		addTooltip("dragons_breath_cannon", "An upgraded hand cannon designed to launch dragon fireballs");
 		// Gun metadata
 		addTooltip("gun.meta.base_velocity", "Base Velocity: %s");
 		addTooltip("gun.meta.base_reload_time", "Base Reload Time: %s seconds");
@@ -421,6 +425,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("ventus_arrow", "450% more powerful than normal arrows. Causes enemies to levitate on impact.");
 		addTooltip("astral_arrow", "350% more powerful than normal arrows. Extremely accurate and has minimal falloff.");
 		addTooltip("starstorm_arrow", "565% more powerful than normal arrows");
+		addTooltip("void_arrow", "600% more powerful than normal arrows. Whatever you're firing at is going to die.");
 		addTooltip("smoke_grenade_arrow", "Obscure the vision of your enemies from afar");
 
 		addTooltip("wooden_musket_ball", "Very inaccurate, and likely to cause a misfire. Why would anyone make wooden musket balls anyway?");
@@ -435,10 +440,12 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("tesla_musket_ball", "Made from a powerful Tesla alloy. Weakens targets.");
 		addTooltip("ventus_musket_ball", "A musket ball made from Ventus shards. Causes targets to levitate.");
 		addTooltip("astral_musket_ball", "Built using an Astral material. Extremely accurate and has little falloff.");
-		addTooltip("starstorm_musket_ball", "A musket ball made from Starstorm. Strongest caliber in terms of raw damage.");
+		addTooltip("starstorm_musket_ball", "A musket ball made from Starstorm. Second strongest caliber in terms of raw damage.");
+		addTooltip("void_musket_ball", "Somehow you managed to make a musket ball out of the absence of matter. There's no surpassing this.");
 		addTooltip("cannonball", "A heavy metal ball that can be fired from a hand cannon.");
 		addTooltip("explosive_cannonball", "Similar to the cannonball but explodes on impact.");
 		addTooltip("flare", "Brightly illuminates the area around it.");
+		addTooltip("dragon_fireball", "A fiery projectile that explodes on impact, leaving a toxic cloud of dragon's breath.");
 		// Projectile metadata
 		addTooltip("bullet.meta.base_damage", "Base Damage: %s");
 		addTooltip("bullet.meta.gravity_modifier", "Gravity Modifier: %s");
@@ -457,6 +464,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("astral_armor", "Improves mobility and allows you to dash forward (Toggleable with your Armor Effect Toggle key)");
 		addTooltip("starstorm_armor", "Increases raw damage output by 20%");
 		addTooltip("padded_leather_armor", "Fully dampens vibrations caused by walking or running");
+		addTooltip("void_armor", "Combines and improves the effects of Astral and Starstorm armor. Crouching while dashing will summon dragon's breath clouds (Toggleable with your Armor Effect Toggle key)");
 
 		// Throwables
 		addTooltip("smoke_grenade", "Creates a thick cloud of smoke. Good for quickly escaping a situation.");
@@ -496,6 +504,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("ventus_gauntlet", "Has a 95% chance to inflict Bleeding.");
 		addTooltip("astral_gauntlet", "Has a 95% chance to inflict Bleeding.");
 		addTooltip("starstorm_gauntlet", "Has a 95% chance to inflict Bleeding.");
+		addTooltip("void_gauntlet", "Has a 95% chance to inflict Bleeding.");
 
 		// Staffs
 		addTooltip("ventus_staff", "Teach your enemies the importance of personal space");
@@ -510,6 +519,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("bandage", "Cover those nasty cuts and scrapes");
 		addTooltip("painkillers", "Feel no pain with a copious amount of pills");
 		addTooltip("mre", "Tastes disgusting but at least you won't be hungry for a while");
+		addTooltip("moldy_bread", "It would probably be wise to avoid eating this, unless you're really desperate");
 		addTooltip("first_aid_kit", "An effective method of healing, combining the effects of bandages and painkillers");
 
 		// Commander Pedestal Augments
@@ -540,6 +550,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("curse_cleaning_soap", "Cleanses your soul of all curses");
 		addTooltip("champion_keycard", "Unlocks levels within Champion Towers");
 		addTooltip("kill_counter", "Apply to an item to track the number of kills achieved with it");
+		addTooltip("teleporter", "Warp between linked teleporters");
 
 		// Accessories
 		addTooltip("accessory.effects", "This accessory provides the following effects:");
@@ -575,6 +586,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("hans_blessing_2", "Tis but a scratch");
 		addTooltip("celestial_spirit_1", "When taking damage, there is a 15% chance to summon a meteor");
 		addTooltip("celestial_spirit_2", "The meteor will only damage the creature that attacked you");
+		addTooltip("void_blessing", "Take less damage from all sources, and become immune to falling out of the world");
 		addTooltip("blademaster_emblem", "Increases melee damage and adds a chance to inflict Bleeding");
 		addTooltip("deadeye_pendant_1", "Increases damage over distance with firearms");
 		addTooltip("deadeye_pendant_2", "Maximum damage increase is 20% at 100 meters");
@@ -625,10 +637,10 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("bloody_sacrifice_effect_5", "- 25% chance to roll a second loot drop entirely");
 
 		addTooltip("jonnys_curse_1", "It's like the wrath of gods, Egyptian pharaohs, Chinese monks, and Hans himself.");
-		addTooltip("jonnys_curse_2", "Ping me if you want more textures, because I probably wont respond.");
+		addTooltip("jonnys_curse_2", "Ping me if you want more textures, because I probably won't respond.");
 		addTooltip("jonnys_curse_3", "Hrnnnnnggggg soup.");
 		addTooltip("jonnys_curse_4", "I don't even think Hans would be able to withstand such pain.");
-		addTooltip("jonnys_curse_5", "Imagine stubbing your toe into a lego brick that has a tack stuck through the middle.");
+		addTooltip("jonnys_curse_5", "Imagine stubbing your toe into a Lego brick that has a tack stuck through the middle.");
 		addTooltip("jonnys_curse_6", "Exist in the life of a furry on 4chan!");
 		addTooltip("jonnys_curse_7", "This is what happens when you nuke yourself in Garry's mod.");
 		addTooltip("jonnys_curse_8", "The true for the worthy play through.");
@@ -676,8 +688,13 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addMessage("item.jonnys_curse.using", "Are you sure you wanna become a furry?");
 		addMessage("item.jonnys_curse.canceled", "You remain normal for now...");
 		addMessage("item.jonnys_curse.used", "Its so over...");
+		addMessage("item.pliers.set_linked_teleporter", "Teleporter location set to (%s, %s, %s)");
+		addMessage("item.pliers.store_linked_teleporter", "Stored teleporter location (%s, %s, %s)");
+		addMessage("item.pliers.clear_linked_teleporter", "Cleared stored teleporter location");
 		addMessage("block.wall_shelf.locked", "This shelf has been locked");
 		addMessage("block.wall_shelf.unlocked", "This shelf has been unlocked");
+		addMessage("block.teleporter.linked_teleporter_does_not_exist", "The linked teleporter no longer exists");
+		addMessage("block.teleporter.no_linked_teleporter", "Link this teleporter to another one using pliers first");
 		addMessage("armor_effects.disabled", "Armor effects have been disabled");
 		addMessage("armor_effects.enabled", "Armor effects have been enabled");
 		addMessage("armor_effects.tesla_armor.effect_everything", "Currently effecting ALL creatures (including players)");
@@ -854,6 +871,30 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("starstorm_armor.title", "Celestial Wrath");
 		addAdvancement("starstorm_armor.description", "Wear a full set of Starstorm armor");
 
+		// Void advancements
+		addAdvancement("ender_essence.title", "The Essence of End Creatures");
+		addAdvancement("ender_essence.description", "Obtain a sample of Ender Essence");
+		addAdvancement("void_ingot.title", "The Absence of Matter");
+		addAdvancement("void_ingot.description", "Obtain a Void ingot, where the absence of matter suddenly gains physical form");
+		addAdvancement("void_sword.title", "Violent Anti-Matter");
+		addAdvancement("void_sword.description", "Craft a Void sword");
+		addAdvancement("void_pickaxe.title", "Void Tools: Pickaxe");
+		addAdvancement("void_pickaxe.description", "Craft a Void pickaxe");
+		addAdvancement("void_axe.title", "Void Tools: Axe");
+		addAdvancement("void_axe.description", "Craft a Void axe");
+		addAdvancement("void_shovel.title", "Void Tools: Shovel");
+		addAdvancement("void_shovel.description", "Craft a Void shovel");
+		addAdvancement("void_hoe.title", "Void Tools: Hoe");
+		addAdvancement("void_hoe.description", "Craft a Void hoe");
+		addAdvancement("void_tools.title", "The End of All Things");
+		addAdvancement("void_tools.description", "Obtain every Void tool");
+		addAdvancement("void_armor.title", "The End of All Protection");
+		addAdvancement("void_armor.description", "Wear a full set of Void armor");
+		addAdvancement("teleporter.title", "Teleportation");
+		addAdvancement("teleporter.description", "Obtain a teleporter");
+		addAdvancement("moldy_bread.title", "I Have Done Nothing But Teleport Bread for Three Days");
+		addAdvancement("moldy_bread.description", "You told me to, Engineer");
+
 		// Copper advancements
 		addAdvancement("copper_ingot.title", "Simple Metals: Copper");
 		addAdvancement("copper_ingot.description", "Obtain a copper ingot");
@@ -901,6 +942,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("musket.description", "Craft a musket");
 		addAdvancement("hand_cannon.title", "Big Boom");
 		addAdvancement("hand_cannon.description", "Craft a hand cannon");
+		addAdvancement("dragons_breath_cannon.title", "Dragon's Wrath");
+		addAdvancement("dragons_breath_cannon.description", "Craft a dragon's breath cannon");
 
 		// Other weapons
 		addAdvancement("pike.title", "Long Distance Stabbing");
@@ -959,6 +1002,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		// Super Hans
 		addAdvancement("hansium_ingot.title", "Raw Strength in an Ingot");
 		addAdvancement("hansium_ingot.description", "Obtain a Hansium Ingot, dropped by the mighty Super Hans");
+		addAdvancement("rapid_reflexes.title", "Rapid Reflexes");
+		addAdvancement("rapid_reflexes.description", "Land a mace smash attack on Super Hans quickly after a dodge");
 		addAdvancement("the_sword.title", "The Sword of All Time");
 		addAdvancement("the_sword.description", "Obtain The Sword, a powerful combination of several swords");
 		addAdvancement("recovery_staff.title", "What Hurts Me Can Also Heal Me");
@@ -1073,8 +1118,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addConfigField("entity.tooltip", "Entity-specific settings");
 		addConfigField("celestial_tower", "Celestial Tower Settings");
 		addConfigField("celestial_tower.tooltip", "Celestial Tower settings");
-		addConfigField("skygazer", "Skygazer Settings");
-		addConfigField("skygazer.tooltip", "Skygazer settings");
+		addConfigField("celestial_altar", "Celestial Altar Settings");
+		addConfigField("celestial_altar.tooltip", "Celestial Altar settings");
 		addConfigField("the_commander", "The Commander Settings");
 		addConfigField("the_commander.tooltip", "The Commander settings");
 		addConfigField("weapons", "Weapon Settings");
@@ -1089,6 +1134,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addConfigField("musket.tooltip", "Musket settings");
 		addConfigField("hand_cannon", "Hand Cannon Settings");
 		addConfigField("hand_cannon.tooltip", "Hand Cannon settings");
+		addConfigField("dragons_breath_cannon", "Dragon's Breath Cannon Settings");
+		addConfigField("dragons_breath_cannon.tooltip", "Dragon's Breath Cannon settings");
 		addConfigField("ventus_staff", "Ventus Staff Settings");
 		addConfigField("ventus_staff.tooltip", "Ventus Staff settings");
 		addConfigField("meteor_staff", "Meteor Staff Settings");

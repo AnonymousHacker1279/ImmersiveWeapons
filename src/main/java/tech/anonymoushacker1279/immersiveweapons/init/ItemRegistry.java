@@ -13,28 +13,43 @@ import tech.anonymoushacker1279.immersiveweapons.data.IWJukeboxSongs;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.common.CommonItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.item.*;
-import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem.AccessorySlot;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.*;
-import tech.anonymoushacker1279.immersiveweapons.item.bow.*;
+import tech.anonymoushacker1279.immersiveweapons.item.bow.AuroraBow;
+import tech.anonymoushacker1279.immersiveweapons.item.bow.DragonBreathBow;
+import tech.anonymoushacker1279.immersiveweapons.item.bow.IceBowItem;
 import tech.anonymoushacker1279.immersiveweapons.item.fortitude.*;
-import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.*;
+import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
+import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.MoltenGauntletItem;
+import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.TeslaGauntletItem;
+import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.VentusGauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.*;
 import tech.anonymoushacker1279.immersiveweapons.item.materials.CustomTiers;
-import tech.anonymoushacker1279.immersiveweapons.item.pike.*;
+import tech.anonymoushacker1279.immersiveweapons.item.pike.MoltenPikeItem;
+import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
+import tech.anonymoushacker1279.immersiveweapons.item.pike.TeslaPikeItem;
+import tech.anonymoushacker1279.immersiveweapons.item.pike.VentusPikeItem;
 import tech.anonymoushacker1279.immersiveweapons.item.potion.AlcoholItem;
 import tech.anonymoushacker1279.immersiveweapons.item.potion.WineItem;
-import tech.anonymoushacker1279.immersiveweapons.item.projectile.*;
+import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem.BulletBuilder;
+import tech.anonymoushacker1279.immersiveweapons.item.projectile.CustomArrowItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.CustomArrowItem.ArrowBuilder;
+import tech.anonymoushacker1279.immersiveweapons.item.projectile.DragonFireballItem;
+import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem.ThrowableType;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils.HitEffect;
+import tech.anonymoushacker1279.immersiveweapons.item.tool.PliersItem;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.TheSword;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.molten.*;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.tesla.*;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.ventus.*;
-import tech.anonymoushacker1279.immersiveweapons.item.utility.*;
-import tech.anonymoushacker1279.immersiveweapons.util.markers.*;
+import tech.anonymoushacker1279.immersiveweapons.item.utility.BasicContainerItem;
+import tech.anonymoushacker1279.immersiveweapons.item.utility.CustomBoatItem;
+import tech.anonymoushacker1279.immersiveweapons.item.utility.FuelItem;
+import tech.anonymoushacker1279.immersiveweapons.util.markers.DatagenExclusionMarker;
 import tech.anonymoushacker1279.immersiveweapons.util.markers.DatagenExclusionMarker.Type;
+import tech.anonymoushacker1279.immersiveweapons.util.markers.LanguageEntryOverride;
+import tech.anonymoushacker1279.immersiveweapons.util.markers.TextureMetadataMarker;
 import tech.anonymoushacker1279.immersiveweapons.util.markers.TextureMetadataMarker.PredefinedGroups;
 import tech.anonymoushacker1279.immersiveweapons.world.food.FoodItemProperties;
 
@@ -144,6 +159,26 @@ public class ItemRegistry {
 	public static final Supplier<HoeItem> STARSTORM_HOE = ITEMS.register("starstorm_hoe", () -> new HoeItem(CustomTiers.STARSTORM, new Properties().attributes(
 			HoeItem.createAttributes(CustomTiers.STARSTORM, -7, 0.0f)
 	)));
+	@TextureMetadataMarker(frameTime = 25, interpolate = true)
+	public static final Supplier<SwordItem> VOID_SWORD = ITEMS.register("void_sword", () -> new SwordItem(CustomTiers.VOID, new Properties().attributes(
+			SwordItem.createAttributes(CustomTiers.VOID, 3, -1.3f)
+	)));
+	@TextureMetadataMarker(frameTime = 25, interpolate = true)
+	public static final Supplier<PickaxeItem> VOID_PICKAXE = ITEMS.register("void_pickaxe", () -> new PickaxeItem(CustomTiers.VOID, new Properties().attributes(
+			PickaxeItem.createAttributes(CustomTiers.VOID, 1, -1.7f)
+	)));
+	@TextureMetadataMarker(frameTime = 25, interpolate = true)
+	public static final Supplier<AxeItem> VOID_AXE = ITEMS.register("void_axe", () -> new AxeItem(CustomTiers.VOID, new Properties().attributes(
+			AxeItem.createAttributes(CustomTiers.VOID, 5, -1.9f)
+	)));
+	@TextureMetadataMarker(frameTime = 25, interpolate = true)
+	public static final Supplier<ShovelItem> VOID_SHOVEL = ITEMS.register("void_shovel", () -> new ShovelItem(CustomTiers.VOID, new Properties().attributes(
+			ShovelItem.createAttributes(CustomTiers.VOID, 1.5f, -1.9f)
+	)));
+	@TextureMetadataMarker(frameTime = 25, interpolate = true)
+	public static final Supplier<HoeItem> VOID_HOE = ITEMS.register("void_hoe", () -> new HoeItem(CustomTiers.VOID, new Properties().attributes(
+			HoeItem.createAttributes(CustomTiers.VOID, -9, 1.1f)
+	)));
 	public static final Supplier<TheSword> THE_SWORD = ITEMS.register("the_sword", TheSword::new);
 
 	// Weapons
@@ -186,6 +221,9 @@ public class ItemRegistry {
 	public static final Supplier<PikeItem> STARSTORM_PIKE = ITEMS.register("starstorm_pike", () -> new PikeItem(CustomTiers.STARSTORM, new Properties().attributes(
 			PikeItem.createAttributes(CustomTiers.STARSTORM, -2.6f)
 	), Ingredient.of(IWItemTagGroups.STARSTORM_INGOTS)));
+	public static final Supplier<PikeItem> VOID_PIKE = ITEMS.register("void_pike", () -> new PikeItem(CustomTiers.VOID, new Properties().attributes(
+			PikeItem.createAttributes(CustomTiers.VOID, -1.5f)
+	), Ingredient.of(IWItemTagGroups.VOID_INGOTS)));
 	@DatagenExclusionMarker(Type.MODEL_GENERATOR_ITEM)
 	public static final Supplier<SimplePistolItem> FLINTLOCK_PISTOL = ITEMS.register("flintlock_pistol", () -> new SimplePistolItem(new Properties().durability(499)));
 	@DatagenExclusionMarker(Type.MODEL_GENERATOR_ITEM)
@@ -199,6 +237,9 @@ public class ItemRegistry {
 	public static final Supplier<FlareGunItem> FLARE_GUN = ITEMS.register("flare_gun", () -> new FlareGunItem(new Properties().durability(399)));
 	@DatagenExclusionMarker(Type.MODEL_GENERATOR_ITEM)
 	public static final Supplier<HandCannonItem> HAND_CANNON = ITEMS.register("hand_cannon", () -> new HandCannonItem(new Properties().durability(199)));
+	@DatagenExclusionMarker(Type.MODEL_GENERATOR_ITEM)
+	@LanguageEntryOverride("Dragon's Breath Cannon")
+	public static final Supplier<DragonsBreathCannonItem> DRAGONS_BREATH_CANNON = ITEMS.register("dragons_breath_cannon", () -> new DragonsBreathCannonItem(new Properties().durability(249)));
 	public static final Supplier<GauntletItem> WOODEN_GAUNTLET = ITEMS.register("wooden_gauntlet", () -> new GauntletItem(Tiers.WOOD, new Properties().attributes(
 			GauntletItem.createAttributes(Tiers.WOOD, -2.3f)
 	), 0.15f, 0, Ingredient.of(ItemTags.PLANKS)));
@@ -238,6 +279,9 @@ public class ItemRegistry {
 	public static final Supplier<GauntletItem> STARSTORM_GAUNTLET = ITEMS.register("starstorm_gauntlet", () -> new GauntletItem(CustomTiers.STARSTORM, new Properties().attributes(
 			GauntletItem.createAttributes(CustomTiers.STARSTORM, -2.3f)
 	), 0.95f, 2, Ingredient.of(IWItemTagGroups.STARSTORM_INGOTS)));
+	public static final Supplier<GauntletItem> VOID_GAUNTLET = ITEMS.register("void_gauntlet", () -> new GauntletItem(CustomTiers.VOID, new Properties().attributes(
+			GauntletItem.createAttributes(CustomTiers.VOID, -1.2f)
+	), 0.95f, 3, Ingredient.of(IWItemTagGroups.VOID_INGOTS)));
 	public static final Supplier<MeteorStaffItem> METEOR_STAFF = ITEMS.register("meteor_staff", () -> new MeteorStaffItem(new Properties().durability(199)));
 	public static final Supplier<CursedSightStaffItem> CURSED_SIGHT_STAFF = ITEMS.register("cursed_sight_staff", () -> new CursedSightStaffItem(new Properties().durability(149)));
 	@TextureMetadataMarker(frameTime = 3)
@@ -275,6 +319,9 @@ public class ItemRegistry {
 	public static final Supplier<Item> CONDUCTIVE_ALLOY = ITEMS.register("conductive_alloy", () -> new Item(new Properties()));
 	public static final Supplier<Item> MOLTEN_INGOT = ITEMS.register("molten_ingot", () -> new FuelItem(new Properties().fireResistant(), 24000));
 	public static final Supplier<Item> MOLTEN_SMITHING_TEMPLATE = ITEMS.register("molten_smithing_template", () -> new Item(new Properties().fireResistant()));
+	public static final Supplier<Item> ENDER_ESSENCE = ITEMS.register("ender_essence", () -> new Item(new Properties()));
+	@TextureMetadataMarker(frameTime = 25, interpolate = true)
+	public static final Supplier<Item> VOID_INGOT = ITEMS.register("void_ingot", () -> new Item(new Properties()));
 	public static final Supplier<Item> HANSIUM_INGOT = ITEMS.register("hansium_ingot", () -> new Item(new Properties()));
 	public static final Supplier<Item> BLACKPOWDER = ITEMS.register("blackpowder", () -> new Item(new Properties()));
 	public static final Supplier<Item> SULFUR = ITEMS.register("sulfur", () -> new Item(new Properties()));
@@ -310,6 +357,7 @@ public class ItemRegistry {
 	public static final Supplier<CustomArrowItem<?>> VENTUS_ARROW = ITEMS.register("ventus_arrow", () -> new ArrowBuilder<>(new Properties(), 6.5d, EntityRegistry.VENTUS_ARROW_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.0355d).shootingVector(0.0025d, 0.2d, 0.9d).hitEffect(HitEffect.VENTUS).build());
 	public static final Supplier<CustomArrowItem<?>> ASTRAL_ARROW = ITEMS.register("astral_arrow", () -> new ArrowBuilder<>(new Properties(), 5.50d, EntityRegistry.ASTRAL_ARROW_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.01d).shootingVector(0.002d, 0.1d, 0.6d).build());
 	public static final Supplier<CustomArrowItem<?>> STARSTORM_ARROW = ITEMS.register("starstorm_arrow", () -> new ArrowBuilder<>(new Properties(), 7.65d, EntityRegistry.STARSTORM_ARROW_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.0355d).shootingVector(0.0025d, 0.2d, 0.9d).build());
+	public static final Supplier<CustomArrowItem<?>> VOID_ARROW = ITEMS.register("void_arrow", () -> new ArrowBuilder<>(new Properties(), 8.0d, EntityRegistry.VOID_ARROW_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.01d).shootingVector(0.002d, 0.1d, 0.6d).build());
 	@LanguageEntryOverride("Smoke Grenade Arrow")
 	public static final Supplier<CustomArrowItem<?>> SMOKE_GRENADE_ARROW = ITEMS.register("smoke_grenade_arrow", () -> new ArrowBuilder<>(new Properties(), 2.0d, EntityRegistry.SMOKE_GRENADE_ARROW_ENTITY).color(0).build());
 	@LanguageEntryOverride("Red Smoke Grenade Arrow")
@@ -335,12 +383,14 @@ public class ItemRegistry {
 	public static final Supplier<BulletItem<?>> VENTUS_MUSKET_BALL = ITEMS.register("ventus_musket_ball", () -> new BulletBuilder<>(new Properties().stacksTo(99), 7.50d, EntityRegistry.VENTUS_MUSKET_BALL_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.002d).hitEffect(HitEffect.VENTUS).shootingVector(0.002d, 0.2d, 0.5d).build());
 	public static final Supplier<BulletItem<?>> ASTRAL_MUSKET_BALL = ITEMS.register("astral_musket_ball", () -> new BulletBuilder<>(new Properties().stacksTo(99), 6.25d, EntityRegistry.ASTRAL_MUSKET_BALL_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.001d).shootingVector(0.001d, 0.1d, 0.2d).build());
 	public static final Supplier<BulletItem<?>> STARSTORM_MUSKET_BALL = ITEMS.register("starstorm_musket_ball", () -> new BulletBuilder<>(new Properties().stacksTo(99), 8.65d, EntityRegistry.STARSTORM_MUSKET_BALL_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.002d).shootingVector(0.002d, 0.2d, 0.5d).build());
+	public static final Supplier<BulletItem<?>> VOID_MUSKET_BALL = ITEMS.register("void_musket_ball", () -> new BulletBuilder<>(new Properties().stacksTo(99), 9.0d, EntityRegistry.VOID_MUSKET_BALL_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.001d).shootingVector(0.001d, 0.1d, 0.2d).build());
 	@DatagenExclusionMarker(Type.MODEL_GENERATOR_ITEM)
 	public static final Supplier<BulletItem<?>> FLARE = ITEMS.register("flare", () -> new BulletBuilder<>(new Properties(), 0.1d, EntityRegistry.FLARE_ENTITY).gravityModifier(0.06d).build());
 	@DatagenExclusionMarker(Type.MODEL_GENERATOR_ITEM)
 	public static final Supplier<BulletItem<?>> CANNONBALL = ITEMS.register("cannonball", () -> new BulletItem.BulletBuilder<>(new Properties(), 6.0d, EntityRegistry.CANNONBALL_ENTITY).gravityModifier(0.055d).build());
 	@DatagenExclusionMarker(Type.MODEL_GENERATOR_ITEM)
 	public static final Supplier<BulletItem<?>> EXPLOSIVE_CANNONBALL = ITEMS.register("explosive_cannonball", () -> new BulletItem.BulletBuilder<>(new Properties(), 6.0d, EntityRegistry.CANNONBALL_ENTITY).isExplosive(true).build());
+	public static final Supplier<DragonFireballItem> DRAGON_FIREBALL = ITEMS.register("dragon_fireball", () -> DragonFireballItem.createFromBulletBuilder(new BulletBuilder<>(new Properties(), 12.0d, EntityRegistry.DRAGON_FIREBALL_ENTITY).gravityModifier(0.001d).isExplosive(true)));
 	@DatagenExclusionMarker(Type.MODEL_GENERATOR_ITEM)
 	public static final Supplier<Item> MORTAR_SHELL = ITEMS.register("mortar_shell", () -> new Item(new Properties()));
 	public static final Supplier<Item> GRENADE_ASSEMBLY = ITEMS.register("grenade_assembly", () -> new Item(new Properties()));
@@ -379,16 +429,17 @@ public class ItemRegistry {
 	public static final Supplier<ThrowableItem> MOLOTOV_COCKTAIL = ITEMS.register("molotov_cocktail", () -> new ThrowableItem(new Properties().stacksTo(16), ThrowableType.MOLOTOV));
 	public static final Supplier<Item> SMOKE_POWDER = ITEMS.register("smoke_powder", () -> new Item(new Properties()));
 	public static final Supplier<BasicContainerItem> MORTAR_AND_PESTLE = ITEMS.register("mortar_and_pestle", () -> new BasicContainerItem(new Properties()));
+	public static final Supplier<PliersItem> PLIERS = ITEMS.register("pliers", () -> new PliersItem(new Properties().stacksTo(1)));
 	public static final Supplier<AlcoholItem> BOTTLE_OF_ALCOHOL = ITEMS.register("bottle_of_alcohol", () -> new AlcoholItem(new Properties().stacksTo(16)));
 	public static final Supplier<WineItem> BOTTLE_OF_WINE = ITEMS.register("bottle_of_wine", () -> new WineItem(new Properties().stacksTo(16)));
-	public static final Supplier<Item> PLIERS = ITEMS.register("pliers", () -> new Item(new Properties().stacksTo(1)));
 	public static final Supplier<ChocolateBarItem> CHOCOLATE_BAR = ITEMS.register("chocolate_bar", () -> new ChocolateBarItem(new Properties().food(FoodItemProperties.CHOCOLATE_BAR), false));
 	@DatagenExclusionMarker(Type.MODEL_GENERATOR_ITEM)
 	@LanguageEntryOverride("Chocolate Bar")
 	public static final Supplier<ChocolateBarItem> EXPLOSIVE_CHOCOLATE_BAR = ITEMS.register("explosive_chocolate_bar", () -> new ChocolateBarItem(new Properties().food(FoodItemProperties.CHOCOLATE_BAR), true));
-	public static final Supplier<BandageItem> BANDAGE = ITEMS.register("bandage", () -> new BandageItem(new Properties().stacksTo(16)));
 	@LanguageEntryOverride("Meal Ready-to-Eat (MRE)")
 	public static final Supplier<Item> MRE = ITEMS.register("mre", () -> new Item(new Properties().food(FoodItemProperties.MRE)));
+	public static final Supplier<Item> MOLDY_BREAD = ITEMS.register("moldy_bread", () -> new Item(new Properties().food(FoodItemProperties.MOLDY_BREAD)));
+	public static final Supplier<BandageItem> BANDAGE = ITEMS.register("bandage", () -> new BandageItem(new Properties().stacksTo(16)));
 	public static final Supplier<PainkillerItem> PAINKILLERS = ITEMS.register("painkillers", () -> new PainkillerItem(new Properties().stacksTo(24)));
 	public static final Supplier<Item> SYRINGE = ITEMS.register("syringe", () -> new Item(new Properties().stacksTo(16)));
 	public static final Supplier<MorphineItem> MORPHINE = ITEMS.register("morphine", () -> new MorphineItem(new Properties().stacksTo(16)));
@@ -401,46 +452,47 @@ public class ItemRegistry {
 	public static final Supplier<CustomBoatItem> STARDUST_BOAT = ITEMS.register("stardust_boat", () -> new CustomBoatItem(new Item.Properties().stacksTo(1)));
 	public static final Supplier<CustomBoatItem> STARDUST_CHEST_BOAT = ITEMS.register("stardust_chest_boat", () -> new CustomBoatItem(new Item.Properties().stacksTo(1)));
 	public static final Supplier<CurseCleaningSoapItem> CURSE_CLEANING_SOAP = ITEMS.register("curse_cleaning_soap", () -> new CurseCleaningSoapItem(new Properties().stacksTo(1)));
-	public static final Supplier<AccessoryItem> SATCHEL = ITEMS.register("satchel", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.BELT, AccessoryItemEffects.SATCHEL));
-	public static final Supplier<AccessoryItem> POWDER_HORN = ITEMS.register("powder_horn", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.BODY, AccessoryItemEffects.POWDER_HORN));
+	public static final Supplier<Item> SATCHEL = ITEMS.register("satchel", () -> new Item(new Properties().stacksTo(1)));
+	public static final Supplier<Item> POWDER_HORN = ITEMS.register("powder_horn", () -> new Item(new Properties().stacksTo(1)));
 	@LanguageEntryOverride("Berserker's Amulet")
-	public static final Supplier<AccessoryItem> BERSERKERS_AMULET = ITEMS.register("berserkers_amulet", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.CHARM, AccessoryItemEffects.BERSERKERS_AMULET));
+	public static final Supplier<Item> BERSERKERS_AMULET = ITEMS.register("berserkers_amulet", () -> new Item(new Properties().stacksTo(1)));
 	@LanguageEntryOverride("Hans' Blessing")
-	public static final Supplier<AccessoryItem> HANS_BLESSING = ITEMS.register("hans_blessing", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.SPIRIT, AccessoryItemEffects.HANS_BLESSING));
-	public static final Supplier<AccessoryItem> CELESTIAL_SPIRIT = ITEMS.register("celestial_spirit", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.SPIRIT, AccessoryItemEffects.CELESTIAL_SPIRIT));
-	public static final Supplier<AccessoryItem> BLADEMASTER_EMBLEM = ITEMS.register("blademaster_emblem", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.CHARM, AccessoryItemEffects.BLADEMASTER_EMBLEM));
-	public static final Supplier<AccessoryItem> DEADEYE_PENDANT = ITEMS.register("deadeye_pendant", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.NECKLACE, AccessoryItemEffects.DEADEYE_PENDANT));
-	public static final Supplier<AccessoryItem> BLOATED_HEART = ITEMS.register("bloated_heart", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.BODY, AccessoryItemEffects.BLOATED_HEART));
-	public static final Supplier<AccessoryItem> NETHERITE_SHIELD = ITEMS.register("netherite_shield", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.BODY, AccessoryItemEffects.NETHERITE_SHIELD));
+	public static final Supplier<Item> HANS_BLESSING = ITEMS.register("hans_blessing", () -> new Item(new Properties().stacksTo(1)));
+	public static final Supplier<Item> CELESTIAL_SPIRIT = ITEMS.register("celestial_spirit", () -> new Item(new Properties().stacksTo(1)));
+	public static final Supplier<Item> VOID_BLESSING = ITEMS.register("void_blessing", () -> new Item(new Properties().stacksTo(1)));
+	public static final Supplier<Item> BLADEMASTER_EMBLEM = ITEMS.register("blademaster_emblem", () -> new Item(new Properties().stacksTo(1)));
+	public static final Supplier<Item> DEADEYE_PENDANT = ITEMS.register("deadeye_pendant", () -> new Item(new Properties().stacksTo(1)));
+	public static final Supplier<Item> BLOATED_HEART = ITEMS.register("bloated_heart", () -> new Item(new Properties().stacksTo(1)));
+	public static final Supplier<Item> NETHERITE_SHIELD = ITEMS.register("netherite_shield", () -> new Item(new Properties().stacksTo(1)));
 	@LanguageEntryOverride("Melee Master's Molten Glove")
-	public static final Supplier<AccessoryItem> MELEE_MASTERS_MOLTEN_GLOVE = ITEMS.register("melee_masters_molten_glove", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.HAND, AccessoryItemEffects.MELEE_MASTERS_MOLTEN_GLOVE));
-	public static final Supplier<AccessoryItem> IRON_FIST = ITEMS.register("iron_fist", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.HAND, AccessoryItemEffects.IRON_FIST));
-	public static final Supplier<AccessoryItem> GLOVE_OF_RAPID_SWINGING = ITEMS.register("glove_of_rapid_swinging", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.HAND, AccessoryItemEffects.GLOVE_OF_RAPID_SWINGING));
-	public static final Supplier<AccessoryItem> HAND_OF_DOOM = ITEMS.register("hand_of_doom", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.HAND, AccessoryItemEffects.HAND_OF_DOOM));
-	public static final Supplier<AccessoryItem> COPPER_RING = ITEMS.register("copper_ring", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.RING, AccessoryItemEffects.COPPER_RING));
-	public static final Supplier<AccessoryItem> IRON_RING = ITEMS.register("iron_ring", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.RING, AccessoryItemEffects.IRON_RING));
-	public static final Supplier<AccessoryItem> COBALT_RING = ITEMS.register("cobalt_ring", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.RING, AccessoryItemEffects.COBALT_RING));
-	public static final Supplier<AccessoryItem> GOLDEN_RING = ITEMS.register("golden_ring", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.RING, AccessoryItemEffects.GOLDEN_RING));
-	public static final Supplier<AccessoryItem> AMETHYST_RING = ITEMS.register("amethyst_ring", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.RING, AccessoryItemEffects.AMETHYST_RING));
-	public static final Supplier<AccessoryItem> EMERALD_RING = ITEMS.register("emerald_ring", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.RING, AccessoryItemEffects.EMERALD_RING));
-	public static final Supplier<AccessoryItem> DIAMOND_RING = ITEMS.register("diamond_ring", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.RING, AccessoryItemEffects.DIAMOND_RING));
-	public static final Supplier<AccessoryItem> NETHERITE_RING = ITEMS.register("netherite_ring", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.RING, AccessoryItemEffects.NETHERITE_RING));
-	public static final Supplier<AccessoryItem> DEATH_GEM_RING = ITEMS.register("death_gem_ring", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.RING, AccessoryItemEffects.DEATH_GEM_RING));
-	public static final Supplier<AccessoryItem> MEDAL_OF_ADEQUACY = ITEMS.register("medal_of_adequacy", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.NECKLACE, AccessoryItemEffects.MEDAL_OF_ADEQUACY));
-	public static final Supplier<AccessoryItem> DEPTH_CHARM = ITEMS.register("depth_charm", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.CHARM, AccessoryItemEffects.DEPTH_CHARM));
-	public static final Supplier<AccessoryItem> REINFORCED_DEPTH_CHARM = ITEMS.register("reinforced_depth_charm", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.CHARM, AccessoryItemEffects.REINFORCED_DEPTH_CHARM));
-	public static final Supplier<AccessoryItem> INSOMNIA_AMULET = ITEMS.register("insomnia_amulet", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.NECKLACE, AccessoryItemEffects.INSOMNIA_AMULET));
-	public static final Supplier<AccessoryItem> GOGGLES = ITEMS.register("goggles", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.HEAD, AccessoryItemEffects.GOGGLES));
-	public static final Supplier<AccessoryItem> LAVA_GOGGLES = ITEMS.register("lava_goggles", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.HEAD, AccessoryItemEffects.LAVA_GOGGLES));
-	public static final Supplier<AccessoryItem> NIGHT_VISION_GOGGLES = ITEMS.register("night_vision_goggles", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.HEAD, AccessoryItemEffects.NIGHT_VISION_GOGGLES));
-	public static final Supplier<AccessoryItem> AGILITY_BRACELET = ITEMS.register("agility_bracelet", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.BRACELET, AccessoryItemEffects.AGILITY_BRACELET));
-	public static final Supplier<AccessoryItem> BLOODY_CLOTH = ITEMS.register("bloody_cloth", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.HEAD, AccessoryItemEffects.BLOODY_CLOTH));
-	public static final Supplier<AccessoryItem> ANCIENT_SCROLL = ITEMS.register("ancient_scroll", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.CHARM, AccessoryItemEffects.ANCIENT_SCROLL));
-	public static final Supplier<AccessoryItem> HOLY_MANTLE = ITEMS.register("holy_mantle", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.BELT, AccessoryItemEffects.HOLY_MANTLE));
-	public static final Supplier<AccessoryItem> VENSTRAL_JAR = ITEMS.register("venstral_jar", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.BELT, AccessoryItemEffects.VENSTRAL_JAR));
-	public static final Supplier<AccessoryItem> SUPER_BLANKET_CAPE = ITEMS.register("super_blanket_cape", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.BODY, AccessoryItemEffects.SUPER_BLANKET_CAPE));
-	public static final Supplier<AccessoryItem> MEDAL_OF_HONOR = ITEMS.register("medal_of_honor", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.CHARM, AccessoryItemEffects.MEDAL_OF_HONOR));
-	public static final Supplier<AccessoryItem> MEDAL_OF_DISHONOR = ITEMS.register("medal_of_dishonor", () -> new AccessoryItem(new Properties().stacksTo(1), AccessorySlot.CHARM, AccessoryItemEffects.MEDAL_OF_DISHONOR));
+	public static final Supplier<Item> MELEE_MASTERS_MOLTEN_GLOVE = ITEMS.register("melee_masters_molten_glove", () -> new Item(new Properties().stacksTo(1)));
+	public static final Supplier<Item> IRON_FIST = ITEMS.register("iron_fist", () -> new Item(new Properties().stacksTo(1)));
+	public static final Supplier<Item> GLOVE_OF_RAPID_SWINGING = ITEMS.register("glove_of_rapid_swinging", () -> new Item(new Properties().stacksTo(1)));
+	public static final Supplier<Item> HAND_OF_DOOM = ITEMS.register("hand_of_doom", () -> new Item(new Properties().stacksTo(1)));
+	public static final Supplier<Item> COPPER_RING = ITEMS.register("copper_ring", () -> new Item(new Properties().stacksTo(1)));
+	public static final Supplier<Item> IRON_RING = ITEMS.register("iron_ring", () -> new Item(new Properties().stacksTo(1)));
+	public static final Supplier<Item> COBALT_RING = ITEMS.register("cobalt_ring", () -> new Item(new Properties().stacksTo(1)));
+	public static final Supplier<Item> GOLDEN_RING = ITEMS.register("golden_ring", () -> new Item(new Properties().stacksTo(1)));
+	public static final Supplier<Item> AMETHYST_RING = ITEMS.register("amethyst_ring", () -> new Item(new Properties().stacksTo(1)));
+	public static final Supplier<Item> EMERALD_RING = ITEMS.register("emerald_ring", () -> new Item(new Properties().stacksTo(1)));
+	public static final Supplier<Item> DIAMOND_RING = ITEMS.register("diamond_ring", () -> new Item(new Properties().stacksTo(1)));
+	public static final Supplier<Item> NETHERITE_RING = ITEMS.register("netherite_ring", () -> new Item(new Properties().stacksTo(1)));
+	public static final Supplier<Item> DEATH_GEM_RING = ITEMS.register("death_gem_ring", () -> new Item(new Properties().stacksTo(1)));
+	public static final Supplier<Item> MEDAL_OF_ADEQUACY = ITEMS.register("medal_of_adequacy", () -> new Item(new Properties().stacksTo(1)));
+	public static final Supplier<Item> DEPTH_CHARM = ITEMS.register("depth_charm", () -> new Item(new Properties().stacksTo(1)));
+	public static final Supplier<Item> REINFORCED_DEPTH_CHARM = ITEMS.register("reinforced_depth_charm", () -> new Item(new Properties().stacksTo(1)));
+	public static final Supplier<Item> INSOMNIA_AMULET = ITEMS.register("insomnia_amulet", () -> new Item(new Properties().stacksTo(1)));
+	public static final Supplier<Item> GOGGLES = ITEMS.register("goggles", () -> new Item(new Properties().stacksTo(1)));
+	public static final Supplier<Item> LAVA_GOGGLES = ITEMS.register("lava_goggles", () -> new Item(new Properties().stacksTo(1)));
+	public static final Supplier<Item> NIGHT_VISION_GOGGLES = ITEMS.register("night_vision_goggles", () -> new Item(new Properties().stacksTo(1)));
+	public static final Supplier<Item> AGILITY_BRACELET = ITEMS.register("agility_bracelet", () -> new Item(new Properties().stacksTo(1)));
+	public static final Supplier<Item> BLOODY_CLOTH = ITEMS.register("bloody_cloth", () -> new Item(new Properties().stacksTo(1)));
+	public static final Supplier<Item> ANCIENT_SCROLL = ITEMS.register("ancient_scroll", () -> new Item(new Properties().stacksTo(1)));
+	public static final Supplier<Item> HOLY_MANTLE = ITEMS.register("holy_mantle", () -> new Item(new Properties().stacksTo(1)));
+	public static final Supplier<Item> VENSTRAL_JAR = ITEMS.register("venstral_jar", () -> new Item(new Properties().stacksTo(1)));
+	public static final Supplier<Item> SUPER_BLANKET_CAPE = ITEMS.register("super_blanket_cape", () -> new Item(new Properties().stacksTo(1)));
+	public static final Supplier<Item> MEDAL_OF_HONOR = ITEMS.register("medal_of_honor", () -> new Item(new Properties().stacksTo(1)));
+	public static final Supplier<Item> MEDAL_OF_DISHONOR = ITEMS.register("medal_of_dishonor", () -> new Item(new Properties().stacksTo(1)));
 	public static final Supplier<CursedItem> BLOODY_SACRIFICE = ITEMS.register("bloody_sacrifice", () -> new CursedItem(new Properties().stacksTo(1).setNoRepair().durability(100), "bloody_sacrifice"));
 	@LanguageEntryOverride("Jonny's Curse")
 	public static final Supplier<CursedItem> JONNYS_CURSE = ITEMS.register("jonnys_curse", () -> new CursedItem(new Properties().stacksTo(1).setNoRepair().durability(100), "jonnys_curse"));
@@ -505,6 +557,14 @@ public class ItemRegistry {
 	@LanguageEntryOverride("Padded Leather Pants")
 	public static final Supplier<ArmorItem> PADDED_LEATHER_LEGGINGS = ITEMS.register("padded_leather_leggings", () -> new ArmorItem(ArmorMaterialRegistry.PADDED_LEATHER, ArmorItem.Type.LEGGINGS, new Item.Properties().durability(ArmorItem.Type.LEGGINGS.getDurability(6))));
 	public static final Supplier<ArmorItem> PADDED_LEATHER_BOOTS = ITEMS.register("padded_leather_boots", () -> new ArmorItem(ArmorMaterialRegistry.PADDED_LEATHER, ArmorItem.Type.BOOTS, new Item.Properties().durability(ArmorItem.Type.BOOTS.getDurability(6))));
+	@TextureMetadataMarker(frameTime = 25, interpolate = true)
+	public static final Supplier<VoidArmorItem> VOID_HELMET = ITEMS.register("void_helmet", () -> new VoidArmorItem(ArmorMaterialRegistry.VOID, ArmorItem.Type.HELMET, new Item.Properties().durability(ArmorItem.Type.HELMET.getDurability(35))));
+	@TextureMetadataMarker(frameTime = 25, interpolate = true)
+	public static final Supplier<VoidArmorItem> VOID_CHESTPLATE = ITEMS.register("void_chestplate", () -> new VoidArmorItem(ArmorMaterialRegistry.VOID, ArmorItem.Type.CHESTPLATE, new Item.Properties().durability(ArmorItem.Type.CHESTPLATE.getDurability(35))));
+	@TextureMetadataMarker(frameTime = 25, interpolate = true)
+	public static final Supplier<VoidArmorItem> VOID_LEGGINGS = ITEMS.register("void_leggings", () -> new VoidArmorItem(ArmorMaterialRegistry.VOID, ArmorItem.Type.LEGGINGS, new Item.Properties().durability(ArmorItem.Type.LEGGINGS.getDurability(35))));
+	@TextureMetadataMarker(frameTime = 25, interpolate = true)
+	public static final Supplier<VoidArmorItem> VOID_BOOTS = ITEMS.register("void_boots", () -> new VoidArmorItem(ArmorMaterialRegistry.VOID, ArmorItem.Type.BOOTS, new Item.Properties().durability(ArmorItem.Type.BOOTS.getDurability(35))));
 
 	// Spawn eggs
 	public static final Supplier<DeferredSpawnEggItem> DYING_SOLDIER_SPAWN_EGG = ITEMS.register("dying_soldier_spawn_egg", () -> new DeferredSpawnEggItem(EntityRegistry.DYING_SOLDIER_ENTITY, 0x7a6851, 0x783d22, (new Item.Properties()).stacksTo(16)));

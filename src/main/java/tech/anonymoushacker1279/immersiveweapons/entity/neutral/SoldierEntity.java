@@ -12,6 +12,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -20,7 +21,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
-import tech.anonymoushacker1279.immersiveweapons.item.AccessoryItem;
+import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
 
 import java.time.LocalDate;
@@ -134,7 +135,7 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 				if (player.isCreative()) {
 					return super.hurt(source, amount);
 				} else {
-					if (AccessoryItem.isAccessoryActive(player, getPeaceAccessory())) {
+					if (Accessory.isAccessoryActive(player, getPeaceAccessory())) {
 						return false;
 					}
 				}
@@ -230,15 +231,15 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 
 	protected abstract void prepareForCombat();
 
-	protected abstract AccessoryItem getPeaceAccessory();
+	protected abstract Item getPeaceAccessory();
 
-	protected abstract AccessoryItem getAggroAccessory();
+	protected abstract Item getAggroAccessory();
 
 	protected boolean canTargetEntityWhenHurt(LivingEntity entity) {
 		if (entity instanceof Player player) {
 			return !player.isCreative()
-					&& ((isAngryAt(player) || AccessoryItem.isAccessoryActive(player, getAggroAccessory()))
-					&& !AccessoryItem.isAccessoryActive(player, getPeaceAccessory()));
+					&& ((isAngryAt(player) || Accessory.isAccessoryActive(player, getAggroAccessory()))
+					&& !Accessory.isAccessoryActive(player, getPeaceAccessory()));
 		} else {
 			for (Class<? extends Entity> clazz : ignoresDamageFrom) {
 				if (clazz.isInstance(entity)) {
