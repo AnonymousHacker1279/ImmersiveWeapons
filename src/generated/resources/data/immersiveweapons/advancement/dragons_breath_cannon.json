@@ -1,0 +1,37 @@
+{
+  "parent": "immersiveweapons:void_ingot",
+  "criteria": {
+    "hold": {
+      "conditions": {
+        "items": [
+          {
+            "items": "immersiveweapons:dragons_breath_cannon"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersiveweapons.dragons_breath_cannon.description"
+    },
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "immersiveweapons:dragons_breath_cannon"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.dragons_breath_cannon.title"
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ],
+  "rewards": {
+    "experience": 125
+  },
+  "sends_telemetry_event": true
+}

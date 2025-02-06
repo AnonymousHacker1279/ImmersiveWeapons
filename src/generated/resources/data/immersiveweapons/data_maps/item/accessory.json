@@ -915,6 +915,26 @@
       "effects": [],
       "mob_effects": [],
       "slot": "belt"
+    },
+    "immersiveweapons:void_blessing": {
+      "attribute_modifiers": [],
+      "dynamic_attribute_modifiers": [],
+      "effect_scaling_types": {
+        "damage_resistance": {
+          "name": "none"
+        }
+      },
+      "effects": [
+        {
+          "type": {
+            "clamp": true,
+            "name": "damage_resistance"
+          },
+          "value": 0.15
+        }
+      ],
+      "mob_effects": [],
+      "slot": "spirit"
     }
   }
 }

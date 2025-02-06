@@ -27,7 +27,9 @@ import tech.anonymoushacker1279.immersiveweapons.entity.neutral.FieldMedicEntity
 import tech.anonymoushacker1279.immersiveweapons.entity.neutral.MinutemanEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.npc.SkeletonMerchantEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.npc.SkygazerEntity;
-import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.init.AccessoryEffectScalingTypeRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.AccessoryEffectTypeRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
 import tech.anonymoushacker1279.immersiveweapons.network.handler.*;
@@ -86,6 +88,7 @@ public class ModEventSubscriber {
 		registrar.playToServer(TeslaArmorPayload.TYPE, TeslaArmorPayload.STREAM_CODEC, TeslaArmorPayloadHandler.getInstance()::handleData);
 		registrar.playToServer(VentusArmorPayload.TYPE, VentusArmorPayload.STREAM_CODEC, VentusArmorPayloadHandler.getInstance()::handleData);
 		registrar.playToServer(AstralArmorPayload.TYPE, AstralArmorPayload.STREAM_CODEC, AstralArmorPayloadHandler.getInstance()::handleData);
+		registrar.playToServer(VoidArmorPayload.TYPE, VoidArmorPayload.STREAM_CODEC, VoidArmorPayloadHandler.getInstance()::handleData);
 		registrar.playToClient(AstralCrystalPayload.TYPE, AstralCrystalPayload.STREAM_CODEC, AstralCrystalPayloadHandler.getInstance()::handleData);
 		registrar.playToClient(BulletEntityDebugPayload.TYPE, BulletEntityDebugPayload.STREAM_CODEC, BulletEntityDebugPayloadHandler.getInstance()::handleData);
 		registrar.playToClient(SyncPlayerDataPayload.TYPE, SyncPlayerDataPayload.STREAM_CODEC, SyncPlayerDataPayloadHandler.getInstance()::handleData);

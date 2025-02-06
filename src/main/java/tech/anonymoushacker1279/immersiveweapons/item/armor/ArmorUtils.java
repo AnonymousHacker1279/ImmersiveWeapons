@@ -40,4 +40,11 @@ public class ArmorUtils {
 				livingEntity.getItemBySlot(EquipmentSlot.LEGS).getItem() == ItemRegistry.STARSTORM_LEGGINGS.get() &&
 				livingEntity.getItemBySlot(EquipmentSlot.FEET).getItem() == ItemRegistry.STARSTORM_BOOTS.get();
 	}
+
+	public static boolean isWearingVoidArmor(LivingEntity livingEntity) {
+		return livingEntity.getItemBySlot(EquipmentSlot.HEAD).getItem() == ItemRegistry.VOID_HELMET.get() &&
+				livingEntity.getItemBySlot(EquipmentSlot.CHEST).getItem() == ItemRegistry.VOID_CHESTPLATE.get() &&
+				livingEntity.getItemBySlot(EquipmentSlot.LEGS).getItem() == ItemRegistry.VOID_LEGGINGS.get() &&
+				livingEntity.getItemBySlot(EquipmentSlot.FEET).getItem() == ItemRegistry.VOID_BOOTS.get();
+	}
 }

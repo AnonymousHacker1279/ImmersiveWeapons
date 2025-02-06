@@ -43,6 +43,8 @@ public class AccessoryItemEffects {
 	public static final AccessoryEffectBuilder HANS_BLESSING = new AccessoryEffectBuilder()
 			.addEffect(AccessoryEffectTypeRegistry.DAMAGE_RESISTANCE.get(), 0.15d);
 	public static final AccessoryEffectBuilder CELESTIAL_SPIRIT = new AccessoryEffectBuilder();
+	public static final AccessoryEffectBuilder VOID_BLESSING = new AccessoryEffectBuilder()
+			.addObjectsFromBuilder(HANS_BLESSING);
 	public static final AccessoryEffectBuilder BLADEMASTER_EMBLEM = new AccessoryEffectBuilder()
 			.addEffect(AccessoryEffectTypeRegistry.MELEE_DAMAGE.get(), 0.1d)
 			.addEffect(AccessoryEffectTypeRegistry.MELEE_BLEED_CHANCE.get(), 0.3d);

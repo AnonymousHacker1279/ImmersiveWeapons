@@ -4,7 +4,9 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.armortrim.TrimMaterial;
 import net.minecraft.world.item.armortrim.TrimMaterials;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
@@ -67,6 +69,8 @@ public class ItemModelGenerator extends ItemModelProvider implements DataGenUtil
 				ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/custom/astral"));
 		pikeMaterialMap.put(ItemRegistry.STARSTORM_PIKE.get(),
 				ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/custom/starstorm"));
+		pikeMaterialMap.put(ItemRegistry.VOID_PIKE.get(),
+				ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/custom/void"));
 
 		// Make a map of gauntlets to material textures
 
@@ -96,6 +100,8 @@ public class ItemModelGenerator extends ItemModelProvider implements DataGenUtil
 				ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/custom/astral"));
 		gauntletMaterialMap.put(ItemRegistry.STARSTORM_GAUNTLET.get(),
 				ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/custom/starstorm"));
+		gauntletMaterialMap.put(ItemRegistry.VOID_GAUNTLET.get(),
+				ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/custom/void"));
 
 		// Make a list of trim materials
 		trimMaterials.add(TrimMaterials.QUARTZ);
@@ -359,10 +365,14 @@ public class ItemModelGenerator extends ItemModelProvider implements DataGenUtil
 				} else {
 					if (!isAtArmorItems) {
 						if (item instanceof BulletItem<?>) {
-							getBuilder(getItemLocation(item).getPath())
-									.parent(new ModelFile.UncheckedModelFile(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
-											"item/musket_ball")))
-									.texture("all", getItemLocation(item));
+							if (item == ItemRegistry.DRAGON_FIREBALL.get()) {
+								basicItem(item);
+							} else {
+								getBuilder(getItemLocation(item).getPath())
+										.parent(new ModelFile.UncheckedModelFile(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+												"item/musket_ball")))
+										.texture("all", getItemLocation(item));
+							}
 						} else {
 							basicItem(item);
 						}

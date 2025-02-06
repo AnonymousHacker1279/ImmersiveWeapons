@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "void",
+  "key": {
+    "a": {
+      "item": "immersiveweapons:starstorm_pickaxe"
+    },
+    "b": {
+      "item": "immersiveweapons:astral_pickaxe"
+    },
+    "c": {
+      "tag": "immersiveweapons:ingots/starstorm"
+    },
+    "d": {
+      "tag": "immersiveweapons:ingots/astral"
+    },
+    "e": {
+      "tag": "immersiveweapons:ingots/void"
+    }
+  },
+  "pattern": [
+    "ced",
+    "aeb",
+    "ced"
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:void_pickaxe"
+  }
+}

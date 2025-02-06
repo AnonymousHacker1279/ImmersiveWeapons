@@ -16,7 +16,7 @@ public class OreReplacementData {
 		public static final RuleTest REGULAR_STONE = new TagMatchTest(BlockTags.STONE_ORE_REPLACEABLES);
 		public static final RuleTest DEEPSLATE_STONE = new TagMatchTest(BlockTags.DEEPSLATE_ORE_REPLACEABLES);
 		public static final RuleTest NETHER_STONE = new TagMatchTest(Blocks.ORE_BEARING_GROUND_NETHERRACK);
-
+		public static final RuleTest END_STONE = new TagMatchTest(Blocks.END_STONES);
 	}
 
 	public static class OreReplacementTargets {
@@ -43,6 +43,10 @@ public class OreReplacementData {
 		public static final List<TargetBlockState> POTASSIUM_NITRATE_ORE_TARGETS = List.of(
 				OreConfiguration.target(ReplacementRules.REGULAR_STONE,
 						BlockRegistry.POTASSIUM_NITRATE_ORE.get().defaultBlockState())
+		);
+		public static final List<TargetBlockState> VOID_ORE_TARGETS = List.of(
+				OreConfiguration.target(ReplacementRules.END_STONE,
+						BlockRegistry.VOID_ORE.get().defaultBlockState())
 		);
 	}
 }

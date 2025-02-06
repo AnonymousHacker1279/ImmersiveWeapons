@@ -32,6 +32,7 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 		addCommonTags();
 		addImmersiveWeaponsTags();
 		addMinecraftTags();
+		addToolTags();
 		addMiningBlockTags();
 	}
 
@@ -65,9 +66,17 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 				BlockRegistry.SULFUR_ORE.get(),
 				BlockRegistry.DEEPSLATE_SULFUR_ORE.get(),
 				BlockRegistry.NETHER_SULFUR_ORE.get());
+		tag(CommonBlockTagGroups.POTASSIUM_NITRATE_ORES).add(
+				BlockRegistry.POTASSIUM_NITRATE_ORE.get());
 		tag(Blocks.ORES).addTags(
 				CommonBlockTagGroups.COBALT_ORES,
-				CommonBlockTagGroups.SULFUR_ORES);
+				CommonBlockTagGroups.SULFUR_ORES,
+				CommonBlockTagGroups.POTASSIUM_NITRATE_ORES,
+				IWBlockTagGroups.ELECTRIC_ORES,
+				IWBlockTagGroups.MOLTEN_ORES,
+				IWBlockTagGroups.VENTUS_ORES,
+				IWBlockTagGroups.ASTRAL_ORES,
+				IWBlockTagGroups.VOID_ORES);
 	}
 
 	/**
@@ -88,26 +97,16 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 				BlockRegistry.STRIPPED_STARDUST_LOG.get(),
 				BlockRegistry.STRIPPED_STARDUST_WOOD.get());
 
-		// Tool tags
-		tag(IWBlockTagGroups.INCORRECT_FOR_COPPER_TOOL)
-				.addTag(BlockTags.NEEDS_DIAMOND_TOOL)
-				.addTag(Blocks.NEEDS_NETHERITE_TOOL)
-				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL);
-		tag(IWBlockTagGroups.INCORRECT_FOR_COBALT_TOOL)
-				.addTag(BlockTags.NEEDS_DIAMOND_TOOL)
-				.addTag(Blocks.NEEDS_NETHERITE_TOOL)
-				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL);
-		tag(IWBlockTagGroups.INCORRECT_FOR_MOLTEN_TOOL)
-				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL);
-		tag(IWBlockTagGroups.INCORRECT_FOR_TESLA_TOOL)
-				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL);
-		tag(IWBlockTagGroups.INCORRECT_FOR_VENTUS_TOOL)
-				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL);
-		tag(IWBlockTagGroups.INCORRECT_FOR_STARSTORM_TOOL);
-		tag(IWBlockTagGroups.INCORRECT_FOR_ASTRAL_TOOL);
-		tag(IWBlockTagGroups.INCORRECT_FOR_HANSIUM_TOOL);
-
-		tag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL);
+		tag(IWBlockTagGroups.ELECTRIC_ORES).add(
+				BlockRegistry.ELECTRIC_ORE.get());
+		tag(IWBlockTagGroups.MOLTEN_ORES).add(
+				BlockRegistry.MOLTEN_ORE.get());
+		tag(IWBlockTagGroups.VENTUS_ORES).add(
+				BlockRegistry.VENTUS_ORE.get());
+		tag(IWBlockTagGroups.ASTRAL_ORES).add(
+				BlockRegistry.ASTRAL_ORE.get());
+		tag(IWBlockTagGroups.VOID_ORES).add(
+				BlockRegistry.VOID_ORE.get());
 	}
 
 	/**
@@ -209,24 +208,58 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 		// Smelts-to-glass tag
 		tag(BlockTags.SMELTS_TO_GLASS).add(BlockRegistry.BLOOD_SAND.get());
 
-		// Incorrect for X tool tags
+
+	}
+
+	private void addToolTags() {
 		tag(BlockTags.INCORRECT_FOR_WOODEN_TOOL)
-				.addTag(Blocks.NEEDS_NETHERITE_TOOL)
-				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL);
+				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL)
+				.addTag(IWBlockTagGroups.NEEDS_VOID_TOOL);
 		tag(BlockTags.INCORRECT_FOR_STONE_TOOL)
-				.addTag(Blocks.NEEDS_NETHERITE_TOOL)
-				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL);
+				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL)
+				.addTag(IWBlockTagGroups.NEEDS_VOID_TOOL);
 		tag(BlockTags.INCORRECT_FOR_GOLD_TOOL)
+				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL)
+				.addTag(IWBlockTagGroups.NEEDS_VOID_TOOL);
+		tag(IWBlockTagGroups.INCORRECT_FOR_COPPER_TOOL)
+				.addTag(BlockTags.NEEDS_DIAMOND_TOOL)
 				.addTag(Blocks.NEEDS_NETHERITE_TOOL)
-				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL);
+				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL)
+				.addTag(IWBlockTagGroups.NEEDS_VOID_TOOL);
 		tag(BlockTags.INCORRECT_FOR_IRON_TOOL)
+				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL)
+				.addTag(IWBlockTagGroups.NEEDS_VOID_TOOL);
+		tag(IWBlockTagGroups.INCORRECT_FOR_COBALT_TOOL)
+				.addTag(BlockTags.NEEDS_DIAMOND_TOOL)
 				.addTag(Blocks.NEEDS_NETHERITE_TOOL)
-				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL);
+				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL)
+				.addTag(IWBlockTagGroups.NEEDS_VOID_TOOL);
 		tag(BlockTags.INCORRECT_FOR_DIAMOND_TOOL)
-				.addTag(Blocks.NEEDS_NETHERITE_TOOL)
-				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL);
+				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL)
+				.addTag(IWBlockTagGroups.NEEDS_VOID_TOOL);
 		tag(BlockTags.INCORRECT_FOR_NETHERITE_TOOL)
-				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL);
+				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL)
+				.addTag(IWBlockTagGroups.NEEDS_VOID_TOOL);
+		tag(IWBlockTagGroups.INCORRECT_FOR_MOLTEN_TOOL)
+				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL)
+				.addTag(IWBlockTagGroups.NEEDS_VOID_TOOL);
+		tag(IWBlockTagGroups.INCORRECT_FOR_TESLA_TOOL)
+				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL)
+				.addTag(IWBlockTagGroups.NEEDS_VOID_TOOL);
+		tag(IWBlockTagGroups.INCORRECT_FOR_VENTUS_TOOL)
+				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL)
+				.addTag(IWBlockTagGroups.NEEDS_VOID_TOOL);
+		tag(IWBlockTagGroups.INCORRECT_FOR_STARSTORM_TOOL)
+				.addTag(IWBlockTagGroups.NEEDS_VOID_TOOL);
+		tag(IWBlockTagGroups.INCORRECT_FOR_ASTRAL_TOOL)
+				.addTag(IWBlockTagGroups.NEEDS_VOID_TOOL);
+		tag(IWBlockTagGroups.INCORRECT_FOR_VOID_TOOL)
+				.addTag(IWBlockTagGroups.NEEDS_HANSIUM_TOOL);
+		tag(IWBlockTagGroups.INCORRECT_FOR_HANSIUM_TOOL);
+
+		tag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL);
+		tag(IWBlockTagGroups.NEEDS_VOID_TOOL);
+		tag(IWBlockTagGroups.NEEDS_HANSIUM_TOOL);
 	}
 
 	/**
@@ -265,6 +298,8 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 				tier = 3;
 			} else if (block == BlockRegistry.ASTRAL_ORE.get()) {
 				tier = 4;
+			} else if (block == BlockRegistry.VOID_ORE.get()) {
+				tier = 5;
 			}
 
 			if (tagStage != 4) {
@@ -281,6 +316,7 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 					case 2 -> tag(BlockTags.NEEDS_IRON_TOOL).add(block);
 					case 3 -> tag(BlockTags.NEEDS_DIAMOND_TOOL).add(block);
 					case 4 -> tag(Blocks.NEEDS_NETHERITE_TOOL).add(block);
+					case 5 -> tag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL).add(block);
 					default -> tag(BlockTags.NEEDS_STONE_TOOL).add(block);
 				}
 			}

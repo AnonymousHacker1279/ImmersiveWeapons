@@ -10,12 +10,16 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
@@ -26,6 +30,7 @@ import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.data.IWEnchantments;
+import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
 import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryManager;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
@@ -48,9 +53,10 @@ public abstract class AbstractGunItem extends Item {
 			.synced(FlammablePowder.CODEC, true)
 			.build();
 
-	protected static final Predicate<ItemStack> MUSKET_BALLS = (stack) -> stack.is(ItemTags.create(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "projectiles/musket_balls")));
-	protected static final Predicate<ItemStack> FLARES = (stack) -> stack.is(ItemTags.create(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "projectiles/flares")));
-	protected static final Predicate<ItemStack> CANNONBALLS = (stack) -> stack.is(ItemTags.create(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "projectiles/cannonballs")));
+	protected static final Predicate<ItemStack> MUSKET_BALLS = (stack) -> stack.is(IWItemTagGroups.MUSKET_BALLS);
+	protected static final Predicate<ItemStack> FLARES = (stack) -> stack.is(IWItemTagGroups.FLARES);
+	protected static final Predicate<ItemStack> CANNONBALLS = (stack) -> stack.is(IWItemTagGroups.CANNONBALLS);
+	protected static final Predicate<ItemStack> DRAGON_FIREBALLS = (stack) -> stack.is(IWItemTagGroups.DRAGON_FIREBALLS);
 	protected static final Predicate<ItemStack> FLAMMABLE_POWDERS = (stack) -> stack.getItemHolder().getData(POWDER_TYPE) != null;
 
 	final DataComponentType<Float> DENSITY_MODIFIER = DataComponentTypeRegistry.DENSITY_MODIFIER.get();
@@ -134,8 +140,10 @@ public abstract class AbstractGunItem extends Item {
 							bulletEntity = bulletItem.createBullet(level, player, gun);
 						} else if (FLARES.test(ammo)) {
 							bulletEntity = bulletItem.createFlare(level, player, gun);
-						} else {
+						} else if (CANNONBALLS.test(ammo)) {
 							bulletEntity = bulletItem.createCannonball(level, player, gun);
+						} else {
+							bulletEntity = bulletItem.createDragonFireball(level, player, gun);
 						}
 
 						setupFire(player, bulletEntity, gun, ammo, powder);

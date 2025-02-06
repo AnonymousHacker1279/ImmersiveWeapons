@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "immersiveweapons:void_leggings"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "void_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#immersiveweapons:ingots/void"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "void_ingot"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:void_leggings"
+    ]
+  }
+}

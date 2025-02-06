@@ -2,8 +2,11 @@ package tech.anonymoushacker1279.immersiveweapons.data.advancements;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.Advancement.Builder;
-import net.minecraft.advancements.*;
+import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementRequirements.Strategy;
+import net.minecraft.advancements.AdvancementRewards;
+import net.minecraft.advancements.AdvancementType;
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup.Provider;
@@ -24,7 +27,10 @@ import tech.anonymoushacker1279.immersiveweapons.advancement.EntityDiscoveredTri
 import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
 import tech.anonymoushacker1279.immersiveweapons.data.dimensions.DimensionGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWItemTagGroups;
-import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
 import java.util.function.Consumer;
 
@@ -614,6 +620,116 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 								ItemRegistry.STARSTORM_BOOTS.get()))
 				.rewards(AdvancementRewards.Builder.experience(100))
 				.save(consumer, prefixString("starstorm_armor"));
+
+		AdvancementHolder obtainEnderEssence = Builder.advancement().parent(root)
+				.display(ItemRegistry.ENDER_ESSENCE.get(),
+						createTitle("ender_essence"),
+						createDescription("ender_essence"),
+						null, AdvancementType.TASK, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.ENDER_ESSENCE.get()))
+				.save(consumer, prefixString("ender_essence"));
+
+		AdvancementHolder obtainVoidIngot = Builder.advancement().parent(obtainEnderEssence)
+				.display(ItemRegistry.VOID_INGOT.get(),
+						createTitle("void_ingot"),
+						createDescription("void_ingot"),
+						null, AdvancementType.TASK, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VOID_INGOT.get()))
+				.save(consumer, prefixString("void_ingot"));
+
+		Builder.advancement().parent(obtainVoidIngot)
+				.display(ItemRegistry.VOID_SWORD.get(),
+						createTitle("void_sword"),
+						createDescription("void_sword"),
+						null, AdvancementType.TASK, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VOID_SWORD.get()))
+				.rewards(AdvancementRewards.Builder.experience(50))
+				.save(consumer, prefixString("void_sword"));
+
+		Builder.advancement().parent(obtainVoidIngot)
+				.display(ItemRegistry.VOID_PICKAXE.get(),
+						createTitle("void_pickaxe"),
+						createDescription("void_pickaxe"),
+						null, AdvancementType.TASK, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VOID_PICKAXE.get()))
+				.rewards(AdvancementRewards.Builder.experience(50))
+				.save(consumer, prefixString("void_pickaxe"));
+
+		Builder.advancement().parent(obtainVoidIngot)
+				.display(ItemRegistry.VOID_AXE.get(),
+						createTitle("void_axe"),
+						createDescription("void_axe"),
+						null, AdvancementType.TASK, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VOID_AXE.get()))
+				.rewards(AdvancementRewards.Builder.experience(50))
+				.save(consumer, prefixString("void_axe"));
+
+		Builder.advancement().parent(obtainVoidIngot)
+				.display(ItemRegistry.VOID_SHOVEL.get(),
+						createTitle("void_shovel"),
+						createDescription("void_shovel"),
+						null, AdvancementType.TASK, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VOID_SHOVEL.get()))
+				.rewards(AdvancementRewards.Builder.experience(50))
+				.save(consumer, prefixString("void_shovel"));
+
+		Builder.advancement().parent(obtainVoidIngot)
+				.display(ItemRegistry.VOID_HOE.get(),
+						createTitle("void_hoe"),
+						createDescription("void_hoe"),
+						null, AdvancementType.CHALLENGE, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VOID_HOE.get()))
+				.rewards(AdvancementRewards.Builder.experience(75))
+				.save(consumer, prefixString("void_hoe"));
+
+		Builder.advancement().parent(obtainVoidIngot)
+				.display(ItemRegistry.VOID_HELMET.get(),
+						createTitle("void_armor"),
+						createDescription("void_armor"),
+						null, AdvancementType.GOAL, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VOID_HELMET.get(),
+								ItemRegistry.VOID_CHESTPLATE.get(), ItemRegistry.VOID_LEGGINGS.get(),
+								ItemRegistry.VOID_BOOTS.get()))
+				.rewards(AdvancementRewards.Builder.experience(100))
+				.save(consumer, prefixString("void_armor"));
+
+		Builder.advancement().parent(obtainVoidIngot)
+				.display(ItemRegistry.DRAGONS_BREATH_CANNON.get(),
+						createTitle("dragons_breath_cannon"),
+						createDescription("dragons_breath_cannon"),
+						null, AdvancementType.CHALLENGE, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.DRAGONS_BREATH_CANNON.get()))
+				.rewards(AdvancementRewards.Builder.experience(125))
+				.save(consumer, prefixString("dragons_breath_cannon"));
+
+		AdvancementHolder obtainTeleporter = Builder.advancement().parent(obtainVoidIngot)
+				.display(BlockItemRegistry.TELEPORTER_ITEM.get(),
+						createTitle("teleporter"),
+						createDescription("teleporter"),
+						null, AdvancementType.GOAL, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(BlockItemRegistry.TELEPORTER_ITEM.get()))
+				.rewards(AdvancementRewards.Builder.experience(100))
+				.save(consumer, prefixString("teleporter"));
+
+		Builder.advancement().parent(obtainTeleporter)
+				.display(ItemRegistry.MOLDY_BREAD.get(),
+						createTitle("moldy_bread"),
+						createDescription("moldy_bread"),
+						null, AdvancementType.CHALLENGE, true, true, true)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLDY_BREAD.get()))
+				.rewards(AdvancementRewards.Builder.experience(150))
+				.save(consumer, prefixString("moldy_bread"));
 
 		// Padded Leather advancements
 		Builder.advancement().parent(root)

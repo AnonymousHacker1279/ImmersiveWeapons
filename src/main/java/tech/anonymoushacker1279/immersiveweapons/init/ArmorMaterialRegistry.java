@@ -6,8 +6,10 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ArmorMaterial.Layer;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -135,6 +137,20 @@ public class ArmorMaterialRegistry {
 			0.0F,
 			0.0F
 	));
+
+	public static final DeferredHolder<ArmorMaterial, ArmorMaterial> VOID = register("void",
+			Util.make(new EnumMap<>(ArmorItem.Type.class), (map) -> {
+				map.put(ArmorItem.Type.BOOTS, 6);
+				map.put(ArmorItem.Type.LEGGINGS, 7);
+				map.put(ArmorItem.Type.CHESTPLATE, 10);
+				map.put(ArmorItem.Type.HELMET, 6);
+			}),
+			24,
+			SoundEventRegistry.VOID_ARMOR_EQUIP,
+			() -> Ingredient.of(ItemRegistry.VOID_INGOT.get()),
+			2.3F,
+			0.01F
+	);
 
 	private static DeferredHolder<ArmorMaterial, ArmorMaterial> register(String name, EnumMap<ArmorItem.Type, Integer> defense, int enchantmentValue, Holder<SoundEvent> equipSound, Supplier<Ingredient> repairIngredients, float toughness, float knockbackResistance) {
 		List<Layer> armorLayers = List.of(new Layer(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, name)));

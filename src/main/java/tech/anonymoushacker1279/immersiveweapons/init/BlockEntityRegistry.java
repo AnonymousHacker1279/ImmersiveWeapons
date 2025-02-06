@@ -34,6 +34,7 @@ public class BlockEntityRegistry {
 	public static final Supplier<BlockEntityType<AmmunitionTableBlockEntity>> AMMUNITION_TABLE_BLOCK_ENTITY = BLOCK_ENTITIES.register("ammunition_table", () -> new BlockEntityType<>(AmmunitionTableBlockEntity::new, Sets.newHashSet(BlockRegistry.AMMUNITION_TABLE.get()), null));
 	public static final Supplier<BlockEntityType<StarForgeBlockEntity>> STAR_FORGE_BLOCK_ENTITY = BLOCK_ENTITIES.register("star_forge", () -> new BlockEntityType<>(StarForgeBlockEntity::new, Sets.newHashSet(BlockRegistry.STAR_FORGE_CONTROLLER.get()), null));
 	public static final Supplier<BlockEntityType<CommanderPedestalBlockEntity>> COMMANDER_PEDESTAL_BLOCK_ENTITY = BLOCK_ENTITIES.register("commander_pedestal", () -> new BlockEntityType<>(CommanderPedestalBlockEntity::new, Sets.newHashSet(BlockRegistry.COMMANDER_PEDESTAL.get()), null));
+	public static final Supplier<BlockEntityType<TeleporterBlockEntity>> TELEPORTER_BLOCK_ENTITY = BLOCK_ENTITIES.register("teleporter", () -> new BlockEntityType<>(TeleporterBlockEntity::new, Sets.newHashSet(BlockRegistry.TELEPORTER.get()), null));
 
 	private static Block[] getSkullBlocks() {
 		return BlockRegistry.BLOCKS.getEntries().stream()
