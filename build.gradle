@@ -41,8 +41,8 @@ repositories {
 		}
 	}
 	maven {
-		name = "TerraformersMC"
-		url = "https://maven.terraformersmc.com/"
+		name "Forge"
+		url "https://maven.minecraftforge.net/"
 	}
 }
 
@@ -139,9 +139,9 @@ dependencies {
 
 	implementation "net.neoforged:neoforge:${neoforge_version}"
 
-	implementation(jarJar("com.terraformersmc:biolith-neoforge:[${biolith}]")) {
+	implementation(jarJar("com.github.glitchfiend:TerraBlender-neoforge:[${terrablender_version}]")) {
 		version {
-			prefer biolith
+			prefer terrablender_version
 		}
 	}
 
