@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.world.phys.AABB;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.client.TooltipHandler;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.entity.vehicle.CustomBoatType;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
@@ -40,6 +41,9 @@ public class PostSetupHandler {
 				.postSetup(EntityRegistry.STARDUST_BOAT_ENTITY.get(), CustomBoatType.STARDUST);
 		ItemRegistry.STARDUST_CHEST_BOAT.get()
 				.postSetup(EntityRegistry.STARDUST_CHEST_BOAT_ENTITY.get(), CustomBoatType.STARDUST_CHEST);
+
+		// Compile simple tooltips
+		TooltipHandler.compileTooltips();
 
 		// Initialize custom portals
 		CustomPortalBuilder.beginPortal()
