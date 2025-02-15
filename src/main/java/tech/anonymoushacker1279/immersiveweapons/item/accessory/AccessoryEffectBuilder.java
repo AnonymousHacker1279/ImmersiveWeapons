@@ -6,9 +6,14 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import tech.anonymoushacker1279.immersiveweapons.init.AccessoryEffectScalingTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.AccessoryEffectTypeRegistry;
-import tech.anonymoushacker1279.immersiveweapons.item.accessory.scaling.*;
+import tech.anonymoushacker1279.immersiveweapons.item.accessory.scaling.AccessoryEffectScalingType;
+import tech.anonymoushacker1279.immersiveweapons.item.accessory.scaling.AttributeOperation;
+import tech.anonymoushacker1279.immersiveweapons.item.accessory.scaling.DynamicAttributeOperationInstance;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Builder for creating accessory effects.
@@ -16,7 +21,7 @@ import java.util.*;
 public class AccessoryEffectBuilder {
 
 	private final List<AccessoryEffectInstance> effects = new ArrayList<>(5);
-	private Map<String, AccessoryEffectScalingType> effectScalingTypes = new HashMap<>(5);
+	private final Map<String, AccessoryEffectScalingType> effectScalingTypes = new HashMap<>(5);
 	private final List<AttributeOperation> attributeModifiers = new ArrayList<>(5);
 	private final List<DynamicAttributeOperationInstance> dynamicAttributeModifiers = new ArrayList<>(5);
 	private final List<MobEffectInstance> mobEffects = new ArrayList<>(5);
@@ -35,8 +40,8 @@ public class AccessoryEffectBuilder {
 	}
 
 	/**
-	 * Add an effect to the accessory. See {@link AccessoryEffectTypeRegistry} for a list of available effects.
-	 * Accepts a scaling type, which will be used to scale the effect value based player conditions.
+	 * Add an effect to the accessory. See {@link AccessoryEffectTypeRegistry} for a list of available effects. Accepts
+	 * a scaling type, which will be used to scale the effect value based player conditions.
 	 *
 	 * @param type        the <code>AccessoryEffectType</code>
 	 * @param value       the value of the effect
@@ -62,8 +67,8 @@ public class AccessoryEffectBuilder {
 	}
 
 	/**
-	 * Add a dynamic attribute modifier to the accessory. These are reconstructed as necessary to achieve the
-	 * target value.
+	 * Add a dynamic attribute modifier to the accessory. These are reconstructed as necessary to achieve the target
+	 * value.
 	 *
 	 * @param modifier    the <code>AttributeModifier</code>
 	 * @param attribute   the <code>Attribute</code>
