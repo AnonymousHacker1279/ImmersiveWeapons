@@ -1,6 +1,9 @@
 package tech.anonymoushacker1279.immersiveweapons.util.markers;
 
-import java.lang.annotation.*;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
@@ -21,8 +24,8 @@ public @interface TextureMetadataMarker {
 	int[] frames() default {};
 
 	/**
-	 * For specific groups that all share the same properties, an {@link PredefinedGroups}
-	 * enum can be provided instead of manually defining all the properties multiple times.
+	 * For specific groups that all share the same properties, a {@link PredefinedGroups} enum can be provided instead
+	 * of manually defining all the properties multiple times.
 	 */
 	PredefinedGroups predefinedGroup() default PredefinedGroups.NONE;
 

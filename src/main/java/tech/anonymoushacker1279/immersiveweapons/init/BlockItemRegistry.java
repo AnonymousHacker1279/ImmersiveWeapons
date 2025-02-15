@@ -1,11 +1,13 @@
 package tech.anonymoushacker1279.immersiveweapons.init;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.HangingSignItem;
 import net.minecraft.world.item.Item.Properties;
 import net.minecraft.world.item.SignItem;
 import net.minecraft.world.item.StandingAndWallBlockItem;
+import tech.anonymoushacker1279.immersiveweapons.util.markers.TooltipMarker;
 
 import java.util.function.Supplier;
 
@@ -36,6 +38,7 @@ public class BlockItemRegistry {
 	public static final Supplier<BlockItem> RUSTED_IRON_BLOCK_ITEM = ItemRegistry.ITEMS.register("rusted_iron_block", () -> new BlockItem(BlockRegistry.RUSTED_IRON_BLOCK.get(), new Properties()));
 	public static final Supplier<BlockItem> SMALL_PARTS_TABLE_ITEM = ItemRegistry.ITEMS.register("small_parts_table", () -> new BlockItem(BlockRegistry.SMALL_PARTS_TABLE.get(), new Properties()));
 	public static final Supplier<BlockItem> AMMUNITION_TABLE_ITEM = ItemRegistry.ITEMS.register("ammunition_table", () -> new BlockItem(BlockRegistry.AMMUNITION_TABLE.get(), new Properties()));
+	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC})
 	public static final Supplier<BlockItem> BARREL_TAP_ITEM = ItemRegistry.ITEMS.register("barrel_tap", () -> new BlockItem(BlockRegistry.BARREL_TAP.get(), new Properties()));
 	public static final Supplier<BlockItem> STAR_FORGE_CONTROLLER_ITEM = ItemRegistry.ITEMS.register("star_forge_controller", () -> new BlockItem(BlockRegistry.STAR_FORGE_CONTROLLER.get(), new Properties()));
 	public static final Supplier<BlockItem> STAR_FORGE_BRICKS_ITEM = ItemRegistry.ITEMS.register("star_forge_bricks", () -> new BlockItem(BlockRegistry.STAR_FORGE_BRICKS.get(), new Properties()));
@@ -58,18 +61,26 @@ public class BlockItemRegistry {
 	public static final Supplier<BlockItem> BROWN_STAINED_BULLETPROOF_GLASS_ITEM = ItemRegistry.ITEMS.register("brown_stained_bulletproof_glass", () -> new BlockItem(BlockRegistry.BROWN_STAINED_BULLETPROOF_GLASS.get(), new Properties()));
 	public static final Supplier<BlockItem> GREEN_STAINED_BULLETPROOF_GLASS_ITEM = ItemRegistry.ITEMS.register("green_stained_bulletproof_glass", () -> new BlockItem(BlockRegistry.GREEN_STAINED_BULLETPROOF_GLASS.get(), new Properties()));
 	public static final Supplier<BlockItem> RED_STAINED_BULLETPROOF_GLASS_ITEM = ItemRegistry.ITEMS.register("red_stained_bulletproof_glass", () -> new BlockItem(BlockRegistry.RED_STAINED_BULLETPROOF_GLASS.get(), new Properties()));
+	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC})
 	public static final Supplier<BlockItem> PUNJI_STICKS_ITEM = ItemRegistry.ITEMS.register("punji_sticks", () -> new BlockItem(BlockRegistry.PUNJI_STICKS.get(), new Properties()));
+	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC})
 	public static final Supplier<BlockItem> PITFALL_ITEM = ItemRegistry.ITEMS.register("pitfall", () -> new BlockItem(BlockRegistry.PITFALL.get(), new Properties()));
+	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC})
 	public static final Supplier<BlockItem> BEAR_TRAP_ITEM = ItemRegistry.ITEMS.register("bear_trap", () -> new BlockItem(BlockRegistry.BEAR_TRAP.get(), new Properties()));
 	public static final Supplier<BlockItem> BARBED_WIRE_ITEM = ItemRegistry.ITEMS.register("barbed_wire", () -> new BlockItem(BlockRegistry.BARBED_WIRE.get(), new Properties()));
+	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC})
 	public static final Supplier<BlockItem> LANDMINE_ITEM = ItemRegistry.ITEMS.register("landmine", () -> new BlockItem(BlockRegistry.LANDMINE.get(), new Properties()));
+	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC})
 	public static final Supplier<BlockItem> SPIKE_TRAP_ITEM = ItemRegistry.ITEMS.register("spike_trap", () -> new BlockItem(BlockRegistry.SPIKE_TRAP.get(), new Properties()));
 	public static final Supplier<BlockItem> SANDBAG_ITEM = ItemRegistry.ITEMS.register("sandbag", () -> new BlockItem(BlockRegistry.SANDBAG.get(), new Properties()));
 	public static final Supplier<BlockItem> IRON_PANEL_ITEM = ItemRegistry.ITEMS.register("iron_panel", () -> new BlockItem(BlockRegistry.IRON_PANEL.get(), new Properties()));
 	public static final Supplier<BlockItem> IRON_PANEL_BARS_ITEM = ItemRegistry.ITEMS.register("iron_panel_bars", () -> new BlockItem(BlockRegistry.IRON_PANEL_BARS.get(), new Properties()));
+	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC})
 	public static final Supplier<BlockItem> SPOTLIGHT_ITEM = ItemRegistry.ITEMS.register("spotlight", () -> new BlockItem(BlockRegistry.SPOTLIGHT.get(), new Properties()));
+	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC})
 	public static final Supplier<BlockItem> MORTAR_ITEM = ItemRegistry.ITEMS.register("mortar", () -> new BlockItem(BlockRegistry.MORTAR.get(), new Properties()));
 	public static final Supplier<BlockItem> WALL_SHELF_ITEM = ItemRegistry.ITEMS.register("wall_shelf", () -> new BlockItem(BlockRegistry.WALL_SHELF.get(), new Properties()));
+	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC})
 	public static final Supplier<BlockItem> PANIC_ALARM_ITEM = ItemRegistry.ITEMS.register("panic_alarm", () -> new BlockItem(BlockRegistry.PANIC_ALARM.get(), new Properties()));
 	public static final Supplier<BlockItem> OAK_TABLE_ITEM = ItemRegistry.ITEMS.register("oak_table", () -> new BlockItem(BlockRegistry.OAK_TABLE.get(), new Properties()));
 	public static final Supplier<BlockItem> SPRUCE_TABLE_ITEM = ItemRegistry.ITEMS.register("spruce_table", () -> new BlockItem(BlockRegistry.SPRUCE_TABLE.get(), new Properties()));
@@ -86,11 +97,15 @@ public class BlockItemRegistry {
 	public static final Supplier<BlockItem> STARDUST_TABLE_ITEM = ItemRegistry.ITEMS.register("stardust_table", () -> new BlockItem(BlockRegistry.STARDUST_TABLE.get(), new Properties()));
 	public static final Supplier<BlockItem> CAMP_CHAIR_ITEM = ItemRegistry.ITEMS.register("camp_chair", () -> new BlockItem(BlockRegistry.CAMP_CHAIR.get(), new Properties()));
 	public static final Supplier<BlockItem> BARBED_WIRE_FENCE_ITEM = ItemRegistry.ITEMS.register("barbed_wire_fence", () -> new BlockItem(BlockRegistry.BARBED_WIRE_FENCE.get(), new Properties()));
+	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC})
 	public static final Supplier<BlockItem> WOODEN_SPIKES_ITEM = ItemRegistry.ITEMS.register("wooden_spikes", () -> new BlockItem(BlockRegistry.WOODEN_SPIKES.get(), new Properties()));
 	public static final Supplier<BlockItem> BIOHAZARD_BOX_ITEM = ItemRegistry.ITEMS.register("biohazard_box", () -> new BlockItem(BlockRegistry.BIOHAZARD_BOX.get(), new Properties()));
+	@TooltipMarker(style = {ChatFormatting.GREEN, ChatFormatting.ITALIC})
 	public static final Supplier<BlockItem> MINUTEMAN_STATUE_ITEM = ItemRegistry.ITEMS.register("minuteman_statue", () -> new BlockItem(BlockRegistry.MINUTEMAN_STATUE.get(), new Properties()));
+	@TooltipMarker(style = {ChatFormatting.GREEN, ChatFormatting.ITALIC})
 	public static final Supplier<BlockItem> MEDIC_STATUE_ITEM = ItemRegistry.ITEMS.register("medic_statue", () -> new BlockItem(BlockRegistry.MEDIC_STATUE.get(), new Properties()));
 	public static final Supplier<BlockItem> TESLA_SYNTHESIZER_ITEM = ItemRegistry.ITEMS.register("tesla_synthesizer", () -> new BlockItem(BlockRegistry.TESLA_SYNTHESIZER.get(), new Properties()));
+	@TooltipMarker(style = {ChatFormatting.LIGHT_PURPLE, ChatFormatting.ITALIC})
 	public static final Supplier<BlockItem> TELEPORTER_ITEM = ItemRegistry.ITEMS.register("teleporter", () -> new BlockItem(BlockRegistry.TELEPORTER.get(), new Properties()));
 	public static final Supplier<BlockItem> CLOUD_ITEM = ItemRegistry.ITEMS.register("cloud", () -> new BlockItem(BlockRegistry.CLOUD.get(), new Properties()));
 	public static final Supplier<BlockItem> CLOUD_MARBLE_ITEM = ItemRegistry.ITEMS.register("cloud_marble", () -> new BlockItem(BlockRegistry.CLOUD_MARBLE.get(), new Properties()));

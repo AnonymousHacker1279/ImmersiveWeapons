@@ -32,9 +32,9 @@ ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.immersiveweapons]]
-modId = "biolith"
+modId = "terrablender"
 type = "required"
-versionRange = "[3.0.0,)"
+versionRange = "[4.1.0.0,)"
 ordering = "NONE"
 side = "BOTH"
 

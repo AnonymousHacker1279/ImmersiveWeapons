@@ -490,21 +490,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("wooden_spikes", "Poor man's barbed wire");
 
 		// Gauntlets
-		addTooltip("gauntlet", "Beat the life out of your opponents.");
-		addTooltip("wooden_gauntlet", "Has a 15% chance to inflict Bleeding.");
-		addTooltip("stone_gauntlet", "Has a 25% chance to inflict Bleeding.");
-		addTooltip("golden_gauntlet", "Has a 35% chance to inflict Bleeding.");
-		addTooltip("copper_gauntlet", "Has a 45% chance to inflict Bleeding.");
-		addTooltip("iron_gauntlet", "Has a 55% chance to inflict Bleeding.");
-		addTooltip("cobalt_gauntlet", "Has a 60% chance to inflict Bleeding.");
-		addTooltip("diamond_gauntlet", "Has a 75% chance to inflict Bleeding.");
-		addTooltip("netherite_gauntlet", "Has an 85% chance to inflict Bleeding.");
-		addTooltip("molten_gauntlet", "Has a 95% chance to inflict Bleeding.");
-		addTooltip("tesla_gauntlet", "Has a 95% chance to inflict Bleeding.");
-		addTooltip("ventus_gauntlet", "Has a 95% chance to inflict Bleeding.");
-		addTooltip("astral_gauntlet", "Has a 95% chance to inflict Bleeding.");
-		addTooltip("starstorm_gauntlet", "Has a 95% chance to inflict Bleeding.");
-		addTooltip("void_gauntlet", "Has a 95% chance to inflict Bleeding.");
+		addTooltip("gauntlet_1", "Beat the life out of your opponents.");
+		addTooltip("gauntlet_2", "Has a %s%% chance to inflict Bleeding (%s).");
 
 		// Staffs
 		addTooltip("ventus_staff", "Teach your enemies the importance of personal space");
