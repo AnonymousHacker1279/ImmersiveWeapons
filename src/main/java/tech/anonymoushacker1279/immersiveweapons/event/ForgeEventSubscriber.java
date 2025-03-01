@@ -306,7 +306,6 @@ public class ForgeEventSubscriber {
 				player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1.0f, 1.0f);
 			}
 
-
 			if (player instanceof ServerPlayer serverPlayer && serverPlayer.getServer() != null) {
 				// If over 175 damage was dealt, add an advancement
 				if (event.getNewDamage() >= 175.0f) {
