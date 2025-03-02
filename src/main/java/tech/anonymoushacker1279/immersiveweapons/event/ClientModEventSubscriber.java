@@ -284,6 +284,7 @@ public class ClientModEventSubscriber {
 		event.registerLayerDefinition(FireflyModel.LAYER_LOCATION, FireflyModel::createBodyLayer);
 		event.registerLayerDefinition(MeteorModel.LAYER_LOCATION, MeteorModel::createBodyLayer);
 		event.registerLayerDefinition(MusketBallModel.LAYER_LOCATION, MusketBallModel::createBodyLayer);
+		event.registerLayerDefinition(CannonballModel.LAYER_LOCATION, CannonballModel::createBodyLayer);
 		event.registerLayerDefinition(EvilEyeModel.LAYER_LOCATION, EvilEyeModel::createBodyLayer);
 		event.registerLayerDefinition(SkeletonMerchantModel.LAYER_LOCATION, SkeletonMerchantModel::createBodyLayer);
 		event.registerLayerDefinition(ModelLayerLocations.MINUTEMAN_HEAD_LAYER, SkullModel::createHumanoidHeadLayer);
