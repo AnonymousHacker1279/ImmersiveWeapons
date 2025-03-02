@@ -23,6 +23,12 @@ public class MusketBallRenderer<T extends BulletEntity> extends EntityRenderer<T
 		model = new MusketBallModel<>(context.bakeLayer(MusketBallModel.LAYER_LOCATION));
 	}
 
+	public MusketBallRenderer(EntityRendererProvider.Context context, ResourceLocation location) {
+		super(context);
+		textureLocation = location;
+		model = new MusketBallModel<>(context.bakeLayer(MusketBallModel.LAYER_LOCATION));
+	}
+
 	@Override
 	public void render(BulletEntity entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int light) {
 		poseStack.pushPose();

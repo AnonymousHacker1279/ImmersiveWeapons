@@ -220,7 +220,8 @@ public class ClientModEventSubscriber {
 		event.registerEntityRenderer(EntityRegistry.STARSTORM_MUSKET_BALL_ENTITY.get(), context -> new MusketBallRenderer<>(context, "starstorm"));
 		event.registerEntityRenderer(EntityRegistry.VOID_MUSKET_BALL_ENTITY.get(), context -> new MusketBallRenderer<>(context, "void"));
 
-		event.registerEntityRenderer(EntityRegistry.FLARE_ENTITY.get(), FlareRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.FLARE_ENTITY.get(), context -> new MusketBallRenderer<>(context, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+				"textures/item/flare.png")));
 		event.registerEntityRenderer(EntityRegistry.CANNONBALL_ENTITY.get(), CannonballRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.DRAGON_FIREBALL_ENTITY.get(), DragonFireballBulletRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.MORTAR_SHELL_ENTITY.get(), ThrownItemRenderer::new);
