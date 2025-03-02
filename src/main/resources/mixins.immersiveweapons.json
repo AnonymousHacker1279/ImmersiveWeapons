@@ -2,8 +2,17 @@
 	"package": "tech.anonymoushacker1279.immersiveweapons.mixin",
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
-		"AbstractArrowMixin", "BaseFireBlockMixin", "ClientboundSetEntityMotionPacketMixin", "CombatRulesMixin", "EnchantmentMixin", "EntityMixin", "ProjectileMixin",
-		"WindChargeMixin", "loot.EnchantedCountIncreaseFunctionMixin", "loot.EnchantmentHelperMixin", "loot.LootItemRandomChanceWithEnchantedBonusConditionMixin"
+		"AbstractArrowMixin",
+		"BaseFireBlockMixin",
+		"ClientboundSetEntityMotionPacketMixin",
+		"CombatRulesMixin",
+		"EnchantmentMixin",
+		"EntityMixin",
+		"ProjectileMixin",
+		"WindChargeMixin",
+		"loot.EnchantedCountIncreaseFunctionMixin",
+		"loot.EnchantmentHelperMixin",
+		"loot.LootItemRandomChanceWithEnchantedBonusConditionMixin"
 	],
 	"client": [
 		"EnchantmentMixin"
