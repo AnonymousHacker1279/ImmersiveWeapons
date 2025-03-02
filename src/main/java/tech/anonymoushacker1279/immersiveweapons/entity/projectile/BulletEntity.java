@@ -10,14 +10,18 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.phys.*;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.Tags.Blocks;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -26,7 +30,9 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact.BulletImpactParticleOptions;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
-import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.ParticleTypesRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.BulletEntityDebugPayload;
@@ -41,7 +47,6 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 	private final SoundEvent hitSound = getDefaultHitGroundSoundEvent();
 	private boolean hasAlreadyBrokeGlass = false;
 	private Vec3 initialPos = Vec3.ZERO;
-	private Item firingItem = ItemRegistry.FLINTLOCK_PISTOL.get();
 	public List<Double> shootingVectorInputs = List.of(0.0025d, 0.2d, 1.1d);
 	public HitEffect hitEffect = HitEffect.NONE;
 	public boolean flameTrail = false;
@@ -72,10 +77,6 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 
 			return bulletEntity;
 		}
-	}
-
-	public void setFiringItem(Item stack) {
-		firingItem = stack;
 	}
 
 	public float calculateDamage() {
@@ -226,6 +227,14 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 				float pitch = (float) (0.8F + (getDeltaMovement().length() * 0.2) + (distanceTo(player) * 0.05));
 				player.playSound(SoundEventRegistry.BULLET_WHIZZ.get(), 1.0F, pitch);
 			}
+		}
+	}
+
+
+	@Override
+	protected void tickDespawn() {
+		for (int i = 0; i < IWConfigs.SERVER.bulletDespawnTimeModifier.get(); i++) {
+			super.tickDespawn();
 		}
 	}
 }

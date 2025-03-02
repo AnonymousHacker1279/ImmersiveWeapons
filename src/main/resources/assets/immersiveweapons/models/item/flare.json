@@ -1,8 +1,8 @@
 {
 	"credit": "AnonymousHacker1279",
 	"textures": {
-		"0": "immersiveweapons:item/flare_gun",
-		"particle": "immersiveweapons:item/flare_gun"
+		"0": "immersiveweapons:item/flare",
+		"particle": "immersiveweapons:item/flare"
 	},
 	"elements": [
 		{

@@ -6,47 +6,145 @@
 	},
 	"elements": [
 		{
-			"from": [7, 0, 7],
-			"to": [9, 16, 9],
+			"from": [
+				7,
+				0,
+				7
+			],
+			"to": [
+				9,
+				16,
+				9
+			],
 			"faces": {
-				"north": {"uv": [0, 0, 2, 14], "texture": "#0"},
-				"east": {"uv": [0, 0, 2, 14], "texture": "#0"},
-				"south": {"uv": [0, 0, 2, 14], "texture": "#0"},
-				"west": {"uv": [0, 0, 2, 14], "texture": "#0"},
-				"up": {"uv": [0, 0, 2, 2], "texture": "#0"},
-				"down": {"uv": [0, 0, 2, 2], "texture": "#0"}
+				"north": {
+					"uv": [
+						0,
+						0,
+						2,
+						14
+					],
+					"texture": "#0"
+				},
+				"east": {
+					"uv": [
+						0,
+						0,
+						2,
+						14
+					],
+					"texture": "#0"
+				},
+				"south": {
+					"uv": [
+						0,
+						0,
+						2,
+						14
+					],
+					"texture": "#0"
+				},
+				"west": {
+					"uv": [
+						0,
+						0,
+						2,
+						14
+					],
+					"texture": "#0"
+				},
+				"up": {
+					"uv": [
+						0,
+						0,
+						2,
+						2
+					],
+					"texture": "#0"
+				},
+				"down": {
+					"uv": [
+						0,
+						0,
+						2,
+						2
+					],
+					"texture": "#0"
+				}
 			}
 		}
 	],
 	"display": {
 		"thirdperson_righthand": {
-			"scale": [0.5, 0.5, 0.5]
+			"scale": [
+				0.5,
+				0.5,
+				0.5
+			]
 		},
 		"thirdperson_lefthand": {
-			"scale": [0.5, 0.5, 0.5]
+			"scale": [
+				0.5,
+				0.5,
+				0.5
+			]
 		},
 		"firstperson_righthand": {
-			"translation": [3.75, 0, 0],
-			"scale": [0.5, 0.5, 0.5]
+			"translation": [
+				3.75,
+				0,
+				0
+			],
+			"scale": [
+				0.5,
+				0.5,
+				0.5
+			]
 		},
 		"firstperson_lefthand": {
-			"translation": [3.75, 0, 0],
-			"scale": [0.5, 0.5, 0.5]
+			"translation": [
+				3.75,
+				0,
+				0
+			],
+			"scale": [
+				0.5,
+				0.5,
+				0.5
+			]
 		},
 		"ground": {
-			"scale": [0.5, 0.5, 0.5]
+			"scale": [
+				0.5,
+				0.5,
+				0.5
+			]
 		},
 		"gui": {
-			"rotation": [13, -20.75, 0],
-			"scale": [0.75, 0.75, 0.75]
+			"rotation": [
+				13,
+				-20.75,
+				0
+			],
+			"scale": [
+				0.75,
+				0.75,
+				0.75
+			]
 		}
 	},
 	"groups": [
 		{
 			"name": "base",
-			"origin": [8, 8, 8],
+			"origin": [
+				8,
+				8,
+				8
+			],
 			"color": 0,
-			"children": [0]
+			"children": [
+				0
+			]
 		}
 	]
 }

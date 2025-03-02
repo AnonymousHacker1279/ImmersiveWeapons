@@ -1633,6 +1633,33 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		createPedestalAugment(ItemRegistry.PEDESTAL_AUGMENT_ARMOR.get(), Items.IRON_HELMET);
 		createPedestalAugment(ItemRegistry.PEDESTAL_AUGMENT_ENCHANTMENT.get(), Items.BOOK);
 		createPedestalAugment(ItemRegistry.PEDESTAL_AUGMENT_CAPACITY.get(), Items.CHEST);
+
+		// Summoning statues
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, BlockItemRegistry.MINUTEMAN_STATUE_ITEM.get())
+				.define('a', ItemRegistry.BLUNDERBUSS.get())
+				.define('b', ItemRegistry.MEDAL_OF_HONOR.get())
+				.define('c', ItemRegistry.AZUL_KEYSTONE.get())
+				.define('d', Tags.Items.INGOTS_GOLD)
+				.define('e', Items.CRACKED_POLISHED_BLACKSTONE_BRICKS)
+				.pattern(" a ")
+				.pattern("dbd")
+				.pattern("ece")
+				.group("summoning_statue")
+				.unlockedBy("medal_of_honor", has(ItemRegistry.MEDAL_OF_HONOR.get()))
+				.save(output);
+
+		ShapedRecipeBuilder.shaped(RecipeCategory.MISC, BlockItemRegistry.MEDIC_STATUE_ITEM.get())
+				.define('a', ItemRegistry.FIRST_AID_KIT.get())
+				.define('b', ItemRegistry.MEDAL_OF_HONOR.get())
+				.define('c', ItemRegistry.AZUL_KEYSTONE.get())
+				.define('d', Tags.Items.INGOTS_GOLD)
+				.define('e', Items.CRACKED_POLISHED_BLACKSTONE_BRICKS)
+				.pattern(" a ")
+				.pattern("dbd")
+				.pattern("ece")
+				.group("summoning_statue")
+				.unlockedBy("medal_of_honor", has(ItemRegistry.MEDAL_OF_HONOR.get()))
+				.save(output);
 	}
 
 	private void createMinecraftItems() {

@@ -418,8 +418,6 @@ public abstract class AbstractGunItem extends Item {
 	}
 
 	public void setupFire(LivingEntity shooter, BulletEntity bullet, ItemStack gun, @Nullable ItemStack ammo, PowderType powderType) {
-		bullet.setFiringItem(this);
-
 		float powderVelocityModifier = powderType.data.velocityModifier();
 		if (shooter instanceof Player player) {
 			// Check for any scenarios where the powder would become wet

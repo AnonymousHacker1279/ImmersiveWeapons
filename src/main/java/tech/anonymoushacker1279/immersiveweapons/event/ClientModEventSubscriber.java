@@ -205,22 +205,23 @@ public class ClientModEventSubscriber {
 				new CustomArrowRenderer<>(context, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 						"textures/entity/projectiles/smoke_bomb_arrow.png")));
 
-		event.registerEntityRenderer(EntityRegistry.WOODEN_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
-		event.registerEntityRenderer(EntityRegistry.STONE_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
-		event.registerEntityRenderer(EntityRegistry.GOLDEN_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
-		event.registerEntityRenderer(EntityRegistry.COPPER_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
-		event.registerEntityRenderer(EntityRegistry.IRON_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
-		event.registerEntityRenderer(EntityRegistry.COBALT_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
-		event.registerEntityRenderer(EntityRegistry.DIAMOND_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
-		event.registerEntityRenderer(EntityRegistry.NETHERITE_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
-		event.registerEntityRenderer(EntityRegistry.MOLTEN_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
-		event.registerEntityRenderer(EntityRegistry.TESLA_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
-		event.registerEntityRenderer(EntityRegistry.VENTUS_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
-		event.registerEntityRenderer(EntityRegistry.ASTRAL_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
-		event.registerEntityRenderer(EntityRegistry.STARSTORM_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
-		event.registerEntityRenderer(EntityRegistry.VOID_MUSKET_BALL_ENTITY.get(), MusketBallRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.WOODEN_MUSKET_BALL_ENTITY.get(), context -> new MusketBallRenderer<>(context, "wooden"));
+		event.registerEntityRenderer(EntityRegistry.STONE_MUSKET_BALL_ENTITY.get(), context -> new MusketBallRenderer<>(context, "stone"));
+		event.registerEntityRenderer(EntityRegistry.GOLDEN_MUSKET_BALL_ENTITY.get(), context -> new MusketBallRenderer<>(context, "golden"));
+		event.registerEntityRenderer(EntityRegistry.COPPER_MUSKET_BALL_ENTITY.get(), context -> new MusketBallRenderer<>(context, "copper"));
+		event.registerEntityRenderer(EntityRegistry.IRON_MUSKET_BALL_ENTITY.get(), context -> new MusketBallRenderer<>(context, "iron"));
+		event.registerEntityRenderer(EntityRegistry.COBALT_MUSKET_BALL_ENTITY.get(), context -> new MusketBallRenderer<>(context, "cobalt"));
+		event.registerEntityRenderer(EntityRegistry.DIAMOND_MUSKET_BALL_ENTITY.get(), context -> new MusketBallRenderer<>(context, "diamond"));
+		event.registerEntityRenderer(EntityRegistry.NETHERITE_MUSKET_BALL_ENTITY.get(), context -> new MusketBallRenderer<>(context, "netherite"));
+		event.registerEntityRenderer(EntityRegistry.MOLTEN_MUSKET_BALL_ENTITY.get(), context -> new MusketBallRenderer<>(context, "molten"));
+		event.registerEntityRenderer(EntityRegistry.TESLA_MUSKET_BALL_ENTITY.get(), context -> new MusketBallRenderer<>(context, "tesla"));
+		event.registerEntityRenderer(EntityRegistry.VENTUS_MUSKET_BALL_ENTITY.get(), context -> new MusketBallRenderer<>(context, "ventus"));
+		event.registerEntityRenderer(EntityRegistry.ASTRAL_MUSKET_BALL_ENTITY.get(), context -> new MusketBallRenderer<>(context, "astral"));
+		event.registerEntityRenderer(EntityRegistry.STARSTORM_MUSKET_BALL_ENTITY.get(), context -> new MusketBallRenderer<>(context, "starstorm"));
+		event.registerEntityRenderer(EntityRegistry.VOID_MUSKET_BALL_ENTITY.get(), context -> new MusketBallRenderer<>(context, "void"));
 
-		event.registerEntityRenderer(EntityRegistry.FLARE_ENTITY.get(), FlareRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.FLARE_ENTITY.get(), context -> new MusketBallRenderer<>(context, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+				"textures/item/flare.png")));
 		event.registerEntityRenderer(EntityRegistry.CANNONBALL_ENTITY.get(), CannonballRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.DRAGON_FIREBALL_ENTITY.get(), DragonFireballBulletRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.MORTAR_SHELL_ENTITY.get(), ThrownItemRenderer::new);
@@ -283,6 +284,8 @@ public class ClientModEventSubscriber {
 		event.registerLayerDefinition(CelestialTowerModel.LAYER_LOCATION, CelestialTowerModel::createBodyLayer);
 		event.registerLayerDefinition(FireflyModel.LAYER_LOCATION, FireflyModel::createBodyLayer);
 		event.registerLayerDefinition(MeteorModel.LAYER_LOCATION, MeteorModel::createBodyLayer);
+		event.registerLayerDefinition(MusketBallModel.LAYER_LOCATION, MusketBallModel::createBodyLayer);
+		event.registerLayerDefinition(CannonballModel.LAYER_LOCATION, CannonballModel::createBodyLayer);
 		event.registerLayerDefinition(EvilEyeModel.LAYER_LOCATION, EvilEyeModel::createBodyLayer);
 		event.registerLayerDefinition(SkeletonMerchantModel.LAYER_LOCATION, SkeletonMerchantModel::createBodyLayer);
 		event.registerLayerDefinition(ModelLayerLocations.MINUTEMAN_HEAD_LAYER, SkullModel::createHumanoidHeadLayer);
