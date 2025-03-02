@@ -17,6 +17,7 @@ public class ServerConfig {
 	public final ModConfigSpec.IntValue panicAlarmRange;
 	public final ModConfigSpec.BooleanValue blockDecay;
 	public final ModConfigSpec.DoubleValue maxArmorProtection;
+	public final ModConfigSpec.IntValue bulletDespawnTimeModifier;
 	public final ModConfigSpec.IntValue discoveryAdvancementRange;
 	public final ModConfigSpec.IntValue celestialTowerSpawnCheckingRadius;
 	public final ModConfigSpec.DoubleValue celestialTowerWaveSizeModifier;
@@ -73,6 +74,10 @@ public class ServerConfig {
 		maxArmorProtection = builder
 				.comment("Set the maximum armor protection cap. The vanilla default is 20, but higher values allow better armor to work as intended. 25 is fully unlocked.")
 				.defineInRange("maxArmorProtection", 25.0d, 20.0d, 25.0d);
+
+		bulletDespawnTimeModifier = builder
+				.comment("Set the bullet despawn time modifier. Increasing this will cause bullets to despawn faster. By default, these take 60 seconds to despawn once they hit the ground.")
+				.defineInRange("customArrowDespawnTimeModifier", 1, 1, 10);
 
 		builder.comment("Celestial Altar")
 				.push("celestial_altar");

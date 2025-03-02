@@ -720,6 +720,7 @@
   "immersiveweapons.configuration.blunderbuss.tooltip": "Blunderbuss settings",
   "immersiveweapons.configuration.blunderbussFireInaccuracy": "Blunderbuss Fire Inaccuracy",
   "immersiveweapons.configuration.blunderbussFireVelocity": "Blunderbuss Fire Velocity",
+  "immersiveweapons.configuration.bulletDespawnTimeModifier": "Bullet Despawn Time Modifier",
   "immersiveweapons.configuration.bulletsBreakGlass": "Bullets Break Glass",
   "immersiveweapons.configuration.celestialAltarEnchantCaps": "Celestial Altar Enchant Caps",
   "immersiveweapons.configuration.celestialAltarMaxEnchantUpgradeCost": "Celestial Altar Max Enchant Upgrade Cost",
