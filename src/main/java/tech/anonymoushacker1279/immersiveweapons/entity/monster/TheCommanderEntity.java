@@ -12,7 +12,10 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
@@ -201,10 +204,7 @@ public class TheCommanderEntity extends DyingSoldierEntity implements AttackerTr
 	public void readAdditionalSaveData(CompoundTag pCompound) {
 		super.readAdditionalSaveData(pCompound);
 
-		if (hasCustomName()) {
-			bossEvent.setName(getDisplayName());
-		}
-
+		bossEvent.setName(getDisplayName());
 		totalWavesToSpawn = pCompound.getInt("totalWavesToSpawn");
 		waveSizeModifier = pCompound.getInt("waveSizeModifier");
 		wavesSpawned = pCompound.getInt("wavesSpawned");
@@ -216,6 +216,7 @@ public class TheCommanderEntity extends DyingSoldierEntity implements AttackerTr
 					totalWavesToSpawn));
 			bossEvent.setProgress((float) wavesSpawned / totalWavesToSpawn);
 		} else {
+			bossEvent.setColor(BossBarColor.GREEN);
 			bossEvent.setProgress(getHealth() / getMaxHealth());
 		}
 

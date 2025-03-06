@@ -272,12 +272,12 @@ if (file("RELEASE_NOTES.md").exists()) {
 
 		curseDepends {
 			optional "immersive-weapons-compatibility-bridge", "attributefix"
-			embedded 'biomesquisher', 'custom-portal-api-reforged'
+			embedded 'terrablender-neoforge', 'custom-portal-api-reforged'
 		}
 
 		modrinthDepends {
 			optional "immersive-weapons-compatibility-bridge", "attributefix"
-			embedded 'biomesquisher', 'custom-portal-api-reforged'
+			embedded 'terrablender', 'custom-portal-api-reforged'
 		}
 	}
 } else {

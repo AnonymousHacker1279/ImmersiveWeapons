@@ -77,7 +77,7 @@ public class ServerConfig {
 
 		bulletDespawnTimeModifier = builder
 				.comment("Set the bullet despawn time modifier. Increasing this will cause bullets to despawn faster. By default, these take 60 seconds to despawn once they hit the ground.")
-				.defineInRange("customArrowDespawnTimeModifier", 1, 1, 10);
+				.defineInRange("bulletDespawnTimeModifier", 1, 1, 10);
 
 		builder.comment("Celestial Altar")
 				.push("celestial_altar");
