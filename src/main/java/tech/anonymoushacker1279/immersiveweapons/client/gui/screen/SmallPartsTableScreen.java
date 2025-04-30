@@ -5,7 +5,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -54,21 +54,20 @@ public class SmallPartsTableScreen extends AbstractContainerScreen<SmallPartsMen
 
 	@Override
 	protected void renderBg(GuiGraphics guiGraphics, float partialTick, int pX, int pY) {
-		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 		RenderSystem.setShaderTexture(0, BG_LOCATION);
 		int leftPos = this.leftPos;
 		int topPos = this.topPos;
-		guiGraphics.blit(BG_LOCATION, leftPos, topPos, 0, 0, imageWidth, imageHeight);
+		guiGraphics.blit(RenderType::guiTextured, BG_LOCATION, leftPos, topPos, 0, 0, imageWidth, imageHeight, 256, 256);
 		Slot materialSlot = menu.getMaterialSlot();
 
 		if (!materialSlot.hasItem()) {
-			guiGraphics.blit(BG_LOCATION, leftPos + materialSlot.x, topPos + materialSlot.y, imageWidth, 0, 16, 16);
+			guiGraphics.blit(RenderType::guiTextured, BG_LOCATION, leftPos + materialSlot.x, topPos + materialSlot.y, imageWidth, 0, 16, 16, 256, 256);
 		}
 
 		int scrollOffset = (int) (41.0F * scrollOffs);
-		guiGraphics.blit(BG_LOCATION, leftPos + 119, topPos + PATTERNS_Y - 4 + scrollOffset,
+		guiGraphics.blit(RenderType::guiTextured, BG_LOCATION, leftPos + 119, topPos + PATTERNS_Y - 4 + scrollOffset,
 				232 + (displayPatterns ? 0 : SCROLLER_WIDTH),
-				0, SCROLLER_WIDTH, SCROLLER_HEIGHT);
+				0, SCROLLER_WIDTH, SCROLLER_HEIGHT, 256, 256);
 
 		if (resultPatterns != null) {
 			if (menu.getSelectedPartsPatternIndex() > 0) {
@@ -94,7 +93,7 @@ public class SmallPartsTableScreen extends AbstractContainerScreen<SmallPartsMen
 					vOffset += 32;
 				}
 
-				guiGraphics.blit(BG_LOCATION, x, y, 0, vOffset, PATTERN_IMAGE_SIZE, PATTERN_IMAGE_SIZE);
+				guiGraphics.blit(RenderType::guiTextured, BG_LOCATION, x, y, 0, vOffset, PATTERN_IMAGE_SIZE, PATTERN_IMAGE_SIZE, 256, 256);
 				if (startIndex + indexOffset - 1 <= resultPatterns.size() - 1) {
 					guiGraphics.renderItem(new ItemStack(resultPatterns.get(startIndex + indexOffset - 1)), x, y);
 				}

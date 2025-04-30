@@ -6,11 +6,16 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.event.entity.living.*;
+import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.event.entity.living.LivingExperienceDropEvent;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+import net.neoforged.neoforge.event.entity.living.LivingKnockBackEvent;
 import net.neoforged.neoforge.event.entity.player.CriticalHitEvent;
 import tech.anonymoushacker1279.immersiveweapons.api.events.ComputeEnchantedLootBonusEvent;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MeteorEntity;
-import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.init.AccessoryEffectTypeRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
@@ -193,11 +198,10 @@ public class AccessoryEffects {
 	public static void holyMantleEffect(LivingIncomingDamageEvent event, LivingEntity damagedEntity) {
 		// Completely negates damage, incurs 30s cooldown
 		if (damagedEntity instanceof Player player) {
-			if (Accessory.isAccessoryActive(player, ItemRegistry.HOLY_MANTLE.get())) {
-				if (!player.getCooldowns().isOnCooldown(ItemRegistry.HOLY_MANTLE.get())) {
-					player.getCooldowns().addCooldown(ItemRegistry.HOLY_MANTLE.get(), 600);
-					event.setCanceled(true);
-				}
+			ItemStack stack = ItemRegistry.HOLY_MANTLE.get().getDefaultInstance();
+			if (!player.getCooldowns().isOnCooldown(stack)) {
+				player.getCooldowns().addCooldown(stack, 600);
+				event.setCanceled(true);
 			}
 		}
 	}

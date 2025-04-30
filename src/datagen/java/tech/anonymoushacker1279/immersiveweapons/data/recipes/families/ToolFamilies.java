@@ -8,8 +8,8 @@ import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.common.CommonItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
-import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
-import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
+import tech.anonymoushacker1279.immersiveweapons.item.tool.GauntletItem;
+import tech.anonymoushacker1279.immersiveweapons.item.tool.PikeItem;
 
 import java.util.Collection;
 import java.util.function.Supplier;

@@ -7,15 +7,15 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
-public record GunScopePayload(double playerFOV, double changingPlayerFOV,
+public record GunScopePayload(float playerFOV, float changingPlayerFOV,
                               float scopeScale) implements CustomPacketPayload {
 
 	public static final Type<GunScopePayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "gun_scope"));
 
 	public static final StreamCodec<FriendlyByteBuf, GunScopePayload> STREAM_CODEC = StreamCodec.composite(
-			ByteBufCodecs.DOUBLE,
+			ByteBufCodecs.FLOAT,
 			GunScopePayload::playerFOV,
-			ByteBufCodecs.DOUBLE,
+			ByteBufCodecs.FLOAT,
 			GunScopePayload::changingPlayerFOV,
 			ByteBufCodecs.FLOAT,
 			GunScopePayload::scopeScale,

@@ -11,7 +11,9 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.registries.datamaps.DataMapType;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
-import tech.anonymoushacker1279.immersiveweapons.item.accessory.scaling.*;
+import tech.anonymoushacker1279.immersiveweapons.item.accessory.scaling.AccessoryEffectScalingType;
+import tech.anonymoushacker1279.immersiveweapons.item.accessory.scaling.AttributeOperation;
+import tech.anonymoushacker1279.immersiveweapons.item.accessory.scaling.DynamicAttributeOperationInstance;
 import tech.anonymoushacker1279.immersiveweapons.util.IWCBBridge;
 
 import java.util.*;
@@ -80,7 +82,7 @@ public record Accessory(AccessorySlot slot,
 			ItemStack stack = player.getInventory().getItem(i);
 			Accessory accessory = stack.getItemHolder().getData(Accessory.ACCESSORY);
 			if (accessory != null && accessory.slot() == slot) {
-				if (!player.getCooldowns().isOnCooldown(stack.getItem())) {
+				if (!player.getCooldowns().isOnCooldown(stack)) {
 					accessories.add(stack);
 				}
 			}
@@ -94,8 +96,8 @@ public record Accessory(AccessorySlot slot,
 	}
 
 	/**
-	 * Check if the specified accessory is active for the player.
-	 * If IWCB is installed and the Curios plugin is registered, it will defer to IWCB.
+	 * Check if the specified accessory is active for the player. If IWCB is installed and the Curios plugin is
+	 * registered, it will defer to IWCB.
 	 *
 	 * @param player the <code>Player</code> to check
 	 * @param stack  the <code>ItemStack</code> to check

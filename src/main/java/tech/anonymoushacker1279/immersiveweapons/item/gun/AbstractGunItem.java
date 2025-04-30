@@ -11,16 +11,15 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.UseAnim;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -71,7 +70,7 @@ public abstract class AbstractGunItem extends Item {
 	}
 
 	@Override
-	public void releaseUsing(ItemStack gun, Level level, LivingEntity livingEntity, int timeLeft) {
+	public boolean releaseUsing(ItemStack gun, Level level, LivingEntity livingEntity, int timeLeft) {
 
 		if (livingEntity instanceof Player player) {
 			if (level.isClientSide) {
@@ -84,7 +83,7 @@ public abstract class AbstractGunItem extends Item {
 			ItemStack ammo = findAmmo(gun, livingEntity);
 			PowderType powder = findPowder(gun, livingEntity);
 
-			// Determine number of bullets to fire
+			// Determine the number of bullets to fire
 			int bulletsToFire = isCreative ? getMaxBulletsToFire() : getBulletsToFire(ammo);
 
 			// Roll for misfire
@@ -115,7 +114,7 @@ public abstract class AbstractGunItem extends Item {
 			}
 
 			if (getUseDuration(gun, player) < 0) {
-				return;
+				return false;
 			}
 
 			// Check if the gun can be fired
@@ -178,10 +177,12 @@ public abstract class AbstractGunItem extends Item {
 					// Calculate the cooldown
 					int cooldown = (int) (getCooldown() * (1f - reductionFactor));
 
-					player.getCooldowns().addCooldown(this, cooldown);
+					player.getCooldowns().addCooldown(gun, cooldown);
 				}
 			}
 		}
+
+		return true;
 	}
 
 	public ItemStack findAmmo(ItemStack gun, LivingEntity livingEntity) {
@@ -230,11 +231,6 @@ public abstract class AbstractGunItem extends Item {
 		return null;
 	}
 
-	@Override
-	public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
-		return getRepairMaterial().test(repair) || super.isValidRepairItem(toRepair, repair);
-	}
-
 	protected static ItemStack getHeldPredicate(LivingEntity livingEntity, Predicate<ItemStack> predicate) {
 		if (predicate.test(livingEntity.getItemInHand(InteractionHand.OFF_HAND))) {
 			return livingEntity.getItemInHand(InteractionHand.OFF_HAND);
@@ -245,16 +241,16 @@ public abstract class AbstractGunItem extends Item {
 	}
 
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+	public InteractionResult use(Level level, Player player, InteractionHand hand) {
 
 		ItemStack itemInHand = player.getItemInHand(hand);
 		boolean hasAmmo = !findAmmo(itemInHand, player).isEmpty();
 
 		if (!player.isCreative() && !hasAmmo) {
-			return InteractionResultHolder.fail(itemInHand);
+			return InteractionResult.FAIL;
 		} else {
 			player.startUsingItem(hand);
-			return InteractionResultHolder.consume(itemInHand);
+			return InteractionResult.CONSUME;
 		}
 	}
 
@@ -263,7 +259,7 @@ public abstract class AbstractGunItem extends Item {
 		super.onUseTick(level, livingEntity, stack, remainingUseDuration);
 
 		if (!level.isClientSide && canScope() && livingEntity instanceof ServerPlayer serverPlayer) {
-			PacketDistributor.sendToPlayer(serverPlayer, new GunScopePayload(GunData.playerFOV, 15.0d, GunData.scopeScale));
+			PacketDistributor.sendToPlayer(serverPlayer, new GunScopePayload(GunData.playerFOV, 15.0f, GunData.scopeScale));
 		}
 	}
 
@@ -285,8 +281,8 @@ public abstract class AbstractGunItem extends Item {
 	}
 
 	@Override
-	public UseAnim getUseAnimation(ItemStack pStack) {
-		return UseAnim.CUSTOM;
+	public ItemUseAnimation getUseAnimation(ItemStack pStack) {
+		return ItemUseAnimation.NONE;    // TODO: custom implementation, might require enum extension
 	}
 
 	/**
@@ -296,25 +292,6 @@ public abstract class AbstractGunItem extends Item {
 	 */
 	public Predicate<ItemStack> getInventoryAmmoPredicate() {
 		return MUSKET_BALLS;
-	}
-
-	/**
-	 * Return the enchantability factor of the item, most of the time it is based on material.
-	 *
-	 * @return int
-	 */
-	@Override
-	public int getEnchantmentValue(ItemStack stack) {
-		return 1;
-	}
-
-	/**
-	 * Get the repair material.
-	 *
-	 * @return Ingredient
-	 */
-	protected Ingredient getRepairMaterial() {
-		return Ingredient.of(Items.IRON_INGOT);
 	}
 
 	/**
@@ -439,7 +416,7 @@ public abstract class AbstractGunItem extends Item {
 			bullet.setCritArrow(true);
 		}
 
-		// Handle enchants
+		// Handle enchantments
 		HolderGetter<Enchantment> enchantmentGetter = shooter.registryAccess().lookup(Registries.ENCHANTMENT).orElseThrow();
 		Optional<Reference<Enchantment>> firepower = enchantmentGetter.get(IWEnchantments.FIREPOWER);
 		Optional<Reference<Enchantment>> scorchShot = enchantmentGetter.get(IWEnchantments.SCORCH_SHOT);

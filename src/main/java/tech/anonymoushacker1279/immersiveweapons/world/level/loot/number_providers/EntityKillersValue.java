@@ -45,7 +45,7 @@ public record EntityKillersValue() implements NumberProvider {
 	}
 
 	public float getFloat(LootContext lootContext) {
-		Entity entity = lootContext.getParam(LootContextParams.THIS_ENTITY);
+		Entity entity = lootContext.getParameter(LootContextParams.THIS_ENTITY);
 
 		if (entity instanceof AttackerTracker attackerTracker) {
 			return attackerTracker.getAttackingEntities();

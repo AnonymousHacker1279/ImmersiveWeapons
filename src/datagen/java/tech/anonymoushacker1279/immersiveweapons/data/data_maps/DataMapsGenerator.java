@@ -25,7 +25,7 @@ public class DataMapsGenerator extends DataMapProvider {
 
 	@Override
 	@SuppressWarnings("deprecation")
-	protected void gather() {
+	protected void gather(Provider provider) {
 		builder(NeoForgeDataMaps.VIBRATION_FREQUENCIES)
 				.add(GameEventRegistry.FLASHBANG_EXPLODE, new VibrationFrequency(15), false)
 				.add(GameEventRegistry.SMOKE_GRENADE_HISS, new VibrationFrequency(14), false)

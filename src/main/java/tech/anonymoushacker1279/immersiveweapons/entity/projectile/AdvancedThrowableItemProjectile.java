@@ -5,12 +5,17 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.*;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.HitResult.Type;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
@@ -27,12 +32,12 @@ public abstract class AdvancedThrowableItemProjectile extends ThrowableItemProje
 		super(entityType, level);
 	}
 
-	public AdvancedThrowableItemProjectile(EntityType<? extends ThrowableItemProjectile> entityType, LivingEntity livingEntity, Level level) {
-		super(entityType, livingEntity, level);
+	public AdvancedThrowableItemProjectile(EntityType<? extends ThrowableItemProjectile> entityType, LivingEntity livingEntity, Level level, ItemStack stack) {
+		super(entityType, livingEntity, level, stack);
 	}
 
-	public AdvancedThrowableItemProjectile(EntityType<? extends ThrowableItemProjectile> entityType, Level level, double x, double y, double z) {
-		super(entityType, x, y, z, level);
+	public AdvancedThrowableItemProjectile(EntityType<? extends ThrowableItemProjectile> entityType, Level level, double x, double y, double z, ItemStack stack) {
+		super(entityType, x, y, z, level, stack);
 	}
 
 	@Override
@@ -108,7 +113,7 @@ public abstract class AdvancedThrowableItemProjectile extends ThrowableItemProje
 		}
 
 		if (ticksInGround > 300) {
-			kill();
+			discard();
 		}
 	}
 

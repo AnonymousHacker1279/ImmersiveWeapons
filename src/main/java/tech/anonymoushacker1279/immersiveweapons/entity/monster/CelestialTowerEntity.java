@@ -22,7 +22,6 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
-import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.entity.AttackerTracker;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
@@ -34,6 +33,7 @@ import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import tech.anonymoushacker1279.immersiveweapons.world.level.saveddata.IWSavedData;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -95,9 +95,7 @@ public class CelestialTowerEntity extends Monster implements AttackerTracker, Gr
 
 	@Nullable
 	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
-	                                    MobSpawnType reason, @Nullable SpawnGroupData spawnData) {
-
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, EntitySpawnReason spawnReason, @Nullable SpawnGroupData spawnGroupData) {
 		bossEvent.setProgress(0f);
 		totalWavesToSpawn = 3;
 		waveSizeModifier = 1;
@@ -125,7 +123,7 @@ public class CelestialTowerEntity extends Monster implements AttackerTracker, Gr
 		Objects.requireNonNull(getAttribute(Attributes.ARMOR))
 				.setBaseValue(getAttributeBaseValue(Attributes.ARMOR) + ((double) (totalWavesToSpawn * 5) / 3));
 
-		return super.finalizeSpawn(level, difficulty, reason, spawnData);
+		return super.finalizeSpawn(level, difficulty, spawnReason, spawnGroupData);
 	}
 
 	@Override
@@ -148,17 +146,17 @@ public class CelestialTowerEntity extends Monster implements AttackerTracker, Gr
 	}
 
 	@Override
-	public boolean hurt(DamageSource pSource, float pAmount) {
-		if (pSource == damageSources().genericKill()) {
-			return super.hurt(pSource, pAmount);
+	public boolean hurtServer(ServerLevel level, DamageSource damageSource, float amount) {
+		if (damageSource == damageSources().genericKill()) {
+			return super.hurtServer(level, damageSource, amount);
 		}
 
 		if (doneSpawningWaves) {
-			boolean doesHurt = super.hurt(pSource, pAmount);
+			boolean doesHurt = super.hurtServer(level, damageSource, amount);
 
-			if (doesHurt && pSource.getEntity() != null) {
+			if (doesHurt && damageSource.getEntity() != null) {
 				bossEvent.setProgress(getHealth() / 240f);
-				attackedByEntity(pSource.getEntity(), attackingEntities);
+				attackedByEntity(damageSource.getEntity(), attackingEntities);
 			}
 
 			return doesHurt;
@@ -233,8 +231,8 @@ public class CelestialTowerEntity extends Monster implements AttackerTracker, Gr
 	}
 
 	@Override
-	public boolean checkSpawnRules(LevelAccessor pLevel, MobSpawnType pSpawnReason) {
-		if (pSpawnReason == MobSpawnType.SPAWNER || pSpawnReason == MobSpawnType.SPAWN_EGG) {
+	public boolean checkSpawnRules(LevelAccessor level, EntitySpawnReason spawnReason) {
+		if (spawnReason == EntitySpawnReason.SPAWNER || spawnReason == EntitySpawnReason.SPAWN_ITEM_USE) {
 			return true;
 		}
 
@@ -245,14 +243,13 @@ public class CelestialTowerEntity extends Monster implements AttackerTracker, Gr
 			}
 		}
 
-		if (!pLevel.getBlockState(blockPosition().below()).isValidSpawn(pLevel, blockPosition().below(), getType())) {
+		if (!level.getBlockState(blockPosition().below()).isValidSpawn(level, blockPosition().below(), getType())) {
 			return false;
 		}
 
 		int nearbyLanterns = 0;
 
-
-		if (pLevel instanceof ServerLevel serverLevel) {
+		if (level instanceof ServerLevel serverLevel) {
 			for (BlockPos lanternPos : IWSavedData.getData(serverLevel.getServer()).getAllLanterns()) {
 				if (lanternPos.distManhattan(new Vec3i(blockPosition().getX(), blockPosition().getY(), blockPosition().getZ())) < IWConfigs.SERVER.celestialTowerSpawnCheckingRadius.getAsInt()) {
 					nearbyLanterns++;

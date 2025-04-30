@@ -1,7 +1,7 @@
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 @FieldsAreNonnullByDefault
-package tech.anonymoushacker1279.immersiveweapons.menu.slot;
+package tech.anonymoushacker1279.immersiveweapons.item.crafting.input;
 
 import net.minecraft.FieldsAreNonnullByDefault;
 import net.minecraft.MethodsReturnNonnullByDefault;

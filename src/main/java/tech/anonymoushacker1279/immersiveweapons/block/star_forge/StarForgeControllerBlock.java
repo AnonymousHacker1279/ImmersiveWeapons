@@ -3,13 +3,14 @@ package tech.anonymoushacker1279.immersiveweapons.block.star_forge;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -58,9 +59,9 @@ public class StarForgeControllerBlock extends BasicOrientableBlock implements En
 	}
 
 	@Override
-	protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
+	protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
 		if (level.isClientSide) {
-			return ItemInteractionResult.SUCCESS;
+			return InteractionResult.SUCCESS;
 		} else {
 			if (level.getBlockEntity(pos) instanceof StarForgeBlockEntity blockEntity && player instanceof ServerPlayer serverPlayer) {
 				if (player.isHolding(Items.LAVA_BUCKET)) {
@@ -72,29 +73,29 @@ public class StarForgeControllerBlock extends BasicOrientableBlock implements En
 					}
 				} else {
 					if (blockEntity.isInUse()) {
-						return ItemInteractionResult.FAIL;
+						return InteractionResult.FAIL;
 					}
 
 					serverPlayer.openMenu(new SimpleMenuProvider((id, inventory, player1) -> new StarForgeMenu(id, inventory, blockEntity, blockEntity.containerData), CONTAINER_NAME), buffer -> {
-						List<ResourceLocation> recipeLocations = blockEntity.getAvailableRecipeIds();
-						buffer.writeVarInt(recipeLocations.size());
+						List<ResourceKey<Recipe<?>>> keys = blockEntity.getAvailableRecipeKeys();
+						buffer.writeVarInt(keys.size());
 
-						for (ResourceLocation location : recipeLocations) {
-							buffer.writeResourceLocation(location);
+						for (ResourceKey<Recipe<?>> key : keys) {
+							buffer.writeResourceKey(key);
 						}
 					});
 
 				}
 			}
 
-			return ItemInteractionResult.CONSUME;
+			return InteractionResult.CONSUME;
 		}
 	}
 
 	@Override
 	public MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
 		if (level.getBlockEntity(pos) instanceof StarForgeBlockEntity blockEntity) {
-			return new SimpleMenuProvider((id, inventory, player) -> new StarForgeMenu(id, inventory, blockEntity.getAvailableRecipeIds()), CONTAINER_NAME);
+			return new SimpleMenuProvider((id, inventory, player) -> new StarForgeMenu(id, inventory, blockEntity.getAvailableRecipeKeys()), CONTAINER_NAME);
 		}
 
 		return null;

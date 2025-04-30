@@ -9,13 +9,16 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.fml.common.asm.enumextension.EnumProxy;
 import net.neoforged.neoforge.client.IArmPoseTransformer;
-import tech.anonymoushacker1279.immersiveweapons.item.gun.*;
+import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
+import tech.anonymoushacker1279.immersiveweapons.item.gun.MusketItem;
+import tech.anonymoushacker1279.immersiveweapons.item.gun.SimpleShotgunItem;
 
 public class CustomArmPoses {
 
-	public static void bootstrap() {}
+	public static void bootstrap() {
+	}
 
-	public static final EnumProxy<ArmPose> AIM_PISTOL_POSE_PARAMS = new EnumProxy<>(ArmPose.class, false, (IArmPoseTransformer) (model, entity, arm) -> {
+	public static final EnumProxy<ArmPose> AIM_PISTOL_POSE_PARAMS = new EnumProxy<>(ArmPose.class, false, (IArmPoseTransformer) (model, state, arm) -> {
 		// Hold the gun up as if it's being aimed
 		if (arm == HumanoidArm.RIGHT) {
 			model.rightArm.xRot = -1.5f;
@@ -34,7 +37,7 @@ public class CustomArmPoses {
 		}
 	});
 
-	public static final EnumProxy<ArmPose> AIM_MUSKET_POSE_PARAMS = new EnumProxy<>(ArmPose.class, true, (IArmPoseTransformer) (model, entity, arm) -> {
+	public static final EnumProxy<ArmPose> AIM_MUSKET_POSE_PARAMS = new EnumProxy<>(ArmPose.class, true, (IArmPoseTransformer) (model, state, arm) -> {
 		// Hold the gun up as if it's being aimed. This one uses two hands, one needs to be supporting the gun at the end and the other midway
 		if (arm == HumanoidArm.RIGHT) {
 			model.rightArm.xRot = -1.5f;
@@ -63,9 +66,9 @@ public class CustomArmPoses {
 		}
 	});
 
-	public static final EnumProxy<ArmPose> HOLD_PIKE_POSE_PARAMS = new EnumProxy<>(ArmPose.class, true, (IArmPoseTransformer) (model, entity, arm) -> {
+	public static final EnumProxy<ArmPose> HOLD_PIKE_POSE_PARAMS = new EnumProxy<>(ArmPose.class, true, (IArmPoseTransformer) (model, state, arm) -> {
 		// Hold the pike with both hands, like a spear
-		if (!entity.swinging) {
+		if (!state.isUsingItem) {
 			if (arm == HumanoidArm.RIGHT) {
 				model.rightArm.xRot = -0.35F;
 				model.rightArm.yRot = -0.4F;
@@ -87,11 +90,11 @@ public class CustomArmPoses {
 			}
 		} else {
 			// As this is a spear-like item, it needs to stab in a thrusting motion
-			float swingProgress = entity.getAttackAnim(model.attackTime);
+			float swingProgress = 1;    // TODO: find replacement for state.getAttackAnim()
 			float armRotation = Mth.sin(swingProgress * (float) Math.PI);
 
 			// Disable the arm swinging animation
-			model.attackTime = 0.0F;
+			state.attackTime = 0.0F;
 
 			// Animate the arms moving forward in a thrust motion
 			if (arm == HumanoidArm.RIGHT) {

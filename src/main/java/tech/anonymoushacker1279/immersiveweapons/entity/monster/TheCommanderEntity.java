@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerBossEvent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.BossEvent.BossBarColor;
@@ -12,10 +13,7 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
@@ -74,7 +72,7 @@ public class TheCommanderEntity extends DyingSoldierEntity implements AttackerTr
 	}
 
 	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData) {
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, EntitySpawnReason reason, @Nullable SpawnGroupData spawnData) {
 		bossEvent.setProgress(0f);
 
 		totalWavesToSpawn = 3;
@@ -107,12 +105,12 @@ public class TheCommanderEntity extends DyingSoldierEntity implements AttackerTr
 	}
 
 	@Override
-	protected boolean canReplaceCurrentItem(ItemStack pCandidate, ItemStack pExisting) {
-		if (pCandidate.getItem() instanceof AbstractGunItem newGun && pExisting.getItem() instanceof AbstractGunItem oldGun) {
+	protected boolean canReplaceCurrentItem(ItemStack newItem, ItemStack currentItem, EquipmentSlot slot) {
+		if (newItem.getItem() instanceof AbstractGunItem newGun && currentItem.getItem() instanceof AbstractGunItem oldGun) {
 			return newGun.getBaseFireVelocity() > oldGun.getBaseFireVelocity();
 		}
 
-		return super.canReplaceCurrentItem(pCandidate, pExisting);
+		return super.canReplaceCurrentItem(newItem, currentItem, slot);
 	}
 
 	@Override
@@ -121,7 +119,7 @@ public class TheCommanderEntity extends DyingSoldierEntity implements AttackerTr
 	}
 
 	@Override
-	public boolean hurt(DamageSource source, float amount) {
+	public boolean hurtServer(ServerLevel serverLevel, DamageSource source, float amount) {
 		if (!source.is(DamageTypes.GENERIC_KILL) && !doneSpawningWaves) {
 			return false;
 		}
@@ -145,7 +143,7 @@ public class TheCommanderEntity extends DyingSoldierEntity implements AttackerTr
 
 		amount *= playerCountReductionFactor;
 
-		boolean doesHurt = super.hurt(source, amount);
+		boolean doesHurt = super.hurtServer(serverLevel, source, amount);
 
 		if (doesHurt) {
 			bossEvent.setProgress(getHealth() / getMaxHealth());

@@ -4,13 +4,17 @@ import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.syncher.*;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.*;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -18,7 +22,9 @@ import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.*;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -29,7 +35,10 @@ import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.FlyRandomlyGoal;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 
 public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementOnDiscovery {
 
@@ -82,7 +91,7 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 
 		if (!level.isClientSide) {
 			entity.finalizeSpawn((ServerLevelAccessor) level, level.getCurrentDifficultyAt(entity.blockPosition()),
-					MobSpawnType.EVENT, null);
+					EntitySpawnReason.EVENT, null);
 		}
 
 		level.addFreshEntity(entity);
@@ -128,7 +137,7 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 		}
 
 		// Find players every 40 ticks if not summoned by a staff
-		if (!level().isClientSide) {
+		if (level() instanceof ServerLevel serverLevel) {
 			if (!summonedByStaff && tickCount % 40 == 0) {
 				// Increase distance based on difficulty and size
 				int scanDistance = 16;
@@ -140,7 +149,7 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 				Player player = level().getNearestPlayer(this, scanDistance);
 				// Check for proper targeting conditions
 				if (player != null) {
-					boolean validTarget = TargetingConditions.forCombat().test(this, player);
+					boolean validTarget = TargetingConditions.forCombat().test(serverLevel, this, player);
 					if (validTarget) {
 						targetedEntity = player;
 
@@ -157,8 +166,8 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 			} else {
 				// Ensure the target is still valid
 				boolean validTarget = !summonedByStaff
-						? TargetingConditions.forCombat().test(this, targetedEntity)
-						: TargetingConditions.forCombat().ignoreLineOfSight().test(this, targetedEntity);
+						? TargetingConditions.forCombat().test(serverLevel, this, targetedEntity)
+						: TargetingConditions.forCombat().ignoreLineOfSight().test(serverLevel, this, targetedEntity);
 
 				if (!validTarget) {
 					targetedEntity = null;
@@ -219,12 +228,13 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 	}
 
 	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty,
-	                                    MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData) {
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
+	                                    EntitySpawnReason reason, @Nullable SpawnGroupData spawnData) {
 		setSize(getRandom().nextIntBetweenInclusive(1, 3));
 		setHealth(getMaxHealth());
 		xpReward = summonedByStaff() ? 0 : 3 * getSize();
-		return super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData);
+
+		return super.finalizeSpawn(level, difficulty, reason, spawnData);
 	}
 
 	@Override
@@ -286,10 +296,10 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 	}
 
 	@Override
-	public boolean hurt(DamageSource source, float amount) {
+	public boolean hurtServer(ServerLevel serverLevel, DamageSource source, float amount) {
 		if (source.getEntity() instanceof LivingEntity entity && !summonedByStaff()) {
 			if (entity instanceof Player player && player.isCreative()) {
-				return super.hurt(source, amount);
+				return super.hurtServer(serverLevel, source, amount);
 			}
 
 			targetedEntity = entity;
@@ -298,7 +308,7 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 			goalSelector.removeGoal(flyRandomlyGoal);
 		}
 
-		return super.hurt(source, amount);
+		return super.hurtServer(serverLevel, source, amount);
 	}
 
 	@Nullable
@@ -314,8 +324,8 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 		return entityData.get(SUMMONED_BY_STAFF);
 	}
 
-	public static boolean checkSpawnRules(EntityType<? extends Mob> type, LevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random) {
-		boolean validSpawn = checkMobSpawnRules(type, level, spawnType, pos, random);
+	public static boolean checkSpawnRules(EntityType<? extends Mob> type, LevelAccessor level, EntitySpawnReason reason, BlockPos pos, RandomSource random) {
+		boolean validSpawn = checkMobSpawnRules(type, level, reason, pos, random);
 		boolean notUnderground = level.getBlockStates(new AABB(pos)
 						.expandTowards(0, 25, 0))
 				.allMatch((state) -> state.is(Blocks.CAVE_AIR) || state.is(Blocks.AIR));

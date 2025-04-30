@@ -3,55 +3,23 @@ package tech.anonymoushacker1279.immersiveweapons.item.crafting;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.HolderLookup.Provider;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import tech.anonymoushacker1279.immersiveweapons.init.RecipeSerializerRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.RecipeTypeRegistry;
 
-public record PistonCrushingRecipe(String group, ResourceLocation block, ItemStack result, int minCount,
-                                   int maxCount) implements Recipe<RecipeInput> {
+public class PistonCrushingRecipe extends SingleItemRecipe {
 
-	@Override
-	public boolean matches(RecipeInput input, Level level) {
-		return false;
-	}
+	private final int minCount;
+	private final int maxCount;
 
-	@Override
-	public ItemStack assemble(RecipeInput input, Provider registries) {
-		return result;
-	}
-
-	public boolean matches(Block block) {
-		return this.block.equals(BuiltInRegistries.BLOCK.getKey(block));
-	}
-
-	@Override
-	public ItemStack getResultItem(Provider provider) {
-		return result.copy();
-	}
-
-	@Override
-	public boolean canCraftInDimensions(int width, int height) {
-		return false;
-	}
-
-	public Block getBlock() {
-		return BuiltInRegistries.BLOCK.get(block);
-	}
-
-	/**
-	 * Get a random drop amount based on the min and max count (inclusive).
-	 */
-	public int getRandomDropAmount() {
-		return minCount + (int) (Math.random() * ((maxCount - minCount) + 1));
+	public PistonCrushingRecipe(String group, Ingredient input, ItemStack result, int minCount, int maxCount) {
+		super(group, input, result);
+		this.minCount = minCount;
+		this.maxCount = maxCount;
 	}
 
 	public int getMinCount() {
@@ -63,23 +31,18 @@ public record PistonCrushingRecipe(String group, ResourceLocation block, ItemSta
 	}
 
 	@Override
-	public ItemStack getToastSymbol() {
-		return new ItemStack(Blocks.PISTON);
-	}
-
-	@Override
-	public RecipeSerializer<?> getSerializer() {
+	public RecipeSerializer<? extends SingleItemRecipe> getSerializer() {
 		return RecipeSerializerRegistry.PISTON_CRUSHING_RECIPE_SERIALIZER.get();
 	}
 
 	@Override
-	public RecipeType<?> getType() {
+	public RecipeType<? extends SingleItemRecipe> getType() {
 		return RecipeTypeRegistry.PISTON_CRUSHING_RECIPE_TYPE.get();
 	}
 
 	@Override
-	public String getGroup() {
-		return group;
+	public RecipeBookCategory recipeBookCategory() {
+		return RecipeBookCategories.CRAFTING_MISC; // TODO: custom category
 	}
 
 	@Override
@@ -87,53 +50,57 @@ public record PistonCrushingRecipe(String group, ResourceLocation block, ItemSta
 		return true;
 	}
 
-	public interface Factory<T extends PistonCrushingRecipe> {
-		T create(String group, ResourceLocation block, ItemStack result, int minCount, int maxCount);
+	/**
+	 * Get a random drop amount based on the min and max count (inclusive).
+	 */
+	public int getRandomDropAmount() {
+		return minCount + (int) (Math.random() * ((maxCount - minCount) + 1));
 	}
 
-	public static class Serializer implements RecipeSerializer<PistonCrushingRecipe> {
+	public interface Factory<T extends PistonCrushingRecipe> {
+		T create(String group, Ingredient blockItem, ItemStack result, int minCount, int maxCount);
+	}
 
-		private static final MapCodec<PistonCrushingRecipe> CODEC = RecordCodecBuilder.mapCodec(
-				instance -> instance.group(
-								Codec.STRING.optionalFieldOf("group", "").forGetter(recipe -> recipe.group),
-								ResourceLocation.CODEC.fieldOf("block").forGetter(recipe -> recipe.block),
-								ItemStack.SINGLE_ITEM_CODEC.fieldOf("result").forGetter(recipe -> recipe.result),
-								Codec.INT.fieldOf("minCount").forGetter(recipe -> recipe.minCount),
-								Codec.INT.fieldOf("maxCount").forGetter(recipe -> recipe.maxCount)
-						)
-						.apply(instance, PistonCrushingRecipe::new)
-		);
+	public static class Serializer<T extends PistonCrushingRecipe> implements RecipeSerializer<T> {
 
-		private static final StreamCodec<RegistryFriendlyByteBuf, PistonCrushingRecipe> STREAM_CODEC = StreamCodec.of(
-				PistonCrushingRecipe.Serializer::toNetwork, PistonCrushingRecipe.Serializer::fromNetwork
-		);
+		private final MapCodec<T> codec;
+		private final StreamCodec<RegistryFriendlyByteBuf, T> streamCodec;
 
-		@Override
-		public MapCodec<PistonCrushingRecipe> codec() {
-			return CODEC;
+		public Serializer(PistonCrushingRecipe.Factory<T> factory) {
+			codec = RecordCodecBuilder.mapCodec(
+					instance -> instance.group(
+									Codec.STRING.optionalFieldOf("group", "").forGetter(SingleItemRecipe::group),
+									Ingredient.CODEC.fieldOf("blockItem").forGetter(SingleItemRecipe::input),
+									ItemStack.SINGLE_ITEM_CODEC.fieldOf("result").forGetter(SingleItemRecipe::result),
+									Codec.INT.fieldOf("minCount").forGetter(PistonCrushingRecipe::getMinCount),
+									Codec.INT.fieldOf("maxCount").forGetter(PistonCrushingRecipe::getMaxCount)
+							)
+							.apply(instance, factory::create)
+			);
+
+			streamCodec = StreamCodec.composite(
+					ByteBufCodecs.STRING_UTF8,
+					SingleItemRecipe::group,
+					Ingredient.CONTENTS_STREAM_CODEC,
+					SingleItemRecipe::input,
+					ItemStack.STREAM_CODEC,
+					SingleItemRecipe::result,
+					ByteBufCodecs.INT,
+					PistonCrushingRecipe::getMinCount,
+					ByteBufCodecs.INT,
+					PistonCrushingRecipe::getMaxCount,
+					factory::create
+			);
 		}
 
 		@Override
-		public StreamCodec<RegistryFriendlyByteBuf, PistonCrushingRecipe> streamCodec() {
-			return STREAM_CODEC;
+		public MapCodec<T> codec() {
+			return this.codec;
 		}
 
-		private static PistonCrushingRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
-			String group = buffer.readUtf();
-			ResourceLocation block = buffer.readResourceLocation();
-			ItemStack result = ItemStack.STREAM_CODEC.decode(buffer);
-			int minCount = buffer.readInt();
-			int maxCount = buffer.readInt();
-
-			return new PistonCrushingRecipe(group, block, result, minCount, maxCount);
-		}
-
-		private static void toNetwork(RegistryFriendlyByteBuf buffer, PistonCrushingRecipe recipe) {
-			buffer.writeUtf(recipe.group);
-			buffer.writeResourceLocation(recipe.block);
-			ItemStack.STREAM_CODEC.encode(buffer, recipe.result);
-			buffer.writeInt(recipe.minCount);
-			buffer.writeInt(recipe.maxCount);
+		@Override
+		public StreamCodec<RegistryFriendlyByteBuf, T> streamCodec() {
+			return this.streamCodec;
 		}
 	}
 }

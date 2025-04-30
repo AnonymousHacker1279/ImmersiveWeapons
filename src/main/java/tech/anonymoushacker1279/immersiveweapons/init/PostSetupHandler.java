@@ -1,7 +1,5 @@
 package tech.anonymoushacker1279.immersiveweapons.init;
 
-import net.kyrptonaught.customportalapi.api.CustomPortalBuilder;
-import net.kyrptonaught.customportalapi.util.SHOULDTP;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -13,8 +11,6 @@ import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.world.phys.AABB;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.TooltipHandler;
-import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
-import tech.anonymoushacker1279.immersiveweapons.entity.vehicle.CustomBoatType;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class PostSetupHandler {
@@ -32,21 +28,12 @@ public class PostSetupHandler {
 		emptyPot.addPlant(BuiltInRegistries.BLOCK.getKey(BlockRegistry.MOONGLOW.get()), BlockRegistry.POTTED_MOONGLOW);
 		emptyPot.addPlant(BuiltInRegistries.BLOCK.getKey(BlockRegistry.DEATHWEED.get()), BlockRegistry.POTTED_DEATHWEED);
 
-		// Setup custom boats
-		ItemRegistry.BURNED_OAK_BOAT.get()
-				.postSetup(EntityRegistry.BURNED_OAK_BOAT_ENTITY.get(), CustomBoatType.BURNED_OAK);
-		ItemRegistry.BURNED_OAK_CHEST_BOAT.get()
-				.postSetup(EntityRegistry.BURNED_OAK_CHEST_BOAT_ENTITY.get(), CustomBoatType.BURNED_OAK_CHEST);
-		ItemRegistry.STARDUST_BOAT.get()
-				.postSetup(EntityRegistry.STARDUST_BOAT_ENTITY.get(), CustomBoatType.STARDUST);
-		ItemRegistry.STARDUST_CHEST_BOAT.get()
-				.postSetup(EntityRegistry.STARDUST_CHEST_BOAT_ENTITY.get(), CustomBoatType.STARDUST_CHEST);
-
 		// Compile simple tooltips
 		TooltipHandler.compileTooltips();
 
 		// Initialize custom portals
-		CustomPortalBuilder.beginPortal()
+		// TODO: re-implement after Custom Portals API is updated
+		/*CustomPortalBuilder.beginPortal()
 				.frameBlock(BlockRegistry.TILTROS_PORTAL_FRAME.get())
 				.customPortalBlock(BlockRegistry.TILTROS_PORTAL::get)
 				.lightWithItem(ItemRegistry.AZUL_KEYSTONE.get())
@@ -60,7 +47,7 @@ public class PostSetupHandler {
 
 					generateBiodome(entity.level(), entity.blockPosition(), 7);
 				})
-				.registerPortal();
+				.registerPortal();*/
 	}
 
 	public static void generateBiodome(Level level, BlockPos center, int radius) {

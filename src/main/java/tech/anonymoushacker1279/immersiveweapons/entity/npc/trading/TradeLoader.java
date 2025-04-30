@@ -1,10 +1,9 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.npc.trading;
 
-import com.google.gson.*;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.RegistryOps;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
@@ -15,28 +14,26 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.SyncMerchantTradesPayload;
 
-import java.util.*;
-import java.util.Map.Entry;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-public class TradeLoader extends SimpleJsonResourceReloadListener {
-
-	private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+public class TradeLoader extends SimpleJsonResourceReloadListener<MerchantTrades> {
 
 	public static final Map<EntityType<?>, MerchantTrades> TRADES = new HashMap<>(5);
 
 	public TradeLoader() {
-		super(GSON, "merchant_trades");
+		super(MerchantTrades.CODEC, "merchant_trades");
 	}
 
 	@Override
-	protected void apply(Map<ResourceLocation, JsonElement> pObject, ResourceManager pResourceManager, ProfilerFiller pProfiler) {
+	protected void apply(Map<ResourceLocation, MerchantTrades> map, ResourceManager resourceManager, ProfilerFiller profiler) {
 		TRADES.clear();
-		RegistryOps<JsonElement> registryops = makeConditionalOps();
 
-		pObject.forEach((id, element) -> {
+		map.forEach((id, element) -> {
 			try {
-				MerchantTrades trades = MerchantTrades.CODEC.parse(registryops, element).getOrThrow();
-				TRADES.put(BuiltInRegistries.ENTITY_TYPE.get(id), trades);
+				ResourceKey<EntityType<?>> key = ResourceKey.create(BuiltInRegistries.ENTITY_TYPE.key(), id);
+				TRADES.put(BuiltInRegistries.ENTITY_TYPE.getOrThrow(key).value(), element);
 			} catch (Exception e) {
 				throw new IllegalStateException("Failed to load merchant trades from " + id, e);
 			}
@@ -44,12 +41,13 @@ public class TradeLoader extends SimpleJsonResourceReloadListener {
 
 		// Sync trades to clients
 		if (ServerLifecycleHooks.getCurrentServer() != null) {
-			for (Entry<EntityType<?>, MerchantTrades> entry : TRADES.entrySet()) {
+			for (Map.Entry<EntityType<?>, MerchantTrades> entry : TRADES.entrySet()) {
 				final SyncMerchantTradesPayload payload = new SyncMerchantTradesPayload(entry.getKey(), entry.getValue());
 				PacketDistributor.sendToAllPlayers(payload);
 			}
 		}
 	}
+
 
 	public static Int2ObjectMap<ItemListing[]> getTrades(EntityType<?> type) {
 		Int2ObjectMap<ItemListing[]> tradesMap = new Int2ObjectOpenHashMap<>();

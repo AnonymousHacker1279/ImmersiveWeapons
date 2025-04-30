@@ -2,17 +2,26 @@ package tech.anonymoushacker1279.immersiveweapons.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.*;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LightBlock;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.redstone.Orientation;
 import tech.anonymoushacker1279.immersiveweapons.block.core.BasicOrientableBlock;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,11 +53,9 @@ public class SpotlightBlock extends BasicOrientableBlock implements SimpleWaterl
 	}
 
 	@Override
-	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState,
-	                              LevelAccessor levelAccessor, BlockPos currentPos, BlockPos facingPos) {
-
-		return facing.getOpposite() == stateIn.getValue(FACING) && !stateIn.canSurvive(levelAccessor, currentPos)
-				? Blocks.AIR.defaultBlockState() : stateIn;
+	protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess scheduledTickAccess, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
+		return direction.getOpposite() == state.getValue(FACING) && !state.canSurvive(level, pos)
+				? Blocks.AIR.defaultBlockState() : state;
 	}
 
 	@Override
@@ -64,9 +71,7 @@ public class SpotlightBlock extends BasicOrientableBlock implements SimpleWaterl
 	}
 
 	@Override
-	public void neighborChanged(BlockState state, Level level, BlockPos pos, Block blockIn,
-	                            BlockPos fromPos, boolean isMoving) {
-
+	protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, @Nullable Orientation orientation, boolean movedByPiston) {
 		if (!level.isClientSide) {
 			boolean isLit = state.getValue(LIT);
 			if (!isLit && level.hasNeighborSignal(pos)) {

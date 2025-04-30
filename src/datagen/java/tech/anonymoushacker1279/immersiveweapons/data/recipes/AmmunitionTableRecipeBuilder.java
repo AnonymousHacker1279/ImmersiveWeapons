@@ -5,7 +5,9 @@ import net.minecraft.world.item.crafting.Recipe;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.AmmunitionTableRecipe;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.AmmunitionTableRecipe.MaterialGroup;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class AmmunitionTableRecipeBuilder extends IWRecipeBuilder {
 
@@ -19,7 +21,7 @@ public class AmmunitionTableRecipeBuilder extends IWRecipeBuilder {
 		this.factory = factory;
 	}
 
-	public static AmmunitionTableRecipeBuilder crafting(List<MaterialGroup> materials, Item result) {
+	public static AmmunitionTableRecipeBuilder crafting(List<AmmunitionTableRecipe.MaterialGroup> materials, Item result) {
 		return new AmmunitionTableRecipeBuilder(AmmunitionTableRecipe::new, materials, result);
 	}
 

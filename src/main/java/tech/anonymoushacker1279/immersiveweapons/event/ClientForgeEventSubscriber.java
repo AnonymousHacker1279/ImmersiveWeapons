@@ -15,8 +15,12 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.EventBusSubscriber.Bus;
-import net.neoforged.neoforge.client.event.*;
-import net.neoforged.neoforge.client.event.ViewportEvent.*;
+import net.neoforged.neoforge.client.event.InputEvent;
+import net.neoforged.neoforge.client.event.RenderBlockScreenEffectEvent;
+import net.neoforged.neoforge.client.event.RenderGuiLayerEvent;
+import net.neoforged.neoforge.client.event.ViewportEvent.ComputeFogColor;
+import net.neoforged.neoforge.client.event.ViewportEvent.ComputeFov;
+import net.neoforged.neoforge.client.event.ViewportEvent.RenderFog;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
@@ -155,7 +159,7 @@ public class ClientForgeEventSubscriber {
 					|| (itemInHand.asItem() instanceof ThrowableItem throwableItem && throwableItem.type.canCharge))
 					&& minecraft.player.isUsingItem()) {
 
-				double fov = event.getFOV();
+				float fov = event.getFOV();
 				int useTicks = minecraft.player.getTicksUsingItem();
 				float fovModifier = (float) useTicks / 20.0F;
 
@@ -175,7 +179,7 @@ public class ClientForgeEventSubscriber {
 	public static void renderGuiOverlayPostEvent(RenderGuiLayerEvent.Post event) {
 		if (GunData.changingPlayerFOV != -1) {
 			if (minecraft.options.getCameraType().isFirstPerson()) {
-				float deltaFrame = minecraft.getTimer().getGameTimeDeltaTicks() / 8;
+				float deltaFrame = minecraft.getDeltaTracker().getGameTimeDeltaTicks() / 8;
 				GunData.scopeScale = Mth.lerp(0.25F * deltaFrame, GunData.scopeScale, 1.125F);
 
 				IWOverlays.SCOPE_ELEMENT.render(event.getGuiGraphics(), event.getPartialTick());
@@ -215,7 +219,12 @@ public class ClientForgeEventSubscriber {
 								0.0D, 0.0D, 0.0D);
 					}
 
-					player.getCooldowns().addCooldown(ItemRegistry.VENSTRAL_JAR.get(), 1200);
+					player.getInventory().items.stream()
+							.filter(stack -> stack.getItem() == ItemRegistry.VENSTRAL_JAR.get())
+							.findFirst()
+							.ifPresent(stack -> {
+								player.getCooldowns().addCooldown(stack, 1200);
+							});
 				}
 			}
 		}

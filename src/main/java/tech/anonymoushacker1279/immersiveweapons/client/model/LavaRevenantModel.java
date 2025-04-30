@@ -1,11 +1,12 @@
 package tech.anonymoushacker1279.immersiveweapons.client.model;
 
-import net.minecraft.client.model.HierarchicalModel;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.util.Mth;
-import tech.anonymoushacker1279.immersiveweapons.entity.monster.lava_revenant.LavaRevenantEntity;
 
-public class LavaRevenantModel<T extends LavaRevenantEntity> extends HierarchicalModel<T> {
+public class LavaRevenantModel extends EntityModel<LivingEntityRenderState> {
 	private final ModelPart root;
 	private final ModelPart leftWingBase;
 	private final ModelPart leftWingTip;
@@ -15,6 +16,7 @@ public class LavaRevenantModel<T extends LavaRevenantEntity> extends Hierarchica
 	private final ModelPart tailTip;
 
 	public LavaRevenantModel(ModelPart modelPart) {
+		super(modelPart, RenderType::entityCutout);
 		root = modelPart;
 		ModelPart modelpart = modelPart.getChild("body");
 		tailBase = modelpart.getChild("tail_base");
@@ -26,16 +28,10 @@ public class LavaRevenantModel<T extends LavaRevenantEntity> extends Hierarchica
 	}
 
 	@Override
-	public ModelPart root() {
-		return root;
-	}
+	public void setupAnim(LivingEntityRenderState renderState) {
+		super.setupAnim(renderState);
 
-	/**
-	 * Sets this entity's model rotation angles
-	 */
-	@Override
-	public void setupAnim(T pEntity, float pLimbSwing, float pLimbSwingAmount, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
-		float f = ((float) pEntity.getUniqueFlapTickOffset() + pAgeInTicks) * 7.448451F * ((float) Math.PI / 180F);
+		float f = renderState.ageInTicks * 7.448451F * ((float) Math.PI / 180F);
 		leftWingBase.zRot = Mth.cos(f) * 16.0F * ((float) Math.PI / 180F);
 		leftWingTip.zRot = Mth.cos(f) * 16.0F * ((float) Math.PI / 180F);
 		rightWingBase.zRot = -leftWingBase.zRot;

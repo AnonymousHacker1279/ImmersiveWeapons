@@ -10,7 +10,9 @@ import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.OpenDoorGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -48,7 +50,7 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 	}
 
 	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData) {
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, EntitySpawnReason reason, @Nullable SpawnGroupData spawnData) {
 
 		populateDefaultEquipmentSlots(random, difficulty);
 		populateDefaultEquipmentEnchantments(level, random, difficulty);
@@ -99,12 +101,12 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 	}
 
 	@Override
-	protected boolean canReplaceCurrentItem(ItemStack pCandidate, ItemStack pExisting) {
-		if (pCandidate.getItem() instanceof AbstractGunItem && pExisting.getItem() instanceof AbstractGunItem) {
+	protected boolean canReplaceCurrentItem(ItemStack newItem, ItemStack currentItem, EquipmentSlot slot) {
+		if (newItem.getItem() instanceof AbstractGunItem && currentItem.getItem() instanceof AbstractGunItem) {
 			return true;
 		}
 
-		return super.canReplaceCurrentItem(pCandidate, pExisting);
+		return super.canReplaceCurrentItem(newItem, currentItem, slot);
 	}
 
 	@Override
@@ -123,7 +125,7 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 	}
 
 	@Override
-	public boolean hurt(DamageSource source, float amount) {
+	public boolean hurtServer(ServerLevel serverLevel, DamageSource source, float amount) {
 		if (source.getEntity() != null) {
 			for (Class<? extends Entity> clazz : ignoresDamageFrom) {
 				if (clazz.isInstance(source.getEntity())) {
@@ -133,7 +135,7 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 
 			if (source.getEntity() instanceof Player player) {
 				if (player.isCreative()) {
-					return super.hurt(source, amount);
+					return super.hurtServer(serverLevel, source, amount);
 				} else {
 					if (Accessory.isAccessoryActive(player, getPeaceAccessory())) {
 						return false;
@@ -146,11 +148,11 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 				setTarget(livingEntity);
 				setPersistentAngerTarget(source.getEntity().getUUID());
 
-				return super.hurt(source, amount);
+				return super.hurtServer(serverLevel, source, amount);
 			}
 		}
 
-		return super.hurt(source, amount);
+		return super.hurtServer(serverLevel, source, amount);
 	}
 
 	@Override
@@ -236,9 +238,9 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 	protected abstract Item getAggroAccessory();
 
 	protected boolean canTargetEntityWhenHurt(LivingEntity entity) {
-		if (entity instanceof Player player) {
+		if (entity instanceof Player player && player.level() instanceof ServerLevel serverLevel) {
 			return !player.isCreative()
-					&& ((isAngryAt(player) || Accessory.isAccessoryActive(player, getAggroAccessory()))
+					&& ((isAngryAt(player, serverLevel) || Accessory.isAccessoryActive(player, getAggroAccessory()))
 					&& !Accessory.isAccessoryActive(player, getPeaceAccessory()));
 		} else {
 			for (Class<? extends Entity> clazz : ignoresDamageFrom) {

@@ -2,7 +2,6 @@ package tech.anonymoushacker1279.immersiveweapons.item.armor;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -16,8 +15,11 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
+import net.minecraft.world.item.equipment.ArmorMaterial;
+import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.PacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
@@ -30,13 +32,13 @@ public class VentusArmorItem extends ArmorItem {
 	private int windShieldCooldown = 0;
 	private int windShieldDuration = 0;
 
-	public VentusArmorItem(Holder<ArmorMaterial> material, Type armorType, Properties properties) {
+	public VentusArmorItem(ArmorMaterial material, ArmorType armorType, Properties properties) {
 		super(material, armorType, properties);
 	}
 
 	@Override
-	public ItemAttributeModifiers getDefaultAttributeModifiers() {
-		return super.getDefaultAttributeModifiers().withModifierAdded(
+	public ItemAttributeModifiers getDefaultAttributeModifiers(ItemStack stack) {
+		return super.getDefaultAttributeModifiers(stack).withModifierAdded(
 				Attributes.SAFE_FALL_DISTANCE,
 				new AttributeModifier(
 						ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "ventus_safe_fall_distance"),

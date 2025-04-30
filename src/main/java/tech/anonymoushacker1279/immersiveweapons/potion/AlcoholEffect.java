@@ -1,6 +1,10 @@
 package tech.anonymoushacker1279.immersiveweapons.potion;
 
-import net.minecraft.world.effect.*;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 
 public class AlcoholEffect extends MobEffect {
@@ -12,12 +16,12 @@ public class AlcoholEffect extends MobEffect {
 	}
 
 	@Override
-	public boolean applyEffectTick(LivingEntity livingEntity, int amplifier) {
-		livingEntity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, duration, amplifier, false, false));
-		livingEntity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, duration, amplifier, false, false));
-		livingEntity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, duration, amplifier, false, false));
+	public boolean applyEffectTick(ServerLevel level, LivingEntity entity, int amplifier) {
+		entity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, duration, amplifier, false, false));
+		entity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, duration, amplifier, false, false));
+		entity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, duration, amplifier, false, false));
 
-		return true;
+		return super.applyEffectTick(level, entity, amplifier);
 	}
 
 	@Override

@@ -121,7 +121,7 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 			Vec3 scaledPosition = delta.normalize().scale(0.0025F);
 			setPosRaw(getX() - scaledPosition.x, getY() - scaledPosition.y, getZ() - scaledPosition.z);
 			playSound(hitSound, 1.0F, 1.2F / (random.nextFloat() * 0.2F + 0.9F));
-			inGround = true;
+			setInGround(true);
 			shakeTime = 7;
 			setCritArrow(false);
 			setPierceLevel((byte) 0);
@@ -204,13 +204,13 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 
 	@Override
 	protected void doWhileTicking() {
-		if (tickCount % 10 == 0 && !inGround && getOwner() instanceof ServerPlayer player) {
+		if (tickCount % 10 == 0 && !isInGround() && getOwner() instanceof ServerPlayer player) {
 			if (!level().isClientSide) {
 				PacketDistributor.sendToPlayer(player, new BulletEntityDebugPayload(calculateDamage(), isCritArrow()));
 			}
 		}
 
-		if (!inGround && flameTrail && level() instanceof ServerLevel serverLevel) {
+		if (!isInGround() && flameTrail && level() instanceof ServerLevel serverLevel) {
 			serverLevel.sendParticles(
 					ParticleTypes.SMALL_FLAME,
 					position().x, position().y, position().z,
@@ -221,7 +221,7 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 					random.nextGaussian() * 0.025);
 		}
 
-		if (!inGround && tickCount % 2 == 0 && level().isClientSide) {
+		if (!isInGround() && tickCount % 2 == 0 && level().isClientSide) {
 			Player player = level().getNearestPlayer(this, 5.0D);
 			if (player != null) {
 				float pitch = (float) (0.8F + (getDeltaMovement().length() * 0.2) + (distanceTo(player) * 0.05));

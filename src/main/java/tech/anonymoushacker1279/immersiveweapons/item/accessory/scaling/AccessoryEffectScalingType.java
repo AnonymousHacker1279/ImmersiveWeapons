@@ -47,7 +47,7 @@ public class AccessoryEffectScalingType {
 		double depth = player.getY();
 		if (depth < 64) {
 			double rawValue = accessory.getEffectValue(type);
-			int worldFloor = player.level().getMinBuildHeight();
+			int worldFloor = player.level().getMinY();
 
 			// The scaling is inverse proportionally to the player's depth
 			double depthScaling = Mth.clamp(Math.min(1.0, ((64 - depth) / (64 - worldFloor))) * 100, 0, 100);

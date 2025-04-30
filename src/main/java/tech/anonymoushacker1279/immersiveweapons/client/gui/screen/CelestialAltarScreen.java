@@ -1,8 +1,8 @@
 package tech.anonymoushacker1279.immersiveweapons.client.gui.screen;
 
-import net.minecraft.client.gui.Font.DisplayMode;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -25,20 +25,18 @@ public class CelestialAltarScreen extends AbstractContainerScreen<CelestialAltar
 
 	@Override
 	protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
-		guiGraphics.blit(GUI_TEXTURE, leftPos, topPos, 0, 0, imageWidth, imageHeight);
+		guiGraphics.blit(RenderType::guiTextured, GUI_TEXTURE, leftPos, topPos, 0, 0, imageWidth, imageHeight, 256, 256);
 
 		// Render the fragment cost next to its respective slot
 		if (menu.hasInputItem()) {
-			font.drawInBatch(" : " + menu.getFragmentCost(),
+			guiGraphics.drawString(
+					font,
+					" : " + menu.getFragmentCost(),
 					leftPos + 100,
 					topPos + 15,
 					0x000000,
-					false,
-					guiGraphics.pose().last().pose(),
-					guiGraphics.bufferSource(),
-					DisplayMode.NORMAL,
-					0,
-					15728880);
+					false
+			);
 		}
 	}
 }

@@ -26,6 +26,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -48,7 +49,7 @@ public class TeleporterBlock extends Block implements EntityBlock, SimpleWaterlo
 	}
 
 	@Override
-	protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos neighborPos, boolean movedByPiston) {
+	protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, @Nullable Orientation orientation, boolean movedByPiston) {
 		if (!level.isClientSide) {
 			boolean isPowered = level.hasNeighborSignal(pos);
 			if (isPowered && level.getBlockEntity(pos) instanceof TeleporterBlockEntity blockEntity) {
@@ -78,7 +79,9 @@ public class TeleporterBlock extends Block implements EntityBlock, SimpleWaterlo
 									linkedPos.getY() + 1.0D,
 									linkedPos.getZ() + 0.5D,
 									Set.of(),
-									entity.getYRot(), entity.getXRot());
+									entity.getYRot(),
+									entity.getXRot(),
+									false);
 
 							if (entity instanceof ItemEntity itemEntity && itemEntity.getItem().is(Items.BREAD)) {
 								didMoldBread.set(true);

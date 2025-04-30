@@ -3,7 +3,10 @@ package tech.anonymoushacker1279.immersiveweapons.advancement;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.critereon.*;
+import net.minecraft.advancements.critereon.ContextAwarePredicate;
+import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
+import net.minecraft.core.HolderGetter;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -42,8 +45,8 @@ public class EntityDiscoveredTrigger extends SimpleCriterionTrigger<EntityDiscov
 					);
 		}
 
-		public static Criterion<EntityDiscoveredTrigger.TriggerInstance> discoveredEntity(EntityType<?> entity) {
-			return discoveredEntity(EntityPredicate.Builder.entity().of(entity).build());
+		public static Criterion<EntityDiscoveredTrigger.TriggerInstance> discoveredEntity(HolderGetter<EntityType<?>> getter, EntityType<?> entity) {
+			return discoveredEntity(EntityPredicate.Builder.entity().of(getter, entity).build());
 		}
 
 		public boolean matches(LootContext lootContext) {

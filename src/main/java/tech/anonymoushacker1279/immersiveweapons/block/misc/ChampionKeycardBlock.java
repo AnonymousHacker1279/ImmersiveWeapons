@@ -2,7 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.block.misc;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -18,7 +18,7 @@ public class ChampionKeycardBlock extends Block {
 	}
 
 	@Override
-	protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
+	protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
 		if (hand.equals(InteractionHand.MAIN_HAND)) {
 			// If the player is holding a Champion Keycard item, break
 			if (player.getItemInHand(hand).getItem() == ItemRegistry.CHAMPION_KEYCARD.get()) {
@@ -30,11 +30,11 @@ public class ChampionKeycardBlock extends Block {
 					player.getItemInHand(hand).shrink(1);
 				}
 
-				return ItemInteractionResult.SUCCESS;
+				return InteractionResult.SUCCESS;
 			}
 		}
 
-		return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+		return InteractionResult.PASS;
 	}
 
 	/**

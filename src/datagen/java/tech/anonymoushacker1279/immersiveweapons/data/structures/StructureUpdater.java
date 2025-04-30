@@ -2,8 +2,12 @@ package tech.anonymoushacker1279.immersiveweapons.data.structures;
 
 import com.google.common.hash.Hashing;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.data.*;
-import net.minecraft.nbt.*;
+import net.minecraft.data.CachedOutput;
+import net.minecraft.data.DataProvider;
+import net.minecraft.data.PackOutput;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtAccounter;
+import net.minecraft.nbt.NbtIo;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.MultiPackResourceManager;
 import net.minecraft.server.packs.resources.Resource;
@@ -85,8 +89,8 @@ public class StructureUpdater implements DataProvider {
 	}
 
 	/**
-	 * Update NBT data to the latest version. This is done by passing the data through a datafixer and then saving
-	 * it back to NBT.
+	 * Update NBT data to the latest version. This is done by passing the data through a datafixer and then saving it
+	 * back to NBT.
 	 *
 	 * @param nbt the <code>CompoundTag</code> to update
 	 * @return CompoundTag
@@ -94,7 +98,7 @@ public class StructureUpdater implements DataProvider {
 	private static CompoundTag updateNBT(CompoundTag nbt) {
 		final CompoundTag updatedNBT = DataFixTypes.STRUCTURE.updateToCurrentVersion(DataFixers.getDataFixer(), nbt, nbt.getInt("DataVersion"));
 		StructureTemplate template = new StructureTemplate();
-		template.load(BuiltInRegistries.BLOCK.asLookup(), updatedNBT);
+		template.load(BuiltInRegistries.BLOCK.freeze(), updatedNBT);
 		return template.save(new CompoundTag());
 	}
 

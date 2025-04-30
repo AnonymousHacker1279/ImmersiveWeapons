@@ -32,11 +32,11 @@ public class IWDamageSources {
 	public static final ResourceKey<DamageType> HELLFIRE_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "hellfire"));
 
 	private static DamageSource getDamageSource(RegistryAccess registryAccess, ResourceKey<DamageType> key) {
-		return new DamageSource(registryAccess.registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(key));
+		return new DamageSource(registryAccess.lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(key));
 	}
 
 	private static DamageSource getEntityDamageSource(RegistryAccess registryAccess, ResourceKey<DamageType> key, Entity directEntity, Entity causingEntity) {
-		return new DamageSource(registryAccess.registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(key), directEntity, causingEntity);
+		return new DamageSource(registryAccess.lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(key), directEntity, causingEntity);
 	}
 
 	public static DamageSource barbedWire(RegistryAccess registryAccess) {

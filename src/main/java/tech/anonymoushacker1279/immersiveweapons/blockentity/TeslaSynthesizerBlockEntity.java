@@ -2,29 +2,37 @@ package tech.anonymoushacker1279.immersiveweapons.blockentity;
 
 import com.google.common.collect.Maps;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
-import net.minecraft.core.*;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.WorldlyContainer;
-import net.minecraft.world.entity.player.*;
-import net.minecraft.world.inventory.*;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.StackedItemContents;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockEntityRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.RecipeTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.TeslaSynthesizerRecipe;
-import tech.anonymoushacker1279.immersiveweapons.item.crafting.TeslaSynthesizerRecipeInput;
+import tech.anonymoushacker1279.immersiveweapons.item.crafting.input.TeslaSynthesizerRecipeInput;
 import tech.anonymoushacker1279.immersiveweapons.menu.TeslaSynthesizerMenu;
 
 import java.util.Map;
@@ -143,7 +151,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	/**
 	 * Runs once per tick. Handle smelting procedures here.
 	 */
-	public void tick(Level level) {
+	public void tick(ServerLevel serverLevel) {
 		boolean isBurning = isBurning();
 		boolean hasChanged = false;
 		if (isBurning()) {
@@ -156,40 +164,40 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 		ItemStack fuel = items.get(3);
 		if (isBurning() || !material1.isEmpty() && !material2.isEmpty() && !material3.isEmpty() && !fuel.isEmpty()) {
 
-			Optional<RecipeHolder<TeslaSynthesizerRecipe>> recipeHolder = level.getRecipeManager()
-					.getRecipeFor(RecipeTypeRegistry.TESLA_SYNTHESIZER_RECIPE_TYPE.get(), new TeslaSynthesizerRecipeInput(material1, material2, material3), level);
+			Optional<RecipeHolder<TeslaSynthesizerRecipe>> optional = serverLevel.recipeAccess()
+					.getRecipeFor(RecipeTypeRegistry.TESLA_SYNTHESIZER_RECIPE_TYPE.get(),
+							new TeslaSynthesizerRecipeInput(material1, material2, material3),
+							serverLevel);
 
-			TeslaSynthesizerRecipe synthesizerRecipe = recipeHolder.map(RecipeHolder::value).orElse(null);
+			TeslaSynthesizerRecipe synthesizerRecipe = optional.map(RecipeHolder::value).orElse(null);
 
 			if (!isBurning() && canSmelt(synthesizerRecipe)) {
 				burnTime = getBurnTime(fuel);
 				burnTimeTotal = burnTime;
 				if (isBurning()) {
 					hasChanged = true;
-					if (fuel.hasCraftingRemainingItem()) {
-						items.set(3, fuel.getCraftingRemainingItem());
-					} else if (!fuel.isEmpty()) {
+					if (!fuel.isEmpty()) {
 						fuel.shrink(1);
 						if (fuel.isEmpty()) {
-							items.set(3, fuel.getCraftingRemainingItem());
+							items.set(3, fuel.getCraftingRemainder());
 						}
 					}
 				}
 			}
 
-			if (isBurning() && canSmelt(synthesizerRecipe)) {
+			if (isBurning() && canSmelt(synthesizerRecipe) && synthesizerRecipe != null) {
 				cookTime++;
 				if (cookTime == cookTimeTotal) {
 					cookTime = 0;
-					cookTimeTotal = getCookTime();
+					cookTimeTotal = synthesizerRecipe.getCookTime();
 
 					// Smelt the recipe
-					if (synthesizerRecipe != null && canSmelt(synthesizerRecipe)) {
+					if (canSmelt(synthesizerRecipe)) {
 						ItemStack ingredient1 = items.get(0);
 						ItemStack ingredient2 = items.get(1);
 						ItemStack ingredient3 = items.get(2);
 						ItemStack recipeOutputStack = items.get(4);
-						ItemStack recipeOutput = synthesizerRecipe.getResultItem(level.registryAccess());
+						ItemStack recipeOutput = synthesizerRecipe.result();
 						if (recipeOutputStack.isEmpty()) {
 							items.set(4, recipeOutput.copy());
 						} else if (recipeOutputStack.getItem() == recipeOutput.getItem()) {
@@ -290,9 +298,9 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	 * @param recipe the <code>Recipe</code> instance
 	 * @return boolean
 	 */
-	private boolean canSmelt(@Nullable Recipe<?> recipe) {
-		if (!items.get(0).isEmpty() && !items.get(1).isEmpty() && !items.get(2).isEmpty() && recipe != null) {
-			ItemStack resultItem = recipe.getResultItem(level.registryAccess());
+	private boolean canSmelt(@Nullable TeslaSynthesizerRecipe recipe) {
+		if (recipe != null & !items.get(0).isEmpty() && !items.get(1).isEmpty() && !items.get(2).isEmpty()) {
+			ItemStack resultItem = recipe.result();
 			if (resultItem.isEmpty()) {
 				return false;
 			} else {
@@ -311,24 +319,6 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 		} else {
 			return false;
 		}
-	}
-
-	/**
-	 * Get the cook time for a recipe.
-	 *
-	 * @return int
-	 */
-	private int getCookTime() {
-		if (level != null) {
-			Optional<RecipeHolder<TeslaSynthesizerRecipe>> recipe = level.getRecipeManager()
-					.getRecipeFor(RecipeTypeRegistry.TESLA_SYNTHESIZER_RECIPE_TYPE.get(), new TeslaSynthesizerRecipeInput(items.get(0), items.get(1), items.get(2)), level);
-
-			if (recipe.isPresent()) {
-				return recipe.get().value().getCookTime();
-			}
-		}
-
-		return 0;
 	}
 
 	/**
@@ -449,7 +439,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 
 		if (!flag) {
 			if (index == 0 || index == 1 || index == 2) {
-				cookTimeTotal = getCookTime();
+				cookTimeTotal = 0;
 				cookTime = 0;
 				setChanged();
 			}
@@ -492,15 +482,10 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 		items.clear();
 	}
 
-	/**
-	 * Fill stacked contents.
-	 *
-	 * @param helper the <code>RecipeItemHelper</code> instance
-	 */
 	@Override
-	public void fillStackedContents(StackedContents helper) {
+	public void fillStackedContents(StackedItemContents stackedContents) {
 		for (ItemStack itemStack : items) {
-			helper.accountStack(itemStack);
+			stackedContents.accountStack(itemStack);
 		}
 	}
 }

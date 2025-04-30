@@ -29,7 +29,9 @@ import tech.anonymoushacker1279.immersiveweapons.data.structures.StructureUpdate
 import tech.anonymoushacker1279.immersiveweapons.data.tags.*;
 import tech.anonymoushacker1279.immersiveweapons.data.textures.TextureMetadataGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.trades.TradeDataGenerator;
-import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +74,7 @@ public class CustomDataGenerator {
 		// Server data
 		generator.addProvider(event.includeServer(), new AdvancementProvider(output, lookupProvider, existingFileHelper, List.of(new AdvancementGenerator())));
 		generator.addProvider(event.includeServer(), new LootTableGenerator(output, lookupProvider));
-		generator.addProvider(event.includeServer(), new FamilyGenerator(output, lookupProvider));
+		generator.addProvider(event.includeServer(), new FamilyGenerator.Runner(output, lookupProvider));
 		BlockTagsGenerator blockTagsGenerator = new BlockTagsGenerator(output, lookupProvider, existingFileHelper);
 		generator.addProvider(event.includeServer(), blockTagsGenerator);
 		generator.addProvider(event.includeServer(), new ItemTagsGenerator(output, lookupProvider, blockTagsGenerator, existingFileHelper));

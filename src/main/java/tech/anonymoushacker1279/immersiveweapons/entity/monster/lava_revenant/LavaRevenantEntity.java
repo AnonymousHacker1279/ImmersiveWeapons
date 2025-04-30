@@ -3,7 +3,9 @@ package tech.anonymoushacker1279.immersiveweapons.entity.monster.lava_revenant;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.syncher.*;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
@@ -13,13 +15,17 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.control.*;
+import net.minecraft.world.entity.ai.control.BodyRotationControl;
+import net.minecraft.world.entity.ai.control.LookControl;
+import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.*;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
@@ -32,7 +38,10 @@ import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscov
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.LocalSoundPayload;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.EnumSet;
+import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvancementOnDiscovery {
@@ -306,7 +315,9 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 			damage = damage * 0.35f;
 		}
 
-		return hurt(source, damage);
+		hurt(source, damage);
+
+		return true;
 	}
 
 	/**
@@ -327,10 +338,10 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 				for (int lMinZ = minZ; lMinZ <= maxZ; ++lMinZ) {
 					BlockPos pos = new BlockPos(i, lMinY, lMinZ);
 					BlockState state = level().getBlockState(pos);
-					if (!state.isAir()) {
-						if (CommonHooks.canEntityDestroy(level(), pos, this) && state.getDestroySpeed(level(), pos) <= 1.5f) {
+					if (!state.isAir() && level() instanceof ServerLevel serverLevel) {
+						if (CommonHooks.canEntityDestroy(serverLevel, pos, this) && state.getDestroySpeed(level(), pos) <= 1.5f) {
 
-							blockRemoved = level().removeBlock(pos, false) || blockRemoved;
+							blockRemoved = serverLevel.removeBlock(pos, false) || blockRemoved;
 						} else if (!state.liquid()) {
 							stuck = true;
 						}
@@ -359,14 +370,14 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 		return subEntities;
 	}
 
+	@Nullable
 	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty,
-	                                    MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData) {
-
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, EntitySpawnReason spawnReason, @javax.annotation.Nullable SpawnGroupData spawnGroupData) {
 		anchorPoint = blockPosition().above(15);
 		setSize(getRandom().nextIntBetweenInclusive(1, 3));
 		setHealth(getMaxHealth());
-		return super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData);
+
+		return super.finalizeSpawn(level, difficulty, spawnReason, spawnGroupData);
 	}
 
 	/**
@@ -477,25 +488,24 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 		private final TargetingConditions attackTargeting = TargetingConditions.forCombat().range(128.0D);
 		private int nextScanTick = 20;
 
-		/**
-		 * Returns whether execution should begin. You can also read and cache any state necessary for execution in this
-		 * method as well.
-		 */
 		@Override
 		public boolean canUse() {
 			if (nextScanTick > 0) {
 				--nextScanTick;
 			} else {
-				nextScanTick = 60;
-				List<Player> nearbyPlayers = level().getNearbyPlayers(attackTargeting, LavaRevenantEntity.this,
-						getBoundingBox().inflate(128.0D, 96.0D, 128.0D));
-				if (!nearbyPlayers.isEmpty()) {
-					nearbyPlayers.sort(Comparator.<Entity, Double> comparing(Entity::getY).reversed());
+				if (level() instanceof ServerLevel serverLevel) {
+					nextScanTick = 60;
+					List<Player> nearbyPlayers = serverLevel.getNearbyPlayers(attackTargeting, LavaRevenantEntity.this,
+							getBoundingBox().inflate(128.0D, 96.0D, 128.0D));
 
-					for (Player player : nearbyPlayers) {
-						if (canAttack(player, TargetingConditions.DEFAULT)) {
-							setTarget(player);
-							return true;
+					if (!nearbyPlayers.isEmpty()) {
+						nearbyPlayers.sort(Comparator.<Entity, Double>comparing(Entity::getY).reversed());
+
+						for (Player player : nearbyPlayers) {
+							if (canAttack(player)) {
+								setTarget(player);
+								return true;
+							}
 						}
 					}
 				}
@@ -510,21 +520,17 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 		@Override
 		public boolean canContinueToUse() {
 			LivingEntity target = getTarget();
-			return target != null && canAttack(target, TargetingConditions.DEFAULT);
+			return target != null && canAttack(target);
 		}
 	}
 
 	class AttackStrategyGoal extends Goal {
 		private int nextSweepTick;
 
-		/**
-		 * Returns whether execution should begin. You can also read and cache any state necessary for execution in this
-		 * method as well.
-		 */
 		@Override
 		public boolean canUse() {
 			LivingEntity target = getTarget();
-			return target != null && canAttack(getTarget(), TargetingConditions.DEFAULT);
+			return target != null && canAttack(getTarget());
 		}
 
 		/**
@@ -785,20 +791,22 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 		 */
 		@Override
 		public void tick() {
-			LivingEntity target = getTarget();
-			if (target != null) {
-				moveTargetPoint = new Vec3(target.getX(), target.getY(0.5D), target.getZ());
-				if (getBoundingBox().inflate(0.2F).intersects(target.getBoundingBox())) {
-					if (!inWall) {
-						doHurtTarget(target);
+			if (level() instanceof ServerLevel serverLevel) {
+				LivingEntity target = getTarget();
+				if (target != null) {
+					moveTargetPoint = new Vec3(target.getX(), target.getY(0.5D), target.getZ());
+					if (getBoundingBox().inflate(0.2F).intersects(target.getBoundingBox())) {
+						if (!inWall) {
+							doHurtTarget(serverLevel, target);
+						}
+						attackPhase = LavaRevenantEntity.AttackPhase.CIRCLE;
+						if (!isSilent()) {
+							PacketDistributor.sendToPlayersTrackingChunk((ServerLevel) level(), chunkPosition(), new LocalSoundPayload(blockPosition(), SoundEventRegistry.LAVA_REVENANT_BITE.getKey(),
+									SoundSource.HOSTILE, 0.3F, level().getRandom().nextFloat() * 0.1F + 0.9F, false));
+						}
+					} else if (horizontalCollision || hurtTime > 0) {
+						attackPhase = LavaRevenantEntity.AttackPhase.CIRCLE;
 					}
-					attackPhase = LavaRevenantEntity.AttackPhase.CIRCLE;
-					if (!isSilent()) {
-						PacketDistributor.sendToPlayersTrackingChunk((ServerLevel) level(), chunkPosition(), new LocalSoundPayload(blockPosition(), SoundEventRegistry.LAVA_REVENANT_BITE.get().getLocation(),
-								SoundSource.HOSTILE, 0.3F, level().getRandom().nextFloat() * 0.1F + 0.9F, false));
-					}
-				} else if (horizontalCollision || hurtTime > 0) {
-					attackPhase = LavaRevenantEntity.AttackPhase.CIRCLE;
 				}
 			}
 		}

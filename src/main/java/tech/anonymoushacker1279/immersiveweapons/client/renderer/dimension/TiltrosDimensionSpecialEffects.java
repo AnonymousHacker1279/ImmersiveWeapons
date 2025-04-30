@@ -5,12 +5,10 @@ import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.renderer.*;
-import net.minecraft.client.renderer.FogRenderer.FogMode;
+import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
-import org.joml.Vector3f;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
 public class TiltrosDimensionSpecialEffects extends DimensionSpecialEffects {
@@ -33,20 +31,18 @@ public class TiltrosDimensionSpecialEffects extends DimensionSpecialEffects {
 	}
 
 	@Override
-	public float[] getSunriseColor(float pTimeOfDay, float pPartialTicks) {
-		return null;
+	public int getSunriseOrSunsetColor(float timeOfDay) {
+		return 0xFFFFFF;
 	}
 
 	@Override
-	public boolean renderSky(ClientLevel level, int ticks, float partialTick, Matrix4f modelViewMatrix, Camera camera, Matrix4f projectionMatrix, boolean isFoggy, Runnable setupFog) {
-		FogRenderer.setupFog(camera, FogMode.FOG_SKY, 32.0f, false, partialTick);
+	public boolean renderSky(ClientLevel level, int ticks, float partialTick, Matrix4f modelViewMatrix, Camera camera, Matrix4f projectionMatrix, Runnable setupFog) {
 		PoseStack poseStack = new PoseStack();
 		poseStack.mulPose(modelViewMatrix);
 
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
 		RenderSystem.depthMask(false);
-		RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
 		RenderSystem.setShaderTexture(0, SKY_LOCATION);
 		Tesselator tesselator = Tesselator.getInstance();
 
@@ -86,10 +82,5 @@ public class TiltrosDimensionSpecialEffects extends DimensionSpecialEffects {
 		RenderSystem.disableBlend();
 
 		return true;
-	}
-
-	@Override
-	public void adjustLightmapColors(ClientLevel level, float partialTicks, float skyDarken, float skyLight, float blockLight, int pixelX, int pixelY, Vector3f colors) {
-		colors.set(colors.x() + 0.12f, colors.y(), colors.z() + 0.22f);
 	}
 }

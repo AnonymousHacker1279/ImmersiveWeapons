@@ -8,13 +8,14 @@ import net.minecraft.world.level.biome.*;
 import net.minecraft.world.level.biome.Biome.TemperatureModifier;
 import net.minecraft.world.level.biome.BiomeSpecialEffects.GrassColorModifier;
 import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
-import net.minecraft.world.level.levelgen.GenerationStep.Carving;
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import tech.anonymoushacker1279.immersiveweapons.data.features.IWConfiguredCarvers;
 import tech.anonymoushacker1279.immersiveweapons.data.features.IWPlacedFeatures;
-import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.ParticleTypesRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 
 public class BiomesGenerator {
 
@@ -156,7 +157,7 @@ public class BiomesGenerator {
 	                                                                        HolderGetter<ConfiguredWorldCarver<?>> worldCarvers) {
 
 		BiomeGenerationSettings.Builder generationBuilder = new BiomeGenerationSettings.Builder(placedFeatures, worldCarvers)
-				.addCarver(Carving.AIR, IWConfiguredCarvers.TRENCH)
+				.addCarver(IWConfiguredCarvers.TRENCH)
 				.addFeature(Decoration.VEGETAL_DECORATION, IWPlacedFeatures.PATCH_WOODEN_SPIKES)
 				.addFeature(Decoration.VEGETAL_DECORATION, IWPlacedFeatures.BURNED_OAK_TREE);
 
@@ -170,7 +171,7 @@ public class BiomesGenerator {
 	                                                                          HolderGetter<ConfiguredWorldCarver<?>> worldCarvers) {
 
 		BiomeGenerationSettings.Builder generationBuilder = new BiomeGenerationSettings.Builder(placedFeatures, worldCarvers)
-				.addCarver(Carving.AIR, IWConfiguredCarvers.TILTROS_WASTES)
+				.addCarver(IWConfiguredCarvers.TILTROS_WASTES)
 				.addFeature(Decoration.LOCAL_MODIFICATIONS, IWPlacedFeatures.ASTRAL_GEODE);
 
 		VanillaFeatures.getOverworldBaseGeneration(generationBuilder);

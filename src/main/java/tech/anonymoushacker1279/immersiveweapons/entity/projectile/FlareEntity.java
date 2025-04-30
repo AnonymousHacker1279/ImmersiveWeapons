@@ -3,8 +3,13 @@ package tech.anonymoushacker1279.immersiveweapons.entity.projectile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.syncher.*;
-import net.minecraft.world.entity.*;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.projectile.Arrow;
@@ -81,7 +86,8 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 					}
 					lightPositions.clear();
 				}
-				kill();
+
+				discard();
 			}
 		}
 
@@ -111,8 +117,8 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 		}
 
 		// Aggro nearby minutemen to attack the nearest monster
-		if (shouldStopMoving && !level().isClientSide && tickCount % 4 == 0) {
-			aggroNearbyMinutemen();
+		if (shouldStopMoving && level() instanceof ServerLevel serverLevel && tickCount % 4 == 0) {
+			aggroNearbyMinutemen(serverLevel);
 		}
 	}
 
@@ -126,7 +132,10 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 		super.doWhenHitEntity(entity);
 		hasHitEntity = true;
 		entity.igniteForSeconds(6);
-		aggroNearbyMinutemen();
+
+		if (entity.level() instanceof ServerLevel serverLevel) {
+			aggroNearbyMinutemen(serverLevel);
+		}
 	}
 
 	/**
@@ -208,12 +217,12 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 		}
 	}
 
-	private void aggroNearbyMinutemen() {
-		Monster monster = level().getNearestEntity(Monster.class, TargetingConditions.forCombat(), null, getX(), getY(), getZ(), getBoundingBox().inflate(7));
-		MinutemanEntity minuteman = level().getNearestEntity(MinutemanEntity.class, TargetingConditions.forNonCombat(), null, getX(), getY(), getZ(), getBoundingBox().inflate(16));
+	private void aggroNearbyMinutemen(ServerLevel serverLevel) {
+		Monster monster = serverLevel.getNearestEntity(Monster.class, TargetingConditions.forCombat(), null, getX(), getY(), getZ(), getBoundingBox().inflate(7));
+		MinutemanEntity minuteman = serverLevel.getNearestEntity(MinutemanEntity.class, TargetingConditions.forNonCombat(), null, getX(), getY(), getZ(), getBoundingBox().inflate(16));
 
 		if (monster != null && minuteman != null && getOwner() instanceof LivingEntity owner) {
-			if (!minuteman.isAngryAt(owner)) {
+			if (!minuteman.isAngryAt(owner, serverLevel)) {
 				minuteman.aggroNearbyMinutemen(getBoundingBox(), monster);
 			}
 		}

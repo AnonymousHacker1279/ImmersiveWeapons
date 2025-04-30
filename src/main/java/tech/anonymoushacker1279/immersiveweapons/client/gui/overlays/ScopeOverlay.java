@@ -19,7 +19,7 @@ public class ScopeOverlay {
 		int y1 = y + vHeight;
 		RenderSystem.enableBlend();
 		RenderSystem.setShaderColor(0.0f, 0.0f, 0.0f, 0.1f);
-		gui.blit(IWOverlays.SCOPE_LOCATION, x, y, -90, 0.0F, 0.0F, uWidth, vHeight, uWidth, vHeight);
+		gui.blit(rl -> RenderType.guiOverlay(), IWOverlays.SCOPE_LOCATION, x, y, -90, 0.0F, uWidth, vHeight, uWidth, vHeight);
 		RenderSystem.disableBlend();
 		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
 		gui.fill(RenderType.guiOverlay(), 0, y1, guiWidth, guiHeight, -90, -16777216);

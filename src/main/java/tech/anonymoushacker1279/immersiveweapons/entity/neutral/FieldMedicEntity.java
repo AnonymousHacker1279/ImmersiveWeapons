@@ -1,12 +1,16 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.neutral;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
@@ -90,8 +94,8 @@ public class FieldMedicEntity extends SoldierEntity {
 	}
 
 	@Override
-	public boolean hurt(DamageSource source, float amount) {
-		boolean didHurt = super.hurt(source, amount);
+	public boolean hurtServer(ServerLevel serverLevel, DamageSource source, float amount) {
+		boolean didHurt = super.hurtServer(serverLevel, source, amount);
 		if (didHurt && source.getEntity() instanceof LivingEntity livingEntity) {
 
 			double followDistance = getAttributeValue(Attributes.FOLLOW_RANGE);
@@ -110,8 +114,8 @@ public class FieldMedicEntity extends SoldierEntity {
 	}
 
 	@Override
-	public boolean doHurtTarget(Entity entity) {
-		boolean didHurtTarget = super.doHurtTarget(entity);
+	public boolean doHurtTarget(ServerLevel serverLevel, Entity entity) {
+		boolean didHurtTarget = super.doHurtTarget(serverLevel, entity);
 		if (didHurtTarget && entity instanceof LivingEntity livingEntity) {
 			if (!getMainHandItem().is(ItemRegistry.USED_SYRINGE.get())) {
 				prepareForCombat();

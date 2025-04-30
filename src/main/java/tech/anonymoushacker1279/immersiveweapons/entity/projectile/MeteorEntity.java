@@ -20,7 +20,9 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.Level.ExplosionInteraction;
-import net.minecraft.world.phys.*;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.event.EventHooks;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
@@ -47,7 +49,8 @@ public class MeteorEntity extends Projectile {
 	 * @param owner        the <code>LivingEntity</code> owner
 	 * @param staff        the <code>ItemStack</code> staff. May be null if not summoned by a staff.
 	 * @param targetPos    the <code>BlockPos</code> target position
-	 * @param targetEntity the <code>LivingEntity</code> target entity. May be null. If not, the meteor will only damage the specified target.
+	 * @param targetEntity the <code>LivingEntity</code> target entity. May be null. If not, the meteor will only damage
+	 *                     the specified target.
 	 * @return true if the meteor was successfully created, false otherwise
 	 */
 	public static boolean create(Level level, LivingEntity owner, @Nullable ItemStack staff, BlockPos targetPos, @Nullable LivingEntity targetEntity) {
@@ -225,7 +228,7 @@ public class MeteorEntity extends Projectile {
 			}
 		}
 
-		kill();
+		discard();
 	}
 
 	@Override

@@ -4,7 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseFireBlock;
@@ -30,13 +30,13 @@ public abstract class BaseFireBlockMixin {
 		if (pEntity instanceof ItemEntity itemEntity && itemEntity.getItem().is(ItemRegistry.HANS_BLESSING.get())) {
 			// Check if inside a Champion Tower structure
 			if (pLevel instanceof ServerLevel serverLevel) {
-				Structure structure = serverLevel.structureManager().registryAccess().registryOrThrow(Registries.STRUCTURE).get(SuperHansEntity.CHAMPION_TOWER_KEY);
+				Structure structure = serverLevel.structureManager().registryAccess().lookupOrThrow(Registries.STRUCTURE).getValue(SuperHansEntity.CHAMPION_TOWER_KEY);
 				if (structure != null) {
 					StructureStart structureStart = serverLevel.structureManager().getStructureWithPieceAt(pPos, structure);
 					if (structureStart.isValid()) {
 						SuperHansEntity superHans = new SuperHansEntity(EntityRegistry.SUPER_HANS_ENTITY.get(), pLevel);
 						superHans.setPos(pEntity.position());
-						superHans.finalizeSpawn(serverLevel, pLevel.getCurrentDifficultyAt(pPos), MobSpawnType.TRIGGERED, null);
+						superHans.finalizeSpawn(serverLevel, pLevel.getCurrentDifficultyAt(pPos), EntitySpawnReason.TRIGGERED, null);
 						pLevel.addFreshEntity(superHans);
 
 						// Destroy the item

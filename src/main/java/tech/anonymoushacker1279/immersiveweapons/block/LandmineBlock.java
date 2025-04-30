@@ -2,10 +2,11 @@ package tech.anonymoushacker1279.immersiveweapons.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -13,16 +14,25 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.*;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.Level.ExplosionInteraction;
-import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.state.*;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.shapes.*;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
@@ -58,14 +68,14 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 	}
 
 	@Override
-	protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
+	protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
 		if (!level.isClientSide) {
 			ItemStack currentlyHeldItem = player.getMainHandItem();
 
 			// Disarm with pliers if armed
 			if (state.getValue(ARMED) && currentlyHeldItem.getItem() == ItemRegistry.PLIERS.get()) {
 				level.setBlock(pos, state.setValue(ARMED, false), 3);
-				return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+				return InteractionResult.PASS;
 			}
 
 			// Arm if not currently set and pliers are not held
@@ -80,7 +90,7 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 					currentlyHeldItem.shrink(1);
 				}
 
-				return ItemInteractionResult.CONSUME;
+				return InteractionResult.CONSUME;
 			}
 
 			// Add sand if not already camouflaged
@@ -90,11 +100,11 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 					currentlyHeldItem.shrink(1);
 				}
 
-				return ItemInteractionResult.CONSUME;
+				return InteractionResult.CONSUME;
 			}
 		}
 
-		return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+		return InteractionResult.PASS;
 	}
 
 	@Override
@@ -153,10 +163,8 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 	}
 
 	@Override
-	public void wasExploded(Level level, BlockPos pos, Explosion explosion) {
-		if (!level.isClientSide) {
-			explode(level, pos, null);
-		}
+	public void wasExploded(ServerLevel level, BlockPos pos, Explosion explosion) {
+		explode(level, pos, null);
 	}
 
 	@Override

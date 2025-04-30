@@ -2,7 +2,9 @@ package tech.anonymoushacker1279.immersiveweapons.entity.monster;
 
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.syncher.*;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -189,7 +191,7 @@ public class StormCreeperEntity extends Creeper implements GrantAdvancementOnDis
 		if (damageSource.getEntity() instanceof StormCreeperEntity creeper) {
 			if (creeper.canDropMobsSkull()) {
 				creeper.increaseDroppedSkulls();
-				spawnAtLocation(Items.CREEPER_HEAD);
+				spawnAtLocation(level, Items.CREEPER_HEAD);
 			}
 		}
 	}
@@ -235,7 +237,7 @@ public class StormCreeperEntity extends Creeper implements GrantAdvancementOnDis
 				itemInHand.hurtAndBreak(1, pPlayer, EquipmentSlot.MAINHAND);
 			}
 
-			return InteractionResult.sidedSuccess(level().isClientSide);
+			return InteractionResult.SUCCESS;
 		} else {
 			return super.mobInteract(pPlayer, pHand);
 		}
@@ -294,8 +296,8 @@ public class StormCreeperEntity extends Creeper implements GrantAdvancementOnDis
 	}
 
 	@Override
-	public int getBaseExperienceReward() {
-		xpReward = 5 + level().random.nextInt(5);
-		return super.getBaseExperienceReward();
+	protected int getBaseExperienceReward(ServerLevel level) {
+		xpReward = 5 + level.random.nextInt(5);
+		return super.getBaseExperienceReward(level);
 	}
 }

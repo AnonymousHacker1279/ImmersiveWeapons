@@ -2,7 +2,10 @@ package tech.anonymoushacker1279.immersiveweapons.entity.ambient;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.syncher.*;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
@@ -109,8 +112,8 @@ public class FireflyEntity extends AmbientCreature {
 	}
 
 	@Override
-	protected void customServerAiStep() {
-		super.customServerAiStep();
+	protected void customServerAiStep(ServerLevel serverLevel) {
+		super.customServerAiStep(serverLevel);
 		BlockPos pos = blockPosition();
 		// Get the block pos of the block the entity is facing
 		BlockPos targetPos = pos.relative(getDirection());
@@ -146,7 +149,7 @@ public class FireflyEntity extends AmbientCreature {
 				setYRot(getDirection().toYRot());
 
 				// If players get too close, stop resting
-				if (level().getNearestPlayer(RESTING_TARGETING, this) != null) {
+				if (level().getNearestPlayer(this, 2.0D) != null) {
 					setResting(false);
 					targetPosition = null;
 					if (!isSilent) {
@@ -161,7 +164,7 @@ public class FireflyEntity extends AmbientCreature {
 				}
 			}
 		} else {
-			if (targetBlockPosition != null && (!level().isEmptyBlock(targetBlockPosition) || targetBlockPosition.getY() <= level().getMinBuildHeight())) {
+			if (targetBlockPosition != null && (!level().isEmptyBlock(targetBlockPosition) || targetBlockPosition.getY() <= level().getMinY())) {
 				targetBlockPosition = null;
 			}
 
@@ -225,21 +228,14 @@ public class FireflyEntity extends AmbientCreature {
 		return true;
 	}
 
-	/**
-	 * Called when the entity is attacked.
-	 */
 	@Override
-	public boolean hurt(DamageSource pSource, float pAmount) {
-		if (isInvulnerableTo(pSource)) {
-			return false;
-		} else {
-			if (!level().isClientSide && isResting()) {
-				setResting(false);
-				targetPosition = null;
-			}
-
-			return super.hurt(pSource, pAmount);
+	public boolean hurtServer(ServerLevel level, DamageSource damageSource, float amount) {
+		if (isResting()) {
+			setResting(false);
+			targetPosition = null;
 		}
+
+		return super.hurtServer(level, damageSource, amount);
 	}
 
 	@Override

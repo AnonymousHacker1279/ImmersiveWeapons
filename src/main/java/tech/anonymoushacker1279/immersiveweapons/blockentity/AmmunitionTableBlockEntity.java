@@ -9,6 +9,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -16,18 +17,21 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockEntityRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.DataComponentTypeRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.RecipeTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.AmmunitionTableRecipe;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.AmmunitionTableRecipe.MaterialGroup;
+import tech.anonymoushacker1279.immersiveweapons.item.crafting.input.AmmunitionTableRecipeInput;
 import tech.anonymoushacker1279.immersiveweapons.menu.AmmunitionTableMenu;
 
 import java.util.List;
+import java.util.Optional;
 
 public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity implements EntityBlock {
 
@@ -106,8 +110,7 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 
 		if (tag.contains("excessStack")) {
 			String itemName = tag.getString("excessStack");
-			excessStack = BuiltInRegistries.ITEM.get(ResourceLocation.parse(itemName)).getDefaultInstance();
-			excessStack.setCount(Math.clamp(containerData.get(1), 0, 99));
+			excessStack = BuiltInRegistries.ITEM.getValue(ResourceLocation.parse(itemName)).getDefaultInstance();
 			excessStack.set(DENSITY_MODIFIER, densityModifier);
 		}
 	}
@@ -234,24 +237,25 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 	/**
 	 * Try to find a valid recipe based on the first item in the inventory.
 	 *
-	 * @param level the <code>Level</code> instance
+	 * @param serverLevel the <code>ServerLevel</code> instance
 	 * @return RecipeHolder
 	 */
-	private @Nullable RecipeHolder<AmmunitionTableRecipe> getValidRecipe(Level level) {
-		List<RecipeHolder<AmmunitionTableRecipe>> recipes = level.getRecipeManager()
-				.getAllRecipesFor(RecipeTypeRegistry.AMMUNITION_TABLE_RECIPE_TYPE.get());
+	private @Nullable RecipeHolder<AmmunitionTableRecipe> getValidRecipe(ServerLevel serverLevel) {
+		// Create a temporary inventory to hold the items that only include the first 6 slots
+		NonNullList<ItemStack> tempInventory = NonNullList.withSize(6, ItemStack.EMPTY);
+		for (int i = 0; i < 6; i++) {
+			tempInventory.set(i, inventory.get(i));
+		}
 
-		ItemStack firstStack = inventory.stream().filter(stack -> stack != ItemStack.EMPTY).findFirst().orElse(ItemStack.EMPTY);
+		Optional<RecipeHolder<AmmunitionTableRecipe>> optional = serverLevel.recipeAccess()
+				.getRecipeFor(RecipeTypeRegistry.AMMUNITION_TABLE_RECIPE_TYPE.get(), new AmmunitionTableRecipeInput(tempInventory), serverLevel);
 
-		return recipes.stream()
-				.filter(r -> r.value().getIngredients().stream().anyMatch(ingredient -> ingredient.test(firstStack)))
-				.findFirst()
-				.orElse(null);
+		return optional.orElse(null);
 	}
 
 	/**
-	 * Calculates the output size based on the current recipe and available inventory materials. It will additionally set
-	 * slot costs for each input item.
+	 * Calculates the output size based on the current recipe and available inventory materials. It will additionally
+	 * set slot costs for each input item.
 	 *
 	 * @param materialGroups the list of <code>MaterialGroup</code> instances
 	 * @return int
@@ -284,48 +288,51 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 			return;
 		}
 
-		RecipeHolder<AmmunitionTableRecipe> recipe = getValidRecipe(level);
+		if (level instanceof ServerLevel serverLevel) {
+			RecipeHolder<AmmunitionTableRecipe> recipe = getValidRecipe(serverLevel);
 
-		if (recipe == null) {
-			if (excessStack != ItemStack.EMPTY && didCraft) {
-				inventory.set(6, excessStack);
-				handleExcess();
+			if (recipe == null) {
+				if (excessStack != ItemStack.EMPTY && didCraft) {
+					inventory.set(6, excessStack);
+					handleExcess();
+				} else {
+					inventory.set(6, ItemStack.EMPTY);
+					containerData.set(1, 0);
+				}
+
+				return;
+			}
+
+			List<MaterialGroup> recipeMaterials = recipe.value().materials();
+			ItemStack result = recipe.value().result();
+
+			slotCosts.clear();
+			int outputSize = calculateOutputSize(recipeMaterials);
+
+			if (outputSize > 99) {
+				containerData.set(1, outputSize - 99);
+				outputSize = 99;
+				excessStack = result.copyWithCount(outputSize);
+
+				if (densityModifier > 0) {
+					excessStack.set(DENSITY_MODIFIER, densityModifier);
+				}
 			} else {
-				inventory.set(6, ItemStack.EMPTY);
 				containerData.set(1, 0);
 			}
 
-			return;
-		}
-
-		List<MaterialGroup> recipeMaterials = recipe.value().getMaterials();
-		ItemStack result = recipe.value().getResultItem(level.registryAccess());
-
-		slotCosts.clear();
-		int outputSize = calculateOutputSize(recipeMaterials);
-
-		if (outputSize > 99) {
-			containerData.set(1, outputSize - 99);
-			outputSize = 99;
-			excessStack = result.copyWithCount(outputSize);
-
 			if (densityModifier > 0) {
-				excessStack.set(DENSITY_MODIFIER, densityModifier);
+				result.set(DENSITY_MODIFIER, densityModifier);
 			}
-		} else {
-			containerData.set(1, 0);
-		}
 
-		if (densityModifier > 0) {
-			result.set(DENSITY_MODIFIER, densityModifier);
+			result.setCount(outputSize);
+			inventory.set(6, result);
 		}
-
-		result.setCount(outputSize);
-		inventory.set(6, result);
 	}
 
 	/**
-	 * Runs after a result stack has been taken. Decreases the stack size of each input item by the amount specified in the slotCosts list.
+	 * Runs after a result stack has been taken. Decreases the stack size of each input item by the amount specified in
+	 * the slotCosts list.
 	 */
 	public void depleteMaterials() {
 		for (int i = 0; i < 6; i++) {

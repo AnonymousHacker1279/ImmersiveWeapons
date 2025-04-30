@@ -5,40 +5,44 @@ import com.mojang.math.Axis;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.resources.ResourceLocation;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.model.LavaRevenantModel;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.layers.LavaRevenantEyesLayer;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.lava_revenant.LavaRevenantEntity;
 
-public class LavaRevenantRenderer extends MobRenderer<LavaRevenantEntity, LavaRevenantModel<LavaRevenantEntity>> {
+public class LavaRevenantRenderer extends MobRenderer<LavaRevenantEntity, LivingEntityRenderState, LavaRevenantModel> {
 
 	private static final ResourceLocation TEXTURE_LOCATION = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/entity/lava_revenant/lava_revenant.png");
 
 	public LavaRevenantRenderer(EntityRendererProvider.Context context) {
-		super(context, new LavaRevenantModel<>(context.bakeLayer(ModelLayers.PHANTOM)), 0.75F);
-		addLayer(new LavaRevenantEyesLayer<>(this));
+		super(context, new LavaRevenantModel(context.bakeLayer(ModelLayers.PHANTOM)), 0.75F);
+		addLayer(new LavaRevenantEyesLayer(this));
 	}
 
-	/**
-	 * Returns the location of an entity's texture.
-	 */
 	@Override
-	public ResourceLocation getTextureLocation(LavaRevenantEntity pEntity) {
+	public LivingEntityRenderState createRenderState() {
+		return new LivingEntityRenderState();
+	}
+
+	@Override
+	public ResourceLocation getTextureLocation(LivingEntityRenderState state) {
 		return TEXTURE_LOCATION;
 	}
 
 	@Override
-	protected void scale(LavaRevenantEntity entity, PoseStack poseStack, float partialTick) {
-		int size = entity.getSize();
+	protected void scale(LivingEntityRenderState state, PoseStack poseStack) {
+		// int size = state.getSize();
+		int size = 1;   // TODO: need custom render state
 		float sizeModifier = 1.0F + 5.0F * (float) size;
 		poseStack.scale(sizeModifier, sizeModifier, sizeModifier);
 		poseStack.translate(0.0D, 1.3125D, 0.1875D);
 	}
 
 	@Override
-	protected void setupRotations(LavaRevenantEntity entity, PoseStack pMatrixStack, float age, float yaw, float partialTick, float scale) {
-		super.setupRotations(entity, pMatrixStack, age, yaw, partialTick, scale);
-		pMatrixStack.mulPose(Axis.XP.rotationDegrees(entity.getXRot()));
+	protected void setupRotations(LivingEntityRenderState renderState, PoseStack poseStack, float bodyRot, float scale) {
+		super.setupRotations(renderState, poseStack, bodyRot, scale);
+		poseStack.mulPose(Axis.XP.rotationDegrees(renderState.xRot));
 	}
 }

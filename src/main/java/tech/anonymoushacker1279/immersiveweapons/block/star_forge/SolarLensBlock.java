@@ -2,8 +2,13 @@ package tech.anonymoushacker1279.immersiveweapons.block.star_forge;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.level.*;
-import net.minecraft.world.level.block.*;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.TransparentBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -39,11 +44,8 @@ public class SolarLensBlock extends TransparentBlock {
 	}
 
 	@Override
-	public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState,
-	                              LevelAccessor levelAccessor, BlockPos currentPos,
-	                              BlockPos neighborPos) {
-
-		return !state.canSurvive(levelAccessor, currentPos) ? Blocks.AIR.defaultBlockState()
-				: super.updateShape(state, direction, neighborState, levelAccessor, currentPos, neighborPos);
+	protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess scheduledTickAccess, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
+		return !state.canSurvive(level, pos) ? Blocks.AIR.defaultBlockState()
+				: super.updateShape(state, level, scheduledTickAccess, pos, direction, neighborPos, neighborState, random);
 	}
 }

@@ -15,9 +15,12 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.AdvancementProvider;
@@ -38,6 +41,10 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 
 	@Override
 	public void generate(Provider provider, Consumer<AdvancementHolder> consumer, ExistingFileHelper existingFileHelper) {
+		HolderGetter<Item> itemLookup = provider.lookupOrThrow(Registries.ITEM);
+		HolderGetter<Block> blockLookup = provider.lookupOrThrow(Registries.BLOCK);
+		HolderGetter<EntityType<?>> entityTypeLookup = provider.lookupOrThrow(Registries.ENTITY_TYPE);
+
 		// Root advancement
 		AdvancementHolder root = Builder.advancement()
 				.display(ItemRegistry.TESLA_SWORD.get(),
@@ -760,7 +767,7 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 						createDescription("pike"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(IWItemTagGroups.PIKES).build()))
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(itemLookup, IWItemTagGroups.PIKES).build()))
 				.requirements(Strategy.OR)
 				.save(consumer, prefixString("pike"));
 
@@ -770,7 +777,7 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 						createDescription("shards"),
 						null, AdvancementType.TASK, false, false, false)
 				.addCriterion("hold",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(IWItemTagGroups.SHARDS).build()))
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(itemLookup, IWItemTagGroups.SHARDS).build()))
 				.requirements(Strategy.OR)
 				.save(consumer, prefixString("shards"));
 
@@ -828,7 +835,7 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 						createDescription("musket_ball"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(IWItemTagGroups.MUSKET_BALLS).build()))
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(itemLookup, IWItemTagGroups.MUSKET_BALLS).build()))
 				.save(consumer, prefixString("musket_ball"));
 
 		Builder.advancement().parent(root)
@@ -917,7 +924,7 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 						createDescription("smoke_grenade"),
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(IWItemTagGroups.SMOKE_GRENADES)))
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(itemLookup, IWItemTagGroups.SMOKE_GRENADES)))
 				.save(consumer, prefixString("smoke_grenade"));
 
 		Builder.advancement().parent(smallPartsTable)
@@ -971,7 +978,7 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 						createDescription("gauntlet"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(IWItemTagGroups.GAUNTLETS).build()))
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(itemLookup, IWItemTagGroups.GAUNTLETS).build()))
 				.requirements(Strategy.OR)
 				.save(consumer, prefixString("gauntlet"));
 
@@ -983,7 +990,7 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 						null, AdvancementType.TASK, false, false, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(
-								ItemPredicate.Builder.item().of(Tags.Items.INGOTS).build())
+								ItemPredicate.Builder.item().of(itemLookup, Tags.Items.INGOTS).build())
 				)
 				.save(consumer, prefixString("ingots"));
 
@@ -994,7 +1001,7 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 						null, AdvancementType.TASK, false, false, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(
-								ItemPredicate.Builder.item().of(Tags.Items.NUGGETS).build())
+								ItemPredicate.Builder.item().of(itemLookup, Tags.Items.NUGGETS).build())
 				)
 				.save(consumer, prefixString("nuggets"));
 
@@ -1183,22 +1190,22 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 						createTitle("entity_discovery"),
 						createDescription("entity_discovery"),
 						null, AdvancementType.GOAL, true, true, false)
-				.addCriterion("discover_minuteman", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.MINUTEMAN_ENTITY.get()))
-				.addCriterion("discover_field_medic", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.FIELD_MEDIC_ENTITY.get()))
-				.addCriterion("discover_dying_soldier", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.DYING_SOLDIER_ENTITY.get()))
-				.addCriterion("discover_the_commander", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.THE_COMMANDER_ENTITY.get()))
-				.addCriterion("discover_wandering_warrior", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.WANDERING_WARRIOR_ENTITY.get()))
-				.addCriterion("discover_hans", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.HANS_ENTITY.get()))
-				.addCriterion("discover_super_hans", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.SUPER_HANS_ENTITY.get()))
-				.addCriterion("discover_lava_revenant", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.LAVA_REVENANT_ENTITY.get()))
-				.addCriterion("discover_rock_spider", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.ROCK_SPIDER_ENTITY.get()))
-				.addCriterion("discover_celestial_tower", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.CELESTIAL_TOWER_ENTITY.get()))
-				.addCriterion("discover_starmite", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.STARMITE_ENTITY.get()))
-				.addCriterion("discover_storm_creeper", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.STORM_CREEPER_ENTITY.get()))
-				.addCriterion("discover_evil_eye", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.EVIL_EYE_ENTITY.get()))
-				.addCriterion("discover_star_wolf", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.STAR_WOLF_ENTITY.get()))
-				.addCriterion("discover_skygazer", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.SKYGAZER_ENTITY.get()))
-				.addCriterion("discover_skeleton_merchant", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.SKELETON_MERCHANT_ENTITY.get()))
+				.addCriterion("discover_minuteman", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.MINUTEMAN_ENTITY.get()))
+				.addCriterion("discover_field_medic", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.FIELD_MEDIC_ENTITY.get()))
+				.addCriterion("discover_dying_soldier", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.DYING_SOLDIER_ENTITY.get()))
+				.addCriterion("discover_the_commander", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.THE_COMMANDER_ENTITY.get()))
+				.addCriterion("discover_wandering_warrior", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.WANDERING_WARRIOR_ENTITY.get()))
+				.addCriterion("discover_hans", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.HANS_ENTITY.get()))
+				.addCriterion("discover_super_hans", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.SUPER_HANS_ENTITY.get()))
+				.addCriterion("discover_lava_revenant", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.LAVA_REVENANT_ENTITY.get()))
+				.addCriterion("discover_rock_spider", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.ROCK_SPIDER_ENTITY.get()))
+				.addCriterion("discover_celestial_tower", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.CELESTIAL_TOWER_ENTITY.get()))
+				.addCriterion("discover_starmite", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.STARMITE_ENTITY.get()))
+				.addCriterion("discover_storm_creeper", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.STORM_CREEPER_ENTITY.get()))
+				.addCriterion("discover_evil_eye", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.EVIL_EYE_ENTITY.get()))
+				.addCriterion("discover_star_wolf", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.STAR_WOLF_ENTITY.get()))
+				.addCriterion("discover_skygazer", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.SKYGAZER_ENTITY.get()))
+				.addCriterion("discover_skeleton_merchant", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.SKELETON_MERCHANT_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(150))
 				.save(consumer, prefixString("entity_discovery"));
 
@@ -1207,7 +1214,7 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 						createTitle("discover_minuteman"),
 						createDescription("discover_minuteman"),
 						null, AdvancementType.TASK, true, true, false)
-				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.MINUTEMAN_ENTITY.get()))
+				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.MINUTEMAN_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, prefixString("discover_minuteman"));
 
@@ -1216,7 +1223,7 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 						createTitle("discover_field_medic"),
 						createDescription("discover_field_medic"),
 						null, AdvancementType.TASK, true, true, false)
-				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.FIELD_MEDIC_ENTITY.get()))
+				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.FIELD_MEDIC_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, prefixString("discover_field_medic"));
 
@@ -1225,7 +1232,7 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 						createTitle("discover_dying_soldier"),
 						createDescription("discover_dying_soldier"),
 						null, AdvancementType.TASK, true, true, false)
-				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.DYING_SOLDIER_ENTITY.get()))
+				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.DYING_SOLDIER_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, prefixString("discover_dying_soldier"));
 
@@ -1234,7 +1241,7 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 						createTitle("discover_the_commander"),
 						createDescription("discover_the_commander"),
 						null, AdvancementType.TASK, true, true, false)
-				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.THE_COMMANDER_ENTITY.get()))
+				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.THE_COMMANDER_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, prefixString("discover_the_commander"));
 
@@ -1243,7 +1250,7 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 						createTitle("discover_wandering_warrior"),
 						createDescription("discover_wandering_warrior"),
 						null, AdvancementType.TASK, true, true, false)
-				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.WANDERING_WARRIOR_ENTITY.get()))
+				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.WANDERING_WARRIOR_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, prefixString("discover_wandering_warrior"));
 
@@ -1252,7 +1259,7 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 						createTitle("discover_hans"),
 						createDescription("discover_hans"),
 						null, AdvancementType.TASK, true, true, false)
-				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.HANS_ENTITY.get()))
+				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.HANS_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, prefixString("discover_hans"));
 
@@ -1261,7 +1268,7 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 						createTitle("discover_super_hans"),
 						createDescription("discover_super_hans"),
 						null, AdvancementType.TASK, true, true, false)
-				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.SUPER_HANS_ENTITY.get()))
+				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.SUPER_HANS_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, prefixString("discover_super_hans"));
 
@@ -1270,7 +1277,7 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 						createTitle("discover_lava_revenant"),
 						createDescription("discover_lava_revenant"),
 						null, AdvancementType.TASK, true, true, false)
-				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.LAVA_REVENANT_ENTITY.get()))
+				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.LAVA_REVENANT_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, prefixString("discover_lava_revenant"));
 
@@ -1279,7 +1286,7 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 						createTitle("discover_rock_spider"),
 						createDescription("discover_rock_spider"),
 						null, AdvancementType.TASK, true, true, false)
-				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.ROCK_SPIDER_ENTITY.get()))
+				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.ROCK_SPIDER_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, prefixString("discover_rock_spider"));
 
@@ -1288,7 +1295,7 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 						createTitle("discover_starmite"),
 						createDescription("discover_starmite"),
 						null, AdvancementType.TASK, true, true, false)
-				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.STARMITE_ENTITY.get()))
+				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.STARMITE_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, prefixString("discover_starmite"));
 
@@ -1297,7 +1304,7 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 						createTitle("discover_storm_creeper"),
 						createDescription("discover_storm_creeper"),
 						null, AdvancementType.TASK, true, true, false)
-				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.STORM_CREEPER_ENTITY.get()))
+				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.STORM_CREEPER_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, prefixString("discover_storm_creeper"));
 
@@ -1306,7 +1313,7 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 						createTitle("discover_evil_eye"),
 						createDescription("discover_evil_eye"),
 						null, AdvancementType.TASK, true, true, false)
-				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.EVIL_EYE_ENTITY.get()))
+				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.EVIL_EYE_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, prefixString("discover_evil_eye"));
 
@@ -1315,7 +1322,7 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 						createTitle("discover_star_wolf"),
 						createDescription("discover_star_wolf"),
 						null, AdvancementType.TASK, true, true, false)
-				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.STAR_WOLF_ENTITY.get()))
+				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.STAR_WOLF_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, prefixString("discover_star_wolf"));
 
@@ -1324,7 +1331,7 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 						createTitle("discover_skygazer"),
 						createDescription("discover_skygazer"),
 						null, AdvancementType.TASK, true, true, false)
-				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.SKYGAZER_ENTITY.get()))
+				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.SKYGAZER_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, prefixString("discover_skygazer"));
 
@@ -1333,7 +1340,7 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 						createTitle("discover_skeleton_merchant"),
 						createDescription("discover_skeleton_merchant"),
 						null, AdvancementType.TASK, true, true, false)
-				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.SKELETON_MERCHANT_ENTITY.get()))
+				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.SKELETON_MERCHANT_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, prefixString("discover_skeleton_merchant"));
 
@@ -1343,7 +1350,7 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 						createTitle("discover_celestial_tower"),
 						createDescription("discover_celestial_tower"),
 						null, AdvancementType.TASK, true, true, false)
-				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(EntityRegistry.CELESTIAL_TOWER_ENTITY.get()))
+				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.CELESTIAL_TOWER_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, prefixString("discover_celestial_tower"));
 
@@ -1385,7 +1392,7 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(
-								ItemPredicate.Builder.item().of(IWItemTagGroups.ACCESSORIES).build()))
+								ItemPredicate.Builder.item().of(itemLookup, IWItemTagGroups.ACCESSORIES).build()))
 				.rewards(AdvancementRewards.Builder.experience(15))
 				.save(consumer, prefixString("accessories"));
 		Builder.advancement().parent(root)
@@ -1410,7 +1417,7 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 										.source(EntityPredicate.Builder.entity()
 												.equipment(EntityEquipmentPredicate.Builder.equipment()
 														.mainhand(ItemPredicate.Builder.item()
-																.of(ItemRegistry.USED_SYRINGE.get()))
+																.of(itemLookup, ItemRegistry.USED_SYRINGE.get()))
 														.build()))))
 				.save(consumer, prefixString("used_syringe"));
 
@@ -1479,7 +1486,7 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item()
-								.of(ItemTags.PLANKS).build()))
+								.of(itemLookup, ItemTags.PLANKS).build()))
 				.save(consumer, prefixString("planks"));
 
 		Builder.advancement().parent(root)
@@ -1489,7 +1496,7 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item()
-								.of(BlockItemRegistry.MUD_ITEM.get()).build()))
+								.of(itemLookup, BlockItemRegistry.MUD_ITEM.get()).build()))
 				.save(consumer, prefixString("mud"));
 
 		Builder.advancement().parent(root)
@@ -1499,7 +1506,7 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item()
-								.of(Items.BAMBOO).build()))
+								.of(itemLookup, Items.BAMBOO).build()))
 				.save(consumer, prefixString("bamboo"));
 
 		Builder.advancement().parent(root)
@@ -1509,7 +1516,7 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item()
-								.of(BlockItemRegistry.CLOUD_MARBLE_ITEM.get()).build()))
+								.of(itemLookup, BlockItemRegistry.CLOUD_MARBLE_ITEM.get()).build()))
 				.save(consumer, prefixString("cloud_marble"));
 
 		Builder.advancement().parent(root)
@@ -1519,7 +1526,7 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item()
-								.of(BlockItemRegistry.BIOHAZARD_BOX_ITEM.get()).build()))
+								.of(itemLookup, BlockItemRegistry.BIOHAZARD_BOX_ITEM.get()).build()))
 				.save(consumer, prefixString("biohazard_box"));
 
 		Builder.advancement().parent(root)
@@ -1528,7 +1535,7 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 						createDescription("cloud"),
 						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
-						PlayerTrigger.TriggerInstance.walkOnBlockWithEquipment(BlockRegistry.CLOUD.get(),
+						PlayerTrigger.TriggerInstance.walkOnBlockWithEquipment(blockLookup, itemLookup, BlockRegistry.CLOUD.get(),
 								Items.AIR))
 				.save(consumer, prefixString("cloud"));
 
@@ -1650,7 +1657,7 @@ public record AdvancementGenerator() implements AdvancementProvider.AdvancementG
 						createDescription("pedestal_augment"),
 						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold", InventoryChangeTrigger.TriggerInstance.hasItems(
-						ItemPredicate.Builder.item().of(IWItemTagGroups.COMMANDER_PEDESTAL_AUGMENTS).build()))
+						ItemPredicate.Builder.item().of(itemLookup, IWItemTagGroups.COMMANDER_PEDESTAL_AUGMENTS).build()))
 				.rewards(AdvancementRewards.Builder.experience(75))
 				.save(consumer, prefixString("pedestal_augment"));
 

@@ -67,7 +67,7 @@ public class DragonFireballBulletEntity extends BulletEntity implements ItemSupp
 	protected void doWhileTicking() {
 		super.doWhileTicking();
 
-		if (!inGround && level() instanceof ServerLevel serverLevel) {
+		if (!isInGround() && level() instanceof ServerLevel serverLevel) {
 			serverLevel.sendParticles(
 					ParticleTypes.DRAGON_BREATH,
 					position().x, position().y, position().z,

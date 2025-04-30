@@ -3,18 +3,13 @@ package tech.anonymoushacker1279.immersiveweapons.item.tool.tesla;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
-import tech.anonymoushacker1279.immersiveweapons.item.materials.CustomTiers;
+import tech.anonymoushacker1279.immersiveweapons.item.materials.IWToolMaterials;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
 
 public class TeslaSword extends SwordItem implements HitEffectUtils {
 
 	public TeslaSword() {
-		super(CustomTiers.TESLA,
-				new Properties()
-						.attributes(createAttributes(
-								CustomTiers.TESLA, 3, -2.4f)
-						)
-		);
+		super(IWToolMaterials.TESLA.applySwordProperties(new Properties(), 3, -2.4F));
 	}
 
 	@Override

@@ -2,8 +2,11 @@ package tech.anonymoushacker1279.immersiveweapons.entity.monster.lava_revenant;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.Pose;
 import net.neoforged.neoforge.entity.PartEntity;
 
 public class LavaRevenantPart extends PartEntity<LavaRevenantEntity> {
@@ -42,12 +45,9 @@ public class LavaRevenantPart extends PartEntity<LavaRevenantEntity> {
 		return true;
 	}
 
-	/**
-	 * Called when the entity is attacked.
-	 */
 	@Override
-	public boolean hurt(DamageSource pSource, float pAmount) {
-		return !isInvulnerableTo(pSource) && parentMob.hurt(this, pSource, pAmount);
+	public boolean hurtServer(ServerLevel level, DamageSource damageSource, float amount) {
+		return parentMob.hurtServer(level, damageSource, amount);
 	}
 
 	/**

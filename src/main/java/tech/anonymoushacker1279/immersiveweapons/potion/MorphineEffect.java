@@ -1,6 +1,10 @@
 package tech.anonymoushacker1279.immersiveweapons.potion;
 
-import net.minecraft.world.effect.*;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 
 public class MorphineEffect extends MobEffect {
@@ -12,17 +16,17 @@ public class MorphineEffect extends MobEffect {
 	}
 
 	@Override
-	public boolean applyEffectTick(LivingEntity livingEntity, int amplifier) {
+	public boolean applyEffectTick(ServerLevel serverLevel, LivingEntity entity, int amplifier) {
 		if (duration > 900) {
-			livingEntity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, duration - 900, amplifier, false, false));
-			livingEntity.addEffect(new MobEffectInstance(MobEffects.HEALTH_BOOST, duration - 900, amplifier, false, false));
-			livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, duration - 900, amplifier, false, false));
+			entity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, duration - 900, amplifier, false, false));
+			entity.addEffect(new MobEffectInstance(MobEffects.HEALTH_BOOST, duration - 900, amplifier, false, false));
+			entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, duration - 900, amplifier, false, false));
 		}
 
 		if (duration <= 900) {
-			livingEntity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, duration, amplifier, false, false));
-			livingEntity.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, duration, amplifier, false, false));
-			livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, duration, amplifier, false, false));
+			entity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, duration, amplifier, false, false));
+			entity.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, duration, amplifier, false, false));
+			entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, duration, amplifier, false, false));
 		}
 
 		return true;

@@ -1,4 +1,4 @@
-package tech.anonymoushacker1279.immersiveweapons.item.crafting;
+package tech.anonymoushacker1279.immersiveweapons.item.crafting.input;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeInput;

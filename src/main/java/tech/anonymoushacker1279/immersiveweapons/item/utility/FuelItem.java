@@ -1,9 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.item.utility;
 
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeType;
-import org.jetbrains.annotations.Nullable;
 
 public class FuelItem extends Item {
 
@@ -14,8 +11,7 @@ public class FuelItem extends Item {
 		this.burnTime = burnTime;
 	}
 
-	@Override
-	public int getBurnTime(ItemStack itemStack, @Nullable RecipeType<?> recipeType) {
+	public int getBurnTime() {
 		return burnTime;
 	}
 }

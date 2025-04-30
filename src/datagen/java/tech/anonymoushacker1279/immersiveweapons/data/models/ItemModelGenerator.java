@@ -7,8 +7,8 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
-import net.minecraft.world.item.armortrim.TrimMaterial;
-import net.minecraft.world.item.armortrim.TrimMaterials;
+import net.minecraft.world.item.equipment.trim.TrimMaterial;
+import net.minecraft.world.item.equipment.trim.TrimMaterials;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -18,9 +18,9 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.DataGenUtils;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
-import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
-import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem;
+import tech.anonymoushacker1279.immersiveweapons.item.tool.GauntletItem;
+import tech.anonymoushacker1279.immersiveweapons.item.tool.PikeItem;
 import tech.anonymoushacker1279.immersiveweapons.util.markers.DatagenExclusionMarker;
 import tech.anonymoushacker1279.immersiveweapons.util.markers.DatagenExclusionMarker.Type;
 
@@ -217,11 +217,12 @@ public class ItemModelGenerator extends ItemModelProvider implements DataGenUtil
 
 		// Create trimmed variants
 		for (ResourceKey<TrimMaterial> trimMaterial : trimMaterials) {
-			String armorType = switch (item.getEquipmentSlot()) {
+			String armorType = switch (item.getDefaultInstance().getEquipmentSlot()) {
 				case HEAD -> "helmet";
 				case CHEST -> "chestplate";
 				case LEGS -> "leggings";
 				case FEET -> "boots";
+				case null -> null;
 				default -> "";
 			};
 

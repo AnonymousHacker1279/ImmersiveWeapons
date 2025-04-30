@@ -1,7 +1,9 @@
 package tech.anonymoushacker1279.immersiveweapons.item.projectile;
 
-import net.minecraft.core.*;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Holder.Reference;
+import net.minecraft.core.HolderGetter;
+import net.minecraft.core.Position;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -18,7 +20,9 @@ import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils.HitEff
 import tech.anonymoushacker1279.immersiveweapons.util.ArrowAttributeAccessor;
 
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 public class CustomArrowItem<T extends CustomArrowEntity> extends ArrowItem {
@@ -86,8 +90,8 @@ public class CustomArrowItem<T extends CustomArrowEntity> extends ArrowItem {
 	}
 
 	/**
-	 * Check if the arrow is infinite. A more flexible check than Vanilla provides.
-	 * Restricts the ability to lower level arrows, for balance.
+	 * Check if the arrow is infinite. A more flexible check than Vanilla provides. Restricts the ability to lower level
+	 * arrows for balance.
 	 *
 	 * @param arrow   the arrow being checked
 	 * @param bow     the bow firing the arrow

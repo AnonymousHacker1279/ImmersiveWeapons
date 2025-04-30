@@ -83,7 +83,7 @@ public class SimpleDropModifierHandler extends LootModifier {
 		ItemStack stack = itemStack.copyWithCount(lootQuantity);
 
 		if (mobType != null) {
-			if (context.getParamOrNull(LootContextParams.THIS_ENTITY) instanceof Mob mob && mob.getType().is(mobType)) {
+			if (context.getOptionalParameter(LootContextParams.THIS_ENTITY) instanceof Mob mob && mob.getType().is(mobType)) {
 				generatedLoot.add(stack);
 			}
 		} else {

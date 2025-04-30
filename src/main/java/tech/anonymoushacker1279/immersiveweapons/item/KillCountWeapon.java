@@ -59,7 +59,7 @@ public class KillCountWeapon {
 	}
 
 	/**
-	 * An enum of weapon name tiers, which are used to determine the level of a weapon based on the amount of kills.
+	 * An enum of weapon name tiers, which are used to determine the level of a weapon based on the number of kills.
 	 */
 	public enum WeaponTier {
 		SPECIAL("special", 0, ChatFormatting.GRAY),

@@ -4,7 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.ClipContext.Block;
 import net.minecraft.world.level.ClipContext.Fluid;
@@ -37,21 +37,20 @@ public interface SummoningStaff {
 		}
 	}
 
-	default void handleCooldown(Item item, @Nullable BlockPos lookingAt, Player player, InteractionHand hand) {
-		handleCooldown(item, lookingAt, player, hand, getStaffCooldown());
+	default void handleCooldown(@Nullable BlockPos lookingAt, Player player, InteractionHand hand) {
+		handleCooldown(lookingAt, player, hand, getStaffCooldown());
 	}
 
-	default void handleCooldown(Item item, Player player, InteractionHand hand) {
-		handleCooldown(item, BlockPos.ZERO, player, hand, getStaffCooldown());
+	default void handleCooldown(Player player, InteractionHand hand) {
+		handleCooldown(BlockPos.ZERO, player, hand, getStaffCooldown());
 	}
 
-	default void handleCooldown(Item item, @Nullable BlockPos lookingAt, Player player, InteractionHand hand, int cooldown) {
+	default void handleCooldown(@Nullable BlockPos lookingAt, Player player, InteractionHand hand, int cooldown) {
 		if (lookingAt != null) {
 			if (!player.isCreative()) {
-				player.getItemInHand(hand).hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
-
-				// Add a cooldown to the item
-				player.getCooldowns().addCooldown(item, cooldown);
+				ItemStack stack = player.getItemInHand(hand);
+				stack.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
+				player.getCooldowns().addCooldown(stack, cooldown);
 			}
 		}
 	}

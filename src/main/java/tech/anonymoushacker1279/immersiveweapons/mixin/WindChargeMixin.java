@@ -9,7 +9,9 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.windcharge.WindCharge;
-import net.minecraft.world.level.*;
+import net.minecraft.world.level.ExplosionDamageCalculator;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.SimpleExplosionDamageCalculator;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -23,7 +25,7 @@ public abstract class WindChargeMixin {
 
 	@Unique
 	private static final ExplosionDamageCalculator VENTUS_EXPLOSION_DAMAGE_CALCULATOR = new SimpleExplosionDamageCalculator(
-			true, false, Optional.of(2.44F), BuiltInRegistries.BLOCK.getTag(BlockTags.BLOCKS_WIND_CHARGE_EXPLOSIONS).map(Function.identity())
+			true, false, Optional.of(2.44F), BuiltInRegistries.BLOCK.get(BlockTags.BLOCKS_WIND_CHARGE_EXPLOSIONS).map(Function.identity())
 	);
 
 	@WrapMethod(method = "explode")

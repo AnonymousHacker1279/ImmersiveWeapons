@@ -21,9 +21,9 @@ import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IW
 import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
-import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
-import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
+import tech.anonymoushacker1279.immersiveweapons.item.tool.GauntletItem;
+import tech.anonymoushacker1279.immersiveweapons.item.tool.PikeItem;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -66,6 +66,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		tag(Tags.Items.INGOTS).addTag(IWItemTagGroups.STARSTORM_INGOTS);
 		tag(Tags.Items.INGOTS).addTag(IWItemTagGroups.ASTRAL_INGOTS);
 		tag(Tags.Items.INGOTS).addTag(IWItemTagGroups.VOID_INGOTS);
+		tag(Tags.Items.INGOTS).addTag(IWItemTagGroups.HANSIUM_INGOTS);
 
 		// Nugget tags
 		tag(CommonItemTagGroups.COBALT_NUGGETS).add(ItemRegistry.COBALT_NUGGET.get());
@@ -137,6 +138,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		tag(IWItemTagGroups.ASTRAL_INGOTS).add(ItemRegistry.ASTRAL_INGOT.get());
 		tag(IWItemTagGroups.STARSTORM_INGOTS).add(ItemRegistry.STARSTORM_INGOT.get());
 		tag(IWItemTagGroups.VOID_INGOTS).add(ItemRegistry.VOID_INGOT.get());
+		tag(IWItemTagGroups.HANSIUM_INGOTS).add(ItemRegistry.HANSIUM_INGOT.get());
 
 		// Shard tags
 		tag(IWItemTagGroups.MOLTEN_SHARDS).add(ItemRegistry.MOLTEN_SHARD.get());

@@ -1,9 +1,13 @@
 package tech.anonymoushacker1279.immersiveweapons.blockentity;
 
-import net.minecraft.core.*;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.world.*;
+import net.minecraft.world.Clearable;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.Containers;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -13,6 +17,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public abstract class AbstractInventoryBlockEntity extends BlockEntity implements EntityBlock, Clearable {
 
 	private final NonNullList<ItemStack> inventory = NonNullList.withSize(getInventorySize(), ItemStack.EMPTY);
+	private int filledSlots = 0;
 
 	/**
 	 * Constructor for AbstractInventoryBlockEntity.
@@ -23,6 +28,10 @@ public abstract class AbstractInventoryBlockEntity extends BlockEntity implement
 
 	public int getInventorySize() {
 		return 4;
+	}
+
+	public int getFilledSlots() {
+		return filledSlots;
 	}
 
 	/**
@@ -36,6 +45,7 @@ public abstract class AbstractInventoryBlockEntity extends BlockEntity implement
 			ItemStack itemstack = inventory.get(i);
 			if (itemstack.isEmpty()) {
 				inventory.set(i, itemStack.split(1));
+				filledSlots++;
 				inventoryChanged();
 				return true;
 			}
@@ -53,6 +63,7 @@ public abstract class AbstractInventoryBlockEntity extends BlockEntity implement
 					Containers.dropItemStack(level, getBlockPos().getX(), getBlockPos().getY(), getBlockPos().getZ(), inventory.get(i));
 				}
 				inventory.set(i, ItemStack.EMPTY);
+				filledSlots--;
 				inventoryChanged();
 				return;
 			}
@@ -88,6 +99,12 @@ public abstract class AbstractInventoryBlockEntity extends BlockEntity implement
 		super.loadAdditional(nbt, provider);
 		inventory.clear();
 		ContainerHelper.loadAllItems(nbt, inventory, provider);
+
+		for (ItemStack itemStack : inventory) {
+			if (!itemStack.isEmpty()) {
+				filledSlots++;
+			}
+		}
 	}
 
 	/**

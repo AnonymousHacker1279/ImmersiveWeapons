@@ -1,28 +1,40 @@
-package tech.anonymoushacker1279.immersiveweapons.item.pike;
+package tech.anonymoushacker1279.immersiveweapons.item.tool;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ToolMaterial;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.init.AttributeRegistry;
+import tech.anonymoushacker1279.immersiveweapons.item.materials.IWToolMaterials;
 
-public class PikeItem extends TieredItem {
+public class PikeItem extends Item implements HitEffectUtils {
 
-	public final Ingredient repairIngredient;
+	private final HitEffect hitEffect;
 
-	public PikeItem(Tier tier, Properties properties, Ingredient repairIngredient) {
-		super(tier, properties);
+	public PikeItem(ToolMaterial material, float attackSpeedModifier, Properties properties) {
+		super(material.applyCommonProperties(properties).attributes(createAttributes(material, attackSpeedModifier)));
 
-		this.repairIngredient = repairIngredient;
+		if (material == IWToolMaterials.MOLTEN) {
+			hitEffect = HitEffect.MOLTEN;
+		} else if (material == IWToolMaterials.TESLA) {
+			hitEffect = HitEffect.TESLA;
+		} else if (material == IWToolMaterials.VENTUS) {
+			hitEffect = HitEffect.VENTUS;
+		} else {
+			hitEffect = HitEffect.NONE;
+		}
 	}
 
 	@Override
@@ -32,6 +44,15 @@ public class PikeItem extends TieredItem {
 
 	@Override
 	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+		switch (hitEffect) {
+			case MOLTEN -> addMoltenEffects(target, attacker);
+			case TESLA -> addTeslaEffects(target);
+			case VENTUS -> addVentusEffects(target);
+			default -> {
+				// No hit effect
+			}
+		}
+
 		stack.hurtAndBreak(1, attacker, EquipmentSlot.MAINHAND);
 		return true;
 	}
@@ -45,23 +66,19 @@ public class PikeItem extends TieredItem {
 		return true;
 	}
 
-	@Override
-	public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
-		return repairIngredient.test(repair) || super.isValidRepairItem(toRepair, repair);
-	}
+	// TODO: investigate enum extension
+	/*@Override
+	public ItemUseAnimation getUseAnimation(ItemStack pStack) {
+		return ItemUseAnimation.CUSTOM;
+	}*/
 
-	@Override
-	public UseAnim getUseAnimation(ItemStack pStack) {
-		return UseAnim.CUSTOM;
-	}
-
-	public static ItemAttributeModifiers createAttributes(Tier tier, float attackSpeedModifier) {
+	public static ItemAttributeModifiers createAttributes(ToolMaterial material, float attackSpeedModifier) {
 		return ItemAttributeModifiers.builder()
 				.add(
 						Attributes.ATTACK_DAMAGE,
 						new AttributeModifier(
 								ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "attack_damage"),
-								(float) 3 + tier.getAttackDamageBonus(),
+								(float) 3 + material.attackDamageBonus(),
 								Operation.ADD_VALUE
 						),
 						EquipmentSlotGroup.MAINHAND)

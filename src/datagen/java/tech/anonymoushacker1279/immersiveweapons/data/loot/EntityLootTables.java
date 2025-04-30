@@ -1,8 +1,12 @@
 package tech.anonymoushacker1279.immersiveweapons.data.loot;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.advancements.critereon.*;
+import net.minecraft.advancements.critereon.EntityFlagsPredicate;
+import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.advancements.critereon.NbtPredicate;
+import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.EntityLootSubProvider;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -11,17 +15,24 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.storage.loot.*;
+import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootContext.EntityTarget;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.entries.TagEntry;
 import net.minecraft.world.level.storage.loot.functions.*;
 import net.minecraft.world.level.storage.loot.functions.SetNameFunction.Target;
-import net.minecraft.world.level.storage.loot.predicates.*;
+import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemKilledByPlayerCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceWithEnchantedBonusCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.neoforged.neoforge.registries.DeferredHolder;
-import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.PotionRegistry;
 import tech.anonymoushacker1279.immersiveweapons.world.level.loot.number_providers.EntityKillersValue;
 
 import java.util.stream.Stream;
@@ -30,8 +41,12 @@ public class EntityLootTables extends EntityLootSubProvider {
 
 	protected static final EntityPredicate.Builder ENTITY_ON_FIRE = EntityPredicate.Builder.entity().flags(EntityFlagsPredicate.Builder.flags().setOnFire(true));
 
+	private final HolderGetter<EntityType<?>> entityTypeGetter;
+
 	protected EntityLootTables(Provider registries) {
 		super(FeatureFlags.REGISTRY.allFlags(), registries);
+
+		entityTypeGetter = registries.lookupOrThrow(Registries.ENTITY_TYPE);
 	}
 
 	@Override
@@ -258,7 +273,7 @@ public class EntityLootTables extends EntityLootSubProvider {
 						.name("music_discs")
 						.add(TagEntry.expandTag(ItemTags.CREEPER_DROP_MUSIC_DISCS))
 						.when(LootItemEntityPropertyCondition.hasProperties(EntityTarget.ATTACKER,
-								EntityPredicate.Builder.entity().of(EntityTypeTags.SKELETONS)))));
+								EntityPredicate.Builder.entity().of(entityTypeGetter, EntityTypeTags.SKELETONS)))));
 
 		add(EntityRegistry.EVIL_EYE_ENTITY.get(), LootTable.lootTable()
 				.withPool(LootPool.lootPool()

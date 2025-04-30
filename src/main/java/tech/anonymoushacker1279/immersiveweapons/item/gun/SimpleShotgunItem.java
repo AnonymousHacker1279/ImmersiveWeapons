@@ -4,8 +4,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
@@ -40,16 +38,6 @@ public class SimpleShotgunItem extends AbstractGunItem {
 	@Override
 	public SoundEvent getFireSound() {
 		return SoundEventRegistry.BLUNDERBUSS_FIRE.get();
-	}
-
-	/**
-	 * Get the repair material.
-	 *
-	 * @return Ingredient
-	 */
-	@Override
-	protected Ingredient getRepairMaterial() {
-		return Ingredient.of(Items.GOLD_INGOT);
 	}
 
 	@Override

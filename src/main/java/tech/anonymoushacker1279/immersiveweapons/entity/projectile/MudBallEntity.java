@@ -1,7 +1,11 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.projectile;
 
-import net.minecraft.core.particles.*;
-import net.minecraft.world.entity.*;
+import net.minecraft.core.particles.ItemParticleOption;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Blaze;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
@@ -17,11 +21,11 @@ public class MudBallEntity extends AdvancedThrowableItemProjectile {
 	}
 
 	public MudBallEntity(Level level, LivingEntity livingEntity) {
-		super(EntityRegistry.MUD_BALL_ENTITY.get(), livingEntity, level);
+		super(EntityRegistry.MUD_BALL_ENTITY.get(), livingEntity, level, ItemRegistry.MUD_BALL.get().getDefaultInstance());
 	}
 
 	public MudBallEntity(Level level, double x, double y, double z) {
-		super(EntityRegistry.MUD_BALL_ENTITY.get(), level, x, y, z);
+		super(EntityRegistry.MUD_BALL_ENTITY.get(), level, x, y, z, ItemRegistry.MUD_BALL.get().getDefaultInstance());
 	}
 
 	@Override

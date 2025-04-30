@@ -1,4 +1,4 @@
-package tech.anonymoushacker1279.immersiveweapons.item.gauntlet;
+package tech.anonymoushacker1279.immersiveweapons.item.tool;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderGetter;
@@ -12,11 +12,10 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Tier;
-import net.minecraft.world.item.TieredItem;
+import net.minecraft.world.item.ToolMaterial;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -25,19 +24,29 @@ import net.neoforged.neoforge.common.ItemAbility;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.IWEnchantments;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
+import tech.anonymoushacker1279.immersiveweapons.item.materials.IWToolMaterials;
 
-public class GauntletItem extends TieredItem {
+public class GauntletItem extends Item implements HitEffectUtils {
 
-	public final Ingredient repairIngredient;
 	private final float bleedChance;
 	private final int bleedLevel;
+	private final HitEffect hitEffect;
 
-	public GauntletItem(Tier tier, Properties properties, float bleedChance, int bleedLevel, Ingredient repairIngredient) {
-		super(tier, properties);
+	public GauntletItem(ToolMaterial material, float attackSpeedModifier, float bleedChance, int bleedLevel, Properties properties) {
+		super(material.applyCommonProperties(properties).attributes(createAttributes(material, attackSpeedModifier)));
 
-		this.repairIngredient = repairIngredient;
 		this.bleedChance = bleedChance;
 		this.bleedLevel = bleedLevel;
+
+		if (material == IWToolMaterials.MOLTEN) {
+			hitEffect = HitEffect.MOLTEN;
+		} else if (material == IWToolMaterials.TESLA) {
+			hitEffect = HitEffect.TESLA;
+		} else if (material == IWToolMaterials.VENTUS) {
+			hitEffect = HitEffect.VENTUS;
+		} else {
+			hitEffect = HitEffect.NONE;
+		}
 	}
 
 	public float getBleedChance() {
@@ -75,6 +84,15 @@ public class GauntletItem extends TieredItem {
 			}
 		}
 
+		switch (hitEffect) {
+			case MOLTEN -> addMoltenEffects(target, attacker);
+			case TESLA -> addTeslaEffects(target);
+			case VENTUS -> addVentusEffects(target);
+			default -> {
+				// No hit effect
+			}
+		}
+
 		stack.hurtAndBreak(1, attacker, EquipmentSlot.MAINHAND);
 		return true;
 	}
@@ -93,18 +111,13 @@ public class GauntletItem extends TieredItem {
 		return ItemAbilities.DEFAULT_SWORD_ACTIONS.contains(ability);
 	}
 
-	@Override
-	public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
-		return repairIngredient.test(repair) || super.isValidRepairItem(toRepair, repair);
-	}
-
-	public static ItemAttributeModifiers createAttributes(Tier tier, float attackSpeedModifier) {
+	public static ItemAttributeModifiers createAttributes(ToolMaterial material, float attackSpeedModifier) {
 		return ItemAttributeModifiers.builder()
 				.add(
 						Attributes.ATTACK_DAMAGE,
 						new AttributeModifier(
 								ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "attack_damage"),
-								(float) 2 + tier.getAttackDamageBonus(),
+								(float) 2 + material.attackDamageBonus(),
 								AttributeModifier.Operation.ADD_VALUE
 						),
 						EquipmentSlotGroup.MAINHAND)

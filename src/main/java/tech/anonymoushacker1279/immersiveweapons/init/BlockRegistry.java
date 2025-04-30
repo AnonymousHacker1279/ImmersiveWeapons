@@ -24,7 +24,6 @@ import tech.anonymoushacker1279.immersiveweapons.block.*;
 import tech.anonymoushacker1279.immersiveweapons.block.barbed_wire.BarbedWireBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.barbed_wire.BarbedWireFenceBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.core.BasicOrientableBlock;
-import tech.anonymoushacker1279.immersiveweapons.block.core.CustomSandBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.core.StrippablePillarBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.crafting.*;
 import tech.anonymoushacker1279.immersiveweapons.block.decoration.*;
@@ -214,7 +213,7 @@ public class BlockRegistry {
 	public static final Supplier<StairBlock> HARDENED_MUD_STAIRS = BLOCKS.register("hardened_mud_stairs", () -> new StairBlock(HARDENED_MUD.get().defaultBlockState(), BlockBehaviour.Properties.ofFullCopy(BURNED_OAK_PLANKS.get())));
 	public static final Supplier<SlabBlock> HARDENED_MUD_SLAB = BLOCKS.register("hardened_mud_slab", () -> new SlabBlock(BlockBehaviour.Properties.of().mapColor(MapColor.DIRT).strength(2.0f, 1.0f).sound(SoundType.ROOTED_DIRT)));
 	public static final Supplier<Block> HARDENED_MUD_WINDOW = BLOCKS.register("hardened_mud_window", () -> new HardenedMudWindowBlock(BlockBehaviour.Properties.of().mapColor(MapColor.DIRT).strength(2.0f, 1.0f).sound(SoundType.ROOTED_DIRT).noOcclusion()));
-	public static final Supplier<CustomSandBlock> BLOOD_SAND = BLOCKS.register("blood_sand", () -> new CustomSandBlock(new ColorRGBA(13201254), BlockBehaviour.Properties.of().mapColor(MapColor.SAND).instrument(NoteBlockInstrument.SNARE).strength(0.5f).sound(SoundType.SAND)));
+	public static final Supplier<ColoredFallingBlock> BLOOD_SAND = BLOCKS.register("blood_sand", () -> new ColoredFallingBlock(new ColorRGBA(13201254), BlockBehaviour.Properties.of().mapColor(MapColor.SAND).instrument(NoteBlockInstrument.SNARE).strength(0.5f).sound(SoundType.SAND)));
 	// Stone tier
 	public static final Supplier<PunjiSticksBlock> PUNJI_STICKS = BLOCKS.register("punji_sticks", () -> new PunjiSticksBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).ignitedByLava().pushReaction(PushReaction.DESTROY).strength(5.0f, 1.0f).sound(SoundType.METAL).requiresCorrectToolForDrops()));
 
@@ -222,7 +221,7 @@ public class BlockRegistry {
 	// Wood tier
 	public static final Supplier<StardustLeavesBlock> STARDUST_LEAVES = BLOCKS.register("stardust_leaves", () -> new StardustLeavesBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).ignitedByLava().pushReaction(PushReaction.DESTROY).strength(0.3f).randomTicks().sound(SoundType.GRASS).noOcclusion().isValidSpawn((state, getter, pos, type) -> (type == EntityType.OCELOT || type == EntityType.PARROT)).isSuffocating((state, getter, pos) -> false).isViewBlocking((state, getter, pos) -> false)));
 
-	// Breakable without tool
+	// Breakable without a tool
 	public static final Supplier<TransparentBlock> BULLETPROOF_GLASS = BLOCKS.register("bulletproof_glass", () -> new TransparentBlock(BlockBehaviour.Properties.of().instrument(NoteBlockInstrument.HAT).sound(SoundType.GLASS).noOcclusion().strength(0.5f)));
 	public static final Supplier<StainedGlassBlock> WHITE_STAINED_BULLETPROOF_GLASS = BLOCKS.register("white_stained_bulletproof_glass", () -> new StainedGlassBlock(DyeColor.WHITE, BlockBehaviour.Properties.of().mapColor(DyeColor.WHITE).instrument(NoteBlockInstrument.HAT).sound(SoundType.GLASS).noOcclusion().strength(0.5f)));
 	public static final Supplier<StainedGlassBlock> LIGHT_GRAY_STAINED_BULLETPROOF_GLASS = BLOCKS.register("light_gray_stained_bulletproof_glass", () -> new StainedGlassBlock(DyeColor.LIGHT_GRAY, BlockBehaviour.Properties.of().mapColor(DyeColor.LIGHT_GRAY).instrument(NoteBlockInstrument.HAT).sound(SoundType.GLASS).noOcclusion().strength(0.5f)));
@@ -252,28 +251,28 @@ public class BlockRegistry {
 	public static final Supplier<BranchBlock> BURNED_OAK_BRANCH = BLOCKS.register("burned_oak_branch", () -> new BranchBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(0.1f).sound(SoundType.WOOD).noOcclusion().noCollission()));
 	public static final Supplier<SkullBlock> MINUTEMAN_HEAD = BLOCKS.register("minuteman_head", () -> new CustomSkullBlock(CustomSkullTypes.MINUTEMAN, BlockBehaviour.Properties.of().pushReaction(PushReaction.DESTROY).strength(1.0f)));
 	@DatagenExclusionMarker(Type.LANGUAGE_GENERATOR)
-	public static final Supplier<CustomWallSkullBlock> MINUTEMAN_WALL_HEAD = BLOCKS.register("minuteman_wall_head", () -> new CustomWallSkullBlock(CustomSkullTypes.MINUTEMAN, BlockBehaviour.Properties.of().pushReaction(PushReaction.DESTROY).strength(1.0f).lootFrom(MINUTEMAN_HEAD)));
+	public static final Supplier<CustomWallSkullBlock> MINUTEMAN_WALL_HEAD = BLOCKS.register("minuteman_wall_head", () -> new CustomWallSkullBlock(CustomSkullTypes.MINUTEMAN, BlockBehaviour.Properties.of().pushReaction(PushReaction.DESTROY).strength(1.0f)));
 	public static final Supplier<SkullBlock> FIELD_MEDIC_HEAD = BLOCKS.register("field_medic_head", () -> new CustomSkullBlock(CustomSkullTypes.FIELD_MEDIC, BlockBehaviour.Properties.of().pushReaction(PushReaction.DESTROY).strength(1.0f)));
 	@DatagenExclusionMarker(Type.LANGUAGE_GENERATOR)
-	public static final Supplier<CustomWallSkullBlock> FIELD_MEDIC_WALL_HEAD = BLOCKS.register("field_medic_wall_head", () -> new CustomWallSkullBlock(CustomSkullTypes.FIELD_MEDIC, BlockBehaviour.Properties.of().pushReaction(PushReaction.DESTROY).strength(1.0f).lootFrom(FIELD_MEDIC_HEAD)));
+	public static final Supplier<CustomWallSkullBlock> FIELD_MEDIC_WALL_HEAD = BLOCKS.register("field_medic_wall_head", () -> new CustomWallSkullBlock(CustomSkullTypes.FIELD_MEDIC, BlockBehaviour.Properties.of().pushReaction(PushReaction.DESTROY).strength(1.0f)));
 	public static final Supplier<SkullBlock> DYING_SOLDIER_HEAD = BLOCKS.register("dying_soldier_head", () -> new CustomSkullBlock(CustomSkullTypes.DYING_SOLDIER, BlockBehaviour.Properties.of().pushReaction(PushReaction.DESTROY).strength(1.0f)));
 	@DatagenExclusionMarker(Type.LANGUAGE_GENERATOR)
-	public static final Supplier<CustomWallSkullBlock> DYING_SOLDIER_WALL_HEAD = BLOCKS.register("dying_soldier_wall_head", () -> new CustomWallSkullBlock(CustomSkullTypes.DYING_SOLDIER, BlockBehaviour.Properties.of().pushReaction(PushReaction.DESTROY).strength(1.0f).lootFrom(DYING_SOLDIER_HEAD)));
+	public static final Supplier<CustomWallSkullBlock> DYING_SOLDIER_WALL_HEAD = BLOCKS.register("dying_soldier_wall_head", () -> new CustomWallSkullBlock(CustomSkullTypes.DYING_SOLDIER, BlockBehaviour.Properties.of().pushReaction(PushReaction.DESTROY).strength(1.0f)));
 	public static final Supplier<SkullBlock> THE_COMMANDER_HEAD = BLOCKS.register("the_commander_head", () -> new CustomSkullBlock(CustomSkullTypes.THE_COMMANDER, BlockBehaviour.Properties.of().pushReaction(PushReaction.DESTROY).strength(1.0f)));
 	@DatagenExclusionMarker(Type.LANGUAGE_GENERATOR)
-	public static final Supplier<CustomWallSkullBlock> THE_COMMANDER_WALL_HEAD = BLOCKS.register("the_commander_wall_head", () -> new CustomWallSkullBlock(CustomSkullTypes.THE_COMMANDER, BlockBehaviour.Properties.of().pushReaction(PushReaction.DESTROY).strength(1.0f).lootFrom(THE_COMMANDER_HEAD)));
+	public static final Supplier<CustomWallSkullBlock> THE_COMMANDER_WALL_HEAD = BLOCKS.register("the_commander_wall_head", () -> new CustomWallSkullBlock(CustomSkullTypes.THE_COMMANDER, BlockBehaviour.Properties.of().pushReaction(PushReaction.DESTROY).strength(1.0f)));
 	public static final Supplier<SkullBlock> WANDERING_WARRIOR_HEAD = BLOCKS.register("wandering_warrior_head", () -> new CustomSkullBlock(CustomSkullTypes.WANDERING_WARRIOR, BlockBehaviour.Properties.of().pushReaction(PushReaction.DESTROY).strength(1.0f)));
 	@DatagenExclusionMarker(Type.LANGUAGE_GENERATOR)
-	public static final Supplier<CustomWallSkullBlock> WANDERING_WARRIOR_WALL_HEAD = BLOCKS.register("wandering_warrior_wall_head", () -> new CustomWallSkullBlock(CustomSkullTypes.WANDERING_WARRIOR, BlockBehaviour.Properties.of().pushReaction(PushReaction.DESTROY).strength(1.0f).lootFrom(WANDERING_WARRIOR_HEAD)));
+	public static final Supplier<CustomWallSkullBlock> WANDERING_WARRIOR_WALL_HEAD = BLOCKS.register("wandering_warrior_wall_head", () -> new CustomWallSkullBlock(CustomSkullTypes.WANDERING_WARRIOR, BlockBehaviour.Properties.of().pushReaction(PushReaction.DESTROY).strength(1.0f)));
 	public static final Supplier<SkullBlock> HANS_HEAD = BLOCKS.register("hans_head", () -> new CustomSkullBlock(CustomSkullTypes.HANS, BlockBehaviour.Properties.of().pushReaction(PushReaction.DESTROY).strength(1.0f)));
 	@DatagenExclusionMarker(Type.LANGUAGE_GENERATOR)
-	public static final Supplier<CustomWallSkullBlock> HANS_WALL_HEAD = BLOCKS.register("hans_wall_head", () -> new CustomWallSkullBlock(CustomSkullTypes.HANS, BlockBehaviour.Properties.of().pushReaction(PushReaction.DESTROY).strength(1.0f).lootFrom(HANS_HEAD)));
+	public static final Supplier<CustomWallSkullBlock> HANS_WALL_HEAD = BLOCKS.register("hans_wall_head", () -> new CustomWallSkullBlock(CustomSkullTypes.HANS, BlockBehaviour.Properties.of().pushReaction(PushReaction.DESTROY).strength(1.0f)));
 	public static final Supplier<SkullBlock> STORM_CREEPER_HEAD = BLOCKS.register("storm_creeper_head", () -> new CustomSkullBlock(CustomSkullTypes.STORM_CREEPER, BlockBehaviour.Properties.of().pushReaction(PushReaction.DESTROY).strength(1.0f)));
 	@DatagenExclusionMarker(Type.LANGUAGE_GENERATOR)
-	public static final Supplier<CustomWallSkullBlock> STORM_CREEPER_WALL_HEAD = BLOCKS.register("storm_creeper_wall_head", () -> new CustomWallSkullBlock(CustomSkullTypes.STORM_CREEPER, BlockBehaviour.Properties.of().pushReaction(PushReaction.DESTROY).strength(1.0f).lootFrom(STORM_CREEPER_HEAD)));
+	public static final Supplier<CustomWallSkullBlock> STORM_CREEPER_WALL_HEAD = BLOCKS.register("storm_creeper_wall_head", () -> new CustomWallSkullBlock(CustomSkullTypes.STORM_CREEPER, BlockBehaviour.Properties.of().pushReaction(PushReaction.DESTROY).strength(1.0f)));
 	public static final Supplier<SkullBlock> SKELETON_MERCHANT_HEAD = BLOCKS.register("skeleton_merchant_head", () -> new CustomSkullBlock(CustomSkullTypes.SKELETON_MERCHANT, BlockBehaviour.Properties.of().pushReaction(PushReaction.DESTROY).strength(1.0f)));
 	@DatagenExclusionMarker(Type.LANGUAGE_GENERATOR)
-	public static final Supplier<CustomWallSkullBlock> SKELETON_MERCHANT_WALL_HEAD = BLOCKS.register("skeleton_merchant_wall_head", () -> new CustomWallSkullBlock(CustomSkullTypes.SKELETON_MERCHANT, BlockBehaviour.Properties.of().pushReaction(PushReaction.DESTROY).strength(1.0f).lootFrom(SKELETON_MERCHANT_HEAD)));
+	public static final Supplier<CustomWallSkullBlock> SKELETON_MERCHANT_WALL_HEAD = BLOCKS.register("skeleton_merchant_wall_head", () -> new CustomWallSkullBlock(CustomSkullTypes.SKELETON_MERCHANT, BlockBehaviour.Properties.of().pushReaction(PushReaction.DESTROY).strength(1.0f)));
 	public static final Supplier<MoonglowBlock> MOONGLOW = BLOCKS.register("moonglow", () -> new MoonglowBlock(MobEffects.GLOWING, 10, BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).sound(SoundType.GRASS).lightLevel((state) -> 12).noCollission().instabreak().offsetType(OffsetType.XZ)));
 	public static final Supplier<FlowerPotBlock> POTTED_MOONGLOW = BLOCKS.register("potted_moonglow", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, MOONGLOW, BlockBehaviour.Properties.of().pushReaction(PushReaction.DESTROY).lightLevel((state) -> 12).instabreak().noOcclusion()));
 	public static final Supplier<DeathweedBlock> DEATHWEED = BLOCKS.register("deathweed", () -> new DeathweedBlock(MobEffects.HARM, 0, BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).sound(SoundType.GRASS).lightLevel((state) -> 4).noCollission().instabreak().offsetType(OffsetType.XZ)));

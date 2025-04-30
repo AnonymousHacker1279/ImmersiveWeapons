@@ -1,7 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.client.gui.overlays;
 
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.Font.DisplayMode;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 
@@ -81,11 +80,14 @@ public class DebugTracingOverlay {
 
 		for (String str : overlayItems) {
 			textHeightPosition -= 15;
-			fontRenderer.drawInBatch(str, 5f, textHeightPosition, 0xFFFFFF, false,
-					guiGraphics.pose().last().pose(),
-					guiGraphics.bufferSource(),
-					DisplayMode.NORMAL,
-					0, 15728880);
+			guiGraphics.drawString(
+					fontRenderer,
+					str,
+					5f,
+					textHeightPosition,
+					0xFFFFFF,
+					false
+			);
 		}
 	}
 

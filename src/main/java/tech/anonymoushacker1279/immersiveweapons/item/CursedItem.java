@@ -5,8 +5,10 @@ import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -23,8 +25,8 @@ public class CursedItem extends Item {
 	final DataComponentType<Boolean> AT_MAX_CHARGE = DataComponentTypeRegistry.AT_MAX_CHARGE.get();
 
 	/**
-	 * Cursed items cannot be removed once used. Their effects are permanent in survival mode, even persisting through death.
-	 * They are "charged" and require 100 entity kills while the item is in the inventory to be used.
+	 * Cursed items cannot be removed once used. Their effects are permanent in survival mode, even persisting through
+	 * death. They are "charged" and require 100 entity kills while the item is in the inventory to be used.
 	 * <p>
 	 * The only way to clear the effects of a cursed item is to use a {@link CurseCleaningSoapItem} item, which is not
 	 * obtainable in survival mode.
@@ -68,11 +70,6 @@ public class CursedItem extends Item {
 	}
 
 	@Override
-	public boolean isEnchantable(ItemStack stack) {
-		return false;
-	}
-
-	@Override
 	public void onUseTick(Level level, LivingEntity livingEntity, ItemStack stack, int remainingUseDuration) {
 		super.onUseTick(level, livingEntity, stack, remainingUseDuration);
 
@@ -108,8 +105,7 @@ public class CursedItem extends Item {
 	}
 
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level level, Player player,
-	                                              InteractionHand hand) {
+	public InteractionResult use(Level level, Player player, InteractionHand hand) {
 
 		ItemStack stack = player.getItemInHand(hand);
 
@@ -122,10 +118,10 @@ public class CursedItem extends Item {
 
 				CURSE_EFFECT_FADE = 1.0f;
 
-				return InteractionResultHolder.fail(stack);
+				return InteractionResult.FAIL;
 			} else {
 				player.startUsingItem(hand);
-				return InteractionResultHolder.success(stack);
+				return InteractionResult.SUCCESS;
 			}
 		} else {
 			if (player.level().isClientSide) {
@@ -134,18 +130,18 @@ public class CursedItem extends Item {
 			}
 		}
 
-		return InteractionResultHolder.fail(stack);
+		return InteractionResult.FAIL;
 	}
 
 	@Override
-	public void releaseUsing(ItemStack stack, Level level, LivingEntity livingEntity, int timeCharged) {
+	public boolean releaseUsing(ItemStack stack, Level level, LivingEntity livingEntity, int timeCharged) {
 		if (livingEntity instanceof Player player && getDamage(stack) == 0) {
 			if (timeCharged > 0) {
 				if (level.isClientSide) {
 					player.displayClientMessage(Component.translatable("immersiveweapons.item.%s.canceled".formatted(name))
 							.withStyle(ChatFormatting.YELLOW), true);
 				}
-				return;
+				return false;
 			}
 
 			// Add a tag to the player to indicate that they have used the item
@@ -168,6 +164,10 @@ public class CursedItem extends Item {
 			if (!player.isCreative()) {
 				stack.hurtAndBreak(100, player, EquipmentSlot.MAINHAND);
 			}
+
+			return true;
 		}
+
+		return super.releaseUsing(stack, level, livingEntity, timeCharged);
 	}
 }

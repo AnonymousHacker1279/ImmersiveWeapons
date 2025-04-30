@@ -3,7 +3,9 @@ package tech.anonymoushacker1279.immersiveweapons.entity.misc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
@@ -17,12 +19,10 @@ public class ChairEntity extends Entity {
 
 	private BlockPos source;
 
-
 	public ChairEntity(EntityType<?> entityType, Level level) {
 		super(entityType, level);
 		source = BlockPos.ZERO;
 	}
-
 
 	private ChairEntity(Level level, BlockPos pos, double yOffset) {
 		this(EntityRegistry.CHAIR_ENTITY.get(), level);
@@ -43,29 +43,25 @@ public class ChairEntity extends Entity {
 		return InteractionResult.PASS;
 	}
 
-	/**
-	 * Runs once each tick.
-	 */
 	@Override
 	public void tick() {
 		super.tick();
-		if (!level().isClientSide) {
+		if (level() instanceof ServerLevel serverLevel) {
 			if (getPassengers().isEmpty() || level().isEmptyBlock(source)) {
-				kill();
+				kill(serverLevel);
 				level().updateNeighbourForOutputSignal(blockPosition(), level().getBlockState(blockPosition()).getBlock());
 			}
 		}
 	}
 
-	/**
-	 * Check if this entity can be ridden by the supplied entity.
-	 *
-	 * @param entity the <code>Entity</code> being checked
-	 * @return boolean
-	 */
 	@Override
 	protected boolean canRide(Entity entity) {
 		return true;
+	}
+
+	@Override
+	public boolean hurtServer(ServerLevel level, DamageSource damageSource, float amount) {
+		return false;
 	}
 
 	@Override

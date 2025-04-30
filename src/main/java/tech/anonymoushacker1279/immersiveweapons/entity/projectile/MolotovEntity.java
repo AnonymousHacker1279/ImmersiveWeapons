@@ -27,16 +27,16 @@ public class MolotovEntity extends AdvancedThrowableItemProjectile {
 	}
 
 	public MolotovEntity(Level level, LivingEntity livingEntity) {
-		super(EntityRegistry.MOLOTOV_COCKTAIL_ENTITY.get(), livingEntity, level);
+		super(EntityRegistry.MOLOTOV_COCKTAIL_ENTITY.get(), livingEntity, level, ItemRegistry.MOLOTOV_COCKTAIL.get().getDefaultInstance());
 	}
 
 	public MolotovEntity(Level level, double x, double y, double z) {
-		super(EntityRegistry.MOLOTOV_COCKTAIL_ENTITY.get(), level, x, y, z);
+		super(EntityRegistry.MOLOTOV_COCKTAIL_ENTITY.get(), level, x, y, z, ItemRegistry.MOLOTOV_COCKTAIL.get().getDefaultInstance());
 	}
 
 	/**
-	 * ProjectileItemEntity::setItem uses this to save storage space.
-	 * It only stores the itemStack if the itemStack is not the default item.
+	 * ProjectileItemEntity::setItem uses this to save storage space. It only stores the itemStack if the itemStack is
+	 * not the default item.
 	 *
 	 * @return Item
 	 */
@@ -80,7 +80,7 @@ public class MolotovEntity extends AdvancedThrowableItemProjectile {
 				}
 			}
 
-			kill();
+			discard();
 		}
 	}
 
@@ -111,7 +111,7 @@ public class MolotovEntity extends AdvancedThrowableItemProjectile {
 	public void handleEntityEvent(byte statusID) {
 		if (statusID == VANILLA_IMPACT_STATUS_ID) {
 			level().playLocalSound(getX(), getY(), getZ(), SoundEvents.GLASS_BREAK, SoundSource.NEUTRAL, 1f, 1f, false);
-			kill();
+			discard();
 		}
 	}
 }

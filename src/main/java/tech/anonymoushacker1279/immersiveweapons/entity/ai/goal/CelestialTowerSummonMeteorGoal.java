@@ -1,5 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.ai.goal;
 
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
@@ -26,8 +27,6 @@ public class CelestialTowerSummonMeteorGoal extends Goal {
 
 	@Override
 	public void tick() {
-		// The tower will summon a meteor at a random player's position in the near vicinity
-		// If it is done spawning waves, they spawn twice as often
 		if (summonCooldown <= 0) {
 			summonCooldown = tower.isDoneSpawningWaves() ? 200 / tower.getDifficultyWaveSizeModifier() : 400 / tower.getDifficultyWaveSizeModifier();
 
@@ -39,18 +38,20 @@ public class CelestialTowerSummonMeteorGoal extends Goal {
 					tower.getZ() + 32);
 
 			// Find a random nearby player (within 32 blocks)
-			List<Player> nearbyPlayers = tower.level().getNearbyPlayers(
-					TargetingConditions.forCombat().range(32),
-					tower,
-					searchBox
-			);
+			if (tower.level() instanceof ServerLevel serverLevel) {
+				List<Player> nearbyPlayers = serverLevel.getNearbyPlayers(
+						TargetingConditions.forCombat().range(32),
+						tower,
+						searchBox
+				);
 
-			// Select a random player
-			if (!nearbyPlayers.isEmpty()) {
-				Player target = nearbyPlayers.get(tower.getRandom().nextIntBetweenInclusive(0, nearbyPlayers.size() - 1));
+				// Select a random player
+				if (!nearbyPlayers.isEmpty()) {
+					Player target = nearbyPlayers.get(tower.getRandom().nextIntBetweenInclusive(0, nearbyPlayers.size() - 1));
 
-				// Summon a meteor at the player's position
-				MeteorEntity.create(tower.level(), tower, null, target.blockPosition(), null);
+					// Summon a meteor at the player's position
+					MeteorEntity.create(tower.level(), tower, null, target.blockPosition(), null);
+				}
 			}
 		} else {
 			summonCooldown--;

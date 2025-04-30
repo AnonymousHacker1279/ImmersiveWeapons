@@ -2,14 +2,20 @@ package tech.anonymoushacker1279.immersiveweapons.entity.projectile;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.Tags.EntityTypes;
 import net.neoforged.neoforge.network.PacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.smoke_grenade.SmokeGrenadeParticleOptions;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
-import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.GameEventRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.SmokeGrenadePayload;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
@@ -21,12 +27,12 @@ public class SmokeGrenadeEntity extends AdvancedThrowableItemProjectile {
 		super(entityType, level);
 	}
 
-	public SmokeGrenadeEntity(Level level, LivingEntity livingEntity) {
-		super(EntityRegistry.SMOKE_GRENADE_ENTITY.get(), livingEntity, level);
+	public SmokeGrenadeEntity(Level level, LivingEntity livingEntity, ItemStack stack) {
+		super(EntityRegistry.SMOKE_GRENADE_ENTITY.get(), livingEntity, level, stack);
 	}
 
 	public SmokeGrenadeEntity(Level level, double x, double y, double z) {
-		super(EntityRegistry.SMOKE_GRENADE_ENTITY.get(), level, x, y, z);
+		super(EntityRegistry.SMOKE_GRENADE_ENTITY.get(), level, x, y, z, ItemRegistry.SMOKE_GRENADE.get().getDefaultInstance());
 	}
 
 	/**
