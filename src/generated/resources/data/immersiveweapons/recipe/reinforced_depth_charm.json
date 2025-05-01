@@ -3,33 +3,15 @@
   "category": "misc",
   "group": "reinforced_depth_charm",
   "ingredients": [
-    {
-      "item": "immersiveweapons:depth_charm"
-    },
-    {
-      "item": "immersiveweapons:warden_heart"
-    },
-    {
-      "item": "minecraft:deepslate"
-    },
-    {
-      "item": "minecraft:deepslate"
-    },
-    {
-      "item": "minecraft:deepslate"
-    },
-    {
-      "item": "minecraft:deepslate"
-    },
-    {
-      "item": "minecraft:deepslate"
-    },
-    {
-      "item": "minecraft:deepslate"
-    },
-    {
-      "item": "minecraft:deepslate"
-    }
+    "immersiveweapons:depth_charm",
+    "immersiveweapons:warden_heart",
+    "minecraft:deepslate",
+    "minecraft:deepslate",
+    "minecraft:deepslate",
+    "minecraft:deepslate",
+    "minecraft:deepslate",
+    "minecraft:deepslate",
+    "minecraft:deepslate"
   ],
   "result": {
     "count": 1,

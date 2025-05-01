@@ -8,8 +8,8 @@ import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
 
 public class MoltenPickaxe extends PickaxeItem implements HitEffectUtils {
 
-	public MoltenPickaxe() {
-		super(IWToolMaterials.MOLTEN, 1, -2.8f, new Properties().fireResistant());
+	public MoltenPickaxe(Properties properties) {
+		super(IWToolMaterials.MOLTEN, 1, -2.8f, properties.fireResistant());
 	}
 
 	@Override

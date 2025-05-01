@@ -1,13 +1,9 @@
 {
   "type": "immersiveweapons:astral_crystal",
+  "catalyst": "minecraft:amethyst_shard",
   "group": "astral_crystal",
-  "primaryMaterial": {
-    "item": "immersiveweapons:raw_astral"
-  },
+  "material": "immersiveweapons:raw_astral",
   "result": {
     "id": "immersiveweapons:astral_ingot"
-  },
-  "secondaryMaterial": {
-    "item": "minecraft:amethyst_shard"
   }
 }

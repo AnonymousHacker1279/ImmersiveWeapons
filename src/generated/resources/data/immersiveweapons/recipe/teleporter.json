@@ -3,21 +3,11 @@
   "category": "building",
   "group": "void",
   "key": {
-    "a": {
-      "tag": "immersiveweapons:ingots/void"
-    },
-    "b": {
-      "tag": "immersiveweapons:ingots/tesla"
-    },
-    "c": {
-      "item": "minecraft:purpur_slab"
-    },
-    "d": {
-      "item": "minecraft:ender_eye"
-    },
-    "e": {
-      "item": "minecraft:dragon_breath"
-    }
+    "a": "#immersiveweapons:ingots/void",
+    "b": "#immersiveweapons:ingots/tesla",
+    "c": "minecraft:purpur_slab",
+    "d": "minecraft:ender_eye",
+    "e": "minecraft:dragon_breath"
   },
   "pattern": [
     "ede",

@@ -8,8 +8,8 @@ import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
 
 public class MoltenAxe extends AxeItem implements HitEffectUtils {
 
-	public MoltenAxe() {
-		super(IWToolMaterials.MOLTEN, 5, -3.0f, new Properties().fireResistant());
+	public MoltenAxe(Properties properties) {
+		super(IWToolMaterials.MOLTEN, 5, -3.0f, properties.fireResistant());
 	}
 
 	@Override

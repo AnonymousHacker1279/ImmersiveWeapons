@@ -104,15 +104,18 @@ public class StarForgeScreen extends AbstractContainerScreen<StarForgeMenu> {
 				StarForgeRecipe recipe = availableRecipes.get(i);
 
 				ItemStack ingot = recipe.primaryMaterial().items().getFirst().value().getDefaultInstance();
-				ItemStack secondaryMaterial = recipe.secondaryMaterial().items().getFirst().value().getDefaultInstance();
 				ItemStack result = recipe.result();
 
 				// Render the items
 				guiGraphics.renderItem(ingot, leftPosOffset + 3, y + 3);
 				guiGraphics.renderItemDecorations(font, ingot, leftPosOffset + 3, y + 3);
 
-				guiGraphics.renderItem(secondaryMaterial, leftPosOffset + 21, y + 3);
-				guiGraphics.renderItemDecorations(font, secondaryMaterial, leftPosOffset + 21, y + 3);
+				if (recipe.secondaryMaterial().isPresent()) {
+					ItemStack secondaryMaterial = recipe.secondaryMaterial().get().items().getFirst().value().getDefaultInstance();
+					guiGraphics.renderItem(secondaryMaterial, leftPosOffset + 21, y + 3);
+					guiGraphics.renderItemDecorations(font, secondaryMaterial, leftPosOffset + 21, y + 3);
+
+				}
 
 				guiGraphics.renderItem(result, leftPosOffset + 39, y + 3);
 			}

@@ -3,9 +3,7 @@
   "category": "building",
   "group": "starstorm",
   "key": {
-    "a": {
-      "tag": "immersiveweapons:ingots/starstorm"
-    }
+    "a": "#immersiveweapons:ingots/starstorm"
   },
   "pattern": [
     "aaa",

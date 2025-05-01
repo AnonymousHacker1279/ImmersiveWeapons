@@ -1,12 +1,19 @@
 {
   "type": "immersiveweapons:small_parts",
   "craftables": [
-    "immersiveweapons:flintlock_assembly",
-    "immersiveweapons:iron_barrel",
-    "immersiveweapons:short_iron_barrel"
+    {
+      "count": 1,
+      "id": "immersiveweapons:flintlock_assembly"
+    },
+    {
+      "count": 1,
+      "id": "immersiveweapons:iron_barrel"
+    },
+    {
+      "count": 1,
+      "id": "immersiveweapons:short_iron_barrel"
+    }
   ],
   "group": "small_parts",
-  "material": {
-    "tag": "c:ingots/iron"
-  }
+  "material": "#c:ingots/iron"
 }

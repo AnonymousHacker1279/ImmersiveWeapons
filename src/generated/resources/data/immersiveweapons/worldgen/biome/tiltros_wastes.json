@@ -1,12 +1,10 @@
 {
-  "carvers": {
-    "air": [
-      "immersiveweapons:tiltros_wastes",
-      "minecraft:cave",
-      "minecraft:cave_extra_underground",
-      "minecraft:canyon"
-    ]
-  },
+  "carvers": [
+    "immersiveweapons:tiltros_wastes",
+    "minecraft:cave",
+    "minecraft:cave_extra_underground",
+    "minecraft:canyon"
+  ],
   "creature_spawn_probability": 0.65,
   "downfall": 0.0,
   "effects": {

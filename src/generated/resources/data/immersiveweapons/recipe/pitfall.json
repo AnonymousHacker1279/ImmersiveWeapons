@@ -3,15 +3,9 @@
   "category": "building",
   "group": "traps",
   "key": {
-    "a": {
-      "item": "minecraft:stick"
-    },
-    "b": {
-      "item": "minecraft:short_grass"
-    },
-    "c": {
-      "tag": "minecraft:leaves"
-    }
+    "a": "minecraft:stick",
+    "b": "minecraft:short_grass",
+    "c": "#minecraft:leaves"
   },
   "pattern": [
     "bcb",

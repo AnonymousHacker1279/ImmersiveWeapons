@@ -3,12 +3,8 @@
   "category": "equipment",
   "group": "netherite",
   "key": {
-    "a": {
-      "item": "immersiveweapons:diamond_arrow"
-    },
-    "b": {
-      "tag": "c:ingots/netherite"
-    }
+    "a": "immersiveweapons:diamond_arrow",
+    "b": "#c:ingots/netherite"
   },
   "pattern": [
     "aaa",

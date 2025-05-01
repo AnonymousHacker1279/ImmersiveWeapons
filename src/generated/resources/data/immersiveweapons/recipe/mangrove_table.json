@@ -3,12 +3,8 @@
   "category": "building",
   "group": "tables",
   "key": {
-    "a": {
-      "item": "minecraft:mangrove_slab"
-    },
-    "b": {
-      "item": "minecraft:mangrove_fence"
-    }
+    "a": "minecraft:mangrove_slab",
+    "b": "minecraft:mangrove_fence"
   },
   "pattern": [
     "a",

@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "a": {
-      "tag": "immersiveweapons:ingots/astral"
-    },
-    "b": {
-      "item": "minecraft:stick"
-    },
-    "c": {
-      "item": "minecraft:feather"
-    }
+    "a": "#immersiveweapons:ingots/astral",
+    "b": "minecraft:stick",
+    "c": "minecraft:feather"
   },
   "pattern": [
     "a",

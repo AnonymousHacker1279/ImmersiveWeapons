@@ -3,12 +3,8 @@
   "category": "building",
   "group": "chest_boat",
   "ingredients": [
-    {
-      "item": "minecraft:chest"
-    },
-    {
-      "item": "immersiveweapons:stardust_boat"
-    }
+    "minecraft:chest",
+    "immersiveweapons:stardust_boat"
   ],
   "result": {
     "count": 1,

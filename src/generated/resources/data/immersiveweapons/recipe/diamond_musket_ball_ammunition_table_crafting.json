@@ -5,9 +5,7 @@
     {
       "base_multiplier": 0.14,
       "density": 0.09,
-      "ingredient": {
-        "tag": "immersiveweapons:shards/diamond"
-      }
+      "ingredient": "#immersiveweapons:shards/diamond"
     }
   ],
   "result": {

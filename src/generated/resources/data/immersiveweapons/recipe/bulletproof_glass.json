@@ -3,12 +3,8 @@
   "category": "building",
   "group": "bulletproof_glass",
   "key": {
-    "a": {
-      "item": "minecraft:glass"
-    },
-    "b": {
-      "tag": "c:ingots/iron"
-    }
+    "a": "minecraft:glass",
+    "b": "#c:ingots/iron"
   },
   "pattern": [
     "aaa",

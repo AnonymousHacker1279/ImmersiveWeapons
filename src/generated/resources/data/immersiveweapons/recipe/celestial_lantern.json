@@ -3,15 +3,9 @@
   "category": "building",
   "group": "lights",
   "key": {
-    "a": {
-      "tag": "c:nuggets/iron"
-    },
-    "b": {
-      "tag": "c:glass_panes"
-    },
-    "c": {
-      "item": "immersiveweapons:celestial_fragment"
-    }
+    "a": "#c:nuggets/iron",
+    "b": "#c:glass_panes",
+    "c": "immersiveweapons:celestial_fragment"
   },
   "pattern": [
     "aba",

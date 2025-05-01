@@ -3,9 +3,7 @@
   "category": "building",
   "group": "planks",
   "ingredients": [
-    {
-      "tag": "immersiveweapons:burned_oak_logs"
-    }
+    "#immersiveweapons:burned_oak_logs"
   ],
   "result": {
     "count": 4,

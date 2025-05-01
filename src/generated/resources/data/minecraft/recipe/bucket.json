@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "a": {
-      "tag": "c:ingots/metal"
-    }
+    "a": "#c:ingots/metal"
   },
   "pattern": [
     "a a",

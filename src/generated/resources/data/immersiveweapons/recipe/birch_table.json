@@ -3,12 +3,8 @@
   "category": "building",
   "group": "tables",
   "key": {
-    "a": {
-      "item": "minecraft:birch_slab"
-    },
-    "b": {
-      "item": "minecraft:birch_fence"
-    }
+    "a": "minecraft:birch_slab",
+    "b": "minecraft:birch_fence"
   },
   "pattern": [
     "a",

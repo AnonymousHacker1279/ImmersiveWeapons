@@ -3,15 +3,9 @@
   "category": "misc",
   "group": "first_aid",
   "ingredients": [
-    {
-      "item": "minecraft:sugar"
-    },
-    {
-      "item": "minecraft:glistering_melon_slice"
-    },
-    {
-      "item": "minecraft:beetroot"
-    }
+    "minecraft:sugar",
+    "minecraft:glistering_melon_slice",
+    "minecraft:beetroot"
   ],
   "result": {
     "count": 1,

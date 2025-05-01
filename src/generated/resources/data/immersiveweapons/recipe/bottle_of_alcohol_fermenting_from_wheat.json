@@ -1,9 +1,7 @@
 {
   "type": "immersiveweapons:barrel_tap",
   "group": "barrel_tap",
-  "material": {
-    "item": "minecraft:wheat"
-  },
+  "material": "minecraft:wheat",
   "materialCount": 12,
   "result": {
     "id": "immersiveweapons:bottle_of_alcohol"

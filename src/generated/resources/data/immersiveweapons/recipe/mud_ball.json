@@ -3,9 +3,7 @@
   "category": "misc",
   "group": "mud",
   "ingredients": [
-    {
-      "item": "immersiveweapons:mud"
-    }
+    "immersiveweapons:mud"
   ],
   "result": {
     "count": 4,

@@ -3,15 +3,9 @@
   "category": "misc",
   "group": "cursed_sight_staff",
   "key": {
-    "a": {
-      "item": "immersiveweapons:celestial_fragment"
-    },
-    "b": {
-      "item": "immersiveweapons:broken_lens"
-    },
-    "c": {
-      "item": "minecraft:redstone"
-    }
+    "a": "immersiveweapons:celestial_fragment",
+    "b": "immersiveweapons:broken_lens",
+    "c": "minecraft:redstone"
   },
   "pattern": [
     "aba",

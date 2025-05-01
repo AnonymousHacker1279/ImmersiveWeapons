@@ -8,8 +8,8 @@ import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
 
 public class VentusShovel extends ShovelItem implements HitEffectUtils {
 
-	public VentusShovel() {
-		super(IWToolMaterials.VENTUS, 1.5f, -2.6f, new Properties());
+	public VentusShovel(Properties properties) {
+		super(IWToolMaterials.VENTUS, 1.5f, -2.6f, properties);
 	}
 
 	@Override

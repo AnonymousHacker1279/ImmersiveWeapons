@@ -3,12 +3,8 @@
   "category": "building",
   "group": "barbed_wire",
   "key": {
-    "a": {
-      "tag": "c:ingots/iron"
-    },
-    "b": {
-      "item": "immersiveweapons:barbed_wire"
-    }
+    "a": "#c:ingots/iron",
+    "b": "immersiveweapons:barbed_wire"
   },
   "pattern": [
     "aba",

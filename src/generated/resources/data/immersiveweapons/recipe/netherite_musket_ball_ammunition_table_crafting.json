@@ -5,9 +5,7 @@
     {
       "base_multiplier": 1.3,
       "density": 2.5,
-      "ingredient": {
-        "tag": "c:ingots/netherite"
-      }
+      "ingredient": "#c:ingots/netherite"
     }
   ],
   "result": {

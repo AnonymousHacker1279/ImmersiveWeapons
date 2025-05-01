@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "first_aid",
   "key": {
-    "a": {
-      "tag": "c:ingots/iron"
-    },
-    "b": {
-      "tag": "c:nuggets/iron"
-    }
+    "a": "#c:ingots/iron",
+    "b": "#c:nuggets/iron"
   },
   "pattern": [
     " a ",

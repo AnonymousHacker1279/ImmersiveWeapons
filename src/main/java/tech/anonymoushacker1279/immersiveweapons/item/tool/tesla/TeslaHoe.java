@@ -8,8 +8,8 @@ import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
 
 public class TeslaHoe extends HoeItem implements HitEffectUtils {
 
-	public TeslaHoe() {
-		super(IWToolMaterials.TESLA, -7, 0.0f, new Properties());
+	public TeslaHoe(Properties properties) {
+		super(IWToolMaterials.TESLA, -7, 0.0f, properties);
 	}
 
 	@Override

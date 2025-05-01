@@ -3,12 +3,8 @@
   "category": "equipment",
   "group": "firearm",
   "key": {
-    "a": {
-      "tag": "c:ingots/iron"
-    },
-    "b": {
-      "tag": "c:ingots/copper"
-    }
+    "a": "#c:ingots/iron",
+    "b": "#c:ingots/copper"
   },
   "pattern": [
     " a ",

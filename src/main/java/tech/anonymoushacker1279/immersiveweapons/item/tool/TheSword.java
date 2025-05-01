@@ -7,8 +7,8 @@ import tech.anonymoushacker1279.immersiveweapons.item.materials.IWToolMaterials;
 
 public class TheSword extends SwordItem implements HitEffectUtils {
 
-	public TheSword() {
-		super(IWToolMaterials.HANSIUM.applySwordProperties(new Properties().fireResistant(), 3, -1.3f));
+	public TheSword(Properties properties) {
+		super(IWToolMaterials.HANSIUM.applySwordProperties(properties.fireResistant(), 3, -1.3f));
 	}
 
 	@Override

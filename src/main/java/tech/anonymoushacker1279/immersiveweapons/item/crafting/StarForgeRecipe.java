@@ -15,12 +15,14 @@ import tech.anonymoushacker1279.immersiveweapons.init.RecipeSerializerRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.RecipeTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.input.StarForgeRecipeInput;
 
+import java.util.Optional;
+
 public class StarForgeRecipe implements Recipe<StarForgeRecipeInput> {
 
 	private final String group;
 	private final Ingredient primaryMaterial;
 	private final int primaryMaterialCount;
-	private final Ingredient secondaryMaterial;
+	private final Optional<Ingredient> secondaryMaterial;
 	private final int secondaryMaterialCount;
 	private final ItemStack result;
 	private final int smeltTime;
@@ -28,7 +30,7 @@ public class StarForgeRecipe implements Recipe<StarForgeRecipeInput> {
 	@Nullable
 	private PlacementInfo placementInfo;
 
-	public StarForgeRecipe(String group, Ingredient primaryMaterial, int primaryMaterialCount, Ingredient secondaryMaterial,
+	public StarForgeRecipe(String group, Ingredient primaryMaterial, int primaryMaterialCount, Optional<Ingredient> secondaryMaterial,
 	                       int secondaryMaterialCount, int smeltTime, ItemStack result) {
 
 		this.group = group;
@@ -56,7 +58,7 @@ public class StarForgeRecipe implements Recipe<StarForgeRecipeInput> {
 		return primaryMaterialCount;
 	}
 
-	public Ingredient secondaryMaterial() {
+	public Optional<Ingredient> secondaryMaterial() {
 		return secondaryMaterial;
 	}
 
@@ -109,7 +111,7 @@ public class StarForgeRecipe implements Recipe<StarForgeRecipeInput> {
 
 
 	public interface Factory<T extends StarForgeRecipe> {
-		T create(String group, Ingredient ingot, int ingotCount, Ingredient secondaryMaterial, int secondaryMaterialCount,
+		T create(String group, Ingredient ingot, int ingotCount, Optional<Ingredient> secondaryMaterial, int secondaryMaterialCount,
 		         int smeltTime, ItemStack result);
 	}
 
@@ -124,7 +126,7 @@ public class StarForgeRecipe implements Recipe<StarForgeRecipeInput> {
 									Codec.STRING.optionalFieldOf("group", "").forGetter(StarForgeRecipe::group),
 									Ingredient.CODEC.fieldOf("primary_material").forGetter(StarForgeRecipe::primaryMaterial),
 									Codec.INT.fieldOf("primary_material_count").forGetter(StarForgeRecipe::primaryMaterialCount),
-									Ingredient.CODEC.fieldOf("secondary_material").forGetter(StarForgeRecipe::secondaryMaterial),
+									Ingredient.CODEC.optionalFieldOf("secondary_material").forGetter(StarForgeRecipe::secondaryMaterial),
 									Codec.INT.fieldOf("secondary_material_count").forGetter(StarForgeRecipe::secondaryMaterialCount),
 									Codec.INT.fieldOf("smelt_time").forGetter(StarForgeRecipe::smeltTime),
 									ItemStack.SINGLE_ITEM_CODEC.fieldOf("result").forGetter(StarForgeRecipe::result)
@@ -139,7 +141,7 @@ public class StarForgeRecipe implements Recipe<StarForgeRecipeInput> {
 					StarForgeRecipe::primaryMaterial,
 					ByteBufCodecs.INT,
 					StarForgeRecipe::primaryMaterialCount,
-					Ingredient.CONTENTS_STREAM_CODEC,
+					Ingredient.OPTIONAL_CONTENTS_STREAM_CODEC,
 					StarForgeRecipe::secondaryMaterial,
 					ByteBufCodecs.INT,
 					StarForgeRecipe::secondaryMaterialCount,

@@ -2,12 +2,10 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "a": {
-      "item": "immersiveweapons:smooth_blood_sandstone"
-    }
+    "#": "immersiveweapons:smooth_blood_sandstone"
   },
   "pattern": [
-    "aaa"
+    "###"
   ],
   "result": {
     "count": 6,

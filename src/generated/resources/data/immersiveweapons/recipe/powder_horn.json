@@ -3,15 +3,9 @@
   "category": "misc",
   "group": "powder_horn",
   "key": {
-    "a": {
-      "tag": "c:gunpowders"
-    },
-    "b": {
-      "tag": "c:strings"
-    },
-    "c": {
-      "item": "minecraft:goat_horn"
-    }
+    "a": "#c:gunpowders",
+    "b": "#c:strings",
+    "c": "minecraft:goat_horn"
   },
   "pattern": [
     " b ",

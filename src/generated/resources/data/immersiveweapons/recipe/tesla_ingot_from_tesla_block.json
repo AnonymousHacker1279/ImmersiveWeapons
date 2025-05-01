@@ -3,9 +3,7 @@
   "category": "misc",
   "group": "tesla",
   "ingredients": [
-    {
-      "item": "immersiveweapons:tesla_block"
-    }
+    "immersiveweapons:tesla_block"
   ],
   "result": {
     "count": 9,

@@ -8,8 +8,8 @@ import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
 
 public class MoltenSword extends SwordItem implements HitEffectUtils {
 
-	public MoltenSword() {
-		super(IWToolMaterials.MOLTEN.applySwordProperties(new Properties().fireResistant(), 3, -2.4f));
+	public MoltenSword(Properties properties) {
+		super(IWToolMaterials.MOLTEN.applySwordProperties(properties.fireResistant(), 3, -2.4f));
 	}
 
 	@Override

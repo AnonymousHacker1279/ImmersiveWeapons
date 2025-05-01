@@ -3,12 +3,8 @@
   "category": "equipment",
   "group": "firearm",
   "key": {
-    "a": {
-      "item": "immersiveweapons:scope"
-    },
-    "b": {
-      "item": "immersiveweapons:musket"
-    }
+    "a": "immersiveweapons:scope",
+    "b": "immersiveweapons:musket"
   },
   "pattern": [
     "a",

@@ -3,18 +3,10 @@
   "category": "equipment",
   "group": "smoke_grenade",
   "key": {
-    "a": {
-      "item": "minecraft:bamboo"
-    },
-    "b": {
-      "item": "immersiveweapons:grenade_assembly"
-    },
-    "c": {
-      "item": "immersiveweapons:smoke_powder"
-    },
-    "d": {
-      "tag": "c:dyes/yellow"
-    }
+    "a": "minecraft:bamboo",
+    "b": "immersiveweapons:grenade_assembly",
+    "c": "immersiveweapons:smoke_powder",
+    "d": "#c:dyes/yellow"
   },
   "pattern": [
     "dcb",

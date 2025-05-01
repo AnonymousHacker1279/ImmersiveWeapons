@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "molten",
   "key": {
-    "a": {
-      "tag": "immersiveweapons:shards/molten"
-    },
-    "b": {
-      "item": "immersiveweapons:obsidian_shard"
-    }
+    "a": "#immersiveweapons:shards/molten",
+    "b": "immersiveweapons:obsidian_shard"
   },
   "pattern": [
     "aaa",

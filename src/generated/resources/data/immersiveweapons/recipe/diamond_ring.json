@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "ring",
   "key": {
-    "a": {
-      "tag": "c:gems/diamond"
-    },
-    "b": {
-      "item": "immersiveweapons:golden_ring"
-    }
+    "a": "#c:gems/diamond",
+    "b": "immersiveweapons:golden_ring"
   },
   "pattern": [
     " a ",

@@ -1,16 +1,10 @@
 {
   "type": "minecraft:smithing_transform",
-  "addition": {
-    "tag": "immersiveweapons:ingots/molten"
-  },
-  "base": {
-    "item": "minecraft:netherite_pickaxe"
-  },
+  "addition": "#immersiveweapons:ingots/molten",
+  "base": "minecraft:netherite_pickaxe",
   "result": {
     "count": 1,
     "id": "immersiveweapons:molten_pickaxe"
   },
-  "template": {
-    "item": "immersiveweapons:molten_smithing_template"
-  }
+  "template": "immersiveweapons:molten_smithing_template"
 }

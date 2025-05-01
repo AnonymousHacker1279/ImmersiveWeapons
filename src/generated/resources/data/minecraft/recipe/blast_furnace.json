@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "a": {
-      "tag": "c:ingots/metal"
-    },
-    "b": {
-      "item": "minecraft:furnace"
-    },
-    "c": {
-      "item": "minecraft:smooth_stone"
-    }
+    "a": "#c:ingots/metal",
+    "b": "minecraft:furnace",
+    "c": "minecraft:smooth_stone"
   },
   "pattern": [
     "aaa",

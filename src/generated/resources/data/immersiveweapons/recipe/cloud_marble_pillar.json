@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "a": {
-      "item": "immersiveweapons:cloud_marble_bricks"
-    }
+    "a": "immersiveweapons:cloud_marble_bricks"
   },
   "pattern": [
     "a",

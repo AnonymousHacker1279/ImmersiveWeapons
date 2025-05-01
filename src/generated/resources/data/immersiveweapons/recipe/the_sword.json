@@ -3,27 +3,13 @@
   "category": "equipment",
   "group": "the_sword",
   "key": {
-    "a": {
-      "item": "immersiveweapons:molten_sword"
-    },
-    "b": {
-      "item": "immersiveweapons:void_ingot"
-    },
-    "c": {
-      "item": "immersiveweapons:ventus_sword"
-    },
-    "d": {
-      "item": "immersiveweapons:tesla_sword"
-    },
-    "e": {
-      "item": "immersiveweapons:void_sword"
-    },
-    "f": {
-      "item": "immersiveweapons:hans_blessing"
-    },
-    "g": {
-      "item": "immersiveweapons:hansium_ingot"
-    }
+    "a": "immersiveweapons:molten_sword",
+    "b": "immersiveweapons:void_ingot",
+    "c": "immersiveweapons:ventus_sword",
+    "d": "immersiveweapons:tesla_sword",
+    "e": "immersiveweapons:void_sword",
+    "f": "immersiveweapons:hans_blessing",
+    "g": "immersiveweapons:hansium_ingot"
   },
   "pattern": [
     "abc",

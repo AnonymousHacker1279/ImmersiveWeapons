@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "a": {
-      "item": "immersiveweapons:stone_pike_head"
-    },
-    "b": {
-      "tag": "minecraft:stone_tool_materials"
-    },
-    "c": {
-      "item": "immersiveweapons:wooden_tool_rod"
-    }
+    "a": "immersiveweapons:stone_pike_head",
+    "b": "#minecraft:stone_tool_materials",
+    "c": "immersiveweapons:wooden_tool_rod"
   },
   "pattern": [
     "a",

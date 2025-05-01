@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "first_aid",
   "key": {
-    "a": {
-      "tag": "c:strings"
-    },
-    "b": {
-      "tag": "minecraft:wool"
-    }
+    "a": "#c:strings",
+    "b": "#minecraft:wool"
   },
   "pattern": [
     "aba"

@@ -3,9 +3,7 @@
   "category": "misc",
   "group": "molten",
   "key": {
-    "a": {
-      "tag": "immersiveweapons:ingots/molten"
-    }
+    "a": "#immersiveweapons:ingots/molten"
   },
   "pattern": [
     "aaa",

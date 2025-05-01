@@ -4,9 +4,7 @@
   "cookingtime": 100,
   "experience": 0.1,
   "group": "mud",
-  "ingredient": {
-    "item": "immersiveweapons:dried_mud"
-  },
+  "ingredient": "immersiveweapons:dried_mud",
   "result": {
     "count": 1,
     "id": "immersiveweapons:hardened_mud"

@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "a": {
-      "item": "immersiveweapons:diamond_pike_head"
-    },
-    "b": {
-      "tag": "c:gems/diamond"
-    },
-    "c": {
-      "item": "immersiveweapons:wooden_tool_rod"
-    }
+    "a": "immersiveweapons:diamond_pike_head",
+    "b": "#c:gems/diamond",
+    "c": "immersiveweapons:wooden_tool_rod"
   },
   "pattern": [
     "a",

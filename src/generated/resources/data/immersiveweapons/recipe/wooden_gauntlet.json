@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "a": {
-      "tag": "minecraft:planks"
-    },
-    "b": {
-      "item": "immersiveweapons:gauntlet_scaffolding"
-    }
+    "a": "#minecraft:planks",
+    "b": "immersiveweapons:gauntlet_scaffolding"
   },
   "pattern": [
     "aaa",

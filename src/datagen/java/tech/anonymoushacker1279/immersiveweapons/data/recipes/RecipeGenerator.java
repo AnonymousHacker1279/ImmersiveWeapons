@@ -2055,7 +2055,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 	}
 
 	private void smallPartsTinkering(TagKey<Item> material, List<Item> craftables) {
-		HolderSet<Item> materialSet = BuiltInRegistries.ITEM.getOrThrow(material);
+		HolderSet<Item> materialSet = registries.lookupOrThrow(Registries.ITEM).getOrThrow(material);
 		SmallPartsRecipeBuilder.tinker(Ingredient.of(materialSet), craftables)
 				.unlockedBy("copper_ingot", has(Tags.Items.INGOTS_COPPER))
 				.save(output, ImmersiveWeapons.MOD_ID + ":" + getTagName(material) + "_tinkering");
@@ -2076,7 +2076,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 
 	private void starForgeSmelting(TagKey<Item> ingot, int ingotCount, Item result, int smeltTime) {
 		HolderSet<Item> ingotSet = BuiltInRegistries.ITEM.getOrThrow(ingot);
-		StarForgeRecipeBuilder.forge(Ingredient.of(ingotSet), ingotCount, Ingredient.of(), 0, result, smeltTime)
+		StarForgeRecipeBuilder.forge(Ingredient.of(ingotSet), ingotCount, result, smeltTime)
 				.unlockedBy("star_forge_controller", has(BlockRegistry.STAR_FORGE_CONTROLLER.get()))
 				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_star_forge_smelting");
 	}

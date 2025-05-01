@@ -3,9 +3,7 @@
   "category": "misc",
   "group": "cobalt",
   "ingredients": [
-    {
-      "item": "immersiveweapons:cobalt_block"
-    }
+    "immersiveweapons:cobalt_block"
   ],
   "result": {
     "count": 9,

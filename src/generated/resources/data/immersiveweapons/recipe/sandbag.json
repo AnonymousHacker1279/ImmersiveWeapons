@@ -3,12 +3,8 @@
   "category": "building",
   "group": "sandbags",
   "key": {
-    "a": {
-      "tag": "c:sands"
-    },
-    "b": {
-      "item": "immersiveweapons:cloth_scrap"
-    }
+    "a": "#c:sands",
+    "b": "immersiveweapons:cloth_scrap"
   },
   "pattern": [
     "bbb",

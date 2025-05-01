@@ -3,12 +3,8 @@
   "category": "building",
   "group": "tables",
   "key": {
-    "a": {
-      "item": "minecraft:bamboo_slab"
-    },
-    "b": {
-      "item": "minecraft:bamboo_fence"
-    }
+    "a": "minecraft:bamboo_slab",
+    "b": "minecraft:bamboo_fence"
   },
   "pattern": [
     "a",

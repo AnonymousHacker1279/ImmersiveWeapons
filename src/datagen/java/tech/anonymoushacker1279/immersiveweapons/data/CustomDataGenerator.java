@@ -6,7 +6,6 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.metadata.PackMetadataGenerator;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -31,7 +30,6 @@ import tech.anonymoushacker1279.immersiveweapons.data.textures.TextureMetadataGe
 import tech.anonymoushacker1279.immersiveweapons.data.trades.TradeDataGenerator;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
-import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +39,6 @@ import java.util.function.Supplier;
 @EventBusSubscriber(bus = Bus.MOD)
 public class CustomDataGenerator {
 
-	public static final List<Item> ALL_ITEMS = new ArrayList<>(250);
 	public static final List<Block> ALL_BLOCKS = new ArrayList<>(250);
 	public static final List<EntityType<?>> ALL_ENTITIES = new ArrayList<>(250);
 
@@ -74,10 +71,10 @@ public class CustomDataGenerator {
 		// Server data
 		generator.addProvider(event.includeServer(), new AdvancementProvider(output, lookupProvider, existingFileHelper, List.of(new AdvancementGenerator())));
 		generator.addProvider(event.includeServer(), new LootTableGenerator(output, lookupProvider));
-		generator.addProvider(event.includeServer(), new FamilyGenerator.Runner(output, lookupProvider));
 		BlockTagsGenerator blockTagsGenerator = new BlockTagsGenerator(output, lookupProvider, existingFileHelper);
 		generator.addProvider(event.includeServer(), blockTagsGenerator);
 		generator.addProvider(event.includeServer(), new ItemTagsGenerator(output, lookupProvider, blockTagsGenerator, existingFileHelper));
+		generator.addProvider(event.includeServer(), new FamilyGenerator.Runner(output, lookupProvider));
 		generator.addProvider(event.includeServer(), new EntityTypeTagsGenerator(output, lookupProvider, existingFileHelper));
 		generator.addProvider(event.includeServer(), new GameEventTagsGenerator(output, lookupProvider, existingFileHelper));
 		generator.addProvider(event.includeServer(), new EnchantmentTagsGenerator(output, lookupProvider, existingFileHelper));
@@ -91,7 +88,6 @@ public class CustomDataGenerator {
 	}
 
 	private static void prepareLists() {
-		ItemRegistry.ITEMS.getEntries().stream().map(Supplier::get).forEach(ALL_ITEMS::add);
 		BlockRegistry.BLOCKS.getEntries().stream().map(Supplier::get).forEach(ALL_BLOCKS::add);
 		EntityRegistry.ENTITY_TYPES.getEntries().stream().map(Supplier::get).forEach(ALL_ENTITIES::add);
 	}

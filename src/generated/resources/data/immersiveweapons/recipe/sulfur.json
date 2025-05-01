@@ -3,9 +3,7 @@
   "category": "misc",
   "group": "sulfur",
   "ingredients": [
-    {
-      "item": "immersiveweapons:raw_sulfur_block"
-    }
+    "immersiveweapons:raw_sulfur_block"
   ],
   "result": {
     "count": 9,

@@ -3,15 +3,9 @@
   "category": "building",
   "group": "traps",
   "key": {
-    "a": {
-      "tag": "c:dusts/redstone"
-    },
-    "b": {
-      "tag": "c:ingots/iron"
-    },
-    "c": {
-      "tag": "c:nuggets/iron"
-    }
+    "a": "#c:dusts/redstone",
+    "b": "#c:ingots/iron",
+    "c": "#c:nuggets/iron"
   },
   "pattern": [
     "ccc",

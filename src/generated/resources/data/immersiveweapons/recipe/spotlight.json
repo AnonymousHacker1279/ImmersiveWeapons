@@ -3,15 +3,9 @@
   "category": "building",
   "group": "lights",
   "key": {
-    "a": {
-      "item": "minecraft:redstone_lamp"
-    },
-    "b": {
-      "item": "minecraft:black_concrete"
-    },
-    "c": {
-      "tag": "c:ingots/metal"
-    }
+    "a": "minecraft:redstone_lamp",
+    "b": "minecraft:black_concrete",
+    "c": "#c:ingots/metal"
   },
   "pattern": [
     "bab",

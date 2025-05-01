@@ -3,9 +3,7 @@
   "category": "building",
   "group": "cobalt",
   "key": {
-    "a": {
-      "item": "immersiveweapons:raw_cobalt"
-    }
+    "a": "immersiveweapons:raw_cobalt"
   },
   "pattern": [
     "aaa",

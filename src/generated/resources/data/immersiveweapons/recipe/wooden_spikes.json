@@ -3,12 +3,8 @@
   "category": "building",
   "group": "traps",
   "key": {
-    "a": {
-      "tag": "minecraft:planks"
-    },
-    "b": {
-      "item": "minecraft:stick"
-    }
+    "a": "#minecraft:planks",
+    "b": "minecraft:stick"
   },
   "pattern": [
     "b b",

@@ -3,9 +3,7 @@
   "category": "misc",
   "group": "copper_nugget",
   "ingredients": [
-    {
-      "tag": "c:ingots/copper"
-    }
+    "#c:ingots/copper"
   ],
   "result": {
     "count": 9,

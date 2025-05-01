@@ -3,9 +3,7 @@
   "category": "building",
   "group": "wood",
   "key": {
-    "a": {
-      "item": "immersiveweapons:burned_oak_log"
-    }
+    "a": "immersiveweapons:burned_oak_log"
   },
   "pattern": [
     "aa",

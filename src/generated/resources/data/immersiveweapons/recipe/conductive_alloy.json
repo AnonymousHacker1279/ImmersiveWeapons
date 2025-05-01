@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "conductive_alloy",
   "key": {
-    "a": {
-      "tag": "c:ingots/copper"
-    },
-    "b": {
-      "tag": "c:ingots/gold"
-    }
+    "a": "#c:ingots/copper",
+    "b": "#c:ingots/gold"
   },
   "pattern": [
     "ab"

@@ -3,18 +3,10 @@
   "category": "misc",
   "group": "food",
   "ingredients": [
-    {
-      "item": "minecraft:carrot"
-    },
-    {
-      "item": "minecraft:potato"
-    },
-    {
-      "item": "minecraft:beetroot"
-    },
-    {
-      "item": "minecraft:cooked_chicken"
-    }
+    "minecraft:carrot",
+    "minecraft:potato",
+    "minecraft:beetroot",
+    "minecraft:cooked_chicken"
   ],
   "result": {
     "count": 1,

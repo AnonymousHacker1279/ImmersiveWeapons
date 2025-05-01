@@ -3,9 +3,7 @@
   "category": "misc",
   "group": "shard",
   "ingredients": [
-    {
-      "item": "minecraft:obsidian"
-    }
+    "minecraft:obsidian"
   ],
   "result": {
     "count": 9,

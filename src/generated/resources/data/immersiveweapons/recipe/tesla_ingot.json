@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "tesla",
   "key": {
-    "a": {
-      "tag": "immersiveweapons:ingots/electric"
-    },
-    "b": {
-      "item": "immersiveweapons:conductive_alloy"
-    }
+    "a": "#immersiveweapons:ingots/electric",
+    "b": "immersiveweapons:conductive_alloy"
   },
   "pattern": [
     "ab "

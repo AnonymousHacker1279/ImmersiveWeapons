@@ -3,9 +3,7 @@
   "category": "building",
   "group": "iron_panel",
   "key": {
-    "a": {
-      "tag": "c:storage_blocks/iron"
-    }
+    "a": "#c:storage_blocks/iron"
   },
   "pattern": [
     "aaa"

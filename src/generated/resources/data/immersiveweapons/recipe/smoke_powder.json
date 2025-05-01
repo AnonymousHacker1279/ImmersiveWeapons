@@ -3,18 +3,10 @@
   "category": "misc",
   "group": "smoke_grenade",
   "ingredients": [
-    {
-      "item": "immersiveweapons:mortar_and_pestle"
-    },
-    {
-      "item": "minecraft:gunpowder"
-    },
-    {
-      "tag": "minecraft:coals"
-    },
-    {
-      "tag": "minecraft:leaves"
-    }
+    "immersiveweapons:mortar_and_pestle",
+    "minecraft:gunpowder",
+    "#minecraft:coals",
+    "#minecraft:leaves"
   ],
   "result": {
     "count": 4,

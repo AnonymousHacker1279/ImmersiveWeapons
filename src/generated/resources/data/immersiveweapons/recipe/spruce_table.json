@@ -3,12 +3,8 @@
   "category": "building",
   "group": "tables",
   "key": {
-    "a": {
-      "item": "minecraft:spruce_slab"
-    },
-    "b": {
-      "item": "minecraft:spruce_fence"
-    }
+    "a": "minecraft:spruce_slab",
+    "b": "minecraft:spruce_fence"
   },
   "pattern": [
     "a",

@@ -3,12 +3,8 @@
   "category": "building",
   "group": "tables",
   "key": {
-    "a": {
-      "item": "minecraft:crimson_slab"
-    },
-    "b": {
-      "item": "minecraft:crimson_fence"
-    }
+    "a": "minecraft:crimson_slab",
+    "b": "minecraft:crimson_fence"
   },
   "pattern": [
     "a",

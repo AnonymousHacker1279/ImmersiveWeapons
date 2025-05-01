@@ -3,33 +3,15 @@
   "category": "misc",
   "group": "food",
   "ingredients": [
-    {
-      "item": "minecraft:cocoa_beans"
-    },
-    {
-      "item": "minecraft:cocoa_beans"
-    },
-    {
-      "item": "minecraft:cocoa_beans"
-    },
-    {
-      "item": "minecraft:cocoa_beans"
-    },
-    {
-      "item": "minecraft:cocoa_beans"
-    },
-    {
-      "item": "minecraft:cocoa_beans"
-    },
-    {
-      "item": "minecraft:cocoa_beans"
-    },
-    {
-      "item": "minecraft:cocoa_beans"
-    },
-    {
-      "item": "minecraft:milk_bucket"
-    }
+    "minecraft:cocoa_beans",
+    "minecraft:cocoa_beans",
+    "minecraft:cocoa_beans",
+    "minecraft:cocoa_beans",
+    "minecraft:cocoa_beans",
+    "minecraft:cocoa_beans",
+    "minecraft:cocoa_beans",
+    "minecraft:cocoa_beans",
+    "minecraft:milk_bucket"
   ],
   "result": {
     "count": 8,

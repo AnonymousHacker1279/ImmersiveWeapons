@@ -3,7 +3,7 @@
     "immersiveweapons:agility_bracelet": {
       "attribute_modifiers": [
         {
-          "attribute": "minecraft:generic.movement_speed",
+          "attribute": "minecraft:movement_speed",
           "modifier": {
             "amount": 0.05,
             "id": "immersiveweapons:agility_bracelet_speed_modifier",
@@ -11,7 +11,7 @@
           }
         },
         {
-          "attribute": "minecraft:generic.step_height",
+          "attribute": "minecraft:step_height",
           "modifier": {
             "amount": 0.5,
             "id": "immersiveweapons:agility_bracelet_step_height_modifier",
@@ -138,7 +138,7 @@
     "immersiveweapons:bloated_heart": {
       "attribute_modifiers": [
         {
-          "attribute": "minecraft:generic.max_health",
+          "attribute": "minecraft:max_health",
           "modifier": {
             "amount": 4.0,
             "id": "immersiveweapons:bloated_heart_health_modifier",
@@ -358,10 +358,6 @@
           "ambient": true,
           "duration": 60,
           "id": "minecraft:hero_of_the_village",
-          "neoforge:cures": [
-            "milk",
-            "protected_by_totem"
-          ],
           "show_icon": true
         }
       ],
@@ -370,7 +366,7 @@
     "immersiveweapons:glove_of_rapid_swinging": {
       "attribute_modifiers": [
         {
-          "attribute": "minecraft:generic.attack_speed",
+          "attribute": "minecraft:attack_speed",
           "modifier": {
             "amount": 0.25,
             "id": "immersiveweapons:glove_of_rapid_swinging_attack_speed_modifier",
@@ -437,7 +433,7 @@
     "immersiveweapons:hand_of_doom": {
       "attribute_modifiers": [
         {
-          "attribute": "minecraft:generic.attack_speed",
+          "attribute": "minecraft:attack_speed",
           "modifier": {
             "amount": 0.25,
             "id": "immersiveweapons:glove_of_rapid_swinging_attack_speed_modifier",
@@ -734,7 +730,7 @@
       "dynamic_attribute_modifiers": [
         {
           "attributeOperation": {
-            "attribute": "minecraft:generic.knockback_resistance",
+            "attribute": "minecraft:knockback_resistance",
             "modifier": {
               "amount": 0.0,
               "id": "immersiveweapons:netherite_shield_knockback_resistance",
@@ -771,10 +767,6 @@
           "ambient": true,
           "duration": 220,
           "id": "minecraft:night_vision",
-          "neoforge:cures": [
-            "milk",
-            "protected_by_totem"
-          ],
           "show_icon": true
         }
       ],
@@ -873,7 +865,7 @@
     "immersiveweapons:super_blanket_cape": {
       "attribute_modifiers": [
         {
-          "attribute": "minecraft:generic.movement_speed",
+          "attribute": "minecraft:movement_speed",
           "modifier": {
             "amount": 0.05,
             "id": "immersiveweapons:super_blanket_cape_speed_modifier",
@@ -889,20 +881,12 @@
           "ambient": true,
           "duration": 60,
           "id": "minecraft:jump_boost",
-          "neoforge:cures": [
-            "milk",
-            "protected_by_totem"
-          ],
           "show_icon": true
         },
         {
           "ambient": true,
           "duration": 60,
           "id": "minecraft:slow_falling",
-          "neoforge:cures": [
-            "milk",
-            "protected_by_totem"
-          ],
           "show_icon": true
         }
       ],

@@ -8,8 +8,8 @@ import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
 
 public class MoltenHoe extends HoeItem implements HitEffectUtils {
 
-	public MoltenHoe() {
-		super(IWToolMaterials.MOLTEN, -5, 0.0f, new Properties().fireResistant());
+	public MoltenHoe(Properties properties) {
+		super(IWToolMaterials.MOLTEN, -5, 0.0f, properties.fireResistant());
 	}
 
 	@Override

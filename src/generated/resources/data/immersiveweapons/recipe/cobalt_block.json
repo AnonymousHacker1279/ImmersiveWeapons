@@ -3,9 +3,7 @@
   "category": "building",
   "group": "cobalt",
   "key": {
-    "a": {
-      "tag": "c:ingots/cobalt"
-    }
+    "a": "#c:ingots/cobalt"
   },
   "pattern": [
     "aaa",

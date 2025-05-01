@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "ventus",
   "key": {
-    "a": {
-      "tag": "immersiveweapons:shards/ventus"
-    },
-    "b": {
-      "tag": "c:gems/diamond"
-    }
+    "a": "#immersiveweapons:shards/ventus",
+    "b": "#c:gems/diamond"
   },
   "pattern": [
     "aaa",

@@ -8,8 +8,8 @@ import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
 
 public class TeslaPickaxe extends PickaxeItem implements HitEffectUtils {
 
-	public TeslaPickaxe() {
-		super(IWToolMaterials.TESLA, 1, -2.8f, new Properties());
+	public TeslaPickaxe(Properties properties) {
+		super(IWToolMaterials.TESLA, 1, -2.8f, properties);
 	}
 
 	@Override

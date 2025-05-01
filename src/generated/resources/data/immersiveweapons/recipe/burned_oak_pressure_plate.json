@@ -3,9 +3,7 @@
   "category": "building",
   "group": "wooden_pressure_plate",
   "key": {
-    "a": {
-      "item": "immersiveweapons:burned_oak_planks"
-    }
+    "a": "immersiveweapons:burned_oak_planks"
   },
   "pattern": [
     "aa"

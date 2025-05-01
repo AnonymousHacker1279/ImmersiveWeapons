@@ -3,9 +3,7 @@
   "category": "misc",
   "group": "tesla",
   "key": {
-    "a": {
-      "tag": "immersiveweapons:nuggets/tesla"
-    }
+    "a": "#immersiveweapons:nuggets/tesla"
   },
   "pattern": [
     "aaa",

@@ -1,14 +1,11 @@
 {
   "type": "minecraft:crafting_shaped",
   "category": "building",
-  "group": "mud",
   "key": {
-    "a": {
-      "item": "immersiveweapons:hardened_mud"
-    }
+    "#": "immersiveweapons:hardened_mud"
   },
   "pattern": [
-    "aaa"
+    "###"
   ],
   "result": {
     "count": 6,

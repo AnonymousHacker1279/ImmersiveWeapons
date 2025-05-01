@@ -2,33 +2,15 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "tag": "c:dusts/sulfur"
-    },
-    {
-      "tag": "minecraft:coals"
-    },
-    {
-      "item": "immersiveweapons:potassium_nitrate"
-    },
-    {
-      "item": "immersiveweapons:potassium_nitrate"
-    },
-    {
-      "item": "immersiveweapons:potassium_nitrate"
-    },
-    {
-      "item": "immersiveweapons:potassium_nitrate"
-    },
-    {
-      "item": "immersiveweapons:potassium_nitrate"
-    },
-    {
-      "item": "immersiveweapons:potassium_nitrate"
-    },
-    {
-      "item": "immersiveweapons:mortar_and_pestle"
-    }
+    "#c:dusts/sulfur",
+    "#minecraft:coals",
+    "immersiveweapons:potassium_nitrate",
+    "immersiveweapons:potassium_nitrate",
+    "immersiveweapons:potassium_nitrate",
+    "immersiveweapons:potassium_nitrate",
+    "immersiveweapons:potassium_nitrate",
+    "immersiveweapons:potassium_nitrate",
+    "immersiveweapons:mortar_and_pestle"
   ],
   "result": {
     "count": 8,

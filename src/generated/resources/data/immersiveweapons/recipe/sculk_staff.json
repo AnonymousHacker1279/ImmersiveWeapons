@@ -3,15 +3,9 @@
   "category": "equipment",
   "group": "sculk_staff",
   "key": {
-    "a": {
-      "item": "immersiveweapons:warden_heart"
-    },
-    "b": {
-      "item": "immersiveweapons:obsidian_rod"
-    },
-    "c": {
-      "item": "minecraft:echo_shard"
-    }
+    "a": "immersiveweapons:warden_heart",
+    "b": "immersiveweapons:obsidian_rod",
+    "c": "minecraft:echo_shard"
   },
   "pattern": [
     "cac",

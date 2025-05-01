@@ -3,15 +3,9 @@
   "category": "equipment",
   "group": "pliers",
   "key": {
-    "a": {
-      "item": "minecraft:leather"
-    },
-    "b": {
-      "item": "immersiveweapons:tool_joint"
-    },
-    "c": {
-      "tag": "c:ingots/metal"
-    }
+    "a": "minecraft:leather",
+    "b": "immersiveweapons:tool_joint",
+    "c": "#c:ingots/metal"
   },
   "pattern": [
     " c ",

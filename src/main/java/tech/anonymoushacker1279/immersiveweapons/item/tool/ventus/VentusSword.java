@@ -8,8 +8,8 @@ import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
 
 public class VentusSword extends SwordItem implements HitEffectUtils {
 
-	public VentusSword() {
-		super(IWToolMaterials.VENTUS.applySwordProperties(new Properties(), 3, -2.0f));
+	public VentusSword(Properties properties) {
+		super(IWToolMaterials.VENTUS.applySwordProperties(properties, 3, -2.0f));
 	}
 
 	@Override

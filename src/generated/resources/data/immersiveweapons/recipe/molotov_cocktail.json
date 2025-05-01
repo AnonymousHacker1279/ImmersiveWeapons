@@ -3,12 +3,8 @@
   "category": "equipment",
   "group": "molotov_cocktail",
   "key": {
-    "a": {
-      "tag": "c:strings"
-    },
-    "b": {
-      "item": "immersiveweapons:bottle_of_alcohol"
-    }
+    "a": "#c:strings",
+    "b": "immersiveweapons:bottle_of_alcohol"
   },
   "pattern": [
     " a ",

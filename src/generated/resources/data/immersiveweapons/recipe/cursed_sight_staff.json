@@ -3,12 +3,8 @@
   "category": "equipment",
   "group": "cursed_sight_staff",
   "key": {
-    "a": {
-      "item": "immersiveweapons:cursed_sight_staff_core"
-    },
-    "b": {
-      "item": "immersiveweapons:obsidian_rod"
-    }
+    "a": "immersiveweapons:cursed_sight_staff_core",
+    "b": "immersiveweapons:obsidian_rod"
   },
   "pattern": [
     "a",

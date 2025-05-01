@@ -8,8 +8,8 @@ import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
 
 public class VentusAxe extends AxeItem implements HitEffectUtils {
 
-	public VentusAxe() {
-		super(IWToolMaterials.VENTUS, 5, -2.6f, new Properties());
+	public VentusAxe(Properties properties) {
+		super(IWToolMaterials.VENTUS, 5, -2.6f, properties);
 	}
 
 	@Override

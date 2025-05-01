@@ -3,9 +3,7 @@
   "category": "building",
   "group": "astral",
   "key": {
-    "a": {
-      "tag": "immersiveweapons:ingots/astral"
-    }
+    "a": "#immersiveweapons:ingots/astral"
   },
   "pattern": [
     "aaa",

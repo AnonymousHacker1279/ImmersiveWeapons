@@ -3,18 +3,10 @@
   "category": "equipment",
   "group": "ammunition_table",
   "key": {
-    "a": {
-      "tag": "c:ingots/iron"
-    },
-    "b": {
-      "tag": "minecraft:planks"
-    },
-    "c": {
-      "tag": "minecraft:stone_crafting_materials"
-    },
-    "d": {
-      "tag": "c:gunpowders"
-    }
+    "a": "#c:ingots/iron",
+    "b": "#minecraft:planks",
+    "c": "#minecraft:stone_crafting_materials",
+    "d": "#c:gunpowders"
   },
   "pattern": [
     "aaa",

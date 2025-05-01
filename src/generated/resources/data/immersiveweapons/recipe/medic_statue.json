@@ -3,21 +3,11 @@
   "category": "misc",
   "group": "summoning_statue",
   "key": {
-    "a": {
-      "item": "immersiveweapons:first_aid_kit"
-    },
-    "b": {
-      "item": "immersiveweapons:medal_of_honor"
-    },
-    "c": {
-      "item": "immersiveweapons:azul_keystone"
-    },
-    "d": {
-      "tag": "c:ingots/gold"
-    },
-    "e": {
-      "item": "minecraft:cracked_polished_blackstone_bricks"
-    }
+    "a": "immersiveweapons:first_aid_kit",
+    "b": "immersiveweapons:medal_of_honor",
+    "c": "immersiveweapons:azul_keystone",
+    "d": "#c:ingots/gold",
+    "e": "minecraft:cracked_polished_blackstone_bricks"
   },
   "pattern": [
     " a ",

@@ -238,8 +238,10 @@ public class StarForgeBlockEntity extends BaseContainerBlockEntity implements En
 		for (RecipeHolder<StarForgeRecipe> holder : ALL_RECIPES) {
 			StarForgeRecipe recipe = holder.value();
 
-			if (recipe.primaryMaterial().test(primaryMaterial) && recipe.secondaryMaterial().test(secondaryMaterial)) {
-				availableRecipes.add(holder);
+			if (recipe.primaryMaterial().test(primaryMaterial) && recipe.secondaryMaterial().isPresent()) {
+				if (recipe.secondaryMaterial().get().test(secondaryMaterial)) {
+					availableRecipes.add(holder);
+				}
 			}
 		}
 

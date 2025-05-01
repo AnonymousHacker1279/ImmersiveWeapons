@@ -8,8 +8,8 @@ import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
 
 public class VentusPickaxe extends PickaxeItem implements HitEffectUtils {
 
-	public VentusPickaxe() {
-		super(IWToolMaterials.VENTUS, 1, -2.4f, new Properties());
+	public VentusPickaxe(Properties properties) {
+		super(IWToolMaterials.VENTUS, 1, -2.4f, properties);
 	}
 
 	@Override

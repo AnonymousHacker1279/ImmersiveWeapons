@@ -8,8 +8,8 @@ import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
 
 public class VentusHoe extends HoeItem implements HitEffectUtils {
 
-	public VentusHoe() {
-		super(IWToolMaterials.VENTUS, -5, 0.2f, new Properties());
+	public VentusHoe(Properties properties) {
+		super(IWToolMaterials.VENTUS, -5, 0.2f, properties);
 	}
 
 	@Override

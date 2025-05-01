@@ -3,24 +3,12 @@
   "category": "building",
   "group": "tesla",
   "key": {
-    "a": {
-      "item": "minecraft:netherite_ingot"
-    },
-    "b": {
-      "item": "immersiveweapons:molten_block"
-    },
-    "c": {
-      "tag": "c:ingots/copper"
-    },
-    "d": {
-      "tag": "c:glass_panes"
-    },
-    "e": {
-      "tag": "c:ingots/iron"
-    },
-    "f": {
-      "item": "immersiveweapons:tesla_ingot"
-    }
+    "a": "minecraft:netherite_ingot",
+    "b": "immersiveweapons:molten_block",
+    "c": "#c:ingots/copper",
+    "d": "#c:glass_panes",
+    "e": "#c:ingots/iron",
+    "f": "immersiveweapons:tesla_ingot"
   },
   "pattern": [
     "fff",

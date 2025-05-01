@@ -3,12 +3,8 @@
   "category": "equipment",
   "group": "firearm",
   "key": {
-    "a": {
-      "item": "minecraft:tnt"
-    },
-    "b": {
-      "item": "immersiveweapons:cannonball"
-    }
+    "a": "minecraft:tnt",
+    "b": "immersiveweapons:cannonball"
   },
   "pattern": [
     " b ",

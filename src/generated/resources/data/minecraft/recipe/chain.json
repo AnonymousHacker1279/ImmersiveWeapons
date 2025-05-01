@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "a": {
-      "tag": "c:ingots/metal"
-    },
-    "b": {
-      "tag": "c:nuggets/metal"
-    }
+    "a": "#c:ingots/metal",
+    "b": "#c:nuggets/metal"
   },
   "pattern": [
     " b ",

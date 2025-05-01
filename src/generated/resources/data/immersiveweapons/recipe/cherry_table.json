@@ -3,12 +3,8 @@
   "category": "building",
   "group": "tables",
   "key": {
-    "a": {
-      "item": "minecraft:cherry_slab"
-    },
-    "b": {
-      "item": "minecraft:cherry_fence"
-    }
+    "a": "minecraft:cherry_slab",
+    "b": "minecraft:cherry_fence"
   },
   "pattern": [
     "a",

@@ -3,12 +3,8 @@
   "category": "building",
   "group": "tables",
   "key": {
-    "a": {
-      "item": "minecraft:oak_slab"
-    },
-    "b": {
-      "item": "minecraft:oak_fence"
-    }
+    "a": "minecraft:oak_slab",
+    "b": "minecraft:oak_fence"
   },
   "pattern": [
     "a",

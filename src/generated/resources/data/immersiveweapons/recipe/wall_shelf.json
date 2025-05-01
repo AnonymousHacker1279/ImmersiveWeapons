@@ -3,12 +3,8 @@
   "category": "building",
   "group": "shelves",
   "key": {
-    "a": {
-      "tag": "minecraft:wooden_slabs"
-    },
-    "b": {
-      "tag": "c:ingots/metal"
-    }
+    "a": "#minecraft:wooden_slabs",
+    "b": "#c:ingots/metal"
   },
   "pattern": [
     "bab",

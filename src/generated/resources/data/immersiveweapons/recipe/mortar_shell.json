@@ -3,12 +3,8 @@
   "category": "building",
   "group": "artillery",
   "key": {
-    "a": {
-      "item": "minecraft:tnt"
-    },
-    "b": {
-      "tag": "c:stones"
-    }
+    "a": "minecraft:tnt",
+    "b": "#c:stones"
   },
   "pattern": [
     " b ",

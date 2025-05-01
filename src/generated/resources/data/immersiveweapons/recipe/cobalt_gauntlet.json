@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "a": {
-      "tag": "c:ingots/cobalt"
-    },
-    "b": {
-      "item": "immersiveweapons:gauntlet_scaffolding"
-    }
+    "a": "#c:ingots/cobalt",
+    "b": "immersiveweapons:gauntlet_scaffolding"
   },
   "pattern": [
     "aaa",

@@ -1,5 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.data.models;
 
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -217,12 +218,11 @@ public class ItemModelGenerator extends ItemModelProvider implements DataGenUtil
 
 		// Create trimmed variants
 		for (ResourceKey<TrimMaterial> trimMaterial : trimMaterials) {
-			String armorType = switch (item.getDefaultInstance().getEquipmentSlot()) {
+			String armorType = switch (item.components().get(DataComponents.EQUIPPABLE).slot()) {
 				case HEAD -> "helmet";
 				case CHEST -> "chestplate";
 				case LEGS -> "leggings";
 				case FEET -> "boots";
-				case null -> null;
 				default -> "";
 			};
 

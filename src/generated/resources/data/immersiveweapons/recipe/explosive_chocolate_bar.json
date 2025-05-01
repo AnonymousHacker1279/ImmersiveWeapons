@@ -3,33 +3,15 @@
   "category": "misc",
   "group": "food",
   "ingredients": [
-    {
-      "item": "immersiveweapons:chocolate_bar"
-    },
-    {
-      "item": "immersiveweapons:chocolate_bar"
-    },
-    {
-      "item": "immersiveweapons:chocolate_bar"
-    },
-    {
-      "item": "immersiveweapons:chocolate_bar"
-    },
-    {
-      "item": "immersiveweapons:chocolate_bar"
-    },
-    {
-      "item": "immersiveweapons:chocolate_bar"
-    },
-    {
-      "item": "immersiveweapons:chocolate_bar"
-    },
-    {
-      "item": "immersiveweapons:chocolate_bar"
-    },
-    {
-      "item": "minecraft:tnt"
-    }
+    "immersiveweapons:chocolate_bar",
+    "immersiveweapons:chocolate_bar",
+    "immersiveweapons:chocolate_bar",
+    "immersiveweapons:chocolate_bar",
+    "immersiveweapons:chocolate_bar",
+    "immersiveweapons:chocolate_bar",
+    "immersiveweapons:chocolate_bar",
+    "immersiveweapons:chocolate_bar",
+    "minecraft:tnt"
   ],
   "result": {
     "count": 8,

@@ -3,21 +3,11 @@
   "category": "misc",
   "group": "void",
   "key": {
-    "a": {
-      "item": "immersiveweapons:starstorm_hoe"
-    },
-    "b": {
-      "item": "immersiveweapons:astral_hoe"
-    },
-    "c": {
-      "tag": "immersiveweapons:ingots/starstorm"
-    },
-    "d": {
-      "tag": "immersiveweapons:ingots/astral"
-    },
-    "e": {
-      "tag": "immersiveweapons:ingots/void"
-    }
+    "a": "immersiveweapons:starstorm_hoe",
+    "b": "immersiveweapons:astral_hoe",
+    "c": "#immersiveweapons:ingots/starstorm",
+    "d": "#immersiveweapons:ingots/astral",
+    "e": "#immersiveweapons:ingots/void"
   },
   "pattern": [
     "ced",

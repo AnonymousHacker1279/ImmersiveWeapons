@@ -3,15 +3,9 @@
   "category": "equipment",
   "group": "void",
   "key": {
-    "a": {
-      "item": "immersiveweapons:hans_blessing"
-    },
-    "b": {
-      "tag": "immersiveweapons:ingots/void"
-    },
-    "c": {
-      "item": "immersiveweapons:ender_essence"
-    }
+    "a": "immersiveweapons:hans_blessing",
+    "b": "#immersiveweapons:ingots/void",
+    "c": "immersiveweapons:ender_essence"
   },
   "pattern": [
     "cbc",
