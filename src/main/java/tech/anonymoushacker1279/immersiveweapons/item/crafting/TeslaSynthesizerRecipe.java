@@ -32,7 +32,7 @@ public class TeslaSynthesizerRecipe implements Recipe<TeslaSynthesizerRecipeInpu
 		this.group = group;
 		this.material1 = material1;
 		this.material2 = material2;
-		this.material3 = material2;
+		this.material3 = material3;
 		this.result = result;
 		this.cookTime = cookTime;
 	}
@@ -78,7 +78,7 @@ public class TeslaSynthesizerRecipe implements Recipe<TeslaSynthesizerRecipeInpu
 
 	@Override
 	public boolean matches(TeslaSynthesizerRecipeInput input, Level level) {
-		return false;
+		return material1.test(input.getItem(0)) && material2.test(input.getItem(1)) && material3.test(input.getItem(2));
 	}
 
 	@Override

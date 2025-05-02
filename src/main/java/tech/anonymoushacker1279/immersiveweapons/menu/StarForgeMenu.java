@@ -20,7 +20,6 @@ import tech.anonymoushacker1279.immersiveweapons.blockentity.StarForgeBlockEntit
 import tech.anonymoushacker1279.immersiveweapons.init.MenuTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.StarForgeRecipe;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.star_forge.StarForgeMenuPayload;
-import tech.anonymoushacker1279.immersiveweapons.network.payload.star_forge.StarForgeUpdateRecipesPayload;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -137,15 +136,16 @@ public class StarForgeMenu extends AbstractContainerMenu {
 			}
 
 			// Send the packet to the client
-			PacketDistributor.sendToPlayersNear(
+			// TODO: fix recipe sync
+			/*PacketDistributor.sendToPlayersNear(
 					(ServerLevel) starForgeBlockEntity.getLevel(),
 					null,
 					starForgeBlockEntity.getBlockPos().getX(),
 					starForgeBlockEntity.getBlockPos().getY(),
 					starForgeBlockEntity.getBlockPos().getZ(),
 					16,
-					new StarForgeUpdateRecipesPayload(player.getUUID(), containerId, starForgeBlockEntity.getAvailableRecipeKeys())
-			);
+					new StarForgeUpdateRecipesPayload(player.getUUID(), containerId, availableRecipes)
+			);*/
 
 			// If there is a recipe already being crafted, cancel it
 			if (containerData.get(2) > 0) {

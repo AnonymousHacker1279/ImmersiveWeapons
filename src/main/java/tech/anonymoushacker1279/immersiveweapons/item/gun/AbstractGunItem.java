@@ -119,7 +119,7 @@ public abstract class AbstractGunItem extends Item {
 
 			// Check if the gun can be fired
 			if (!misfire && ((!ammo.isEmpty() && powder != null) || isCreative)) {
-				// If the ammunition stack is empty, set it to the default.
+				// If the ammunition ingredient is empty, set it to the default.
 				// This happens when the player is in creative mode but has no ammunition.
 				if (ammo.isEmpty()) {
 					ammo = new ItemStack(defaultAmmo());

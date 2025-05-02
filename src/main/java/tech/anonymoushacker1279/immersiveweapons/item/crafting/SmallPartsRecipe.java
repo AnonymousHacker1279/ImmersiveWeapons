@@ -59,7 +59,7 @@ public class SmallPartsRecipe implements Recipe<RecipeInput> {
 
 	@Override
 	public boolean matches(RecipeInput input, Level level) {
-		return false;
+		return this.input.test(input.getItem(0));
 	}
 
 	@Override

@@ -46,7 +46,7 @@ public class AmmunitionTableScreen extends AbstractContainerScreen<AmmunitionTab
 				false
 		);
 
-		// Render the excess stack size below the result slot
+		// Render the excess ingredient size below the result slot
 		int excess = menu.getExcessStackSize();
 		if (excess > 0) {
 			String excessStackSize = "+" + excess;

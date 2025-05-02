@@ -11,6 +11,7 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -151,7 +152,7 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 	}
 
 	/**
-	 * Get the stack in the given slot.
+	 * Get the ingredient in the given slot.
 	 *
 	 * @param index the slot index
 	 * @return ItemStack
@@ -162,7 +163,7 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 	}
 
 	/**
-	 * Removes up to a specified number of items from an inventory slot and returns them in a new stack.
+	 * Removes up to a specified number of items from an inventory slot and returns them in a new ingredient.
 	 *
 	 * @param index the slot index
 	 * @param count the number to remove
@@ -174,7 +175,7 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 	}
 
 	/**
-	 * Removes a stack from the given slot and returns it.
+	 * Removes a ingredient from the given slot and returns it.
 	 *
 	 * @param index the slot index
 	 * @return ItemStack
@@ -185,7 +186,7 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 	}
 
 	/**
-	 * Sets the given item stack to the specified slot in the inventory.
+	 * Sets the given item ingredient to the specified slot in the inventory.
 	 *
 	 * @param index the slot index
 	 * @param stack the <code>ItemStack</code> to set
@@ -267,8 +268,8 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 			ItemStack stack = inventory.get(i);
 			if (!stack.isEmpty()) {
 				for (MaterialGroup materialGroup : materialGroups) {
-					if (materialGroup.getIngredient().test(stack)) {
-						int output = (int) Math.floor(((stack.getCount() * (1.0f + materialGroup.getDensity())) * materialGroup.baseMultiplier()) / (1.0f + densityModifier));
+					if (materialGroup.ingredient().test(stack)) {
+						int output = (int) Math.floor(((stack.getCount() * (1.0f + materialGroup.density())) * materialGroup.baseMultiplier()) / (1.0f + densityModifier));
 						outputPerSlot.set(i, output);
 
 						slotCosts.set(i, stack.getCount());
@@ -293,7 +294,6 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 
 			if (recipe == null) {
 				if (excessStack != ItemStack.EMPTY && didCraft) {
-					inventory.set(6, excessStack);
 					handleExcess();
 				} else {
 					inventory.set(6, ItemStack.EMPTY);
@@ -304,7 +304,7 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 			}
 
 			List<MaterialGroup> recipeMaterials = recipe.value().materials();
-			ItemStack result = recipe.value().result();
+			ItemStack result = recipe.value().result().copy();
 
 			slotCosts.clear();
 			int outputSize = calculateOutputSize(recipeMaterials);
@@ -312,7 +312,7 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 			if (outputSize > 99) {
 				containerData.set(1, outputSize - 99);
 				outputSize = 99;
-				excessStack = result.copyWithCount(outputSize);
+				excessStack = result.copy();
 
 				if (densityModifier > 0) {
 					excessStack.set(DENSITY_MODIFIER, densityModifier);
@@ -331,8 +331,8 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 	}
 
 	/**
-	 * Runs after a result stack has been taken. Decreases the stack size of each input item by the amount specified in
-	 * the slotCosts list.
+	 * Runs after a result ingredient has been taken. Decreases the ingredient size of each input item by the amount
+	 * specified in the slotCosts list.
 	 */
 	public void depleteMaterials() {
 		for (int i = 0; i < 6; i++) {
@@ -348,22 +348,32 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 	 */
 	public void handleExcess() {
 		int excess = containerData.get(1);
-		if (excess > 0) {
-			int stackSize = Math.clamp(excess, 0, 99);
-			excessStack.setCount(stackSize);
-			containerData.set(1, excess - stackSize);
-		} else {
-			excessStack = ItemStack.EMPTY;
-		}
-	}
+		if (excess > 0 && !excessStack.isEmpty()) {
+			// Drop excess items on the ground, splitting by max stack size
+			int maxStackSize = excessStack.getMaxStackSize();
+			while (excess > 0) {
+				int dropCount = Math.min(excess, maxStackSize);
+				ItemStack dropStack = excessStack.copyWithCount(dropCount);
+				dropStack.set(DENSITY_MODIFIER, densityModifier);
+				excess -= dropCount;
 
-	/**
-	 * Checks if there is an excess amount of output.
-	 *
-	 * @return boolean
-	 */
-	public boolean hasExcess() {
-		return containerData.get(1) > 0;
+				// Drop the item in the world
+				if (level != null) {
+					BlockPos pos = getBlockPos();
+					level.addFreshEntity(new ItemEntity(level, pos.getX(), pos.getY(), pos.getZ(), dropStack));
+				}
+
+				// Update the excess stack size
+				excessStackSize = excess;
+
+				if (excess == 0) {
+					excessStack = ItemStack.EMPTY;
+					containerData.set(1, 0);
+				} else {
+					containerData.set(1, excess);
+				}
+			}
+		}
 	}
 
 	/**

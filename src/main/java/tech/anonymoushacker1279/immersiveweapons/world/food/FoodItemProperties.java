@@ -22,6 +22,9 @@ public class FoodItemProperties {
 			.saturationModifier(0.2F)
 			.build();
 
+	public static final Consumable CHOCOLATE_BAR_CONSUMABLE = Consumables.defaultFood()
+			.consumeSeconds(0.8f)
+			.build();
 	public static final Consumable MOLDY_BREAD_CONSUMABLE = Consumables.defaultFood()
 			.onConsume(new ApplyStatusEffectsConsumeEffect(new MobEffectInstance(MobEffects.POISON, 400, 0)))
 			.build();

@@ -157,8 +157,8 @@ dependencies {
 	// Include JEI
 	// runtimeOnly "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
 	// Include WTHIT and badpackets
-	// runtimeOnly "mcp.mobius.waila:wthit:neo-${wthit_version}"
-	// runtimeOnly "lol.bai:badpackets:neo-${badpackets_version}"
+	runtimeOnly "mcp.mobius.waila:wthit:neo-${wthit_version}"
+	runtimeOnly "lol.bai:badpackets:neo-${badpackets_version}"
 }
 
 tasks.named('processResources', ProcessResources).configure {

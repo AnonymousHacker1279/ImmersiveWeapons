@@ -17,6 +17,7 @@ public class MeteorRenderer extends EntityRenderer<MeteorEntity, EntityRenderSta
 	private final MeteorModel model;
 
 	private static final ResourceLocation TEXTURE_LOCATION = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/entity/meteor/meteor.png");
+	private static final RenderType RENDER_TYPE = RenderType.entityCutout(TEXTURE_LOCATION);
 
 	public MeteorRenderer(Context context) {
 		super(context);
@@ -35,7 +36,7 @@ public class MeteorRenderer extends EntityRenderer<MeteorEntity, EntityRenderSta
 
 		poseStack.translate(-0.125f, 0, -0.125f);
 
-		model.renderToBuffer(poseStack, bufferSource.getBuffer(RenderType.entityTranslucent(TEXTURE_LOCATION)), packedLight, OverlayTexture.NO_OVERLAY, 16777215);
+		model.renderToBuffer(poseStack, bufferSource.getBuffer(RENDER_TYPE), packedLight, OverlayTexture.NO_OVERLAY, 16777215);
 		poseStack.popPose();
 
 		super.render(renderState, poseStack, bufferSource, packedLight);

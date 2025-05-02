@@ -17,6 +17,15 @@ public class TeslaSynthesizerMenu extends AbstractContainerMenu {
 	private final Container container;
 	private final ContainerData containerData;
 
+	// Slot indices for easy reference
+	private static final int FIRST_INGREDIENT_SLOT = 0;
+	private static final int SECOND_INGREDIENT_SLOT = 1;
+	private static final int THIRD_INGREDIENT_SLOT = 2;
+	private static final int FUEL_SLOT = 3;
+	private static final int RESULT_SLOT = 4;
+	private static final int PLAYER_INVENTORY_START = 5;
+	private static final int PLAYER_INVENTORY_END = 41;
+
 	/**
 	 * Constructor for TeslaSynthesizerMenu.
 	 *
@@ -81,40 +90,41 @@ public class TeslaSynthesizerMenu extends AbstractContainerMenu {
 			newStack = oldStack.copy();
 
 			// If the slot is the result slot
-			if (index == 4) {
-				if (!moveItemStackTo(oldStack, 5, 41, true)) {
+			if (index == RESULT_SLOT) {
+				if (!moveItemStackTo(oldStack, PLAYER_INVENTORY_START, PLAYER_INVENTORY_END, true)) {
 					return ItemStack.EMPTY;
 				}
 
 				slot.onQuickCraft(oldStack, newStack);
 			}
-			// If the slot is the fuel slot
-			else if (index != 3 && index != 2 && index != 1 && index != 0) {
+			// If the slot is not in the synthesizer container (in player inventory)
+			else if (index >= PLAYER_INVENTORY_START) {
 				// If the item is a fuel item
 				if (isFuel(oldStack)) {
-					if (!moveItemStackTo(oldStack, 3, 4, false)) {
+					if (!moveItemStackTo(oldStack, FUEL_SLOT, FUEL_SLOT + 1, false)) {
 						return ItemStack.EMPTY;
 					}
 				}
-				// If the item is a valid ingredient
-				// TODO: check quick stack
-				/*else if (isIngredient(player.level().getRecipeManager(), oldStack)) {
-					if (!moveItemStackTo(oldStack, 0, 3, false)) {
-						return ItemStack.EMPTY;
-					}
-				}*/
-				// If the item is in the player inventory
-				else if (index >= 5 && index < 32) {
-					if (!moveItemStackTo(oldStack, 32, 41, false)) {
-						return ItemStack.EMPTY;
-					}
-				}
-				// If the item is in the player hotbar
-				else if (index >= 32 && index < 41 && !moveItemStackTo(oldStack, 5, 32, false)) {
+				// Try to move to ingredient slots (0-3)
+				if (!moveItemStackTo(oldStack, FIRST_INGREDIENT_SLOT, THIRD_INGREDIENT_SLOT + 1, false)) {
 					return ItemStack.EMPTY;
 				}
-			} else {
-				if (!moveItemStackTo(oldStack, 5, 41, false)) {
+				// If not fuel or special ingredient, move between inventory and hotbar
+				else if (index < PLAYER_INVENTORY_END - 9) {
+					// Move from inventory to hotbar
+					if (!moveItemStackTo(oldStack, PLAYER_INVENTORY_END - 9, PLAYER_INVENTORY_END, false)) {
+						return ItemStack.EMPTY;
+					}
+				} else {
+					// Move from hotbar to inventory
+					if (!moveItemStackTo(oldStack, PLAYER_INVENTORY_START, PLAYER_INVENTORY_END - 9, false)) {
+						return ItemStack.EMPTY;
+					}
+				}
+			}
+			// If the slot is in the synthesizer container (not result)
+			else {
+				if (!moveItemStackTo(oldStack, PLAYER_INVENTORY_START, PLAYER_INVENTORY_END, false)) {
 					return ItemStack.EMPTY;
 				}
 			}

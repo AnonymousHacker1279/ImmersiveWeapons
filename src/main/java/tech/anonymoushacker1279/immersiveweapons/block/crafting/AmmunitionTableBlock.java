@@ -3,9 +3,10 @@ package tech.anonymoushacker1279.immersiveweapons.block.crafting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.*;
+import net.minecraft.world.Containers;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -13,7 +14,10 @@ import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.shapes.*;
+import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import tech.anonymoushacker1279.immersiveweapons.block.core.BasicOrientableBlock;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.AmmunitionTableBlockEntity;
 import tech.anonymoushacker1279.immersiveweapons.menu.AmmunitionTableMenu;
@@ -74,20 +78,6 @@ public class AmmunitionTableBlock extends BasicOrientableBlock implements Entity
 	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (!state.is(newState.getBlock())) {
 			if (level.getBlockEntity(pos) instanceof AmmunitionTableBlockEntity blockEntity) {
-				if (blockEntity.hasExcess() && blockEntity.hasNoMaterials()) {
-					// The excess may be greater than 99 so break it into chunks
-					int excess = blockEntity.containerData.get(1);
-					while (excess > 0) {
-						int stackSize = Math.min(excess, 99);
-						ItemStack stack = blockEntity.excessStack.copy();
-						stack.setCount(stackSize);
-						excess -= stackSize;
-						Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), stack);
-					}
-
-					blockEntity.containerData.set(1, 0);
-				}
-
 				if (!blockEntity.getInventory().get(6).isEmpty() && blockEntity.hasNoMaterials()) {
 					Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), blockEntity.getInventory().get(6));
 				}

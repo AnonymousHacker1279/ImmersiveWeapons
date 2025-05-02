@@ -72,7 +72,15 @@ public class StarForgeRecipe implements Recipe<StarForgeRecipeInput> {
 
 	@Override
 	public boolean matches(StarForgeRecipeInput input, Level level) {
-		return false;
+		if (input.primaryMaterial().isEmpty() || input.primaryMaterial().getCount() < primaryMaterialCount) {
+			return false;
+		}
+
+		if (secondaryMaterial.isPresent() && input.secondaryMaterial() != null) {
+			return !input.secondaryMaterial().isEmpty() && input.secondaryMaterial().getCount() >= secondaryMaterialCount;
+		}
+
+		return true;
 	}
 
 	@Override
@@ -108,7 +116,6 @@ public class StarForgeRecipe implements Recipe<StarForgeRecipeInput> {
 
 		return placementInfo;
 	}
-
 
 	public interface Factory<T extends StarForgeRecipe> {
 		T create(String group, Ingredient ingot, int ingotCount, Optional<Ingredient> secondaryMaterial, int secondaryMaterialCount,

@@ -27,7 +27,7 @@ public class BarrelTapRecipe extends SingleItemRecipe {
 
 	@Override
 	public boolean matches(SingleRecipeInput input, Level level) {
-		return super.matches(input, level) && input.size() >= materialCount;
+		return super.matches(input, level) && input.getItem(0).getCount() >= materialCount;
 	}
 
 	@Override

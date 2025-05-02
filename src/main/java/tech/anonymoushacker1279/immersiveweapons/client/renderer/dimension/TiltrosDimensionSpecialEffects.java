@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.CoreShaders;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
@@ -35,14 +36,15 @@ public class TiltrosDimensionSpecialEffects extends DimensionSpecialEffects {
 		return 0xFFFFFF;
 	}
 
+	// TODO: investigate why sky appears to move when looking around
 	@Override
 	public boolean renderSky(ClientLevel level, int ticks, float partialTick, Matrix4f modelViewMatrix, Camera camera, Matrix4f projectionMatrix, Runnable setupFog) {
 		PoseStack poseStack = new PoseStack();
 		poseStack.mulPose(modelViewMatrix);
 
 		RenderSystem.enableBlend();
-		RenderSystem.defaultBlendFunc();
 		RenderSystem.depthMask(false);
+		RenderSystem.setShader(CoreShaders.POSITION_TEX_COLOR);
 		RenderSystem.setShaderTexture(0, SKY_LOCATION);
 		Tesselator tesselator = Tesselator.getInstance();
 

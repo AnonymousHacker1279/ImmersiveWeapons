@@ -2046,9 +2046,9 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(pResultItem) + "_smithing");
 	}
 
-	private void teslaSynthesizing(ItemLike block, ItemLike material1, ItemLike material2, int cookTime,
+	private void teslaSynthesizing(ItemLike material1, ItemLike material2, ItemLike material3, int cookTime,
 	                               ItemLike result) {
-		TeslaSynthesizerRecipeBuilder.synthesizing(Ingredient.of(block), Ingredient.of(material1), Ingredient.of(material2),
+		TeslaSynthesizerRecipeBuilder.synthesizing(Ingredient.of(material1), Ingredient.of(material2), Ingredient.of(material3),
 						cookTime, result.asItem())
 				.unlockedBy("tesla_ingot", has(IWItemTagGroups.TESLA_INGOTS))
 				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_tesla_synthesizing");

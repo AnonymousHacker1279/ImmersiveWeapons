@@ -530,7 +530,6 @@
   "death.attack.immersiveweapons.wooden_spikes": "%1$s was impaled",
   "death.attack.immersiveweapons.wooden_spikes.item": "%1$s was impaled by %2$s using %3$s",
   "death.attack.immersiveweapons.wooden_spikes.player": "%1$s was impaled by %2$s",
-  "effect.immersiveweapons.alcohol": "Alcohol",
   "effect.immersiveweapons.bleeding": "Bleeding",
   "effect.immersiveweapons.broken_armor": "Broken Armor",
   "effect.immersiveweapons.celestial_protection": "Celestial Protection",

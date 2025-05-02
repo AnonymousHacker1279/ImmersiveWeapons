@@ -1,5 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.event;
 
+import net.minecraft.client.model.BoatModel;
 import net.minecraft.client.model.SkullModel;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.Sheets;
@@ -293,6 +294,10 @@ public class ClientModEventSubscriber {
 		event.registerLayerDefinition(ModelLayerLocations.HANS_HEAD_LAYER, SkullModel::createHumanoidHeadLayer);
 		event.registerLayerDefinition(ModelLayerLocations.STORM_CREEPER_HEAD_LAYER, SkullModel::createMobHeadLayer);
 		event.registerLayerDefinition(ModelLayerLocations.SKELETON_MERCHANT_HEAD_LAYER, SkullModel::createHumanoidHeadLayer);
+		event.registerLayerDefinition(ModelLayerLocations.BURNED_OAK_BOAT_LAYER, BoatModel::createBoatModel);
+		event.registerLayerDefinition(ModelLayerLocations.BURNED_OAK_CHEST_BOAT_LAYER, BoatModel::createChestBoatModel);
+		event.registerLayerDefinition(ModelLayerLocations.STARDUST_BOAT_LAYER, BoatModel::createBoatModel);
+		event.registerLayerDefinition(ModelLayerLocations.STARDUST_CHEST_BOAT_LAYER, BoatModel::createChestBoatModel);
 	}
 
 	/**

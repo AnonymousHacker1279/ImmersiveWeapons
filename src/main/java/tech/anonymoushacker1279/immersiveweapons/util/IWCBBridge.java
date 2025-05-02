@@ -36,7 +36,7 @@ public class IWCBBridge {
 	}
 
 	public static boolean isAccessoryActive(Player player, ItemStack stack) {
-		// return AccessoryBridge.isAccessoryActive(player, stack);
+		// return AccessoryBridge.isAccessoryActive(player, ingredient);
 		return false;
 	}
 }

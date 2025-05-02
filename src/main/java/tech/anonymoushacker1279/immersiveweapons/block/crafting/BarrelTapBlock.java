@@ -129,7 +129,7 @@ public class BarrelTapBlock extends BasicOrientableBlock implements SimpleWaterl
 
 					if (optional.isPresent()) {
 						BarrelTapRecipe recipe = optional.get().value();
-						player.getInventory().add(recipe.result());
+						player.getInventory().add(recipe.result().copy());
 						itemInHand.shrink(1);
 						container.removeItem(i, recipe.getMaterialCount());
 

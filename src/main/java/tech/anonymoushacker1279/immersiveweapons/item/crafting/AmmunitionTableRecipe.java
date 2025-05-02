@@ -49,6 +49,15 @@ public class AmmunitionTableRecipe implements Recipe<RecipeInput> {
 
 	@Override
 	public boolean matches(RecipeInput input, Level level) {
+		for (int i = 0; i < materials.size(); i++) {
+			ItemStack itemStack = input.getItem(i);
+			MaterialGroup materialGroup = materials.get(i);
+
+			if (materialGroup.ingredient().test(itemStack)) {
+				return true;
+			}
+		}
+
 		return false;
 	}
 
@@ -75,7 +84,7 @@ public class AmmunitionTableRecipe implements Recipe<RecipeInput> {
 	@Override
 	public PlacementInfo placementInfo() {
 		if (placementInfo == null) {
-			placementInfo = PlacementInfo.create(materials.getFirst().getIngredient());
+			placementInfo = PlacementInfo.create(materials.getFirst().ingredient());
 		}
 
 		return placementInfo;
@@ -128,12 +137,12 @@ public class AmmunitionTableRecipe implements Recipe<RecipeInput> {
 	}
 
 
-	public record MaterialGroup(Ingredient stack, float density, float baseMultiplier) {
+	public record MaterialGroup(Ingredient ingredient, float density, float baseMultiplier) {
 
 		/**
 		 * Represents a group of materials within a recipe for the Ammunition Table.
 		 *
-		 * @param stack          an <code>Ingredient</code>
+		 * @param ingredient     an <code>Ingredient</code>
 		 * @param density        the density of the material
 		 * @param baseMultiplier the base multiplier for the material (how much this item is worth)
 		 *                       <p>
@@ -144,7 +153,7 @@ public class AmmunitionTableRecipe implements Recipe<RecipeInput> {
 
 		private static final Codec<MaterialGroup> CODEC = RecordCodecBuilder.create(
 				instance -> instance.group(
-								Ingredient.CODEC.fieldOf("ingredient").forGetter(materialGroup -> materialGroup.stack),
+								Ingredient.CODEC.fieldOf("ingredient").forGetter(materialGroup -> materialGroup.ingredient),
 								Codec.FLOAT.fieldOf("density").forGetter(materialGroup -> materialGroup.density),
 								Codec.FLOAT.fieldOf("base_multiplier").forGetter(materialGroup -> materialGroup.baseMultiplier)
 						)
@@ -153,7 +162,7 @@ public class AmmunitionTableRecipe implements Recipe<RecipeInput> {
 
 		private static final StreamCodec<RegistryFriendlyByteBuf, MaterialGroup> STREAM_CODEC = StreamCodec.composite(
 				Ingredient.CONTENTS_STREAM_CODEC,
-				MaterialGroup::stack,
+				MaterialGroup::ingredient,
 				ByteBufCodecs.FLOAT,
 				MaterialGroup::density,
 				ByteBufCodecs.FLOAT,
@@ -163,18 +172,6 @@ public class AmmunitionTableRecipe implements Recipe<RecipeInput> {
 
 		public MaterialGroup(TagKey<Item> tagKey, float density, float baseMultiplier) {
 			this(Ingredient.of(HolderSet.emptyNamed(BuiltInRegistries.ITEM, tagKey)), density, baseMultiplier);
-		}
-
-		public Ingredient getIngredient() {
-			return stack;
-		}
-
-		public float getDensity() {
-			return density;
-		}
-
-		public float getBaseMultiplier() {
-			return baseMultiplier;
 		}
 	}
 }

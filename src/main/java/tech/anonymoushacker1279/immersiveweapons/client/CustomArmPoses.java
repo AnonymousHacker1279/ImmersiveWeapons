@@ -1,6 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.client;
 
 import net.minecraft.client.model.HumanoidModel.ArmPose;
+import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
@@ -68,7 +69,7 @@ public class CustomArmPoses {
 
 	public static final EnumProxy<ArmPose> HOLD_PIKE_POSE_PARAMS = new EnumProxy<>(ArmPose.class, true, (IArmPoseTransformer) (model, state, arm) -> {
 		// Hold the pike with both hands, like a spear
-		if (!state.isUsingItem) {
+		if (state.attackTime == 0) {
 			if (arm == HumanoidArm.RIGHT) {
 				model.rightArm.xRot = -0.35F;
 				model.rightArm.yRot = -0.4F;
@@ -90,8 +91,7 @@ public class CustomArmPoses {
 			}
 		} else {
 			// As this is a spear-like item, it needs to stab in a thrusting motion
-			float swingProgress = 1;    // TODO: find replacement for state.getAttackAnim()
-			float armRotation = Mth.sin(swingProgress * (float) Math.PI);
+			float armRotation = Mth.lerp(state.attackTime * 2, 1.0F, 0.0F);
 
 			// Disable the arm swinging animation
 			state.attackTime = 0.0F;
@@ -119,6 +119,23 @@ public class CustomArmPoses {
 				}
 			}
 		}
+
+		return ArmPose.EMPTY;
+	}
+
+	public static ArmPose getFirearmPose(HumanoidRenderState state) {
+		ItemStack itemStack = state.getMainHandItem();
+		if (!itemStack.isEmpty()) {
+			if (state.isUsingItem) {
+				Item item = itemStack.getItem();
+				if (item instanceof MusketItem || item instanceof SimpleShotgunItem) {
+					return CustomArmPoses.AIM_MUSKET_POSE_PARAMS.getValue();
+				} else if (item instanceof AbstractGunItem) {
+					return CustomArmPoses.AIM_PISTOL_POSE_PARAMS.getValue();
+				}
+			}
+		}
+
 		return ArmPose.EMPTY;
 	}
 }

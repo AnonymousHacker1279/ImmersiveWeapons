@@ -14,19 +14,15 @@ import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
-import net.minecraft.world.item.crafting.SingleRecipeInput;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.MenuTypeRegistry;
-import tech.anonymoushacker1279.immersiveweapons.init.RecipeTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.SmallPartsRecipe;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 
 public class SmallPartsMenu extends AbstractContainerMenu {
 
@@ -105,27 +101,25 @@ public class SmallPartsMenu extends AbstractContainerMenu {
 		addDataSlot(selectedPartsPatternIndex);
 
 		if (inventory.player.level() instanceof ServerLevel serverLevel) {
-			initializeRecipes(serverLevel.recipeAccess(), serverLevel);
+			initializeRecipes(serverLevel.recipeAccess());
 		}
 	}
 
-	private void initializeRecipes(RecipeManager manager, ServerLevel serverLevel) {
-		Optional<RecipeHolder<SmallPartsRecipe>> optional = manager.getRecipeFor(RecipeTypeRegistry.SMALL_PARTS_RECIPE_TYPE.get(),
-				new SingleRecipeInput(materialSlot.getItem()), serverLevel);
-
-		if (optional.isPresent()) {
-			RecipeHolder<SmallPartsRecipe> recipe = optional.get();
-			for (ItemStack craftable : recipe.value().craftables()) {
-				if (!craftable.isEmpty()) {
-					for (Holder<Item> material : recipe.value().input().getValues()) {
-						Pair<Item, Item> pair = new Pair<>(material.value(), craftable.getItem());
-						if (!ALL_CRAFTABLES.contains(pair)) {
-							ALL_CRAFTABLES.add(pair);
+	private void initializeRecipes(RecipeManager manager) {
+		manager.getRecipes().forEach(recipe -> {
+			if (recipe.value() instanceof SmallPartsRecipe smallPartsRecipe) {
+				for (ItemStack craftable : smallPartsRecipe.craftables()) {
+					if (!craftable.isEmpty()) {
+						for (Holder<Item> material : smallPartsRecipe.input().getValues()) {
+							Pair<Item, Item> pair = new Pair<>(material.value(), craftable.getItem());
+							if (!ALL_CRAFTABLES.contains(pair)) {
+								ALL_CRAFTABLES.add(pair);
+							}
 						}
 					}
 				}
 			}
-		}
+		});
 
 		// Sort the recipes alphabetically
 		ALL_CRAFTABLES.sort(Comparator.comparing(o -> o.getSecond().getDescriptionId()));
@@ -184,8 +178,8 @@ public class SmallPartsMenu extends AbstractContainerMenu {
 	}
 
 	/**
-	 * Handle when the stack in slot {@code index} is shift-clicked. Normally this moves the stack between the player
-	 * inventory and the other inventory(s).
+	 * Handle when the ingredient in slot {@code index} is shift-clicked. Normally this moves the ingredient between the
+	 * player inventory and the other inventory(s).
 	 */
 	@Override
 	public ItemStack quickMoveStack(Player pPlayer, int pIndex) {

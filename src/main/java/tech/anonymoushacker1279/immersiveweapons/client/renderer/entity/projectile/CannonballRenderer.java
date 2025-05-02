@@ -16,6 +16,7 @@ import tech.anonymoushacker1279.immersiveweapons.entity.projectile.CannonballEnt
 public class CannonballRenderer extends EntityRenderer<CannonballEntity, LivingEntityRenderState> {
 
 	private static final ResourceLocation TEXTURE_LOCATION = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/item/cannonball.png");
+	private static final RenderType RENDER_TYPE = RenderType.entityCutout(TEXTURE_LOCATION);
 	private final CannonballModel model;
 
 	public CannonballRenderer(Context context) {
@@ -38,7 +39,7 @@ public class CannonballRenderer extends EntityRenderer<CannonballEntity, LivingE
 		poseStack.scale(1.25f, 1.25f, 1.25f);
 		poseStack.translate(-0.125f, 0.0125f, -0.125f);
 
-		model.renderToBuffer(poseStack, bufferSource.getBuffer(RenderType.entityCutout(TEXTURE_LOCATION)), packedLight, OverlayTexture.NO_OVERLAY, 16777215);
+		model.renderToBuffer(poseStack, bufferSource.getBuffer(RENDER_TYPE), packedLight, OverlayTexture.NO_OVERLAY, 16777215);
 
 		poseStack.popPose();
 	}

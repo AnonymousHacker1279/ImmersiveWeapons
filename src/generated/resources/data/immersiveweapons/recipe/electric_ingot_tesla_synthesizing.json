@@ -4,7 +4,7 @@
   "group": "tesla_synthesizer",
   "material1": "minecraft:stone",
   "material2": "minecraft:lapis_lazuli",
-  "material3": "minecraft:lapis_lazuli",
+  "material3": "immersiveweapons:conductive_alloy",
   "result": {
     "id": "immersiveweapons:electric_ingot"
   }

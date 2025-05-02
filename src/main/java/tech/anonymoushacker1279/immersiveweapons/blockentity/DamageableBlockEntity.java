@@ -101,8 +101,8 @@ public class DamageableBlockEntity extends BlockEntity {
 	}
 
 	/**
-	 * Repair the block if the given stack matches this block's repair item. Each use
-	 * of the repair item will repair the block by one stage.
+	 * Repair the block if the given ingredient matches this block's repair item. Each use of the repair item will
+	 * repair the block by one stage.
 	 *
 	 * @param repairStack the <code>ItemStack</code> to attempt to repair the block with
 	 * @param repairItem  the <code>Item</code> which this block is repairable with

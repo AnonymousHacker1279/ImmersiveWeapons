@@ -1,7 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.item.potion;
 
 import net.minecraft.world.effect.MobEffectInstance;
-import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
+import net.minecraft.world.effect.MobEffects;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +21,13 @@ public class AlcoholItem extends CustomPotionItem {
 	@Override
 	protected List<MobEffectInstance> getEffects() {
 		List<MobEffectInstance> effectInstances = new ArrayList<>(1);
-		effectInstances.add(new MobEffectInstance(EffectRegistry.ALCOHOL_EFFECT,
+		effectInstances.add(new MobEffectInstance(MobEffects.CONFUSION,
 				600, 0, false, true));
+		effectInstances.add(new MobEffectInstance(MobEffects.DAMAGE_BOOST,
+				600, 0, false, true));
+		effectInstances.add(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE,
+				600, 0, false, true));
+
 		return effectInstances;
 	}
 }

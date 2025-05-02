@@ -425,10 +425,10 @@ public class ItemRegistry {
 	public static final Supplier<AlcoholItem> BOTTLE_OF_ALCOHOL = ITEMS.registerItem("bottle_of_alcohol", (properties) -> new AlcoholItem(properties.stacksTo(16)));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC})
 	public static final Supplier<WineItem> BOTTLE_OF_WINE = ITEMS.registerItem("bottle_of_wine", (properties) -> new WineItem(properties.stacksTo(16)));
-	public static final Supplier<ChocolateBarItem> CHOCOLATE_BAR = ITEMS.registerItem("chocolate_bar", (properties) -> new ChocolateBarItem(properties.food(FoodItemProperties.CHOCOLATE_BAR).useCooldown(1.0f), false));
+	public static final Supplier<ChocolateBarItem> CHOCOLATE_BAR = ITEMS.registerItem("chocolate_bar", (properties) -> new ChocolateBarItem(properties.food(FoodItemProperties.CHOCOLATE_BAR, FoodItemProperties.CHOCOLATE_BAR_CONSUMABLE), false));
 	@DatagenExclusionMarker(Type.MODEL_GENERATOR_ITEM)
 	@LanguageEntryOverride("Chocolate Bar")
-	public static final Supplier<ChocolateBarItem> EXPLOSIVE_CHOCOLATE_BAR = ITEMS.registerItem("explosive_chocolate_bar", (properties) -> new ChocolateBarItem(properties.food(FoodItemProperties.CHOCOLATE_BAR).useCooldown(1.0f), true));
+	public static final Supplier<ChocolateBarItem> EXPLOSIVE_CHOCOLATE_BAR = ITEMS.registerItem("explosive_chocolate_bar", (properties) -> new ChocolateBarItem(properties.food(FoodItemProperties.CHOCOLATE_BAR, FoodItemProperties.CHOCOLATE_BAR_CONSUMABLE), true));
 	@LanguageEntryOverride("Meal Ready-to-Eat (MRE)")
 	@TooltipMarker(style = {ChatFormatting.GREEN, ChatFormatting.ITALIC})
 	public static final Supplier<Item> MRE = ITEMS.registerItem("mre", (properties) -> new Item(properties.food(FoodItemProperties.MRE)));

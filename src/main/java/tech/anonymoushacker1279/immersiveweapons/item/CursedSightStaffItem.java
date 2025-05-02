@@ -71,7 +71,7 @@ public class CursedSightStaffItem extends Item implements SummoningStaff {
 				return InteractionResult.PASS;
 			}
 		} else {
-			return InteractionResult.PASS;
+			return InteractionResult.SUCCESS;
 		}
 
 

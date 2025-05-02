@@ -15,19 +15,17 @@ import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
 
 public class MusketBallRenderer extends EntityRenderer<BulletEntity, LivingEntityRenderState> {
 
-	private final ResourceLocation textureLocation;
 	private final MusketBallModel model;
+	private final RenderType renderType;
 
 	public MusketBallRenderer(Context context, String name) {
-		super(context);
-		textureLocation = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/item/%s_musket_ball.png".formatted(name));
-		model = new MusketBallModel(context.bakeLayer(MusketBallModel.LAYER_LOCATION));
+		this(context, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/item/%s_musket_ball.png".formatted(name)));
 	}
 
 	public MusketBallRenderer(Context context, ResourceLocation location) {
 		super(context);
-		textureLocation = location;
 		model = new MusketBallModel(context.bakeLayer(MusketBallModel.LAYER_LOCATION));
+		renderType = RenderType.entityCutout(location);
 	}
 
 	@Override
@@ -45,7 +43,7 @@ public class MusketBallRenderer extends EntityRenderer<BulletEntity, LivingEntit
 		poseStack.scale(1.25f, 1.25f, 1.25f);
 		poseStack.translate(-0.025f, 0.025f, -0.025f);
 
-		model.renderToBuffer(poseStack, bufferSource.getBuffer(RenderType.entityCutout(textureLocation)), packedLight, OverlayTexture.NO_OVERLAY, 16777215);
+		model.renderToBuffer(poseStack, bufferSource.getBuffer(renderType), packedLight, OverlayTexture.NO_OVERLAY, 16777215);
 
 		poseStack.popPose();
 	}

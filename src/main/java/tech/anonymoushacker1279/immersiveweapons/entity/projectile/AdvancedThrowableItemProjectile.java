@@ -25,7 +25,6 @@ public abstract class AdvancedThrowableItemProjectile extends ThrowableItemProje
 	protected boolean hasActivated = false;
 	@Nullable
 	protected BlockState inBlockState;
-	public float randomRotation;
 	protected int ticksInGround;
 
 	public AdvancedThrowableItemProjectile(EntityType<? extends AdvancedThrowableItemProjectile> entityType, Level level) {
