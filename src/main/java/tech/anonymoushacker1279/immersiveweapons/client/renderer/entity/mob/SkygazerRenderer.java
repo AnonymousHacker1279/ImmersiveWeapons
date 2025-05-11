@@ -18,8 +18,8 @@ public class SkygazerRenderer extends MobRenderer<SkygazerEntity, VillagerRender
 
 	public SkygazerRenderer(EntityRendererProvider.Context context) {
 		super(context, new VillagerModel(context.bakeLayer(ModelLayers.WANDERING_TRADER)), 0.5F);
-		addLayer(new CustomHeadLayer<>(this, context.getModelSet(), context.getItemRenderer()));
-		addLayer(new CrossedArmsItemLayer<>(this, context.getItemRenderer()));
+		addLayer(new CustomHeadLayer<>(this, context.getModelSet()));
+		addLayer(new CrossedArmsItemLayer<>(this));
 	}
 
 	@Override

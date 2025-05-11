@@ -83,7 +83,7 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 		float velocityModifier = (float) getDeltaMovement().length();
 		// Determine the damage to be dealt, which is calculated by multiplying the velocity modifier
 		// and the base damage. It's clamped if the velocity is extremely high.
-		int damage = Mth.ceil(Mth.clamp(velocityModifier * getBaseDamage(), 0.0D, 2.147483647E9D));
+		int damage = Mth.ceil(Mth.clamp(velocityModifier * baseDamage, 0.0D, 2.147483647E9D));
 
 		// Add crit modifier if the bullet is critical
 		if (isCritArrow()) {

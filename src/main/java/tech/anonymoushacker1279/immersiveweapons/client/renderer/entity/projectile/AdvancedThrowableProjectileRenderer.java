@@ -5,7 +5,7 @@ import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.client.renderer.item.ItemModelResolver;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.item.ItemDisplayContext;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.state.ThrowableProjectileRenderState;
@@ -13,11 +13,11 @@ import tech.anonymoushacker1279.immersiveweapons.entity.projectile.AdvancedThrow
 
 public class AdvancedThrowableProjectileRenderer extends EntityRenderer<AdvancedThrowableItemProjectile, ThrowableProjectileRenderState> {
 
-	private final ItemRenderer itemRenderer;
+	private final ItemModelResolver itemModelResolver;
 
 	public AdvancedThrowableProjectileRenderer(EntityRendererProvider.Context context) {
 		super(context);
-		itemRenderer = context.getItemRenderer();
+		itemModelResolver = context.getItemModelResolver();
 	}
 
 	@Override
@@ -42,16 +42,7 @@ public class AdvancedThrowableProjectileRenderer extends EntityRenderer<Advanced
 
 		poseStack.scale(1.25f, 1.25f, 1.25f);
 
-		itemRenderer.render(
-				state.stack,
-				ItemDisplayContext.NONE,
-				false,
-				poseStack,
-				bufferSource,
-				packedLight,
-				OverlayTexture.NO_OVERLAY,
-				state.model
-		);
+		state.stackRenderState.render(poseStack, bufferSource, packedLight, OverlayTexture.NO_OVERLAY);
 
 		poseStack.popPose();
 	}
@@ -65,7 +56,6 @@ public class AdvancedThrowableProjectileRenderer extends EntityRenderer<Advanced
 		}
 
 		reusedState.movementLengthSqr = (float) entity.getDeltaMovement().lengthSqr();
-		reusedState.stack = entity.getItem();
-		reusedState.model = itemRenderer.getModel(entity.getItem(), entity.level(), null, entity.getId());
+		itemModelResolver.updateForNonLiving(reusedState.stackRenderState, entity.getItem(), ItemDisplayContext.NONE, entity);
 	}
 }

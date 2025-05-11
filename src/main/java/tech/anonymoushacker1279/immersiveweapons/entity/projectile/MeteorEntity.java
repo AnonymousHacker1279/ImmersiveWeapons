@@ -3,6 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.entity.projectile;
 import net.minecraft.commands.arguments.EntityAnchorArgument.Anchor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderGetter;
+import net.minecraft.core.UUIDUtil;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
@@ -103,7 +104,7 @@ public class MeteorEntity extends Projectile {
 			meteorEntity.setDeltaMovement(direction);
 
 			if (targetEntity != null) {
-				meteorEntity.getPersistentData().putUUID("target", targetEntity.getUUID());
+				meteorEntity.getPersistentData().store("targetEntityUUID", UUIDUtil.CODEC, targetEntity.getUUID());
 			}
 
 			// Spawn the entity
@@ -237,25 +238,15 @@ public class MeteorEntity extends Projectile {
 
 	@Override
 	protected void readAdditionalSaveData(CompoundTag nbt) {
-		// Load the target position
-		targetPos = new BlockPos(nbt.getInt("targetX"), nbt.getInt("targetY"), nbt.getInt("targetZ"));
-		// Load the starting position
-		startPos = new BlockPos(nbt.getInt("startX"), nbt.getInt("startY"), nbt.getInt("startZ"));
-		// Load the distance to the target
-		distToTarget = nbt.getDouble("distToTarget");
+		targetPos = BlockPos.of(nbt.getLongOr("target", 0L));
+		startPos = BlockPos.of(nbt.getLongOr("start", 0L));
+		distToTarget = nbt.getDoubleOr("distToTarget", 0.0);
 	}
 
 	@Override
 	protected void addAdditionalSaveData(CompoundTag nbt) {
-		// Save the target position
-		nbt.putInt("targetX", targetPos.getX());
-		nbt.putInt("targetY", targetPos.getY());
-		nbt.putInt("targetZ", targetPos.getZ());
-		// Save the starting position
-		nbt.putInt("startX", startPos.getX());
-		nbt.putInt("startY", startPos.getY());
-		nbt.putInt("startZ", startPos.getZ());
-		// Save the distance to the target
+		nbt.putLong("target", targetPos.asLong());
+		nbt.putLong("start", startPos.asLong());
 		nbt.putDouble("distToTarget", distToTarget);
 	}
 

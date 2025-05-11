@@ -120,7 +120,7 @@ public abstract class AbstractStatueBlockEntity<T extends SoldierEntity> extends
 			BlockPos randomPositionInArea = getRandomPositionInArea();
 			if (level != null && level.getBlockState(randomPositionInArea) == Blocks.AIR.defaultBlockState()) {
 				entity.finalizeSpawn((ServerLevel) level, level.getCurrentDifficultyAt(randomPositionInArea), EntitySpawnReason.SPAWNER, null);
-				entity.moveTo(randomPositionInArea, 0.0F, 0.0F);
+				entity.snapTo(randomPositionInArea, 0.0F, 0.0F);
 				level.addFreshEntity(entity);
 				spawnParticles();
 				break;
@@ -180,6 +180,6 @@ public abstract class AbstractStatueBlockEntity<T extends SoldierEntity> extends
 	@Override
 	public void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
 		super.loadAdditional(tag, provider);
-		cooldown = tag.getInt("scanCooldown");
+		cooldown = tag.getInt("scanCooldown").orElse(0);
 	}
 }

@@ -3,6 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.entity.npc.trading;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.FileToIdConverter;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -12,6 +13,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.npc.VillagerTrades.ItemListing;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
+import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.SyncMerchantTradesPayload;
 
 import java.util.HashMap;
@@ -21,9 +23,10 @@ import java.util.Map;
 public class TradeLoader extends SimpleJsonResourceReloadListener<MerchantTrades> {
 
 	public static final Map<EntityType<?>, MerchantTrades> TRADES = new HashMap<>(5);
+	public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "merchant_trades");
 
 	public TradeLoader() {
-		super(MerchantTrades.CODEC, "merchant_trades");
+		super(MerchantTrades.CODEC, FileToIdConverter.json("merchant_trades"));
 	}
 
 	@Override

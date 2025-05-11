@@ -27,7 +27,7 @@ public class FirstAidKitItem extends AbstractFortitudeItem {
 		List<MobEffectInstance> effects = new ArrayList<>(3);
 
 		effects.add(new MobEffectInstance(MobEffects.REGENERATION, 240, 1, false, true));
-		effects.add(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 1200, 0, false, true));
+		effects.add(new MobEffectInstance(MobEffects.RESISTANCE, 1200, 0, false, true));
 
 		return effects;
 	}

@@ -5,7 +5,6 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
 import net.minecraft.world.entity.EntityType;
 import net.neoforged.neoforge.common.Tags.EntityTypes;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.CustomDataGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWEntityTypeTagGroups;
@@ -15,8 +14,8 @@ import java.util.concurrent.CompletableFuture;
 
 public class EntityTypeTagsGenerator extends EntityTypeTagsProvider {
 
-	public EntityTypeTagsGenerator(PackOutput output, CompletableFuture<Provider> lookupProvider, ExistingFileHelper existingFileHelper) {
-		super(output, lookupProvider, ImmersiveWeapons.MOD_ID, existingFileHelper);
+	public EntityTypeTagsGenerator(PackOutput output, CompletableFuture<Provider> lookupProvider) {
+		super(output, lookupProvider, ImmersiveWeapons.MOD_ID);
 	}
 
 	@Override

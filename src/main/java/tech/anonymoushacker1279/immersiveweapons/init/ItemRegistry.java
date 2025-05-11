@@ -71,8 +71,8 @@ public class ItemRegistry {
 	@TextureMetadataMarker(frameTime = 5)
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "molten_tool")
 	public static final Supplier<MoltenHoe> MOLTEN_HOE = ITEMS.registerItem("molten_hoe", MoltenHoe::new);
-	public static final Supplier<SwordItem> COPPER_SWORD = ITEMS.registerItem("copper_sword", (properties) -> new SwordItem(IWToolMaterials.COPPER, 3, -2.4f, properties));
-	public static final Supplier<PickaxeItem> COPPER_PICKAXE = ITEMS.registerItem("copper_pickaxe", (properties) -> new PickaxeItem(IWToolMaterials.COPPER, 1, -2.8f, properties));
+	public static final Supplier<Item> COPPER_SWORD = ITEMS.registerItem("copper_sword", (properties) -> new Item(properties.sword(IWToolMaterials.COPPER, 3, -2.4f)));
+	public static final Supplier<Item> COPPER_PICKAXE = ITEMS.registerItem("copper_pickaxe", (properties) -> new Item(properties.pickaxe(IWToolMaterials.COPPER, 1, -2.8f)));
 	public static final Supplier<AxeItem> COPPER_AXE = ITEMS.registerItem("copper_axe", (properties) -> new AxeItem(IWToolMaterials.COPPER, 6, -3.1f, properties));
 	public static final Supplier<ShovelItem> COPPER_SHOVEL = ITEMS.registerItem("copper_shovel", (properties) -> new ShovelItem(IWToolMaterials.COPPER, 1.5f, -3.0f, properties));
 	public static final Supplier<HoeItem> COPPER_HOE = ITEMS.registerItem("copper_hoe", (properties) -> new HoeItem(IWToolMaterials.COPPER, -1, -1.0f, properties));
@@ -88,8 +88,8 @@ public class ItemRegistry {
 	@TextureMetadataMarker(frameTime = 3)
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC})
 	public static final Supplier<TeslaHoe> TESLA_HOE = ITEMS.registerItem("tesla_hoe", TeslaHoe::new);
-	public static final Supplier<SwordItem> COBALT_SWORD = ITEMS.registerItem("cobalt_sword", (properties) -> new SwordItem(IWToolMaterials.COBALT, 3, -2.4f, properties));
-	public static final Supplier<PickaxeItem> COBALT_PICKAXE = ITEMS.registerItem("cobalt_pickaxe", (properties) -> new PickaxeItem(IWToolMaterials.COBALT, 1, -2.8f, properties));
+	public static final Supplier<Item> COBALT_SWORD = ITEMS.registerItem("cobalt_sword", (properties) -> new Item(properties.sword(IWToolMaterials.COBALT, 3, -2.4f)));
+	public static final Supplier<Item> COBALT_PICKAXE = ITEMS.registerItem("cobalt_pickaxe", (properties) -> new Item(properties.pickaxe(IWToolMaterials.COBALT, 1, -2.8f)));
 	public static final Supplier<AxeItem> COBALT_AXE = ITEMS.registerItem("cobalt_axe", (properties) -> new AxeItem(IWToolMaterials.COBALT, 6, -3.1f, properties));
 	public static final Supplier<ShovelItem> COBALT_SHOVEL = ITEMS.registerItem("cobalt_shovel", (properties) -> new ShovelItem(IWToolMaterials.COBALT, 1.5f, -3.0f, properties));
 	public static final Supplier<HoeItem> COBALT_HOE = ITEMS.registerItem("cobalt_hoe", (properties) -> new HoeItem(IWToolMaterials.COBALT, -2, -1.0f, properties));
@@ -108,16 +108,16 @@ public class ItemRegistry {
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC})
 	public static final Supplier<VentusStaff> VENTUS_STAFF = ITEMS.registerItem("ventus_staff", (properties) -> new VentusStaff(properties.durability(300)));
 	@TooltipMarker(style = {ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC})
-	public static final Supplier<SwordItem> ASTRAL_SWORD = ITEMS.registerItem("astral_sword", (properties) -> new SwordItem(IWToolMaterials.ASTRAL, 3, -1.5f, properties));
-	public static final Supplier<PickaxeItem> ASTRAL_PICKAXE = ITEMS.registerItem("astral_pickaxe", (properties) -> new PickaxeItem(IWToolMaterials.ASTRAL, 1, -1.9f, properties));
+	public static final Supplier<Item> ASTRAL_SWORD = ITEMS.registerItem("astral_sword", (properties) -> new Item(properties.sword(IWToolMaterials.ASTRAL, 3, -1.5f)));
+	public static final Supplier<Item> ASTRAL_PICKAXE = ITEMS.registerItem("astral_pickaxe", (properties) -> new Item(properties.pickaxe(IWToolMaterials.ASTRAL, 1, -1.9f)));
 	public static final Supplier<AxeItem> ASTRAL_AXE = ITEMS.registerItem("astral_axe", (properties) -> new AxeItem(IWToolMaterials.ASTRAL, 5, -2.1f, properties));
 	public static final Supplier<ShovelItem> ASTRAL_SHOVEL = ITEMS.registerItem("astral_shovel", (properties) -> new ShovelItem(IWToolMaterials.ASTRAL, 1.5f, -2.1f, properties));
 	public static final Supplier<HoeItem> ASTRAL_HOE = ITEMS.registerItem("astral_hoe", (properties) -> new HoeItem(IWToolMaterials.ASTRAL, -4, 0.8f, properties));
 	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.STARSTORM_ITEMS)
 	@TooltipMarker(style = {ChatFormatting.RED, ChatFormatting.ITALIC})
-	public static final Supplier<SwordItem> STARSTORM_SWORD = ITEMS.registerItem("starstorm_sword", (properties) -> new SwordItem(IWToolMaterials.STARSTORM, 3, -2.4f, properties));
+	public static final Supplier<Item> STARSTORM_SWORD = ITEMS.registerItem("starstorm_sword", (properties) -> new Item(properties.sword(IWToolMaterials.STARSTORM, 3, -2.4f)));
 	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.STARSTORM_ITEMS)
-	public static final Supplier<PickaxeItem> STARSTORM_PICKAXE = ITEMS.registerItem("starstorm_pickaxe", (properties) -> new PickaxeItem(IWToolMaterials.STARSTORM, 1, -2.8f, properties));
+	public static final Supplier<Item> STARSTORM_PICKAXE = ITEMS.registerItem("starstorm_pickaxe", (properties) -> new Item(properties.sword(IWToolMaterials.STARSTORM, 1, -2.8f)));
 	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.STARSTORM_ITEMS)
 	public static final Supplier<AxeItem> STARSTORM_AXE = ITEMS.registerItem("starstorm_axe", (properties) -> new AxeItem(IWToolMaterials.STARSTORM, 5, -3.0f, properties));
 	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.STARSTORM_ITEMS)
@@ -126,9 +126,9 @@ public class ItemRegistry {
 	public static final Supplier<HoeItem> STARSTORM_HOE = ITEMS.registerItem("starstorm_hoe", (properties) -> new HoeItem(IWToolMaterials.STARSTORM, -7, 0.0f, properties));
 	@TextureMetadataMarker(frameTime = 25, interpolate = true)
 	@TooltipMarker(style = {ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC})
-	public static final Supplier<SwordItem> VOID_SWORD = ITEMS.registerItem("void_sword", (properties) -> new SwordItem(IWToolMaterials.VOID, 3, -1.3f, properties));
+	public static final Supplier<Item> VOID_SWORD = ITEMS.registerItem("void_sword", (properties) -> new Item(properties.sword(IWToolMaterials.VOID, 3, -1.3f)));
 	@TextureMetadataMarker(frameTime = 25, interpolate = true)
-	public static final Supplier<PickaxeItem> VOID_PICKAXE = ITEMS.registerItem("void_pickaxe", (properties) -> new PickaxeItem(IWToolMaterials.VOID, 1, -1.7f, properties));
+	public static final Supplier<Item> VOID_PICKAXE = ITEMS.registerItem("void_pickaxe", (properties) -> new Item(properties.pickaxe(IWToolMaterials.VOID, 1, -1.7f)));
 	@TextureMetadataMarker(frameTime = 25, interpolate = true)
 	public static final Supplier<AxeItem> VOID_AXE = ITEMS.registerItem("void_axe", (properties) -> new AxeItem(IWToolMaterials.VOID, 5, -1.9f, properties));
 	@TextureMetadataMarker(frameTime = 25, interpolate = true)
@@ -529,10 +529,10 @@ public class ItemRegistry {
 	public static final Supplier<MoltenArmorItem> MOLTEN_LEGGINGS = ITEMS.registerItem("molten_leggings", (properties) -> new MoltenArmorItem(IWArmorMaterials.MOLTEN, ArmorType.LEGGINGS, properties.fireResistant()));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "molten_armor")
 	public static final Supplier<MoltenArmorItem> MOLTEN_BOOTS = ITEMS.registerItem("molten_boots", (properties) -> new MoltenArmorItem(IWArmorMaterials.MOLTEN, ArmorType.BOOTS, properties.fireResistant()));
-	public static final Supplier<ArmorItem> COPPER_HELMET = ITEMS.registerItem("copper_helmet", (properties) -> new ArmorItem(IWArmorMaterials.COPPER, ArmorType.HELMET, properties));
-	public static final Supplier<ArmorItem> COPPER_CHESTPLATE = ITEMS.registerItem("copper_chestplate", (properties) -> new ArmorItem(IWArmorMaterials.COPPER, ArmorType.CHESTPLATE, properties));
-	public static final Supplier<ArmorItem> COPPER_LEGGINGS = ITEMS.registerItem("copper_leggings", (properties) -> new ArmorItem(IWArmorMaterials.COPPER, ArmorType.LEGGINGS, properties));
-	public static final Supplier<ArmorItem> COPPER_BOOTS = ITEMS.registerItem("copper_boots", (properties) -> new ArmorItem(IWArmorMaterials.COPPER, ArmorType.BOOTS, properties));
+	public static final Supplier<Item> COPPER_HELMET = ITEMS.registerItem("copper_helmet", (properties) -> new Item(properties.humanoidArmor(IWArmorMaterials.COPPER, ArmorType.HELMET)));
+	public static final Supplier<Item> COPPER_CHESTPLATE = ITEMS.registerItem("copper_chestplate", (properties) -> new Item(properties.humanoidArmor(IWArmorMaterials.COPPER, ArmorType.CHESTPLATE)));
+	public static final Supplier<Item> COPPER_LEGGINGS = ITEMS.registerItem("copper_leggings", (properties) -> new Item(properties.humanoidArmor(IWArmorMaterials.COPPER, ArmorType.LEGGINGS)));
+	public static final Supplier<Item> COPPER_BOOTS = ITEMS.registerItem("copper_boots", (properties) -> new Item(properties.humanoidArmor(IWArmorMaterials.COPPER, ArmorType.BOOTS)));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "tesla_armor")
 	public static final Supplier<TeslaArmorItem> TESLA_HELMET = ITEMS.registerItem("tesla_helmet", (properties) -> new TeslaArmorItem(IWArmorMaterials.TESLA, ArmorType.HELMET, properties));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "tesla_armor")
@@ -563,27 +563,27 @@ public class ItemRegistry {
 	public static final Supplier<AstralArmorItem> ASTRAL_BOOTS = ITEMS.registerItem("astral_boots", (properties) -> new AstralArmorItem(IWArmorMaterials.ASTRAL, ArmorType.BOOTS, properties));
 	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.STARSTORM_ITEMS)
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "starstorm_armor")
-	public static final Supplier<ArmorItem> STARSTORM_HELMET = ITEMS.registerItem("starstorm_helmet", (properties) -> new ArmorItem(IWArmorMaterials.STARSTORM, ArmorType.HELMET, properties));
+	public static final Supplier<Item> STARSTORM_HELMET = ITEMS.registerItem("starstorm_helmet", (properties) -> new Item(properties.humanoidArmor(IWArmorMaterials.STARSTORM, ArmorType.HELMET)));
 	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.STARSTORM_ITEMS)
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "starstorm_armor")
-	public static final Supplier<ArmorItem> STARSTORM_CHESTPLATE = ITEMS.registerItem("starstorm_chestplate", (properties) -> new ArmorItem(IWArmorMaterials.STARSTORM, ArmorType.CHESTPLATE, properties));
+	public static final Supplier<Item> STARSTORM_CHESTPLATE = ITEMS.registerItem("starstorm_chestplate", (properties) -> new Item(properties.humanoidArmor(IWArmorMaterials.STARSTORM, ArmorType.CHESTPLATE)));
 	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.STARSTORM_ITEMS)
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "starstorm_armor")
-	public static final Supplier<ArmorItem> STARSTORM_LEGGINGS = ITEMS.registerItem("starstorm_leggings", (properties) -> new ArmorItem(IWArmorMaterials.STARSTORM, ArmorType.LEGGINGS, properties));
+	public static final Supplier<Item> STARSTORM_LEGGINGS = ITEMS.registerItem("starstorm_leggings", (properties) -> new Item(properties.humanoidArmor(IWArmorMaterials.STARSTORM, ArmorType.LEGGINGS)));
 	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.STARSTORM_ITEMS)
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "starstorm_armor")
-	public static final Supplier<ArmorItem> STARSTORM_BOOTS = ITEMS.registerItem("starstorm_boots", (properties) -> new ArmorItem(IWArmorMaterials.STARSTORM, ArmorType.BOOTS, properties));
+	public static final Supplier<Item> STARSTORM_BOOTS = ITEMS.registerItem("starstorm_boots", (properties) -> new Item(properties.humanoidArmor(IWArmorMaterials.STARSTORM, ArmorType.BOOTS)));
 	@LanguageEntryOverride("Padded Leather Cap")
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "padded_leather_armor")
-	public static final Supplier<ArmorItem> PADDED_LEATHER_HELMET = ITEMS.registerItem("padded_leather_helmet", (properties) -> new ArmorItem(IWArmorMaterials.PADDED_LEATHER, ArmorType.HELMET, properties));
+	public static final Supplier<Item> PADDED_LEATHER_HELMET = ITEMS.registerItem("padded_leather_helmet", (properties) -> new Item(properties.humanoidArmor(IWArmorMaterials.PADDED_LEATHER, ArmorType.HELMET)));
 	@LanguageEntryOverride("Padded Leather Tunic")
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "padded_leather_armor")
-	public static final Supplier<ArmorItem> PADDED_LEATHER_CHESTPLATE = ITEMS.registerItem("padded_leather_chestplate", (properties) -> new ArmorItem(IWArmorMaterials.PADDED_LEATHER, ArmorType.CHESTPLATE, properties));
+	public static final Supplier<Item> PADDED_LEATHER_CHESTPLATE = ITEMS.registerItem("padded_leather_chestplate", (properties) -> new Item(properties.humanoidArmor(IWArmorMaterials.PADDED_LEATHER, ArmorType.CHESTPLATE)));
 	@LanguageEntryOverride("Padded Leather Pants")
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "padded_leather_armor")
-	public static final Supplier<ArmorItem> PADDED_LEATHER_LEGGINGS = ITEMS.registerItem("padded_leather_leggings", (properties) -> new ArmorItem(IWArmorMaterials.PADDED_LEATHER, ArmorType.LEGGINGS, properties));
+	public static final Supplier<Item> PADDED_LEATHER_LEGGINGS = ITEMS.registerItem("padded_leather_leggings", (properties) -> new Item(properties.humanoidArmor(IWArmorMaterials.PADDED_LEATHER, ArmorType.LEGGINGS)));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "padded_leather_armor")
-	public static final Supplier<ArmorItem> PADDED_LEATHER_BOOTS = ITEMS.registerItem("padded_leather_boots", (properties) -> new ArmorItem(IWArmorMaterials.PADDED_LEATHER, ArmorType.BOOTS, properties));
+	public static final Supplier<Item> PADDED_LEATHER_BOOTS = ITEMS.registerItem("padded_leather_boots", (properties) -> new Item(properties.humanoidArmor(IWArmorMaterials.PADDED_LEATHER, ArmorType.BOOTS)));
 	@TextureMetadataMarker(frameTime = 25, interpolate = true)
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "void_armor")
 	public static final Supplier<VoidArmorItem> VOID_HELMET = ITEMS.registerItem("void_helmet", (properties) -> new VoidArmorItem(IWArmorMaterials.VOID, ArmorType.HELMET, properties));
@@ -598,25 +598,25 @@ public class ItemRegistry {
 	public static final Supplier<VoidArmorItem> VOID_BOOTS = ITEMS.registerItem("void_boots", (properties) -> new VoidArmorItem(IWArmorMaterials.VOID, ArmorType.BOOTS, properties));
 
 	// Spawn eggs
-	public static final Supplier<SpawnEggItem> DYING_SOLDIER_SPAWN_EGG = ITEMS.registerItem("dying_soldier_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.DYING_SOLDIER_ENTITY.get(), 0x7a6851, 0x783d22, (properties).stacksTo(16)));
-	public static final Supplier<SpawnEggItem> THE_COMMANDER_SPAWN_EGG = ITEMS.registerItem("the_commander_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.THE_COMMANDER_ENTITY.get(), 0x7a6851, 0x783d22, (properties).stacksTo(16)));
-	public static final Supplier<SpawnEggItem> MINUTEMAN_SPAWN_EGG = ITEMS.registerItem("minuteman_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.MINUTEMAN_ENTITY.get(), 0x494522, 0x204b2a, (properties).stacksTo(16)));
-	public static final Supplier<SpawnEggItem> FIELD_MEDIC_SPAWN_EGG = ITEMS.registerItem("field_medic_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.FIELD_MEDIC_ENTITY.get(), 0xde5451, 0xebe4d2, (properties).stacksTo(16)));
-	public static final Supplier<SpawnEggItem> WANDERING_WARRIOR_SPAWN_EGG = ITEMS.registerItem("wandering_warrior_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.WANDERING_WARRIOR_ENTITY.get(), 0x614226, 0x2e6278, (properties).stacksTo(16)));
+	public static final Supplier<SpawnEggItem> DYING_SOLDIER_SPAWN_EGG = ITEMS.registerItem("dying_soldier_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.DYING_SOLDIER_ENTITY.get(), properties.stacksTo(16)));
+	public static final Supplier<SpawnEggItem> THE_COMMANDER_SPAWN_EGG = ITEMS.registerItem("the_commander_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.THE_COMMANDER_ENTITY.get(), properties.stacksTo(16)));
+	public static final Supplier<SpawnEggItem> MINUTEMAN_SPAWN_EGG = ITEMS.registerItem("minuteman_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.MINUTEMAN_ENTITY.get(), properties.stacksTo(16)));
+	public static final Supplier<SpawnEggItem> FIELD_MEDIC_SPAWN_EGG = ITEMS.registerItem("field_medic_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.FIELD_MEDIC_ENTITY.get(), properties.stacksTo(16)));
+	public static final Supplier<SpawnEggItem> WANDERING_WARRIOR_SPAWN_EGG = ITEMS.registerItem("wandering_warrior_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.WANDERING_WARRIOR_ENTITY.get(), properties.stacksTo(16)));
 	@LanguageEntryOverride("Hans the Almighty Spawn Egg")
 	@TooltipMarker(style = {ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC})
-	public static final Supplier<SpawnEggItem> HANS_SPAWN_EGG = ITEMS.registerItem("hans_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.HANS_ENTITY.get(), 0xd0a873, 0xafafaf, (properties.stacksTo(16))));
+	public static final Supplier<SpawnEggItem> HANS_SPAWN_EGG = ITEMS.registerItem("hans_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.HANS_ENTITY.get(), properties.stacksTo(16)));
 	@LanguageEntryOverride("Super Hans the Almighty Spawn Egg")
 	@TooltipMarker(style = {ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC})
-	public static final Supplier<SpawnEggItem> SUPER_HANS_SPAWN_EGG = ITEMS.registerItem("super_hans_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.SUPER_HANS_ENTITY.get(), 0xd0a873, 0xafafaf, (properties.stacksTo(16))));
-	public static final Supplier<SpawnEggItem> LAVA_REVENANT_SPAWN_EGG = ITEMS.registerItem("lava_revenant_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.LAVA_REVENANT_ENTITY.get(), 0x640000, 0x990000, (properties.stacksTo(16))));
-	public static final Supplier<SpawnEggItem> ROCK_SPIDER_SPAWN_EGG = ITEMS.registerItem("rock_spider_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.ROCK_SPIDER_ENTITY.get(), 0x7f7f7f, 0xa80e0e, (properties.stacksTo(16))));
-	public static final Supplier<SpawnEggItem> CELESTIAL_TOWER_SPAWN_EGG = ITEMS.registerItem("celestial_tower_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.CELESTIAL_TOWER_ENTITY.get(), 0x63353d, 0xb3754b, (properties.stacksTo(16))));
-	public static final Supplier<SpawnEggItem> STARMITE_SPAWN_EGG = ITEMS.registerItem("starmite_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.STARMITE_ENTITY.get(), 0x8f4f1c, 0xa55c1e, (properties.stacksTo(16))));
-	public static final Supplier<SpawnEggItem> FIREFLY_SPAWN_EGG = ITEMS.registerItem("firefly_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.FIREFLY_ENTITY.get(), 0x703a2a, 0x43e88d, (properties.stacksTo(16))));
-	public static final Supplier<SpawnEggItem> STORM_CREEPER_SPAWN_EGG = ITEMS.registerItem("storm_creeper_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.STORM_CREEPER_ENTITY.get(), 0xfe162c, 0x00eaf6, (properties.stacksTo(16))));
-	public static final Supplier<SpawnEggItem> EVIL_EYE_SPAWN_EGG = ITEMS.registerItem("evil_eye_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.EVIL_EYE_ENTITY.get(), 0xd7d7d7, 0x4e8386, (properties.stacksTo(16))));
-	public static final Supplier<SpawnEggItem> STAR_WOLF_SPAWN_EGG = ITEMS.registerItem("star_wolf_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.STAR_WOLF_ENTITY.get(), 0x0b0707, 0x919191, (properties.stacksTo(16))));
-	public static final Supplier<SpawnEggItem> SKYGAZER_SPAWN_EGG = ITEMS.registerItem("skygazer_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.SKYGAZER_ENTITY.get(), 0x4c1036, 0x4c1036, (properties.stacksTo(16))));
-	public static final Supplier<SpawnEggItem> SKELETON_MERCHANT_SPAWN_EGG = ITEMS.registerItem("skeleton_merchant_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.SKELETON_MERCHANT_ENTITY.get(), 0x798580, 0x832121, (properties.stacksTo(16))));
+	public static final Supplier<SpawnEggItem> SUPER_HANS_SPAWN_EGG = ITEMS.registerItem("super_hans_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.SUPER_HANS_ENTITY.get(), properties.stacksTo(16)));
+	public static final Supplier<SpawnEggItem> LAVA_REVENANT_SPAWN_EGG = ITEMS.registerItem("lava_revenant_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.LAVA_REVENANT_ENTITY.get(), properties.stacksTo(16)));
+	public static final Supplier<SpawnEggItem> ROCK_SPIDER_SPAWN_EGG = ITEMS.registerItem("rock_spider_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.ROCK_SPIDER_ENTITY.get(), properties.stacksTo(16)));
+	public static final Supplier<SpawnEggItem> CELESTIAL_TOWER_SPAWN_EGG = ITEMS.registerItem("celestial_tower_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.CELESTIAL_TOWER_ENTITY.get(), properties.stacksTo(16)));
+	public static final Supplier<SpawnEggItem> STARMITE_SPAWN_EGG = ITEMS.registerItem("starmite_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.STARMITE_ENTITY.get(), properties.stacksTo(16)));
+	public static final Supplier<SpawnEggItem> FIREFLY_SPAWN_EGG = ITEMS.registerItem("firefly_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.FIREFLY_ENTITY.get(), properties.stacksTo(16)));
+	public static final Supplier<SpawnEggItem> STORM_CREEPER_SPAWN_EGG = ITEMS.registerItem("storm_creeper_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.STORM_CREEPER_ENTITY.get(), properties.stacksTo(16)));
+	public static final Supplier<SpawnEggItem> EVIL_EYE_SPAWN_EGG = ITEMS.registerItem("evil_eye_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.EVIL_EYE_ENTITY.get(), properties.stacksTo(16)));
+	public static final Supplier<SpawnEggItem> STAR_WOLF_SPAWN_EGG = ITEMS.registerItem("star_wolf_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.STAR_WOLF_ENTITY.get(), properties.stacksTo(16)));
+	public static final Supplier<SpawnEggItem> SKYGAZER_SPAWN_EGG = ITEMS.registerItem("skygazer_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.SKYGAZER_ENTITY.get(), properties.stacksTo(16)));
+	public static final Supplier<SpawnEggItem> SKELETON_MERCHANT_SPAWN_EGG = ITEMS.registerItem("skeleton_merchant_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.SKELETON_MERCHANT_ENTITY.get(), properties.stacksTo(16)));
 }

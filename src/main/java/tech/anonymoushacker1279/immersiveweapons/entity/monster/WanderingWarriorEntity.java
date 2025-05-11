@@ -77,7 +77,7 @@ public class WanderingWarriorEntity extends AbstractWanderingWarriorEntity {
 	public void load(CompoundTag compound) {
 		super.load(compound);
 
-		isBerserk = compound.getBoolean("isBerserk");
+		isBerserk = compound.getBooleanOr("isBerserk", false);
 	}
 
 	@Override

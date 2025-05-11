@@ -2,14 +2,16 @@ package tech.anonymoushacker1279.immersiveweapons.item.armor;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.equipment.ArmorMaterial;
 import net.minecraft.world.item.equipment.ArmorType;
@@ -20,21 +22,22 @@ import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.TeslaArmorPayload;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
-public class TeslaArmorItem extends ArmorItem {
+public class TeslaArmorItem extends Item {
 
 	private int noiseCooldown = 0;
 
 	public TeslaArmorItem(ArmorMaterial material, ArmorType armorType, Properties properties) {
-		super(material, armorType, properties);
+		super(properties.humanoidArmor(material, armorType));
 	}
 
 	@Override
-	public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
+	public void inventoryTick(ItemStack stack, ServerLevel level, Entity entity, @Nullable EquipmentSlot slot) {
 		if (entity instanceof Player player) {
 			if (ArmorUtils.isWearingTeslaArmor(player)) {
-				String data = player.getPersistentData().getString("TeslaArmorEffectState");
+				String data = player.getPersistentData().getString("TeslaArmorEffectState").orElse("");
 				EffectState state = data.isEmpty() ? EffectState.DISABLED : EffectState.getFromString(data);
 
 				if (level.isClientSide) {
@@ -106,9 +109,9 @@ public class TeslaArmorItem extends ArmorItem {
 	private void handleEffect(LivingEntity livingEntity, Level level, Player player) {
 		livingEntity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS,
 				100, 0, false, false));
-		livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN,
+		livingEntity.addEffect(new MobEffectInstance(MobEffects.SLOWNESS,
 				100, 0, false, false));
-		livingEntity.addEffect(new MobEffectInstance(MobEffects.CONFUSION,
+		livingEntity.addEffect(new MobEffectInstance(MobEffects.NAUSEA,
 				100, 0, false, false));
 
 		if (level.isClientSide) {

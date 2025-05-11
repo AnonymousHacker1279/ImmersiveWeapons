@@ -9,15 +9,11 @@ import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.blockentity.SkullBlockRenderer;
 import net.minecraft.client.renderer.entity.BoatRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
-import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
-import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionContents;
-import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.level.GrassColor;
-import net.minecraft.world.level.ItemLike;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -47,7 +43,9 @@ import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.mob.*;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.projectile.*;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.function.Supplier;
 
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.MOD, value = Dist.CLIENT)
@@ -321,22 +319,14 @@ public class ClientModEventSubscriber {
 
 	@SubscribeEvent
 	public static void registerSkullModel(EntityRenderersEvent.CreateSkullModels event) {
-		event.registerSkullModel(CustomSkullTypes.MINUTEMAN, new SkullModel(event.getEntityModelSet()
-				.bakeLayer(ModelLayerLocations.MINUTEMAN_HEAD_LAYER)));
-		event.registerSkullModel(CustomSkullTypes.FIELD_MEDIC, new SkullModel(event.getEntityModelSet()
-				.bakeLayer(ModelLayerLocations.FIELD_MEDIC_HEAD_LAYER)));
-		event.registerSkullModel(CustomSkullTypes.DYING_SOLDIER, new SkullModel(event.getEntityModelSet()
-				.bakeLayer(ModelLayerLocations.DYING_SOLDIER_HEAD_LAYER)));
-		event.registerSkullModel(CustomSkullTypes.THE_COMMANDER, new SkullModel(event.getEntityModelSet()
-				.bakeLayer(ModelLayerLocations.THE_COMMANDER_HEAD_LAYER)));
-		event.registerSkullModel(CustomSkullTypes.WANDERING_WARRIOR, new SkullModel(event.getEntityModelSet()
-				.bakeLayer(ModelLayerLocations.WANDERING_WARRIOR_HEAD_LAYER)));
-		event.registerSkullModel(CustomSkullTypes.HANS, new SkullModel(event.getEntityModelSet()
-				.bakeLayer(ModelLayerLocations.HANS_HEAD_LAYER)));
-		event.registerSkullModel(CustomSkullTypes.STORM_CREEPER, new SkullModel(event.getEntityModelSet()
-				.bakeLayer(ModelLayerLocations.STORM_CREEPER_HEAD_LAYER)));
-		event.registerSkullModel(CustomSkullTypes.SKELETON_MERCHANT, new SkullModel(event.getEntityModelSet()
-				.bakeLayer(ModelLayerLocations.SKELETON_MERCHANT_HEAD_LAYER)));
+		event.registerSkullModel(CustomSkullTypes.MINUTEMAN, ModelLayerLocations.MINUTEMAN_HEAD_LAYER);
+		event.registerSkullModel(CustomSkullTypes.FIELD_MEDIC, ModelLayerLocations.FIELD_MEDIC_HEAD_LAYER);
+		event.registerSkullModel(CustomSkullTypes.DYING_SOLDIER, ModelLayerLocations.DYING_SOLDIER_HEAD_LAYER);
+		event.registerSkullModel(CustomSkullTypes.THE_COMMANDER, ModelLayerLocations.THE_COMMANDER_HEAD_LAYER);
+		event.registerSkullModel(CustomSkullTypes.WANDERING_WARRIOR, ModelLayerLocations.WANDERING_WARRIOR_HEAD_LAYER);
+		event.registerSkullModel(CustomSkullTypes.HANS, ModelLayerLocations.HANS_HEAD_LAYER);
+		event.registerSkullModel(CustomSkullTypes.STORM_CREEPER, ModelLayerLocations.STORM_CREEPER_HEAD_LAYER);
+		event.registerSkullModel(CustomSkullTypes.SKELETON_MERCHANT, ModelLayerLocations.SKELETON_MERCHANT_HEAD_LAYER);
 	}
 
 	@SubscribeEvent
@@ -357,28 +347,11 @@ public class ClientModEventSubscriber {
 	}
 
 	@SubscribeEvent
-	public static void registerItemColorHandlers(RegisterColorHandlersEvent.Item event) {
-		ImmersiveWeapons.LOGGER.info("Registering item color handlers");
-
-		event.register((stack, color) -> GrassColor.get(0.5d, 1.0d),
-				BlockItemRegistry.PITFALL_ITEM.get());
-
-		// Handle dyeable armor
-		event.register(
-				(stack, color) -> color > 0 ? -1 : DyedItemColor.getOrDefault(stack, -6265536),
-				ItemRegistry.PADDED_LEATHER_HELMET.get(),
-				ItemRegistry.PADDED_LEATHER_CHESTPLATE.get(),
-				ItemRegistry.PADDED_LEATHER_LEGGINGS.get(),
-				ItemRegistry.PADDED_LEATHER_BOOTS.get()
-		);
-	}
-
-	@SubscribeEvent
 	public static void registerBlockColorHandlers(RegisterColorHandlersEvent.Block event) {
 		ImmersiveWeapons.LOGGER.info("Registering block color handlers");
 
-		event.register((state, tintGetter, pos, color) -> BiomeColors
-						.getAverageGrassColor(Objects.requireNonNull(tintGetter), Objects.requireNonNull(pos)),
+		event.register((blockState, tintGetter, pos, color) ->
+						tintGetter != null && pos != null ? BiomeColors.getAverageGrassColor(tintGetter, pos) : GrassColor.getDefaultColor(),
 				BlockRegistry.PITFALL.get());
 	}
 
@@ -422,7 +395,8 @@ public class ClientModEventSubscriber {
 	}
 
 	private static void registerPropertyGetters() {
-		registerPropertyGetter(ItemRegistry.IRON_GAUNTLET.get(), prefix("gunslinger"),
+		// TODO: replace this entirely because none of it exists anymore
+		/*registerPropertyGetter(ItemRegistry.IRON_GAUNTLET.get(), prefix("gunslinger"),
 				(stack, clientLevel, livingEntity, i) -> stack.getDisplayName().getString().toLowerCase(Locale.ROOT)
 						.equals("[the gunslinger]") ? 1 : 0);
 
@@ -458,20 +432,7 @@ public class ClientModEventSubscriber {
 					}
 				});
 		registerPropertyGetter(ItemRegistry.AURORA_BOW.get(), prefix("pulling"),
-				(stack, clientLevel, livingEntity, i) -> livingEntity != null && livingEntity.isUsingItem() && livingEntity.getUseItem() == stack ? 1.0F : 0.0F);
-	}
-
-	/**
-	 * Register an item property getter.
-	 *
-	 * @param item             the <code>ItemLike</code> instance
-	 * @param resourceLocation the <code>ResourceLocation</code> of the item
-	 * @param propertyValue    the <code>ClampedItemPropertyFunction</code> value
-	 */
-	public static void registerPropertyGetter(ItemLike item, ResourceLocation resourceLocation,
-	                                          ClampedItemPropertyFunction propertyValue) {
-
-		ItemProperties.register(item.asItem(), resourceLocation, propertyValue);
+				(stack, clientLevel, livingEntity, i) -> livingEntity != null && livingEntity.isUsingItem() && livingEntity.getUseItem() == stack ? 1.0F : 0.0F);*/
 	}
 
 	/**

@@ -77,9 +77,9 @@ public class StormCreeperEntity extends Creeper implements GrantAdvancementOnDis
 	}
 
 	@Override
-	public boolean causeFallDamage(float pFallDistance, float pMultiplier, DamageSource pSource) {
-		boolean causeFallDamage = super.causeFallDamage(pFallDistance, pMultiplier, pSource);
-		swell += (int) (pFallDistance * 1.5F);
+	public boolean causeFallDamage(double distance, float damageMultiplier, DamageSource source) {
+		boolean causeFallDamage = super.causeFallDamage(distance, damageMultiplier, source);
+		swell += (int) (distance * 1.5F);
 		if (swell > maxSwell - 5) {
 			swell = maxSwell - 5;
 		}
@@ -107,22 +107,14 @@ public class StormCreeperEntity extends Creeper implements GrantAdvancementOnDis
 		pCompound.putBoolean("ignited", isIgnited());
 	}
 
-	/**
-	 * (abstract) Protected helper method to read subclass entity data from NBT.
-	 */
 	@Override
-	public void readAdditionalSaveData(CompoundTag pCompound) {
-		super.readAdditionalSaveData(pCompound);
-		entityData.set(DATA_IS_POWERED, pCompound.getBoolean("powered"));
-		if (pCompound.contains("fuse", 99)) {
-			maxSwell = pCompound.getShort("fuse");
-		}
+	public void readAdditionalSaveData(CompoundTag compound) {
+		super.readAdditionalSaveData(compound);
+		entityData.set(DATA_IS_POWERED, compound.getBooleanOr("powered", false));
+		maxSwell = compound.getShortOr("fuse", (short) 30);
+		explosionRadius = compound.getByteOr("explosionRadius", (byte) 5);
 
-		if (pCompound.contains("explosionRadius", 99)) {
-			explosionRadius = pCompound.getByte("explosionRadius");
-		}
-
-		if (pCompound.getBoolean("ignited")) {
+		if (compound.getBooleanOr("ignited", false)) {
 			ignite();
 		}
 

@@ -145,7 +145,7 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 
 		// Add strength effect if health is low
 		if (getHealth() / getMaxHealth() <= 0.25f) {
-			addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 300, 1));
+			addEffect(new MobEffectInstance(MobEffects.STRENGTH, 300, 1));
 		}
 
 		boolean doesHurt = super.hurtServer(serverLevel, source, amount);
@@ -273,7 +273,7 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 
 					if (optionalEntity.isPresent()) {
 						if (optionalEntity.get() instanceof Player player) {
-							player.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 60, 4, true, true));
+							player.addEffect(new MobEffectInstance(MobEffects.MINING_FATIGUE, 60, 4, true, true));
 						}
 					}
 
@@ -341,7 +341,7 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 	public void load(CompoundTag pCompound) {
 		super.load(pCompound);
 
-		xpReward = pCompound.getInt("xpReward");
+		xpReward = pCompound.getIntOr("xpReward", 0);
 	}
 
 	public int getAttackingEntities() {

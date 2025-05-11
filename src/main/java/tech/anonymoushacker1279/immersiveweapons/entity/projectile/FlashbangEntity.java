@@ -62,14 +62,14 @@ public class FlashbangEntity extends AdvancedThrowableItemProjectile {
 								if (canSee(player, this, true)) {
 									player.addEffect(new MobEffectInstance(EffectRegistry.FLASHBANG_EFFECT,
 											200, 0, true, false, false));
-									player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN,
+									player.addEffect(new MobEffectInstance(MobEffects.SLOWNESS,
 											200, 0, true, false, false));
 								}
 							}
 						} else if (entity instanceof Mob mob && !mob.getType().is(EntityTypes.BOSSES)) {
 							if (canSee(mob, this, false)) {
 								mob.goalSelector.addGoal(1, new DisorientedWanderingGoal(mob, IWConfigs.SERVER.flashbangDisorientTime.getAsInt() * 20));
-								mob.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN,
+								mob.addEffect(new MobEffectInstance(MobEffects.SLOWNESS,
 										200, 0, true, false, false));
 							}
 						}

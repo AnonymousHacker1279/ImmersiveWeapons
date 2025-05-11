@@ -2,6 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.block.barbed_wire;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -29,7 +30,7 @@ public class BarbedWireBlock extends DamageableBlock implements BarbedWireUtils 
 	}
 
 	@Override
-	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+	protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier) {
 		handleEntityContact(state, level, pos, entity);
 	}
 }

@@ -212,7 +212,7 @@ public class FireflyEntity extends AmbientCreature {
 	}
 
 	@Override
-	public boolean causeFallDamage(float pFallDistance, float pMultiplier, DamageSource pSource) {
+	public boolean causeFallDamage(double distance, float damageMultiplier, DamageSource source) {
 		return false;
 	}
 
@@ -241,7 +241,7 @@ public class FireflyEntity extends AmbientCreature {
 	@Override
 	public void readAdditionalSaveData(CompoundTag pCompound) {
 		super.readAdditionalSaveData(pCompound);
-		entityData.set(DATA_ID_FLAGS, pCompound.getByte("FireflyFlags"));
+		entityData.set(DATA_ID_FLAGS, pCompound.getByteOr("FireflyFlags", (byte) 0));
 	}
 
 	@Override

@@ -405,15 +405,15 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 		ContainerHelper.loadAllItems(tag, items, provider);
 
 		// Load process state
-		burnTime = tag.getInt("BurnTime");
-		cookTime = tag.getInt("CookTime");
-		cookTimeTotal = tag.getInt("CookTimeTotal");
+		burnTime = tag.getInt("BurnTime").orElse(0);
+		cookTime = tag.getInt("CookTime").orElse(0);
+		cookTimeTotal = tag.getInt("CookTimeTotal").orElse(200);
 		burnTimeTotal = getBurnTime(items.get(SLOT_FUEL));
 
 		// Load recipe usage data
-		CompoundTag recipesTag = tag.getCompound("RecipesUsed");
-		for (String key : recipesTag.getAllKeys()) {
-			usedRecipes.put(ResourceLocation.parse(key), recipesTag.getInt(key));
+		CompoundTag recipesTag = tag.getCompound("RecipesUsed").orElse(new CompoundTag());
+		for (String key : recipesTag.keySet()) {
+			usedRecipes.put(ResourceLocation.parse(key), recipesTag.getInt(key).orElse(0));
 		}
 	}
 

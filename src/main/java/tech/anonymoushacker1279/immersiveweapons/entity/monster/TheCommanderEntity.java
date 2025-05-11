@@ -203,11 +203,11 @@ public class TheCommanderEntity extends DyingSoldierEntity implements AttackerTr
 		super.readAdditionalSaveData(pCompound);
 
 		bossEvent.setName(getDisplayName());
-		totalWavesToSpawn = pCompound.getInt("totalWavesToSpawn");
-		waveSizeModifier = pCompound.getInt("waveSizeModifier");
-		wavesSpawned = pCompound.getInt("wavesSpawned");
-		doneSpawningWaves = pCompound.getBoolean("doneSpawningWaves");
-		breakTowerFences = pCompound.getBoolean("hasJumpedOutOfTower");
+		totalWavesToSpawn = pCompound.getIntOr("totalWavesToSpawn", 3);
+		waveSizeModifier = pCompound.getIntOr("waveSizeModifier", 1);
+		wavesSpawned = pCompound.getIntOr("wavesSpawned", 0);
+		doneSpawningWaves = pCompound.getBooleanOr("doneSpawningWaves", false);
+		breakTowerFences = pCompound.getBooleanOr("hasJumpedOutOfTower", false);
 
 		if (wavesSpawned > 0 && !doneSpawningWaves) {
 			bossEvent.setName(Component.translatable("immersiveweapons.boss.the_commander.waves", wavesSpawned,
@@ -218,7 +218,7 @@ public class TheCommanderEntity extends DyingSoldierEntity implements AttackerTr
 			bossEvent.setProgress(getHealth() / getMaxHealth());
 		}
 
-		xpReward = pCompound.getInt("xpReward");
+		xpReward = pCompound.getIntOr("xpReward", 0);
 	}
 
 	@Override

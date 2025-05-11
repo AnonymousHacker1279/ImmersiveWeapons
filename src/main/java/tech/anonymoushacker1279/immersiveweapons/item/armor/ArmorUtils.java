@@ -6,6 +6,13 @@ import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
 public class ArmorUtils {
 
+	public static boolean isWearingCobaltArmor(LivingEntity livingEntity) {
+		return livingEntity.getItemBySlot(EquipmentSlot.HEAD).getItem() == ItemRegistry.COBALT_HELMET.get() &&
+				livingEntity.getItemBySlot(EquipmentSlot.CHEST).getItem() == ItemRegistry.COBALT_CHESTPLATE.get() &&
+				livingEntity.getItemBySlot(EquipmentSlot.LEGS).getItem() == ItemRegistry.COBALT_LEGGINGS.get() &&
+				livingEntity.getItemBySlot(EquipmentSlot.FEET).getItem() == ItemRegistry.COBALT_BOOTS.get();
+	}
+
 	public static boolean isWearingMoltenArmor(LivingEntity livingEntity) {
 		return livingEntity.getItemBySlot(EquipmentSlot.HEAD).getItem() == ItemRegistry.MOLTEN_HELMET.get() &&
 				livingEntity.getItemBySlot(EquipmentSlot.CHEST).getItem() == ItemRegistry.MOLTEN_CHESTPLATE.get() &&

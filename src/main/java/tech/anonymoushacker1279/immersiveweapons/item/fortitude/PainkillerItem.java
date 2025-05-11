@@ -24,7 +24,7 @@ public class PainkillerItem extends Item {
 	@Override
 	public InteractionResult use(Level level, Player player, InteractionHand hand) {
 		ItemStack itemInHand = player.getItemInHand(hand);
-		player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 1200, 0, false, true));
+		player.addEffect(new MobEffectInstance(MobEffects.RESISTANCE, 1200, 0, false, true));
 
 		if (!player.isCreative()) {
 			itemInHand.shrink(1);

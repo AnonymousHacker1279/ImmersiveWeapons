@@ -9,13 +9,12 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.animal.Wolf;
+import net.minecraft.world.entity.animal.wolf.Wolf;
 import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 
 import javax.annotation.Nullable;
-import java.util.UUID;
 
 public class StarWolfEntity extends Wolf implements GrantAdvancementOnDiscovery {
 
@@ -73,12 +72,9 @@ public class StarWolfEntity extends Wolf implements GrantAdvancementOnDiscovery 
 	@Override
 	public Wolf getBreedOffspring(ServerLevel level, AgeableMob otherParent) {
 		Wolf wolf = EntityRegistry.STAR_WOLF_ENTITY.get().create(level, EntitySpawnReason.BREEDING);
-		if (wolf != null) {
-			UUID ownerUUID = getOwnerUUID();
-			if (ownerUUID != null) {
-				wolf.setOwnerUUID(ownerUUID);
-				wolf.setTame(true, true);
-			}
+		if (wolf != null && getOwner() != null) {
+			wolf.setOwner(getOwner());
+			wolf.setTame(true, true);
 		}
 
 		return wolf;

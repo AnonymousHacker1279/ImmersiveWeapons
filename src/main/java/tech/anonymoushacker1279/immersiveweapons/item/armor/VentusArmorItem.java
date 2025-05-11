@@ -5,17 +5,19 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.equipment.ArmorMaterial;
@@ -27,13 +29,15 @@ import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.VentusArmorPayload;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
-public class VentusArmorItem extends ArmorItem {
+import javax.annotation.Nullable;
+
+public class VentusArmorItem extends Item {
 
 	private int windShieldCooldown = 0;
 	private int windShieldDuration = 0;
 
 	public VentusArmorItem(ArmorMaterial material, ArmorType armorType, Properties properties) {
-		super(material, armorType, properties);
+		super(properties.humanoidArmor(material, armorType));
 	}
 
 	@Override
@@ -48,10 +52,10 @@ public class VentusArmorItem extends ArmorItem {
 	}
 
 	@Override
-	public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
+	public void inventoryTick(ItemStack stack, ServerLevel level, Entity entity, @Nullable EquipmentSlot slot) {
 		if (entity instanceof Player player) {
 			if (ArmorUtils.isWearingVentusArmor(player)) {
-				boolean effectEnabled = player.getPersistentData().getBoolean("VentusArmorEffectEnabled");
+				boolean effectEnabled = player.getPersistentData().getBoolean("VentusArmorEffectEnabled").orElse(false);
 
 				if (level.isClientSide) {
 					if (IWKeyBinds.TOGGLE_ARMOR_EFFECT.consumeClick()) {
@@ -104,7 +108,7 @@ public class VentusArmorItem extends ArmorItem {
 				}
 
 				if (effectEnabled) {
-					player.addEffect(new MobEffectInstance(MobEffects.JUMP,
+					player.addEffect(new MobEffectInstance(MobEffects.JUMP_BOOST,
 							0, 2, false, false));
 					player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING,
 							0, 0, false, false));

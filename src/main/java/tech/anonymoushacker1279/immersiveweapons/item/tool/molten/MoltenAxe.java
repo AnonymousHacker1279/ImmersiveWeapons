@@ -13,8 +13,7 @@ public class MoltenAxe extends AxeItem implements HitEffectUtils {
 	}
 
 	@Override
-	public boolean hurtEnemy(ItemStack itemStack, LivingEntity target, LivingEntity attacker) {
+	public void hurtEnemy(ItemStack itemStack, LivingEntity target, LivingEntity attacker) {
 		addMoltenEffects(target, attacker);
-		return super.hurtEnemy(itemStack, target, attacker);
 	}
 }

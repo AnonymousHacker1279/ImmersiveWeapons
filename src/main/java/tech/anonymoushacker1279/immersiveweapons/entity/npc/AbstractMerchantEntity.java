@@ -184,6 +184,6 @@ public abstract class AbstractMerchantEntity extends AbstractVillager implements
 	public void load(CompoundTag compound) {
 		super.load(compound);
 
-		entityData.set(TRADE_REFRESH_TIME, compound.getInt("tradeRefreshTime"));
+		entityData.set(TRADE_REFRESH_TIME, compound.getIntOr("tradeRefreshTime", 24000));
 	}
 }

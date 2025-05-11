@@ -158,13 +158,13 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 		super.addAdditionalSaveData(pCompound);
 
 		if (!lightPositions.isEmpty()) {
-			List<Integer> xPositions = new ArrayList<>(3);
-			List<Integer> yPositions = new ArrayList<>(3);
-			List<Integer> zPositions = new ArrayList<>(3);
+			int[] xPositions = new int[lightPositions.size()];
+			int[] yPositions = new int[lightPositions.size()];
+			int[] zPositions = new int[lightPositions.size()];
 			for (BlockPos pos : lightPositions) {
-				xPositions.add(pos.getX());
-				yPositions.add(pos.getY());
-				zPositions.add(pos.getZ());
+				xPositions[lightPositions.indexOf(pos)] = pos.getX();
+				yPositions[lightPositions.indexOf(pos)] = pos.getY();
+				zPositions[lightPositions.indexOf(pos)] = pos.getZ();
 			}
 
 			pCompound.putIntArray("xPositions", xPositions);
@@ -182,16 +182,17 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 	public void readAdditionalSaveData(CompoundTag pCompound) {
 		super.readAdditionalSaveData(pCompound);
 
-		int[] xPositions = pCompound.getIntArray("xPositions");
-		int[] yPositions = pCompound.getIntArray("yPositions");
-		int[] zPositions = pCompound.getIntArray("zPositions");
+		int[] xPositions = pCompound.getIntArray("xPositions").orElse(null);
+		int[] yPositions = pCompound.getIntArray("yPositions").orElse(null);
+		int[] zPositions = pCompound.getIntArray("zPositions").orElse(null);
 
 		// Each item in xPositions should match an entry in y/zPositions, so build a list of BlockPos
 		// with each individual position
-		int iteration = 0;
-		for (Integer integer : xPositions) {
-			lightPositions.add(new BlockPos(integer, yPositions[iteration], zPositions[iteration]));
-			iteration++;
+		if (xPositions != null && yPositions != null && zPositions != null) {
+			for (int i = 0; i < xPositions.length; i++) {
+				BlockPos pos = new BlockPos(xPositions[i], yPositions[i], zPositions[i]);
+				lightPositions.add(pos);
+			}
 		}
 	}
 

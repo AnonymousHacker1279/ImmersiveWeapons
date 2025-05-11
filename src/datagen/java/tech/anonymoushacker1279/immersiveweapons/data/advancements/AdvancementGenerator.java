@@ -11,6 +11,7 @@ import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.data.advancements.AdvancementSubProvider;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
@@ -23,8 +24,6 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.common.data.AdvancementProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.advancement.EntityDiscoveredTrigger;
 import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
@@ -37,10 +36,10 @@ import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
 import java.util.function.Consumer;
 
-public record AdvancementGenerator() implements AdvancementProvider.AdvancementGenerator {
+public record AdvancementGenerator() implements AdvancementSubProvider {
 
 	@Override
-	public void generate(Provider provider, Consumer<AdvancementHolder> consumer, ExistingFileHelper existingFileHelper) {
+	public void generate(Provider provider, Consumer<AdvancementHolder> consumer) {
 		HolderGetter<Item> itemLookup = provider.lookupOrThrow(Registries.ITEM);
 		HolderGetter<Block> blockLookup = provider.lookupOrThrow(Registries.BLOCK);
 		HolderGetter<EntityType<?>> entityTypeLookup = provider.lookupOrThrow(Registries.ENTITY_TYPE);

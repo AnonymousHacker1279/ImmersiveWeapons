@@ -6,7 +6,6 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags.Blocks;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.CustomDataGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.common.CommonBlockTagGroups;
@@ -20,8 +19,8 @@ import java.util.function.Supplier;
 
 public class BlockTagsGenerator extends BlockTagsProvider {
 
-	public BlockTagsGenerator(PackOutput output, CompletableFuture<Provider> lookupProvider, ExistingFileHelper existingFileHelper) {
-		super(output, lookupProvider, ImmersiveWeapons.MOD_ID, existingFileHelper);
+	public BlockTagsGenerator(PackOutput output, CompletableFuture<Provider> lookupProvider) {
+		super(output, lookupProvider, ImmersiveWeapons.MOD_ID);
 	}
 
 	/**

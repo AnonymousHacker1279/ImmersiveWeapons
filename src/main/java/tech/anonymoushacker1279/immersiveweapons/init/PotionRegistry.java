@@ -21,8 +21,8 @@ public class PotionRegistry {
 	public static final DeferredHolder<Potion, Potion> DEATH_POTION = POTIONS.register("death", () -> new Potion("death", new MobEffectInstance(EffectRegistry.DAMAGE_VULNERABILITY_EFFECT, 1800)));
 	public static final DeferredHolder<Potion, Potion> STRONG_DEATH_POTION = POTIONS.register("strong_death", () -> new Potion("death", new MobEffectInstance(EffectRegistry.DAMAGE_VULNERABILITY_EFFECT, 1200, 1)));
 	public static final DeferredHolder<Potion, Potion> LONG_DEATH_POTION = POTIONS.register("long_death", () -> new Potion("death", new MobEffectInstance(EffectRegistry.DAMAGE_VULNERABILITY_EFFECT, 2400)));
-	public static final DeferredHolder<Potion, Potion> SUPER_HEALING_POTION = POTIONS.register("super_healing", () -> new Potion("healing", new MobEffectInstance(MobEffects.HEAL, 1, 2)));
-	public static final DeferredHolder<Potion, Potion> ULTRA_HEALING_POTION = POTIONS.register("ultra_healing", () -> new Potion("healing", new MobEffectInstance(MobEffects.HEAL, 1, 3)));
+	public static final DeferredHolder<Potion, Potion> SUPER_HEALING_POTION = POTIONS.register("super_healing", () -> new Potion("healing", new MobEffectInstance(MobEffects.INSTANT_HEALTH, 1, 2)));
+	public static final DeferredHolder<Potion, Potion> ULTRA_HEALING_POTION = POTIONS.register("ultra_healing", () -> new Potion("healing", new MobEffectInstance(MobEffects.INSTANT_HEALTH, 1, 3)));
 	public static final DeferredHolder<Potion, Potion> SUPER_REGENERATION_POTION = POTIONS.register("super_regeneration", () -> new Potion("regeneration", new MobEffectInstance(MobEffects.REGENERATION, 300, 2)));
 	public static final DeferredHolder<Potion, Potion> ULTRA_REGENERATION_POTION = POTIONS.register("ultra_regeneration", () -> new Potion("regeneration", new MobEffectInstance(MobEffects.REGENERATION, 200, 3)));
 	public static final DeferredHolder<Potion, Potion> BROKEN_ARMOR_POTION = POTIONS.register("broken_armor", () -> new Potion("broken_armor", new MobEffectInstance(EffectRegistry.BROKEN_ARMOR_EFFECT, 1800)));

@@ -97,12 +97,11 @@ public class RecoveryStaffItem extends Item implements SummoningStaff {
 	@SubscribeEvent
 	public static void livingHurtEvent(LivingDamageEvent.Post event) {
 		if (event.getEntity() instanceof Player player) {
-			player.getInventory().items.stream()
-					.filter(stack -> stack.getItem() instanceof RecoveryStaffItem)
-					.findFirst().ifPresent(stack -> {
-						RecoveryStaffItem staff = (RecoveryStaffItem) stack.getItem();
-						staff.setHealAmount((event.getNewDamage() / 2) + 4);
-					});
+			for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+				if (player.getInventory().getItem(i).getItem() instanceof RecoveryStaffItem staff) {
+					staff.setHealAmount(event.getNewDamage() / 2 + 4);
+				}
+			}
 		}
 	}
 }

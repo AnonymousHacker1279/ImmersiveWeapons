@@ -4,7 +4,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -114,16 +113,6 @@ public class ShelfBlock extends BasicOrientableBlock implements EntityBlock, Sim
 		}
 
 		return InteractionResult.PASS;
-	}
-
-	@Override
-	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-		if (!state.is(newState.getBlock())) {
-			if (level.getBlockEntity(pos) instanceof ShelfBlockEntity shelfBlockEntity) {
-				Containers.dropContents(level, pos, shelfBlockEntity.getInventory());
-			}
-			super.onRemove(state, level, pos, newState, isMoving);
-		}
 	}
 
 	@Override

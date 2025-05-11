@@ -25,7 +25,6 @@ public class TeslaSynthesizerScreen extends AbstractContainerScreen<TeslaSynthes
 	@Override
 	protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
 		RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-		RenderSystem.setShaderTexture(0, GUI_TEXTURE);
 		int i = leftPos;
 		int j = topPos;
 		guiGraphics.blit(RenderType::guiTextured, GUI_TEXTURE, i, j, 0, 0, imageWidth, imageHeight, 256, 256);
@@ -36,12 +35,6 @@ public class TeslaSynthesizerScreen extends AbstractContainerScreen<TeslaSynthes
 
 		int l = menu.getCookProgressionScaled();
 		guiGraphics.blit(RenderType::guiTextured, GUI_TEXTURE, i + 79, j + 34, 176, 14, l + 1, 16, 256, 256);
-	}
-
-	@Override
-	protected void renderLabels(GuiGraphics guiGraphics, int x, int y) {
-		RenderSystem.disableBlend();
-		super.renderLabels(guiGraphics, x, y);
 	}
 
 	@Override

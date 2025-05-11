@@ -1,11 +1,9 @@
 package tech.anonymoushacker1279.immersiveweapons.client.renderer.dimension;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.renderer.CoreShaders;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
@@ -42,10 +40,7 @@ public class TiltrosDimensionSpecialEffects extends DimensionSpecialEffects {
 		PoseStack poseStack = new PoseStack();
 		poseStack.mulPose(modelViewMatrix);
 
-		RenderSystem.enableBlend();
-		RenderSystem.depthMask(false);
-		RenderSystem.setShader(CoreShaders.POSITION_TEX_COLOR);
-		RenderSystem.setShaderTexture(0, SKY_LOCATION);
+		// RenderSystem.setShaderTexture(0, SKY_LOCATION);
 		Tesselator tesselator = Tesselator.getInstance();
 
 		for (int i = 0; i < 6; ++i) {
@@ -76,12 +71,9 @@ public class TiltrosDimensionSpecialEffects extends DimensionSpecialEffects {
 			bufferBuilder.addVertex(poseMatrix, -100.0F, -100.0F, 100.0F).setUv(0.0F, 1.0F).setColor(255, 255, 255, 75);
 			bufferBuilder.addVertex(poseMatrix, 100.0F, -100.0F, 100.0F).setUv(1.0F, 1.0F).setColor(255, 255, 255, 75);
 			bufferBuilder.addVertex(poseMatrix, 100.0F, -100.0F, -100.0F).setUv(1.0F, 0.0F).setColor(255, 255, 255, 75);
-			BufferUploader.drawWithShader(bufferBuilder.buildOrThrow());
+			// BufferUploader.drawWithShader(bufferBuilder.buildOrThrow());
 			poseStack.popPose();
 		}
-
-		RenderSystem.depthMask(true);
-		RenderSystem.disableBlend();
 
 		return true;
 	}

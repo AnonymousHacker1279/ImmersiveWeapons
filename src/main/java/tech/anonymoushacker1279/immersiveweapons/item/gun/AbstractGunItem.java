@@ -264,9 +264,9 @@ public abstract class AbstractGunItem extends Item {
 	}
 
 	@Override
-	public void inventoryTick(ItemStack pStack, Level pLevel, Entity pEntity, int pSlotId, boolean pIsSelected) {
-		if (pEntity instanceof Player player) {
-			if (pLevel.isClientSide && !player.getUseItem().is(ItemRegistry.MUSKET_SCOPE.get())) {
+	public void inventoryTick(ItemStack stack, ServerLevel level, Entity entity, @Nullable EquipmentSlot slot) {
+		if (entity instanceof Player player) {  // TODO: needs fixed as this is a server-only method now
+			if (!player.getUseItem().is(ItemRegistry.MUSKET_SCOPE.get())) {
 				GunData.changingPlayerFOV = -1;
 				GunData.scopeScale = 0.5f;
 			}
@@ -425,7 +425,7 @@ public abstract class AbstractGunItem extends Item {
 		if (firepower.isPresent()) {
 			enchantmentLevel = gun.getEnchantmentLevel(firepower.get());
 			if (enchantmentLevel > 0) {
-				bullet.setBaseDamage(bullet.getBaseDamage() + (double) enchantmentLevel * 0.5D + 0.5D);
+				bullet.setBaseDamage(bullet.baseDamage + (double) enchantmentLevel * 0.5D + 0.5D);
 			}
 		}
 
@@ -441,7 +441,7 @@ public abstract class AbstractGunItem extends Item {
 			float densityModifier = ammo.getOrDefault(DENSITY_MODIFIER, 0f);
 			if (densityModifier > 0) {
 				// A full 100% value is +20% damage
-				bullet.setBaseDamage(bullet.getBaseDamage() + (bullet.getBaseDamage() * (densityModifier * 0.2f)));
+				bullet.setBaseDamage(bullet.baseDamage + (bullet.baseDamage * (densityModifier * 0.2f)));
 
 				// Higher density slightly increases the gravity modifier
 				((ArrowAttributeAccessor) bullet).immersiveWeapons$setGravity(bullet.getGravity() + (densityModifier * 0.015f));

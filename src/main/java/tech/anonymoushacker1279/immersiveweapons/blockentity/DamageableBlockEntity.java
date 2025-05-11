@@ -37,10 +37,10 @@ public class DamageableBlockEntity extends BlockEntity {
 	public void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
 		super.loadAdditional(tag, provider);
 
-		maxHealth = tag.getInt("maxHealth");
-		health = tag.getInt("health");
-		stages = tag.getInt("stages");
-		currentStage = tag.getInt("currentStage");
+		maxHealth = tag.getInt("maxHealth").orElse(1);
+		health = tag.getInt("health").orElse(maxHealth);
+		stages = tag.getInt("stages").orElse(1);
+		currentStage = tag.getInt("currentStage").orElse(0);
 	}
 
 	@Override

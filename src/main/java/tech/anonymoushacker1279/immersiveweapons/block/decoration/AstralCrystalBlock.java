@@ -4,11 +4,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Entity.RemovalReason;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -66,17 +66,6 @@ public class AstralCrystalBlock extends AmethystClusterBlock implements EntityBl
 	}
 
 	@Override
-	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-		if (!state.is(newState.getBlock())) {
-			BlockEntity blockEntity = level.getBlockEntity(pos);
-			if (blockEntity instanceof AstralCrystalBlockEntity crystalBlockEntity) {
-				Containers.dropContents(level, pos, crystalBlockEntity.getInventory());
-			}
-			super.onRemove(state, level, pos, newState, isMoving);
-		}
-	}
-
-	@Override
 	public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
 		if (level.getBlockEntity(pos) instanceof AstralCrystalBlockEntity entity && isBuiltOnPlatform(level, pos)) {
 			float particleChance = entity.getFilledSlots() * 0.25f;
@@ -94,7 +83,7 @@ public class AstralCrystalBlock extends AmethystClusterBlock implements EntityBl
 	}
 
 	@Override
-	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+	protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier) {
 		if (entity instanceof ItemEntity itemEntity && isBuiltOnPlatform(level, pos)) {
 			if (level.getBlockEntity(pos) instanceof AstralCrystalBlockEntity blockEntity && level instanceof ServerLevel serverLevel) {
 				RecipeHolder<AstralCrystalRecipe> holder = blockEntity.getRecipe(serverLevel.recipeAccess(), serverLevel);

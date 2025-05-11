@@ -53,7 +53,7 @@ public class SmokeGrenadeEntity extends AdvancedThrowableItemProjectile {
 
 		for (int i = 0; i < particles; ++i) {
 			level.addParticle(SmokeGrenadeParticleOptions.getParticleByColor(color),
-					true, x, y, z,
+					true, true, x, y, z,
 					GeneralUtilities.getRandomNumber(-0.1d, 0.1d),
 					GeneralUtilities.getRandomNumber(-0.1d, 0.1d),
 					GeneralUtilities.getRandomNumber(-0.1d, 0.1d));

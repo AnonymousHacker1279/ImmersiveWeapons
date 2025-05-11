@@ -6,6 +6,7 @@ import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
+import net.minecraft.util.random.Weighted;
 import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 import net.neoforged.neoforge.common.world.BiomeModifier;
@@ -81,12 +82,12 @@ public class IWBiomeModifiers {
 		biomeModifier(context, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "wandering_warrior_spawn"),
 				AddSpawnsBiomeModifier.singleSpawn(
 						context.lookup(Registries.BIOME).getOrThrow(BiomeTags.IS_OVERWORLD),
-						new SpawnerData(EntityRegistry.WANDERING_WARRIOR_ENTITY.get(), 65, 1, 1)
+						new Weighted<>(new SpawnerData(EntityRegistry.WANDERING_WARRIOR_ENTITY.get(), 1, 1), 65)
 				));
 		biomeModifier(context, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "hans_spawn"),
 				AddSpawnsBiomeModifier.singleSpawn(
 						context.lookup(Registries.BIOME).getOrThrow(BiomeTags.IS_OVERWORLD),
-						new SpawnerData(EntityRegistry.HANS_ENTITY.get(), 5, 1, 1)
+						new Weighted<>(new SpawnerData(EntityRegistry.HANS_ENTITY.get(), 1, 1), 5)
 				));
 	}
 

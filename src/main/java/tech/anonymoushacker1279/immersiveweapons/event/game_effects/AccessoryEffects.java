@@ -149,14 +149,14 @@ public class AccessoryEffects {
 	public static void bloodySacrificeEffect(LivingIncomingDamageEvent event, LivingEntity damagedEntity) {
 		if (damagedEntity instanceof Player player) {
 			// Player takes 50% more damage if they used the item
-			if (player.getPersistentData().getBoolean("used_curse_accessory_bloody_sacrifice")) {
+			if (player.getPersistentData().getBooleanOr("used_curse_accessory_bloody_sacrifice", false)) {
 				event.setAmount(event.getAmount() * 1.5f);
 			}
 		}
 
 		if (event.getSource().getEntity() instanceof Player player) {
 			// Player deals 10% less damage if they used the item
-			if (player.getPersistentData().getBoolean("used_curse_accessory_bloody_sacrifice")) {
+			if (player.getPersistentData().getBooleanOr("used_curse_accessory_bloody_sacrifice", false)) {
 				event.setAmount(event.getAmount() * 0.9f);
 			}
 		}
@@ -165,7 +165,7 @@ public class AccessoryEffects {
 	public static void jonnysCurseEffect(LivingIncomingDamageEvent event, LivingEntity damagedEntity) {
 		if (damagedEntity instanceof Player player) {
 			// Player takes 200% more damage if they used the item
-			if (player.getPersistentData().getBoolean("used_curse_accessory_jonnys_curse")) {
+			if (player.getPersistentData().getBooleanOr("used_curse_accessory_jonnys_curse", false)) {
 				if (GeneralUtilities.notJonny(player.getUUID())) {
 					event.setAmount(event.getAmount() * 3f);
 				} else {
@@ -176,7 +176,7 @@ public class AccessoryEffects {
 
 		if (event.getSource().getEntity() instanceof Player player) {
 			// Projectiles deal zero damage
-			if (player.getPersistentData().getBoolean("used_curse_accessory_jonnys_curse") && event.getSource().is(DamageTypeTags.IS_PROJECTILE)) {
+			if (player.getPersistentData().getBooleanOr("used_curse_accessory_jonnys_curse", false) && event.getSource().is(DamageTypeTags.IS_PROJECTILE)) {
 				if (GeneralUtilities.notJonny(player.getUUID())) {
 					event.setAmount(0f);
 				} else {

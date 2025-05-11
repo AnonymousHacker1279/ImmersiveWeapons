@@ -1,7 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.client;
 
 import net.minecraft.client.model.HumanoidModel.ArmPose;
-import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
@@ -111,22 +110,6 @@ public class CustomArmPoses {
 	public static ArmPose getFirearmPose(LivingEntity entity, InteractionHand hand, ItemStack itemStack) {
 		if (!itemStack.isEmpty()) {
 			if (entity.getUsedItemHand() == hand && entity.getUseItemRemainingTicks() > 0) {
-				Item item = itemStack.getItem();
-				if (item instanceof MusketItem || item instanceof SimpleShotgunItem) {
-					return CustomArmPoses.AIM_MUSKET_POSE_PARAMS.getValue();
-				} else if (item instanceof AbstractGunItem) {
-					return CustomArmPoses.AIM_PISTOL_POSE_PARAMS.getValue();
-				}
-			}
-		}
-
-		return ArmPose.EMPTY;
-	}
-
-	public static ArmPose getFirearmPose(HumanoidRenderState state) {
-		ItemStack itemStack = state.getMainHandItem();
-		if (!itemStack.isEmpty()) {
-			if (state.isUsingItem) {
 				Item item = itemStack.getItem();
 				if (item instanceof MusketItem || item instanceof SimpleShotgunItem) {
 					return CustomArmPoses.AIM_MUSKET_POSE_PARAMS.getValue();

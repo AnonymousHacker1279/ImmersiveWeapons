@@ -13,8 +13,7 @@ public class VentusHoe extends HoeItem implements HitEffectUtils {
 	}
 
 	@Override
-	public boolean hurtEnemy(ItemStack itemStack, LivingEntity target, LivingEntity attacker) {
+	public void hurtEnemy(ItemStack itemStack, LivingEntity target, LivingEntity attacker) {
 		addVentusEffects(target);
-		return super.hurtEnemy(itemStack, target, attacker);
 	}
 }

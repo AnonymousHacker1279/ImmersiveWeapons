@@ -65,7 +65,7 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 				setItemSlot(EquipmentSlot.HEAD,
 						new ItemStack(random.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
 
-				armorDropChances[EquipmentSlot.HEAD.getIndex()] = 0.0F;
+				setDropChance(EquipmentSlot.HEAD, 0.0F);
 			}
 		}
 
@@ -78,7 +78,7 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 		int baseXP = Mth.ceil(100 * difficultyMultiplier);
 
 		int armorXP = 0;
-		for (ItemStack stack : getArmorSlots()) {
+		for (ItemStack stack : List.of(getItemBySlot(EquipmentSlot.HEAD), getItemBySlot(EquipmentSlot.CHEST), getItemBySlot(EquipmentSlot.LEGS), getItemBySlot(EquipmentSlot.FEET))) {
 			if (!stack.isEmpty()) {
 				armorXP += 2 + random.nextInt(3);
 

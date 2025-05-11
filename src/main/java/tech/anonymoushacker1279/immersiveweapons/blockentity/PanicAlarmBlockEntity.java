@@ -13,7 +13,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
-import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockEntityRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.GameEventRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 
 public class PanicAlarmBlockEntity extends BlockEntity implements EntityBlock {
 
@@ -92,7 +94,7 @@ public class PanicAlarmBlockEntity extends BlockEntity implements EntityBlock {
 	public void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
 		super.loadAdditional(tag, provider);
 
-		cooldown = tag.getInt("cooldown");
-		isPowered = tag.getBoolean("isPowered");
+		cooldown = tag.getInt("cooldown").orElse(0);
+		isPowered = tag.getBoolean("isPowered").orElse(false);
 	}
 }

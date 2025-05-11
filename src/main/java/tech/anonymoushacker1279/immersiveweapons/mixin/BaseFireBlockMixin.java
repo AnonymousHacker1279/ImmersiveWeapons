@@ -5,6 +5,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseFireBlock;
@@ -26,24 +27,24 @@ import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 public abstract class BaseFireBlockMixin {
 
 	@Inject(method = "entityInside", at = @At("RETURN"))
-	private void checkForSuperHansSpawn(BlockState pState, Level pLevel, BlockPos pPos, Entity pEntity, CallbackInfo ci) {
-		if (pEntity instanceof ItemEntity itemEntity && itemEntity.getItem().is(ItemRegistry.HANS_BLESSING.get())) {
+	private void checkForSuperHansSpawn(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier, CallbackInfo ci) {
+		if (entity instanceof ItemEntity itemEntity && itemEntity.getItem().is(ItemRegistry.HANS_BLESSING.get())) {
 			// Check if inside a Champion Tower structure
-			if (pLevel instanceof ServerLevel serverLevel) {
+			if (level instanceof ServerLevel serverLevel) {
 				Structure structure = serverLevel.structureManager().registryAccess().lookupOrThrow(Registries.STRUCTURE).getValue(SuperHansEntity.CHAMPION_TOWER_KEY);
 				if (structure != null) {
-					StructureStart structureStart = serverLevel.structureManager().getStructureWithPieceAt(pPos, structure);
+					StructureStart structureStart = serverLevel.structureManager().getStructureWithPieceAt(pos, structure);
 					if (structureStart.isValid()) {
-						SuperHansEntity superHans = new SuperHansEntity(EntityRegistry.SUPER_HANS_ENTITY.get(), pLevel);
-						superHans.setPos(pEntity.position());
-						superHans.finalizeSpawn(serverLevel, pLevel.getCurrentDifficultyAt(pPos), EntitySpawnReason.TRIGGERED, null);
-						pLevel.addFreshEntity(superHans);
+						SuperHansEntity superHans = new SuperHansEntity(EntityRegistry.SUPER_HANS_ENTITY.get(), level);
+						superHans.setPos(entity.position());
+						superHans.finalizeSpawn(serverLevel, level.getCurrentDifficultyAt(pos), EntitySpawnReason.TRIGGERED, null);
+						level.addFreshEntity(superHans);
 
 						// Destroy the item
 						itemEntity.discard();
 
 						// Extinguish the fire
-						pLevel.removeBlock(pPos, false);
+						level.removeBlock(pos, false);
 					}
 				}
 			}

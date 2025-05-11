@@ -5,7 +5,10 @@ import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -60,12 +63,11 @@ public class PunjiSticksBlock extends Block implements SimpleWaterloggedBlock {
 	}
 
 	@Override
-	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+	protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier) {
 		if (entity instanceof LivingEntity livingEntity) {
 			if (livingEntity.fallDistance >= 2.5f) {
 				int featherFallingLevel = getFeatherFallingLevel(livingEntity);
-				float damage = (livingEntity.fallDistance + 10f) *
-						(1.25f - (featherFallingLevel <= 4 ? featherFallingLevel * 0.25f : 1.0f));
+				float damage = (float) ((livingEntity.fallDistance + 10f) * (1.25f - (featherFallingLevel <= 4 ? featherFallingLevel * 0.25f : 1.0f)));
 				livingEntity.hurt(IWDamageSources.punjiSticksFall(level.registryAccess()), damage);
 			} else {
 				float damage = (float) (livingEntity.getDeltaMovement().dot(new Vec3(1, 1, 1)) / 1.5f) + 2.0f;

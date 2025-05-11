@@ -4,25 +4,38 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.*;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.LecternBlock;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import tech.anonymoushacker1279.immersiveweapons.block.core.BasicOrientableBlock;
 import tech.anonymoushacker1279.immersiveweapons.menu.CelestialAltarMenu;
 
 import javax.annotation.Nullable;
+import java.util.Map;
 
 public class CelestialAltarBlock extends BasicOrientableBlock {
 
 	private static final Component CONTAINER_NAME = Component.translatable("container.immersiveweapons.celestial_altar");
+	private static final VoxelShape SHAPE_COLLISION = Shapes.or(Block.column(16.0, 0.0, 2.0), Block.column(8.0, 2.0, 14.0));
+	private static final Map<Direction, VoxelShape> SHAPES = Shapes.rotateHorizontal(
+			Shapes.or(
+					Block.boxZ(16.0, 10.0, 14.0, 1.0, 5.333333),
+					Block.boxZ(16.0, 12.0, 16.0, 5.333333, 9.666667),
+					Block.boxZ(16.0, 14.0, 18.0, 9.666667, 14.0),
+					SHAPE_COLLISION
+			)
+	);
 
 	public CelestialAltarBlock(Properties properties) {
 		super(properties);
@@ -36,18 +49,12 @@ public class CelestialAltarBlock extends BasicOrientableBlock {
 
 	@Override
 	protected VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-		return LecternBlock.SHAPE_COLLISION;
+		return SHAPE_COLLISION;
 	}
 
 	@Override
 	protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-		return switch (state.getValue(FACING)) {
-			case NORTH -> LecternBlock.SHAPE_NORTH;
-			case SOUTH -> LecternBlock.SHAPE_SOUTH;
-			case EAST -> LecternBlock.SHAPE_EAST;
-			case WEST -> LecternBlock.SHAPE_WEST;
-			default -> LecternBlock.SHAPE_COMMON;
-		};
+		return SHAPES.get(state.getValue(FACING));
 	}
 
 	@Nullable

@@ -33,8 +33,8 @@ public interface HitEffectUtils {
 
 	default void addTeslaEffects(LivingEntity livingEntity) {
 		livingEntity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 140, 1, false, false));
-		livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 140, 1, false, false));
-		livingEntity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 140, 1, false, false));
+		livingEntity.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 140, 1, false, false));
+		livingEntity.addEffect(new MobEffectInstance(MobEffects.NAUSEA, 140, 1, false, false));
 	}
 
 	default void addVentusEffects(LivingEntity livingEntity) {

@@ -87,11 +87,6 @@ public class HansEntity extends AbstractWanderingWarriorEntity {
 	}
 
 	@Override
-	protected float getEquipmentDropChance(EquipmentSlot slot) {
-		return 0.0f;
-	}
-
-	@Override
 	public boolean hurtServer(ServerLevel serverLevel, DamageSource source, float amount) {
 		if (amount > 0 && source.getEntity() instanceof Player
 				|| source.getEntity() instanceof Mob

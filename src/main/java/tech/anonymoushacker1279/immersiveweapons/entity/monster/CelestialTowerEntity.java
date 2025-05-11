@@ -31,7 +31,7 @@ import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.CelestialTowerSu
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.HoverGoal;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
-import tech.anonymoushacker1279.immersiveweapons.world.level.saveddata.IWSavedData;
+import tech.anonymoushacker1279.immersiveweapons.world.level.saveddata.CelestialLanternData;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -186,10 +186,10 @@ public class CelestialTowerEntity extends Monster implements AttackerTracker, Gr
 		super.readAdditionalSaveData(pCompound);
 
 		bossEvent.setName(getDisplayName());
-		totalWavesToSpawn = pCompound.getInt("totalWavesToSpawn");
-		waveSizeModifier = pCompound.getInt("waveSizeModifier");
-		wavesSpawned = pCompound.getInt("wavesSpawned");
-		doneSpawningWaves = pCompound.getBoolean("doneSpawningWaves");
+		totalWavesToSpawn = pCompound.getIntOr("totalWavesToSpawn", 3);
+		waveSizeModifier = pCompound.getIntOr("waveSizeModifier", 1);
+		wavesSpawned = pCompound.getIntOr("wavesSpawned", 0);
+		doneSpawningWaves = pCompound.getBooleanOr("doneSpawningWaves", false);
 
 		if (wavesSpawned > 0 && !doneSpawningWaves) {
 			bossEvent.setName(Component.translatable("immersiveweapons.boss.celestial_tower.waves", wavesSpawned,
@@ -204,7 +204,7 @@ public class CelestialTowerEntity extends Monster implements AttackerTracker, Gr
 			ALL_TOWERS.add(this);
 		}
 
-		xpReward = pCompound.getInt("xpReward");
+		xpReward = pCompound.getIntOr("xpReward", 0);
 	}
 
 	@Override
@@ -250,7 +250,7 @@ public class CelestialTowerEntity extends Monster implements AttackerTracker, Gr
 		int nearbyLanterns = 0;
 
 		if (level instanceof ServerLevel serverLevel) {
-			for (BlockPos lanternPos : IWSavedData.getData(serverLevel.getServer()).getAllLanterns()) {
+			for (BlockPos lanternPos : CelestialLanternData.getData(serverLevel.getServer()).getAllLanterns()) {
 				if (lanternPos.distManhattan(new Vec3i(blockPosition().getX(), blockPosition().getY(), blockPosition().getZ())) < IWConfigs.SERVER.celestialTowerSpawnCheckingRadius.getAsInt()) {
 					nearbyLanterns++;
 

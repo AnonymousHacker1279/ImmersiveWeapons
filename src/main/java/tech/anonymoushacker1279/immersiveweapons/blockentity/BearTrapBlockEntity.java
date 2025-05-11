@@ -2,6 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.blockentity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.core.UUIDUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -42,7 +43,7 @@ public class BearTrapBlockEntity extends BlockEntity implements EntityBlock {
 			trappedEntity.setDeltaMovement(0, 0, 0);
 
 			if (trappedEntity instanceof Mob mob) {
-				mob.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 1, 9, true, true));
+				mob.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 1, 9, true, true));
 			}
 
 			if (!trappedEntity.getBoundingBox().intersects(new AABB(blockPos)) || !trappedEntity.isAlive()) {
@@ -71,7 +72,7 @@ public class BearTrapBlockEntity extends BlockEntity implements EntityBlock {
 		super.saveAdditional(tag, registries);
 
 		if (trappedEntity != null) {
-			tag.putUUID("trappedEntity", trappedEntity.getUUID());
+			tag.store("UUID", UUIDUtil.CODEC, trappedEntity.getUUID());
 		}
 	}
 
@@ -79,8 +80,8 @@ public class BearTrapBlockEntity extends BlockEntity implements EntityBlock {
 	protected void loadAdditional(CompoundTag tag, Provider registries) {
 		super.loadAdditional(tag, registries);
 
-		if (tag.hasUUID("trappedEntity")) {
-			trappedEntityUUID = tag.getUUID("trappedEntity");
-		}
+		tag.read("UUID", UUIDUtil.CODEC).ifPresent(uuid -> {
+			trappedEntityUUID = uuid;
+		});
 	}
 }

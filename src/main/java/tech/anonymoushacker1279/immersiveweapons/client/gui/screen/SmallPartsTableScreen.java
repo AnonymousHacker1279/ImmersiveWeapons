@@ -1,7 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.client.gui.screen;
 
 import com.mojang.blaze3d.platform.Lighting;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -54,7 +53,6 @@ public class SmallPartsTableScreen extends AbstractContainerScreen<SmallPartsMen
 
 	@Override
 	protected void renderBg(GuiGraphics guiGraphics, float partialTick, int pX, int pY) {
-		RenderSystem.setShaderTexture(0, BG_LOCATION);
 		int leftPos = this.leftPos;
 		int topPos = this.topPos;
 		guiGraphics.blit(RenderType::guiTextured, BG_LOCATION, leftPos, topPos, 0, 0, imageWidth, imageHeight, 256, 256);
@@ -85,7 +83,6 @@ public class SmallPartsTableScreen extends AbstractContainerScreen<SmallPartsMen
 				int indexOffset = i - startIndex;
 				int x = leftPosOffset + indexOffset % 3 * PATTERN_IMAGE_SIZE;
 				int y = topPosOffset + indexOffset / 3 * PATTERN_IMAGE_SIZE;
-				RenderSystem.setShaderTexture(0, BG_LOCATION);
 				int vOffset = imageHeight;
 				if (i == menu.getSelectedPartsPatternIndex()) {
 					vOffset += PATTERN_IMAGE_SIZE;

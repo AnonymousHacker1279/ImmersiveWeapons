@@ -1,25 +1,28 @@
 package tech.anonymoushacker1279.immersiveweapons.item.armor;
 
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.equipment.ArmorMaterial;
 import net.minecraft.world.item.equipment.ArmorType;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 
-public class MoltenArmorItem extends ArmorItem {
+import javax.annotation.Nullable;
+
+public class MoltenArmorItem extends Item {
 
 	public MoltenArmorItem(ArmorMaterial material, ArmorType armorType, Properties properties) {
-		super(material, armorType, properties);
+		super(properties.humanoidArmor(material, armorType));
 	}
 
 	@Override
-	public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
+	public void inventoryTick(ItemStack stack, ServerLevel level, Entity entity, @Nullable EquipmentSlot slot) {
 		if (entity instanceof Player player) {
 			if (ArmorUtils.isWearingMoltenArmor(player)) {
 				if (player.isInLava()) {

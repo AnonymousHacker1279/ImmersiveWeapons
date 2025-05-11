@@ -9,21 +9,14 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
 import tech.anonymoushacker1279.immersiveweapons.block.crafting.AmmunitionTableBlock;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.AmmunitionTableBlockEntity;
 
 public class AmmunitionTableRenderer implements BlockEntityRenderer<AmmunitionTableBlockEntity> {
 
-	/**
-	 * Constructor for ShelfRenderer.
-	 */
-	public AmmunitionTableRenderer() {
-	}
-
 	@Override
-	public void render(AmmunitionTableBlockEntity blockEntity, float partialTicks, PoseStack poseStack,
-	                   MultiBufferSource buffer, int packedLight, int packedOverlay) {
-
+	public void render(AmmunitionTableBlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay, Vec3 cameraPos) {
 		NonNullList<ItemStack> inventory = blockEntity.getInventory();
 
 		Direction direction = blockEntity.getBlockState().getValue(AmmunitionTableBlock.FACING);
@@ -67,7 +60,7 @@ public class AmmunitionTableRenderer implements BlockEntityRenderer<AmmunitionTa
 					poseStack.mulPose(Axis.XP.rotationDegrees(-25f));
 
 					// Render the item
-					Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemDisplayContext.FIXED, packedLight, packedOverlay, poseStack, buffer, blockEntity.getLevel(), 0);
+					Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemDisplayContext.FIXED, packedLight, packedOverlay, poseStack, bufferSource, blockEntity.getLevel(), 0);
 				} else {
 					poseStack.translate(0.225D, 0.775D, -0.05D); // Baseline position
 					poseStack.scale(0.25f, 0.25f, 0.25f);
@@ -85,7 +78,7 @@ public class AmmunitionTableRenderer implements BlockEntityRenderer<AmmunitionTa
 						prevZ = z;
 
 						// Render the item
-						Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemDisplayContext.FIXED, packedLight, packedOverlay, poseStack, buffer, blockEntity.getLevel(), 0);
+						Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemDisplayContext.FIXED, packedLight, packedOverlay, poseStack, bufferSource, blockEntity.getLevel(), 0);
 					}
 				}
 

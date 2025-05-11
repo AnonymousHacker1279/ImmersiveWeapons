@@ -37,7 +37,7 @@ public class SkygazerEntity extends AbstractMerchantEntity {
 
 				for (int i = 0; i < getRandom().nextIntBetweenInclusive(2, 3); i++) {
 					StarmiteEntity starmite = new StarmiteEntity(EntityRegistry.STARMITE_ENTITY.get(), level());
-					starmite.moveTo(attacker.getX(), attacker.getY(), attacker.getZ(), attacker.getXRot(), attacker.getYRot());
+					starmite.snapTo(attacker.getX(), attacker.getY(), attacker.getZ(), attacker.getXRot(), attacker.getYRot());
 
 					// Increase the attack damage
 					Objects.requireNonNull(starmite.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(4.0D);

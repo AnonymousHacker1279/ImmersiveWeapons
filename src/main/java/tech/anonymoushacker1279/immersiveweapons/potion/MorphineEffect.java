@@ -18,15 +18,15 @@ public class MorphineEffect extends MobEffect {
 	@Override
 	public boolean applyEffectTick(ServerLevel serverLevel, LivingEntity entity, int amplifier) {
 		if (duration > 900) {
-			entity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, duration - 900, amplifier, false, false));
+			entity.addEffect(new MobEffectInstance(MobEffects.RESISTANCE, duration - 900, amplifier, false, false));
 			entity.addEffect(new MobEffectInstance(MobEffects.HEALTH_BOOST, duration - 900, amplifier, false, false));
-			entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, duration - 900, amplifier, false, false));
+			entity.addEffect(new MobEffectInstance(MobEffects.SPEED, duration - 900, amplifier, false, false));
 		}
 
 		if (duration <= 900) {
 			entity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, duration, amplifier, false, false));
-			entity.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, duration, amplifier, false, false));
-			entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, duration, amplifier, false, false));
+			entity.addEffect(new MobEffectInstance(MobEffects.MINING_FATIGUE, duration, amplifier, false, false));
+			entity.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, duration, amplifier, false, false));
 		}
 
 		return true;

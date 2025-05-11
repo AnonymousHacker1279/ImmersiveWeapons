@@ -19,8 +19,6 @@ import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.common.ItemAbilities;
-import net.neoforged.neoforge.common.ItemAbility;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.IWEnchantments;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
@@ -58,12 +56,12 @@ public class GauntletItem extends Item implements HitEffectUtils {
 	}
 
 	@Override
-	public boolean canAttackBlock(BlockState state, Level level, BlockPos pos, Player player) {
-		return !player.isCreative();
+	public boolean canDestroyBlock(ItemStack stack, BlockState state, Level level, BlockPos pos, LivingEntity entity) {
+		return entity instanceof Player player && !player.isCreative();
 	}
 
 	@Override
-	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+	public void hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
 		if (target.getRandom().nextFloat() <= bleedChance) {
 			HolderGetter<Enchantment> enchantmentGetter = target.registryAccess().lookup(Registries.ENCHANTMENT).orElseThrow();
 
@@ -76,8 +74,8 @@ public class GauntletItem extends Item implements HitEffectUtils {
 			enchantmentLevel = stack.getEnchantmentLevel(enchantmentGetter.getOrThrow(IWEnchantments.EXCESSIVE_FORCE));
 			if (enchantmentLevel > 0) {
 				duration = 2 + (enchantmentLevel * 20);
-				target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, duration, 0, true, false));
-				target.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, duration, 0, true, false));
+				target.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, duration, 0, true, false));
+				target.addEffect(new MobEffectInstance(MobEffects.MINING_FATIGUE, duration, 0, true, false));
 
 				// Knock back the target
 				target.knockback(0.5f, attacker.getX() - target.getX(), attacker.getZ() - target.getZ());
@@ -94,7 +92,6 @@ public class GauntletItem extends Item implements HitEffectUtils {
 		}
 
 		stack.hurtAndBreak(1, attacker, EquipmentSlot.MAINHAND);
-		return true;
 	}
 
 	@Override
@@ -104,11 +101,6 @@ public class GauntletItem extends Item implements HitEffectUtils {
 		}
 
 		return true;
-	}
-
-	@Override
-	public boolean canPerformAction(ItemStack stack, ItemAbility ability) {
-		return ItemAbilities.DEFAULT_SWORD_ACTIONS.contains(ability);
 	}
 
 	public static ItemAttributeModifiers createAttributes(ToolMaterial material, float attackSpeedModifier) {

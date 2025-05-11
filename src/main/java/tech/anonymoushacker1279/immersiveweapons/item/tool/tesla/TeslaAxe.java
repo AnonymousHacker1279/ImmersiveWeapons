@@ -13,8 +13,7 @@ public class TeslaAxe extends AxeItem implements HitEffectUtils {
 	}
 
 	@Override
-	public boolean hurtEnemy(ItemStack itemStack, LivingEntity target, LivingEntity pAttacker) {
+	public void hurtEnemy(ItemStack itemStack, LivingEntity target, LivingEntity pAttacker) {
 		addTeslaEffects(target);
-		return super.hurtEnemy(itemStack, target, pAttacker);
 	}
 }

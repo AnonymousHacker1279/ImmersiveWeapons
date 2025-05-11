@@ -3,6 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.item;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -15,6 +16,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.init.DataComponentTypeRegistry;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -89,8 +91,8 @@ public class CursedItem extends Item {
 	}
 
 	@Override
-	public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
-		super.inventoryTick(stack, level, entity, slotId, isSelected);
+	public void inventoryTick(ItemStack stack, ServerLevel level, Entity entity, @Nullable EquipmentSlot slot) {
+		super.inventoryTick(stack, level, entity, slot);
 
 		if (stack.get(AT_MAX_CHARGE) == null) {
 			stack.set(AT_MAX_CHARGE, false);
@@ -110,7 +112,7 @@ public class CursedItem extends Item {
 		ItemStack stack = player.getItemInHand(hand);
 
 		if (getDamage(stack) == 0) {
-			if (player.getPersistentData().getBoolean("used_curse_accessory_" + name)) {
+			if (player.getPersistentData().getBoolean("used_curse_accessory_" + name).orElse(false)) {
 				if (player.level().isClientSide) {
 					player.displayClientMessage(Component.translatable("immersiveweapons.item.%s.used".formatted(name))
 							.withStyle(ChatFormatting.RED), true);

@@ -51,12 +51,12 @@ public class CurseCleaningSoapItem extends Item {
 	}
 
 	private boolean handleData(Player player) {
-		int initialSize = player.getPersistentData().getAllKeys().size();
-		player.getPersistentData().getAllKeys().removeIf(
+		int initialSize = player.getPersistentData().keySet().size();
+		player.getPersistentData().keySet().removeIf(
 				key -> key.matches("used_curse_accessory_.*")
 		);
 
-		if (initialSize != player.getPersistentData().getAllKeys().size()) {
+		if (initialSize != player.getPersistentData().keySet().size()) {
 			player.displayClientMessage(Component.translatable("immersiveweapons.item.curse_cleaning_soap.cleaned")
 					.withStyle(ChatFormatting.GREEN), true);
 

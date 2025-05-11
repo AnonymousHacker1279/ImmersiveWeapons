@@ -80,7 +80,7 @@ public class BiodomeLifeSupportUnitBlockEntity extends BlockEntity implements En
 	public void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
 		super.loadAdditional(tag, provider);
 
-		cooldown = tag.getInt("cooldown");
-		isPowered = tag.getBoolean("isPowered");
+		cooldown = tag.getInt("cooldown").orElse(0);
+		isPowered = tag.getBoolean("isPowered").orElse(false);
 	}
 }

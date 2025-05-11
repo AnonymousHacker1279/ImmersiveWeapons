@@ -387,12 +387,12 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 	public void readAdditionalSaveData(CompoundTag pCompound) {
 		super.readAdditionalSaveData(pCompound);
 		if (pCompound.contains("AX")) {
-			anchorPoint = new BlockPos(pCompound.getInt("AX"),
-					pCompound.getInt("AY"),
-					pCompound.getInt("AZ"));
+			anchorPoint = new BlockPos(pCompound.getIntOr("AX", 0),
+					pCompound.getIntOr("AY", 0),
+					pCompound.getIntOr("AZ", 0));
 		}
 
-		setSize(pCompound.getInt("Size"));
+		setSize(pCompound.getIntOr("Size", 0));
 	}
 
 	@Override

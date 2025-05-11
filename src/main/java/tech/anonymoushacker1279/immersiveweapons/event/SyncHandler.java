@@ -11,8 +11,8 @@ import java.util.UUID;
 public class SyncHandler {
 
 	/**
-	 * Sync persistent data from server to client. This is in a separate class to avoid loading client classes
-	 * on the dedicated server.
+	 * Sync persistent data from server to client. This is in a separate class to avoid loading client classes on the
+	 * dedicated server.
 	 *
 	 * @param tag        the <code>CompoundTag</code> to sync, should be from {@link Player#getPersistentData()}
 	 * @param playerUUID the <code>UUID</code> of the player to sync to
@@ -21,7 +21,7 @@ public class SyncHandler {
 		Player player = Minecraft.getInstance().player;
 		if (player != null && player.getUUID().equals(playerUUID)) {
 			// Add the server tags to the player
-			for (String key : tag.getAllKeys()) {
+			for (String key : tag.keySet()) {
 				if (tag.get(key) != null) {
 					player.getPersistentData().put(key, Objects.requireNonNull(tag.get(key)));
 				}
@@ -30,8 +30,8 @@ public class SyncHandler {
 	}
 
 	/**
-	 * Sync values for debug tracing data from server to client. This is in a separate class to avoid loading
-	 * client classes on the dedicated server. All parameters which are not being updated should be passed as -1.
+	 * Sync values for debug tracing data from server to client. This is in a separate class to avoid loading client
+	 * classes on the dedicated server. All parameters which are not being updated should be passed as -1.
 	 *
 	 * @param lastDamageDealt the damage dealt
 	 * @param lastDamageTaken the damage taken

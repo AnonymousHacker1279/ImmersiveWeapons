@@ -53,8 +53,8 @@ public class TeleporterBlockEntity extends BlockEntity {
 		super.loadAdditional(tag, registries);
 
 		if (tag.contains("linkedTeleporterPos") && tag.contains("linkedTeleporterDimension")) {
-			linkedTeleporterPos = BlockPos.of(tag.getLong("linkedTeleporterPos"));
-			linkedTeleporterDimension = ResourceLocation.parse(tag.getString("linkedTeleporterDimension"));
+			linkedTeleporterPos = BlockPos.of(tag.getLong("linkedTeleporterPos").orElse(0L));
+			linkedTeleporterDimension = ResourceLocation.parse(tag.getString("linkedTeleporterDimension").orElse(""));
 		}
 	}
 }

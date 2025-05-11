@@ -46,7 +46,7 @@ public class ShelfBlockEntity extends AbstractInventoryBlockEntity {
 	@Override
 	public void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
 		super.loadAdditional(tag, provider);
-		isLocked = tag.getBoolean("isLocked");
+		isLocked = tag.getBoolean("isLocked").orElse(false);
 	}
 
 	@Override

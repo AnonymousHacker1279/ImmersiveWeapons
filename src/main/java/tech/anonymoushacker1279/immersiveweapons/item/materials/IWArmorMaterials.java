@@ -1,12 +1,11 @@
 package tech.anonymoushacker1279.immersiveweapons.item.materials;
 
 import net.minecraft.Util;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.equipment.ArmorMaterial;
 import net.minecraft.world.item.equipment.ArmorType;
 import net.neoforged.neoforge.common.Tags;
-import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.data.IWEquipmentAssets;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.common.CommonItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
@@ -28,7 +27,7 @@ public class IWArmorMaterials {
 			3.25F,
 			0.12F,
 			IWItemTagGroups.MOLTEN_INGOTS,
-			ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "molten")
+			IWEquipmentAssets.MOLTEN
 	);
 
 	public static final ArmorMaterial COPPER = new ArmorMaterial(
@@ -44,7 +43,7 @@ public class IWArmorMaterials {
 			0.0F,
 			0.0F,
 			Tags.Items.INGOTS_COPPER,
-			ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "copper")
+			IWEquipmentAssets.COPPER
 	);
 
 	public static final ArmorMaterial TESLA = new ArmorMaterial(
@@ -60,7 +59,7 @@ public class IWArmorMaterials {
 			3.5F,
 			0.05F,
 			IWItemTagGroups.TESLA_INGOTS,
-			ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "tesla")
+			IWEquipmentAssets.TESLA
 	);
 
 	public static final ArmorMaterial COBALT = new ArmorMaterial(
@@ -76,7 +75,7 @@ public class IWArmorMaterials {
 			0.0F,
 			0.0F,
 			CommonItemTagGroups.COBALT_INGOTS,
-			ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "cobalt")
+			IWEquipmentAssets.COBALT
 	);
 
 	public static final ArmorMaterial VENTUS = new ArmorMaterial(
@@ -92,7 +91,7 @@ public class IWArmorMaterials {
 			2.75F,
 			0.02F,
 			IWItemTagGroups.VENTUS_SHARDS,
-			ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "ventus")
+			IWEquipmentAssets.VENTUS
 	);
 
 	public static final ArmorMaterial ASTRAL = new ArmorMaterial(
@@ -108,7 +107,7 @@ public class IWArmorMaterials {
 			1.8F,
 			0.0F,
 			IWItemTagGroups.ASTRAL_INGOTS,
-			ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "astral")
+			IWEquipmentAssets.ASTRAL
 	);
 
 	public static final ArmorMaterial STARSTORM = new ArmorMaterial(
@@ -124,7 +123,7 @@ public class IWArmorMaterials {
 			2.2F,
 			0.0F,
 			IWItemTagGroups.STARSTORM_INGOTS,
-			ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "starstorm")
+			IWEquipmentAssets.STARSTORM
 	);
 
 	public static final ArmorMaterial PADDED_LEATHER = new ArmorMaterial(
@@ -140,7 +139,7 @@ public class IWArmorMaterials {
 			0.0F,
 			0.0F,
 			Tags.Items.LEATHERS,
-			ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "padded_leather")
+			IWEquipmentAssets.PADDED_LEATHER
 	);
 
 	public static final ArmorMaterial VOID = new ArmorMaterial(
@@ -156,6 +155,6 @@ public class IWArmorMaterials {
 			2.3F,
 			0.01F,
 			IWItemTagGroups.VOID_INGOTS,
-			ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "void")
+			IWEquipmentAssets.VOID
 	);
 }

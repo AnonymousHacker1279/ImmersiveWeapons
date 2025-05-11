@@ -3,6 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.entity.monster;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.UUIDUtil;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -65,10 +66,10 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 	public EvilEyeEntity(EntityType<? extends FlyingMob> entityType, Level level) {
 		super(entityType, level);
 
-		lowTierDebuffs.add(MobEffects.MOVEMENT_SLOWDOWN);
-		lowTierDebuffs.add(MobEffects.CONFUSION);
+		lowTierDebuffs.add(MobEffects.SLOWNESS);
+		lowTierDebuffs.add(MobEffects.NAUSEA);
 		lowTierDebuffs.add(MobEffects.HUNGER);
-		lowTierDebuffs.add(MobEffects.DIG_SLOWDOWN);
+		lowTierDebuffs.add(MobEffects.MINING_FATIGUE);
 		lowTierDebuffs.add(MobEffects.GLOWING);
 
 		highTierDebuffs.add(MobEffects.WITHER);
@@ -238,21 +239,27 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundTag pCompound) {
-		super.addAdditionalSaveData(pCompound);
-		pCompound.putInt("Size", getSize());
-		pCompound.putBoolean("SummonedByStaff", entityData.get(SUMMONED_BY_STAFF));
-		pCompound.putUUID("Target", targetedEntity == null ? new UUID(0, 0) : targetedEntity.getUUID());
+	public void addAdditionalSaveData(CompoundTag compound) {
+		super.addAdditionalSaveData(compound);
+		compound.putInt("Size", getSize());
+		compound.putBoolean("SummonedByStaff", entityData.get(SUMMONED_BY_STAFF));
+
+		if (targetedEntityUUID != null) {
+			compound.store("Target", UUIDUtil.CODEC, targetedEntityUUID);
+		}
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundTag pCompound) {
-		super.readAdditionalSaveData(pCompound);
-		setSize(pCompound.getInt("Size"));
-		entityData.set(SUMMONED_BY_STAFF, pCompound.getBoolean("SummonedByStaff"));
+	public void readAdditionalSaveData(CompoundTag compound) {
+		super.readAdditionalSaveData(compound);
+		setSize(compound.getIntOr("Size", 0));
+		entityData.set(SUMMONED_BY_STAFF, compound.getBooleanOr("SummonedByStaff", false));
 
-		UUID uuid = pCompound.getUUID("Target");
-		targetedEntityUUID = uuid.equals(new UUID(0, 0)) ? null : uuid;
+		if (compound.contains("Target")) {
+			compound.read("Target", UUIDUtil.CODEC).ifPresent(uuid -> {
+				targetedEntityUUID = uuid;
+			});
+		}
 	}
 
 	@Override

@@ -5,13 +5,11 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.Tags.Blocks;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.common.CommonBlockTagGroups;
@@ -33,8 +31,8 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 
 	public static final List<Item> ALL_ITEMS = new ArrayList<>(250);
 
-	public ItemTagsGenerator(PackOutput output, CompletableFuture<Provider> lookupProvider, BlockTagsProvider blocks, ExistingFileHelper existingFileHelper) {
-		super(output, lookupProvider, blocks.contentsGetter(), ImmersiveWeapons.MOD_ID, existingFileHelper);
+	public ItemTagsGenerator(PackOutput output, CompletableFuture<Provider> lookupProvider, BlockTagsProvider blocks) {
+		super(output, lookupProvider, blocks.contentsGetter(), ImmersiveWeapons.MOD_ID);
 	}
 
 	@Override
@@ -402,11 +400,14 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 				BlockItemRegistry.CRIMSON_TABLE_ITEM.get());
 
 		// Trimmable armor tag
-		for (DeferredHolder<Item, ? extends Item> item : ItemRegistry.ITEMS.getEntries()) {
-			if (item.get() instanceof ArmorItem armor) {
-				tag(ItemTags.TRIMMABLE_ARMOR).add(armor);
-			}
-		}
+		tag(ItemTags.TRIMMABLE_ARMOR).addTags(
+				IWItemTagGroups.MOLTEN_ARMOR,
+				IWItemTagGroups.TESLA_ARMOR,
+				IWItemTagGroups.VENTUS_ARMOR,
+				IWItemTagGroups.ASTRAL_ARMOR,
+				IWItemTagGroups.STARSTORM_ARMOR,
+				IWItemTagGroups.VOID_ARMOR
+		);
 
 		// Beacon payment tag
 		tag(ItemTags.BEACON_PAYMENT_ITEMS).add(

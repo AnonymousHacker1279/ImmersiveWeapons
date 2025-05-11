@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockEntityRegistry;
-import tech.anonymoushacker1279.immersiveweapons.world.level.saveddata.IWSavedData;
+import tech.anonymoushacker1279.immersiveweapons.world.level.saveddata.CelestialLanternData;
 
 public class CelestialLanternBlockEntity extends BlockEntity implements EntityBlock {
 
@@ -35,7 +35,7 @@ public class CelestialLanternBlockEntity extends BlockEntity implements EntityBl
 	public void onLoad() {
 		super.onLoad();
 		if (level instanceof ServerLevel serverLevel) {
-			IWSavedData.getData(serverLevel.getServer()).addLantern(getBlockPos());
+			CelestialLanternData.getData(serverLevel.getServer()).addLantern(getBlockPos());
 		}
 	}
 }

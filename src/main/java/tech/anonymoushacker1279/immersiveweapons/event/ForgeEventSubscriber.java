@@ -4,6 +4,7 @@ import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderGetter;
+import net.minecraft.core.UUIDUtil;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
@@ -49,7 +50,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.EventBusSubscriber.Bus;
-import net.neoforged.neoforge.event.AddReloadListenerEvent;
+import net.neoforged.neoforge.event.AddServerReloadListenersEvent;
 import net.neoforged.neoforge.event.AnvilUpdateEvent;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
@@ -121,12 +122,12 @@ public class ForgeEventSubscriber {
 			}
 
 			// Handle permanent hunger effect of Bloody Sacrifice and Jonny's Curse
-			if (player.getPersistentData().getBoolean("used_curse_accessory_bloody_sacrifice")) {
+			if (player.getPersistentData().getBooleanOr("used_curse_accessory_bloody_sacrifice", false)) {
 				if (!player.hasEffect(MobEffects.HUNGER)) {
 					player.addEffect(new MobEffectInstance(MobEffects.HUNGER, -1, 0, true, true));
 				}
 			}
-			if (player.getPersistentData().getBoolean("used_curse_accessory_jonnys_curse")) {
+			if (player.getPersistentData().getBooleanOr("used_curse_accessory_jonnys_curse", false)) {
 				if (GeneralUtilities.notJonny(player.getUUID())) {
 					if (!player.hasEffect(MobEffects.HUNGER)) {
 						player.addEffect(new MobEffectInstance(MobEffects.HUNGER, -1, 2, true, true));
@@ -170,7 +171,7 @@ public class ForgeEventSubscriber {
 						player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 200, 0, true, true));
 					}
 					if (chance <= 0.3f) {
-						player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 200, 0, true, true));
+						player.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 200, 0, true, true));
 					}
 				}
 			}
@@ -215,9 +216,11 @@ public class ForgeEventSubscriber {
 
 		if (event.getSource().is(IWDamageSources.METEOR_KEY) && event.getSource().getDirectEntity() instanceof MeteorEntity meteor && !meteor.getPersistentData().isEmpty()) {
 			// Check for a "target" tag, and check if it matches the damaged entity's UUID
-			if (!meteor.getPersistentData().getUUID("target").equals(damagedEntity.getUUID())) {
-				event.setCanceled(true);
-			}
+			meteor.getPersistentData().read("targetEntityUUID", UUIDUtil.CODEC).ifPresent(uuid -> {
+				if (!uuid.equals(damagedEntity.getUUID())) {
+					event.setCanceled(true);
+				}
+			});
 		}
 
 		// Handle environmental effects
@@ -232,13 +235,17 @@ public class ForgeEventSubscriber {
 			if (event.getSource().is(DamageTypes.FELL_OUT_OF_WORLD) && Accessory.isAccessoryActive(player, ItemRegistry.VOID_BLESSING.get())) {
 				// Warp back to spawn
 				if (player.getServer() != null) {
-					ServerLevel targetLevel = player.getServer().getLevel(player.getRespawnDimension());
-					if (targetLevel != null) {
-						player.resetFallDistance();
-						if (player.getRespawnPosition() != null) {
-							player.teleportTo(targetLevel, player.getRespawnPosition().getX(), player.getRespawnPosition().getY(), player.getRespawnPosition().getZ(), Set.of(), player.getYRot(), player.getXRot(), false);
-						} else {
-							BlockPos spawnPos = targetLevel.getSharedSpawnPos();
+					if (player.getRespawnConfig() != null) {
+						ServerLevel targetLevel = player.getServer().getLevel(player.getRespawnConfig().dimension());
+						if (targetLevel != null) {
+							player.resetFallDistance();
+							BlockPos respawnPos = player.getRespawnConfig().pos();
+							player.teleportTo(targetLevel, respawnPos.getX(), respawnPos.getY(), respawnPos.getZ(), Set.of(), player.getYRot(), player.getXRot(), false);
+						}
+					} else {
+						BlockPos spawnPos = player.level().getSharedSpawnPos();
+						ServerLevel targetLevel = player.getServer().getLevel(player.level().dimension());
+						if (targetLevel != null) {
 							player.teleportTo(targetLevel, spawnPos.getX(), spawnPos.getY(), spawnPos.getZ(), Set.of(), player.getYRot(), player.getXRot(), false);
 						}
 					}
@@ -366,8 +373,8 @@ public class ForgeEventSubscriber {
 			for (int i = 0; i < 10; i++) {
 				CaveSpider spider = EntityType.CAVE_SPIDER.create(level, EntitySpawnReason.EVENT);
 				if (spider != null) {
-					spider.moveTo(dyingEntity.getX(), dyingEntity.getY(), dyingEntity.getZ(), dyingEntity.getYRot(), dyingEntity.getXRot());
-					spider.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 20, 4, true, false));
+					spider.snapTo(dyingEntity.getX(), dyingEntity.getY(), dyingEntity.getZ(), dyingEntity.getYRot(), dyingEntity.getXRot());
+					spider.addEffect(new MobEffectInstance(MobEffects.RESISTANCE, 20, 4, true, false));
 					level.addFreshEntity(spider);
 				}
 			}
@@ -447,7 +454,7 @@ public class ForgeEventSubscriber {
 				if (level.getRandom().nextFloat() <= 0.15) {
 					StarmiteEntity entity = EntityRegistry.STARMITE_ENTITY.get().create(level, EntitySpawnReason.EVENT);
 					if (entity != null) {
-						entity.moveTo(belowPos.getX(), belowPos.getY(), belowPos.getZ(), 0, 0);
+						entity.snapTo(belowPos.getX(), belowPos.getY(), belowPos.getZ(), 0, 0);
 						level.addFreshEntity(entity);
 					}
 				}
@@ -463,7 +470,7 @@ public class ForgeEventSubscriber {
 
 		if (event.getDamageSource().getEntity() instanceof Player player) {
 			// Increase the looting level by 3 with the Bloody Sacrifice curse
-			if (player.getPersistentData().getBoolean("used_curse_accessory_bloody_sacrifice")) {
+			if (player.getPersistentData().getBooleanOr("used_curse_accessory_bloody_sacrifice", false)) {
 				event.setEnchantmentLevel(event.getEnchantmentLevel() + 3);
 			}
 
@@ -476,7 +483,7 @@ public class ForgeEventSubscriber {
 	public static void livingDropsEvent(LivingDropsEvent event) {
 		if (event.getSource().getEntity() instanceof Player player) {
 			// 25% chance to drop items a second time with the Bloody Sacrifice curse
-			if (player.getPersistentData().getBoolean("used_curse_accessory_bloody_sacrifice")) {
+			if (player.getPersistentData().getBooleanOr("used_curse_accessory_bloody_sacrifice", false)) {
 				if (player.getRandom().nextFloat() <= 0.25f) {
 					ResourceKey<LootTable> lootTable = event.getEntity().getLootTable().orElseThrow();
 					MinecraftServer server = event.getEntity().level().getServer();
@@ -521,7 +528,7 @@ public class ForgeEventSubscriber {
 			}
 
 			// 50% chance to not get any drops with Jonny's Curse
-			if (player.getPersistentData().getBoolean("used_curse_accessory_jonnys_curse")) {
+			if (player.getPersistentData().getBooleanOr("used_curse_accessory_jonnys_curse", false)) {
 				if (GeneralUtilities.notJonny(player.getUUID()) && player.getRandom().nextFloat() <= 0.5f) {
 					event.setCanceled(true);
 				}
@@ -567,8 +574,8 @@ public class ForgeEventSubscriber {
 	}
 
 	@SubscribeEvent
-	public static void addReloadListenerEvent(AddReloadListenerEvent event) {
-		event.addListener(new TradeLoader());
+	public static void addReloadListenerEvent(AddServerReloadListenersEvent event) {
+		event.addListener(TradeLoader.ID, new TradeLoader());
 	}
 
 	@SubscribeEvent

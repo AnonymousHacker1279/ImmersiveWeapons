@@ -13,8 +13,7 @@ public class TeslaHoe extends HoeItem implements HitEffectUtils {
 	}
 
 	@Override
-	public boolean hurtEnemy(ItemStack itemStack, LivingEntity target, LivingEntity attacker) {
+	public void hurtEnemy(ItemStack itemStack, LivingEntity target, LivingEntity attacker) {
 		addTeslaEffects(target);
-		return super.hurtEnemy(itemStack, target, attacker);
 	}
 }

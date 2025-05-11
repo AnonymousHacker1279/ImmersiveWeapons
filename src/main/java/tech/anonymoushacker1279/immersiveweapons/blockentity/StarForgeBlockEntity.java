@@ -113,7 +113,7 @@ public class StarForgeBlockEntity extends BaseContainerBlockEntity implements En
 	public void tick(ServerLevel level, BlockPos pos, BlockState state) {
 		if (level.getGameTime() % 20 == 0) {
 			Direction controllerDirection = state.getValue(StarForgeControllerBlock.FACING);
-			hasSolarEnergy = level.isDay()
+			hasSolarEnergy = level.isBrightOutside()
 					&& level.canSeeSky(pos.above(3).relative(controllerDirection))
 					&& StarForgeControllerBlock.checkForValidMultiBlock(state, pos, level);
 
@@ -160,9 +160,9 @@ public class StarForgeBlockEntity extends BaseContainerBlockEntity implements En
 
 		inventory.clear();
 		ContainerHelper.loadAllItems(tag, inventory, provider);
-		hasSolarEnergy = tag.getBoolean("hasSolarEnergy");
-		temperature = tag.getInt("temperature");
-		smeltTime = tag.getInt("smeltTime");
+		hasSolarEnergy = tag.getBoolean("hasSolarEnergy").orElse(false);
+		temperature = tag.getInt("temperature").orElse(0);
+		smeltTime = tag.getInt("smeltTime").orElse(0);
 	}
 
 	@Override

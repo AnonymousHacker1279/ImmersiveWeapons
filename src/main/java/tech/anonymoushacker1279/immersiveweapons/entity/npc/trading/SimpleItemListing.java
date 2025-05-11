@@ -2,7 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.entity.npc.trading;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.component.DataComponentPredicate;
+import net.minecraft.core.component.DataComponentExactPredicate;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -58,8 +58,8 @@ public record SimpleItemListing(ItemStack item1, ItemStack item2, ItemStack resu
 
 	@Override
 	public MerchantOffer getOffer(Entity p_219693_, RandomSource p_219694_) {
-		ItemCost cost = new ItemCost(item1.getItemHolder(), item1.getCount(), DataComponentPredicate.EMPTY, item1);
-		Optional<ItemCost> optionalSecondCost = item2.isEmpty() ? Optional.empty() : Optional.of(new ItemCost(item2.getItemHolder(), item2.getCount(), DataComponentPredicate.EMPTY, item2));
+		ItemCost cost = new ItemCost(item1.getItemHolder(), item1.getCount(), DataComponentExactPredicate.EMPTY, item1);
+		Optional<ItemCost> optionalSecondCost = item2.isEmpty() ? Optional.empty() : Optional.of(new ItemCost(item2.getItemHolder(), item2.getCount(), DataComponentExactPredicate.EMPTY, item2));
 		return new MerchantOffer(cost, optionalSecondCost, result, maxUses, xpReward, priceMultiplier);
 	}
 }

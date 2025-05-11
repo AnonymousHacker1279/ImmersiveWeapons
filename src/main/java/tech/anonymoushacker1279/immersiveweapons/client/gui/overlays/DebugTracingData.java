@@ -83,7 +83,7 @@ public class DebugTracingData {
 				GENERAL_DAMAGE_RESISTANCE += 0.05d;
 
 				if (!player.getPersistentData().isEmpty()) {
-					CELESTIAL_PROTECTION_NO_DAMAGE_CHANCE = player.getPersistentData().getFloat("celestialProtectionChanceForNoDamage");
+					CELESTIAL_PROTECTION_NO_DAMAGE_CHANCE = player.getPersistentData().getFloat("celestialProtectionChanceForNoDamage").orElse(0.0f);
 				}
 			}
 		}

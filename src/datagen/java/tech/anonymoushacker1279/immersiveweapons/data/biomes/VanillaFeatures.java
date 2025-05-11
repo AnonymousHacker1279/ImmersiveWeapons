@@ -26,6 +26,6 @@ public class VanillaFeatures {
 	public static void getPlainsLikeGeneration(Builder generationBuilder) {
 		BiomeDefaultFeatures.addPlainVegetation(generationBuilder);
 		BiomeDefaultFeatures.addDefaultMushrooms(generationBuilder);
-		BiomeDefaultFeatures.addDefaultExtraVegetation(generationBuilder);
+		BiomeDefaultFeatures.addDefaultExtraVegetation(generationBuilder, true);
 	}
 }

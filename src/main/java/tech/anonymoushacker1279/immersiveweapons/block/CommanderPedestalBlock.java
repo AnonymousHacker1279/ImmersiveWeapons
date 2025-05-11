@@ -1,7 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.block;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -70,15 +69,5 @@ public class CommanderPedestalBlock extends Block implements EntityBlock {
 		}
 
 		return InteractionResult.PASS;
-	}
-
-	@Override
-	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-		if (!state.is(newState.getBlock())) {
-			if (level.getBlockEntity(pos) instanceof CommanderPedestalBlockEntity blockEntity) {
-				Containers.dropContents(level, pos, blockEntity.getInventory());
-			}
-			super.onRemove(state, level, pos, newState, isMoving);
-		}
 	}
 }

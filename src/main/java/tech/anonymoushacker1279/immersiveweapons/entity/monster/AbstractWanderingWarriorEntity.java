@@ -138,7 +138,7 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 				setItemSlot(EquipmentSlot.HEAD,
 						new ItemStack(random.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
 
-				armorDropChances[EquipmentSlot.HEAD.getIndex()] = 0.0F;
+				setDropChance(EquipmentSlot.HEAD, 0.0F);
 			}
 		}
 

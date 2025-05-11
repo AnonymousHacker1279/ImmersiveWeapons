@@ -38,12 +38,12 @@ public class PikeItem extends Item implements HitEffectUtils {
 	}
 
 	@Override
-	public boolean canAttackBlock(BlockState state, Level level, BlockPos pos, Player player) {
-		return !player.isCreative();
+	public boolean canDestroyBlock(ItemStack stack, BlockState state, Level level, BlockPos pos, LivingEntity entity) {
+		return entity instanceof Player player && !player.isCreative();
 	}
 
 	@Override
-	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+	public void hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
 		switch (hitEffect) {
 			case MOLTEN -> addMoltenEffects(target, attacker);
 			case TESLA -> addTeslaEffects(target);
@@ -54,7 +54,6 @@ public class PikeItem extends Item implements HitEffectUtils {
 		}
 
 		stack.hurtAndBreak(1, attacker, EquipmentSlot.MAINHAND);
-		return true;
 	}
 
 	@Override

@@ -172,9 +172,9 @@ public abstract class AdvancedThrowableItemProjectile extends ThrowableItemProje
 	public void readAdditionalSaveData(CompoundTag pCompound) {
 		super.readAdditionalSaveData(pCompound);
 
-		stopMoving = pCompound.getBoolean("stopMoving");
-		hasActivated = pCompound.getBoolean("hasActivated");
-		ticksInGround = pCompound.getInt("ticksInGround");
+		stopMoving = pCompound.getBooleanOr("stopMoving", false);
+		hasActivated = pCompound.getBooleanOr("hasActivated", false);
+		ticksInGround = pCompound.getIntOr("ticksInGround", 0);
 	}
 
 	/**

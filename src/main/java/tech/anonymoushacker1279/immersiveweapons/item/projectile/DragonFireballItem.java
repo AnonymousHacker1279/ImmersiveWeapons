@@ -42,7 +42,7 @@ public class DragonFireballItem extends BulletItem<DragonFireballBulletEntity> {
 		Vec3 movement = new Vec3(x, y, z);
 		DragonFireball fireball = new DragonFireball(EntityType.DRAGON_FIREBALL, level);
 		fireball.addDeltaMovement(movement.normalize());
-		fireball.moveTo(pos.x() + direction.getStepX(), pos.y() + direction.getStepY(), pos.z() + direction.getStepZ(), 0.0F, 0.0F);
+		fireball.snapTo(pos.x() + direction.getStepX(), pos.y() + direction.getStepY(), pos.z() + direction.getStepZ(), 0.0F, 0.0F);
 		return fireball;
 	}
 

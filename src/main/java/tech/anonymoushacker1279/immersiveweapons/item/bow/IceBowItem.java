@@ -16,7 +16,7 @@ public class IceBowItem extends BowItem {
 	@Override
 	public AbstractArrow customArrow(AbstractArrow abstractArrow, ItemStack projectileStack, ItemStack weaponStack) {
 		if (abstractArrow instanceof Arrow arrow) {
-			arrow.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 2));
+			arrow.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 100, 2));
 
 			return arrow;
 		}

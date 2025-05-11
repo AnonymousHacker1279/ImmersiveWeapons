@@ -106,11 +106,11 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 		super.loadAdditional(tag, provider);
 		inventory.clear();
 		ContainerHelper.loadAllItems(tag, inventory, provider);
-		densityModifier = tag.getFloat("densityModifier");
-		containerData.set(1, tag.getInt("excessStackSize"));
+		densityModifier = tag.getFloat("densityModifier").orElse(0.0f);
+		containerData.set(1, tag.getInt("excessStackSize").orElse(0));
 
 		if (tag.contains("excessStack")) {
-			String itemName = tag.getString("excessStack");
+			String itemName = tag.getString("excessStack").orElse("");
 			excessStack = BuiltInRegistries.ITEM.getValue(ResourceLocation.parse(itemName)).getDefaultInstance();
 			excessStack.set(DENSITY_MODIFIER, densityModifier);
 		}
@@ -383,5 +383,11 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 	 */
 	public boolean hasNoMaterials() {
 		return inventory.stream().limit(6).allMatch(ItemStack::isEmpty);
+	}
+
+	@Override
+	public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+		removeItemNoUpdate(6);  // Remove the output item
+		super.preRemoveSideEffects(pos, state);
 	}
 }

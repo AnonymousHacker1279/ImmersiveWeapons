@@ -120,7 +120,7 @@ public class AccessoryItemEffects {
 	public static final AccessoryEffectBuilder VENSTRAL_JAR = new AccessoryEffectBuilder();
 	public static final AccessoryEffectBuilder SUPER_BLANKET_CAPE = new AccessoryEffectBuilder()
 			.addAttributeModifier(SUPER_BLANKET_CAPE_SPEED_MODIFIER, Attributes.MOVEMENT_SPEED)
-			.addMobEffect(new MobEffectInstance(MobEffects.JUMP, 60, 0, true, true))
+			.addMobEffect(new MobEffectInstance(MobEffects.JUMP_BOOST, 60, 0, true, true))
 			.addMobEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 60, 0, true, true));
 	public static final AccessoryEffectBuilder MEDAL_OF_HONOR = new AccessoryEffectBuilder()
 			.addEffect(AccessoryEffectTypeRegistry.DAMAGE_RESISTANCE.get(), 0.05d);

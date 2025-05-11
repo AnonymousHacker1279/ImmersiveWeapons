@@ -3,7 +3,6 @@ package tech.anonymoushacker1279.immersiveweapons.block.crafting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.Containers;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
@@ -71,22 +70,6 @@ public class AmmunitionTableBlock extends BasicOrientableBlock implements Entity
 			}
 
 			return InteractionResult.CONSUME;
-		}
-	}
-
-	@Override
-	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-		if (!state.is(newState.getBlock())) {
-			if (level.getBlockEntity(pos) instanceof AmmunitionTableBlockEntity blockEntity) {
-				if (!blockEntity.getInventory().get(6).isEmpty() && blockEntity.hasNoMaterials()) {
-					Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), blockEntity.getInventory().get(6));
-				}
-
-				blockEntity.removeItemNoUpdate(6);  // Remove the output item
-				Containers.dropContents(level, pos, blockEntity);
-			}
-
-			super.onRemove(state, level, pos, newState, isMoving);
 		}
 	}
 }

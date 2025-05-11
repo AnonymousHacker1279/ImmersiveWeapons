@@ -8,6 +8,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
@@ -219,12 +220,12 @@ public class ClientForgeEventSubscriber {
 								0.0D, 0.0D, 0.0D);
 					}
 
-					player.getInventory().items.stream()
-							.filter(stack -> stack.getItem() == ItemRegistry.VENSTRAL_JAR.get())
-							.findFirst()
-							.ifPresent(stack -> {
-								player.getCooldowns().addCooldown(stack, 1200);
-							});
+					for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+						ItemStack stack = player.getInventory().getItem(i);
+						if (stack.getItem() == ItemRegistry.VENSTRAL_JAR.get()) {
+							player.getCooldowns().addCooldown(stack, 1200);
+						}
+					}
 				}
 			}
 		}

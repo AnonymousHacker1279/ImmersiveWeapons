@@ -3,6 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.block;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Items;
@@ -45,17 +46,8 @@ public class WoodenSpikesBlock extends DamageableBlock {
 		builder.add(WATERLOGGED, FACING, DAMAGE_STAGE);
 	}
 
-	/**
-	 * Runs when an entity is inside the block's collision area.
-	 * Allows the block to deal damage on contact.
-	 *
-	 * @param state  the <code>BlockState</code> of the block
-	 * @param level  the <code>Level</code> the block is in
-	 * @param pos    the <code>BlockPos</code> the block is at
-	 * @param entity the <code>Entity</code> passing through the block
-	 */
 	@Override
-	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+	protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier) {
 		if (entity instanceof LivingEntity livingEntity) {
 			entity.makeStuckInBlock(state, new Vec3(0.85F, 0.80D, 0.85F));
 			if (!level.isClientSide && (entity.xOld != entity.getX() || entity.zOld != entity.getZ())) {

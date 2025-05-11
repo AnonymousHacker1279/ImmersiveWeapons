@@ -4,35 +4,38 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.equipment.ArmorMaterial;
 import net.minecraft.world.item.equipment.ArmorType;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.network.PacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.VoidArmorPayload;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
-public class VoidArmorItem extends ArmorItem {
+import javax.annotation.Nullable;
+
+public class VoidArmorItem extends Item {
 
 	private int dashCooldown = 0;
 
 	public VoidArmorItem(ArmorMaterial material, ArmorType armorType, Properties properties) {
-		super(material, armorType, properties);
+		super(properties.humanoidArmor(material, armorType));
 	}
 
 	@Override
-	public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
+	public void inventoryTick(ItemStack stack, ServerLevel level, Entity entity, @Nullable EquipmentSlot slot) {
 		if (entity instanceof Player player) {
 			if (ArmorUtils.isWearingVoidArmor(player)) {
-				boolean effectEnabled = player.getPersistentData().getBoolean("VoidArmorEffectEnabled");
+				boolean effectEnabled = player.getPersistentData().getBoolean("VoidArmorEffectEnabled").orElse(false);
 
 				if (level.isClientSide) {
 					if (IWKeyBinds.TOGGLE_ARMOR_EFFECT.consumeClick()) {
@@ -96,11 +99,11 @@ public class VoidArmorItem extends ArmorItem {
 				}
 
 				if (effectEnabled) {
-					player.addEffect(new MobEffectInstance(MobEffects.JUMP,
+					player.addEffect(new MobEffectInstance(MobEffects.JUMP_BOOST,
 							0, 1, false, false));
-					player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED,
+					player.addEffect(new MobEffectInstance(MobEffects.SPEED,
 							0, 0, false, false));
-					player.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED,
+					player.addEffect(new MobEffectInstance(MobEffects.HASTE,
 							0, 0, false, false));
 				}
 			}
