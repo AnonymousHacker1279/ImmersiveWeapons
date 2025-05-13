@@ -1,63 +1,33 @@
 {
   "variants": {
-    "facing=east,lit=false,waterlogged=false": {
-      "model": "immersiveweapons:block/spotlight_wall_unlit",
+    "facing=east,lit=false": {
+      "model": "immersiveweapons:block/spotlight_unlit",
       "y": 90
     },
-    "facing=east,lit=false,waterlogged=true": {
-      "model": "immersiveweapons:block/spotlight_wall_unlit",
+    "facing=east,lit=true": {
+      "model": "immersiveweapons:block/spotlight_lit",
       "y": 90
     },
-    "facing=east,lit=true,waterlogged=false": {
-      "model": "immersiveweapons:block/spotlight_wall_lit",
-      "y": 90
+    "facing=north,lit=false": {
+      "model": "immersiveweapons:block/spotlight_unlit"
     },
-    "facing=east,lit=true,waterlogged=true": {
-      "model": "immersiveweapons:block/spotlight_wall_lit",
-      "y": 90
+    "facing=north,lit=true": {
+      "model": "immersiveweapons:block/spotlight_lit"
     },
-    "facing=north,lit=false,waterlogged=false": {
-      "model": "immersiveweapons:block/spotlight_wall_unlit"
-    },
-    "facing=north,lit=false,waterlogged=true": {
-      "model": "immersiveweapons:block/spotlight_wall_unlit"
-    },
-    "facing=north,lit=true,waterlogged=false": {
-      "model": "immersiveweapons:block/spotlight_wall_lit"
-    },
-    "facing=north,lit=true,waterlogged=true": {
-      "model": "immersiveweapons:block/spotlight_wall_lit"
-    },
-    "facing=south,lit=false,waterlogged=false": {
-      "model": "immersiveweapons:block/spotlight_wall_unlit",
+    "facing=south,lit=false": {
+      "model": "immersiveweapons:block/spotlight_unlit",
       "y": 180
     },
-    "facing=south,lit=false,waterlogged=true": {
-      "model": "immersiveweapons:block/spotlight_wall_unlit",
+    "facing=south,lit=true": {
+      "model": "immersiveweapons:block/spotlight_lit",
       "y": 180
     },
-    "facing=south,lit=true,waterlogged=false": {
-      "model": "immersiveweapons:block/spotlight_wall_lit",
-      "y": 180
-    },
-    "facing=south,lit=true,waterlogged=true": {
-      "model": "immersiveweapons:block/spotlight_wall_lit",
-      "y": 180
-    },
-    "facing=west,lit=false,waterlogged=false": {
-      "model": "immersiveweapons:block/spotlight_wall_unlit",
+    "facing=west,lit=false": {
+      "model": "immersiveweapons:block/spotlight_unlit",
       "y": 270
     },
-    "facing=west,lit=false,waterlogged=true": {
-      "model": "immersiveweapons:block/spotlight_wall_unlit",
-      "y": 270
-    },
-    "facing=west,lit=true,waterlogged=false": {
-      "model": "immersiveweapons:block/spotlight_wall_lit",
-      "y": 270
-    },
-    "facing=west,lit=true,waterlogged=true": {
-      "model": "immersiveweapons:block/spotlight_wall_lit",
+    "facing=west,lit=true": {
+      "model": "immersiveweapons:block/spotlight_lit",
       "y": 270
     }
   }

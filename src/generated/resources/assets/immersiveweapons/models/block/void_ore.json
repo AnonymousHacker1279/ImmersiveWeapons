@@ -1,8 +1,6 @@
 {
-  "parent": "immersiveweapons:block/simple_overlay",
-  "render_type": "minecraft:cutout_mipped",
+  "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "minecraft:block/end_stone",
-    "overlay": "immersiveweapons:block/void_ore"
+    "all": "immersiveweapons:block/void_ore"
   }
 }

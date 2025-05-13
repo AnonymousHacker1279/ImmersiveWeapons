@@ -9,7 +9,7 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 public class IWEquipmentAssets {
 
 	private static final ResourceKey<? extends Registry<EquipmentAsset>> ROOT_ID = ResourceKey.createRegistryKey(
-			ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "equipment_asset"));
+			ResourceLocation.withDefaultNamespace("equipment_asset"));
 
 	public static final ResourceKey<EquipmentAsset> MOLTEN = create("molten");
 	public static final ResourceKey<EquipmentAsset> COPPER = create("copper");

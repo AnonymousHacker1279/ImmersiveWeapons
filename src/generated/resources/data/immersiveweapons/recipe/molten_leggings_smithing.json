@@ -3,7 +3,6 @@
   "addition": "#immersiveweapons:ingots/molten",
   "base": "minecraft:netherite_leggings",
   "result": {
-    "count": 1,
     "id": "immersiveweapons:molten_leggings"
   },
   "template": "immersiveweapons:molten_smithing_template"

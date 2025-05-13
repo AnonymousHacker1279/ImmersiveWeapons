@@ -3,7 +3,6 @@
   "addition": "#immersiveweapons:ingots/molten",
   "base": "minecraft:netherite_shovel",
   "result": {
-    "count": 1,
     "id": "immersiveweapons:molten_shovel"
   },
   "template": "immersiveweapons:molten_smithing_template"

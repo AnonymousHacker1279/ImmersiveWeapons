@@ -1,8 +1,6 @@
 {
-  "parent": "immersiveweapons:block/simple_overlay",
-  "render_type": "minecraft:cutout_mipped",
+  "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "minecraft:block/netherrack",
-    "overlay": "immersiveweapons:block/molten_ore"
+    "all": "immersiveweapons:block/molten_ore"
   }
 }

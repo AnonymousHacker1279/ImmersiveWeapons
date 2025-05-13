@@ -49,10 +49,10 @@ public class MortarShellEntity extends Projectile implements ItemSupplier {
 			}
 
 			switch (state.getValue(MortarBlock.FACING)) {
-				case NORTH -> mortarShellEntity.setDeltaMovement(0.0f, rotationModifier, 1.25f);
-				case SOUTH -> mortarShellEntity.setDeltaMovement(0.0f, rotationModifier, -1.25f);
-				case EAST -> mortarShellEntity.setDeltaMovement(-1.25f, rotationModifier, 0.0f);
-				case WEST -> mortarShellEntity.setDeltaMovement(1.25f, rotationModifier, 0.0f);
+				case NORTH -> mortarShellEntity.setDeltaMovement(0.0f, rotationModifier, -1.25f);
+				case SOUTH -> mortarShellEntity.setDeltaMovement(0.0f, rotationModifier, 1.25f);
+				case EAST -> mortarShellEntity.setDeltaMovement(1.25f, rotationModifier, 0.0f);
+				case WEST -> mortarShellEntity.setDeltaMovement(-1.25f, rotationModifier, 0.0f);
 			}
 
 			if (player != null) {

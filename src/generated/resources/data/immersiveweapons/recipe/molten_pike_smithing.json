@@ -3,7 +3,6 @@
   "addition": "#immersiveweapons:ingots/molten",
   "base": "immersiveweapons:netherite_pike",
   "result": {
-    "count": 1,
     "id": "immersiveweapons:molten_pike"
   },
   "template": "immersiveweapons:molten_smithing_template"

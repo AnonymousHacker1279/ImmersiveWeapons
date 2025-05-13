@@ -10,8 +10,8 @@ import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 
 public class SoundGenerator extends SoundDefinitionsProvider {
 
-	public SoundGenerator(PackOutput output, String modId) {
-		super(output, modId);
+	public SoundGenerator(PackOutput output) {
+		super(output, ImmersiveWeapons.MOD_ID);
 	}
 
 	@Override

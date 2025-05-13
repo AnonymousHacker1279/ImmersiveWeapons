@@ -3,7 +3,6 @@
   "addition": "minecraft:netherite_ingot",
   "base": "minecraft:shield",
   "result": {
-    "count": 1,
     "id": "immersiveweapons:netherite_shield"
   },
   "template": "minecraft:netherite_upgrade_smithing_template"

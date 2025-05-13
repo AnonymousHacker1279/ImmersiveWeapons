@@ -1,0 +1,26 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "dyeable": {
+          "color_when_undyed": -6265536
+        },
+        "texture": "immersiveweapons:padded_leather"
+      },
+      {
+        "texture": "immersiveweapons:padded_leather_overlay"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "dyeable": {
+          "color_when_undyed": -6265536
+        },
+        "texture": "immersiveweapons:padded_leather"
+      },
+      {
+        "texture": "immersiveweapons:padded_leather_overlay"
+      }
+    ]
+  }
+}

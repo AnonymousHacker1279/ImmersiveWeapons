@@ -11,6 +11,7 @@
     "fog_color": 9464960,
     "foliage_color": 4468277,
     "grass_color": 5576464,
+    "music_volume": 1.0,
     "sky_color": 7628662,
     "water_color": 5580620,
     "water_fog_color": 5258098
@@ -72,8 +73,9 @@
       "minecraft:patch_grass_plain",
       "minecraft:brown_mushroom_normal",
       "minecraft:red_mushroom_normal",
+      "minecraft:patch_pumpkin",
       "minecraft:patch_sugar_cane",
-      "minecraft:patch_pumpkin"
+      "minecraft:patch_firefly_bush_near_water"
     ],
     [
       "minecraft:freeze_top_layer"

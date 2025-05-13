@@ -1,5 +1,5 @@
 {
-  "parent": "immersiveweapons:item/ice_bow",
+  "parent": "minecraft:item/bow",
   "textures": {
     "layer0": "immersiveweapons:item/ice_bow_pulling_0"
   }

@@ -2,7 +2,8 @@
 	"credit": "AnonymousHacker1279",
 	"textures": {
 		"0": "#handle",
-		"1": "#material"
+		"1": "#material",
+		"particle": "#material"
 	},
 	"elements": [
 		{

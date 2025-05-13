@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/door_bottom_right",
-  "render_type": "minecraft:cutout_mipped",
+  "render_type": "minecraft:cutout",
   "textures": {
     "bottom": "immersiveweapons:block/burned_oak_door_bottom",
     "top": "immersiveweapons:block/burned_oak_door_top"

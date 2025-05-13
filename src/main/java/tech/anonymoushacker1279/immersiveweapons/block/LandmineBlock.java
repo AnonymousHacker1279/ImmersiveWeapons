@@ -46,11 +46,6 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 	public static final BooleanProperty SAND = BooleanProperty.create("sand");
 	public static final BooleanProperty VINES = BooleanProperty.create("vines");
 
-	/**
-	 * Constructor for LandmineBlock.
-	 *
-	 * @param properties the <code>Properties</code> of the block
-	 */
 	public LandmineBlock(BlockBehaviour.Properties properties) {
 		super(properties);
 		registerDefaultState(stateDefinition.any()
@@ -79,8 +74,8 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 				return InteractionResult.PASS;
 			}
 
-			// Arm if not currently set and pliers are not held
-			if (!state.getValue(ARMED) && currentlyHeldItem.getItem() != ItemRegistry.PLIERS.get()) {
+			// Arm if not currently set
+			if (!state.getValue(ARMED) && currentlyHeldItem.isEmpty()) {
 				level.setBlock(pos, state.setValue(ARMED, true), 3);
 			}
 

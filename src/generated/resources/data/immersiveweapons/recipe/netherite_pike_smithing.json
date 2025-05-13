@@ -3,7 +3,6 @@
   "addition": "minecraft:netherite_ingot",
   "base": "immersiveweapons:diamond_pike",
   "result": {
-    "count": 1,
     "id": "immersiveweapons:netherite_pike"
   },
   "template": "minecraft:netherite_upgrade_smithing_template"

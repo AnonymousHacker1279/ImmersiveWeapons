@@ -3,7 +3,6 @@
   "addition": "minecraft:netherite_ingot",
   "base": "immersiveweapons:diamond_ring",
   "result": {
-    "count": 1,
     "id": "immersiveweapons:netherite_ring"
   },
   "template": "minecraft:netherite_upgrade_smithing_template"

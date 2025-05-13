@@ -2,6 +2,7 @@
   "parent": "minecraft:item/generated",
   "textures": {
     "layer0": "immersiveweapons:item/padded_leather_boots",
-    "layer1": "minecraft:trims/items/boots_trim_emerald"
+    "layer1": "immersiveweapons:item/padded_leather_boots_overlay",
+    "layer2": "minecraft:trims/items/boots_trim_emerald"
   }
 }

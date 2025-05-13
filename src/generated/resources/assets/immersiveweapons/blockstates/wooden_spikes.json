@@ -1,132 +1,64 @@
 {
   "variants": {
-    "damage_stage=0,facing=east,waterlogged=false": {
+    "damage_stage=0,facing=east": {
       "model": "immersiveweapons:block/wooden_spikes_0",
       "y": 90
     },
-    "damage_stage=0,facing=east,waterlogged=true": {
-      "model": "immersiveweapons:block/wooden_spikes_0",
-      "y": 90
+    "damage_stage=0,facing=north": {
+      "model": "immersiveweapons:block/wooden_spikes_0"
     },
-    "damage_stage=0,facing=north,waterlogged=false": {
-      "model": "immersiveweapons:block/wooden_spikes_0",
-      "y": 180
-    },
-    "damage_stage=0,facing=north,waterlogged=true": {
+    "damage_stage=0,facing=south": {
       "model": "immersiveweapons:block/wooden_spikes_0",
       "y": 180
     },
-    "damage_stage=0,facing=south,waterlogged=false": {
+    "damage_stage=0,facing=west": {
       "model": "immersiveweapons:block/wooden_spikes_0",
-      "y": 180
+      "y": 270
     },
-    "damage_stage=0,facing=south,waterlogged=true": {
-      "model": "immersiveweapons:block/wooden_spikes_0",
-      "y": 180
-    },
-    "damage_stage=0,facing=west,waterlogged=false": {
-      "model": "immersiveweapons:block/wooden_spikes_0",
-      "y": 90
-    },
-    "damage_stage=0,facing=west,waterlogged=true": {
-      "model": "immersiveweapons:block/wooden_spikes_0",
-      "y": 90
-    },
-    "damage_stage=1,facing=east,waterlogged=false": {
+    "damage_stage=1,facing=east": {
       "model": "immersiveweapons:block/wooden_spikes_1",
       "y": 90
     },
-    "damage_stage=1,facing=east,waterlogged=true": {
-      "model": "immersiveweapons:block/wooden_spikes_1",
-      "y": 90
+    "damage_stage=1,facing=north": {
+      "model": "immersiveweapons:block/wooden_spikes_1"
     },
-    "damage_stage=1,facing=north,waterlogged=false": {
-      "model": "immersiveweapons:block/wooden_spikes_1",
-      "y": 180
-    },
-    "damage_stage=1,facing=north,waterlogged=true": {
+    "damage_stage=1,facing=south": {
       "model": "immersiveweapons:block/wooden_spikes_1",
       "y": 180
     },
-    "damage_stage=1,facing=south,waterlogged=false": {
+    "damage_stage=1,facing=west": {
       "model": "immersiveweapons:block/wooden_spikes_1",
-      "y": 180
+      "y": 270
     },
-    "damage_stage=1,facing=south,waterlogged=true": {
-      "model": "immersiveweapons:block/wooden_spikes_1",
-      "y": 180
-    },
-    "damage_stage=1,facing=west,waterlogged=false": {
-      "model": "immersiveweapons:block/wooden_spikes_1",
-      "y": 90
-    },
-    "damage_stage=1,facing=west,waterlogged=true": {
-      "model": "immersiveweapons:block/wooden_spikes_1",
-      "y": 90
-    },
-    "damage_stage=2,facing=east,waterlogged=false": {
+    "damage_stage=2,facing=east": {
       "model": "immersiveweapons:block/wooden_spikes_2",
       "y": 90
     },
-    "damage_stage=2,facing=east,waterlogged=true": {
-      "model": "immersiveweapons:block/wooden_spikes_2",
-      "y": 90
+    "damage_stage=2,facing=north": {
+      "model": "immersiveweapons:block/wooden_spikes_2"
     },
-    "damage_stage=2,facing=north,waterlogged=false": {
-      "model": "immersiveweapons:block/wooden_spikes_2",
-      "y": 180
-    },
-    "damage_stage=2,facing=north,waterlogged=true": {
+    "damage_stage=2,facing=south": {
       "model": "immersiveweapons:block/wooden_spikes_2",
       "y": 180
     },
-    "damage_stage=2,facing=south,waterlogged=false": {
+    "damage_stage=2,facing=west": {
       "model": "immersiveweapons:block/wooden_spikes_2",
-      "y": 180
+      "y": 270
     },
-    "damage_stage=2,facing=south,waterlogged=true": {
-      "model": "immersiveweapons:block/wooden_spikes_2",
-      "y": 180
-    },
-    "damage_stage=2,facing=west,waterlogged=false": {
-      "model": "immersiveweapons:block/wooden_spikes_2",
-      "y": 90
-    },
-    "damage_stage=2,facing=west,waterlogged=true": {
-      "model": "immersiveweapons:block/wooden_spikes_2",
-      "y": 90
-    },
-    "damage_stage=3,facing=east,waterlogged=false": {
+    "damage_stage=3,facing=east": {
       "model": "immersiveweapons:block/wooden_spikes_3",
       "y": 90
     },
-    "damage_stage=3,facing=east,waterlogged=true": {
-      "model": "immersiveweapons:block/wooden_spikes_3",
-      "y": 90
+    "damage_stage=3,facing=north": {
+      "model": "immersiveweapons:block/wooden_spikes_3"
     },
-    "damage_stage=3,facing=north,waterlogged=false": {
+    "damage_stage=3,facing=south": {
       "model": "immersiveweapons:block/wooden_spikes_3",
       "y": 180
     },
-    "damage_stage=3,facing=north,waterlogged=true": {
+    "damage_stage=3,facing=west": {
       "model": "immersiveweapons:block/wooden_spikes_3",
-      "y": 180
-    },
-    "damage_stage=3,facing=south,waterlogged=false": {
-      "model": "immersiveweapons:block/wooden_spikes_3",
-      "y": 180
-    },
-    "damage_stage=3,facing=south,waterlogged=true": {
-      "model": "immersiveweapons:block/wooden_spikes_3",
-      "y": 180
-    },
-    "damage_stage=3,facing=west,waterlogged=false": {
-      "model": "immersiveweapons:block/wooden_spikes_3",
-      "y": 90
-    },
-    "damage_stage=3,facing=west,waterlogged=true": {
-      "model": "immersiveweapons:block/wooden_spikes_3",
-      "y": 90
+      "y": 270
     }
   }
 }

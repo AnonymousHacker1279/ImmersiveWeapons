@@ -44,7 +44,7 @@ public class SandbagBlock extends BasicOrientableBlock {
 
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite()).setValue(BAGS, 0);
+		return defaultBlockState().setValue(FACING, context.getHorizontalDirection()).setValue(BAGS, 0);
 	}
 
 	@Override

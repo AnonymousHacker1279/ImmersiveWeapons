@@ -2,6 +2,7 @@
   "parent": "minecraft:item/generated",
   "textures": {
     "layer0": "immersiveweapons:item/padded_leather_leggings",
-    "layer1": "minecraft:trims/items/leggings_trim_lapis"
+    "layer1": "immersiveweapons:item/padded_leather_leggings_overlay",
+    "layer2": "minecraft:trims/items/leggings_trim_lapis"
   }
 }

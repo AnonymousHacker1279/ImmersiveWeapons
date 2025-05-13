@@ -51,6 +51,7 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 	public HitEffect hitEffect = HitEffect.NONE;
 	public boolean flameTrail = false;
 	private static final TagKey<Block> BULLETPROOF_GLASS = BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "bulletproof_glass"));
+	private static final TagKey<Block> BULLETPROOF_GLASS_PANES = BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "bulletproof_glass_panes"));
 
 	public BulletEntity(EntityType<? extends Arrow> entityType, Level level) {
 		super(entityType, level);
@@ -131,7 +132,7 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 
 		// Check if glass can be broken, and if it hasn't already broken glass
 		if (IWConfigs.SERVER.bulletsBreakGlass.getAsBoolean() && !hasAlreadyBrokeGlass
-				&& !lastState.is(BULLETPROOF_GLASS)
+				&& !(lastState.is(BULLETPROOF_GLASS) || lastState.is(BULLETPROOF_GLASS_PANES))
 				&& (lastState.is(Blocks.GLASS_BLOCKS) || lastState.is(Tags.Blocks.GLASS_PANES))) {
 
 			level().destroyBlock(hitResult.getBlockPos(), false);

@@ -1,32 +1,17 @@
 {
   "variants": {
-    "facing=east,waterlogged=false": {
+    "facing=east": {
       "model": "immersiveweapons:block/american_flag",
       "y": 90
     },
-    "facing=east,waterlogged=true": {
-      "model": "immersiveweapons:block/american_flag",
-      "y": 90
-    },
-    "facing=north,waterlogged=false": {
+    "facing=north": {
       "model": "immersiveweapons:block/american_flag"
     },
-    "facing=north,waterlogged=true": {
-      "model": "immersiveweapons:block/american_flag"
-    },
-    "facing=south,waterlogged=false": {
+    "facing=south": {
       "model": "immersiveweapons:block/american_flag",
       "y": 180
     },
-    "facing=south,waterlogged=true": {
-      "model": "immersiveweapons:block/american_flag",
-      "y": 180
-    },
-    "facing=west,waterlogged=false": {
-      "model": "immersiveweapons:block/american_flag",
-      "y": 270
-    },
-    "facing=west,waterlogged=true": {
+    "facing=west": {
       "model": "immersiveweapons:block/american_flag",
       "y": 270
     }

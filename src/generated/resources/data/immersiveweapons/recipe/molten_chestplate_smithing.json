@@ -3,7 +3,6 @@
   "addition": "#immersiveweapons:ingots/molten",
   "base": "minecraft:netherite_chestplate",
   "result": {
-    "count": 1,
     "id": "immersiveweapons:molten_chestplate"
   },
   "template": "immersiveweapons:molten_smithing_template"

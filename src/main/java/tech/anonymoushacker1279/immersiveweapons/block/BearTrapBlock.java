@@ -58,25 +58,11 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 	}
 
 	@Override
-	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-		if (!level.isClientSide && level.getBlockEntity(pos) instanceof BearTrapBlockEntity blockEntity) {
-			if (state.getValue(TRIGGERED) && blockEntity.getTrappedEntity() == null) {
-				level.setBlock(pos, state.setValue(TRIGGERED, false).setValue(VINES, false), 3);
-				level.gameEvent(GameEvent.BLOCK_DEACTIVATE, pos, GameEvent.Context.of(state));
-
-				return InteractionResult.SUCCESS;
-			}
-		}
-
-		return InteractionResult.PASS;
-	}
-
-	@Override
 	protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
-		if (!level.isClientSide && hand.equals(InteractionHand.MAIN_HAND)) {
+		if (!level.isClientSide && hand.equals(InteractionHand.MAIN_HAND) && level.getBlockEntity(pos) instanceof BearTrapBlockEntity blockEntity) {
 			ItemStack mainHandItem = player.getMainHandItem();
 
-			if (!state.getValue(VINES) && mainHandItem.getItem() == Items.VINE) {
+			if (!state.getValue(VINES) && !state.getValue(TRIGGERED) && mainHandItem.getItem() == Items.VINE) {
 				level.setBlock(pos, state.setValue(VINES, true), 3);
 				if (!player.isCreative()) {
 					mainHandItem.shrink(1);
@@ -84,6 +70,13 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 
 				level.gameEvent(GameEvent.BLOCK_ACTIVATE, pos, GameEvent.Context.of(state));
 				return InteractionResult.CONSUME;
+			} else if (mainHandItem.isEmpty()) {
+				if (state.getValue(TRIGGERED) && blockEntity.getTrappedEntity() == null) {
+					level.setBlock(pos, state.setValue(TRIGGERED, false).setValue(VINES, false), 3);
+					level.gameEvent(GameEvent.BLOCK_DEACTIVATE, pos, GameEvent.Context.of(state));
+
+					return InteractionResult.SUCCESS;
+				}
 			}
 		}
 

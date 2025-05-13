@@ -3,7 +3,6 @@
   "addition": "#immersiveweapons:ingots/molten",
   "base": "immersiveweapons:netherite_gauntlet",
   "result": {
-    "count": 1,
     "id": "immersiveweapons:molten_gauntlet"
   },
   "template": "immersiveweapons:molten_smithing_template"

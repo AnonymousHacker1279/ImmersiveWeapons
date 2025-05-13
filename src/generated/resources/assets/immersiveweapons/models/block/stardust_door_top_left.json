@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/door_top_left",
-  "render_type": "minecraft:cutout_mipped",
+  "render_type": "minecraft:cutout",
   "textures": {
     "bottom": "immersiveweapons:block/stardust_door_bottom",
     "top": "immersiveweapons:block/stardust_door_top"

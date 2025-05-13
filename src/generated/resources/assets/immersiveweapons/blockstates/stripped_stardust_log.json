@@ -1,7 +1,7 @@
 {
   "variants": {
     "axis=x": {
-      "model": "immersiveweapons:block/stripped_stardust_log_horizontal",
+      "model": "immersiveweapons:block/stripped_stardust_log",
       "x": 90,
       "y": 90
     },
@@ -9,7 +9,7 @@
       "model": "immersiveweapons:block/stripped_stardust_log"
     },
     "axis=z": {
-      "model": "immersiveweapons:block/stripped_stardust_log_horizontal",
+      "model": "immersiveweapons:block/stripped_stardust_log",
       "x": 90
     }
   }

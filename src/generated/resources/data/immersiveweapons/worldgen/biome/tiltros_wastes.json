@@ -11,12 +11,18 @@
     "fog_color": 2830199,
     "foliage_color": 14665365,
     "grass_color": 16113331,
-    "music": {
-      "max_delay": 24000,
-      "min_delay": 6000,
-      "replace_current_music": true,
-      "sound": "immersiveweapons:tiltros_wastes_music"
-    },
+    "music": [
+      {
+        "data": {
+          "max_delay": 24000,
+          "min_delay": 6000,
+          "replace_current_music": true,
+          "sound": "immersiveweapons:tiltros_wastes_music"
+        },
+        "weight": 1
+      }
+    ],
+    "music_volume": 1.0,
     "sky_color": 461620,
     "water_color": 7031172,
     "water_fog_color": 4732021

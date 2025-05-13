@@ -9,6 +9,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
@@ -38,7 +39,6 @@ import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem;
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.GAME, value = Dist.CLIENT)
 public class ClientForgeEventSubscriber {
 
-	private static final Minecraft minecraft = Minecraft.getInstance();
 
 	/**
 	 * Event handler for the RenderBlockScreenEffectEvent.
@@ -75,7 +75,8 @@ public class ClientForgeEventSubscriber {
 	@SubscribeEvent
 	public static void renderFogEvent(RenderFog event) {
 		// Reduce lava fog from players wearing a full set of molten armor
-		Player player = minecraft.player;
+		Player player = Minecraft.getInstance().player;
+		Level level = Minecraft.getInstance().level;
 
 		if (player == null) {
 			return;
@@ -84,8 +85,8 @@ public class ClientForgeEventSubscriber {
 		if (player.isInLava()) {
 			boolean hasLavaGoggles = Accessory.isAccessoryActive(player, ItemRegistry.LAVA_GOGGLES.get());
 			if (ArmorUtils.isWearingMoltenArmor(player)) {
-				if (minecraft.level != null) {
-					BlockState state = minecraft.level.getBlockState(new BlockPos(player.blockPosition().above(1)));
+				if (level != null) {
+					BlockState state = level.getBlockState(new BlockPos(player.blockPosition().above(1)));
 					if (state.is(Blocks.LAVA)) {
 						float modifier = hasLavaGoggles ? 1.5f : 1.0f;
 						event.setNearPlaneDistance(16.0f * modifier);
@@ -94,8 +95,8 @@ public class ClientForgeEventSubscriber {
 					}
 				}
 			} else if (hasLavaGoggles) {
-				if (minecraft.level != null) {
-					BlockState state = minecraft.level.getBlockState(new BlockPos(player.blockPosition().above(1)));
+				if (level != null) {
+					BlockState state = level.getBlockState(new BlockPos(player.blockPosition().above(1)));
 					if (state.is(Blocks.LAVA)) {
 						event.setNearPlaneDistance(8.0f);
 						event.setFarPlaneDistance(16.0f);
@@ -129,7 +130,7 @@ public class ClientForgeEventSubscriber {
 
 	@SubscribeEvent
 	public static void computeFogColorEvent(ComputeFogColor event) {
-		if (minecraft.player != null && minecraft.player.hasEffect(EffectRegistry.FLASHBANG_EFFECT)) {
+		if (Minecraft.getInstance().player != null && Minecraft.getInstance().player.hasEffect(EffectRegistry.FLASHBANG_EFFECT)) {
 			if (IWConfigs.CLIENT.darkModeFlashbangs.getAsBoolean()) {
 				event.setRed(0.0f);
 				event.setGreen(0.0f);
@@ -147,21 +148,23 @@ public class ClientForgeEventSubscriber {
 		if (event.getFOV() != 70) {
 			GunData.playerFOV = event.getFOV();
 		}
-		if (GunData.changingPlayerFOV != -1 && minecraft.options.getCameraType().isFirstPerson()) {
+		if (GunData.changingPlayerFOV != -1 && Minecraft.getInstance().options.getCameraType().isFirstPerson()) {
 			event.setFOV(GunData.changingPlayerFOV);
 		}
 
+		Player player = Minecraft.getInstance().player;
+
 		// Handle FOV changes with some items
-		if (minecraft.player != null) {
-			Item itemInHand = minecraft.player.getItemInHand(minecraft.player.getUsedItemHand()).getItem();
+		if (player != null) {
+			Item itemInHand = player.getItemInHand(player.getUsedItemHand()).getItem();
 			if ((itemInHand == ItemRegistry.ICE_BOW.get()
 					|| itemInHand == ItemRegistry.DRAGONS_BREATH_BOW.get()
 					|| itemInHand == ItemRegistry.AURORA_BOW.get()
 					|| (itemInHand.asItem() instanceof ThrowableItem throwableItem && throwableItem.type.canCharge))
-					&& minecraft.player.isUsingItem()) {
+					&& player.isUsingItem()) {
 
 				float fov = event.getFOV();
-				int useTicks = minecraft.player.getTicksUsingItem();
+				int useTicks = player.getTicksUsingItem();
 				float fovModifier = (float) useTicks / 20.0F;
 
 				if (fovModifier > 1.0F) {
@@ -179,8 +182,8 @@ public class ClientForgeEventSubscriber {
 	@SubscribeEvent
 	public static void renderGuiOverlayPostEvent(RenderGuiLayerEvent.Post event) {
 		if (GunData.changingPlayerFOV != -1) {
-			if (minecraft.options.getCameraType().isFirstPerson()) {
-				float deltaFrame = minecraft.getDeltaTracker().getGameTimeDeltaTicks() / 8;
+			if (Minecraft.getInstance().options.getCameraType().isFirstPerson()) {
+				float deltaFrame = Minecraft.getInstance().getDeltaTracker().getGameTimeDeltaTicks() / 8;
 				GunData.scopeScale = Mth.lerp(0.25F * deltaFrame, GunData.scopeScale, 1.125F);
 
 				IWOverlays.SCOPE_ELEMENT.render(event.getGuiGraphics(), event.getPartialTick());
@@ -199,10 +202,14 @@ public class ClientForgeEventSubscriber {
 	@SubscribeEvent
 	public static void keyInputEvent(InputEvent.Key event) {
 		// Double jump ability with the Venstral Jar accessory
-		Player player = minecraft.player;
+		if (Minecraft.getInstance().level == null) {
+			return;
+		}
+
+		Player player = Minecraft.getInstance().player;
 		if (player != null && Accessory.isAccessoryActive(player, ItemRegistry.VENSTRAL_JAR.get())) {
 			// Check if the jump key is pressed
-			if (event.getKey() == minecraft.options.keyJump.getKey().getValue() && event.getAction() == InputConstants.PRESS) {
+			if (event.getKey() == Minecraft.getInstance().options.keyJump.getKey().getValue() && event.getAction() == InputConstants.PRESS) {
 				if (!player.onGround()) {
 					Vec3 deltaMovement = player.getDeltaMovement();
 					float jumpVelocity = 0.42f * (1 + player.getJumpBoostPower());

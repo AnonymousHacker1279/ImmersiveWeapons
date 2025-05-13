@@ -1,7 +1,7 @@
 {
   "variants": {
     "axis=x": {
-      "model": "immersiveweapons:block/cloud_marble_pillar_horizontal",
+      "model": "immersiveweapons:block/cloud_marble_pillar",
       "x": 90,
       "y": 90
     },
@@ -9,7 +9,7 @@
       "model": "immersiveweapons:block/cloud_marble_pillar"
     },
     "axis=z": {
-      "model": "immersiveweapons:block/cloud_marble_pillar_horizontal",
+      "model": "immersiveweapons:block/cloud_marble_pillar",
       "x": 90
     }
   }

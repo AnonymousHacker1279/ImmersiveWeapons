@@ -125,9 +125,7 @@ public class SpotlightBlock extends BasicOrientableBlock implements SimpleWaterl
 
 	@Override
 	protected void affectNeighborsAfterRemoval(BlockState state, ServerLevel level, BlockPos pos, boolean movedByPiston) {
-		if (state == airState) {
-			stateToggled(pos, level, state, true);
-		}
+		stateToggled(pos, level, state, true);
 	}
 
 	/**
