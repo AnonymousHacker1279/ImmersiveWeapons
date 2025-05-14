@@ -15,7 +15,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.animal.IronGolem;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -41,10 +40,9 @@ public class FieldMedicEntity extends SoldierEntity {
 	}
 
 	public static AttributeSupplier.Builder registerAttributes() {
-		return Monster.createMonsterAttributes()
+		return createSoldierAttributes()
 				.add(Attributes.MOVEMENT_SPEED, 0.3D)
-				.add(Attributes.ARMOR, 2.5D)
-				.add(Attributes.ATTACK_DAMAGE, 2.0D);
+				.add(Attributes.ARMOR, 2.5D);
 	}
 
 	@Override

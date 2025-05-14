@@ -7,12 +7,10 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -23,7 +21,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.registries.datamaps.DataMapType;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
@@ -34,9 +31,7 @@ import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
 import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryManager;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
-import tech.anonymoushacker1279.immersiveweapons.item.gun.data.GunData;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem;
-import tech.anonymoushacker1279.immersiveweapons.network.payload.GunScopePayload;
 import tech.anonymoushacker1279.immersiveweapons.util.ArrowAttributeAccessor;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
@@ -73,11 +68,6 @@ public abstract class AbstractGunItem extends Item {
 	public boolean releaseUsing(ItemStack gun, Level level, LivingEntity livingEntity, int timeLeft) {
 
 		if (livingEntity instanceof Player player) {
-			if (level.isClientSide) {
-				GunData.changingPlayerFOV = -1;
-				GunData.scopeScale = 0.5f;
-			}
-
 			boolean isCreative = player.isCreative();
 			boolean misfire = false;
 			ItemStack ammo = findAmmo(gun, livingEntity);
@@ -252,32 +242,6 @@ public abstract class AbstractGunItem extends Item {
 			player.startUsingItem(hand);
 			return InteractionResult.CONSUME;
 		}
-	}
-
-	@Override
-	public void onUseTick(Level level, LivingEntity livingEntity, ItemStack stack, int remainingUseDuration) {
-		super.onUseTick(level, livingEntity, stack, remainingUseDuration);
-
-		if (!level.isClientSide && canScope() && livingEntity instanceof ServerPlayer serverPlayer) {
-			PacketDistributor.sendToPlayer(serverPlayer, new GunScopePayload(GunData.playerFOV, 15.0f, GunData.scopeScale));
-		}
-	}
-
-	@Override
-	public void inventoryTick(ItemStack stack, ServerLevel level, Entity entity, @Nullable EquipmentSlot slot) {
-		if (entity instanceof Player player) {  // TODO: needs fixed as this is a server-only method now
-			if (!player.getUseItem().is(ItemRegistry.MUSKET_SCOPE.get())) {
-				GunData.changingPlayerFOV = -1;
-				GunData.scopeScale = 0.5f;
-			}
-		}
-	}
-
-	@Override
-	public boolean onDroppedByPlayer(ItemStack item, Player player) {
-		PacketDistributor.sendToPlayer((ServerPlayer) player, new GunScopePayload(GunData.playerFOV, -1, 0.5f));
-
-		return super.onDroppedByPlayer(item, player);
 	}
 
 	@Override
@@ -474,11 +438,7 @@ public abstract class AbstractGunItem extends Item {
 			double sideOffset = shooter.getUsedItemHand() == InteractionHand.MAIN_HAND ? 0.5d : -0.5d;
 			particlePosition = particlePosition.add(sideVector.scale(sideOffset));
 
-			// Adjust forward position based on FOV
 			double fov = 70d;
-			if (shooter instanceof Player) {
-				fov = GunData.playerFOV;
-			}
 
 			double fovOffset = 1.75d - (fov / 150.0d);
 			particlePosition = particlePosition.add(lookVector.x * fovOffset * 0.5d, lookVector.y * fovOffset * 0.5d, lookVector.z * fovOffset * 0.5d);

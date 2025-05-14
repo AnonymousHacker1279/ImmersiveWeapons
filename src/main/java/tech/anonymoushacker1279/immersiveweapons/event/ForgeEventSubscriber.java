@@ -79,6 +79,7 @@ import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.CursedItem;
 import tech.anonymoushacker1279.immersiveweapons.item.KillCountWeapon;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
+import tech.anonymoushacker1279.immersiveweapons.item.armor.TickableArmor;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.PistonCrushingRecipe;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.DebugDataPayload;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.SyncMerchantTradesPayload;
@@ -192,6 +193,13 @@ public class ForgeEventSubscriber {
 				}
 			}
 		}
+
+		// Armor ticking
+		player.getInventory().forEach(stack -> {
+			if (stack.getItem() instanceof TickableArmor tickable) {
+				tickable.playerTick(player.level(), player);
+			}
+		});
 
 		// Debug tracing
 		if (DebugTracingData.isDebugTracingEnabled) {
@@ -644,5 +652,7 @@ public class ForgeEventSubscriber {
 			SyncMerchantTradesPayload payload = new SyncMerchantTradesPayload(entry.getKey(), entry.getValue());
 			PacketDistributor.sendToAllPlayers(payload);
 		}
+
+		event.sendRecipes(RecipeTypeRegistry.STAR_FORGE_RECIPE_TYPE.get(), RecipeTypeRegistry.SMALL_PARTS_RECIPE_TYPE.get());
 	}
 }

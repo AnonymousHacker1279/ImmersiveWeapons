@@ -11,7 +11,6 @@ import net.minecraft.world.entity.ai.goal.MoveThroughVillageGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.IronGolem;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -38,7 +37,7 @@ public class DyingSoldierEntity extends RangedSoldierEntity {
 	}
 
 	public static AttributeSupplier.Builder registerAttributes() {
-		return Monster.createMonsterAttributes()
+		return createSoldierAttributes()
 				.add(Attributes.MOVEMENT_SPEED, 0.27D)
 				.add(Attributes.ARMOR, 5.0D);
 	}

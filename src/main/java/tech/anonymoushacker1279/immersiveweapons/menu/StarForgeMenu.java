@@ -19,6 +19,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.StarForgeBlockEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.MenuTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.StarForgeRecipe;
+import tech.anonymoushacker1279.immersiveweapons.item.crafting.input.StarForgeRecipeInput;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.star_forge.StarForgeMenuPayload;
 
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ public class StarForgeMenu extends AbstractContainerMenu {
 	private final Player player;
 
 	public List<StarForgeRecipe> availableRecipes = new ArrayList<>(25);
+	public static final List<RecipeHolder<StarForgeRecipe>> ALL_RECIPES = new ArrayList<>(10);
 
 	public StarForgeMenu(int containerID, Inventory inventory, List<ResourceKey<Recipe<?>>> availableRecipeLocations) {
 		this(containerID, inventory, new SimpleContainer(3), new SimpleContainerData(5));
@@ -135,22 +137,15 @@ public class StarForgeMenu extends AbstractContainerMenu {
 				availableRecipes.add(holder.value());
 			}
 
-			// Send the packet to the client
-			// TODO: fix recipe sync
-			/*PacketDistributor.sendToPlayersNear(
-					(ServerLevel) starForgeBlockEntity.getLevel(),
-					null,
-					starForgeBlockEntity.getBlockPos().getX(),
-					starForgeBlockEntity.getBlockPos().getY(),
-					starForgeBlockEntity.getBlockPos().getZ(),
-					16,
-					new StarForgeUpdateRecipesPayload(player.getUUID(), containerId, availableRecipes)
-			);*/
-
 			// If there is a recipe already being crafted, cancel it
 			if (containerData.get(2) > 0) {
 				containerData.set(2, 0);
 			}
+		} else {
+			// Update available recipes on the client
+			availableRecipes.clear();
+			StarForgeMenu.ALL_RECIPES.forEach(holder -> availableRecipes.add(holder.value()));
+			availableRecipes.removeIf(recipe -> !recipe.matches(new StarForgeRecipeInput(container.getItem(0), container.getItem(1))));
 		}
 	}
 

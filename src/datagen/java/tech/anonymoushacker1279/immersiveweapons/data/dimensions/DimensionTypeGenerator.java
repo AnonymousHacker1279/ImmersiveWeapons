@@ -28,7 +28,7 @@ public class DimensionTypeGenerator {
 				false,
 				-64,
 				256,
-				192,
+				212,
 				BlockTags.INFINIBURN_OVERWORLD,
 				TILTROS_LEVEL_ID,
 				0.2F,

@@ -6,31 +6,26 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.equipment.ArmorMaterial;
 import net.minecraft.world.item.equipment.ArmorType;
+import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.PacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.CobaltArmorPayload;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
-import javax.annotation.Nullable;
-
-public class CobaltArmorItem extends Item {
+public class CobaltArmorItem extends Item implements TickableArmor {
 
 	public CobaltArmorItem(ArmorMaterial material, ArmorType armorType, Properties properties) {
 		super(properties.humanoidArmor(material, armorType));
 	}
 
 	@Override
-	public void inventoryTick(ItemStack stack, ServerLevel level, Entity entity, @Nullable EquipmentSlot slot) {
-		if (entity instanceof Player player && player.getUUID().toString().equals("94f11dac-d1bc-46da-877b-c69f533f2da2")) {
+	public void playerTick(Level level, Player player) {
+		if (player.getUUID().toString().equals("94f11dac-d1bc-46da-877b-c69f533f2da2")) {
 			if (ArmorUtils.isWearingCobaltArmor(player)) {
-
 				boolean effectEnabled = player.getPersistentData().getBoolean("CobaltArmorEffectEnabled").orElse(false);
 
 				if (level.isClientSide) {

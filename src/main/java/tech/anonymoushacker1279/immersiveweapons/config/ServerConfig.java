@@ -306,8 +306,8 @@ public class ServerConfig {
 				.defineInRange("flashbangEffectRange", 10.0d, 0.0d, 32.0d);
 
 		flashbangDisorientTime = builder
-				.comment("Set the time in ticks that entities are disoriented by flashbangs")
-				.defineInRange("flashbangDisorientTime", 100, 0, 200);
+				.comment("Set the time in seconds that entities are disoriented by flashbangs")
+				.defineInRange("flashbangDisorientTime", 10, 0, 60);
 
 		builder.pop();
 

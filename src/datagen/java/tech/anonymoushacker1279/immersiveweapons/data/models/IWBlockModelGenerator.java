@@ -154,7 +154,7 @@ public class IWBlockModelGenerator {
 		blockModels.createHead(BlockRegistry.STORM_CREEPER_HEAD.get(), BlockRegistry.STORM_CREEPER_WALL_HEAD.get(), CustomSkullTypes.STORM_CREEPER, TEMPLATE_SKULL);
 		blockModels.createHead(BlockRegistry.SKELETON_MERCHANT_HEAD.get(), BlockRegistry.SKELETON_MERCHANT_WALL_HEAD.get(), CustomSkullTypes.SKELETON_MERCHANT, TEMPLATE_SKULL);
 		generatePlant(blockModels, BlockRegistry.MOONGLOW.get(), BlockRegistry.POTTED_MOONGLOW.get());
-		generateWood(blockModels, BlockRegistry.STARDUST_WOOD.get(), BlockRegistry.STARDUST_LOG.get());
+		generateStardustWood(blockModels, BlockRegistry.STARDUST_WOOD.get());
 		generateStardustLog(blockModels, BlockRegistry.STARDUST_LOG.get());
 		generateWood(blockModels, BlockRegistry.STRIPPED_STARDUST_WOOD.get(), BlockRegistry.STRIPPED_STARDUST_LOG.get());
 		generateWoodLog(blockModels, BlockRegistry.STRIPPED_STARDUST_LOG.get());
@@ -885,5 +885,54 @@ public class IWBlockModelGenerator {
 				.build();
 
 		models.createAxisAlignedPillarBlock(block, TexturedModel.createDefault(b -> mapping, template));
+	}
+
+	/**
+	 * Generate a stardust wood type blockstate and model. Stardust wood has a second overlay layer.
+	 *
+	 * @param models the block model generator
+	 * @param block  the block to generate the state and model for
+	 */
+	private static void generateStardustWood(BlockModelGenerators models, Block block) {
+		TextureMapping mapping = TextureMapping.column(block)
+				.put(TextureSlot.END, ModelLocationUtils.getModelLocation(BlockRegistry.STARDUST_LOG.get()))
+				.put(TextureSlot.SIDE, ModelLocationUtils.getModelLocation(BlockRegistry.STARDUST_LOG.get()))
+				.put(TextureSlot.LAYER1, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/stardust_granule_overlay"));
+		ModelTemplate normalTemplate = ModelTemplates.CUBE_COLUMN.extend()
+				.renderType("cutout")
+				.requiredTextureSlot(TextureSlot.LAYER1)
+				.element(builder -> builder
+						.allFaces(((direction, faceBuilder) -> {
+							switch (direction) {
+								case NORTH, SOUTH, EAST, WEST -> faceBuilder
+										.texture(TextureSlot.SIDE);
+								case UP, DOWN -> faceBuilder.texture(TextureSlot.END);
+							}
+						})))
+				.element(builder -> builder
+						.allFaces(((direction, faceBuilder) -> faceBuilder
+								.texture(TextureSlot.LAYER1)
+								.emissivity(15, 3))))
+				.build();
+		ModelTemplate horizontalTemplate = ModelTemplates.CUBE_COLUMN_HORIZONTAL.extend()
+				.renderType("cutout")
+				.requiredTextureSlot(TextureSlot.LAYER1)
+				.element(builder -> builder
+						.allFaces(((direction, faceBuilder) -> {
+							switch (direction) {
+								case NORTH, SOUTH, EAST, WEST -> faceBuilder
+										.texture(TextureSlot.SIDE);
+								case UP, DOWN -> faceBuilder.texture(TextureSlot.END);
+							}
+						})))
+				.element(builder -> builder
+						.allFaces(((direction, faceBuilder) -> faceBuilder
+								.texture(TextureSlot.LAYER1)
+								.emissivity(15, 3))))
+				.build();
+
+		models.createRotatedPillarWithHorizontalVariant(block,
+				TexturedModel.createDefault(b -> mapping, normalTemplate),
+				TexturedModel.createDefault(b -> mapping, horizontalTemplate));
 	}
 }

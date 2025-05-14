@@ -2,9 +2,15 @@ package tech.anonymoushacker1279.immersiveweapons.network.handler.star_forge;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.crafting.Recipe;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
+import tech.anonymoushacker1279.immersiveweapons.init.RecipeTypeRegistry;
+import tech.anonymoushacker1279.immersiveweapons.item.crafting.StarForgeRecipe;
 import tech.anonymoushacker1279.immersiveweapons.menu.StarForgeMenu;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.star_forge.StarForgeUpdateRecipesPayload;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class StarForgeUpdateRecipesPayloadHandler {
 
@@ -21,7 +27,15 @@ public class StarForgeUpdateRecipesPayloadHandler {
 
 					if (player.containerMenu instanceof StarForgeMenu menu && menu.containerId == containerId) {
 						// TODO: fix recipe sync
-						// menu.availableRecipes.addAll(data.recipes());
+						//menu.availableRecipes.addAll(data.recipes());
+
+						if (data.recipes().getFirst().getType().equals(RecipeTypeRegistry.STAR_FORGE_RECIPE_TYPE.get())) {
+							List<StarForgeRecipe> recipes = new ArrayList<>(data.recipes().size());
+							for (Recipe<?> recipe : data.recipes()) {
+								recipes.add((StarForgeRecipe) recipe);
+							}
+							menu.availableRecipes.addAll(recipes);
+						}
 					}
 				})
 				.exceptionally(e -> {

@@ -3,7 +3,6 @@ package tech.anonymoushacker1279.immersiveweapons.entity.neutral;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
@@ -40,7 +39,7 @@ public class MinutemanEntity extends RangedSoldierEntity {
 	}
 
 	public static AttributeSupplier.Builder registerAttributes() {
-		return Mob.createMobAttributes()
+		return createSoldierAttributes()
 				.add(Attributes.MOVEMENT_SPEED, 0.27D)
 				.add(Attributes.ARMOR, 4.0D);
 	}

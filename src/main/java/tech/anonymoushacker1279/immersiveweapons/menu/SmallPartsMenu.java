@@ -14,13 +14,15 @@ import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.MenuTypeRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.RecipeTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.SmallPartsRecipe;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 
@@ -101,25 +103,25 @@ public class SmallPartsMenu extends AbstractContainerMenu {
 		addDataSlot(selectedPartsPatternIndex);
 
 		if (inventory.player.level() instanceof ServerLevel serverLevel) {
-			initializeRecipes(serverLevel.recipeAccess());
+			Collection<RecipeHolder<SmallPartsRecipe>> recipes = serverLevel.recipeAccess().recipeMap().byType(RecipeTypeRegistry.SMALL_PARTS_RECIPE_TYPE.get());
+			initializeRecipes(recipes);
 		}
 	}
 
-	private void initializeRecipes(RecipeManager manager) {
-		manager.getRecipes().forEach(recipe -> {
-			if (recipe.value() instanceof SmallPartsRecipe smallPartsRecipe) {
-				for (ItemStack craftable : smallPartsRecipe.craftables()) {
-					if (!craftable.isEmpty()) {
-						for (Holder<Item> material : smallPartsRecipe.input().getValues()) {
-							Pair<Item, Item> pair = new Pair<>(material.value(), craftable.getItem());
-							if (!ALL_CRAFTABLES.contains(pair)) {
-								ALL_CRAFTABLES.add(pair);
-							}
+	public static void initializeRecipes(Collection<RecipeHolder<SmallPartsRecipe>> recipes) {
+		for (RecipeHolder<SmallPartsRecipe> recipeHolder : recipes) {
+			SmallPartsRecipe recipe = recipeHolder.value();
+			for (ItemStack craftable : recipe.craftables()) {
+				if (!craftable.isEmpty()) {
+					for (Holder<Item> material : recipe.input().getValues()) {
+						Pair<Item, Item> pair = new Pair<>(material.value(), craftable.getItem());
+						if (!ALL_CRAFTABLES.contains(pair)) {
+							ALL_CRAFTABLES.add(pair);
 						}
 					}
 				}
 			}
-		});
+		}
 
 		// Sort the recipes alphabetically
 		ALL_CRAFTABLES.sort(Comparator.comparing(o -> o.getSecond().getDescriptionId()));

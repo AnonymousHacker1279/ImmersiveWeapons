@@ -17,7 +17,7 @@ public class ScopeOverlay {
 		int y = (guiHeight - vHeight) / 2;
 		int x1 = x + uWidth;
 		int y1 = y + vHeight;
-		int color = ARGB.colorFromFloat(0.1f, 1.0f, 1.0f, 1.0f);
+		int color = ARGB.colorFromFloat(1f, 1.0f, 1.0f, 1.0f);
 		gui.blit(RenderType::guiTexturedOverlay, IWOverlays.SCOPE_LOCATION, x, y, 0.0F, 0.0F, uWidth, vHeight, uWidth, vHeight, color);
 		gui.fill(RenderType.guiOverlay(), 0, y1, guiWidth, guiHeight, -90, -16777216);
 		gui.fill(RenderType.guiOverlay(), 0, 0, guiWidth, y, -90, -16777216);

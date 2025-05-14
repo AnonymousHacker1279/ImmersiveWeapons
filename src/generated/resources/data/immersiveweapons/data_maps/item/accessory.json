@@ -96,7 +96,7 @@
         },
         {
           "type": {
-            "clamp": true,
+            "clamp": false,
             "name": "damage_resistance"
           },
           "value": -0.2
@@ -211,7 +211,7 @@
         },
         {
           "type": {
-            "clamp": true,
+            "clamp": false,
             "name": "damage_resistance"
           },
           "value": 0.025
@@ -241,7 +241,7 @@
         },
         {
           "type": {
-            "clamp": true,
+            "clamp": false,
             "name": "damage_resistance"
           },
           "value": 0.01
@@ -295,7 +295,7 @@
       "effects": [
         {
           "type": {
-            "clamp": true,
+            "clamp": false,
             "name": "damage_resistance"
           },
           "value": 0.003
@@ -339,7 +339,7 @@
         },
         {
           "type": {
-            "clamp": true,
+            "clamp": false,
             "name": "damage_resistance"
           },
           "value": 0.04
@@ -421,7 +421,7 @@
         },
         {
           "type": {
-            "clamp": true,
+            "clamp": false,
             "name": "damage_resistance"
           },
           "value": 0.03
@@ -500,7 +500,7 @@
       "effects": [
         {
           "type": {
-            "clamp": true,
+            "clamp": false,
             "name": "damage_resistance"
           },
           "value": 0.15
@@ -588,7 +588,7 @@
         },
         {
           "type": {
-            "clamp": true,
+            "clamp": false,
             "name": "damage_resistance"
           },
           "value": 0.02
@@ -616,7 +616,7 @@
       "effects": [
         {
           "type": {
-            "clamp": true,
+            "clamp": false,
             "name": "damage_resistance"
           },
           "value": 0.01
@@ -656,7 +656,7 @@
       "effects": [
         {
           "type": {
-            "clamp": true,
+            "clamp": false,
             "name": "damage_resistance"
           },
           "value": 0.05
@@ -716,7 +716,7 @@
         },
         {
           "type": {
-            "clamp": true,
+            "clamp": false,
             "name": "damage_resistance"
           },
           "value": 0.05
@@ -748,7 +748,7 @@
       "effects": [
         {
           "type": {
-            "clamp": true,
+            "clamp": false,
             "name": "damage_resistance"
           },
           "value": 0.03
@@ -812,7 +812,7 @@
       "effects": [
         {
           "type": {
-            "clamp": true,
+            "clamp": false,
             "name": "damage_resistance"
           },
           "value": 0.003
@@ -911,7 +911,7 @@
       "effects": [
         {
           "type": {
-            "clamp": true,
+            "clamp": false,
             "name": "damage_resistance"
           },
           "value": 0.15

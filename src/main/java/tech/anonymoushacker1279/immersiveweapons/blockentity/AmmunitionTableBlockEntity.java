@@ -360,7 +360,7 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 				// Drop the item in the world
 				if (level != null) {
 					BlockPos pos = getBlockPos();
-					level.addFreshEntity(new ItemEntity(level, pos.getX(), pos.getY(), pos.getZ(), dropStack));
+					level.addFreshEntity(new ItemEntity(level, pos.getX() + 0.5f, pos.getY() + 0.7f, pos.getZ() + 0.5f, dropStack));
 				}
 
 				// Update the excess stack size

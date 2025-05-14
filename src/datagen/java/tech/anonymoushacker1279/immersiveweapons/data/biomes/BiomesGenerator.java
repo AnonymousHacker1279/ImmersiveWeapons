@@ -84,7 +84,7 @@ public class BiomesGenerator {
 
 	public static Biome deadmansDesertBiome(HolderGetter<PlacedFeature> placedFeatures, HolderGetter<ConfiguredWorldCarver<?>> worldCarvers) {
 		return new Biome.BiomeBuilder()
-				.temperature(0.2f)
+				.temperature(0.35f)
 				.downfall(0.0f)
 				.hasPrecipitation(false)
 				.temperatureAdjustment(TemperatureModifier.NONE)

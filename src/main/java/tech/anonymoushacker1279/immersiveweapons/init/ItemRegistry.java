@@ -168,27 +168,27 @@ public class ItemRegistry {
 	public static final Supplier<PikeItem> VOID_PIKE = ITEMS.registerItem("void_pike", (properties) -> new PikeItem(IWToolMaterials.VOID, -1.5f, properties.repairable(IWItemTagGroups.VOID_INGOTS)));
 	@DatagenExclusionMarker(Type.MODEL_GENERATOR_ITEM)
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, dynamicTooltip = DynamicTooltips.FirearmTooltip.class)
-	public static final Supplier<SimplePistolItem> FLINTLOCK_PISTOL = ITEMS.registerItem("flintlock_pistol", (properties) -> new SimplePistolItem(properties.durability(499)));
+	public static final Supplier<SimplePistolItem> FLINTLOCK_PISTOL = ITEMS.registerItem("flintlock_pistol", (properties) -> new SimplePistolItem(properties.durability(499).enchantable(1)));
 	@DatagenExclusionMarker(Type.MODEL_GENERATOR_ITEM)
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, dynamicTooltip = DynamicTooltips.FirearmTooltip.class)
-	public static final Supplier<SimpleShotgunItem> BLUNDERBUSS = ITEMS.registerItem("blunderbuss", (properties) -> new SimpleShotgunItem(properties.durability(449)));
+	public static final Supplier<SimpleShotgunItem> BLUNDERBUSS = ITEMS.registerItem("blunderbuss", (properties) -> new SimpleShotgunItem(properties.durability(449).enchantable(3)));
 	@DatagenExclusionMarker(Type.MODEL_GENERATOR_ITEM)
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, dynamicTooltip = DynamicTooltips.FirearmTooltip.class)
-	public static final Supplier<MusketItem> MUSKET = ITEMS.registerItem("musket", (properties) -> new MusketItem(properties.durability(499), false));
+	public static final Supplier<MusketItem> MUSKET = ITEMS.registerItem("musket", (properties) -> new MusketItem(properties.durability(499).enchantable(2), false));
 	@DatagenExclusionMarker(Type.MODEL_GENERATOR_ITEM)
 	@LanguageEntryOverride("Musket (Scope)")
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "musket", dynamicTooltip = DynamicTooltips.FirearmTooltip.class)
-	public static final Supplier<MusketItem> MUSKET_SCOPE = ITEMS.registerItem("musket_scope", (properties) -> new MusketItem(properties.durability(499), true));
+	public static final Supplier<MusketItem> MUSKET_SCOPE = ITEMS.registerItem("musket_scope", (properties) -> new MusketItem(properties.durability(499).enchantable(2), true));
 	@DatagenExclusionMarker(Type.MODEL_GENERATOR_ITEM)
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, components = 2, dynamicTooltip = DynamicTooltips.FirearmTooltip.class)
-	public static final Supplier<FlareGunItem> FLARE_GUN = ITEMS.registerItem("flare_gun", (properties) -> new FlareGunItem(properties.durability(399)));
+	public static final Supplier<FlareGunItem> FLARE_GUN = ITEMS.registerItem("flare_gun", (properties) -> new FlareGunItem(properties.durability(399).enchantable(1)));
 	@DatagenExclusionMarker(Type.MODEL_GENERATOR_ITEM)
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, dynamicTooltip = DynamicTooltips.FirearmTooltip.class)
-	public static final Supplier<HandCannonItem> HAND_CANNON = ITEMS.registerItem("hand_cannon", (properties) -> new HandCannonItem(properties.durability(199)));
+	public static final Supplier<HandCannonItem> HAND_CANNON = ITEMS.registerItem("hand_cannon", (properties) -> new HandCannonItem(properties.durability(199).enchantable(1)));
 	@DatagenExclusionMarker(Type.MODEL_GENERATOR_ITEM)
 	@LanguageEntryOverride("Dragon's Breath Cannon")
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, dynamicTooltip = DynamicTooltips.FirearmTooltip.class)
-	public static final Supplier<DragonsBreathCannonItem> DRAGONS_BREATH_CANNON = ITEMS.registerItem("dragons_breath_cannon", (properties) -> new DragonsBreathCannonItem(properties.durability(249)));
+	public static final Supplier<DragonsBreathCannonItem> DRAGONS_BREATH_CANNON = ITEMS.registerItem("dragons_breath_cannon", (properties) -> new DragonsBreathCannonItem(properties.durability(249).enchantable(1)));
 	@TooltipMarker(dynamicTooltip = DynamicTooltips.GauntletTooltip.class)
 	public static final Supplier<GauntletItem> WOODEN_GAUNTLET = ITEMS.registerItem("wooden_gauntlet", (properties) -> new GauntletItem(ToolMaterial.WOOD, -2.3f, 0.15f, 0, properties.repairable(ItemTags.PLANKS)));
 	@TooltipMarker(dynamicTooltip = DynamicTooltips.GauntletTooltip.class)
@@ -218,20 +218,20 @@ public class ItemRegistry {
 	@TooltipMarker(dynamicTooltip = DynamicTooltips.GauntletTooltip.class)
 	public static final Supplier<GauntletItem> VOID_GAUNTLET = ITEMS.registerItem("void_gauntlet", (properties) -> new GauntletItem(IWToolMaterials.VOID, -1.2f, 0.95f, 3, properties.repairable(IWItemTagGroups.VOID_INGOTS)));
 	@TooltipMarker(style = {ChatFormatting.GOLD, ChatFormatting.ITALIC})
-	public static final Supplier<MeteorStaffItem> METEOR_STAFF = ITEMS.registerItem("meteor_staff", (properties) -> new MeteorStaffItem(properties.durability(199)));
+	public static final Supplier<MeteorStaffItem> METEOR_STAFF = ITEMS.registerItem("meteor_staff", (properties) -> new MeteorStaffItem(properties.durability(199).enchantable(1)));
 	@TooltipMarker(style = {ChatFormatting.DARK_RED, ChatFormatting.ITALIC})
-	public static final Supplier<CursedSightStaffItem> CURSED_SIGHT_STAFF = ITEMS.registerItem("cursed_sight_staff", (properties) -> new CursedSightStaffItem(properties.durability(149)));
+	public static final Supplier<CursedSightStaffItem> CURSED_SIGHT_STAFF = ITEMS.registerItem("cursed_sight_staff", (properties) -> new CursedSightStaffItem(properties.durability(149).enchantable(1)));
 	@TextureMetadataMarker(frameTime = 3)
 	@TooltipMarker(style = {ChatFormatting.DARK_AQUA, ChatFormatting.ITALIC})
-	public static final Supplier<SculkStaffItem> SCULK_STAFF = ITEMS.registerItem("sculk_staff", (properties) -> new SculkStaffItem(properties.durability(129)));
-	public static final Supplier<RecoveryStaffItem> RECOVERY_STAFF = ITEMS.registerItem("recovery_staff", (properties) -> new RecoveryStaffItem(properties.durability(399)));
+	public static final Supplier<SculkStaffItem> SCULK_STAFF = ITEMS.registerItem("sculk_staff", (properties) -> new SculkStaffItem(properties.durability(129).enchantable(1)));
+	public static final Supplier<RecoveryStaffItem> RECOVERY_STAFF = ITEMS.registerItem("recovery_staff", (properties) -> new RecoveryStaffItem(properties.durability(399).enchantable(1)));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC})
-	public static final Supplier<IceBowItem> ICE_BOW = ITEMS.registerItem("ice_bow", (properties) -> new IceBowItem(properties.durability(149)));
+	public static final Supplier<IceBowItem> ICE_BOW = ITEMS.registerItem("ice_bow", (properties) -> new IceBowItem(properties.durability(149).enchantable(1)));
 	@LanguageEntryOverride("Dragon's Breath Bow")
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC})
-	public static final Supplier<DragonBreathBow> DRAGONS_BREATH_BOW = ITEMS.registerItem("dragons_breath_bow", (properties) -> new DragonBreathBow(properties.durability(99)));
+	public static final Supplier<DragonBreathBow> DRAGONS_BREATH_BOW = ITEMS.registerItem("dragons_breath_bow", (properties) -> new DragonBreathBow(properties.durability(99).enchantable(1)));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC})
-	public static final Supplier<AuroraBow> AURORA_BOW = ITEMS.registerItem("aurora_bow", (properties) -> new AuroraBow(properties.durability(299)));
+	public static final Supplier<AuroraBow> AURORA_BOW = ITEMS.registerItem("aurora_bow", (properties) -> new AuroraBow(properties.durability(299).enchantable(1)));
 
 	// Items
 	public static final Supplier<Item> WOODEN_SHARD = ITEMS.registerItem("wooden_shard", Item::new);

@@ -10,6 +10,8 @@ import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.OpenDoorGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
@@ -47,6 +49,11 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 		goalSelector.addGoal(1, new FloatGoal(this));
 		goalSelector.addGoal(4, new OpenDoorGoal(this, true));
 		goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.8D, 0.35f));
+	}
+
+	public static AttributeSupplier.Builder createSoldierAttributes() {
+		return Mob.createMobAttributes()
+				.add(Attributes.ATTACK_DAMAGE, 2.0D);
 	}
 
 	@Override

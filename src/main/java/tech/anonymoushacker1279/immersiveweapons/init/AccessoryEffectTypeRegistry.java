@@ -45,7 +45,7 @@ public class AccessoryEffectTypeRegistry {
 	/**
 	 * Modifier to all incoming damage sources.
 	 */
-	public static final Supplier<AccessoryEffectType> DAMAGE_RESISTANCE = ACCESSORY_EFFECT_TYPES.register("damage_resistance", (name) -> new AccessoryEffectType(name, true));
+	public static final Supplier<AccessoryEffectType> DAMAGE_RESISTANCE = ACCESSORY_EFFECT_TYPES.register("damage_resistance", AccessoryEffectType::new);
 	/**
 	 * Modifier to melee knockback.
 	 */
@@ -55,8 +55,8 @@ public class AccessoryEffectTypeRegistry {
 	 */
 	public static final Supplier<AccessoryEffectType> MELEE_BLEED_CHANCE = ACCESSORY_EFFECT_TYPES.register("melee_bleed_chance", (name) -> new AccessoryEffectType(name, true));
 	/**
-	 * Modifier to melee critical damage. Additive with vanilla critical damage, which is 50% by default.
-	 * For example, a value of 0.5d will result in 100% critical damage.
+	 * Modifier to melee critical damage. Additive with vanilla critical damage, which is 50% by default. For example, a
+	 * value of 0.5d will result in 100% critical damage.
 	 */
 	public static final Supplier<AccessoryEffectType> MELEE_CRIT_DAMAGE_BONUS = ACCESSORY_EFFECT_TYPES.register("melee_crit_damage_bonus", AccessoryEffectType::new);
 	/**

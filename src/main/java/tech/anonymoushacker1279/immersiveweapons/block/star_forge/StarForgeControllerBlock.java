@@ -118,7 +118,7 @@ public class StarForgeControllerBlock extends BasicOrientableBlock implements En
 	public static boolean checkForValidMultiBlock(BlockState controllerState, BlockPos controllerPos, ServerLevel level) {
 		// Get the selection of blocks to check relative to the controller's direction
 		// The controller is always in front of the forge
-		Direction controllerDirection = controllerState.getValue(FACING);
+		Direction controllerDirection = controllerState.getValue(FACING).getOpposite();
 
 		// Check each "slice" of the structure and ensure it is valid
 

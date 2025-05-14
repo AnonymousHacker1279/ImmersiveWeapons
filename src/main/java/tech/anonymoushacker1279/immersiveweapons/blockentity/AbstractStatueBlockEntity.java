@@ -83,6 +83,7 @@ public abstract class AbstractStatueBlockEntity<T extends SoldierEntity> extends
 
 		if (entitiesInArea != null && entitiesInArea.size() <= (maxNearbyEntities + additionalEntities)) {
 			if (entity != null) {
+				entity.finalizeSpawn((ServerLevel) level, level.getCurrentDifficultyAt(getBlockPos()), EntitySpawnReason.SPAWNER, null);
 				if (entity.getRandom().nextFloat() <= armorSpawnChance) {
 					for (EquipmentSlot equipmentslot : EquipmentSlot.values()) {
 						if (equipmentslot.getType() == Type.HUMANOID_ARMOR) {
@@ -119,7 +120,6 @@ public abstract class AbstractStatueBlockEntity<T extends SoldierEntity> extends
 		for (i = 0; i < 5; i++) {
 			BlockPos randomPositionInArea = getRandomPositionInArea();
 			if (level != null && level.getBlockState(randomPositionInArea) == Blocks.AIR.defaultBlockState()) {
-				entity.finalizeSpawn((ServerLevel) level, level.getCurrentDifficultyAt(randomPositionInArea), EntitySpawnReason.SPAWNER, null);
 				entity.snapTo(randomPositionInArea, 0.0F, 0.0F);
 				level.addFreshEntity(entity);
 				spawnParticles();
