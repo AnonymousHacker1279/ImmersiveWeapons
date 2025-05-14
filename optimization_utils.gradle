@@ -1,153 +1,280 @@
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
+import org.gradle.api.tasks.*
 
 import java.nio.file.Files
 import java.nio.file.StandardCopyOption
 import java.security.MessageDigest
 
-static def calculateMD5Hash(File file) {
-	MessageDigest md = MessageDigest.getInstance("MD5")
-	file.withInputStream { md.update(it.bytes) }
-	byte[] digest = md.digest()
-	return digest.collect { String.format("%02x", it) }.join()
-}
-
-// Load cache with file hashes, to avoid re-optimizing files that are untouched
-def getOrCreateCache(String cacheFileName) {
-	LinkedHashMap<?, ?> cache = [:]
-	if (file(cacheFileName).exists()) {
-		cache = new JsonSlurper().parse(file(cacheFileName)) as LinkedHashMap<?, ?>
-		println("Loaded %s entries from cache (%s).".formatted(cache.size(), cacheFileName))
-	} else {
-		file(cacheFileName).createNewFile()
-		println("Created new cache file: %s".formatted(cacheFileName))
+// Helper methods used by tasks
+class OptimizationUtils {
+	static String calculateMD5Hash(File file) {
+		MessageDigest md = MessageDigest.getInstance("MD5")
+		file.withInputStream { md.update(it.bytes) }
+		byte[] digest = md.digest()
+		return digest.collect { String.format("%02x", it) }.join()
 	}
 
-	return cache
+	static Map<String, Map<String, String>> getOrCreateUnifiedCache(File cacheFile) {
+		Map<String, Map<String, String>> cache = [:]
+		if (cacheFile.exists()) {
+			try {
+				cache = new JsonSlurper().parse(cacheFile) as Map<String, Map<String, String>>
+				int totalEntries = cache.values().sum { it.size() } ?: 0
+				println("Loaded cache with ${totalEntries} total entries from ${cacheFile.name}.")
+			} catch (Exception e) {
+				println("Error loading cache file, creating new one: " + e.message)
+				cache = [:]
+			}
+		} else {
+			cacheFile.createNewFile()
+			println("Created new unified cache file: ${cacheFile.name}")
+			cache = [:]
+		}
+
+		// Ensure we have sections for each file type
+		if (!cache.containsKey("PNG")) cache.put("PNG", [:])
+		if (!cache.containsKey("OGG")) cache.put("OGG", [:])
+
+		return cache
+	}
+
+	static int purgeNonExistentEntries(Map<String, String> typeCache) {
+		int purgedCount = 0
+		List<String> toRemove = []
+
+		typeCache.each { path, hash ->
+			File file = new File(path)
+			if (!file.exists()) {
+				toRemove << path
+				purgedCount++
+			}
+		}
+
+		toRemove.each { typeCache.remove(it) }
+		return purgedCount
+	}
+
+	static void initializeCacheFile(File cacheFile) {
+		if (!cacheFile.exists()) {
+			cacheFile.parentFile?.mkdirs() // Create parent directories if needed
+			cacheFile.text = JsonOutput.toJson([
+					"PNG": [:],
+					"OGG": [:]
+			])
+			println("Initialized cache file: ${cacheFile.absolutePath}")
+		}
+	}
 }
 
-processResources {
-	// Minify JSON files
-	doLast {
+// Task for minifying JSON files
+abstract class JsonMinifyTask extends DefaultTask {
+	@InputDirectory
+	abstract DirectoryProperty getResourcesDir()
+
+	@InputFiles
+	@PathSensitive(PathSensitivity.RELATIVE)
+	abstract ConfigurableFileCollection getJsonFiles()
+
+	@TaskAction
+	void minifyJson() {
 		long minifyStart = System.currentTimeMillis()
 		int filesMinified = 0
 		int bytesSaved = 0
 		int bytesProcessed = 0
 
-		println("Discovering JSON files in %s...".formatted(outputs.files.asPath))
-		ConfigurableFileTree jsonFiles = fileTree(dir: outputs.files.asPath, include: ['**/*.json', '**/*.mcmeta'])
-		int totalFiles = jsonFiles.size()
-		println("Found %s JSON files in %sms.".formatted(totalFiles, (System.currentTimeMillis() - minifyStart)))
+		println("Discovering JSON files in ${resourcesDir.get()}...")
+		int totalFiles = jsonFiles.files.size()
+		println("Found ${totalFiles} JSON files in ${System.currentTimeMillis() - minifyStart}ms.")
 		int processedFiles = 0
 
-		jsonFiles.each {
-			File file = it
+		jsonFiles.each { File file ->
 			filesMinified++
 			long oldLength = file.length()
 			bytesProcessed += oldLength
-			file.text = JsonOutput.toJson(new JsonSlurper().parse(file))
+
+			Object jsonContent = new JsonSlurper().parse(file)
+			file.text = JsonOutput.toJson(jsonContent)
+
 			bytesSaved += (oldLength - file.length())
 			processedFiles++
 
 			int progress = (int) Math.ceil((processedFiles * 100) / totalFiles)
-			print("\rMinifying JSON files... %s%% (%s KB processed)".formatted(progress, (bytesProcessed / 1024).round()))
-			System.out.flush() // Ensure the output is flushed
-		}
-
-		println("\nFinished minifying %s files, saving %s KB in %sms.".formatted(filesMinified, (bytesSaved / 1024).round(), (System.currentTimeMillis() - minifyStart)))
-	}
-}
-
-tasks.named('jar', Jar).configure {
-	// Run optimize tasks
-	dependsOn('optimizePng')
-	dependsOn('optimizeOgg')
-}
-
-void optimizeFile(File file, String command, File tempDir = null) {
-	long size = file.length()
-	File tempFile = tempDir ? new File(tempDir, file.name) : file
-
-	if (command == "optipng") {
-		exec {
-			commandLine command, "-q", "-o7", "-zm1-9", "-strip", "all", file
-		}
-	} else if (command == "optivorbis") {
-		exec {
-			commandLine command, "-q", file, tempFile
-		}
-	}
-
-	if (tempDir && tempFile.length() < size) {
-		Files.move(tempFile.toPath(), file.toPath(), StandardCopyOption.REPLACE_EXISTING)
-	}
-}
-
-void optimizeFiles(String fileType, String command, String cacheFileName, String includePattern) {
-	try {
-		exec {
-			commandLine command, "--version"
-		}
-
-		println("\nBeginning optimization of %s files...".formatted(fileType))
-
-		long minifyStart = System.currentTimeMillis()
-		int originalSize = 0
-		int newSize = 0
-		int filesOptimized = 0
-
-		println("Discovering %s files in %s...".formatted(fileType, sourceSets.main.resources.srcDirs[0]))
-		ConfigurableFileTree files = fileTree(dir: sourceSets.main.resources.srcDirs[0], include: includePattern)
-		int totalFiles = files.size()
-		println("Found %s %s files in %sms.".formatted(totalFiles, fileType, (System.currentTimeMillis() - minifyStart)))
-		LinkedHashMap<?, ?> cache = getOrCreateCache(cacheFileName)
-		File tempDir = fileType == "OGG" ? Files.createTempDirectory("optimizeOgg").toFile() : null
-		int processedFiles = 0
-
-		files.each {
-			originalSize += it.length()
-
-			int progress = (int) Math.ceil((processedFiles * 100) / totalFiles)
-			print("\rOptimizing %s files... %s%% (%s KB processed)".formatted(fileType, progress, (originalSize / 1024).round()))
+			print("\rMinifying JSON files... ${progress}% (${(bytesProcessed / 1024).round()} KB processed)")
 			System.out.flush()
-			processedFiles++
+		}
 
-			if (cache.containsKey(it.path) && cache[it.path] == calculateMD5Hash(it)) {
-				newSize += it.length()
-				return
-			} else {
-				filesOptimized++
-				optimizeFile(it, command, tempDir)
-				newSize += it.length()
-				cache.put(it.path, calculateMD5Hash(it))
+		println("\nFinished minifying ${filesMinified} files, saving ${(bytesSaved / 1024).round()} KB in ${System.currentTimeMillis() - minifyStart}ms.")
+	}
+}
+
+// Base task for optimizing files
+abstract class FileOptimizationTask extends DefaultTask {
+	@Input
+	abstract Property<String> getFileType()
+
+	@Input
+	abstract Property<String> getCommand()
+
+	@InputFile
+	@Optional
+	abstract RegularFileProperty getCacheFile()
+
+	@InputDirectory
+	abstract DirectoryProperty getResourcesDir()
+
+	@Input
+	abstract Property<String> getIncludePattern()
+
+	@InputFiles
+	@PathSensitive(PathSensitivity.RELATIVE)
+	abstract ConfigurableFileCollection getFilesToOptimize()
+
+	FileOptimizationTask() {
+		notCompatibleWithConfigurationCache("This task uses project.exec which isn't supported with configuration cache")
+	}
+
+	@TaskAction
+	void optimize() {
+		try {
+			project.exec {
+				commandLine getCommand().get(), "--version"
+			}
+
+			String fileType = getFileType().get()
+			String command = getCommand().get()
+			File cacheFileName = getCacheFile().getAsFile().getOrNull()
+			if (cacheFileName == null) {
+				cacheFileName = new File(project.buildDir, ".optimizationCache")
+			}
+
+			println("\nBeginning optimization of ${fileType} files...")
+
+			long minifyStart = System.currentTimeMillis()
+			int originalSize = 0
+			int newSize = 0
+			int filesOptimized = 0
+
+			File resourcesDir = getResourcesDir().getAsFile().get()
+			println("Discovering ${fileType} files in ${resourcesDir}...")
+			int totalFiles = filesToOptimize.files.size()
+			println("Found ${totalFiles} ${fileType} files in ${System.currentTimeMillis() - minifyStart}ms.")
+
+			Map<String, Map<String, String>> unifiedCache = OptimizationUtils.getOrCreateUnifiedCache(cacheFileName)
+			Map<String, String> typeCache = unifiedCache.get(fileType)
+
+			int purgedEntries = OptimizationUtils.purgeNonExistentEntries(typeCache)
+			if (purgedEntries > 0) {
+				println("Purged ${purgedEntries} entries for non-existent ${fileType} files from cache.")
+			}
+
+			File tempDir = fileType == "OGG" ? Files.createTempDirectory("optimize${fileType}").toFile() : null
+			int processedFiles = 0
+
+			filesToOptimize.each { File file ->
+				originalSize += file.length()
+
+				int progress = (int) Math.ceil((processedFiles * 100) / totalFiles)
+				print("\rOptimizing ${fileType} files... ${progress}% (${(originalSize / 1024).round()} KB processed)")
+				System.out.flush()
+				processedFiles++
+
+				String fileHash = OptimizationUtils.calculateMD5Hash(file)
+				if (typeCache.containsKey(file.path) && typeCache[file.path] == fileHash) {
+					newSize += file.length()
+				} else {
+					filesOptimized++
+					optimizeFile(file, command, tempDir)
+					newSize += file.length()
+					typeCache.put(file.path, OptimizationUtils.calculateMD5Hash(file))
+				}
+			}
+
+			if (tempDir) {
+				tempDir.deleteDir()
+			}
+
+			println("\nFinished optimizing ${filesOptimized} files, saving ${((originalSize - newSize) / 1024).toLong()} KB in ${System.currentTimeMillis() - minifyStart}ms.")
+
+			if (filesOptimized > 0 || purgedEntries > 0) {
+				cacheFileName.text = JsonOutput.toJson(unifiedCache)
+				int totalCachedEntries = unifiedCache.values().sum { it.size() } ?: 0
+				println("Updated cache with ${totalCachedEntries} total entries (${typeCache.size()} ${fileType} entries).")
+			}
+		} catch (Exception e) {
+			println("An error occurred while attempting to optimize ${getFileType().get()} files.")
+			println("${getCommand().get()} may not be available. Please consider installing ${getCommand().get()}, and ensure it is added to your PATH.")
+			e.printStackTrace()
+		}
+	}
+
+	void optimizeFile(File file, String command, File tempDir = null) {
+		long size = file.length()
+		File tempFile = tempDir ? new File(tempDir, file.name) : file
+
+		if (command == "optipng") {
+			project.exec {
+				commandLine command, "-q", "-o7", "-zm1-9", "-strip", "all", file
+			}
+		} else if (command == "optivorbis") {
+			project.exec {
+				commandLine command, "-q", file, tempFile
 			}
 		}
 
-		if (tempDir) {
-			tempDir.delete()
+		if (tempDir && tempFile.exists() && tempFile.length() < size) {
+			Files.move(tempFile.toPath(), file.toPath(), StandardCopyOption.REPLACE_EXISTING)
 		}
-
-		println("\nFinished optimizing %s files, saving %s KB in %sms.".formatted(filesOptimized, ((originalSize - newSize) / 1024).toLong(), (System.currentTimeMillis() - minifyStart)))
-
-		if (filesOptimized > 0) {
-			file(cacheFileName).text = JsonOutput.toJson(cache)
-			println("Saved " + cache.size() + " entries to cache.")
-		}
-	} catch (Exception e) {
-		println("An error occurred while attempting to optimize %s files.".formatted(fileType))
-		println("%s may not be available. Please consider installing %s, and ensure it is added to your PATH.".formatted(command, command))
-		e.printStackTrace()
 	}
 }
 
-tasks.register('optimizePng').configure {
-	doLast {
-		optimizeFiles("PNG", "optipng", ".optimizePngCache", '**/*.png')
-	}
+// Register the tasks
+tasks.register("minifyJson", JsonMinifyTask) {
+	resourcesDir = tasks.named("processResources").get().destinationDir
+
+	jsonFiles.from(project.fileTree(resourcesDir).matching {
+		include '**/*.json'
+		include '**/*.mcmeta'
+	})
 }
 
-tasks.register('optimizeOgg').configure {
-	doLast {
-		optimizeFiles("OGG", "optivorbis", ".optimizeOggCache", '**/*.ogg')
-	}
+// Use a shared cache file for both optimization tasks
+def sharedCacheFile = project.file(".optimizationCache")
+// Initialize the cache file during configuration time
+OptimizationUtils.initializeCacheFile(sharedCacheFile)
+
+// PNG optimization task
+tasks.register("optimizePng", FileOptimizationTask) {
+	fileType = "PNG"
+	command = "optipng"
+	cacheFile = sharedCacheFile
+	resourcesDir = project.file("src/main/resources")
+	includePattern = '**/*.png'
+
+	filesToOptimize.from(project.fileTree(resourcesDir).matching {
+		include includePattern.get()
+	})
+}
+
+// OGG optimization task
+tasks.register("optimizeOgg", FileOptimizationTask) {
+	fileType = "OGG"
+	command = "optivorbis"
+	cacheFile = sharedCacheFile
+	resourcesDir = project.file("src/main/resources")
+	includePattern = '**/*.ogg'
+
+	filesToOptimize.from(project.fileTree(resourcesDir).matching {
+		include includePattern.get()
+	})
+}
+
+// Hook up the JSON minification to processResources
+tasks.named("processResources").configure {
+	finalizedBy tasks.named("minifyJson")
+}
+
+// Hook up the optimization tasks to jar
+tasks.named('jar').configure {
+	dependsOn('optimizePng', 'optimizeOgg')
 }

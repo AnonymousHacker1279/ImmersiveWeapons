@@ -28,8 +28,7 @@ gradlew.bat
 
 # Caches
 /src/generated/resources/.cache/
-.optimizePngCache
-.optimizeOggCache
+.optimizationCache
 
 # Run configurations
 /runs/

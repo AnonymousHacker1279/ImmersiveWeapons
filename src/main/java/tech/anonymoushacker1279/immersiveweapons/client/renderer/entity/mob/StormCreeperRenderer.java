@@ -15,7 +15,7 @@ public class StormCreeperRenderer extends CreeperRenderer {
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(CreeperRenderState p_363813_) {
+	public ResourceLocation getTextureLocation(CreeperRenderState state) {
 		return TEXTURE_LOCATION;
 	}
 }
