@@ -597,5 +597,17 @@ public class SoundGenerator extends SoundDefinitionsProvider {
 				.with(Sound.sound(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 								"block/tiltros_portal/whoosh/whoosh"),
 						SoundType.SOUND)));
+
+		add(SoundEventRegistry.TILTROS_PORTAL_TRAVEL.get(), definition()
+				.subtitle("subtitles.immersiveweapons.block.tiltros_portal.travel")
+				.with(Sound.sound(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+								"block/tiltros_portal/travel/travel"),
+						SoundType.SOUND)));
+
+		add(SoundEventRegistry.TILTROS_PORTAL_TRIGGER.get(), definition()
+				.subtitle("subtitles.immersiveweapons.block.tiltros_portal.trigger")
+				.with(Sound.sound(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+								"block/tiltros_portal/trigger/trigger"),
+						SoundType.SOUND)));
 	}
 }

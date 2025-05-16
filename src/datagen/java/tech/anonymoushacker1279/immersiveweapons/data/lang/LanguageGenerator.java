@@ -344,6 +344,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addSubtitle("block.panic_alarm.alarm", "Alarm sounds");
 		addSubtitle("block.mortar.fire", "Mortar fires");
 		addSubtitle("block.tiltros_portal.whoosh", "Portal whooshes");
+		addSubtitle("block.tiltros_portal.travel", "Portal noise fades");
+		addSubtitle("block.tiltros_portal.trigger", "Portal noise intensifies");
 
 		// Entity
 		addSubtitle("entity.soldier.ambient", "Soldier speaking");

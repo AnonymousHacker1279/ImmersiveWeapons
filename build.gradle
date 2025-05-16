@@ -54,6 +54,18 @@ sourceSets {
 	}
 }
 
+configurations {
+	extendConfigurations(implementation, datagenImplementation)
+	extendConfigurations(compileOnly, datagenCompileOnly)
+	extendConfigurations(runtimeOnly, datagenRuntimeOnly)
+}
+
+static void extendConfigurations(Configuration base, Configuration... configurations) {
+	for (configuration in configurations) {
+		configuration.extendsFrom(base)
+	}
+}
+
 neoForge {
 	version = project.neo_version
 	addModdingDependenciesTo sourceSets.datagen
@@ -125,11 +137,11 @@ dependencies {
 		}
 	}
 
-	/*implementation(jarJar("net.kyrptonaught.customportalapi:cpapireforged-neo-${minecraft_version}:[${custom_portals_api_version},)")) {
+	implementation(jarJar("net.kyrptonaught.customportalapi:cpapireforged-neo-${minecraft_version}:[${custom_portals_api_version},)")) {
 		version {
 			prefer custom_portals_api_version
 		}
-	}*/
+	}
 
 	// Include Immersive Weapons Compatibility Bridge (IWCB)
 	// implementation "tech.anonymoushacker1279.iwcompatbridge:IWCompatBridge:${iwcb_version}"

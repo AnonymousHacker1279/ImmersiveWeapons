@@ -439,6 +439,18 @@
     ],
     "subtitle": "subtitles.immersiveweapons.armor.tesla.power_up"
   },
+  "tiltros_portal_travel": {
+    "sounds": [
+      "immersiveweapons:block/tiltros_portal/travel/travel"
+    ],
+    "subtitle": "subtitles.immersiveweapons.block.tiltros_portal.travel"
+  },
+  "tiltros_portal_trigger": {
+    "sounds": [
+      "immersiveweapons:block/tiltros_portal/trigger/trigger"
+    ],
+    "subtitle": "subtitles.immersiveweapons.block.tiltros_portal.trigger"
+  },
   "tiltros_portal_whoosh": {
     "sounds": [
       "immersiveweapons:block/tiltros_portal/whoosh/whoosh"

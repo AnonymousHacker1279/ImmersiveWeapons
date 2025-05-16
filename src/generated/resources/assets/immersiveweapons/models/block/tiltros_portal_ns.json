@@ -1,0 +1,29 @@
+{
+  "elements": [
+    {
+      "faces": {
+        "north": {
+          "texture": "#texture"
+        },
+        "south": {
+          "texture": "#texture"
+        }
+      },
+      "from": [
+        0,
+        0,
+        6
+      ],
+      "to": [
+        16,
+        16,
+        10
+      ]
+    }
+  ],
+  "render_type": "minecraft:translucent",
+  "textures": {
+    "particle": "immersiveweapons:block/tiltros_portal",
+    "texture": "immersiveweapons:block/tiltros_portal"
+  }
+}

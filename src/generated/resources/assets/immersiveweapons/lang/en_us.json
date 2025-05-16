@@ -1262,6 +1262,8 @@
   "subtitles.immersiveweapons.block.small_parts_table.used": "Small parts table used",
   "subtitles.immersiveweapons.block.spike_trap.extend": "Spike trap extends",
   "subtitles.immersiveweapons.block.spike_trap.retract": "Spike trap retracts",
+  "subtitles.immersiveweapons.block.tiltros_portal.travel": "Portal noise fades",
+  "subtitles.immersiveweapons.block.tiltros_portal.trigger": "Portal noise intensifies",
   "subtitles.immersiveweapons.block.tiltros_portal.whoosh": "Portal whooshes",
   "subtitles.immersiveweapons.entity.celestial_tower.ambient": "Celestial Tower resonates",
   "subtitles.immersiveweapons.entity.celestial_tower.death": "Celestial Tower collapses",
