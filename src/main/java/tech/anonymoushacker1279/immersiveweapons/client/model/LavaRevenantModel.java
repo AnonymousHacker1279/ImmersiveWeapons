@@ -3,10 +3,10 @@ package tech.anonymoushacker1279.immersiveweapons.client.model;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.util.Mth;
+import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.state.LavaRevenantRenderState;
 
-public class LavaRevenantModel extends EntityModel<LivingEntityRenderState> {
+public class LavaRevenantModel extends EntityModel<LavaRevenantRenderState> {
 	private final ModelPart root;
 	private final ModelPart leftWingBase;
 	private final ModelPart leftWingTip;
@@ -28,7 +28,7 @@ public class LavaRevenantModel extends EntityModel<LivingEntityRenderState> {
 	}
 
 	@Override
-	public void setupAnim(LivingEntityRenderState renderState) {
+	public void setupAnim(LavaRevenantRenderState renderState) {
 		super.setupAnim(renderState);
 
 		float f = renderState.ageInTicks * 7.448451F * ((float) Math.PI / 180F);

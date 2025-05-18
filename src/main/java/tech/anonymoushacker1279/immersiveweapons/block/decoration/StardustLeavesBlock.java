@@ -14,11 +14,11 @@ public class StardustLeavesBlock extends TintedParticleLeavesBlock {
 		super(0.15f, properties);
 	}
 
-	// TODO: remove after testing the vanilla leaf particles
 	@Override
 	public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource randomSource) {
+		super.animateTick(state, level, pos, randomSource);
 		if (level.getBlockState(pos.below()).isAir()) {
-			if (randomSource.nextFloat() <= 0.15f) {
+			if (randomSource.nextFloat() <= 0.025f) {
 				level.addParticle(ParticleTypesRegistry.STARDUST_LEAVES_PARTICLE.get(),
 						pos.getX() + 0.5D + (GeneralUtilities.getRandomNumber(-0.1D, 0.1D)),
 						pos.getY() + (GeneralUtilities.getRandomNumber(-0.1D, 0.1D)),

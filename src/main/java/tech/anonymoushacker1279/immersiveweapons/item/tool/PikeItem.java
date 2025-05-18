@@ -65,12 +65,6 @@ public class PikeItem extends Item implements HitEffectUtils {
 		return true;
 	}
 
-	// TODO: investigate enum extension
-	/*@Override
-	public ItemUseAnimation getUseAnimation(ItemStack pStack) {
-		return ItemUseAnimation.CUSTOM;
-	}*/
-
 	public static ItemAttributeModifiers createAttributes(ToolMaterial material, float attackSpeedModifier) {
 		return ItemAttributeModifiers.builder()
 				.add(

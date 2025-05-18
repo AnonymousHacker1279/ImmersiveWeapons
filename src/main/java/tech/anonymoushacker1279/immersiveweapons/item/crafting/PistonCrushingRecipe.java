@@ -42,7 +42,7 @@ public class PistonCrushingRecipe extends SingleItemRecipe {
 
 	@Override
 	public RecipeBookCategory recipeBookCategory() {
-		return RecipeBookCategories.CRAFTING_MISC; // TODO: custom category
+		return RecipeBookCategories.CRAFTING_MISC;
 	}
 
 	@Override

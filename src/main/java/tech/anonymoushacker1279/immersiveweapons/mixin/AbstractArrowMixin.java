@@ -1,6 +1,8 @@
 package tech.anonymoushacker1279.immersiveweapons.mixin;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -88,5 +90,23 @@ public abstract class AbstractArrowMixin implements ArrowAttributeAccessor {
 		} else {
 			return originalGravity;
 		}
+	}
+
+	/**
+	 * Allow bullets to pass through leaves.
+	 *
+	 * @param original the original value
+	 * @return the modified value
+	 */
+	@ModifyExpressionValue(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/projectile/AbstractArrow;isNoPhysics()Z"))
+	private boolean modifyIsNoPhysics(boolean original) {
+		AbstractArrow self = (AbstractArrow) (Object) this;
+		if (self instanceof BulletEntity bulletEntity) {
+			if (bulletEntity.level().getBlockState(bulletEntity.blockPosition()).is(BlockTags.LEAVES)) {
+				return true;
+			}
+		}
+
+		return original;
 	}
 }

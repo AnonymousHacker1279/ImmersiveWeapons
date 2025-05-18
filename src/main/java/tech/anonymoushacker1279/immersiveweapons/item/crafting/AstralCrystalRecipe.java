@@ -60,7 +60,7 @@ public class AstralCrystalRecipe implements Recipe<AstralCrystalRecipeInput> {
 
 	@Override
 	public RecipeBookCategory recipeBookCategory() {
-		return RecipeBookCategories.CRAFTING_MISC;  // TODO: custom category
+		return RecipeBookCategories.CRAFTING_MISC;
 	}
 
 	@Override

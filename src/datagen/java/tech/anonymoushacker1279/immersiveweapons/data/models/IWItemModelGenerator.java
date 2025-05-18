@@ -2,15 +2,20 @@ package tech.anonymoushacker1279.immersiveweapons.data.models;
 
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.model.*;
+import net.minecraft.client.renderer.item.ItemModel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.IWEquipmentAssets;
+import tech.anonymoushacker1279.immersiveweapons.event.ClientModEventSubscriber;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.item.properties.HasSpecificName;
 
 public class IWItemModelGenerator {
 
 	public static void registerModels(ItemModelGenerators itemModels) {
+		ClientModEventSubscriber.initializeCustomItemProperties();
+
 		itemModels.generateFlatItem(ItemRegistry.MOLTEN_SWORD.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.MOLTEN_PICKAXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.MOLTEN_AXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
@@ -78,7 +83,7 @@ public class IWItemModelGenerator {
 		generateGauntletItem(itemModels, ItemRegistry.STONE_GAUNTLET.get(), ResourceLocation.withDefaultNamespace("block/stone"));
 		generateGauntletItem(itemModels, ItemRegistry.GOLDEN_GAUNTLET.get(), ResourceLocation.withDefaultNamespace("block/gold_block"));
 		generateGauntletItem(itemModels, ItemRegistry.COPPER_GAUNTLET.get(), ResourceLocation.withDefaultNamespace("block/copper_block"));
-		generateGauntletItem(itemModels, ItemRegistry.IRON_GAUNTLET.get(), ResourceLocation.withDefaultNamespace("block/iron_block")); // TODO: add alt model
+		generateIronGauntletItem(itemModels, ItemRegistry.IRON_GAUNTLET.get(), ResourceLocation.withDefaultNamespace("block/iron_block"));
 		generateGauntletItem(itemModels, ItemRegistry.COBALT_GAUNTLET.get(), ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/cobalt_block"));
 		generateGauntletItem(itemModels, ItemRegistry.DIAMOND_GAUNTLET.get(), ResourceLocation.withDefaultNamespace("block/diamond_block"));
 		generateGauntletItem(itemModels, ItemRegistry.NETHERITE_GAUNTLET.get(), ResourceLocation.withDefaultNamespace("block/netherite_block"));
@@ -357,6 +362,29 @@ public class IWItemModelGenerator {
 										.put(TextureSlot.PARTICLE, materialLocation),
 								models.modelOutput
 						)
+				)
+		);
+	}
+
+	private static void generateIronGauntletItem(ItemModelGenerators models, Item item, ResourceLocation materialLocation) {
+		ItemModel.Unbaked model = ItemModelUtils.plainModel(
+				IWModelTemplates.GAUNTLET.create(
+						item,
+						new TextureMapping()
+								.put(IWModelTemplates.Slots.MATERIAL, materialLocation)
+								.put(TextureSlot.PARTICLE, materialLocation),
+						models.modelOutput
+				)
+		);
+
+		ItemModel.Unbaked altModel = ItemModelUtils.plainModel(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/iron_gauntlet_alt"));
+
+		models.itemModelOutput.accept(
+				item,
+				ItemModelUtils.conditional(
+						new HasSpecificName("The Gunslinger"),
+						altModel,
+						model
 				)
 		);
 	}

@@ -104,7 +104,7 @@ public class StarForgeRecipe implements Recipe<StarForgeRecipeInput> {
 
 	@Override
 	public RecipeBookCategory recipeBookCategory() {
-		return RecipeBookCategories.CRAFTING_MISC;  // TODO: custom category
+		return RecipeBookCategories.CRAFTING_MISC;
 	}
 
 	@Override

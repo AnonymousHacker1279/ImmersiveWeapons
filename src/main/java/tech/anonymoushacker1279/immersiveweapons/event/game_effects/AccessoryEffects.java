@@ -197,7 +197,7 @@ public class AccessoryEffects {
 
 	public static void holyMantleEffect(LivingIncomingDamageEvent event, LivingEntity damagedEntity) {
 		// Completely negates damage, incurs 30s cooldown
-		if (damagedEntity instanceof Player player) {
+		if (damagedEntity instanceof Player player && Accessory.isAccessoryActive(player, ItemRegistry.HOLY_MANTLE.get())) {
 			ItemStack stack = ItemRegistry.HOLY_MANTLE.get().getDefaultInstance();
 			if (!player.getCooldowns().isOnCooldown(stack)) {
 				player.getCooldowns().addCooldown(stack, 600);

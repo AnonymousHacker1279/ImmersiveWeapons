@@ -7,19 +7,19 @@ import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.client.renderer.entity.state.SkeletonRenderState;
+import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.resources.ResourceLocation;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.model.SkeletonMerchantModel;
 
-public class SkeletonMerchantClothingLayer<S extends SkeletonRenderState, M extends EntityModel<S>> extends RenderLayer<S, M> {
+public class SkeletonMerchantClothingLayer<S extends HumanoidRenderState, M extends EntityModel<S>> extends RenderLayer<S, M> {
 
 	private static final ResourceLocation CLOTHES_LOCATION = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/entity/skeleton_merchant/skeleton_merchant_overlay.png");
 	private final SkeletonMerchantModel layerModel;
 
-	public SkeletonMerchantClothingLayer(RenderLayerParent<S, M> pRenderer, EntityModelSet pModelSet) {
-		super(pRenderer);
-		this.layerModel = new SkeletonMerchantModel(pModelSet.bakeLayer(ModelLayers.STRAY_OUTER_LAYER));
+	public SkeletonMerchantClothingLayer(RenderLayerParent<S, M> renderer, EntityModelSet models) {
+		super(renderer);
+		this.layerModel = new SkeletonMerchantModel(models.bakeLayer(ModelLayers.STRAY_OUTER_LAYER));
 	}
 
 	@Override

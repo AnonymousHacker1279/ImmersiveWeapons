@@ -92,7 +92,7 @@ public class AmmunitionTableRecipe implements Recipe<RecipeInput> {
 
 	@Override
 	public RecipeBookCategory recipeBookCategory() {
-		return RecipeBookCategories.CRAFTING_MISC; // TODO: custom category
+		return RecipeBookCategories.CRAFTING_MISC;
 	}
 
 	public interface Factory<T extends AmmunitionTableRecipe> {

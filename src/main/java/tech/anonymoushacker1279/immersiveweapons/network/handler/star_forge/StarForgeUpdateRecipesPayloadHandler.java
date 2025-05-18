@@ -26,9 +26,6 @@ public class StarForgeUpdateRecipesPayloadHandler {
 					int containerId = data.containerId();
 
 					if (player.containerMenu instanceof StarForgeMenu menu && menu.containerId == containerId) {
-						// TODO: fix recipe sync
-						//menu.availableRecipes.addAll(data.recipes());
-
 						if (data.recipes().getFirst().getType().equals(RecipeTypeRegistry.STAR_FORGE_RECIPE_TYPE.get())) {
 							List<StarForgeRecipe> recipes = new ArrayList<>(data.recipes().size());
 							for (Recipe<?> recipe : data.recipes()) {

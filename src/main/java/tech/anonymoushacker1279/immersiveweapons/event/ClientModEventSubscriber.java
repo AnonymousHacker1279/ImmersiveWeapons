@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.blockentity.SkullBlockRenderer;
 import net.minecraft.client.renderer.entity.BoatRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.client.renderer.item.properties.conditional.ConditionalItemModelProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -42,6 +43,7 @@ import tech.anonymoushacker1279.immersiveweapons.client.renderer.dimension.Tiltr
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.mob.*;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.projectile.*;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.item.properties.HasSpecificName;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -82,9 +84,9 @@ public class ClientModEventSubscriber {
 			Sheets.addWoodType(WoodTypes.STARDUST);
 
 			CustomArmPoses.bootstrap();
-		});
 
-		event.enqueueWork(ClientModEventSubscriber::registerPropertyGetters);
+			initializeCustomItemProperties();
+		});
 	}
 
 	@SubscribeEvent
@@ -394,54 +396,10 @@ public class ClientModEventSubscriber {
 				ItemRegistry.VOID_PIKE.get());
 	}
 
-	private static void registerPropertyGetters() {
-		// TODO: replace this entirely because none of it exists anymore
-		/*registerPropertyGetter(ItemRegistry.IRON_GAUNTLET.get(), prefix("gunslinger"),
-				(stack, clientLevel, livingEntity, i) -> stack.getDisplayName().getString().toLowerCase(Locale.ROOT)
-						.equals("[the gunslinger]") ? 1 : 0);
-
-		// Register pulling properties for bows
-		registerPropertyGetter(ItemRegistry.ICE_BOW.get(), prefix("pull"),
-				(stack, clientLevel, livingEntity, i) -> {
-					if (livingEntity == null) {
-						return 0.0F;
-					} else {
-						return livingEntity.getUseItem() != stack ? 0.0F : (float) (stack.getUseDuration(livingEntity) - livingEntity.getUseItemRemainingTicks()) / 20.0F;
-					}
-				});
-		registerPropertyGetter(ItemRegistry.ICE_BOW.get(), prefix("pulling"),
-				(stack, clientLevel, livingEntity, i) -> livingEntity != null && livingEntity.isUsingItem() && livingEntity.getUseItem() == stack ? 1.0F : 0.0F);
-
-		registerPropertyGetter(ItemRegistry.DRAGONS_BREATH_BOW.get(), prefix("pull"),
-				(stack, clientLevel, livingEntity, i) -> {
-					if (livingEntity == null) {
-						return 0.0F;
-					} else {
-						return livingEntity.getUseItem() != stack ? 0.0F : (float) (stack.getUseDuration(livingEntity) - livingEntity.getUseItemRemainingTicks()) / 20.0F;
-					}
-				});
-		registerPropertyGetter(ItemRegistry.DRAGONS_BREATH_BOW.get(), prefix("pulling"),
-				(stack, clientLevel, livingEntity, i) -> livingEntity != null && livingEntity.isUsingItem() && livingEntity.getUseItem() == stack ? 1.0F : 0.0F);
-
-		registerPropertyGetter(ItemRegistry.AURORA_BOW.get(), prefix("pull"),
-				(stack, clientLevel, livingEntity, i) -> {
-					if (livingEntity == null) {
-						return 0.0F;
-					} else {
-						return livingEntity.getUseItem() != stack ? 0.0F : (float) (stack.getUseDuration(livingEntity) - livingEntity.getUseItemRemainingTicks()) / 20.0F;
-					}
-				});
-		registerPropertyGetter(ItemRegistry.AURORA_BOW.get(), prefix("pulling"),
-				(stack, clientLevel, livingEntity, i) -> livingEntity != null && livingEntity.isUsingItem() && livingEntity.getUseItem() == stack ? 1.0F : 0.0F);*/
-	}
-
-	/**
-	 * Get the prefix of a string.
-	 *
-	 * @param path the path to prefix
-	 * @return ResourceLocation
-	 */
-	public static ResourceLocation prefix(String path) {
-		return ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, path);
+	public static void initializeCustomItemProperties() {
+		ConditionalItemModelProperties.ID_MAPPER.put(
+				ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "has_specific_name"),
+				HasSpecificName.TYPE
+		);
 	}
 }

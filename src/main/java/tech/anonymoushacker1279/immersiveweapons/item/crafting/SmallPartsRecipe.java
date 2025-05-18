@@ -54,7 +54,7 @@ public class SmallPartsRecipe implements Recipe<RecipeInput> {
 
 	@Override
 	public RecipeBookCategory recipeBookCategory() {
-		return RecipeBookCategories.CRAFTING_MISC;  // TODO: custom category
+		return RecipeBookCategories.CRAFTING_MISC;
 	}
 
 	@Override

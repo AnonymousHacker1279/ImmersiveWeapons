@@ -6,6 +6,7 @@ import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import net.minecraft.resources.ResourceLocation;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.model.SkeletonMerchantModel;
+import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.layers.SkeletonMerchantClothingLayer;
 import tech.anonymoushacker1279.immersiveweapons.entity.npc.SkeletonMerchantEntity;
 
 public class SkeletonMerchantRenderer extends HumanoidMobRenderer<SkeletonMerchantEntity, HumanoidRenderState, SkeletonMerchantModel> {
@@ -15,7 +16,7 @@ public class SkeletonMerchantRenderer extends HumanoidMobRenderer<SkeletonMercha
 	public SkeletonMerchantRenderer(EntityRendererProvider.Context context) {
 		super(context, new SkeletonMerchantModel(context.bakeLayer(SkeletonMerchantModel.LAYER_LOCATION)), 0.5f);
 
-		//addLayer(new SkeletonMerchantClothingLayer<>(this, context.getModelSet()));   TODO: fix
+		addLayer(new SkeletonMerchantClothingLayer<>(this, context.getModelSet()));
 	}
 
 	@Override

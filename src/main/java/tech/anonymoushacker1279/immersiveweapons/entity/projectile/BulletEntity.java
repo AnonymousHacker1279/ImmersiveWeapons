@@ -112,7 +112,8 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 
 		// Check if the bullet hit a permeable block like leaves, if so keep moving and decrease velocity
 		if (lastState.is(BlockTags.LEAVES)) {
-			push(0, -0.1, 0);
+			Vec3 delta = getDeltaMovement().scale(0.75F);
+			setDeltaMovement(delta);
 			shakeTime = 4;
 			didPassThroughBlock = true;
 		} else {
@@ -230,7 +231,6 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 			}
 		}
 	}
-
 
 	@Override
 	protected void tickDespawn() {

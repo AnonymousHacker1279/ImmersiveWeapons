@@ -121,7 +121,6 @@ public class MortarShellEntity extends Projectile implements ItemSupplier {
 		}
 
 		setPos(newX, newY, newZ);
-		// checkInsideBlocks(); TODO: check if still necessary
 	}
 
 	@Override

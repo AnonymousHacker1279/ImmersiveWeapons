@@ -73,7 +73,7 @@ public class TeslaSynthesizerRecipe implements Recipe<TeslaSynthesizerRecipeInpu
 
 	@Override
 	public RecipeBookCategory recipeBookCategory() {
-		return RecipeBookCategories.CRAFTING_MISC;  // TODO: custom category
+		return RecipeBookCategories.CRAFTING_MISC;
 	}
 
 	@Override
