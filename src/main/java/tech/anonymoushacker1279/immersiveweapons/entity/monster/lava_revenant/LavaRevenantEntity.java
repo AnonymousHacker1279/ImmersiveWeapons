@@ -9,6 +9,7 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
@@ -34,6 +35,7 @@ import net.neoforged.neoforge.common.CommonHooks;
 import net.neoforged.neoforge.entity.PartEntity;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
+import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.LocalSoundPayload;
@@ -47,8 +49,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvancementOnDiscovery {
 
 	private static final int TICKS_PER_FLAP = Mth.ceil(24.166098F);
-	private static final EntityDataAccessor<Integer> ID_SIZE = SynchedEntityData.defineId(LavaRevenantEntity.class,
-			EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Integer> ID_SIZE = SynchedEntityData.defineId(LavaRevenantEntity.class, EntityDataSerializers.INT);
 	Vec3 moveTargetPoint = Vec3.ZERO;
 	BlockPos anchorPoint = BlockPos.ZERO;
 	LavaRevenantEntity.AttackPhase attackPhase = LavaRevenantEntity.AttackPhase.CIRCLE;
@@ -63,27 +64,40 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 	private float yRotA;
 	private boolean inWall;
 
+	// Base dimensions for part offsets
+	private static final float WING_OFFSET_X_Z = 2.25f;
+	private static final float WING_OFFSET_Y = 0.5f;
+	private static final float BODY_OFFSET_SCALE = 0.5f;
+	private static final float HEAD_TAIL_OFFSET_DIST = 2f;
+	private static final float HEAD_TAIL_Y_PARAM = 6.5f;
+
+	private static final float WING_DAMAGE_MODIFIER = 0.65f;
+	private static final float HEAD_DAMAGE_MODIFIER = 1.5f;
+	private static final float TAIL_DAMAGE_MODIFIER = 0.35f;
+
 	public LavaRevenantEntity(EntityType<? extends LavaRevenantEntity> entityType, Level level) {
 		super(entityType, level);
-		xpReward = 25 * getSize();
 		moveControl = new LavaRevenantMoveControl(this);
-		lookControl = new LavaRevenantLookControl(this);
+		lookControl = new LookControl(this);
 
-		wing1 = new LavaRevenantPart(this, "wing", (6.0F * getScale()), 2.0F);
-		wing2 = new LavaRevenantPart(this, "wing", (6.0F * getScale()), 2.0F);
-		head = new LavaRevenantPart(this, "head", (3.0F * getScale()), (2.7F * getScale()));
-		body = new LavaRevenantPart(this, "body", (5.0F * (getScale() * 0.8f)), (2.0F * getScale()));
-		tail = new LavaRevenantPart(this, "tail", (2.5F * (getScale() * 0.8f)), 1.0F);
+		wing1 = new LavaRevenantPart(this, "wing", 3.0F, 1F);
+		wing2 = new LavaRevenantPart(this, "wing", 3.0F, 1F);
+		head = new LavaRevenantPart(this, "head", 2.0F, 1.5F);
+		body = new LavaRevenantPart(this, "body", 3.5F, 1.5F);
+		tail = new LavaRevenantPart(this, "tail", 1.25F, 1.0F);
 		subEntities = new LavaRevenantPart[]{wing1, wing2, head, body, tail};
-
 		noPhysics = true;
+		setId(ENTITY_COUNTER.getAndAdd(subEntities.length + 1) + 1);
 	}
 
-	/**
-	 * Register this entity's attributes.
-	 *
-	 * @return AttributeSupplier.Builder
-	 */
+	@Override
+	public void setId(int id) {
+		super.setId(id);
+		for (int i = 0; i < this.subEntities.length; i++) {
+			this.subEntities[i].setId(id + i + 1);
+		}
+	}
+
 	public static AttributeSupplier.Builder registerAttributes() {
 		return Monster.createMonsterAttributes()
 				.add(Attributes.FLYING_SPEED, 0.70D)
@@ -96,8 +110,8 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 	}
 
 	@Override
-	public boolean removeWhenFarAway(double pDistanceToClosestPlayer) {
-		return pDistanceToClosestPlayer >= 512;
+	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+		return distanceToClosestPlayer >= 512;
 	}
 
 	@Override
@@ -121,8 +135,13 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 
 	private void updateSizeInfo() {
 		refreshDimensions();
+		for (LavaRevenantPart part : subEntities) {
+			part.setNewDimensions(part.baseWidth * (Mth.clamp(getSize() * 0.66f, 1, 3)), part.baseHeight);
+		}
+
 		Objects.requireNonNull(getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(14 + getSize());
 		Objects.requireNonNull(getAttribute(Attributes.MAX_HEALTH)).setBaseValue(30 * (getSize() / 2.0f));
+		this.xpReward = 25 * getSize();
 	}
 
 	public int getSize() {
@@ -155,6 +174,11 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 		return getId() * 3;
 	}
 
+	public float getDimensionScaleFactor() {
+		EntityDimensions unscaledDimensions = this.getType().getDimensions();
+		return (unscaledDimensions.width() + 0.2F * (float) this.getSize()) / unscaledDimensions.width();
+	}
+
 	@Override
 	protected boolean shouldDespawnInPeaceful() {
 		return true;
@@ -166,12 +190,11 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 		checkForDiscovery(this);
 	}
 
-	/**
-	 * Called to update the entity's position/logic.
-	 */
 	@Override
 	public void tick() {
 		super.tick();
+
+		float scaleFactor = getDimensionScaleFactor();
 
 		if (level().isClientSide) {
 			float flapTick = Mth.cos((float) (getUniqueFlapTickOffset() + tickCount) * 7.448451F
@@ -190,8 +213,8 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 			}
 
 			int size = getSize();
-			float xSizeModifier = Mth.cos(getYRot() * ((float) Math.PI / 180F)) * (7.0F * (float) size);
-			float zSizeModifier = Mth.sin(getYRot() * ((float) Math.PI / 180F)) * (7.0f * (float) size);
+			float xSizeModifier = Mth.cos(getYRot() * ((float) Math.PI / 180F)) * (5.0F * (float) size);
+			float zSizeModifier = Mth.sin(getYRot() * ((float) Math.PI / 180F)) * (5.0f * (float) size);
 			float ySizeModifier = (0.3F + flapTick * 0.45F) * ((float) size * 0.2F + 1.5F);
 
 			level().addParticle(ParticleTypes.LAVA, getX() + (double) xSizeModifier, getY() + (double) ySizeModifier,
@@ -223,7 +246,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 
 		if (Math.abs(moveTargetDeltaX) > (double) 1.0E-5F || Math.abs(moveTargetDeltaZ) > (double) 1.0E-5F) {
 			float yRotAModifier = Mth.clamp(
-					Mth.wrapDegrees(180.0F - (float) Mth.atan2(moveTargetDeltaX, moveTargetDeltaZ)
+					Mth.wrapDegrees(180.0F - (float) Mth.atan2(moveTargetDeltaZ, moveTargetDeltaX)
 							* (180F / (float) Math.PI) - getYRot()),
 					-10.0F, 10.0F);
 
@@ -243,21 +266,21 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 		float wingXOffset = Mth.cos(yRadians);
 		float wingZOffset = Mth.sin(yRadians);
 
-		tickPart(wing1, wingXOffset * 4.5f, 2f, wingZOffset * 4.5f);
-		tickPart(wing2, wingXOffset * -4.5f, 2f, wingZOffset * -4.5f);
+		tickPart(wing1, wingXOffset * (WING_OFFSET_X_Z * scaleFactor), (WING_OFFSET_Y * scaleFactor), wingZOffset * (WING_OFFSET_X_Z * scaleFactor));
+		tickPart(wing2, wingXOffset * (-WING_OFFSET_X_Z * scaleFactor), (WING_OFFSET_Y * scaleFactor), wingZOffset * (-WING_OFFSET_X_Z * scaleFactor));
 
-		tickPart(body, (sinRotModifier * 0.5F), 0.0D, (-cosRotModifier * 0.5F));
+		tickPart(body, (sinRotModifier * (BODY_OFFSET_SCALE * scaleFactor)), 0.0D, (-cosRotModifier * (BODY_OFFSET_SCALE * scaleFactor)));
 
-		tickPart(head, (-sinRotModifier * (4.5f * getScale() * 0.8f) * cosLatencyPosModifier),
-				(yHeadOffset + sinLatencyPosModifier * 6.5f),
-				(cosRotModifier * (4.5f * getScale() * 0.8f) * cosLatencyPosModifier));
+		tickPart(head, (-sinRotModifier * (HEAD_TAIL_OFFSET_DIST * scaleFactor) * cosLatencyPosModifier),
+				(yHeadOffset + sinLatencyPosModifier * (HEAD_TAIL_Y_PARAM * scaleFactor)),
+				(cosRotModifier * (HEAD_TAIL_OFFSET_DIST * scaleFactor) * cosLatencyPosModifier));
 
-		tickPart(tail, (sinRotModifier * (4.5f * getScale() * 0.8f) * cosLatencyPosModifier),
-				(yHeadOffset + sinLatencyPosModifier * 6.5f),
-				(-cosRotModifier * (4.5f * getScale() * 0.8f) * cosLatencyPosModifier));
+		tickPart(tail, (sinRotModifier * (HEAD_TAIL_OFFSET_DIST * scaleFactor) * cosLatencyPosModifier),
+				(yHeadOffset + sinLatencyPosModifier * (HEAD_TAIL_Y_PARAM * scaleFactor)),
+				(-cosRotModifier * (HEAD_TAIL_OFFSET_DIST * scaleFactor) * cosLatencyPosModifier));
 
 		if (!level().isClientSide) {
-			inWall = checkWalls(head.getBoundingBox()) | checkWalls(body.getBoundingBox());
+			inWall = breakBlocks(head.getBoundingBox()) | breakBlocks(body.getBoundingBox());
 		}
 
 		for (int i = 0; i < subEntities.length; ++i) {
@@ -268,11 +291,10 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 			subEntities[i].yOld = subEntitiesLengthVector[i].y;
 			subEntities[i].zOld = subEntitiesLengthVector[i].z;
 		}
-
 	}
 
-	private void tickPart(LavaRevenantPart pPart, double offsetX, double offsetY, double offsetZ) {
-		pPart.setPos(getX() + offsetX, getY() + offsetY, getZ() + offsetZ);
+	private void tickPart(LavaRevenantPart part, double offsetX, double offsetY, double offsetZ) {
+		part.setPos(getX() + offsetX, getY() + offsetY, getZ() + offsetZ);
 	}
 
 	public double[] getLatencyPos(int pointer, float multiplier) {
@@ -306,30 +328,67 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 		return 0.7F / min / deltaDistance;
 	}
 
-	public boolean hurt(LavaRevenantPart part, DamageSource source, float damage) {
+	public boolean hurtFromPart(ServerLevel serverLevel, LavaRevenantPart part, DamageSource source, float damageAmount) {
+		float modifiedDamage = damageAmount;
 		if (part == wing1 || part == wing2) {
-			damage = damage * 0.65f;
+			modifiedDamage = modifiedDamage * WING_DAMAGE_MODIFIER;
 		} else if (part == head) {
-			damage = damage * 1.5f;
+			modifiedDamage = modifiedDamage * HEAD_DAMAGE_MODIFIER;
 		} else if (part == tail) {
-			damage = damage * 0.35f;
+			modifiedDamage = modifiedDamage * TAIL_DAMAGE_MODIFIER;
 		}
 
-		hurt(source, damage);
+		return this.actuallyApplyDamage(serverLevel, source, modifiedDamage);
+	}
 
-		return true;
+	protected boolean actuallyApplyDamage(ServerLevel serverLevel, DamageSource source, float amount) {
+		if (!this.isAlive()) {
+			return false;
+		}
+
+		if (super.isInvulnerableTo(serverLevel, source)) {
+			return false;
+		}
+
+		amount = this.getDamageAfterMagicAbsorb(source, amount);
+
+		float absorptionToApply = amount;
+		amount = Math.max(amount - this.getAbsorptionAmount(), 0.0F);
+		this.setAbsorptionAmount(this.getAbsorptionAmount() - (absorptionToApply - amount));
+
+		float healthBeforeDamage = this.getHealth();
+
+		if (amount <= 0.0F) {
+			return false;
+		}
+
+		super.hurtServer(serverLevel, source, amount);
+
+		return this.getHealth() < healthBeforeDamage;
+	}
+
+	@Override
+	public boolean hurtServer(ServerLevel serverLevel, DamageSource source, float amount) {
+		if (source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) {
+			return this.actuallyApplyDamage(serverLevel, source, amount);
+		}
+
+		return false;
 	}
 
 	/**
-	 * Destroys weak blocks that are in the way
+	 * Destroy blocks in the way of the entity.
+	 *
+	 * @param area the area to check
+	 * @return true if the entity is stuck in a block
 	 */
-	private boolean checkWalls(AABB pArea) {
-		int minX = Mth.floor(pArea.minX);
-		int minY = Mth.floor(pArea.minY);
-		int minZ = Mth.floor(pArea.minZ);
-		int maxX = Mth.floor(pArea.maxX);
-		int maxY = Mth.floor(pArea.maxY);
-		int maxZ = Mth.floor(pArea.maxZ);
+	private boolean breakBlocks(AABB area) {
+		int minX = Mth.floor(area.minX);
+		int minY = Mth.floor(area.minY);
+		int minZ = Mth.floor(area.minZ);
+		int maxX = Mth.floor(area.maxX);
+		int maxY = Mth.floor(area.maxY);
+		int maxZ = Mth.floor(area.maxZ);
 		boolean stuck = false;
 		boolean blockRemoved = false;
 
@@ -339,10 +398,9 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 					BlockPos pos = new BlockPos(i, lMinY, lMinZ);
 					BlockState state = level().getBlockState(pos);
 					if (!state.isAir() && level() instanceof ServerLevel serverLevel) {
-						if (CommonHooks.canEntityDestroy(serverLevel, pos, this) && state.getDestroySpeed(level(), pos) <= 1.5f) {
-
+						if (CommonHooks.canEntityDestroy(serverLevel, pos, this) && state.getDestroySpeed(level(), pos) <= IWConfigs.SERVER.lavaRevenantBlockBreakThreshold.getAsDouble()) {
 							blockRemoved = serverLevel.removeBlock(pos, false) || blockRemoved;
-						} else if (!state.liquid()) {
+						} else if (!state.getFluidState().isEmpty()) {
 							stuck = true;
 						}
 					}
@@ -354,7 +412,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 			BlockPos randomPos = new BlockPos(minX + random.nextInt(maxX - minX + 1),
 					minY + random.nextInt(maxY - minY + 1),
 					minZ + random.nextInt(maxZ - minZ + 1));
-			level().levelEvent(2008, randomPos, 0);
+			level().levelEvent(2008, randomPos, 0); // corresponds to explosion particles being spawned
 		}
 
 		return stuck;
@@ -372,43 +430,38 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 
 	@Nullable
 	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, EntitySpawnReason spawnReason, @javax.annotation.Nullable SpawnGroupData spawnGroupData) {
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, EntitySpawnReason spawnReason, @Nullable SpawnGroupData spawnGroupData) {
 		anchorPoint = blockPosition().above(15);
 		setSize(getRandom().nextIntBetweenInclusive(1, 3));
 		setHealth(getMaxHealth());
+		this.xpReward = 25 * getSize();
 
 		return super.finalizeSpawn(level, difficulty, spawnReason, spawnGroupData);
 	}
 
-	/**
-	 * Helper method to read subclass entity data from NBT.
-	 */
 	@Override
-	public void readAdditionalSaveData(CompoundTag pCompound) {
-		super.readAdditionalSaveData(pCompound);
-		if (pCompound.contains("AX")) {
-			anchorPoint = new BlockPos(pCompound.getIntOr("AX", 0),
-					pCompound.getIntOr("AY", 0),
-					pCompound.getIntOr("AZ", 0));
+	public void readAdditionalSaveData(CompoundTag compound) {
+		super.readAdditionalSaveData(compound);
+		if (compound.contains("AX")) {
+			anchorPoint = new BlockPos(compound.getIntOr("AX", 0),
+					compound.getIntOr("AY", 0),
+					compound.getIntOr("AZ", 0));
 		}
 
-		setSize(pCompound.getIntOr("Size", 0));
+		setSize(compound.getIntOr("Size", 0));
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundTag pCompound) {
-		super.addAdditionalSaveData(pCompound);
-		pCompound.putInt("AX", anchorPoint.getX());
-		pCompound.putInt("AY", anchorPoint.getY());
-		pCompound.putInt("AZ", anchorPoint.getZ());
-		pCompound.putInt("Size", getSize());
+	public void addAdditionalSaveData(CompoundTag compound) {
+		super.addAdditionalSaveData(compound);
+		compound.putInt("AX", anchorPoint.getX());
+		compound.putInt("AY", anchorPoint.getY());
+		compound.putInt("AZ", anchorPoint.getZ());
+		compound.putInt("Size", getSize());
 	}
 
-	/**
-	 * Checks if the entity is in range to render.
-	 */
 	@Override
-	public boolean shouldRenderAtSqrDistance(double pDistance) {
+	public boolean shouldRenderAtSqrDistance(double distance) {
 		return true;
 	}
 
@@ -423,7 +476,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 	}
 
 	@Override
-	protected SoundEvent getHurtSound(DamageSource pDamageSource) {
+	protected SoundEvent getHurtSound(DamageSource damageSource) {
 		return SoundEventRegistry.LAVA_REVENANT_HURT.get();
 	}
 
@@ -432,27 +485,17 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 		return SoundEventRegistry.LAVA_REVENANT_DEATH.get();
 	}
 
-	/**
-	 * Returns the volume for the sounds this mob makes.
-	 */
 	@Override
-	protected float getSoundVolume() {
-		return 1.0F;
-	}
-
-	@Override
-	public boolean canAttackType(EntityType<?> pType) {
+	public boolean canAttackType(EntityType<?> entityType) {
 		return true;
 	}
 
 	@Override
 	public boolean checkSpawnObstruction(LevelReader pLevel) {
-
 		if (blockPosition().getY() > 0) {
 			if (super.checkSpawnObstruction(pLevel)) {
 				AABB box = new AABB(blockPosition()).inflate(4);
 
-				// At least 60% of the blocks must be air
 				AtomicInteger airBlocks = new AtomicInteger();
 				level().getBlockStates(box).forEach(state -> {
 					if (!state.isAir()) {
@@ -471,19 +514,6 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 		SWOOP
 	}
 
-	static class LavaRevenantLookControl extends LookControl {
-		public LavaRevenantLookControl(Mob mob) {
-			super(mob);
-		}
-
-		/**
-		 * Updates look
-		 */
-		@Override
-		public void tick() {
-		}
-	}
-
 	class AttackPlayerTargetGoal extends Goal {
 		private final TargetingConditions attackTargeting = TargetingConditions.forCombat().range(128.0D);
 		private int nextScanTick = 20;
@@ -491,7 +521,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 		@Override
 		public boolean canUse() {
 			if (nextScanTick > 0) {
-				--nextScanTick;
+				nextScanTick--;
 			} else {
 				if (level() instanceof ServerLevel serverLevel) {
 					nextScanTick = 60;
@@ -514,9 +544,6 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 			return false;
 		}
 
-		/**
-		 * Returns whether an in-progress EntityAIBase should continue executing
-		 */
 		@Override
 		public boolean canContinueToUse() {
 			LivingEntity target = getTarget();
@@ -533,9 +560,6 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 			return target != null && canAttack(getTarget());
 		}
 
-		/**
-		 * Execute a one shot task or start executing a continuous task
-		 */
 		@Override
 		public void start() {
 			nextSweepTick = 10;
@@ -543,22 +567,16 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 			setAnchorAboveTarget();
 		}
 
-		/**
-		 * Reset the task's internal state. Called when this task is interrupted by another one
-		 */
 		@Override
 		public void stop() {
 			anchorPoint = level().getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, anchorPoint)
 					.above(30 + random.nextInt(20));
 		}
 
-		/**
-		 * Keep ticking a continuous task that has already been started
-		 */
 		@Override
 		public void tick() {
 			if (attackPhase == LavaRevenantEntity.AttackPhase.CIRCLE) {
-				--nextSweepTick;
+				nextSweepTick--;
 				if (nextSweepTick <= 0) {
 					attackPhase = LavaRevenantEntity.AttackPhase.SWOOP;
 					setAnchorAboveTarget();
@@ -584,9 +602,6 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 			super(mob);
 		}
 
-		/**
-		 * Update the Head and Body rendering angles
-		 */
 		@Override
 		public void clientTick() {
 			yHeadRot = yBodyRot;
@@ -600,18 +615,11 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 		private float height;
 		private float clockwise;
 
-		/**
-		 * Returns whether execution should begin. You can also read and cache any state necessary for execution in this
-		 * method as well.
-		 */
 		@Override
 		public boolean canUse() {
 			return getTarget() == null || attackPhase == LavaRevenantEntity.AttackPhase.CIRCLE;
 		}
 
-		/**
-		 * Execute a one shot task or start executing a continuous task
-		 */
 		@Override
 		public void start() {
 			distance = 5.0F + random.nextFloat() * 10.0F;
@@ -620,9 +628,6 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 			selectNext();
 		}
 
-		/**
-		 * Keep ticking a continuous task that has already been started
-		 */
 		@Override
 		public void tick() {
 			if (random.nextInt(350) == 0) {
@@ -744,18 +749,12 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 	}
 
 	class SweepAttackGoal extends MoveTargetGoal {
-		/**
-		 * Returns whether execution should begin. You can also read and cache any state necessary for execution in this
-		 * method as well.
-		 */
+
 		@Override
 		public boolean canUse() {
 			return getTarget() != null && attackPhase == LavaRevenantEntity.AttackPhase.SWOOP;
 		}
 
-		/**
-		 * Returns whether an in-progress EntityAIBase should continue executing
-		 */
 		@Override
 		public boolean canContinueToUse() {
 			LivingEntity target = getTarget();
@@ -763,39 +762,26 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 				return false;
 			} else if (!target.isAlive()) {
 				return false;
-			} else if (!(target instanceof Player) || !target.isSpectator() && !((Player) target).isCreative()) {
+			} else if (!(target instanceof Player player) || !player.isSpectator() && !player.isCreative()) {
 				return canUse();
 			} else {
 				return false;
 			}
 		}
 
-		/**
-		 * Execute a one shot task or start executing a continuous task
-		 */
-		@Override
-		public void start() {
-		}
-
-		/**
-		 * Reset the task's internal state. Called when this task is interrupted by another one
-		 */
 		@Override
 		public void stop() {
 			setTarget(null);
 			attackPhase = LavaRevenantEntity.AttackPhase.CIRCLE;
 		}
 
-		/**
-		 * Keep ticking a continuous task that has already been started
-		 */
 		@Override
 		public void tick() {
 			if (level() instanceof ServerLevel serverLevel) {
 				LivingEntity target = getTarget();
 				if (target != null) {
 					moveTargetPoint = new Vec3(target.getX(), target.getY(0.5D), target.getZ());
-					if (getBoundingBox().inflate(0.2F).intersects(target.getBoundingBox())) {
+					if (head.getBoundingBox().inflate(1.25d).intersects(target.getBoundingBox())) {
 						if (!inWall) {
 							doHurtTarget(serverLevel, target);
 						}

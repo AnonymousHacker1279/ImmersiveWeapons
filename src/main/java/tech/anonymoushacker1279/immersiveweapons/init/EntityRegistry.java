@@ -81,7 +81,7 @@ public class EntityRegistry {
 	@LanguageEntryOverride("Burned Oak Boat with Chest")
 	public static final Supplier<EntityType<ChestBoat>> BURNED_OAK_CHEST_BOAT_ENTITY = register("burned_oak_chest_boat", EntityType.Builder.<ChestBoat>of((type, level) -> new ChestBoat(type, level, ItemRegistry.BURNED_OAK_CHEST_BOAT::get), MobCategory.MISC).noLootTable().sized(1.375f, 0.5625f));
 	public static final Supplier<EntityType<MudBallEntity>> MUD_BALL_ENTITY = register("mud_ball", EntityType.Builder.<MudBallEntity>of(MudBallEntity::new, MobCategory.MISC).noLootTable().sized(0.25f, 0.25f));
-	public static final Supplier<EntityType<LavaRevenantEntity>> LAVA_REVENANT_ENTITY = register("lava_revenant", EntityType.Builder.of(LavaRevenantEntity::new, MobCategory.MONSTER).sized(16.0f, 6.0f).clientTrackingRange(32).fireImmune());
+	public static final Supplier<EntityType<LavaRevenantEntity>> LAVA_REVENANT_ENTITY = register("lava_revenant", EntityType.Builder.of(LavaRevenantEntity::new, MobCategory.MONSTER).sized(0.25f, 0.25f).clientTrackingRange(16).fireImmune());
 	public static final Supplier<EntityType<RockSpiderEntity>> ROCK_SPIDER_ENTITY = register("rock_spider", EntityType.Builder.of(RockSpiderEntity::new, MobCategory.MONSTER).sized(0.30f, 0.30f).clientTrackingRange(16));
 	public static final Supplier<EntityType<CelestialTowerEntity>> CELESTIAL_TOWER_ENTITY = register("celestial_tower", EntityType.Builder.of(CelestialTowerEntity::new, MobCategory.MONSTER).sized(8.0f, 9.0f).clientTrackingRange(32));
 	public static final Supplier<EntityType<Boat>> STARDUST_BOAT_ENTITY = register("stardust_boat", EntityType.Builder.<Boat>of((type, level) -> new Boat(type, level, ItemRegistry.STARDUST_BOAT::get), MobCategory.MISC).noLootTable().sized(1.375f, 0.5625f));

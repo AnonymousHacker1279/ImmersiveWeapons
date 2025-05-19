@@ -1111,6 +1111,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addConfigField("celestial_altar.tooltip", "Celestial Altar settings");
 		addConfigField("the_commander", "The Commander Settings");
 		addConfigField("the_commander.tooltip", "The Commander settings");
+		addConfigField("lava_revenant", "Lava Revenant Settings");
+		addConfigField("lava_revenant.tooltip", "Lava Revenant settings");
 		addConfigField("weapons", "Weapon Settings");
 		addConfigField("weapons.tooltip", "Weapon-specific settings");
 		addConfigField("flintlock_pistol", "Flintlock Pistol Settings");
