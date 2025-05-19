@@ -4,6 +4,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.data.worldgen.features.VegetationFeatures;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -26,6 +27,7 @@ public class IWPlacedFeatures {
 	public static final ResourceKey<PlacedFeature> STARDUST_TREE = createKey("stardust_tree");
 	public static final ResourceKey<PlacedFeature> PATCH_DEATHWEED = createKey("patch_deathweed");
 	public static final ResourceKey<PlacedFeature> ASTRAL_GEODE = createKey("astral_geode");
+	public static final ResourceKey<PlacedFeature> PATCH_FIREFLY_BUSH = createKey("patch_firefly_bush");
 
 	public static final ResourceKey<PlacedFeature> MOLTEN_ORE = createKey("molten_ore");
 	public static final ResourceKey<PlacedFeature> NETHER_SULFUR_ORE = createKey("nether_sulfur_ore");
@@ -91,6 +93,14 @@ public class IWPlacedFeatures {
 						BiomeFilter.biome(),
 						InSquarePlacement.spread(),
 						RarityFilter.onAverageOnceEvery(4)
+				));
+
+		register(context, PATCH_FIREFLY_BUSH, configuredFeatures.getOrThrow(VegetationFeatures.PATCH_FIREFLY_BUSH),
+				List.of(
+						PlacementUtils.HEIGHTMAP_NO_LEAVES,
+						CountPlacement.of(2),
+						BiomeFilter.biome(),
+						InSquarePlacement.spread()
 				));
 
 		register(context, MOLTEN_ORE, configuredFeatures.getOrThrow(IWConfiguredFeatures.MOLTEN_ORE_CONFIGURATION),

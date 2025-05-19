@@ -1,5 +1,5 @@
 {
-  "ambient_light": 0.2,
+  "ambient_light": 0.0,
   "bed_works": true,
   "coordinate_scale": 16.0,
   "effects": "immersiveweapons:tiltros",
@@ -8,7 +8,7 @@
   "has_skylight": false,
   "height": 256,
   "infiniburn": "#minecraft:infiniburn_overworld",
-  "logical_height": 212,
+  "logical_height": 256,
   "min_y": -64,
   "monster_spawn_block_light_limit": 0,
   "monster_spawn_light_level": {

@@ -213,6 +213,7 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 
 		// Sand tag
 		tag(BlockTags.SAND).add(BlockRegistry.BLOOD_SAND.get());
+		tag(BlockTags.PLAYS_AMBIENT_DESERT_BLOCK_SOUNDS).add(BlockRegistry.BLOOD_SAND.get());
 
 		// Saplings tag
 		tag(BlockTags.SAPLINGS).add(BlockRegistry.STARDUST_SAPLING.get());

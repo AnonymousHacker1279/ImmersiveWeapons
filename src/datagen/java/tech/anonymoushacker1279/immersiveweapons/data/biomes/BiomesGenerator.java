@@ -185,7 +185,8 @@ public class BiomesGenerator {
 
 		BiomeGenerationSettings.Builder generationBuilder = new BiomeGenerationSettings.Builder(placedFeatures, worldCarvers)
 				.addFeature(Decoration.VEGETAL_DECORATION, IWPlacedFeatures.PATCH_MOONGLOW)
-				.addFeature(Decoration.VEGETAL_DECORATION, IWPlacedFeatures.STARDUST_TREE);
+				.addFeature(Decoration.VEGETAL_DECORATION, IWPlacedFeatures.STARDUST_TREE)
+				.addFeature(Decoration.VEGETAL_DECORATION, IWPlacedFeatures.PATCH_FIREFLY_BUSH);
 
 		VanillaFeatures.getOverworldBaseGeneration(generationBuilder);
 		VanillaFeatures.addPlainGrass(generationBuilder);

@@ -212,7 +212,7 @@ public class BlockRegistry {
 	public static final Supplier<StairBlock> HARDENED_MUD_STAIRS = BLOCKS.registerBlock("hardened_mud_stairs", (properties) -> new StairBlock(HARDENED_MUD.get().defaultBlockState(), properties));
 	public static final Supplier<SlabBlock> HARDENED_MUD_SLAB = BLOCKS.registerBlock("hardened_mud_slab", (properties) -> new SlabBlock(properties.mapColor(MapColor.DIRT).strength(2.0f, 1.0f).sound(SoundType.ROOTED_DIRT)));
 	public static final Supplier<Block> HARDENED_MUD_WINDOW = BLOCKS.registerBlock("hardened_mud_window", (properties) -> new HardenedMudWindowBlock(properties.mapColor(MapColor.DIRT).strength(2.0f, 1.0f).sound(SoundType.ROOTED_DIRT).noOcclusion()));
-	public static final Supplier<ColoredFallingBlock> BLOOD_SAND = BLOCKS.registerBlock("blood_sand", (properties) -> new ColoredFallingBlock(new ColorRGBA(13201254), properties.mapColor(MapColor.SAND).instrument(NoteBlockInstrument.SNARE).strength(0.5f).sound(SoundType.SAND)));
+	public static final Supplier<SandBlock> BLOOD_SAND = BLOCKS.registerBlock("blood_sand", (properties) -> new SandBlock(new ColorRGBA(13201254), properties.mapColor(MapColor.SAND).instrument(NoteBlockInstrument.SNARE).strength(0.5f).sound(SoundType.SAND)));
 	// Stone tier
 	public static final Supplier<PunjiSticksBlock> PUNJI_STICKS = BLOCKS.registerBlock("punji_sticks", (properties) -> new PunjiSticksBlock(properties.mapColor(MapColor.WOOD).ignitedByLava().pushReaction(PushReaction.DESTROY).strength(5.0f, 1.0f).sound(SoundType.METAL).requiresCorrectToolForDrops()));
 
