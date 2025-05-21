@@ -12,7 +12,6 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.ambient.AmbientCreature;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.ClipContext.Block;
@@ -22,13 +21,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult.Type;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 
 public class FireflyEntity extends AmbientCreature {
-	private static final EntityDataAccessor<Byte> DATA_ID_FLAGS = SynchedEntityData.defineId(FireflyEntity.class, EntityDataSerializers.BYTE);
-	private static final TargetingConditions RESTING_TARGETING = TargetingConditions.forNonCombat().range(2.0D);
+	private static final EntityDataAccessor<Boolean> IS_RESTING = SynchedEntityData.defineId(FireflyEntity.class, EntityDataSerializers.BOOLEAN);
 	@Nullable
 	private BlockPos targetBlockPosition;
 	@Nullable
@@ -42,12 +39,9 @@ public class FireflyEntity extends AmbientCreature {
 	@Override
 	protected void defineSynchedData(SynchedEntityData.Builder builder) {
 		super.defineSynchedData(builder);
-		builder.define(DATA_ID_FLAGS, (byte) 0);
+		builder.define(IS_RESTING, false);
 	}
 
-	/**
-	 * Returns the volume for the sounds this mob makes.
-	 */
 	@Override
 	protected float getSoundVolume() {
 		return 0.1F;
@@ -60,7 +54,7 @@ public class FireflyEntity extends AmbientCreature {
 	}
 
 	@Override
-	protected SoundEvent getHurtSound(DamageSource pDamageSource) {
+	protected SoundEvent getHurtSound(DamageSource damageSource) {
 		return null;
 	}
 
@@ -75,7 +69,7 @@ public class FireflyEntity extends AmbientCreature {
 	}
 
 	@Override
-	protected void doPush(Entity pEntity) {
+	protected void doPush(Entity entity) {
 	}
 
 	@Override
@@ -87,22 +81,13 @@ public class FireflyEntity extends AmbientCreature {
 	}
 
 	public boolean isResting() {
-		return (entityData.get(DATA_ID_FLAGS) & 1) != 0;
+		return entityData.get(IS_RESTING);
 	}
 
 	public void setResting(boolean isResting) {
-		byte b = entityData.get(DATA_ID_FLAGS);
-		if (isResting) {
-			entityData.set(DATA_ID_FLAGS, (byte) (b | 1));
-		} else {
-			entityData.set(DATA_ID_FLAGS, (byte) (b & -2));
-		}
-
+		entityData.set(IS_RESTING, isResting);
 	}
 
-	/**
-	 * Called to update the entity's position/logic.
-	 */
 	@Override
 	public void tick() {
 		super.tick();
@@ -120,13 +105,9 @@ public class FireflyEntity extends AmbientCreature {
 		if (isResting()) {
 			boolean isSilent = isSilent();
 			if (level().getBlockState(targetPos).isRedstoneConductor(level(), pos)) {
-				// If the distance between the entity and the target block is greater than 0.05, move towards it
-				// Use an BlockHitResult to check if the entity is colliding with a block
-
 				BlockHitResult result = level().clip(new ClipContext(getEyePosition(1.0F), Vec3.atBottomCenterOf(targetPos), Block.COLLIDER, Fluid.NONE, this));
 				// Move towards the hit position
 				if (result.getType() == Type.BLOCK) {
-
 					if (targetPosition == null) {
 						targetPosition = Vec3.atCenterOf(targetPos);
 						// Randomize the target position a bit, for a more natural look
@@ -163,6 +144,12 @@ public class FireflyEntity extends AmbientCreature {
 					playSound(SoundEventRegistry.FIREFLY_FLYING.get());
 				}
 			}
+
+			// 1/200 chance per tick to move
+			if (random.nextInt(200) == 0) {
+				setResting(false);
+				targetBlockPosition = null;
+			}
 		} else {
 			if (targetBlockPosition != null && (!level().isEmptyBlock(targetBlockPosition) || targetBlockPosition.getY() <= level().getMinY())) {
 				targetBlockPosition = null;
@@ -187,28 +174,25 @@ public class FireflyEntity extends AmbientCreature {
 				setResting(true);
 			}
 		}
-
 	}
 
-	@NotNull
 	private Vec3 getMovement() {
-		double xDiff = (double) targetBlockPosition.getX() - getX();
+		if (targetBlockPosition == null) {
+			return Vec3.ZERO;
+		}
+
+		double dX = (double) targetBlockPosition.getX() - getX();
 		assert targetBlockPosition != null;
-		double yDiff = (double) targetBlockPosition.getY() - getY();
+		double dY = (double) targetBlockPosition.getY() - getY();
 		assert targetBlockPosition != null;
-		double zDiff = (double) targetBlockPosition.getZ() - getZ();
+		double dZ = (double) targetBlockPosition.getZ() - getZ();
 
 		Vec3 deltaMovement = getDeltaMovement();
 		return deltaMovement.add(
-				(Math.signum(xDiff) * 0.5D - deltaMovement.x) * (double) 0.1F,
-				(Math.signum(yDiff) * (double) 0.7F - deltaMovement.y) * (double) 0.1F,
-				(Math.signum(zDiff) * 0.5D - deltaMovement.z) * (double) 0.1F
+				(Math.signum(dX) * 0.5D - deltaMovement.x) * (double) 0.1F,
+				(Math.signum(dY) * (double) 0.7F - deltaMovement.y) * (double) 0.1F,
+				(Math.signum(dZ) * 0.5D - deltaMovement.z) * (double) 0.1F
 		);
-	}
-
-	@Override
-	protected Entity.MovementEmission getMovementEmission() {
-		return Entity.MovementEmission.EVENTS;
 	}
 
 	@Override
@@ -217,12 +201,9 @@ public class FireflyEntity extends AmbientCreature {
 	}
 
 	@Override
-	protected void checkFallDamage(double pY, boolean pOnGround, BlockState pState, BlockPos pPos) {
+	protected void checkFallDamage(double y, boolean onGround, BlockState blockState, BlockPos blockPos) {
 	}
 
-	/**
-	 * Return whether this entity should NOT trigger a pressure plate or a tripwire.
-	 */
 	@Override
 	public boolean isIgnoringBlockTriggers() {
 		return true;
@@ -239,15 +220,15 @@ public class FireflyEntity extends AmbientCreature {
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundTag pCompound) {
-		super.readAdditionalSaveData(pCompound);
-		entityData.set(DATA_ID_FLAGS, pCompound.getByteOr("FireflyFlags", (byte) 0));
+	public void readAdditionalSaveData(CompoundTag compound) {
+		super.readAdditionalSaveData(compound);
+		entityData.set(IS_RESTING, compound.getBooleanOr("isResting", false));
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundTag pCompound) {
-		super.addAdditionalSaveData(pCompound);
-		pCompound.putByte("FireflyFlags", entityData.get(DATA_ID_FLAGS));
+	public void addAdditionalSaveData(CompoundTag compound) {
+		super.addAdditionalSaveData(compound);
+		compound.putBoolean("isResting", entityData.get(IS_RESTING));
 	}
 
 	@Override

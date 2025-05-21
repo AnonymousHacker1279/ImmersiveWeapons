@@ -5,7 +5,6 @@
     "minecraft:cave_extra_underground",
     "minecraft:canyon"
   ],
-  "creature_spawn_probability": 0.65,
   "downfall": 0.0,
   "effects": {
     "fog_color": 2830199,
@@ -85,7 +84,12 @@
     ]
   ],
   "has_precipitation": false,
-  "spawn_costs": {},
+  "spawn_costs": {
+    "immersiveweapons:lava_revenant": {
+      "charge": 1.0,
+      "energy_budget": 2.0
+    }
+  },
   "spawners": {
     "ambient": [],
     "axolotls": [],
@@ -96,13 +100,13 @@
         "type": "immersiveweapons:rock_spider",
         "maxCount": 4,
         "minCount": 2,
-        "weight": 65
+        "weight": 85
       },
       {
         "type": "immersiveweapons:lava_revenant",
         "maxCount": 1,
         "minCount": 1,
-        "weight": 35
+        "weight": 15
       }
     ],
     "underground_water_creature": [],

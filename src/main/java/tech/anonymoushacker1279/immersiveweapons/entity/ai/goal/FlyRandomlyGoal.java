@@ -6,6 +6,7 @@ import net.minecraft.core.Vec3i;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
@@ -40,7 +41,7 @@ public class FlyRandomlyGoal extends Goal {
 		// If the entity has no target position, or the target position is too close, pick a new one
 
 		if (targetingCooldown > 0) {
-			--targetingCooldown;
+			targetingCooldown--;
 			return;
 		}
 
@@ -76,10 +77,10 @@ public class FlyRandomlyGoal extends Goal {
 			}
 
 			// Check if the entity is in Tiltros
-			// It should stay confined to the desert but if it's not in Tiltros, it will always remain idle
+			// It should stay confined to the desert, but if it's not in Tiltros, it will always remain idle
 			if (evilEyeEntity.level().dimension() == TILTROS) {
 				// Ensure the target position is in the Deadman's Desert biome
-				if (!evilEyeEntity.level().getBiome(targetPosition).is(DEADMANS_DESERT)) {
+				if (!evilEyeEntity.level().getBiome(targetPosition).is(DEADMANS_DESERT) && evilEyeEntity.getSpawnType() == EntitySpawnReason.NATURAL) {
 					targetPosition = null;
 					targetingCooldown = 40;
 					return;

@@ -16,7 +16,6 @@ public class FireflyModel extends EntityModel<LivingEntityRenderState> {
 			ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "firefly"),
 			"main");
 
-	private final ModelPart wings;
 	private final ModelPart body;
 	private final ModelPart rightWing;
 	private final ModelPart leftWing;
@@ -24,7 +23,7 @@ public class FireflyModel extends EntityModel<LivingEntityRenderState> {
 	public FireflyModel(ModelPart root) {
 		super(root, RenderType::entityCutout);
 		ModelPart main = root.getChild("main");
-		wings = main.getChild("wings");
+		ModelPart wings = main.getChild("wings");
 		body = main.getChild("body");
 
 		rightWing = wings.getChild("right_wing");

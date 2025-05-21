@@ -84,9 +84,9 @@ public class ClientModEventSubscriber {
 			Sheets.addWoodType(WoodTypes.STARDUST);
 
 			CustomArmPoses.bootstrap();
-
-			initializeCustomItemProperties();
 		});
+
+		initializeCustomItemProperties();
 	}
 
 	@SubscribeEvent

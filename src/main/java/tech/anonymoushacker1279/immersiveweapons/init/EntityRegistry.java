@@ -8,6 +8,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.entity.vehicle.ChestBoat;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.entity.ambient.FireflyEntity;
@@ -92,11 +93,15 @@ public class EntityRegistry {
 	public static final Supplier<EntityType<MeteorEntity>> METEOR_ENTITY = register("meteor", EntityType.Builder.of(MeteorEntity::new, MobCategory.MISC).noLootTable().sized(0.5f, 0.5f).clientTrackingRange(8));
 	public static final Supplier<EntityType<StormCreeperEntity>> STORM_CREEPER_ENTITY = register("storm_creeper", EntityType.Builder.of(StormCreeperEntity::new, MobCategory.MONSTER).sized(0.6f, 1.7f).clientTrackingRange(8));
 	public static final Supplier<EntityType<EvilEyeEntity>> EVIL_EYE_ENTITY = register("evil_eye", EntityType.Builder.of(EvilEyeEntity::new, MobCategory.MONSTER).sized(0.15f, 0.15f).clientTrackingRange(16));
-	public static final Supplier<EntityType<StarWolfEntity>> STAR_WOLF_ENTITY = register("star_wolf", EntityType.Builder.of(StarWolfEntity::new, MobCategory.CREATURE).sized(0.7f, 0.95f).clientTrackingRange(8));
+	public static final DeferredHolder<EntityType<?>, EntityType<StarWolfEntity>> STAR_WOLF_ENTITY = registerHolder("star_wolf", EntityType.Builder.of(StarWolfEntity::new, MobCategory.CREATURE).sized(0.7f, 0.95f).clientTrackingRange(8));
 	public static final Supplier<EntityType<SkygazerEntity>> SKYGAZER_ENTITY = register("skygazer", EntityType.Builder.of(SkygazerEntity::new, MobCategory.CREATURE).sized(0.6f, 1.95f).clientTrackingRange(10));
 	public static final Supplier<EntityType<SkeletonMerchantEntity>> SKELETON_MERCHANT_ENTITY = register("skeleton_merchant", EntityType.Builder.of(SkeletonMerchantEntity::new, MobCategory.CREATURE).sized(0.6f, 1.99f).clientTrackingRange(10));
 
 	private static <T extends Entity> Supplier<EntityType<T>> register(String name, EntityType.Builder<T> builder) {
+		return ENTITY_TYPES.register(name, () -> builder.build(ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, name))));
+	}
+
+	private static <T extends Entity> DeferredHolder<EntityType<?>, EntityType<T>> registerHolder(String name, EntityType.Builder<T> builder) {
 		return ENTITY_TYPES.register(name, () -> builder.build(ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, name))));
 	}
 }

@@ -43,7 +43,7 @@ import java.util.UUID;
 
 public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementOnDiscovery {
 
-	private static final EntityDataAccessor<Integer> ID_SIZE = SynchedEntityData.defineId(EvilEyeEntity.class,
+	private static final EntityDataAccessor<Integer> SIZE = SynchedEntityData.defineId(EvilEyeEntity.class,
 			EntityDataSerializers.INT);
 	private static final EntityDataAccessor<Boolean> SUMMONED_BY_STAFF = SynchedEntityData.defineId(EvilEyeEntity.class,
 			EntityDataSerializers.BOOLEAN);
@@ -121,7 +121,7 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 	@Override
 	protected void defineSynchedData(SynchedEntityData.Builder builder) {
 		super.defineSynchedData(builder);
-		builder.define(ID_SIZE, 0);
+		builder.define(SIZE, 0);
 		builder.define(SUMMONED_BY_STAFF, false);
 	}
 
@@ -133,7 +133,7 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 		boolean summonedByStaff = entityData.get(SUMMONED_BY_STAFF);
 
 		if (targetedEntityUUID != null) {
-			targetedEntity = (LivingEntity) ((ServerLevel) level()).getEntity(targetedEntityUUID);
+			targetedEntity = (LivingEntity) level().getEntity(targetedEntityUUID);
 			targetedEntityUUID = null;
 		}
 
@@ -200,14 +200,14 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 			lookAt(EntityAnchorArgument.Anchor.EYES, targetedEntity.position());
 
 			// If the entity is within 5 blocks of the entity, start increasing the ticks watched
-			if (distanceToSqr(targetedEntity) < 25) {
+			if (distanceTo(targetedEntity) < 5) {
 				ticksWatched++;
 
 				if (ticksWatched >= 100) {
 					// If the entity has been watched for 100 ticks or more, there is a 5% chance every
 					// 20 ticks to inflict a random debuff on the player
 					if (tickCount % 20 == 0 && random.nextFloat() < effectChance) {
-						// If there are at least 3 entities within an 8 block radius, inflict a high tier debuff
+						// If there are at least 3 entities within an 8-block radius, inflict a high tier debuff
 						if (level().getEntitiesOfClass(EvilEyeEntity.class, getBoundingBox().inflate(8), (entity) -> true).size() >= 3) {
 							Holder<MobEffect> effect = highTierDebuffs.get(getRandom().nextIntBetweenInclusive(0, highTierDebuffs.size() - 1));
 							targetedEntity.addEffect(new MobEffectInstance(effect, effectDuration, effectLevel));
@@ -229,11 +229,22 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 	}
 
 	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
-	                                    EntitySpawnReason reason, @Nullable SpawnGroupData spawnData) {
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, EntitySpawnReason reason, @Nullable SpawnGroupData spawnData) {
 		setSize(getRandom().nextIntBetweenInclusive(1, 3));
 		setHealth(getMaxHealth());
 		xpReward = summonedByStaff() ? 0 : 3 * getSize();
+
+		for (int i = 0; i < getSize(); i++) {
+			if (getRandom().nextFloat() <= 0.5f) {
+				effectLevel++;
+			}
+			if (getRandom().nextFloat() <= 0.5f) {
+				effectChance += 0.05f;
+			}
+			if (getRandom().nextFloat() <= 0.5f) {
+				effectDuration += 40;
+			}
+		}
 
 		return super.finalizeSpawn(level, difficulty, reason, spawnData);
 	}
@@ -273,20 +284,20 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 	}
 
 	public int getSize() {
-		return entityData.get(ID_SIZE);
+		return entityData.get(SIZE);
 	}
 
 	public void setSize(int pSize) {
-		entityData.set(ID_SIZE, Mth.clamp(pSize, 0, 64));
+		entityData.set(SIZE, Mth.clamp(pSize, 0, 64));
 	}
 
 	@Override
-	public void onSyncedDataUpdated(EntityDataAccessor<?> pKey) {
-		if (ID_SIZE.equals(pKey)) {
+	public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
+		if (SIZE.equals(key)) {
 			updateSizeInfo();
 		}
 
-		super.onSyncedDataUpdated(pKey);
+		super.onSyncedDataUpdated(key);
 	}
 
 	@Override

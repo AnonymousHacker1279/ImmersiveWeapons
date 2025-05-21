@@ -21,21 +21,34 @@ public class CelestialTowerModel extends EntityModel<LivingEntityRenderState> {
 	}
 
 	public static LayerDefinition createBodyLayer() {
-		MeshDefinition meshDefinition = new MeshDefinition();
-		PartDefinition partDefinition = meshDefinition.getRoot();
+		MeshDefinition mesh = new MeshDefinition();
+		PartDefinition root = mesh.getRoot();
 
-		partDefinition.addOrReplaceChild("main",
+		PartDefinition main = root.addOrReplaceChild("main",
 				CubeListBuilder.create()
 						.texOffs(0, 0)
-						.addBox(-8.0F, -16.0F, -8.0F,
-								16.0F, 16.0F, 16.0F,
+						.addBox(-8.0F, -16.0F, -8.0F, 16.0F, 16.0F, 16.0F,
 								new CubeDeformation(0.0F))
-						.texOffs(0, 32)
-						.addBox(-8.0F, -19.0F, -8.0F,
-								16.0F, 3.0F, 16.0F,
+						.texOffs(0, 48)
+						.addBox(-8.0F, -19.01F, -8.0F, 16.0F, 3.0F, 0.0F,
+								new CubeDeformation(0.0F))
+						.texOffs(32, 48)
+						.addBox(-8.0F, -19.01F, 8.0F, 16.0F, 3.0F, 0.0F,
 								new CubeDeformation(0.0F)),
 				PartPose.offset(0.0F, 24.0F, 0.0F));
 
-		return LayerDefinition.create(meshDefinition, 64, 64);
+		main.addOrReplaceChild("cube1", CubeListBuilder.create()
+						.texOffs(16, 48)
+						.addBox(-8.0F, -3.01F, -1.0F, 16.0F, 3.0F, 0.0F,
+								new CubeDeformation(0.0F)),
+				PartPose.offsetAndRotation(9.0F, -16.0F, 0.0F, 0.0F, 1.5708F, 0.0F));
+
+		main.addOrReplaceChild("cube2", CubeListBuilder.create()
+						.texOffs(16, 48)
+						.addBox(-8.0F, -3.01F, -1.0F, 16.0F, 3.0F, 0.0F,
+								new CubeDeformation(0.0F)),
+				PartPose.offsetAndRotation(-7.0F, -16.0F, 0.0F, 0.0F, 1.5708F, 0.0F));
+
+		return LayerDefinition.create(mesh, 64, 64);
 	}
 }

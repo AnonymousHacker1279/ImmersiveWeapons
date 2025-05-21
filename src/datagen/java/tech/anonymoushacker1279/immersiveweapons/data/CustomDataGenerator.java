@@ -8,8 +8,6 @@ import net.minecraft.data.metadata.PackMetadataGenerator;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.MultiPackResourceManager;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.level.block.Block;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -29,24 +27,15 @@ import tech.anonymoushacker1279.immersiveweapons.data.structures.StructureUpdate
 import tech.anonymoushacker1279.immersiveweapons.data.tags.*;
 import tech.anonymoushacker1279.immersiveweapons.data.textures.TextureMetadataGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.trades.TradeDataGenerator;
-import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
-import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.function.Supplier;
 
 @EventBusSubscriber(bus = Bus.MOD, value = Dist.CLIENT)
 public class CustomDataGenerator {
 
-	public static final List<Block> ALL_BLOCKS = new ArrayList<>(250);
-	public static final List<EntityType<?>> ALL_ENTITIES = new ArrayList<>(250);
-
 	@SubscribeEvent
 	public static void gatherData(GatherDataEvent.Client event) {
-		prepareLists();
-
 		DataGenerator generator = event.getGenerator();
 		PackOutput output = generator.getPackOutput();
 
@@ -80,10 +69,5 @@ public class CustomDataGenerator {
 		generator.addProvider(true, PackMetadataGenerator.forFeaturePack(output, Component.translatable("immersiveweapons.datapack.description")));
 		generator.addProvider(true, new BiomeTagsGenerator(output, lookupProvider));
 		generator.addProvider(true, new DamageTypeTagsGenerator(output, lookupProvider));
-	}
-
-	private static void prepareLists() {
-		BlockRegistry.BLOCKS.getEntries().stream().map(Supplier::get).forEach(ALL_BLOCKS::add);
-		EntityRegistry.ENTITY_TYPES.getEntries().stream().map(Supplier::get).forEach(ALL_ENTITIES::add);
 	}
 }

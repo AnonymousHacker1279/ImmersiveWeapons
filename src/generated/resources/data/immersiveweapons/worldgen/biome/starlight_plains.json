@@ -102,8 +102,8 @@
     "creature": [
       {
         "type": "immersiveweapons:firefly",
-        "maxCount": 4,
-        "minCount": 1,
+        "maxCount": 20,
+        "minCount": 4,
         "weight": 10
       },
       {

@@ -46,7 +46,6 @@ public class CelestialTowerEntity extends Monster implements AttackerTracker, Gr
 	private int waveSizeModifier;
 	private int wavesSpawned = 0;
 	private boolean doneSpawningWaves = false;
-	public final static List<CelestialTowerEntity> ALL_TOWERS = new ArrayList<>(3);
 
 	final List<Entity> attackingEntities = new ArrayList<>(5);
 
@@ -101,7 +100,6 @@ public class CelestialTowerEntity extends Monster implements AttackerTracker, Gr
 		waveSizeModifier = 1;
 
 		teleportTo(getX(), getY() + 2, getZ());
-		ALL_TOWERS.add(this);
 
 		switch (difficulty.getDifficulty()) {
 			case NORMAL -> {
@@ -173,15 +171,6 @@ public class CelestialTowerEntity extends Monster implements AttackerTracker, Gr
 	}
 
 	@Override
-	public void die(DamageSource damageSource) {
-		super.die(damageSource);
-
-		if (!level().isClientSide) {
-			ALL_TOWERS.remove(this);
-		}
-	}
-
-	@Override
 	public void readAdditionalSaveData(CompoundTag pCompound) {
 		super.readAdditionalSaveData(pCompound);
 
@@ -197,11 +186,6 @@ public class CelestialTowerEntity extends Monster implements AttackerTracker, Gr
 			bossEvent.setProgress((float) wavesSpawned / totalWavesToSpawn);
 		} else if (doneSpawningWaves) {
 			bossEvent.setColor(BossBarColor.GREEN);
-		}
-
-		// If loading the world, check if the tower is in the list
-		if (!ALL_TOWERS.contains(this)) {
-			ALL_TOWERS.add(this);
 		}
 
 		xpReward = pCompound.getIntOr("xpReward", 0);
@@ -236,11 +220,9 @@ public class CelestialTowerEntity extends Monster implements AttackerTracker, Gr
 			return true;
 		}
 
-		// Check if there are other Celestial Towers within a distance of 750 blocks
-		for (CelestialTowerEntity tower : ALL_TOWERS) {
-			if (tower.blockPosition().closerThan(blockPosition(), 750)) {
-				return false;
-			}
+		List<CelestialTowerEntity> entities = level.getEntitiesOfClass(CelestialTowerEntity.class, getBoundingBox().inflate(750));
+		if (!entities.isEmpty()) {
+			return false;
 		}
 
 		if (!level.getBlockState(blockPosition().below()).isValidSpawn(level, blockPosition().below(), getType())) {

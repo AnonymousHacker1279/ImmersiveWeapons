@@ -29,6 +29,10 @@ repositories {
 		name "Bai Maven"
 		url "https://maven2.bai.lol"
 	}
+	maven {
+		name "AzureDoom's Maven"
+		url 'https://maven.azuredoom.com/mods'
+	}
 }
 
 base {
@@ -106,6 +110,8 @@ neoForge {
 			if (it.project.javaToolchains.launcherFor(java.toolchain).map { it.metadata.vendor }.getOrElse("").contains("JetBrains")) {
 				jvmArguments.addAll '-XX:+AllowEnhancedClassRedefinition', '-XX:NonProfiledCodeHeapSize=256M', '-XX:ReservedCodeCacheSize=300M'
 			}
+
+			systemProperties.put('terminal.jline', "true")
 		}
 	}
 
@@ -143,7 +149,7 @@ dependencies {
 	}
 
 	// Include Immersive Weapons Compatibility Bridge (IWCB)
-	// implementation "tech.anonymoushacker1279.iwcompatbridge:IWCompatBridge:${iwcb_version}"
+	implementation "tech.anonymoushacker1279.iwcompatbridge:IWCompatBridge:${iwcb_version}"
 
 	// Include WTHIT and badpackets
 	runtimeOnly "mcp.mobius.waila:wthit:neo-${wthit_version}"

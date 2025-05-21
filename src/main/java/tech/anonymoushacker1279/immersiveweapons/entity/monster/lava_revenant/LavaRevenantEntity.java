@@ -8,6 +8,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
@@ -25,6 +26,7 @@ import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
@@ -279,8 +281,8 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 				(yHeadOffset + sinLatencyPosModifier * (HEAD_TAIL_Y_PARAM * scaleFactor)),
 				(-cosRotModifier * (HEAD_TAIL_OFFSET_DIST * scaleFactor) * cosLatencyPosModifier));
 
-		if (!level().isClientSide) {
-			inWall = breakBlocks(head.getBoundingBox()) | breakBlocks(body.getBoundingBox());
+		if (level() instanceof ServerLevel serverLevel) {
+			inWall = breakBlocks(head.getBoundingBox(), serverLevel) | breakBlocks(body.getBoundingBox(), serverLevel);
 		}
 
 		for (int i = 0; i < subEntities.length; ++i) {
@@ -379,10 +381,11 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 	/**
 	 * Destroy blocks in the way of the entity.
 	 *
-	 * @param area the area to check
+	 * @param area        the area to check
+	 * @param serverLevel the server level
 	 * @return true if the entity is stuck in a block
 	 */
-	private boolean breakBlocks(AABB area) {
+	private boolean breakBlocks(AABB area, ServerLevel serverLevel) {
 		int minX = Mth.floor(area.minX);
 		int minY = Mth.floor(area.minY);
 		int minZ = Mth.floor(area.minZ);
@@ -397,10 +400,10 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 				for (int lMinZ = minZ; lMinZ <= maxZ; ++lMinZ) {
 					BlockPos pos = new BlockPos(i, lMinY, lMinZ);
 					BlockState state = level().getBlockState(pos);
-					if (!state.isAir() && level() instanceof ServerLevel serverLevel) {
+					if (!state.isAir()) {
 						if (CommonHooks.canEntityDestroy(serverLevel, pos, this) && state.getDestroySpeed(level(), pos) <= IWConfigs.SERVER.lavaRevenantBlockBreakThreshold.getAsDouble()) {
 							blockRemoved = serverLevel.removeBlock(pos, false) || blockRemoved;
-						} else if (!state.getFluidState().isEmpty()) {
+						} else {
 							stuck = true;
 						}
 					}
@@ -413,6 +416,14 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 					minY + random.nextInt(maxY - minY + 1),
 					minZ + random.nextInt(maxZ - minZ + 1));
 			level().levelEvent(2008, randomPos, 0); // corresponds to explosion particles being spawned
+			PacketDistributor.sendToPlayersTrackingChunk(serverLevel,
+					chunkPosition(),
+					new LocalSoundPayload(blockPosition(),
+							SoundEvents.GENERIC_EXPLODE.key(),
+							SoundSource.BLOCKS,
+							0.8F,
+							level().getRandom().nextFloat() * 0.3F + 0.7F,
+							true));
 		}
 
 		return stuck;
@@ -434,7 +445,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 		anchorPoint = blockPosition().above(15);
 		setSize(getRandom().nextIntBetweenInclusive(1, 3));
 		setHealth(getMaxHealth());
-		this.xpReward = 25 * getSize();
+		xpReward = 25 * getSize();
 
 		return super.finalizeSpawn(level, difficulty, spawnReason, spawnGroupData);
 	}
@@ -491,18 +502,35 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 	}
 
 	@Override
-	public boolean checkSpawnObstruction(LevelReader pLevel) {
+	public boolean checkSpawnRules(LevelAccessor level, EntitySpawnReason spawnReason) {
+		if (spawnReason == EntitySpawnReason.SPAWNER || spawnReason == EntitySpawnReason.SPAWN_ITEM_USE) {
+			return true;
+		}
+
+		List<LavaRevenantEntity> entities = level.getEntitiesOfClass(LavaRevenantEntity.class, getBoundingBox().inflate(75));
+		if (entities.size() >= 2) {
+			return false;
+		}
+
+		return super.checkSpawnRules(level, spawnReason);
+	}
+
+	@Override
+	public boolean checkSpawnObstruction(LevelReader level) {
 		if (blockPosition().getY() > 0) {
-			if (super.checkSpawnObstruction(pLevel)) {
-				AABB box = new AABB(blockPosition()).inflate(4);
+			if (super.checkSpawnObstruction(level)) {
+				AABB box = new AABB(blockPosition()).inflate(3);
 
 				AtomicInteger airBlocks = new AtomicInteger();
+				AtomicInteger allBlocks = new AtomicInteger();
 				level().getBlockStates(box).forEach(state -> {
-					if (!state.isAir()) {
+					if (state.isAir()) {
 						airBlocks.getAndIncrement();
 					}
+					allBlocks.getAndIncrement();
 				});
-				return airBlocks.get() >= box.getSize() * 0.6;
+
+				return airBlocks.get() >= allBlocks.get() * 0.6f;
 			}
 		}
 
@@ -683,11 +711,6 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 
 		@Override
 		public void tick() {
-			if (horizontalCollision) {
-				setYRot(getYRot() + 180.0F);
-				speed = 0.1F;
-			}
-
 			float deltaTargetX = (float) (moveTargetPoint.x - getX());
 			float deltaTargetY = (float) (moveTargetPoint.y - getY());
 			float deltaTargetZ = (float) (moveTargetPoint.z - getZ());
@@ -726,12 +749,6 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 						* Math.abs((double) deltaTargetY / sqrtXZY);
 
 				Vec3 deltaMovement = getDeltaMovement();
-
-				if (inWall) {
-					setYRot(yRotation - 180f);
-					deltaMovement.scale(0.8f);
-					deltaMovement.reverse();
-				}
 
 				setDeltaMovement(deltaMovement.add((new Vec3(x, z, y)).subtract(deltaMovement).scale(0.2D)));
 			}
@@ -781,7 +798,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 				LivingEntity target = getTarget();
 				if (target != null) {
 					moveTargetPoint = new Vec3(target.getX(), target.getY(0.5D), target.getZ());
-					if (head.getBoundingBox().inflate(1.25d).intersects(target.getBoundingBox())) {
+					if (head.getBoundingBox().inflate(1.5d).intersects(target.getBoundingBox())) {
 						if (!inWall) {
 							doHurtTarget(serverLevel, target);
 						}
@@ -790,7 +807,7 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 							PacketDistributor.sendToPlayersTrackingChunk((ServerLevel) level(), chunkPosition(), new LocalSoundPayload(blockPosition(), SoundEventRegistry.LAVA_REVENANT_BITE.getKey(),
 									SoundSource.HOSTILE, 0.3F, level().getRandom().nextFloat() * 0.1F + 0.9F, false));
 						}
-					} else if (horizontalCollision || hurtTime > 0) {
+					} else if (inWall || hurtTime > 0) {
 						attackPhase = LavaRevenantEntity.AttackPhase.CIRCLE;
 					}
 				}

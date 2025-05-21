@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -23,10 +24,10 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
+import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
-import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -107,13 +108,10 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 		return baseXP + armorXP + weaponXP;
 	}
 
+	@Nullable
 	@Override
-	protected boolean canReplaceCurrentItem(ItemStack newItem, ItemStack currentItem, EquipmentSlot slot) {
-		if (newItem.getItem() instanceof AbstractGunItem && currentItem.getItem() instanceof AbstractGunItem) {
-			return true;
-		}
-
-		return super.canReplaceCurrentItem(newItem, currentItem, slot);
+	public TagKey<Item> getPreferredWeaponType() {
+		return IWItemTagGroups.FIREARMS;
 	}
 
 	@Override
