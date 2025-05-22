@@ -9,7 +9,7 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingOverlay;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.ScopeOverlay;
-import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.DataComponentTypeRegistry;
 
 public class IWOverlays {
 
@@ -24,7 +24,7 @@ public class IWOverlays {
 			return;
 		}
 
-		if (MINECRAFT.player.getUseItem().is(ItemRegistry.MUSKET_SCOPE.get())) {
+		if (MINECRAFT.player.getUseItem().get(DataComponentTypeRegistry.SCOPE) != null) {
 			scopeScale = Mth.lerp(0.25f * deltaTracker.getGameTimeDeltaTicks(), scopeScale, 1.125f);
 		} else {
 			scopeScale = Mth.lerp(2.25f * deltaTracker.getGameTimeDeltaTicks(), scopeScale, 0.0f);

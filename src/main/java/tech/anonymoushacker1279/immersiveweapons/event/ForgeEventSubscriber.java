@@ -15,6 +15,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
+import net.minecraft.util.Unit;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -578,6 +579,15 @@ public class ForgeEventSubscriber {
 			KillCountWeapon.initialize(output);
 			event.setOutput(output);
 			event.setCost(5);
+		}
+		// Add scope to musket
+		if (event.getRight().is(ItemRegistry.SCOPE.get()) && event.getLeft().is(ItemRegistry.MUSKET.get())) {
+			if (!event.getLeft().has(DataComponentTypeRegistry.SCOPE)) {
+				ItemStack output = event.getLeft().copy();
+				output.set(DataComponentTypeRegistry.SCOPE, Unit.INSTANCE);
+				event.setOutput(output);
+				event.setCost(3);
+			}
 		}
 	}
 

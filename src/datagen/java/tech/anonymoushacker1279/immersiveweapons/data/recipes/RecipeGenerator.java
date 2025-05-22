@@ -30,10 +30,7 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.DataGenUtils;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.common.CommonItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWItemTagGroups;
-import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
-import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
-import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
-import tech.anonymoushacker1279.immersiveweapons.init.PotionRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.AmmunitionTableRecipe.MaterialGroup;
 
 import java.util.ArrayList;
@@ -952,12 +949,14 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.unlockedBy("cocoa_beans", has(Items.COCOA_BEANS))
 				.save(output);
 		// Explosive chocolate bar
-		ShapelessRecipeBuilder.shapeless(itemGetter, RecipeCategory.FOOD, ItemRegistry.EXPLOSIVE_CHOCOLATE_BAR.get(), 8)
-				.requires(ItemRegistry.CHOCOLATE_BAR.get(), 8)
-				.requires(Items.TNT)
+		ItemStack explosiveChocolateBar = ItemRegistry.CHOCOLATE_BAR.get().getDefaultInstance();
+		explosiveChocolateBar.set(DataComponentTypeRegistry.IS_EXPLOSIVE, true);
+		ShapelessRecipeBuilder.shapeless(itemGetter, RecipeCategory.FOOD, explosiveChocolateBar)
+				.requires(ItemRegistry.CHOCOLATE_BAR.get(), 1)
+				.requires(Items.GUNPOWDER)
 				.group("food")
 				.unlockedBy("chocolate_bar", has(ItemRegistry.CHOCOLATE_BAR.get()))
-				.save(output);
+				.save(output, "explosive_chocolate_bar");
 		// MRE
 		ShapelessRecipeBuilder.shapeless(itemGetter, RecipeCategory.FOOD, ItemRegistry.MRE.get())
 				.requires(Items.CARROT)
@@ -1001,26 +1000,6 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.group("firearm")
 				.unlockedBy("flintlock_assembly", has(ItemRegistry.FLINTLOCK_ASSEMBLY.get()))
 				.save(output);
-		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.COMBAT, ItemRegistry.MUSKET_SCOPE.get())
-				.define('a', ItemRegistry.HEAVY_WOODEN_STOCK.get())
-				.define('b', ItemRegistry.FLINTLOCK_ASSEMBLY.get())
-				.define('c', ItemRegistry.TRIGGER_ASSEMBLY.get())
-				.define('d', ItemRegistry.EXTENDED_IRON_BARREL.get())
-				.define('e', ItemRegistry.SCOPE.get())
-				.pattern(" e ")
-				.pattern("abd")
-				.pattern(" c ")
-				.group("firearm")
-				.unlockedBy("flintlock_assembly", has(ItemRegistry.FLINTLOCK_ASSEMBLY.get()))
-				.save(output);
-		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.COMBAT, ItemRegistry.MUSKET_SCOPE.get())
-				.define('a', ItemRegistry.SCOPE.get())
-				.define('b', ItemRegistry.MUSKET.get())
-				.pattern("a")
-				.pattern("b")
-				.group("firearm")
-				.unlockedBy("musket", has(ItemRegistry.MUSKET.get()))
-				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(ItemRegistry.MUSKET_SCOPE.get()) + "_alt");
 		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.COMBAT, ItemRegistry.FLARE_GUN.get())
 				.define('a', ItemRegistry.WOODEN_PISTOL_HANDLE.get())
 				.define('b', ItemRegistry.FLINTLOCK_ASSEMBLY.get())

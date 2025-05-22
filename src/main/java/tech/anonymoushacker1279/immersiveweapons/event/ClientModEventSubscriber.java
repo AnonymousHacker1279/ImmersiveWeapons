@@ -11,7 +11,9 @@ import net.minecraft.client.renderer.entity.BoatRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.item.properties.conditional.ConditionalItemModelProperties;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Unit;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.level.GrassColor;
@@ -107,6 +109,18 @@ public class ClientModEventSubscriber {
 
 			for (Item item : items) {
 				event.accept(item);
+
+				if (item == ItemRegistry.MUSKET.get()) {
+					ItemStack musketScope = item.getDefaultInstance();
+					musketScope.set(DataComponentTypeRegistry.SCOPE, Unit.INSTANCE);
+					event.accept(musketScope);
+				}
+
+				if (item == ItemRegistry.CHOCOLATE_BAR.get()) {
+					ItemStack chocolateBar = item.getDefaultInstance();
+					chocolateBar.set(DataComponentTypeRegistry.IS_EXPLOSIVE, true);
+					event.accept(chocolateBar);
+				}
 			}
 
 			// Add potion items, which are not in the item registry.
@@ -374,7 +388,6 @@ public class ClientModEventSubscriber {
 				ItemRegistry.FLINTLOCK_PISTOL.get(),
 				ItemRegistry.BLUNDERBUSS.get(),
 				ItemRegistry.MUSKET.get(),
-				ItemRegistry.MUSKET_SCOPE.get(),
 				ItemRegistry.FLARE_GUN.get(),
 				ItemRegistry.HAND_CANNON.get(),
 				ItemRegistry.DRAGONS_BREATH_CANNON.get()

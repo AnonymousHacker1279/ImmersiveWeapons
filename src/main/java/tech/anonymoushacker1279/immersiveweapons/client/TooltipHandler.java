@@ -21,10 +21,7 @@ import oshi.util.tuples.Triplet;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
 import tech.anonymoushacker1279.immersiveweapons.client.tooltip.DynamicTooltip;
-import tech.anonymoushacker1279.immersiveweapons.init.AccessoryEffectScalingTypeRegistry;
-import tech.anonymoushacker1279.immersiveweapons.init.AccessoryEffectTypeRegistry;
-import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
-import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.CursedItem;
 import tech.anonymoushacker1279.immersiveweapons.item.KillCountWeapon;
 import tech.anonymoushacker1279.immersiveweapons.item.RecoveryStaffItem;
@@ -113,6 +110,10 @@ public class TooltipHandler {
 			event.getToolTip().add(1, KillCountWeapon.getTierComponent(stack));
 			event.getToolTip().add(2, Component.literal(""));
 			event.getToolTip().add(KillCountWeapon.getKillComponent(stack));
+		}
+
+		if (stack.has(DataComponentTypeRegistry.SCOPE)) {
+			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.gun.meta.scope").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
 		}
 
 		TOOLTIP_MAP.computeIfPresent(stack.getItem(), (item, triplet) -> {

@@ -26,21 +26,17 @@ public class StarWolfEntity extends Wolf implements GrantAdvancementOnDiscovery 
 		return Mob.createMobAttributes()
 				.add(Attributes.MOVEMENT_SPEED, 0.35F)
 				.add(Attributes.MAX_HEALTH, 12.0D)
-				.add(Attributes.ATTACK_DAMAGE, 5.0D);
+				.add(Attributes.ATTACK_DAMAGE, 6.0D);
 	}
 
 	@Override
-	public void setTame(boolean tamed, boolean applySideEffects) {
-		super.setTame(tamed, applySideEffects);
-
-		if (tamed) {
-			getAttribute(Attributes.MAX_HEALTH).setBaseValue(44.0D);
-			setHealth(44.0F);
+	protected void applyTamingSideEffects() {
+		if (isTame()) {
+			getAttribute(Attributes.MAX_HEALTH).setBaseValue(60.0D);
+			setHealth(60.0F);
 		} else {
 			getAttribute(Attributes.MAX_HEALTH).setBaseValue(12.0D);
 		}
-
-		getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(6.0D);
 	}
 
 	@Override
@@ -56,16 +52,6 @@ public class StarWolfEntity extends Wolf implements GrantAdvancementOnDiscovery 
 		}
 
 		return super.hurtServer(level, damageSource, amount);
-	}
-
-	@Override
-	public int getMaxSpawnClusterSize() {
-		return 2;
-	}
-
-	@Override
-	public boolean isMaxGroupSizeReached(int size) {
-		return size >= 2;
 	}
 
 	@Nullable

@@ -10,16 +10,6 @@
         ]
       },
       "trigger": "minecraft:inventory_changed"
-    },
-    "hold1": {
-      "conditions": {
-        "items": [
-          {
-            "items": "immersiveweapons:musket_scope"
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
     }
   },
   "display": {
@@ -37,8 +27,7 @@
   },
   "requirements": [
     [
-      "hold",
-      "hold1"
+      "hold"
     ]
   ],
   "sends_telemetry_event": true

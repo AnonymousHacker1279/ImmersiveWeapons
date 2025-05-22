@@ -54,11 +54,6 @@ public abstract class AbstractGunItem extends Item {
 
 	final DataComponentType<Float> DENSITY_MODIFIER = DataComponentTypeRegistry.DENSITY_MODIFIER.get();
 
-	/**
-	 * Constructor for AbstractGunItem.
-	 *
-	 * @param properties the <code>Properties</code> for the item
-	 */
 	protected AbstractGunItem(Properties properties) {
 		super(properties);
 	}
@@ -322,10 +317,6 @@ public abstract class AbstractGunItem extends Item {
 
 	public float getMaxXRecoil() {
 		return -7.0f;
-	}
-
-	public boolean canScope() {
-		return false;
 	}
 
 	public float getFireVelocity(ItemStack gun, float powderModifier, LivingEntity shooter) {

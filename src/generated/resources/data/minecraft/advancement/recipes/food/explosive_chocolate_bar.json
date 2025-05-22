@@ -1,32 +1,32 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_the_recipe": {
-      "conditions": {
-        "recipe": "immersiveweapons:musket_scope_alt"
-      },
-      "trigger": "minecraft:recipe_unlocked"
-    },
-    "musket": {
+    "chocolate_bar": {
       "conditions": {
         "items": [
           {
-            "items": "immersiveweapons:musket"
+            "items": "immersiveweapons:chocolate_bar"
           }
         ]
       },
       "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:explosive_chocolate_bar"
+      },
+      "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
       "has_the_recipe",
-      "musket"
+      "chocolate_bar"
     ]
   ],
   "rewards": {
     "recipes": [
-      "immersiveweapons:musket_scope_alt"
+      "minecraft:explosive_chocolate_bar"
     ]
   }
 }

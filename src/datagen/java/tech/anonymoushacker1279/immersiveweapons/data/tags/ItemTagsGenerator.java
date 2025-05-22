@@ -96,11 +96,8 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		tag(Tags.Items.FOODS).add(
 				ItemRegistry.MRE.get(),
 				ItemRegistry.CHOCOLATE_BAR.get(),
-				ItemRegistry.EXPLOSIVE_CHOCOLATE_BAR.get(),
 				ItemRegistry.MOLDY_BREAD.get());
-		tag(Tags.Items.FOODS_CANDY).add(
-				ItemRegistry.CHOCOLATE_BAR.get(),
-				ItemRegistry.EXPLOSIVE_CHOCOLATE_BAR.get());
+		tag(Tags.Items.FOODS_CANDY).add(ItemRegistry.CHOCOLATE_BAR.get());
 		tag(Tags.Items.FOODS_BREAD).add(ItemRegistry.MOLDY_BREAD.get());
 		tag(Tags.Items.FOODS_FOOD_POISONING).add(ItemRegistry.MOLDY_BREAD.get());
 	}

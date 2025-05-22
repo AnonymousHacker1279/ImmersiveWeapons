@@ -402,6 +402,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("hand_cannon", "A powerful, but inaccurate, handheld cannon");
 		addTooltip("dragons_breath_cannon", "An upgraded hand cannon designed to launch dragon fireballs");
 		// Gun metadata
+		addTooltip("gun.meta.scope", "Scope Equipped");
 		addTooltip("gun.meta.base_velocity", "Base Velocity: %s");
 		addTooltip("gun.meta.base_reload_time", "Base Reload Time: %s seconds");
 		addTooltip("gun.meta.base_knockback", "Base Knockback Level: %sx");

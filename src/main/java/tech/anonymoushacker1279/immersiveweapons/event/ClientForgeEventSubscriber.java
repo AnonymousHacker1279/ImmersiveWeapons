@@ -27,6 +27,7 @@ import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
+import tech.anonymoushacker1279.immersiveweapons.init.DataComponentTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.RecipeTypeRegistry;
@@ -152,7 +153,7 @@ public class ClientForgeEventSubscriber {
 		if (player != null) {
 			Item itemInHand = player.getItemInHand(player.getUsedItemHand()).getItem();
 
-			if (player.getUseItem().is(ItemRegistry.MUSKET_SCOPE.get()) && Minecraft.getInstance().options.getCameraType().isFirstPerson()) {
+			if (player.getUseItem().get(DataComponentTypeRegistry.SCOPE) != null && Minecraft.getInstance().options.getCameraType().isFirstPerson()) {
 				event.setFOV(15f);
 			}
 

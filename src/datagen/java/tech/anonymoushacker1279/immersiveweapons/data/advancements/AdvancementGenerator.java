@@ -903,8 +903,6 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 						null, AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MUSKET.get()))
-				.addCriterion("hold1",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MUSKET_SCOPE.get()))
 				.requirements(Strategy.OR)
 				.save(consumer, prefixString("musket"));
 

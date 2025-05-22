@@ -83,4 +83,9 @@ public class LavaRevenantRenderer extends MobRenderer<LavaRevenantEntity, LavaRe
 			hitboxes.add(hitboxrenderstate);
 		}
 	}
+
+	@Override
+	protected AABB getBoundingBoxForCulling(LavaRevenantEntity entity) {
+		return super.getBoundingBoxForCulling(entity).inflate(2d);
+	}
 }

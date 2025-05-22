@@ -6,6 +6,7 @@ import net.minecraft.core.component.DataComponentType.Builder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.util.ExtraCodecs;
+import net.minecraft.util.Unit;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
@@ -26,6 +27,10 @@ public class DataComponentTypeRegistry {
 			builder -> builder.persistent(Codec.BOOL).networkSynchronized(ByteBufCodecs.BOOL));
 	public static final DeferredHolder<DataComponentType<?>, DataComponentType<Float>> DENSITY_MODIFIER = register("density_modifier",
 			builder -> builder.persistent(Codec.FLOAT).networkSynchronized(ByteBufCodecs.FLOAT));
+	public static final DeferredHolder<DataComponentType<?>, DataComponentType<Unit>> SCOPE = register("scope",
+			builder -> builder.persistent(Unit.CODEC).networkSynchronized(Unit.STREAM_CODEC));
+	public static final DeferredHolder<DataComponentType<?>, DataComponentType<Boolean>> IS_EXPLOSIVE = register("explosive",
+			builder -> builder.persistent(Codec.BOOL).networkSynchronized(ByteBufCodecs.BOOL));
 
 	private static <T> DeferredHolder<DataComponentType<?>, DataComponentType<T>> register(String name, UnaryOperator<Builder<T>> builder) {
 		return DATA_COMPONENT_TYPES.register(name, () -> builder.apply(DataComponentType.builder()).build());

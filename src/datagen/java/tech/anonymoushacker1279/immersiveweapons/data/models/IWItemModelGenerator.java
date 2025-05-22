@@ -3,11 +3,13 @@ package tech.anonymoushacker1279.immersiveweapons.data.models;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.model.*;
 import net.minecraft.client.renderer.item.ItemModel;
+import net.minecraft.client.renderer.item.properties.conditional.HasComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.IWEquipmentAssets;
 import tech.anonymoushacker1279.immersiveweapons.event.ClientModEventSubscriber;
+import tech.anonymoushacker1279.immersiveweapons.init.DataComponentTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.properties.HasSpecificName;
 
@@ -74,8 +76,7 @@ public class IWItemModelGenerator {
 		generatePikeItem(itemModels, ItemRegistry.VOID_PIKE.get(), ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/custom/void"));
 		generateStateOnly(itemModels, ItemRegistry.FLINTLOCK_PISTOL.get());
 		generateStateOnly(itemModels, ItemRegistry.BLUNDERBUSS.get());
-		generateStateOnly(itemModels, ItemRegistry.MUSKET.get());
-		generateStateOnly(itemModels, ItemRegistry.MUSKET_SCOPE.get());
+		generateMusket(itemModels, ItemRegistry.MUSKET.get());
 		generateStateOnly(itemModels, ItemRegistry.FLARE_GUN.get());
 		generateStateOnly(itemModels, ItemRegistry.HAND_CANNON.get());
 		generateStateOnly(itemModels, ItemRegistry.DRAGONS_BREATH_CANNON.get());
@@ -213,7 +214,6 @@ public class IWItemModelGenerator {
 		itemModels.generateFlatItem(ItemRegistry.BOTTLE_OF_ALCOHOL.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.BOTTLE_OF_WINE.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.CHOCOLATE_BAR.get(), ModelTemplates.FLAT_ITEM);
-		itemModels.generateFlatItem(ItemRegistry.EXPLOSIVE_CHOCOLATE_BAR.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.MRE.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.MOLDY_BREAD.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.BANDAGE.get(), ModelTemplates.FLAT_ITEM);
@@ -384,6 +384,20 @@ public class IWItemModelGenerator {
 				ItemModelUtils.conditional(
 						new HasSpecificName("The Gunslinger"),
 						altModel,
+						model
+				)
+		);
+	}
+
+	private static void generateMusket(ItemModelGenerators models, Item item) {
+		ItemModel.Unbaked model = ItemModelUtils.plainModel(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/musket"));
+		ItemModel.Unbaked scopeModel = ItemModelUtils.plainModel(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/musket_scope"));
+
+		models.itemModelOutput.accept(
+				item,
+				ItemModelUtils.conditional(
+						new HasComponent(DataComponentTypeRegistry.SCOPE.get(), true),
+						scopeModel,
 						model
 				)
 		);
