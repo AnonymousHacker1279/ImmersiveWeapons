@@ -46,19 +46,6 @@ Weapons for bug fixes and new features.
 
 When looking at the mod file, the version looks like
 this: `ImmersiveWeapons-<Minecraft version>-<Immersive Weapons version>`. For example, `ImmersiveWeapons-1.18.2-1.15.0`.
-The Minecraft version is simple: it only changes when the mod is updated to newer versions of Minecraft.
-
-The Immersive Weapons version is a bit more complex:  
-When the first number changes (**1**.15.0), it is a major change. For example, changing from an in-dev to a full
-release. This probably won't ever change.  
-When the second number changes (1.**15**.0), it is a minor change. For example, adding new features, improvements, etc.
-These are usually content releases or large rewrites.  
-When the third number changes (1.15.**0**), it is a bugfix/patch. These are small changes that correct behaviors or
-otherwise add small functionalities.
-
-You should always update to the latest bugfix/patch version. Updating to the latest minor version is also recommended,
-but can be treated with a lower priority. Read the update changelogs associated with new releases for any important
-information about that release.
 
 This table lists the latest Immersive Weapons version for a Minecraft version. If anything is listed other than
 **Latest**, consider it to be at the End of Life. In some cases, an older version will receive bugfixes should the
@@ -66,7 +53,8 @@ community describe an interest in it (This excludes versions listed as **N/A - B
 
 | MC Version | Immersive Weapons Latest Version                                                                             |
 |------------|--------------------------------------------------------------------------------------------------------------|
-| 1.21.1     | [Latest](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases)                                   |
+| 1.21.5     | [Latest](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases)                                   |
+| 1.21.1     | [v1.31.2](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.31.2)                      |
 | 1.20.6     | [N/A - Build From Source](https://github.com/AnonymousHacker1279/ImmersiveWeapons/tree/1.20.6-dev)           |
 | 1.20.4     | [1.29.2](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.29.2)                       |
 | 1.20.2     | [1.28.0](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.28.0)                       |
