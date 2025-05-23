@@ -2,19 +2,29 @@ package tech.anonymoushacker1279.immersiveweapons.menu;
 
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
-import net.minecraft.world.entity.player.*;
-import net.minecraft.world.inventory.*;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeManager;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.TeslaSynthesizerBlockEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.MenuTypeRegistry;
-import tech.anonymoushacker1279.immersiveweapons.init.RecipeTypeRegistry;
-import tech.anonymoushacker1279.immersiveweapons.menu.slot.*;
 
-public class TeslaSynthesizerMenu extends AbstractContainerMenu implements StackedContentsCompatible {
+public class TeslaSynthesizerMenu extends AbstractContainerMenu {
 
 	private final Container container;
 	private final ContainerData containerData;
+
+	// Slot indices for easy reference
+	private static final int FIRST_INGREDIENT_SLOT = 0;
+	private static final int SECOND_INGREDIENT_SLOT = 1;
+	private static final int THIRD_INGREDIENT_SLOT = 2;
+	private static final int FUEL_SLOT = 3;
+	private static final int RESULT_SLOT = 4;
+	private static final int PLAYER_INVENTORY_START = 5;
+	private static final int PLAYER_INVENTORY_END = 41;
 
 	/**
 	 * Constructor for TeslaSynthesizerMenu.
@@ -41,15 +51,15 @@ public class TeslaSynthesizerMenu extends AbstractContainerMenu implements Stack
 		this.container = container;
 		this.containerData = containerData;
 		// First ingredient slot
-		addSlot(new TeslaSynthesizerMaterialSlot(this, inventory.player.level().getRecipeManager(), container, 0, 6, 17));
+		addSlot(new Slot(container, 0, 6, 17));
 		// Second ingredient slot
-		addSlot(new TeslaSynthesizerMaterialSlot(this, inventory.player.level().getRecipeManager(), container, 1, 31, 17));
+		addSlot(new Slot(container, 1, 31, 17));
 		// Third ingredient slot
-		addSlot(new TeslaSynthesizerMaterialSlot(this, inventory.player.level().getRecipeManager(), container, 2, 56, 17));
+		addSlot(new Slot(container, 2, 56, 17));
 		// Fuel slot
-		addSlot(new TeslaSynthesizerFuelSlot(this, container, 3, 56, 53));
+		addSlot(new Slot(container, 3, 56, 53));
 		// Result slot
-		addSlot(new TeslaSynthesizerResultSlot(container, 4, 116, 35));
+		addSlot(new Slot(container, 4, 116, 35));
 
 		// Player inventory slots
 		for (int i = 0; i < 3; ++i) {
@@ -80,39 +90,41 @@ public class TeslaSynthesizerMenu extends AbstractContainerMenu implements Stack
 			newStack = oldStack.copy();
 
 			// If the slot is the result slot
-			if (index == 4) {
-				if (!moveItemStackTo(oldStack, 5, 41, true)) {
+			if (index == RESULT_SLOT) {
+				if (!moveItemStackTo(oldStack, PLAYER_INVENTORY_START, PLAYER_INVENTORY_END, true)) {
 					return ItemStack.EMPTY;
 				}
 
 				slot.onQuickCraft(oldStack, newStack);
 			}
-			// If the slot is the fuel slot
-			else if (index != 3 && index != 2 && index != 1 && index != 0) {
+			// If the slot is not in the synthesizer container (in player inventory)
+			else if (index >= PLAYER_INVENTORY_START) {
 				// If the item is a fuel item
 				if (isFuel(oldStack)) {
-					if (!moveItemStackTo(oldStack, 3, 4, false)) {
+					if (!moveItemStackTo(oldStack, FUEL_SLOT, FUEL_SLOT + 1, false)) {
 						return ItemStack.EMPTY;
 					}
 				}
-				// If the item is a valid ingredient
-				else if (isIngredient(player.level().getRecipeManager(), oldStack)) {
-					if (!moveItemStackTo(oldStack, 0, 3, false)) {
-						return ItemStack.EMPTY;
-					}
-				}
-				// If the item is in the player inventory
-				else if (index >= 5 && index < 32) {
-					if (!moveItemStackTo(oldStack, 32, 41, false)) {
-						return ItemStack.EMPTY;
-					}
-				}
-				// If the item is in the player hotbar
-				else if (index >= 32 && index < 41 && !moveItemStackTo(oldStack, 5, 32, false)) {
+				// Try to move to ingredient slots (0-3)
+				if (!moveItemStackTo(oldStack, FIRST_INGREDIENT_SLOT, THIRD_INGREDIENT_SLOT + 1, false)) {
 					return ItemStack.EMPTY;
 				}
-			} else {
-				if (!moveItemStackTo(oldStack, 5, 41, false)) {
+				// If not fuel or special ingredient, move between inventory and hotbar
+				else if (index < PLAYER_INVENTORY_END - 9) {
+					// Move from inventory to hotbar
+					if (!moveItemStackTo(oldStack, PLAYER_INVENTORY_END - 9, PLAYER_INVENTORY_END, false)) {
+						return ItemStack.EMPTY;
+					}
+				} else {
+					// Move from hotbar to inventory
+					if (!moveItemStackTo(oldStack, PLAYER_INVENTORY_START, PLAYER_INVENTORY_END - 9, false)) {
+						return ItemStack.EMPTY;
+					}
+				}
+			}
+			// If the slot is in the synthesizer container (not result)
+			else {
+				if (!moveItemStackTo(oldStack, PLAYER_INVENTORY_START, PLAYER_INVENTORY_END, false)) {
 					return ItemStack.EMPTY;
 				}
 			}
@@ -133,13 +145,6 @@ public class TeslaSynthesizerMenu extends AbstractContainerMenu implements Stack
 		return newStack;
 	}
 
-	@Override
-	public void fillStackedContents(StackedContents helper) {
-		if (container instanceof StackedContentsCompatible stackedContentsCompatible) {
-			stackedContentsCompatible.fillStackedContents(helper);
-		}
-	}
-
 	/**
 	 * Check if the given ItemStack is a fuel item.
 	 *
@@ -148,31 +153,6 @@ public class TeslaSynthesizerMenu extends AbstractContainerMenu implements Stack
 	 */
 	public boolean isFuel(ItemStack stack) {
 		return TeslaSynthesizerBlockEntity.isFuel(stack);
-	}
-
-	/**
-	 * Check if the given ItemStack is a valid ingredient for any recipe.
-	 *
-	 * @param recipeManager the <code>RecipeManager</code> instance
-	 * @param stack         the <code>ItemStack</code> being checked
-	 * @return boolean
-	 */
-	public boolean isIngredient(RecipeManager recipeManager, ItemStack stack) {
-		return recipeManager.getAllRecipesFor(RecipeTypeRegistry.TESLA_SYNTHESIZER_RECIPE_TYPE.get())
-				.stream().anyMatch(recipe -> recipe.value().getIngredients()
-						.stream().anyMatch(ingredient -> ingredient.test(stack)));
-	}
-
-	/**
-	 * Check if the given ItemStack is a valid ingredient for the given recipe in the given slot.
-	 *
-	 * @param recipeManager the <code>RecipeManager</code> instance
-	 * @param stack         the <code>ItemStack</code> being checked
-	 * @param slot          the slot index
-	 */
-	public boolean isIngredient(RecipeManager recipeManager, ItemStack stack, int slot) {
-		return recipeManager.getAllRecipesFor(RecipeTypeRegistry.TESLA_SYNTHESIZER_RECIPE_TYPE.get())
-				.stream().anyMatch(recipe -> recipe.value().getIngredients().get(slot).test(stack));
 	}
 
 	/**

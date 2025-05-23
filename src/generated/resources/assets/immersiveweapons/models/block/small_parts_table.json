@@ -1,12 +1,9 @@
 {
-  "parent": "minecraft:block/cube",
+  "parent": "minecraft:block/orientable_with_bottom",
   "textures": {
-    "down": "immersiveweapons:block/small_parts_table_bottom",
-    "east": "immersiveweapons:block/small_parts_table_side",
-    "north": "immersiveweapons:block/small_parts_table_front",
-    "particle": "minecraft:block/copper_block",
-    "south": "immersiveweapons:block/small_parts_table_front",
-    "up": "immersiveweapons:block/small_parts_table_top",
-    "west": "immersiveweapons:block/small_parts_table_side"
+    "bottom": "immersiveweapons:block/small_parts_table_bottom",
+    "front": "immersiveweapons:block/small_parts_table_front",
+    "side": "immersiveweapons:block/small_parts_table_side",
+    "top": "immersiveweapons:block/small_parts_table_top"
   }
 }

@@ -6,11 +6,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 import tech.anonymoushacker1279.immersiveweapons.init.DataComponentTypeRegistry;
-import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.CustomArrowItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem;
+import tech.anonymoushacker1279.immersiveweapons.item.tool.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.ArrayList;

@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "minecraft:block/leaves",
   "elements": [
     {
       "faces": {
@@ -40,48 +40,42 @@
             "block_light": 15,
             "sky_light": 3
           },
-          "rotation": 90,
-          "texture": "#overlay"
+          "texture": "#layer1"
         },
         "east": {
           "neoforge_data": {
             "block_light": 15,
             "sky_light": 3
           },
-          "rotation": 90,
-          "texture": "#overlay"
+          "texture": "#layer1"
         },
         "north": {
           "neoforge_data": {
             "block_light": 15,
             "sky_light": 3
           },
-          "rotation": 90,
-          "texture": "#overlay"
+          "texture": "#layer1"
         },
         "south": {
           "neoforge_data": {
             "block_light": 15,
             "sky_light": 3
           },
-          "rotation": 90,
-          "texture": "#overlay"
+          "texture": "#layer1"
         },
         "up": {
           "neoforge_data": {
             "block_light": 15,
             "sky_light": 3
           },
-          "rotation": 90,
-          "texture": "#overlay"
+          "texture": "#layer1"
         },
         "west": {
           "neoforge_data": {
             "block_light": 15,
             "sky_light": 3
           },
-          "rotation": 90,
-          "texture": "#overlay"
+          "texture": "#layer1"
         }
       },
       "from": [
@@ -99,6 +93,6 @@
   "render_type": "minecraft:cutout_mipped",
   "textures": {
     "all": "immersiveweapons:block/stardust_leaves",
-    "overlay": "immersiveweapons:block/stardust_granule_overlay"
+    "layer1": "immersiveweapons:block/stardust_granule_overlay"
   }
 }

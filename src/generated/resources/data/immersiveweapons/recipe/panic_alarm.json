@@ -3,12 +3,8 @@
   "category": "building",
   "group": "alarms",
   "key": {
-    "a": {
-      "tag": "c:ingots/metal"
-    },
-    "b": {
-      "item": "minecraft:note_block"
-    }
+    "a": "#c:ingots/metal",
+    "b": "minecraft:note_block"
   },
   "pattern": [
     "aba"

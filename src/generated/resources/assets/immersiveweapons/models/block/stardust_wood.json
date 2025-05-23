@@ -4,7 +4,7 @@
     {
       "faces": {
         "down": {
-          "texture": "#side"
+          "texture": "#end"
         },
         "east": {
           "texture": "#side"
@@ -16,7 +16,7 @@
           "texture": "#side"
         },
         "up": {
-          "texture": "#side"
+          "texture": "#end"
         },
         "west": {
           "texture": "#side"
@@ -40,42 +40,42 @@
             "block_light": 15,
             "sky_light": 3
           },
-          "texture": "#overlay"
+          "texture": "#layer1"
         },
         "east": {
           "neoforge_data": {
             "block_light": 15,
             "sky_light": 3
           },
-          "texture": "#overlay"
+          "texture": "#layer1"
         },
         "north": {
           "neoforge_data": {
             "block_light": 15,
             "sky_light": 3
           },
-          "texture": "#overlay"
+          "texture": "#layer1"
         },
         "south": {
           "neoforge_data": {
             "block_light": 15,
             "sky_light": 3
           },
-          "texture": "#overlay"
+          "texture": "#layer1"
         },
         "up": {
           "neoforge_data": {
             "block_light": 15,
             "sky_light": 3
           },
-          "texture": "#overlay"
+          "texture": "#layer1"
         },
         "west": {
           "neoforge_data": {
             "block_light": 15,
             "sky_light": 3
           },
-          "texture": "#overlay"
+          "texture": "#layer1"
         }
       },
       "from": [
@@ -90,10 +90,10 @@
       ]
     }
   ],
-  "render_type": "minecraft:cutout_mipped",
+  "render_type": "minecraft:cutout",
   "textures": {
     "end": "immersiveweapons:block/stardust_log",
-    "overlay": "immersiveweapons:block/stardust_granule_overlay",
+    "layer1": "immersiveweapons:block/stardust_granule_overlay",
     "side": "immersiveweapons:block/stardust_log"
   }
 }

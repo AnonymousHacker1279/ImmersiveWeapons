@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "cloth_scrap",
   "key": {
-    "a": {
-      "tag": "c:strings"
-    },
-    "b": {
-      "item": "minecraft:short_grass"
-    }
+    "a": "#c:strings",
+    "b": "minecraft:short_grass"
   },
   "pattern": [
     "bbb",

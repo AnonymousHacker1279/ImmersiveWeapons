@@ -1,7 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.item.fortitude;
 
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
@@ -22,15 +22,15 @@ public class PainkillerItem extends Item {
 
 
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+	public InteractionResult use(Level level, Player player, InteractionHand hand) {
 		ItemStack itemInHand = player.getItemInHand(hand);
-		player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 1200, 0, false, true));
+		player.addEffect(new MobEffectInstance(MobEffects.RESISTANCE, 1200, 0, false, true));
 
 		if (!player.isCreative()) {
 			itemInHand.shrink(1);
-			player.getCooldowns().addCooldown(this, 2400);
+			player.getCooldowns().addCooldown(itemInHand, 2400);
 		}
 
-		return InteractionResultHolder.sidedSuccess(itemInHand, level.isClientSide());
+		return InteractionResult.SUCCESS;
 	}
 }

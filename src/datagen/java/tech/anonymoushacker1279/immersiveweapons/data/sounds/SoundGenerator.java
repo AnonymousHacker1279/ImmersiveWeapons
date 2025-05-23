@@ -2,7 +2,6 @@ package tech.anonymoushacker1279.immersiveweapons.data.sounds;
 
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.common.data.SoundDefinition.Sound;
 import net.neoforged.neoforge.common.data.SoundDefinition.SoundType;
 import net.neoforged.neoforge.common.data.SoundDefinitionsProvider;
@@ -11,14 +10,8 @@ import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 
 public class SoundGenerator extends SoundDefinitionsProvider {
 
-	/**
-	 * Creates a new instance of this data provider.
-	 *
-	 * @param modId  The mod ID of the current mod.
-	 * @param helper The existing file helper provided by the event you are initializing this provider in.
-	 */
-	public SoundGenerator(PackOutput output, String modId, ExistingFileHelper helper) {
-		super(output, modId, helper);
+	public SoundGenerator(PackOutput output) {
+		super(output, ImmersiveWeapons.MOD_ID);
 	}
 
 	@Override
@@ -603,6 +596,18 @@ public class SoundGenerator extends SoundDefinitionsProvider {
 				.subtitle("subtitles.immersiveweapons.block.tiltros_portal.whoosh")
 				.with(Sound.sound(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 								"block/tiltros_portal/whoosh/whoosh"),
+						SoundType.SOUND)));
+
+		add(SoundEventRegistry.TILTROS_PORTAL_TRAVEL.get(), definition()
+				.subtitle("subtitles.immersiveweapons.block.tiltros_portal.travel")
+				.with(Sound.sound(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+								"block/tiltros_portal/travel/travel"),
+						SoundType.SOUND)));
+
+		add(SoundEventRegistry.TILTROS_PORTAL_TRIGGER.get(), definition()
+				.subtitle("subtitles.immersiveweapons.block.tiltros_portal.trigger")
+				.with(Sound.sound(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+								"block/tiltros_portal/trigger/trigger"),
 						SoundType.SOUND)));
 	}
 }

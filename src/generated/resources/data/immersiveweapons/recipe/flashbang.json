@@ -3,15 +3,9 @@
   "category": "equipment",
   "group": "flashbang",
   "key": {
-    "a": {
-      "item": "minecraft:bamboo"
-    },
-    "b": {
-      "item": "immersiveweapons:grenade_assembly"
-    },
-    "c": {
-      "item": "immersiveweapons:potassium_nitrate"
-    }
+    "a": "minecraft:bamboo",
+    "b": "immersiveweapons:grenade_assembly",
+    "c": "immersiveweapons:potassium_nitrate"
   },
   "pattern": [
     " cb",

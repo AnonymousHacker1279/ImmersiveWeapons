@@ -1,21 +1,30 @@
 package tech.anonymoushacker1279.immersiveweapons.menu;
 
 import com.mojang.datafixers.util.Pair;
+import net.minecraft.core.Holder;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.*;
-import net.minecraft.world.item.*;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.DataSlot;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.RecipeManager;
-import net.neoforged.neoforge.common.NeoForge;
-import tech.anonymoushacker1279.immersiveweapons.api.events.SmallPartsTableCraftEvent;
-import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.MenuTypeRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.RecipeTypeRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.SmallPartsRecipe;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
 
 public class SmallPartsMenu extends AbstractContainerMenu {
 
@@ -25,7 +34,8 @@ public class SmallPartsMenu extends AbstractContainerMenu {
 	public static final List<Pair<Item, Item>> ALL_CRAFTABLES = new ArrayList<>(15);
 	private final ContainerLevelAccess access;
 	private final DataSlot selectedPartsPatternIndex = DataSlot.standalone();
-	private Runnable slotUpdateListener = () -> {};
+	private Runnable slotUpdateListener = () -> {
+	};
 	private final Slot materialSlot;
 	private final Slot resultSlot;
 	private long lastSoundTime;
@@ -76,8 +86,6 @@ public class SmallPartsMenu extends AbstractContainerMenu {
 					}
 				});
 
-				NeoForge.EVENT_BUS.post(new SmallPartsTableCraftEvent(player, stack));
-
 				super.onTake(player, stack);
 			}
 		});
@@ -93,20 +101,20 @@ public class SmallPartsMenu extends AbstractContainerMenu {
 		}
 
 		addDataSlot(selectedPartsPatternIndex);
-		initializeRecipes(inventory.player.level().getRecipeManager());
+
+		if (inventory.player.level() instanceof ServerLevel serverLevel) {
+			Collection<RecipeHolder<SmallPartsRecipe>> recipes = serverLevel.recipeAccess().recipeMap().byType(RecipeTypeRegistry.SMALL_PARTS_RECIPE_TYPE.get());
+			initializeRecipes(recipes);
+		}
 	}
 
-	private void initializeRecipes(RecipeManager manager) {
-		List<RecipeHolder<SmallPartsRecipe>> recipes = manager
-				.getAllRecipesFor(RecipeTypeRegistry.SMALL_PARTS_RECIPE_TYPE.get())
-				.stream()
-				.toList();
-
-		for (RecipeHolder<SmallPartsRecipe> recipe : recipes) {
-			for (Item craftable : recipe.value().craftables()) {
-				if (!(craftable == Items.AIR)) {
-					for (ItemStack material : recipe.value().material().getItems()) {
-						Pair<Item, Item> pair = new Pair<>(material.getItem(), craftable);
+	public static void initializeRecipes(Collection<RecipeHolder<SmallPartsRecipe>> recipes) {
+		for (RecipeHolder<SmallPartsRecipe> recipeHolder : recipes) {
+			SmallPartsRecipe recipe = recipeHolder.value();
+			for (ItemStack craftable : recipe.craftables()) {
+				if (!craftable.isEmpty()) {
+					for (Holder<Item> material : recipe.input().getValues()) {
+						Pair<Item, Item> pair = new Pair<>(material.value(), craftable.getItem());
 						if (!ALL_CRAFTABLES.contains(pair)) {
 							ALL_CRAFTABLES.add(pair);
 						}
@@ -172,8 +180,8 @@ public class SmallPartsMenu extends AbstractContainerMenu {
 	}
 
 	/**
-	 * Handle when the stack in slot {@code index} is shift-clicked. Normally this moves the stack between the player
-	 * inventory and the other inventory(s).
+	 * Handle when the ingredient in slot {@code index} is shift-clicked. Normally this moves the ingredient between the
+	 * player inventory and the other inventory(s).
 	 */
 	@Override
 	public ItemStack quickMoveStack(Player pPlayer, int pIndex) {

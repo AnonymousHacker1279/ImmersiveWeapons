@@ -3,12 +3,8 @@
   "category": "building",
   "group": "tables",
   "key": {
-    "a": {
-      "item": "minecraft:jungle_slab"
-    },
-    "b": {
-      "item": "minecraft:jungle_fence"
-    }
+    "a": "minecraft:jungle_slab",
+    "b": "minecraft:jungle_fence"
   },
   "pattern": [
     "a",

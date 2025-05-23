@@ -1,5 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.npc;
 
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -28,15 +29,15 @@ public class SkygazerEntity extends AbstractMerchantEntity {
 	}
 
 	@Override
-	public boolean hurt(DamageSource source, float amount) {
+	public boolean hurtServer(ServerLevel serverLevel, DamageSource source, float amount) {
 		// Give the attacker blindness and summon 2-3 Starmite entities on the attacker
 		if (source.getDirectEntity() instanceof LivingEntity attacker) {
-			if (TargetingConditions.forCombat().test(this, attacker)) {
+			if (TargetingConditions.forCombat().test(serverLevel, this, attacker)) {
 				attacker.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 250, 0));
 
 				for (int i = 0; i < getRandom().nextIntBetweenInclusive(2, 3); i++) {
 					StarmiteEntity starmite = new StarmiteEntity(EntityRegistry.STARMITE_ENTITY.get(), level());
-					starmite.moveTo(attacker.getX(), attacker.getY(), attacker.getZ(), attacker.getXRot(), attacker.getYRot());
+					starmite.snapTo(attacker.getX(), attacker.getY(), attacker.getZ(), attacker.getXRot(), attacker.getYRot());
 
 					// Increase the attack damage
 					Objects.requireNonNull(starmite.getAttribute(Attributes.ATTACK_DAMAGE)).setBaseValue(4.0D);
@@ -46,6 +47,6 @@ public class SkygazerEntity extends AbstractMerchantEntity {
 			}
 		}
 
-		return super.hurt(source, amount);
+		return super.hurtServer(serverLevel, source, amount);
 	}
 }

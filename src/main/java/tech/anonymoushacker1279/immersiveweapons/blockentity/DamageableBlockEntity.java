@@ -37,10 +37,10 @@ public class DamageableBlockEntity extends BlockEntity {
 	public void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
 		super.loadAdditional(tag, provider);
 
-		maxHealth = tag.getInt("maxHealth");
-		health = tag.getInt("health");
-		stages = tag.getInt("stages");
-		currentStage = tag.getInt("currentStage");
+		maxHealth = tag.getInt("maxHealth").orElse(1);
+		health = tag.getInt("health").orElse(maxHealth);
+		stages = tag.getInt("stages").orElse(1);
+		currentStage = tag.getInt("currentStage").orElse(0);
 	}
 
 	@Override
@@ -101,8 +101,8 @@ public class DamageableBlockEntity extends BlockEntity {
 	}
 
 	/**
-	 * Repair the block if the given stack matches this block's repair item. Each use
-	 * of the repair item will repair the block by one stage.
+	 * Repair the block if the given ingredient matches this block's repair item. Each use of the repair item will
+	 * repair the block by one stage.
 	 *
 	 * @param repairStack the <code>ItemStack</code> to attempt to repair the block with
 	 * @param repairItem  the <code>Item</code> which this block is repairable with

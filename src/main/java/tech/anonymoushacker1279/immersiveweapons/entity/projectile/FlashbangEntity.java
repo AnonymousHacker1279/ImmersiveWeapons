@@ -6,7 +6,9 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.common.Tags.EntityTypes;
@@ -23,11 +25,11 @@ public class FlashbangEntity extends AdvancedThrowableItemProjectile {
 	}
 
 	public FlashbangEntity(Level level, LivingEntity livingEntity) {
-		super(EntityRegistry.FLASHBANG_ENTITY.get(), livingEntity, level);
+		super(EntityRegistry.FLASHBANG_ENTITY.get(), livingEntity, level, ItemRegistry.FLASHBANG.get().getDefaultInstance());
 	}
 
 	public FlashbangEntity(Level level, double x, double y, double z) {
-		super(EntityRegistry.FLASHBANG_ENTITY.get(), level, x, y, z);
+		super(EntityRegistry.FLASHBANG_ENTITY.get(), level, x, y, z, ItemRegistry.FLASHBANG.get().getDefaultInstance());
 	}
 
 	@Override
@@ -54,20 +56,20 @@ public class FlashbangEntity extends AdvancedThrowableItemProjectile {
 					.forEach(entity -> {
 						if (entity instanceof ServerPlayer player) {
 							if (canSee(player, this, false)) {
-								PacketDistributor.sendToPlayer(player, new PlayerSoundPayload(SoundEventRegistry.FLASHBANG_RINGING.get().getLocation(),
+								PacketDistributor.sendToPlayer(player, new PlayerSoundPayload(SoundEventRegistry.FLASHBANG_RINGING.getKey(),
 										1.0f, level().getRandom().nextFloat() * 0.05f + 1.0f));
 
 								if (canSee(player, this, true)) {
 									player.addEffect(new MobEffectInstance(EffectRegistry.FLASHBANG_EFFECT,
 											200, 0, true, false, false));
-									player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN,
+									player.addEffect(new MobEffectInstance(MobEffects.SLOWNESS,
 											200, 0, true, false, false));
 								}
 							}
 						} else if (entity instanceof Mob mob && !mob.getType().is(EntityTypes.BOSSES)) {
 							if (canSee(mob, this, false)) {
 								mob.goalSelector.addGoal(1, new DisorientedWanderingGoal(mob, IWConfigs.SERVER.flashbangDisorientTime.getAsInt() * 20));
-								mob.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN,
+								mob.addEffect(new MobEffectInstance(MobEffects.SLOWNESS,
 										200, 0, true, false, false));
 							}
 						}

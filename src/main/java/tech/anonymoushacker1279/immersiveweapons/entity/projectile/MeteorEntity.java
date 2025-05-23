@@ -3,6 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.entity.projectile;
 import net.minecraft.commands.arguments.EntityAnchorArgument.Anchor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderGetter;
+import net.minecraft.core.UUIDUtil;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
@@ -20,7 +21,9 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.Level.ExplosionInteraction;
-import net.minecraft.world.phys.*;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.event.EventHooks;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
@@ -47,7 +50,8 @@ public class MeteorEntity extends Projectile {
 	 * @param owner        the <code>LivingEntity</code> owner
 	 * @param staff        the <code>ItemStack</code> staff. May be null if not summoned by a staff.
 	 * @param targetPos    the <code>BlockPos</code> target position
-	 * @param targetEntity the <code>LivingEntity</code> target entity. May be null. If not, the meteor will only damage the specified target.
+	 * @param targetEntity the <code>LivingEntity</code> target entity. May be null. If not, the meteor will only damage
+	 *                     the specified target.
 	 * @return true if the meteor was successfully created, false otherwise
 	 */
 	public static boolean create(Level level, LivingEntity owner, @Nullable ItemStack staff, BlockPos targetPos, @Nullable LivingEntity targetEntity) {
@@ -100,7 +104,7 @@ public class MeteorEntity extends Projectile {
 			meteorEntity.setDeltaMovement(direction);
 
 			if (targetEntity != null) {
-				meteorEntity.getPersistentData().putUUID("target", targetEntity.getUUID());
+				meteorEntity.getPersistentData().store("targetEntityUUID", UUIDUtil.CODEC, targetEntity.getUUID());
 			}
 
 			// Spawn the entity
@@ -225,7 +229,7 @@ public class MeteorEntity extends Projectile {
 			}
 		}
 
-		kill();
+		discard();
 	}
 
 	@Override
@@ -234,25 +238,15 @@ public class MeteorEntity extends Projectile {
 
 	@Override
 	protected void readAdditionalSaveData(CompoundTag nbt) {
-		// Load the target position
-		targetPos = new BlockPos(nbt.getInt("targetX"), nbt.getInt("targetY"), nbt.getInt("targetZ"));
-		// Load the starting position
-		startPos = new BlockPos(nbt.getInt("startX"), nbt.getInt("startY"), nbt.getInt("startZ"));
-		// Load the distance to the target
-		distToTarget = nbt.getDouble("distToTarget");
+		targetPos = BlockPos.of(nbt.getLongOr("target", 0L));
+		startPos = BlockPos.of(nbt.getLongOr("start", 0L));
+		distToTarget = nbt.getDoubleOr("distToTarget", 0.0);
 	}
 
 	@Override
 	protected void addAdditionalSaveData(CompoundTag nbt) {
-		// Save the target position
-		nbt.putInt("targetX", targetPos.getX());
-		nbt.putInt("targetY", targetPos.getY());
-		nbt.putInt("targetZ", targetPos.getZ());
-		// Save the starting position
-		nbt.putInt("startX", startPos.getX());
-		nbt.putInt("startY", startPos.getY());
-		nbt.putInt("startZ", startPos.getZ());
-		// Save the distance to the target
+		nbt.putLong("target", targetPos.asLong());
+		nbt.putLong("start", startPos.asLong());
 		nbt.putDouble("distToTarget", distToTarget);
 	}
 

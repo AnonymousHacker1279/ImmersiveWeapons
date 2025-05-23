@@ -1,23 +1,26 @@
 {
-  "carvers": {
-    "air": [
-      "minecraft:cave",
-      "minecraft:cave_extra_underground",
-      "minecraft:canyon"
-    ]
-  },
-  "creature_spawn_probability": 0.85,
+  "carvers": [
+    "minecraft:cave",
+    "minecraft:cave_extra_underground",
+    "minecraft:canyon"
+  ],
   "downfall": 0.0,
   "effects": {
     "fog_color": 11422796,
     "foliage_color": 6242850,
     "grass_color": 6176026,
-    "music": {
-      "max_delay": 24000,
-      "min_delay": 6000,
-      "replace_current_music": true,
-      "sound": "immersiveweapons:deadmans_desert_background_music"
-    },
+    "music": [
+      {
+        "data": {
+          "max_delay": 24000,
+          "min_delay": 6000,
+          "replace_current_music": true,
+          "sound": "immersiveweapons:deadmans_desert_background_music"
+        },
+        "weight": 1
+      }
+    ],
+    "music_volume": 1.0,
     "particle": {
       "options": {
         "type": "immersiveweapons:deadmans_desert_ambient"
@@ -84,6 +87,7 @@
     [
       "immersiveweapons:patch_deathweed",
       "minecraft:glow_lichen",
+      "minecraft:patch_dry_grass_desert",
       "minecraft:patch_dead_bush_2"
     ],
     [
@@ -126,5 +130,5 @@
     "water_ambient": [],
     "water_creature": []
   },
-  "temperature": 0.2
+  "temperature": 0.35
 }

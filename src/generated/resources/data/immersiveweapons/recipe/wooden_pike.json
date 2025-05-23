@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "a": {
-      "item": "immersiveweapons:wooden_pike_head"
-    },
-    "b": {
-      "tag": "minecraft:planks"
-    },
-    "c": {
-      "item": "immersiveweapons:wooden_tool_rod"
-    }
+    "a": "immersiveweapons:wooden_pike_head",
+    "b": "#minecraft:planks",
+    "c": "immersiveweapons:wooden_tool_rod"
   },
   "pattern": [
     "a",

@@ -21,24 +21,24 @@ public interface HitEffectUtils {
 		int scorchShotLevel = source.getMainHandItem().getEnchantmentLevel(enchantmentGetter.get(IWEnchantments.SCORCH_SHOT).orElseThrow());
 
 		if (fireAspectLevel > 0) {
-			target.addEffect(new MobEffectInstance(EffectRegistry.HELLFIRE_EFFECT, 200, Mth.clamp(fireAspectLevel + 1, 1, 5), false, false));
+			target.addEffect(new MobEffectInstance(EffectRegistry.HELLFIRE_EFFECT, 200, Mth.clamp(fireAspectLevel + 1, 1, 5), false, true));
 		} else if (flameLevel > 0) {
-			target.addEffect(new MobEffectInstance(EffectRegistry.HELLFIRE_EFFECT, 200, Mth.clamp(flameLevel + 1, 1, 5), false, false));
+			target.addEffect(new MobEffectInstance(EffectRegistry.HELLFIRE_EFFECT, 200, Mth.clamp(flameLevel + 1, 1, 5), false, true));
 		} else if (scorchShotLevel > 0) {
-			target.addEffect(new MobEffectInstance(EffectRegistry.HELLFIRE_EFFECT, 200, Mth.clamp(scorchShotLevel + 1, 1, 5), false, false));
+			target.addEffect(new MobEffectInstance(EffectRegistry.HELLFIRE_EFFECT, 200, Mth.clamp(scorchShotLevel + 1, 1, 5), false, true));
 		} else {
-			target.addEffect(new MobEffectInstance(EffectRegistry.HELLFIRE_EFFECT, 200, 1, false, false));
+			target.addEffect(new MobEffectInstance(EffectRegistry.HELLFIRE_EFFECT, 200, 1, false, true));
 		}
 	}
 
 	default void addTeslaEffects(LivingEntity livingEntity) {
-		livingEntity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 140, 1, false, false));
-		livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 140, 1, false, false));
-		livingEntity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 140, 1, false, false));
+		livingEntity.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 140, 1, false, true));
+		livingEntity.addEffect(new MobEffectInstance(MobEffects.SLOWNESS, 140, 1, false, true));
+		livingEntity.addEffect(new MobEffectInstance(MobEffects.NAUSEA, 140, 1, false, true));
 	}
 
 	default void addVentusEffects(LivingEntity livingEntity) {
-		livingEntity.addEffect(new MobEffectInstance(MobEffects.LEVITATION, 60, 2, false, false));
+		livingEntity.addEffect(new MobEffectInstance(MobEffects.LEVITATION, 60, 2, false, true));
 	}
 
 	enum HitEffect {

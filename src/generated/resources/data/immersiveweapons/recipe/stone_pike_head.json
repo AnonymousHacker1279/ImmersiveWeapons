@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "a": {
-      "tag": "immersiveweapons:shards/stone"
-    },
-    "b": {
-      "tag": "minecraft:stone_tool_materials"
-    }
+    "a": "#immersiveweapons:shards/stone",
+    "b": "#minecraft:stone_tool_materials"
   },
   "pattern": [
     "a",

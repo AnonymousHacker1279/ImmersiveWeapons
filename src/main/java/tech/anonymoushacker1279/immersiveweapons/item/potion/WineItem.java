@@ -21,9 +21,9 @@ public class WineItem extends CustomPotionItem {
 	@Override
 	protected List<MobEffectInstance> getEffects() {
 		List<MobEffectInstance> effectInstances = new ArrayList<>(2);
-		effectInstances.add(new MobEffectInstance(MobEffects.DAMAGE_BOOST,
+		effectInstances.add(new MobEffectInstance(MobEffects.STRENGTH,
 				360, 0, false, true));
-		effectInstances.add(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE,
+		effectInstances.add(new MobEffectInstance(MobEffects.RESISTANCE,
 				360, 0, false, true));
 		return effectInstances;
 	}

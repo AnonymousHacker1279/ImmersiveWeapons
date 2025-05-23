@@ -9,8 +9,11 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EquipmentSlot.Type;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -80,6 +83,7 @@ public abstract class AbstractStatueBlockEntity<T extends SoldierEntity> extends
 
 		if (entitiesInArea != null && entitiesInArea.size() <= (maxNearbyEntities + additionalEntities)) {
 			if (entity != null) {
+				entity.finalizeSpawn((ServerLevel) level, level.getCurrentDifficultyAt(getBlockPos()), EntitySpawnReason.SPAWNER, null);
 				if (entity.getRandom().nextFloat() <= armorSpawnChance) {
 					for (EquipmentSlot equipmentslot : EquipmentSlot.values()) {
 						if (equipmentslot.getType() == Type.HUMANOID_ARMOR) {
@@ -116,8 +120,7 @@ public abstract class AbstractStatueBlockEntity<T extends SoldierEntity> extends
 		for (i = 0; i < 5; i++) {
 			BlockPos randomPositionInArea = getRandomPositionInArea();
 			if (level != null && level.getBlockState(randomPositionInArea) == Blocks.AIR.defaultBlockState()) {
-				entity.finalizeSpawn((ServerLevel) level, level.getCurrentDifficultyAt(randomPositionInArea), MobSpawnType.SPAWNER, null);
-				entity.moveTo(randomPositionInArea, 0.0F, 0.0F);
+				entity.snapTo(randomPositionInArea, 0.0F, 0.0F);
 				level.addFreshEntity(entity);
 				spawnParticles();
 				break;
@@ -177,6 +180,6 @@ public abstract class AbstractStatueBlockEntity<T extends SoldierEntity> extends
 	@Override
 	public void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
 		super.loadAdditional(tag, provider);
-		cooldown = tag.getInt("scanCooldown");
+		cooldown = tag.getInt("scanCooldown").orElse(0);
 	}
 }

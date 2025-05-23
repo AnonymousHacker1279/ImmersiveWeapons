@@ -11,23 +11,10 @@ import tech.anonymoushacker1279.immersiveweapons.util.ArrowAttributeAccessor;
 
 public class MusketItem extends AbstractGunItem {
 
-	private final boolean hasScope;
-
-	/**
-	 * Constructor for MusketItem.
-	 *
-	 * @param properties the <code>Properties</code> for the item
-	 */
-	public MusketItem(Properties properties, boolean hasScope) {
+	public MusketItem(Properties properties) {
 		super(properties);
-		this.hasScope = hasScope;
 	}
 
-	/**
-	 * Get the fire sound.
-	 *
-	 * @return SoundEvent
-	 */
 	@Override
 	public SoundEvent getFireSound() {
 		return SoundEventRegistry.MUSKET_FIRE.get();
@@ -46,11 +33,6 @@ public class MusketItem extends AbstractGunItem {
 	@Override
 	public float getMaxXRecoil() {
 		return -2.0f;
-	}
-
-	@Override
-	public boolean canScope() {
-		return hasScope;
 	}
 
 	@Override

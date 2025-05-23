@@ -80,9 +80,6 @@ public class DeferredRegistryHandler {
 		ImmersiveWeapons.LOGGER.info("Initializing deferred registry for data component types");
 		DataComponentTypeRegistry.DATA_COMPONENT_TYPES.register(modEventBus);
 
-		ImmersiveWeapons.LOGGER.info("Initializing deferred registry for armor materials");
-		ArmorMaterialRegistry.ARMOR_MATERIALS.register(modEventBus);
-
 		ImmersiveWeapons.LOGGER.info("Initializing deferred registry for attributes");
 		AttributeRegistry.ATTRIBUTES.register(modEventBus);
 

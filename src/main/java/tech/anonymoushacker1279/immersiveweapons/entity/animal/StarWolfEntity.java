@@ -3,16 +3,18 @@ package tech.anonymoushacker1279.immersiveweapons.entity.animal;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.animal.Wolf;
+import net.minecraft.world.entity.animal.wolf.Wolf;
 import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 
 import javax.annotation.Nullable;
-import java.util.UUID;
 
 public class StarWolfEntity extends Wolf implements GrantAdvancementOnDiscovery {
 
@@ -24,21 +26,17 @@ public class StarWolfEntity extends Wolf implements GrantAdvancementOnDiscovery 
 		return Mob.createMobAttributes()
 				.add(Attributes.MOVEMENT_SPEED, 0.35F)
 				.add(Attributes.MAX_HEALTH, 12.0D)
-				.add(Attributes.ATTACK_DAMAGE, 5.0D);
+				.add(Attributes.ATTACK_DAMAGE, 6.0D);
 	}
 
 	@Override
-	public void setTame(boolean tamed, boolean applySideEffects) {
-		super.setTame(tamed, applySideEffects);
-
-		if (tamed) {
-			getAttribute(Attributes.MAX_HEALTH).setBaseValue(44.0D);
-			setHealth(44.0F);
+	protected void applyTamingSideEffects() {
+		if (isTame()) {
+			getAttribute(Attributes.MAX_HEALTH).setBaseValue(60.0D);
+			setHealth(60.0F);
 		} else {
 			getAttribute(Attributes.MAX_HEALTH).setBaseValue(12.0D);
 		}
-
-		getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(6.0D);
 	}
 
 	@Override
@@ -48,35 +46,21 @@ public class StarWolfEntity extends Wolf implements GrantAdvancementOnDiscovery 
 	}
 
 	@Override
-	public boolean hurt(DamageSource source, float amount) {
-		// Star wolves are immune to fall damage
-		if (source.is(DamageTypeTags.IS_FALL)) {
+	public boolean hurtServer(ServerLevel level, DamageSource damageSource, float amount) {
+		if (damageSource.is(DamageTypeTags.IS_FALL)) {
 			return false;
-		} else {
-			return super.hurt(source, amount);
 		}
-	}
 
-	@Override
-	public int getMaxSpawnClusterSize() {
-		return 2;
-	}
-
-	@Override
-	public boolean isMaxGroupSizeReached(int size) {
-		return size >= 2;
+		return super.hurtServer(level, damageSource, amount);
 	}
 
 	@Nullable
 	@Override
-	public Wolf getBreedOffspring(ServerLevel pLevel, AgeableMob pOtherParent) {
-		Wolf wolf = EntityRegistry.STAR_WOLF_ENTITY.get().create(pLevel);
-		if (wolf != null) {
-			UUID ownerUUID = getOwnerUUID();
-			if (ownerUUID != null) {
-				wolf.setOwnerUUID(ownerUUID);
-				wolf.setTame(true, true);
-			}
+	public Wolf getBreedOffspring(ServerLevel level, AgeableMob otherParent) {
+		Wolf wolf = EntityRegistry.STAR_WOLF_ENTITY.get().create(level, EntitySpawnReason.BREEDING);
+		if (wolf != null && getOwner() != null) {
+			wolf.setOwner(getOwner());
+			wolf.setTame(true, true);
 		}
 
 		return wolf;

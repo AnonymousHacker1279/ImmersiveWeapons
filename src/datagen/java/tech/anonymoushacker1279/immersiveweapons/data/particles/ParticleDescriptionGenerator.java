@@ -2,15 +2,14 @@ package tech.anonymoushacker1279.immersiveweapons.data.particles;
 
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import net.neoforged.neoforge.common.data.ParticleDescriptionProvider;
+import net.neoforged.neoforge.client.data.ParticleDescriptionProvider;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.init.ParticleTypesRegistry;
 
 public class ParticleDescriptionGenerator extends ParticleDescriptionProvider {
 
-	public ParticleDescriptionGenerator(PackOutput output, ExistingFileHelper fileHelper) {
-		super(output, fileHelper);
+	public ParticleDescriptionGenerator(PackOutput output) {
+		super(output);
 	}
 
 	@Override

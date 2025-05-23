@@ -5,9 +5,7 @@
     {
       "base_multiplier": 1.3,
       "density": 0.05,
-      "ingredient": {
-        "tag": "immersiveweapons:shards/ventus"
-      }
+      "ingredient": "#immersiveweapons:shards/ventus"
     }
   ],
   "result": {

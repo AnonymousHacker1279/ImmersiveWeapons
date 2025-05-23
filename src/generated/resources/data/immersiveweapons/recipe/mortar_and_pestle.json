@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "mortar_and_pestle",
   "key": {
-    "a": {
-      "item": "minecraft:bowl"
-    },
-    "b": {
-      "item": "minecraft:stick"
-    }
+    "a": "minecraft:bowl",
+    "b": "minecraft:stick"
   },
   "pattern": [
     " b ",

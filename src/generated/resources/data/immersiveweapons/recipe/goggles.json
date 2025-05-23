@@ -3,15 +3,9 @@
   "category": "misc",
   "group": "goggles",
   "key": {
-    "a": {
-      "tag": "c:glass_panes"
-    },
-    "b": {
-      "tag": "c:ingots/iron"
-    },
-    "c": {
-      "tag": "c:strings"
-    }
+    "a": "#c:glass_panes",
+    "b": "#c:ingots/iron",
+    "c": "#c:strings"
   },
   "pattern": [
     " c ",

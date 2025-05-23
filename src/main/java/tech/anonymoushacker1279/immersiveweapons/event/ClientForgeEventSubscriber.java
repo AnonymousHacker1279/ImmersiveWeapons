@@ -5,9 +5,9 @@ import com.mojang.blaze3d.shaders.FogShape;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
@@ -15,25 +15,32 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.EventBusSubscriber.Bus;
-import net.neoforged.neoforge.client.event.*;
-import net.neoforged.neoforge.client.event.ViewportEvent.*;
+import net.neoforged.neoforge.client.event.InputEvent;
+import net.neoforged.neoforge.client.event.RecipesReceivedEvent;
+import net.neoforged.neoforge.client.event.RenderBlockScreenEffectEvent;
+import net.neoforged.neoforge.client.event.RenderGuiLayerEvent;
+import net.neoforged.neoforge.client.event.ViewportEvent.ComputeFogColor;
+import net.neoforged.neoforge.client.event.ViewportEvent.ComputeFov;
+import net.neoforged.neoforge.client.event.ViewportEvent.RenderFog;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
+import tech.anonymoushacker1279.immersiveweapons.init.DataComponentTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.RecipeTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.CursedItem;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.ArmorUtils;
-import tech.anonymoushacker1279.immersiveweapons.item.gun.data.GunData;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem;
+import tech.anonymoushacker1279.immersiveweapons.menu.SmallPartsMenu;
+import tech.anonymoushacker1279.immersiveweapons.menu.StarForgeMenu;
 
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.GAME, value = Dist.CLIENT)
 public class ClientForgeEventSubscriber {
 
-	private static final Minecraft minecraft = Minecraft.getInstance();
 
 	/**
 	 * Event handler for the RenderBlockScreenEffectEvent.
@@ -70,7 +77,8 @@ public class ClientForgeEventSubscriber {
 	@SubscribeEvent
 	public static void renderFogEvent(RenderFog event) {
 		// Reduce lava fog from players wearing a full set of molten armor
-		Player player = minecraft.player;
+		Player player = Minecraft.getInstance().player;
+		Level level = Minecraft.getInstance().level;
 
 		if (player == null) {
 			return;
@@ -79,8 +87,8 @@ public class ClientForgeEventSubscriber {
 		if (player.isInLava()) {
 			boolean hasLavaGoggles = Accessory.isAccessoryActive(player, ItemRegistry.LAVA_GOGGLES.get());
 			if (ArmorUtils.isWearingMoltenArmor(player)) {
-				if (minecraft.level != null) {
-					BlockState state = minecraft.level.getBlockState(new BlockPos(player.blockPosition().above(1)));
+				if (level != null) {
+					BlockState state = level.getBlockState(new BlockPos(player.blockPosition().above(1)));
 					if (state.is(Blocks.LAVA)) {
 						float modifier = hasLavaGoggles ? 1.5f : 1.0f;
 						event.setNearPlaneDistance(16.0f * modifier);
@@ -89,8 +97,8 @@ public class ClientForgeEventSubscriber {
 					}
 				}
 			} else if (hasLavaGoggles) {
-				if (minecraft.level != null) {
-					BlockState state = minecraft.level.getBlockState(new BlockPos(player.blockPosition().above(1)));
+				if (level != null) {
+					BlockState state = level.getBlockState(new BlockPos(player.blockPosition().above(1)));
 					if (state.is(Blocks.LAVA)) {
 						event.setNearPlaneDistance(8.0f);
 						event.setFarPlaneDistance(16.0f);
@@ -124,7 +132,7 @@ public class ClientForgeEventSubscriber {
 
 	@SubscribeEvent
 	public static void computeFogColorEvent(ComputeFogColor event) {
-		if (minecraft.player != null && minecraft.player.hasEffect(EffectRegistry.FLASHBANG_EFFECT)) {
+		if (Minecraft.getInstance().player != null && Minecraft.getInstance().player.hasEffect(EffectRegistry.FLASHBANG_EFFECT)) {
 			if (IWConfigs.CLIENT.darkModeFlashbangs.getAsBoolean()) {
 				event.setRed(0.0f);
 				event.setGreen(0.0f);
@@ -139,24 +147,24 @@ public class ClientForgeEventSubscriber {
 
 	@SubscribeEvent
 	public static void computeFovEvent(ComputeFov event) {
-		if (event.getFOV() != 70) {
-			GunData.playerFOV = event.getFOV();
-		}
-		if (GunData.changingPlayerFOV != -1 && minecraft.options.getCameraType().isFirstPerson()) {
-			event.setFOV(GunData.changingPlayerFOV);
-		}
+		Player player = Minecraft.getInstance().player;
 
 		// Handle FOV changes with some items
-		if (minecraft.player != null) {
-			Item itemInHand = minecraft.player.getItemInHand(minecraft.player.getUsedItemHand()).getItem();
+		if (player != null) {
+			Item itemInHand = player.getItemInHand(player.getUsedItemHand()).getItem();
+
+			if (player.getUseItem().get(DataComponentTypeRegistry.SCOPE) != null && Minecraft.getInstance().options.getCameraType().isFirstPerson()) {
+				event.setFOV(15f);
+			}
+
 			if ((itemInHand == ItemRegistry.ICE_BOW.get()
 					|| itemInHand == ItemRegistry.DRAGONS_BREATH_BOW.get()
 					|| itemInHand == ItemRegistry.AURORA_BOW.get()
 					|| (itemInHand.asItem() instanceof ThrowableItem throwableItem && throwableItem.type.canCharge))
-					&& minecraft.player.isUsingItem()) {
+					&& player.isUsingItem()) {
 
-				double fov = event.getFOV();
-				int useTicks = minecraft.player.getTicksUsingItem();
+				float fov = event.getFOV();
+				int useTicks = player.getTicksUsingItem();
 				float fovModifier = (float) useTicks / 20.0F;
 
 				if (fovModifier > 1.0F) {
@@ -173,15 +181,6 @@ public class ClientForgeEventSubscriber {
 
 	@SubscribeEvent
 	public static void renderGuiOverlayPostEvent(RenderGuiLayerEvent.Post event) {
-		if (GunData.changingPlayerFOV != -1) {
-			if (minecraft.options.getCameraType().isFirstPerson()) {
-				float deltaFrame = minecraft.getTimer().getGameTimeDeltaTicks() / 8;
-				GunData.scopeScale = Mth.lerp(0.25F * deltaFrame, GunData.scopeScale, 1.125F);
-
-				IWOverlays.SCOPE_ELEMENT.render(event.getGuiGraphics(), event.getPartialTick());
-			}
-		}
-
 		if (IWKeyBinds.DEBUG_TRACING.consumeClick()) {
 			DebugTracingData.isDebugTracingEnabled = !DebugTracingData.isDebugTracingEnabled;
 		}
@@ -194,10 +193,14 @@ public class ClientForgeEventSubscriber {
 	@SubscribeEvent
 	public static void keyInputEvent(InputEvent.Key event) {
 		// Double jump ability with the Venstral Jar accessory
-		Player player = minecraft.player;
+		if (Minecraft.getInstance().level == null) {
+			return;
+		}
+
+		Player player = Minecraft.getInstance().player;
 		if (player != null && Accessory.isAccessoryActive(player, ItemRegistry.VENSTRAL_JAR.get())) {
 			// Check if the jump key is pressed
-			if (event.getKey() == minecraft.options.keyJump.getKey().getValue() && event.getAction() == InputConstants.PRESS) {
+			if (event.getKey() == Minecraft.getInstance().options.keyJump.getKey().getValue() && event.getAction() == InputConstants.PRESS) {
 				if (!player.onGround()) {
 					Vec3 deltaMovement = player.getDeltaMovement();
 					float jumpVelocity = 0.42f * (1 + player.getJumpBoostPower());
@@ -215,9 +218,20 @@ public class ClientForgeEventSubscriber {
 								0.0D, 0.0D, 0.0D);
 					}
 
-					player.getCooldowns().addCooldown(ItemRegistry.VENSTRAL_JAR.get(), 1200);
+					player.getCooldowns().addCooldown(ItemRegistry.VENSTRAL_JAR.get().getDefaultInstance(), 1200);
 				}
 			}
 		}
+	}
+
+	@SubscribeEvent
+	public static void recipesReceivedEvent(RecipesReceivedEvent event) {
+		ImmersiveWeapons.LOGGER.info("Client received {} recipes", event.getRecipeMap().values().size());
+
+		StarForgeMenu.ALL_RECIPES.clear();
+		StarForgeMenu.ALL_RECIPES.addAll(event.getRecipeMap().byType(RecipeTypeRegistry.STAR_FORGE_RECIPE_TYPE.get()));
+
+		SmallPartsMenu.ALL_CRAFTABLES.clear();
+		SmallPartsMenu.initializeRecipes(event.getRecipeMap().byType(RecipeTypeRegistry.SMALL_PARTS_RECIPE_TYPE.get()));
 	}
 }

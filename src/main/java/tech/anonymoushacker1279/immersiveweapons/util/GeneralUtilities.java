@@ -17,9 +17,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.shapes.*;
+import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * A collection of random utility methods for general use.
@@ -85,8 +89,8 @@ public class GeneralUtilities {
 	}
 
 	/**
-	 * Check if the specified UUID is not Jonny's. Used as a dev bonus for the Jonny's Curse item, where all effects
-	 * are inverted for Jonny himself.
+	 * Check if the specified UUID is not Jonny's. Used as a dev bonus for the Jonny's Curse item, where all effects are
+	 * inverted for Jonny himself.
 	 *
 	 * @param uuid the UUID to check
 	 * @return true if the UUID is not Jonny's, false otherwise
@@ -172,7 +176,7 @@ public class GeneralUtilities {
 	public static void enchantSpawnedWeapon(Mob mob, RandomSource random, float chanceMultiplier) {
 		if (!mob.getMainHandItem().isEmpty()) {
 			RegistryAccess access = mob.level().registryAccess();
-			Optional<Named<Enchantment>> tag = access.registryOrThrow(Registries.ENCHANTMENT).getTag(EnchantmentTags.ON_RANDOM_LOOT);
+			Optional<Named<Enchantment>> tag = access.lookupOrThrow(Registries.ENCHANTMENT).get(EnchantmentTags.ON_RANDOM_LOOT);
 
 			mob.setItemSlot(
 					EquipmentSlot.MAINHAND,
@@ -199,7 +203,7 @@ public class GeneralUtilities {
 			if (equipmentslot.getType() == Type.HUMANOID_ARMOR) {
 				ItemStack slotStack = mob.getItemBySlot(equipmentslot);
 				RegistryAccess access = mob.level().registryAccess();
-				Optional<Named<Enchantment>> tag = access.registryOrThrow(Registries.ENCHANTMENT).getTag(EnchantmentTags.ON_RANDOM_LOOT);
+				Optional<Named<Enchantment>> tag = access.lookupOrThrow(Registries.ENCHANTMENT).get(EnchantmentTags.ON_RANDOM_LOOT);
 
 				if (!slotStack.isEmpty()) {
 					mob.setItemSlot(

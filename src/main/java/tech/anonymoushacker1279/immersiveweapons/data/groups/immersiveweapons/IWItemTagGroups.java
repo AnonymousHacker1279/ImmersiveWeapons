@@ -35,6 +35,7 @@ public class IWItemTagGroups {
 	public static final TagKey<Item> STARSTORM_INGOTS = createItemTag("ingots/starstorm");
 	public static final TagKey<Item> STARSTORM_SHARDS = createItemTag("shards/starstorm");
 	public static final TagKey<Item> VOID_INGOTS = createItemTag("ingots/void");
+	public static final TagKey<Item> HANSIUM_INGOTS = createItemTag("ingots/hansium");
 	public static final TagKey<Item> ACCESSORIES = createItemTag("accessories");
 	public static final TagKey<Item> SMOKE_GRENADES = createItemTag("smoke_grenades");
 	public static final TagKey<Item> MOLTEN_TOOLS = createItemTag("tools/molten");

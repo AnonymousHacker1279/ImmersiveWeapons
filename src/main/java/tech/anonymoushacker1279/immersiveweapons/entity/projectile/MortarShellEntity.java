@@ -8,13 +8,17 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerEntity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.*;
+import net.minecraft.world.entity.projectile.ItemSupplier;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.Level.ExplosionInteraction;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.*;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.event.EventHooks;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.block.MortarBlock;
@@ -45,10 +49,10 @@ public class MortarShellEntity extends Projectile implements ItemSupplier {
 			}
 
 			switch (state.getValue(MortarBlock.FACING)) {
-				case NORTH -> mortarShellEntity.setDeltaMovement(0.0f, rotationModifier, 1.25f);
-				case SOUTH -> mortarShellEntity.setDeltaMovement(0.0f, rotationModifier, -1.25f);
-				case EAST -> mortarShellEntity.setDeltaMovement(-1.25f, rotationModifier, 0.0f);
-				case WEST -> mortarShellEntity.setDeltaMovement(1.25f, rotationModifier, 0.0f);
+				case NORTH -> mortarShellEntity.setDeltaMovement(0.0f, rotationModifier, -1.25f);
+				case SOUTH -> mortarShellEntity.setDeltaMovement(0.0f, rotationModifier, 1.25f);
+				case EAST -> mortarShellEntity.setDeltaMovement(1.25f, rotationModifier, 0.0f);
+				case WEST -> mortarShellEntity.setDeltaMovement(-1.25f, rotationModifier, 0.0f);
 			}
 
 			if (player != null) {
@@ -117,7 +121,6 @@ public class MortarShellEntity extends Projectile implements ItemSupplier {
 		}
 
 		setPos(newX, newY, newZ);
-		checkInsideBlocks();
 	}
 
 	@Override
@@ -132,7 +135,7 @@ public class MortarShellEntity extends Projectile implements ItemSupplier {
 					4.0F, false, ExplosionInteraction.BLOCK);
 		}
 
-		kill();
+		discard();
 	}
 
 	@Override

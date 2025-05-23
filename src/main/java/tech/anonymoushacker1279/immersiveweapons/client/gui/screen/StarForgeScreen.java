@@ -2,6 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.client.gui.screen;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -33,14 +34,14 @@ public class StarForgeScreen extends AbstractContainerScreen<StarForgeMenu> {
 
 	@Override
 	protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
-		guiGraphics.blit(GUI_TEXTURE, leftPos, topPos, 0, 0, imageWidth, imageHeight);
+		guiGraphics.blit(RenderType::guiTextured, GUI_TEXTURE, leftPos, topPos, 0, 0, imageWidth, imageHeight, 256, 256);
 
 		// Render the solar indicator (12x12 px) at (37, 28)
 		// The inactive indicator is at (177, 17) and the active is at (177, 29)
 		if (menu.hasSolarEnergy()) {
-			guiGraphics.blit(GUI_TEXTURE, leftPos + 36, topPos + 27, 176, 12, 12, 12);
+			guiGraphics.blit(RenderType::guiTextured, GUI_TEXTURE, leftPos + 36, topPos + 27, 176, 12, 12, 12, 256, 256);
 		} else {
-			guiGraphics.blit(GUI_TEXTURE, leftPos + 36, topPos + 27, 176, 0, 12, 12);
+			guiGraphics.blit(RenderType::guiTextured, GUI_TEXTURE, leftPos + 36, topPos + 27, 176, 0, 12, 12, 256, 256);
 		}
 
 		// Render the temperature bar (12x38 px) at (11, 10)
@@ -53,7 +54,7 @@ public class StarForgeScreen extends AbstractContainerScreen<StarForgeMenu> {
 		int sourceY = 24 + 38 - pixels;
 		int destY = topPos + 9 + 38 - pixels;
 		// Render the bar
-		guiGraphics.blit(GUI_TEXTURE, leftPos + 10, destY, 176, sourceY, 12, pixels);
+		guiGraphics.blit(RenderType::guiTextured, GUI_TEXTURE, leftPos + 10, destY, 176, sourceY, 12, pixels, 256, 256);
 
 		List<StarForgeRecipe> availableRecipes = menu.availableRecipes;
 
@@ -70,7 +71,7 @@ public class StarForgeScreen extends AbstractContainerScreen<StarForgeMenu> {
 			scrollbarTextureY = 244;
 		}
 
-		guiGraphics.blit(GUI_TEXTURE, scrollbarX, handleY, scrollbarTextureY, 0, 11, handleHeight);
+		guiGraphics.blit(RenderType::guiTextured, GUI_TEXTURE, scrollbarX, handleY, scrollbarTextureY, 0, 11, handleHeight, 256, 256);
 
 		// Render the selection area and the entries
 		int leftPosOffset = leftPos + 60;
@@ -89,7 +90,7 @@ public class StarForgeScreen extends AbstractContainerScreen<StarForgeMenu> {
 					vOffset += 48; // Hovered entry
 				}
 
-				guiGraphics.blit(GUI_TEXTURE, leftPosOffset, y, 0, vOffset, 56, 24);
+				guiGraphics.blit(RenderType::guiTextured, GUI_TEXTURE, leftPosOffset, y, 0, vOffset, 56, 24, 256, 256);
 			}
 		}
 
@@ -102,16 +103,19 @@ public class StarForgeScreen extends AbstractContainerScreen<StarForgeMenu> {
 			if (!availableRecipes.isEmpty() && i < availableRecipes.size()) {
 				StarForgeRecipe recipe = availableRecipes.get(i);
 
-				ItemStack ingot = recipe.getIngot();
-				ItemStack secondaryMaterial = recipe.getSecondaryMaterial();
+				ItemStack ingot = recipe.primaryMaterial().items().toList().getFirst().value().getDefaultInstance();
 				ItemStack result = recipe.result();
 
 				// Render the items
 				guiGraphics.renderItem(ingot, leftPosOffset + 3, y + 3);
 				guiGraphics.renderItemDecorations(font, ingot, leftPosOffset + 3, y + 3);
 
-				guiGraphics.renderItem(secondaryMaterial, leftPosOffset + 21, y + 3);
-				guiGraphics.renderItemDecorations(font, secondaryMaterial, leftPosOffset + 21, y + 3);
+				if (recipe.secondaryMaterial().isPresent()) {
+					ItemStack secondaryMaterial = recipe.secondaryMaterial().get().items().toList().getFirst().value().getDefaultInstance();
+					guiGraphics.renderItem(secondaryMaterial, leftPosOffset + 21, y + 3);
+					guiGraphics.renderItemDecorations(font, secondaryMaterial, leftPosOffset + 21, y + 3);
+
+				}
 
 				guiGraphics.renderItem(result, leftPosOffset + 39, y + 3);
 			}
@@ -121,9 +125,9 @@ public class StarForgeScreen extends AbstractContainerScreen<StarForgeMenu> {
 		if (isRecipeValid(availableRecipes)) {
 			// If there is a recipe being crafted, the crafting icon should be grayed out
 			if (menu.getSmeltTime() > 0) {
-				guiGraphics.blit(GUI_TEXTURE, leftPos + 144, topPos + 8, 188, 15, 15, 15);
+				guiGraphics.blit(RenderType::guiTextured, GUI_TEXTURE, leftPos + 144, topPos + 8, 188, 15, 15, 15, 256, 256);
 			} else {
-				guiGraphics.blit(GUI_TEXTURE, leftPos + 144, topPos + 8, 188, 0, 15, 15);
+				guiGraphics.blit(RenderType::guiTextured, GUI_TEXTURE, leftPos + 144, topPos + 8, 188, 0, 15, 15, 256, 256);
 			}
 		}
 	}
@@ -268,7 +272,7 @@ public class StarForgeScreen extends AbstractContainerScreen<StarForgeMenu> {
 		if (!availableRecipes.isEmpty() && menu.getMenuSelectionIndex() < availableRecipes.size() && menu.getTemperature() == 1000) {
 			StarForgeRecipe recipe = availableRecipes.get(menu.getMenuSelectionIndex());
 
-			return recipe != null && recipe.matches(menu.container);
+			return recipe != null;
 		}
 
 		return false;

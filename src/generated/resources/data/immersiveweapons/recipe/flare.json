@@ -3,15 +3,9 @@
   "category": "equipment",
   "group": "firearm",
   "key": {
-    "a": {
-      "tag": "c:nuggets/copper"
-    },
-    "b": {
-      "item": "minecraft:paper"
-    },
-    "c": {
-      "item": "immersiveweapons:smoke_powder"
-    }
+    "a": "#c:nuggets/copper",
+    "b": "minecraft:paper",
+    "c": "immersiveweapons:smoke_powder"
   },
   "pattern": [
     " a ",

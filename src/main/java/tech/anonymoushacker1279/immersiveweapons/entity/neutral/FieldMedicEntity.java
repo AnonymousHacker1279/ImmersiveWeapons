@@ -1,23 +1,28 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.neutral;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.animal.IronGolem;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.FieldMedicHealEntitiesGoal;
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.HurtByTargetWithPredicateGoal;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
@@ -37,10 +42,9 @@ public class FieldMedicEntity extends SoldierEntity {
 	}
 
 	public static AttributeSupplier.Builder registerAttributes() {
-		return Monster.createMonsterAttributes()
+		return createSoldierAttributes()
 				.add(Attributes.MOVEMENT_SPEED, 0.3D)
-				.add(Attributes.ARMOR, 2.5D)
-				.add(Attributes.ATTACK_DAMAGE, 2.0D);
+				.add(Attributes.ARMOR, 2.5D);
 	}
 
 	@Override
@@ -54,6 +58,12 @@ public class FieldMedicEntity extends SoldierEntity {
 		goalSelector.addGoal(7, new RandomLookAroundGoal(this));
 		targetSelector.addGoal(1, new HurtByTargetWithPredicateGoal(this, this::canTargetEntityWhenHurt, MinutemanEntity.class, IronGolem.class)
 				.setAlertOthers());
+	}
+
+	@Override
+	@Nullable
+	public TagKey<Item> getPreferredWeaponType() {
+		return null;
 	}
 
 	@Override
@@ -90,8 +100,8 @@ public class FieldMedicEntity extends SoldierEntity {
 	}
 
 	@Override
-	public boolean hurt(DamageSource source, float amount) {
-		boolean didHurt = super.hurt(source, amount);
+	public boolean hurtServer(ServerLevel serverLevel, DamageSource source, float amount) {
+		boolean didHurt = super.hurtServer(serverLevel, source, amount);
 		if (didHurt && source.getEntity() instanceof LivingEntity livingEntity) {
 
 			double followDistance = getAttributeValue(Attributes.FOLLOW_RANGE);
@@ -110,8 +120,8 @@ public class FieldMedicEntity extends SoldierEntity {
 	}
 
 	@Override
-	public boolean doHurtTarget(Entity entity) {
-		boolean didHurtTarget = super.doHurtTarget(entity);
+	public boolean doHurtTarget(ServerLevel serverLevel, Entity entity) {
+		boolean didHurtTarget = super.doHurtTarget(serverLevel, entity);
 		if (didHurtTarget && entity instanceof LivingEntity livingEntity) {
 			if (!getMainHandItem().is(ItemRegistry.USED_SYRINGE.get())) {
 				prepareForCombat();

@@ -3,21 +3,11 @@
   "category": "misc",
   "group": "first_aid",
   "ingredients": [
-    {
-      "item": "immersiveweapons:syringe"
-    },
-    {
-      "item": "minecraft:fermented_spider_eye"
-    },
-    {
-      "item": "minecraft:sugar"
-    },
-    {
-      "item": "minecraft:sugar"
-    },
-    {
-      "item": "minecraft:sugar"
-    }
+    "immersiveweapons:syringe",
+    "minecraft:fermented_spider_eye",
+    "minecraft:sugar",
+    "minecraft:sugar",
+    "minecraft:sugar"
   ],
   "result": {
     "count": 1,

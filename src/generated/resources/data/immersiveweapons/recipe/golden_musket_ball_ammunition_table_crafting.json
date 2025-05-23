@@ -5,16 +5,12 @@
     {
       "base_multiplier": 1.3,
       "density": 1.93,
-      "ingredient": {
-        "tag": "c:ingots/gold"
-      }
+      "ingredient": "#c:ingots/gold"
     },
     {
       "base_multiplier": 0.14,
       "density": 0.21,
-      "ingredient": {
-        "tag": "c:nuggets/gold"
-      }
+      "ingredient": "#c:nuggets/gold"
     }
   ],
   "result": {

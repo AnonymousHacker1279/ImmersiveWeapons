@@ -2,17 +2,24 @@ package tech.anonymoushacker1279.immersiveweapons.block.crafting;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.*;
+import net.minecraft.world.Container;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.level.*;
-import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.item.crafting.SingleRecipeInput;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.BarrelBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -26,7 +33,7 @@ import tech.anonymoushacker1279.immersiveweapons.block.core.BasicOrientableBlock
 import tech.anonymoushacker1279.immersiveweapons.init.RecipeTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.BarrelTapRecipe;
 
-import java.util.List;
+import java.util.Optional;
 
 public class BarrelTapBlock extends BasicOrientableBlock implements SimpleWaterloggedBlock {
 
@@ -56,8 +63,7 @@ public class BarrelTapBlock extends BasicOrientableBlock implements SimpleWaterl
 	}
 
 	/**
-	 * Set FluidState properties.
-	 * Allows the block to exhibit waterlogged behavior.
+	 * Set FluidState properties. Allows the block to exhibit waterlogged behavior.
 	 *
 	 * @param state the <code>BlockState</code> of the block
 	 * @return FluidState
@@ -97,8 +103,7 @@ public class BarrelTapBlock extends BasicOrientableBlock implements SimpleWaterl
 	}
 
 	/**
-	 * Set placement properties.
-	 * Sets the facing direction of the block for placement.
+	 * Set placement properties. Sets the facing direction of the block for placement.
 	 *
 	 * @param context the <code>BlockPlaceContext</code> during placement
 	 * @return BlockState
@@ -109,48 +114,42 @@ public class BarrelTapBlock extends BasicOrientableBlock implements SimpleWaterl
 	}
 
 	@Override
-	protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
+	protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
 		Direction facingDirection = state.getValue(FACING);
+		ItemStack itemInHand = player.getItemInHand(hand);
 
-		if (level.isClientSide) {
-			return ItemInteractionResult.SUCCESS;
-		} else {
-			BlockEntity blockEntity = level.getBlockEntity(pos.relative(facingDirection.getOpposite()));
+		if (level instanceof ServerLevel serverLevel && itemInHand.is(Items.GLASS_BOTTLE)) {
+			if (serverLevel.getBlockEntity(pos.relative(facingDirection.getOpposite())) instanceof Container container) {
+				for (int i = 0; i < container.getContainerSize(); i++) {
+					Optional<RecipeHolder<BarrelTapRecipe>> optional = serverLevel.recipeAccess().getRecipeFor(
+							RecipeTypeRegistry.BARREL_TAP_RECIPE_TYPE.get(),
+							new SingleRecipeInput(container.getItem(i)),
+							serverLevel
+					);
 
-			if (blockEntity != null) {
-				if (player.getMainHandItem().getItem() == Items.GLASS_BOTTLE) {
-					Container container = ((Container) blockEntity);
-					List<RecipeHolder<BarrelTapRecipe>> recipes = level.getRecipeManager()
-							.getAllRecipesFor(RecipeTypeRegistry.BARREL_TAP_RECIPE_TYPE.get());
+					if (optional.isPresent()) {
+						BarrelTapRecipe recipe = optional.get().value();
+						player.getInventory().add(recipe.result().copy());
+						itemInHand.shrink(1);
+						container.removeItem(i, recipe.getMaterialCount());
 
-					for (RecipeHolder<BarrelTapRecipe> recipe : recipes) {
-						for (int i = 0; i < container.getContainerSize(); ++i) {
-							if (recipe.value().getMaterial().test(container.getItem(i))) {
-								if (container.getItem(i).getCount() >= recipe.value().getMaterialCount()) {
-									player.getInventory().add(recipe.value().getResultItem(level.registryAccess()));
-									player.getMainHandItem().shrink(1);
-									container.removeItem(i, recipe.value().getMaterialCount());
+						level.playSound(
+								null,
+								pos.getX(),
+								pos.getY(),
+								pos.getZ(),
+								SoundEvents.BOTTLE_FILL,
+								SoundSource.BLOCKS,
+								1.0F,
+								1.0F
+						);
 
-									level.playSound(
-											null,
-											pos.getX(),
-											pos.getY(),
-											pos.getZ(),
-											SoundEvents.BOTTLE_FILL,
-											SoundSource.BLOCKS,
-											1.0F,
-											1.0F
-									);
-
-									return ItemInteractionResult.CONSUME;
-								}
-							}
-						}
+						return InteractionResult.CONSUME;
 					}
 				}
 			}
-
-			return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
 		}
+
+		return InteractionResult.PASS;
 	}
 }

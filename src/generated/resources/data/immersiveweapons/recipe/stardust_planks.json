@@ -3,9 +3,7 @@
   "category": "building",
   "group": "planks",
   "ingredients": [
-    {
-      "tag": "immersiveweapons:stardust_logs"
-    }
+    "#immersiveweapons:stardust_logs"
   ],
   "result": {
     "count": 4,

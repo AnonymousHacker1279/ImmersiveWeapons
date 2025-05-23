@@ -1,10 +1,11 @@
 package tech.anonymoushacker1279.immersiveweapons.item.potion;
 
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -34,7 +35,7 @@ public abstract class CustomPotionItem extends Item {
 	 * @param hand   the <code>InteractionHand</code> the player is using
 	 */
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+	public InteractionResult use(Level level, Player player, InteractionHand hand) {
 		return ItemUtils.startUsingInstantly(level, player, hand);
 	}
 
@@ -45,10 +46,10 @@ public abstract class CustomPotionItem extends Item {
 			CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) player, pStack);
 		}
 
-		if (!pLevel.isClientSide) {
+		if (pLevel instanceof ServerLevel serverLevel) {
 			for (MobEffectInstance effectInstance : getEffects()) {
 				if (effectInstance.getEffect().value().isInstantenous()) {
-					effectInstance.getEffect().value().applyInstantenousEffect(player, player, pEntityLiving, effectInstance.getAmplifier(), 1.0D);
+					effectInstance.getEffect().value().applyInstantenousEffect(serverLevel, player, player, pEntityLiving, effectInstance.getAmplifier(), 1.0D);
 				} else {
 					pEntityLiving.addEffect(new MobEffectInstance(effectInstance));
 				}
@@ -64,11 +65,11 @@ public abstract class CustomPotionItem extends Item {
 
 		if (player == null || !player.getAbilities().instabuild) {
 			if (pStack.isEmpty()) {
-				return getCraftingRemainingItem(pStack);
+				return getCraftingRemainder(pStack);
 			}
 
 			if (player != null) {
-				player.getInventory().add(getCraftingRemainingItem(pStack));
+				player.getInventory().add(getCraftingRemainder(pStack));
 			}
 		}
 
@@ -81,25 +82,8 @@ public abstract class CustomPotionItem extends Item {
 		return 32;
 	}
 
-	/**
-	 * Check if the item has a container item.
-	 *
-	 * @param stack the <code>ItemStack</code> to be checked
-	 * @return boolean
-	 */
 	@Override
-	public boolean hasCraftingRemainingItem(ItemStack stack) {
-		return true;
-	}
-
-	/**
-	 * Get the container item.
-	 *
-	 * @param stack the <code>ItemStack</code> instance
-	 * @return ItemStack
-	 */
-	@Override
-	public ItemStack getCraftingRemainingItem(ItemStack stack) {
+	public ItemStack getCraftingRemainder(ItemStack itemStack) {
 		return new ItemStack(Items.GLASS_BOTTLE);
 	}
 
@@ -110,8 +94,8 @@ public abstract class CustomPotionItem extends Item {
 	 * @return UseAction
 	 */
 	@Override
-	public UseAnim getUseAnimation(ItemStack stack) {
-		return UseAnim.DRINK;
+	public ItemUseAnimation getUseAnimation(ItemStack stack) {
+		return ItemUseAnimation.DRINK;
 	}
 
 	protected List<MobEffectInstance> getEffects() {

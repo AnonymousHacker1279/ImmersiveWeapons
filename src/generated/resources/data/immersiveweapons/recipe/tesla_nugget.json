@@ -3,9 +3,7 @@
   "category": "misc",
   "group": "tesla",
   "ingredients": [
-    {
-      "tag": "immersiveweapons:ingots/tesla"
-    }
+    "#immersiveweapons:ingots/tesla"
   ],
   "result": {
     "count": 9,

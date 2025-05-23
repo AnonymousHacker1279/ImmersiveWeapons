@@ -3,18 +3,10 @@
   "category": "misc",
   "group": "pedestal_augments",
   "key": {
-    "a": {
-      "item": "immersiveweapons:hansium_ingot"
-    },
-    "b": {
-      "tag": "c:ingots/gold"
-    },
-    "c": {
-      "tag": "c:dyes/red"
-    },
-    "d": {
-      "item": "minecraft:iron_helmet"
-    }
+    "a": "immersiveweapons:hansium_ingot",
+    "b": "#c:ingots/gold",
+    "c": "#c:dyes/red",
+    "d": "minecraft:iron_helmet"
   },
   "pattern": [
     "acb",

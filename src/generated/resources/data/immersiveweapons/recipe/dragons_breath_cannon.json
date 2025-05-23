@@ -3,15 +3,9 @@
   "category": "equipment",
   "group": "void",
   "key": {
-    "a": {
-      "item": "immersiveweapons:hand_cannon"
-    },
-    "b": {
-      "tag": "immersiveweapons:ingots/void"
-    },
-    "c": {
-      "item": "minecraft:dragon_breath"
-    }
+    "a": "immersiveweapons:hand_cannon",
+    "b": "#immersiveweapons:ingots/void",
+    "c": "minecraft:dragon_breath"
   },
   "pattern": [
     "cbc",

@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "hardened_mud": {
+    "has_hardened_mud": {
       "conditions": {
         "items": [
           {
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "hardened_mud"
+      "has_hardened_mud"
     ]
   ],
   "rewards": {

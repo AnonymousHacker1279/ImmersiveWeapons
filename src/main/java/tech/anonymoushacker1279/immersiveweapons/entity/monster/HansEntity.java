@@ -1,5 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.monster;
 
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.RandomSource;
@@ -86,25 +87,13 @@ public class HansEntity extends AbstractWanderingWarriorEntity {
 	}
 
 	@Override
-	protected float getEquipmentDropChance(EquipmentSlot slot) {
-		return 0.0f;
-	}
-
-	/**
-	 * Runs when the entity is hurt.
-	 *
-	 * @param source the <code>DamageSource</code> instance
-	 * @param amount the damage amount
-	 * @return boolean
-	 */
-	@Override
-	public boolean hurt(DamageSource source, float amount) {
+	public boolean hurtServer(ServerLevel serverLevel, DamageSource source, float amount) {
 		if (amount > 0 && source.getEntity() instanceof Player
 				|| source.getEntity() instanceof Mob
 				|| source.getEntity() instanceof PathfinderMob) {
 
 			if (source.isCreativePlayer()) {
-				super.hurt(source, amount);
+				super.hurtServer(serverLevel, source, amount);
 				return true;
 			}
 
@@ -119,11 +108,11 @@ public class HansEntity extends AbstractWanderingWarriorEntity {
 
 			setTarget((LivingEntity) source.getEntity());
 			setCombatTask();
-			return super.hurt(source, amount);
+			return super.hurtServer(serverLevel, source, amount);
 		}
 
 		if (source == damageSources().genericKill()) {
-			super.hurt(source, amount);
+			super.hurtServer(serverLevel, source, amount);
 			return true;
 		}
 

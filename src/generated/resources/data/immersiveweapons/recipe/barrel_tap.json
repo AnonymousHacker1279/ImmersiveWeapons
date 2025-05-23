@@ -3,12 +3,8 @@
   "category": "building",
   "group": "barrel_tap",
   "key": {
-    "a": {
-      "tag": "c:ingots/iron"
-    },
-    "b": {
-      "tag": "c:nuggets/metal"
-    }
+    "a": "#c:ingots/iron",
+    "b": "#c:nuggets/metal"
   },
   "pattern": [
     "  b",

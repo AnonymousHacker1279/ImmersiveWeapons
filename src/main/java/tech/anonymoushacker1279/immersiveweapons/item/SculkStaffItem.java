@@ -5,13 +5,12 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
-import net.minecraft.world.item.*;
-import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -24,11 +23,10 @@ public class SculkStaffItem extends Item implements SummoningStaff {
 	}
 
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level level, Player player,
-	                                              InteractionHand hand) {
+	public InteractionResult use(Level level, Player player, InteractionHand hand) {
 
 		if (hand != InteractionHand.MAIN_HAND) {
-			return InteractionResultHolder.pass(player.getItemInHand(hand));
+			return InteractionResult.PASS;
 		}
 
 		Vec3 eyePos = player.getEyePosition();
@@ -74,9 +72,9 @@ public class SculkStaffItem extends Item implements SummoningStaff {
 
 		player.playSound(SoundEvents.WARDEN_SONIC_BOOM, 3.0F, 1.0F);
 
-		handleCooldown(this, player, hand);
+		handleCooldown(player, hand);
 
-		return InteractionResultHolder.sidedSuccess(player.getItemInHand(hand), level.isClientSide());
+		return InteractionResult.SUCCESS;
 	}
 
 	@Override
@@ -87,15 +85,5 @@ public class SculkStaffItem extends Item implements SummoningStaff {
 	@Override
 	public int getStaffCooldown() {
 		return 150;
-	}
-
-	@Override
-	public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
-		return Ingredient.of(Items.ECHO_SHARD).test(repair) || super.isValidRepairItem(toRepair, repair);
-	}
-
-	@Override
-	public int getEnchantmentValue(ItemStack stack) {
-		return 1;
 	}
 }

@@ -1,7 +1,7 @@
 {
-  "parent": "minecraft:block/orientable",
+  "parent": "minecraft:block/cube_bottom_top",
   "textures": {
-    "front": "immersiveweapons:block/chiseled_blood_sandstone",
+    "bottom": "immersiveweapons:block/blood_sandstone_top",
     "side": "immersiveweapons:block/chiseled_blood_sandstone",
     "top": "immersiveweapons:block/blood_sandstone_top"
   }

@@ -3,9 +3,7 @@
   "category": "misc",
   "group": "cobalt",
   "key": {
-    "a": {
-      "tag": "c:nuggets/cobalt"
-    }
+    "a": "#c:nuggets/cobalt"
   },
   "pattern": [
     "aaa",

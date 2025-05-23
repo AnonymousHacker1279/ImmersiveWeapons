@@ -3,16 +3,27 @@ package tech.anonymoushacker1279.immersiveweapons.block;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.*;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.*;
-import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.entity.*;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -22,7 +33,9 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.phys.shapes.*;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.common.Tags.EntityTypes;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.BearTrapBlockEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
@@ -45,36 +58,29 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 	}
 
 	@Override
-	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-		if (!level.isClientSide && level.getBlockEntity(pos) instanceof BearTrapBlockEntity blockEntity) {
-			if (state.getValue(TRIGGERED) && blockEntity.getTrappedEntity() == null) {
-				level.setBlock(pos, state.setValue(TRIGGERED, false).setValue(VINES, false), 3);
-				level.gameEvent(GameEvent.BLOCK_DEACTIVATE, pos, GameEvent.Context.of(state));
-
-				return InteractionResult.SUCCESS;
-			}
-		}
-
-		return InteractionResult.PASS;
-	}
-
-	@Override
-	protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
-		if (!level.isClientSide && hand.equals(InteractionHand.MAIN_HAND)) {
+	protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
+		if (!level.isClientSide && hand.equals(InteractionHand.MAIN_HAND) && level.getBlockEntity(pos) instanceof BearTrapBlockEntity blockEntity) {
 			ItemStack mainHandItem = player.getMainHandItem();
 
-			if (!state.getValue(VINES) && mainHandItem.getItem() == Items.VINE) {
+			if (!state.getValue(VINES) && !state.getValue(TRIGGERED) && mainHandItem.getItem() == Items.VINE) {
 				level.setBlock(pos, state.setValue(VINES, true), 3);
 				if (!player.isCreative()) {
 					mainHandItem.shrink(1);
 				}
 
 				level.gameEvent(GameEvent.BLOCK_ACTIVATE, pos, GameEvent.Context.of(state));
-				return ItemInteractionResult.CONSUME;
+				return InteractionResult.CONSUME;
+			} else if (mainHandItem.isEmpty()) {
+				if (state.getValue(TRIGGERED) && blockEntity.getTrappedEntity() == null) {
+					level.setBlock(pos, state.setValue(TRIGGERED, false).setValue(VINES, false), 3);
+					level.gameEvent(GameEvent.BLOCK_DEACTIVATE, pos, GameEvent.Context.of(state));
+
+					return InteractionResult.SUCCESS;
+				}
 			}
 		}
 
-		return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+		return InteractionResult.PASS;
 	}
 
 	@Override
@@ -94,8 +100,9 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 	}
 
 	@Override
-	public BlockState updateShape(BlockState pState, Direction pDirection, BlockState pNeighborState, LevelAccessor pLevel, BlockPos pPos, BlockPos pNeighborPos) {
-		return !pState.canSurvive(pLevel, pPos) ? Blocks.AIR.defaultBlockState() : pState;
+	protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess scheduledTickAccess, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
+		return !state.canSurvive(level, pos) ? Blocks.AIR.defaultBlockState()
+				: super.updateShape(state, level, scheduledTickAccess, pos, direction, neighborPos, neighborState, random);
 	}
 
 	@Override
@@ -111,7 +118,7 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 	}
 
 	@Override
-	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+	protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier) {
 		if (entity instanceof Player player && player.isCreative() || entity.getType().is(EntityTypes.BOSSES)) {
 			return;
 		}
@@ -137,7 +144,7 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 
 			if (entity instanceof LivingEntity livingEntity) {
 				level.setBlock(pos, state.setValue(TRIGGERED, true), 3);
-				
+
 				level.gameEvent(GameEvent.BLOCK_ACTIVATE, pos, GameEvent.Context.of(state));
 				level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEventRegistry.BEAR_TRAP_CLOSE.get(),
 						SoundSource.BLOCKS, 1f, 1f, false);

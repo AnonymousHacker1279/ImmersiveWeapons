@@ -3,21 +3,11 @@
   "category": "misc",
   "group": "void",
   "key": {
-    "a": {
-      "item": "immersiveweapons:starstorm_leggings"
-    },
-    "b": {
-      "item": "immersiveweapons:astral_leggings"
-    },
-    "c": {
-      "tag": "immersiveweapons:ingots/starstorm"
-    },
-    "d": {
-      "tag": "immersiveweapons:ingots/astral"
-    },
-    "e": {
-      "tag": "immersiveweapons:ingots/void"
-    }
+    "a": "immersiveweapons:starstorm_leggings",
+    "b": "immersiveweapons:astral_leggings",
+    "c": "#immersiveweapons:ingots/starstorm",
+    "d": "#immersiveweapons:ingots/astral",
+    "e": "#immersiveweapons:ingots/void"
   },
   "pattern": [
     "ced",

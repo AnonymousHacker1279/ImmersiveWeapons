@@ -3,97 +3,108 @@ package tech.anonymoushacker1279.immersiveweapons.item.crafting;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.HolderLookup.Provider;
-import net.minecraft.core.NonNullList;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
-import tech.anonymoushacker1279.immersiveweapons.init.*;
+import org.jetbrains.annotations.Nullable;
+import tech.anonymoushacker1279.immersiveweapons.init.RecipeSerializerRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.RecipeTypeRegistry;
+import tech.anonymoushacker1279.immersiveweapons.item.crafting.input.StarForgeRecipeInput;
 
-public record StarForgeRecipe(String group, Ingredient ingot, int ingotCount, Ingredient secondaryMaterial,
-                              int secondaryMaterialCount, int smeltTime,
-                              ItemStack result) implements Recipe<RecipeInput> {
+import java.util.Optional;
 
-	@Override
-	public boolean matches(RecipeInput input, Level level) {
-		return false;
+public class StarForgeRecipe implements Recipe<StarForgeRecipeInput> {
+
+	private final String group;
+	private final Ingredient primaryMaterial;
+	private final int primaryMaterialCount;
+	private final Optional<Ingredient> secondaryMaterial;
+	private final int secondaryMaterialCount;
+	private final ItemStack result;
+	private final int smeltTime;
+
+	@Nullable
+	private PlacementInfo placementInfo;
+
+	public StarForgeRecipe(String group, Ingredient primaryMaterial, int primaryMaterialCount, Optional<Ingredient> secondaryMaterial,
+	                       int secondaryMaterialCount, int smeltTime, ItemStack result) {
+
+		this.group = group;
+		this.primaryMaterial = primaryMaterial;
+		this.primaryMaterialCount = primaryMaterialCount;
+		this.secondaryMaterial = secondaryMaterial;
+		this.secondaryMaterialCount = secondaryMaterialCount;
+		this.result = result;
+		this.smeltTime = smeltTime;
 	}
 
-	@Override
-	public ItemStack assemble(RecipeInput input, Provider registries) {
+	public String group() {
+		return group;
+	}
+
+	public ItemStack result() {
 		return result;
 	}
 
-	public boolean matches(Container container) {
-		ItemStack ingotStack = container.getItem(0);
-		ItemStack secondaryMaterialStack = container.getItem(1);
+	public Ingredient primaryMaterial() {
+		return primaryMaterial;
+	}
 
-		if (ingotStack.getItem().equals(getIngot().getItem()) && ingotStack.getCount() >= ingotCount) {
-			return secondaryMaterialStack.getItem().equals(getSecondaryMaterial().getItem()) && secondaryMaterialStack.getCount() >= secondaryMaterialCount;
+	public int primaryMaterialCount() {
+		return primaryMaterialCount;
+	}
+
+	public Optional<Ingredient> secondaryMaterial() {
+		return secondaryMaterial;
+	}
+
+	public int secondaryMaterialCount() {
+		return secondaryMaterialCount;
+	}
+
+	public int smeltTime() {
+		return smeltTime;
+	}
+
+	@Override
+	public boolean matches(StarForgeRecipeInput input, Level level) {
+		return matches(input);
+	}
+
+	public boolean matches(StarForgeRecipeInput input) {
+		if (input.primaryMaterial().isEmpty() || input.primaryMaterial().getCount() < primaryMaterialCount || !primaryMaterial.test(input.primaryMaterial())) {
+			return false;
 		}
 
-		return false;
+		if (secondaryMaterial.isPresent() && input.secondaryMaterial() != null) {
+			return !input.secondaryMaterial().isEmpty() && input.secondaryMaterial().getCount() >= secondaryMaterialCount && secondaryMaterial.get().test(input.secondaryMaterial());
+		}
+
+		return true;
 	}
 
 	@Override
-	public ItemStack getResultItem(Provider provider) {
+	public ItemStack assemble(StarForgeRecipeInput input, HolderLookup.Provider registries) {
 		return result;
 	}
 
 	@Override
-	public boolean canCraftInDimensions(int width, int height) {
-		return false;
-	}
-
-	@Override
-	public ItemStack getToastSymbol() {
-		return new ItemStack(BlockRegistry.STAR_FORGE_CONTROLLER.get());
-	}
-
-	@Override
-	public RecipeSerializer<?> getSerializer() {
+	public RecipeSerializer<StarForgeRecipe> getSerializer() {
 		return RecipeSerializerRegistry.STAR_FORGE_RECIPE_SERIALIZER.get();
 	}
 
 	@Override
-	public RecipeType<?> getType() {
+	public RecipeType<StarForgeRecipe> getType() {
 		return RecipeTypeRegistry.STAR_FORGE_RECIPE_TYPE.get();
 	}
 
 	@Override
-	public String getGroup() {
-		return group;
-	}
-
-	@Override
-	public NonNullList<Ingredient> getIngredients() {
-		NonNullList<Ingredient> defaultedList = NonNullList.create();
-		defaultedList.add(ingot);
-		defaultedList.add(secondaryMaterial);
-		return defaultedList;
-	}
-
-	public ItemStack getIngot() {
-		if (ingot.getItems().length > 0) {
-			return ingot.getItems()[0].copyWithCount(ingotCount);
-		} else {
-			return ItemStack.EMPTY;
-		}
-	}
-
-	public ItemStack getSecondaryMaterial() {
-		if (secondaryMaterial.getItems().length > 0) {
-			return secondaryMaterial.getItems()[0].copyWithCount(secondaryMaterialCount);
-		} else {
-			return ItemStack.EMPTY;
-		}
-	}
-
-	public ItemStack result() {
-		return result.copy();
+	public RecipeBookCategory recipeBookCategory() {
+		return RecipeBookCategories.CRAFTING_MISC;
 	}
 
 	@Override
@@ -101,61 +112,66 @@ public record StarForgeRecipe(String group, Ingredient ingot, int ingotCount, In
 		return true;
 	}
 
+	@Override
+	public PlacementInfo placementInfo() {
+		if (placementInfo == null) {
+			placementInfo = PlacementInfo.create(primaryMaterial);
+		}
+
+		return placementInfo;
+	}
+
 	public interface Factory<T extends StarForgeRecipe> {
-		T create(String group, Ingredient ingot, int ingotCount, Ingredient secondaryMaterial, int secondaryMaterialCount,
+		T create(String group, Ingredient ingot, int ingotCount, Optional<Ingredient> secondaryMaterial, int secondaryMaterialCount,
 		         int smeltTime, ItemStack result);
 	}
 
-	public static class Serializer implements RecipeSerializer<StarForgeRecipe> {
+	public static class Serializer<T extends StarForgeRecipe> implements RecipeSerializer<T> {
 
-		private static final MapCodec<StarForgeRecipe> CODEC = RecordCodecBuilder.mapCodec(
-				instance -> instance.group(
-								Codec.STRING.optionalFieldOf("group", "").forGetter(StarForgeRecipe::group),
-								Ingredient.CODEC.fieldOf("ingot").forGetter(StarForgeRecipe::ingot),
-								Codec.INT.fieldOf("ingot_count").forGetter(StarForgeRecipe::ingotCount),
-								Ingredient.CODEC.fieldOf("secondary_material").forGetter(StarForgeRecipe::secondaryMaterial),
-								Codec.INT.fieldOf("secondary_material_count").forGetter(StarForgeRecipe::secondaryMaterialCount),
-								Codec.INT.fieldOf("smelt_time").forGetter(StarForgeRecipe::smeltTime),
-								ItemStack.SINGLE_ITEM_CODEC.fieldOf("result").forGetter(StarForgeRecipe::result)
-						)
-						.apply(instance, StarForgeRecipe::new)
-		);
+		private final MapCodec<T> codec;
+		private final StreamCodec<RegistryFriendlyByteBuf, T> streamCodec;
 
-		private static final StreamCodec<RegistryFriendlyByteBuf, StarForgeRecipe> STREAM_CODEC = StreamCodec.of(
-				StarForgeRecipe.Serializer::toNetwork, StarForgeRecipe.Serializer::fromNetwork
-		);
+		public Serializer(StarForgeRecipe.Factory<T> factory) {
+			codec = RecordCodecBuilder.mapCodec(
+					instance -> instance.group(
+									Codec.STRING.optionalFieldOf("group", "").forGetter(StarForgeRecipe::group),
+									Ingredient.CODEC.fieldOf("primary_material").forGetter(StarForgeRecipe::primaryMaterial),
+									Codec.INT.fieldOf("primary_material_count").forGetter(StarForgeRecipe::primaryMaterialCount),
+									Ingredient.CODEC.optionalFieldOf("secondary_material").forGetter(StarForgeRecipe::secondaryMaterial),
+									Codec.INT.fieldOf("secondary_material_count").forGetter(StarForgeRecipe::secondaryMaterialCount),
+									Codec.INT.fieldOf("smelt_time").forGetter(StarForgeRecipe::smeltTime),
+									ItemStack.SINGLE_ITEM_CODEC.fieldOf("result").forGetter(StarForgeRecipe::result)
+							)
+							.apply(instance, factory::create)
+			);
 
-		@Override
-		public MapCodec<StarForgeRecipe> codec() {
-			return CODEC;
+			streamCodec = StreamCodec.composite(
+					ByteBufCodecs.STRING_UTF8,
+					StarForgeRecipe::group,
+					Ingredient.CONTENTS_STREAM_CODEC,
+					StarForgeRecipe::primaryMaterial,
+					ByteBufCodecs.INT,
+					StarForgeRecipe::primaryMaterialCount,
+					Ingredient.OPTIONAL_CONTENTS_STREAM_CODEC,
+					StarForgeRecipe::secondaryMaterial,
+					ByteBufCodecs.INT,
+					StarForgeRecipe::secondaryMaterialCount,
+					ByteBufCodecs.INT,
+					StarForgeRecipe::smeltTime,
+					ItemStack.STREAM_CODEC,
+					StarForgeRecipe::result,
+					factory::create
+			);
 		}
 
 		@Override
-		public StreamCodec<RegistryFriendlyByteBuf, StarForgeRecipe> streamCodec() {
-			return STREAM_CODEC;
+		public MapCodec<T> codec() {
+			return this.codec;
 		}
 
-		private static StarForgeRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
-
-			String group = buffer.readUtf();
-			Ingredient ingot = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
-			int ingotCount = buffer.readInt();
-			Ingredient secondaryMaterial = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
-			int secondaryMaterialCount = buffer.readInt();
-			int smeltTime = buffer.readInt();
-			ItemStack result = ItemStack.STREAM_CODEC.decode(buffer);
-
-			return new StarForgeRecipe(group, ingot, ingotCount, secondaryMaterial, secondaryMaterialCount, smeltTime, result);
-		}
-
-		private static void toNetwork(RegistryFriendlyByteBuf buffer, StarForgeRecipe recipe) {
-			buffer.writeUtf(recipe.group);
-			Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.ingot);
-			buffer.writeInt(recipe.ingotCount);
-			Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, recipe.secondaryMaterial);
-			buffer.writeInt(recipe.secondaryMaterialCount);
-			buffer.writeInt(recipe.smeltTime);
-			ItemStack.STREAM_CODEC.encode(buffer, recipe.result);
+		@Override
+		public StreamCodec<RegistryFriendlyByteBuf, T> streamCodec() {
+			return this.streamCodec;
 		}
 	}
 }

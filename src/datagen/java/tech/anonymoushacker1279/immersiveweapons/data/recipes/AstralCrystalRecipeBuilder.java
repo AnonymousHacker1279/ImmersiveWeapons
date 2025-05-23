@@ -10,20 +10,20 @@ import java.util.Objects;
 
 public class AstralCrystalRecipeBuilder extends IWRecipeBuilder {
 
-	private final Ingredient primaryMaterial;
-	private final Ingredient secondaryMaterial;
+	private final Ingredient material;
+	private final Ingredient catalyst;
 	private final ItemStack result;
 	private final AstralCrystalRecipe.Factory<?> factory;
 
-	public AstralCrystalRecipeBuilder(AstralCrystalRecipe.Factory<?> factory, Ingredient primaryMaterial, Ingredient secondaryMaterial, ItemStack result) {
-		this.primaryMaterial = primaryMaterial;
-		this.secondaryMaterial = secondaryMaterial;
+	public AstralCrystalRecipeBuilder(AstralCrystalRecipe.Factory<?> factory, Ingredient material, Ingredient catalyst, ItemStack result) {
+		this.material = material;
+		this.catalyst = catalyst;
 		this.result = result;
 		this.factory = factory;
 	}
 
-	public static AstralCrystalRecipeBuilder sorcery(Ingredient primaryMaterial, Ingredient secondaryMaterial, ItemStack result) {
-		return new AstralCrystalRecipeBuilder(AstralCrystalRecipe::new, primaryMaterial, secondaryMaterial, result);
+	public static AstralCrystalRecipeBuilder sorcery(Ingredient material, Ingredient catalyst, ItemStack result) {
+		return new AstralCrystalRecipeBuilder(AstralCrystalRecipe::new, material, catalyst, result);
 	}
 
 	@Override
@@ -33,6 +33,6 @@ public class AstralCrystalRecipeBuilder extends IWRecipeBuilder {
 
 	@Override
 	protected Recipe<?> getRecipe() {
-		return factory.create(Objects.requireNonNullElse(group, "astral_crystal"), primaryMaterial, secondaryMaterial, result);
+		return factory.create(Objects.requireNonNullElse(group, "astral_crystal"), material, catalyst, result);
 	}
 }

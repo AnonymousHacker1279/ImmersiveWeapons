@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "a": {
-      "tag": "immersiveweapons:shards/diamond"
-    },
-    "b": {
-      "item": "minecraft:stick"
-    },
-    "c": {
-      "item": "minecraft:feather"
-    }
+    "a": "#immersiveweapons:shards/diamond",
+    "b": "minecraft:stick",
+    "c": "minecraft:feather"
   },
   "pattern": [
     "a",

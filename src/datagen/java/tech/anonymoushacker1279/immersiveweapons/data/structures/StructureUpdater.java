@@ -2,20 +2,22 @@ package tech.anonymoushacker1279.immersiveweapons.data.structures;
 
 import com.google.common.hash.Hashing;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.data.*;
-import net.minecraft.nbt.*;
+import net.minecraft.data.CachedOutput;
+import net.minecraft.data.DataProvider;
+import net.minecraft.data.PackOutput;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtAccounter;
+import net.minecraft.nbt.NbtIo;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.MultiPackResourceManager;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.util.datafix.DataFixTypes;
 import net.minecraft.util.datafix.DataFixers;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.nio.file.Path;
 import java.util.Map.Entry;
 import java.util.concurrent.CompletableFuture;
@@ -29,19 +31,12 @@ public class StructureUpdater implements DataProvider {
 	 * This data provider is used to update old NBT structures to the latest version. Any updated structure files will
 	 * need to be copied out of the generated data folder and into the appropriate resource pack folder.
 	 *
-	 * @param helper an <code>ExistingFileHelper</code> instance
-	 * @param output a <code>PackOutput</code> instance
+	 * @param output          a <code>PackOutput</code> instance
+	 * @param resourceManager a <code>MultiPackResourceManager</code> instance
 	 */
-	public StructureUpdater(ExistingFileHelper helper, PackOutput output) {
+	public StructureUpdater(PackOutput output, MultiPackResourceManager resourceManager) {
 		this.output = output;
-
-		try {
-			Field serverData = ExistingFileHelper.class.getDeclaredField("serverData");
-			serverData.setAccessible(true);
-			resources = (MultiPackResourceManager) serverData.get(helper);
-		} catch (NoSuchFieldException | IllegalAccessException e) {
-			throw new RuntimeException(e);
-		}
+		this.resources = resourceManager;
 	}
 
 	@Override
@@ -85,16 +80,16 @@ public class StructureUpdater implements DataProvider {
 	}
 
 	/**
-	 * Update NBT data to the latest version. This is done by passing the data through a datafixer and then saving
-	 * it back to NBT.
+	 * Update NBT data to the latest version. This is done by passing the data through a datafixer and then saving it
+	 * back to NBT.
 	 *
 	 * @param nbt the <code>CompoundTag</code> to update
 	 * @return CompoundTag
 	 */
 	private static CompoundTag updateNBT(CompoundTag nbt) {
-		final CompoundTag updatedNBT = DataFixTypes.STRUCTURE.updateToCurrentVersion(DataFixers.getDataFixer(), nbt, nbt.getInt("DataVersion"));
+		final CompoundTag updatedNBT = DataFixTypes.STRUCTURE.updateToCurrentVersion(DataFixers.getDataFixer(), nbt, nbt.getInt("DataVersion").orElseThrow());
 		StructureTemplate template = new StructureTemplate();
-		template.load(BuiltInRegistries.BLOCK.asLookup(), updatedNBT);
+		template.load(BuiltInRegistries.BLOCK.freeze(), updatedNBT);
 		return template.save(new CompoundTag());
 	}
 

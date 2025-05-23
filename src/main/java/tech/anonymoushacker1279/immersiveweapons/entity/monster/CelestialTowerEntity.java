@@ -5,11 +5,12 @@ import net.minecraft.core.Vec3i;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.*;
+import net.minecraft.server.level.ServerBossEvent;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.BossEvent.BossBarColor;
 import net.minecraft.world.BossEvent.BossBarOverlay;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
@@ -18,26 +19,33 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.level.*;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.ServerLevelAccessor;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
-import tech.anonymoushacker1279.immersiveweapons.entity.*;
-import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.*;
+import tech.anonymoushacker1279.immersiveweapons.entity.AttackerTracker;
+import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
+import tech.anonymoushacker1279.immersiveweapons.entity.WaveSummoningBoss;
+import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.CelestialTowerSummonGoal;
+import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.CelestialTowerSummonMeteorGoal;
+import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.HoverGoal;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
-import tech.anonymoushacker1279.immersiveweapons.world.level.saveddata.IWSavedData;
+import tech.anonymoushacker1279.immersiveweapons.world.level.saveddata.CelestialLanternData;
 
-import java.util.*;
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class CelestialTowerEntity extends Monster implements AttackerTracker, GrantAdvancementOnDiscovery, WaveSummoningBoss {
 
 	public final ServerBossEvent bossEvent = (ServerBossEvent) (new ServerBossEvent(getDisplayName(), BossBarColor.RED,
 			BossBarOverlay.PROGRESS)).setDarkenScreen(true);
-	private int totalWavesToSpawn = 3;
-	private int waveSizeModifier = 1;
+	private int totalWavesToSpawn;
+	private int waveSizeModifier;
 	private int wavesSpawned = 0;
 	private boolean doneSpawningWaves = false;
-	public final static List<CelestialTowerEntity> ALL_TOWERS = new ArrayList<>(3);
 
 	final List<Entity> attackingEntities = new ArrayList<>(5);
 
@@ -86,35 +94,34 @@ public class CelestialTowerEntity extends Monster implements AttackerTracker, Gr
 
 	@Nullable
 	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty,
-	                                    MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData) {
-
-		pSpawnData = super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData);
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, EntitySpawnReason spawnReason, @Nullable SpawnGroupData spawnGroupData) {
+		bossEvent.setProgress(0f);
+		totalWavesToSpawn = 3;
+		waveSizeModifier = 1;
 
 		teleportTo(getX(), getY() + 2, getZ());
-		ALL_TOWERS.add(this);
 
-		bossEvent.setProgress(0f);
-
-		// Add more waves based on difficulty + random modifier
-		// Also increase the XP dropped
-		if (pDifficulty.getDifficulty() == Difficulty.EASY) {
-			totalWavesToSpawn = totalWavesToSpawn + getRandom().nextIntBetweenInclusive(0, 1);
-			xpReward = 75;
-		} else if (pDifficulty.getDifficulty() == Difficulty.NORMAL) {
-			totalWavesToSpawn = totalWavesToSpawn + getRandom().nextIntBetweenInclusive(1, 3);
-			waveSizeModifier = 2;
-			xpReward = 100;
-		} else if (pDifficulty.getDifficulty() == Difficulty.HARD) {
-			totalWavesToSpawn = totalWavesToSpawn + getRandom().nextIntBetweenInclusive(2, 4);
-			waveSizeModifier = 3;
-			xpReward = 125;
+		switch (difficulty.getDifficulty()) {
+			case NORMAL -> {
+				totalWavesToSpawn = totalWavesToSpawn + getRandom().nextIntBetweenInclusive(1, 3);
+				waveSizeModifier = 2;
+				xpReward = 100;
+			}
+			case HARD -> {
+				totalWavesToSpawn = totalWavesToSpawn + getRandom().nextIntBetweenInclusive(2, 4);
+				waveSizeModifier = 3;
+				xpReward = 125;
+			}
+			case EASY -> {
+				totalWavesToSpawn = totalWavesToSpawn + getRandom().nextIntBetweenInclusive(0, 1);
+				xpReward = 75;
+			}
 		}
 
 		Objects.requireNonNull(getAttribute(Attributes.ARMOR))
 				.setBaseValue(getAttributeBaseValue(Attributes.ARMOR) + ((double) (totalWavesToSpawn * 5) / 3));
 
-		return pSpawnData;
+		return super.finalizeSpawn(level, difficulty, spawnReason, spawnGroupData);
 	}
 
 	@Override
@@ -137,17 +144,17 @@ public class CelestialTowerEntity extends Monster implements AttackerTracker, Gr
 	}
 
 	@Override
-	public boolean hurt(DamageSource pSource, float pAmount) {
-		if (pSource == damageSources().genericKill()) {
-			return super.hurt(pSource, pAmount);
+	public boolean hurtServer(ServerLevel level, DamageSource damageSource, float amount) {
+		if (damageSource == damageSources().genericKill()) {
+			return super.hurtServer(level, damageSource, amount);
 		}
 
 		if (doneSpawningWaves) {
-			boolean doesHurt = super.hurt(pSource, pAmount);
+			boolean doesHurt = super.hurtServer(level, damageSource, amount);
 
-			if (doesHurt && pSource.getEntity() != null) {
+			if (doesHurt && damageSource.getEntity() != null) {
 				bossEvent.setProgress(getHealth() / 240f);
-				attackedByEntity(pSource.getEntity(), attackingEntities);
+				attackedByEntity(damageSource.getEntity(), attackingEntities);
 			}
 
 			return doesHurt;
@@ -164,38 +171,24 @@ public class CelestialTowerEntity extends Monster implements AttackerTracker, Gr
 	}
 
 	@Override
-	public void die(DamageSource damageSource) {
-		super.die(damageSource);
-
-		if (!level().isClientSide) {
-			ALL_TOWERS.remove(this);
-		}
-	}
-
-	@Override
 	public void readAdditionalSaveData(CompoundTag pCompound) {
 		super.readAdditionalSaveData(pCompound);
 
-		if (hasCustomName()) {
-			bossEvent.setName(getDisplayName());
-		}
-		totalWavesToSpawn = pCompound.getInt("totalWavesToSpawn");
-		waveSizeModifier = pCompound.getInt("waveSizeModifier");
-		wavesSpawned = pCompound.getInt("wavesSpawned");
-		doneSpawningWaves = pCompound.getBoolean("doneSpawningWaves");
+		bossEvent.setName(getDisplayName());
+		totalWavesToSpawn = pCompound.getIntOr("totalWavesToSpawn", 3);
+		waveSizeModifier = pCompound.getIntOr("waveSizeModifier", 1);
+		wavesSpawned = pCompound.getIntOr("wavesSpawned", 0);
+		doneSpawningWaves = pCompound.getBooleanOr("doneSpawningWaves", false);
 
-		if (wavesSpawned > 0) {
+		if (wavesSpawned > 0 && !doneSpawningWaves) {
 			bossEvent.setName(Component.translatable("immersiveweapons.boss.celestial_tower.waves", wavesSpawned,
 					totalWavesToSpawn));
 			bossEvent.setProgress((float) wavesSpawned / totalWavesToSpawn);
+		} else if (doneSpawningWaves) {
+			bossEvent.setColor(BossBarColor.GREEN);
 		}
 
-		// If loading the world, check if the tower is in the list
-		if (!ALL_TOWERS.contains(this)) {
-			ALL_TOWERS.add(this);
-		}
-
-		xpReward = pCompound.getInt("xpReward");
+		xpReward = pCompound.getIntOr("xpReward", 0);
 	}
 
 	@Override
@@ -222,27 +215,24 @@ public class CelestialTowerEntity extends Monster implements AttackerTracker, Gr
 	}
 
 	@Override
-	public boolean checkSpawnRules(LevelAccessor pLevel, MobSpawnType pSpawnReason) {
-		if (pSpawnReason == MobSpawnType.SPAWNER || pSpawnReason == MobSpawnType.SPAWN_EGG) {
+	public boolean checkSpawnRules(LevelAccessor level, EntitySpawnReason spawnReason) {
+		if (spawnReason == EntitySpawnReason.SPAWNER || spawnReason == EntitySpawnReason.SPAWN_ITEM_USE) {
 			return true;
 		}
 
-		// Check if there are other Celestial Towers within a distance of 750 blocks
-		for (CelestialTowerEntity tower : ALL_TOWERS) {
-			if (tower.blockPosition().closerThan(blockPosition(), 750)) {
-				return false;
-			}
+		List<CelestialTowerEntity> entities = level.getEntitiesOfClass(CelestialTowerEntity.class, getBoundingBox().inflate(750));
+		if (!entities.isEmpty()) {
+			return false;
 		}
 
-		if (!pLevel.getBlockState(blockPosition().below()).isValidSpawn(pLevel, blockPosition().below(), getType())) {
+		if (!level.getBlockState(blockPosition().below()).isValidSpawn(level, blockPosition().below(), getType())) {
 			return false;
 		}
 
 		int nearbyLanterns = 0;
 
-
-		if (pLevel instanceof ServerLevel serverLevel) {
-			for (BlockPos lanternPos : IWSavedData.getData(serverLevel.getServer()).getAllLanterns()) {
+		if (level instanceof ServerLevel serverLevel) {
+			for (BlockPos lanternPos : CelestialLanternData.getData(serverLevel.getServer()).getAllLanterns()) {
 				if (lanternPos.distManhattan(new Vec3i(blockPosition().getX(), blockPosition().getY(), blockPosition().getZ())) < IWConfigs.SERVER.celestialTowerSpawnCheckingRadius.getAsInt()) {
 					nearbyLanterns++;
 

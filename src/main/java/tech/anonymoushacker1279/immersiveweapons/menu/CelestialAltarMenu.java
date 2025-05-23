@@ -9,10 +9,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.*;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.config.ServerConfig;
-import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.MenuTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -46,11 +50,6 @@ public class CelestialAltarMenu extends AbstractContainerMenu {
 		enchantmentLookup = lookup;
 
 		inputSlot = addSlot(new Slot(inputContainer, 0, 12, 28) {
-			@Override
-			public boolean mayPlace(ItemStack stack) {
-				return stack.isEnchanted();
-			}
-
 			@Override
 			public void setChanged() {
 				super.setChanged();
@@ -208,6 +207,10 @@ public class CelestialAltarMenu extends AbstractContainerMenu {
 
 	private boolean tryUpgradeEnchantments(ItemStack fragment, ItemStack result) {
 		ItemEnchantments enchantments = result.getTagEnchantments();
+
+		if (enchantments.isEmpty()) {
+			return false;
+		}
 
 		enchantments.keySet().forEach(enchantmentHolder -> {
 			int maxLevel = ServerConfig.getEnchantCap(enchantmentHolder.getRegisteredName());

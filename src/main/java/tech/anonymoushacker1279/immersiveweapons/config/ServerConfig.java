@@ -24,6 +24,7 @@ public class ServerConfig {
 	public final ConfigValue<List<?>> celestialAltarEnchantCaps;
 	public final ModConfigSpec.IntValue celestialAltarMaxEnchantUpgradeCost;
 	public final ModConfigSpec.DoubleValue theCommanderWaveSizeModifier;
+	public final ModConfigSpec.DoubleValue lavaRevenantBlockBreakThreshold;
 	public final ModConfigSpec.DoubleValue gunCritChance;
 	public final ModConfigSpec.BooleanValue bulletsBreakGlass;
 	public final ModConfigSpec.BooleanValue infiniteAmmoOnAllTiers;
@@ -77,7 +78,7 @@ public class ServerConfig {
 
 		bulletDespawnTimeModifier = builder
 				.comment("Set the bullet despawn time modifier. Increasing this will cause bullets to despawn faster. By default, these take 60 seconds to despawn once they hit the ground.")
-				.defineInRange("customArrowDespawnTimeModifier", 1, 1, 10);
+				.defineInRange("bulletDespawnTimeModifier", 1, 1, 10);
 
 		builder.comment("Celestial Altar")
 				.push("celestial_altar");
@@ -129,6 +130,15 @@ public class ServerConfig {
 		theCommanderWaveSizeModifier = builder
 				.comment("Multiplier to change the wave size of The Commander summons")
 				.defineInRange("theCommanderWaveSizeModifier", 1.0d, 0.0d, 5.0d);
+
+		builder.pop();
+
+		builder.comment("Lava Revenant")
+				.push("lava_revenant");
+
+		lavaRevenantBlockBreakThreshold = builder
+				.comment("Set the block strength threshold for the Lava Revenant to break blocks. Higher values will allow stronger blocks to be destroyed.")
+				.defineInRange("lavaRevenantBlockBreakThreshold", 1.5d, 0.0d, Double.MAX_VALUE);
 
 		builder.pop();
 
@@ -306,8 +316,8 @@ public class ServerConfig {
 				.defineInRange("flashbangEffectRange", 10.0d, 0.0d, 32.0d);
 
 		flashbangDisorientTime = builder
-				.comment("Set the time in ticks that entities are disoriented by flashbangs")
-				.defineInRange("flashbangDisorientTime", 100, 0, 200);
+				.comment("Set the time in seconds that entities are disoriented by flashbangs")
+				.defineInRange("flashbangDisorientTime", 10, 0, 60);
 
 		builder.pop();
 

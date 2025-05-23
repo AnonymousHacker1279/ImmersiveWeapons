@@ -3,12 +3,8 @@
   "category": "building",
   "group": "tables",
   "key": {
-    "a": {
-      "item": "immersiveweapons:burned_oak_slab"
-    },
-    "b": {
-      "item": "immersiveweapons:burned_oak_fence"
-    }
+    "a": "immersiveweapons:burned_oak_slab",
+    "b": "immersiveweapons:burned_oak_fence"
   },
   "pattern": [
     "a",

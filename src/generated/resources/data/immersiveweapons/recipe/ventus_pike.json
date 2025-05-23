@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "a": {
-      "item": "immersiveweapons:ventus_pike_head"
-    },
-    "b": {
-      "tag": "immersiveweapons:shards/ventus"
-    },
-    "c": {
-      "item": "immersiveweapons:wooden_tool_rod"
-    }
+    "a": "immersiveweapons:ventus_pike_head",
+    "b": "#immersiveweapons:shards/ventus",
+    "c": "immersiveweapons:wooden_tool_rod"
   },
   "pattern": [
     "a",

@@ -2,14 +2,11 @@ package tech.anonymoushacker1279.immersiveweapons.potion;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.effect.*;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
-import net.neoforged.neoforge.common.EffectCure;
-import net.neoforged.neoforge.common.EffectCures;
 import tech.anonymoushacker1279.immersiveweapons.init.ParticleTypesRegistry;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
-
-import java.util.Set;
 
 public class BleedingEffect extends MobEffect {
 
@@ -20,34 +17,32 @@ public class BleedingEffect extends MobEffect {
 	}
 
 	@Override
-	public boolean applyEffectTick(LivingEntity livingEntity, int amplifier) {
-		if (livingEntity.level() instanceof ServerLevel serverLevel) {
-			RandomSource random = livingEntity.getRandom();
-			if (cooldownTicks <= 0) {
-				cooldownTicks = 60 - (amplifier * 10);
+	public boolean applyEffectTick(ServerLevel serverLevel, LivingEntity entity, int amplifier) {
+		RandomSource random = entity.getRandom();
+		if (cooldownTicks <= 0) {
+			cooldownTicks = 60 - (amplifier * 10);
 
-				float amount = 1.0f + (amplifier * 0.25f);
+			float amount = 1.0f + (amplifier * 0.25f);
 
-				if (livingEntity.invulnerableTime > cooldownTicks) {
-					livingEntity.invulnerableTime = cooldownTicks;
-				}
-
-				livingEntity.hurt(IWDamageSources.bleeding(serverLevel.registryAccess()), amount);
-			} else {
-				cooldownTicks--;
+			if (entity.invulnerableTime > cooldownTicks) {
+				entity.invulnerableTime = cooldownTicks;
 			}
 
-			serverLevel.sendParticles(
-					ParticleTypesRegistry.BLOOD_PARTICLE.get(),
-					livingEntity.position().x,
-					livingEntity.position().y + (random.nextFloat() * livingEntity.getEyeHeight()),
-					livingEntity.position().z,
-					1,
-					livingEntity.getBbWidth() * 0.5f,
-					livingEntity.getBbHeight() * 0.5f,
-					livingEntity.getBbWidth() * 0.5f,
-					0.0d);
+			entity.hurt(IWDamageSources.bleeding(serverLevel.registryAccess()), amount);
+		} else {
+			cooldownTicks--;
 		}
+
+		serverLevel.sendParticles(
+				ParticleTypesRegistry.BLOOD_PARTICLE.get(),
+				entity.position().x,
+				entity.position().y + (random.nextFloat() * entity.getEyeHeight()),
+				entity.position().z,
+				1,
+				entity.getBbWidth() * 0.5f,
+				entity.getBbHeight() * 0.5f,
+				entity.getBbWidth() * 0.5f,
+				0.0d);
 
 		return true;
 	}
@@ -60,10 +55,5 @@ public class BleedingEffect extends MobEffect {
 	@Override
 	public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
 		return true;
-	}
-
-	@Override
-	public void fillEffectCures(Set<EffectCure> cures, MobEffectInstance effectInstance) {
-		cures.add(EffectCures.PROTECTED_BY_TOTEM);
 	}
 }

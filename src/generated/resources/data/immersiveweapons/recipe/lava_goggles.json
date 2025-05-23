@@ -3,15 +3,9 @@
   "category": "misc",
   "group": "goggles",
   "key": {
-    "a": {
-      "item": "immersiveweapons:goggles"
-    },
-    "b": {
-      "tag": "immersiveweapons:ingots/molten"
-    },
-    "c": {
-      "tag": "c:obsidians"
-    }
+    "a": "immersiveweapons:goggles",
+    "b": "#immersiveweapons:ingots/molten",
+    "c": "#c:obsidians"
   },
   "pattern": [
     " c ",

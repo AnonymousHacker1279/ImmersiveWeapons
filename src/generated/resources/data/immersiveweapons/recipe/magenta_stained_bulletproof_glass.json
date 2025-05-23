@@ -3,12 +3,8 @@
   "category": "building",
   "group": "stained_bulletproof_glass",
   "key": {
-    "a": {
-      "item": "immersiveweapons:bulletproof_glass"
-    },
-    "b": {
-      "tag": "c:dyes/magenta"
-    }
+    "a": "immersiveweapons:bulletproof_glass",
+    "b": "#c:dyes/magenta"
   },
   "pattern": [
     "aaa",

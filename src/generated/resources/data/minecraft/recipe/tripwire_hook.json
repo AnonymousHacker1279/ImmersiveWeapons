@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "redstone",
   "key": {
-    "a": {
-      "tag": "c:ingots/metal"
-    },
-    "b": {
-      "item": "minecraft:stick"
-    },
-    "c": {
-      "tag": "minecraft:planks"
-    }
+    "a": "#c:ingots/metal",
+    "b": "minecraft:stick",
+    "c": "#minecraft:planks"
   },
   "pattern": [
     " a ",

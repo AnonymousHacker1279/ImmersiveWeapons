@@ -1,8 +1,6 @@
 {
-  "parent": "immersiveweapons:block/simple_overlay",
-  "render_type": "minecraft:cutout_mipped",
+  "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "minecraft:block/quartz_block_bottom",
-    "overlay": "immersiveweapons:block/astral_ore"
+    "all": "immersiveweapons:block/astral_ore"
   }
 }

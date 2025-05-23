@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "ventus",
   "key": {
-    "a": {
-      "item": "immersiveweapons:ventus_staff_core"
-    },
-    "b": {
-      "item": "immersiveweapons:obsidian_rod"
-    }
+    "a": "immersiveweapons:ventus_staff_core",
+    "b": "immersiveweapons:obsidian_rod"
   },
   "pattern": [
     " a ",

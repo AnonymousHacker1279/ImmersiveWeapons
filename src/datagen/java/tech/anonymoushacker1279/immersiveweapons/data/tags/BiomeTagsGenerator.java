@@ -6,8 +6,6 @@ import net.minecraft.data.tags.BiomeTagsProvider;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.level.biome.Biomes;
 import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.common.CommonWorldGenTagGroups;
@@ -17,8 +15,8 @@ import java.util.concurrent.CompletableFuture;
 
 public class BiomeTagsGenerator extends BiomeTagsProvider {
 
-	public BiomeTagsGenerator(PackOutput output, CompletableFuture<Provider> provider, @Nullable ExistingFileHelper existingFileHelper) {
-		super(output, provider, ImmersiveWeapons.MOD_ID, existingFileHelper);
+	public BiomeTagsGenerator(PackOutput output, CompletableFuture<Provider> provider) {
+		super(output, provider, ImmersiveWeapons.MOD_ID);
 	}
 
 	@Override

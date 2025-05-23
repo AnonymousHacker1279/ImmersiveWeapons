@@ -3,18 +3,10 @@
   "category": "equipment",
   "group": "firearm",
   "key": {
-    "a": {
-      "item": "immersiveweapons:heavy_wooden_stock"
-    },
-    "b": {
-      "item": "immersiveweapons:flintlock_assembly"
-    },
-    "c": {
-      "item": "immersiveweapons:trigger_assembly"
-    },
-    "d": {
-      "item": "immersiveweapons:extended_iron_barrel"
-    }
+    "a": "immersiveweapons:heavy_wooden_stock",
+    "b": "immersiveweapons:flintlock_assembly",
+    "c": "immersiveweapons:trigger_assembly",
+    "d": "immersiveweapons:extended_iron_barrel"
   },
   "pattern": [
     "abd",

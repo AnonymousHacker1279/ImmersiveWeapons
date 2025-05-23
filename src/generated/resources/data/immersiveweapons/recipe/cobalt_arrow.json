@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "a": {
-      "tag": "c:ingots/cobalt"
-    },
-    "b": {
-      "item": "minecraft:stick"
-    },
-    "c": {
-      "item": "minecraft:feather"
-    }
+    "a": "#c:ingots/cobalt",
+    "b": "minecraft:stick",
+    "c": "minecraft:feather"
   },
   "pattern": [
     "a",

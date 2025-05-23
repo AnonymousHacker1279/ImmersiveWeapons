@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "small_parts",
   "key": {
-    "a": {
-      "item": "minecraft:spyglass"
-    },
-    "b": {
-      "item": "immersiveweapons:scope_mount"
-    }
+    "a": "minecraft:spyglass",
+    "b": "immersiveweapons:scope_mount"
   },
   "pattern": [
     "a",

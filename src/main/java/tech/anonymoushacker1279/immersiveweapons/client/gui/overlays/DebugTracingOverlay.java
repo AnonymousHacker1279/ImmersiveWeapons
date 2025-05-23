@@ -1,7 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.client.gui.overlays;
 
 import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.Font.DisplayMode;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 
@@ -29,7 +28,7 @@ public class DebugTracingOverlay {
 
 			overlayItems.add(armorValues);
 		}
-		if (DebugTracingData.GENERAL_DAMAGE_RESISTANCE + DebugTracingData.KNOCKBACK_RESISTANCE != 0) {
+		if (DebugTracingData.GENERAL_DAMAGE_RESISTANCE != 0 || DebugTracingData.KNOCKBACK_RESISTANCE != 0) {
 			String drAndKbr = appendData(DR_AND_KBR,
 					Math.round(DebugTracingData.GENERAL_DAMAGE_RESISTANCE * 100) + "%",
 					Math.round(DebugTracingData.KNOCKBACK_RESISTANCE * 100) + "%");
@@ -81,11 +80,14 @@ public class DebugTracingOverlay {
 
 		for (String str : overlayItems) {
 			textHeightPosition -= 15;
-			fontRenderer.drawInBatch(str, 5f, textHeightPosition, 0xFFFFFF, false,
-					guiGraphics.pose().last().pose(),
-					guiGraphics.bufferSource(),
-					DisplayMode.NORMAL,
-					0, 15728880);
+			guiGraphics.drawString(
+					fontRenderer,
+					str,
+					5f,
+					textHeightPosition,
+					0xFFFFFF,
+					false
+			);
 		}
 	}
 

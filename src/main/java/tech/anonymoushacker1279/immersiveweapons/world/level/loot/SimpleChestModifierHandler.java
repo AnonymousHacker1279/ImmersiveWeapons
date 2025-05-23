@@ -59,8 +59,8 @@ public class SimpleChestModifierHandler extends LootModifier {
 	}
 
 	/**
-	 * Create a simple chest modifier. This will add the specified item to the loot pool if the conditions are met.
-	 * The item will be randomly enchanted given the specified max enchantment levels.
+	 * Create a simple chest modifier. This will add the specified item to the loot pool if the conditions are met. The
+	 * item will be randomly enchanted given the specified max enchantment levels.
 	 *
 	 * @param itemConditions   The conditions that must be met for the item to be added to the loot pool
 	 * @param minQuantity      The minimum quantity of the item to add to the loot pool
@@ -115,7 +115,7 @@ public class SimpleChestModifierHandler extends LootModifier {
 
 			if (maxEnchantLevels > 0) {
 				RegistryAccess access = context.getLevel().registryAccess();
-				Optional<Named<Enchantment>> tag = access.registryOrThrow(Registries.ENCHANTMENT).getTag(EnchantmentTags.ON_RANDOM_LOOT);
+				Optional<Named<Enchantment>> tag = access.lookupOrThrow(Registries.ENCHANTMENT).get(EnchantmentTags.ON_RANDOM_LOOT);
 				EnchantmentHelper.enchantItem(RandomSource.create(), stack, maxEnchantLevels, access, tag);
 			}
 

@@ -3,15 +3,9 @@
   "category": "misc",
   "group": "bloody_sacrifice",
   "key": {
-    "a": {
-      "item": "minecraft:spider_eye"
-    },
-    "b": {
-      "item": "minecraft:porkchop"
-    },
-    "c": {
-      "item": "minecraft:mutton"
-    }
+    "a": "minecraft:spider_eye",
+    "b": "minecraft:porkchop",
+    "c": "minecraft:mutton"
   },
   "pattern": [
     "bbb",

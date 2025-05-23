@@ -6,11 +6,10 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -19,6 +18,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -36,11 +36,6 @@ public class MortarBlock extends BasicOrientableBlock {
 	public static final BooleanProperty LOADED = BooleanProperty.create("loaded");
 	protected static final VoxelShape SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 10.0D, 14.0D);
 
-	/**
-	 * Constructor for MortarBlock.
-	 *
-	 * @param properties the <code>Properties</code> of the block
-	 */
 	public MortarBlock(Properties properties) {
 		super(properties);
 		registerDefaultState(stateDefinition.any()
@@ -49,46 +44,18 @@ public class MortarBlock extends BasicOrientableBlock {
 				.setValue(LOADED, false));
 	}
 
-	/**
-	 * Create the BlockState definition.
-	 *
-	 * @param builder the <code>StateDefinition.Builder</code> of the block
-	 */
 	@Override
 	public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(ROTATION, FACING, LOADED);
 	}
 
-	/**
-	 * Set placement properties.
-	 * Sets the facing direction of the block for placement.
-	 *
-	 * @param context the <code>BlockPlaceContext</code> during placement
-	 * @return BlockState
-	 */
 	@Override
-	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
-	}
-
-	/**
-	 * Set the shape of the block.
-	 *
-	 * @param state            the <code>BlockState</code> of the block
-	 * @param getter           the <code>BlockGetter</code> for the block
-	 * @param pos              the <code>BlockPos</code> the block is at
-	 * @param collisionContext the <code>CollisionContext</code> of the block
-	 * @return VoxelShape
-	 */
-	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos,
-	                           CollisionContext collisionContext) {
-
+	public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext collisionContext) {
 		return SHAPE;
 	}
 
 	@Override
-	protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
+	protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
 		if (!level.isClientSide && hand.equals(InteractionHand.MAIN_HAND)) {
 			ItemStack itemStack = player.getMainHandItem();
 			// If the mortar is loaded and the player is holding flint and steel, fire the shell
@@ -98,9 +65,9 @@ public class MortarBlock extends BasicOrientableBlock {
 				}
 
 				fire(level, pos, state, player);
-				return ItemInteractionResult.CONSUME;
+				return InteractionResult.CONSUME;
 
-				// If the mortar is not loaded and the player is holding a mortar shell	, load the mortar
+				// If the mortar is not loaded and the player is holding a mortar shell, load the mortar
 			} else if (!state.getValue(LOADED) && itemStack.getItem() == ItemRegistry.MORTAR_SHELL.get()) {
 				level.setBlock(pos, state.setValue(LOADED, true), 3);
 
@@ -108,7 +75,7 @@ public class MortarBlock extends BasicOrientableBlock {
 					itemStack.shrink(1);
 				}
 
-				return ItemInteractionResult.CONSUME;
+				return InteractionResult.CONSUME;
 
 				// If the player is crouching, not holding anything, and the mortar is loaded, remove the shell
 				// and give it to the player
@@ -119,7 +86,7 @@ public class MortarBlock extends BasicOrientableBlock {
 
 				level.setBlock(pos, state.setValue(LOADED, false), 3);
 
-				return ItemInteractionResult.SUCCESS;
+				return InteractionResult.SUCCESS;
 
 				// If the player isn't holding anything, cycle through the rotations
 			} else if (itemStack.getItem() == Items.AIR) {
@@ -130,25 +97,14 @@ public class MortarBlock extends BasicOrientableBlock {
 				}
 			}
 
-			return ItemInteractionResult.SUCCESS;
+			return InteractionResult.SUCCESS;
 		}
 
-		return ItemInteractionResult.CONSUME_PARTIAL;
+		return InteractionResult.CONSUME;
 	}
 
-	/**
-	 * Runs when neighboring blocks change state.
-	 *
-	 * @param state    the <code>BlockState</code> of the block
-	 * @param level    the <code>Level</code> the block is in
-	 * @param pos      the <code>BlockPos</code> the block is at
-	 * @param block    the <code>Block</code> that is changing
-	 * @param fromPos  the <code>BlockPos</code> of the changing block
-	 * @param isMoving determines if the block is moving
-	 */
 	@Override
-	public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
-
+	protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, @javax.annotation.Nullable Orientation orientation, boolean movedByPiston) {
 		if (!level.isClientSide) {
 			if (state.getValue(LOADED) && level.hasNeighborSignal(pos)) {
 				fire(level, pos, state, null);
@@ -168,7 +124,7 @@ public class MortarBlock extends BasicOrientableBlock {
 			serverLevel.sendParticles(ParticleTypes.LARGE_SMOKE, pos.getX(), pos.getY(), pos.getZ(),
 					3, 0.0f, 0.2f, 0.0f, 0.0f);
 
-			PacketDistributor.sendToPlayersTrackingChunk(serverLevel, level.getChunkAt(pos).getPos(), new LocalSoundPayload(pos, SoundEventRegistry.MORTAR_FIRE.get().getLocation(),
+			PacketDistributor.sendToPlayersTrackingChunk(serverLevel, level.getChunkAt(pos).getPos(), new LocalSoundPayload(pos, SoundEventRegistry.MORTAR_FIRE.getKey(),
 					SoundSource.BLOCKS, 1.0f, 1.0f, true));
 		}
 

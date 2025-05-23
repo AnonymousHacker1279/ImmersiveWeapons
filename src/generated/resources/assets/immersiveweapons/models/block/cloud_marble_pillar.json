@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/cube_column",
   "textures": {
-    "end": "immersiveweapons:block/cloud_marble_pillar_end",
+    "end": "immersiveweapons:block/cloud_marble_pillar_top",
     "side": "immersiveweapons:block/cloud_marble_pillar_side"
   }
 }

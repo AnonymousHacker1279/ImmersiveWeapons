@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "a": {
-      "item": "immersiveweapons:iron_pike_head"
-    },
-    "b": {
-      "tag": "c:ingots/iron"
-    },
-    "c": {
-      "item": "immersiveweapons:wooden_tool_rod"
-    }
+    "a": "immersiveweapons:iron_pike_head",
+    "b": "#c:ingots/iron",
+    "c": "immersiveweapons:wooden_tool_rod"
   },
   "pattern": [
     "a",

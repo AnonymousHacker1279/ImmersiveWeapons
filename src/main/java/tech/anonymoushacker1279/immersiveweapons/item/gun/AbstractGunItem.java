@@ -7,24 +7,19 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.UseAnim;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.registries.datamaps.DataMapType;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
@@ -35,9 +30,7 @@ import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
 import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryManager;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
-import tech.anonymoushacker1279.immersiveweapons.item.gun.data.GunData;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem;
-import tech.anonymoushacker1279.immersiveweapons.network.payload.GunScopePayload;
 import tech.anonymoushacker1279.immersiveweapons.util.ArrowAttributeAccessor;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
@@ -61,30 +54,20 @@ public abstract class AbstractGunItem extends Item {
 
 	final DataComponentType<Float> DENSITY_MODIFIER = DataComponentTypeRegistry.DENSITY_MODIFIER.get();
 
-	/**
-	 * Constructor for AbstractGunItem.
-	 *
-	 * @param properties the <code>Properties</code> for the item
-	 */
 	protected AbstractGunItem(Properties properties) {
 		super(properties);
 	}
 
 	@Override
-	public void releaseUsing(ItemStack gun, Level level, LivingEntity livingEntity, int timeLeft) {
+	public boolean releaseUsing(ItemStack gun, Level level, LivingEntity livingEntity, int timeLeft) {
 
 		if (livingEntity instanceof Player player) {
-			if (level.isClientSide) {
-				GunData.changingPlayerFOV = -1;
-				GunData.scopeScale = 0.5f;
-			}
-
 			boolean isCreative = player.isCreative();
 			boolean misfire = false;
 			ItemStack ammo = findAmmo(gun, livingEntity);
 			PowderType powder = findPowder(gun, livingEntity);
 
-			// Determine number of bullets to fire
+			// Determine the number of bullets to fire
 			int bulletsToFire = isCreative ? getMaxBulletsToFire() : getBulletsToFire(ammo);
 
 			// Roll for misfire
@@ -115,12 +98,12 @@ public abstract class AbstractGunItem extends Item {
 			}
 
 			if (getUseDuration(gun, player) < 0) {
-				return;
+				return false;
 			}
 
 			// Check if the gun can be fired
 			if (!misfire && ((!ammo.isEmpty() && powder != null) || isCreative)) {
-				// If the ammunition stack is empty, set it to the default.
+				// If the ammunition ingredient is empty, set it to the default.
 				// This happens when the player is in creative mode but has no ammunition.
 				if (ammo.isEmpty()) {
 					ammo = new ItemStack(defaultAmmo());
@@ -178,10 +161,12 @@ public abstract class AbstractGunItem extends Item {
 					// Calculate the cooldown
 					int cooldown = (int) (getCooldown() * (1f - reductionFactor));
 
-					player.getCooldowns().addCooldown(this, cooldown);
+					player.getCooldowns().addCooldown(gun, cooldown);
 				}
 			}
 		}
+
+		return true;
 	}
 
 	public ItemStack findAmmo(ItemStack gun, LivingEntity livingEntity) {
@@ -230,11 +215,6 @@ public abstract class AbstractGunItem extends Item {
 		return null;
 	}
 
-	@Override
-	public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
-		return getRepairMaterial().test(repair) || super.isValidRepairItem(toRepair, repair);
-	}
-
 	protected static ItemStack getHeldPredicate(LivingEntity livingEntity, Predicate<ItemStack> predicate) {
 		if (predicate.test(livingEntity.getItemInHand(InteractionHand.OFF_HAND))) {
 			return livingEntity.getItemInHand(InteractionHand.OFF_HAND);
@@ -245,48 +225,17 @@ public abstract class AbstractGunItem extends Item {
 	}
 
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+	public InteractionResult use(Level level, Player player, InteractionHand hand) {
 
 		ItemStack itemInHand = player.getItemInHand(hand);
 		boolean hasAmmo = !findAmmo(itemInHand, player).isEmpty();
 
 		if (!player.isCreative() && !hasAmmo) {
-			return InteractionResultHolder.fail(itemInHand);
+			return InteractionResult.FAIL;
 		} else {
 			player.startUsingItem(hand);
-			return InteractionResultHolder.consume(itemInHand);
+			return InteractionResult.CONSUME;
 		}
-	}
-
-	@Override
-	public void onUseTick(Level level, LivingEntity livingEntity, ItemStack stack, int remainingUseDuration) {
-		super.onUseTick(level, livingEntity, stack, remainingUseDuration);
-
-		if (!level.isClientSide && canScope() && livingEntity instanceof ServerPlayer serverPlayer) {
-			PacketDistributor.sendToPlayer(serverPlayer, new GunScopePayload(GunData.playerFOV, 15.0d, GunData.scopeScale));
-		}
-	}
-
-	@Override
-	public void inventoryTick(ItemStack pStack, Level pLevel, Entity pEntity, int pSlotId, boolean pIsSelected) {
-		if (pEntity instanceof Player player) {
-			if (pLevel.isClientSide && !player.getUseItem().is(ItemRegistry.MUSKET_SCOPE.get())) {
-				GunData.changingPlayerFOV = -1;
-				GunData.scopeScale = 0.5f;
-			}
-		}
-	}
-
-	@Override
-	public boolean onDroppedByPlayer(ItemStack item, Player player) {
-		PacketDistributor.sendToPlayer((ServerPlayer) player, new GunScopePayload(GunData.playerFOV, -1, 0.5f));
-
-		return super.onDroppedByPlayer(item, player);
-	}
-
-	@Override
-	public UseAnim getUseAnimation(ItemStack pStack) {
-		return UseAnim.CUSTOM;
 	}
 
 	/**
@@ -296,25 +245,6 @@ public abstract class AbstractGunItem extends Item {
 	 */
 	public Predicate<ItemStack> getInventoryAmmoPredicate() {
 		return MUSKET_BALLS;
-	}
-
-	/**
-	 * Return the enchantability factor of the item, most of the time it is based on material.
-	 *
-	 * @return int
-	 */
-	@Override
-	public int getEnchantmentValue(ItemStack stack) {
-		return 1;
-	}
-
-	/**
-	 * Get the repair material.
-	 *
-	 * @return Ingredient
-	 */
-	protected Ingredient getRepairMaterial() {
-		return Ingredient.of(Items.IRON_INGOT);
 	}
 
 	/**
@@ -389,10 +319,6 @@ public abstract class AbstractGunItem extends Item {
 		return -7.0f;
 	}
 
-	public boolean canScope() {
-		return false;
-	}
-
 	public float getFireVelocity(ItemStack gun, float powderModifier, LivingEntity shooter) {
 		HolderGetter<Enchantment> enchantmentGetter = shooter.registryAccess().lookup(Registries.ENCHANTMENT).orElseThrow();
 		Optional<Reference<Enchantment>> velocity = enchantmentGetter.get(IWEnchantments.VELOCITY);
@@ -439,7 +365,7 @@ public abstract class AbstractGunItem extends Item {
 			bullet.setCritArrow(true);
 		}
 
-		// Handle enchants
+		// Handle enchantments
 		HolderGetter<Enchantment> enchantmentGetter = shooter.registryAccess().lookup(Registries.ENCHANTMENT).orElseThrow();
 		Optional<Reference<Enchantment>> firepower = enchantmentGetter.get(IWEnchantments.FIREPOWER);
 		Optional<Reference<Enchantment>> scorchShot = enchantmentGetter.get(IWEnchantments.SCORCH_SHOT);
@@ -448,7 +374,7 @@ public abstract class AbstractGunItem extends Item {
 		if (firepower.isPresent()) {
 			enchantmentLevel = gun.getEnchantmentLevel(firepower.get());
 			if (enchantmentLevel > 0) {
-				bullet.setBaseDamage(bullet.getBaseDamage() + (double) enchantmentLevel * 0.5D + 0.5D);
+				bullet.setBaseDamage(bullet.baseDamage + (double) enchantmentLevel * 0.5D + 0.5D);
 			}
 		}
 
@@ -464,7 +390,7 @@ public abstract class AbstractGunItem extends Item {
 			float densityModifier = ammo.getOrDefault(DENSITY_MODIFIER, 0f);
 			if (densityModifier > 0) {
 				// A full 100% value is +20% damage
-				bullet.setBaseDamage(bullet.getBaseDamage() + (bullet.getBaseDamage() * (densityModifier * 0.2f)));
+				bullet.setBaseDamage(bullet.baseDamage + (bullet.baseDamage * (densityModifier * 0.2f)));
 
 				// Higher density slightly increases the gravity modifier
 				((ArrowAttributeAccessor) bullet).immersiveWeapons$setGravity(bullet.getGravity() + (densityModifier * 0.015f));
@@ -497,11 +423,7 @@ public abstract class AbstractGunItem extends Item {
 			double sideOffset = shooter.getUsedItemHand() == InteractionHand.MAIN_HAND ? 0.5d : -0.5d;
 			particlePosition = particlePosition.add(sideVector.scale(sideOffset));
 
-			// Adjust forward position based on FOV
 			double fov = 70d;
-			if (shooter instanceof Player) {
-				fov = GunData.playerFOV;
-			}
 
 			double fovOffset = 1.75d - (fov / 150.0d);
 			particlePosition = particlePosition.add(lookVector.x * fovOffset * 0.5d, lookVector.y * fovOffset * 0.5d, lookVector.z * fovOffset * 0.5d);

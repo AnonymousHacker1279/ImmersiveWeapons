@@ -1,50 +1,54 @@
 package tech.anonymoushacker1279.immersiveweapons.client.model;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.model.geom.*;
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Entity;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
-public class CelestialTowerModel<T extends Entity> extends EntityModel<T> {
+public class CelestialTowerModel extends EntityModel<LivingEntityRenderState> {
 
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(
 			ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "celestial_tower"),
 			"main");
-	private final ModelPart base;
 
 	public CelestialTowerModel(ModelPart root) {
-		base = root.getChild("main");
+		super(root, RenderType::entityCutout);
 	}
 
 	public static LayerDefinition createBodyLayer() {
-		MeshDefinition meshDefinition = new MeshDefinition();
-		PartDefinition partDefinition = meshDefinition.getRoot();
+		MeshDefinition mesh = new MeshDefinition();
+		PartDefinition root = mesh.getRoot();
 
-		partDefinition.addOrReplaceChild("main",
+		PartDefinition main = root.addOrReplaceChild("main",
 				CubeListBuilder.create()
 						.texOffs(0, 0)
-						.addBox(-8.0F, -16.0F, -8.0F,
-								16.0F, 16.0F, 16.0F,
+						.addBox(-8.0F, -16.0F, -8.0F, 16.0F, 16.0F, 16.0F,
 								new CubeDeformation(0.0F))
-						.texOffs(0, 32)
-						.addBox(-8.0F, -19.0F, -8.0F,
-								16.0F, 3.0F, 16.0F,
+						.texOffs(0, 48)
+						.addBox(-8.0F, -19.01F, -8.0F, 16.0F, 3.0F, 0.0F,
+								new CubeDeformation(0.0F))
+						.texOffs(32, 48)
+						.addBox(-8.0F, -19.01F, 8.0F, 16.0F, 3.0F, 0.0F,
 								new CubeDeformation(0.0F)),
 				PartPose.offset(0.0F, 24.0F, 0.0F));
 
-		return LayerDefinition.create(meshDefinition, 64, 64);
-	}
+		main.addOrReplaceChild("cube1", CubeListBuilder.create()
+						.texOffs(16, 48)
+						.addBox(-8.0F, -3.01F, -1.0F, 16.0F, 3.0F, 0.0F,
+								new CubeDeformation(0.0F)),
+				PartPose.offsetAndRotation(9.0F, -16.0F, 0.0F, 0.0F, 1.5708F, 0.0F));
 
-	@Override
-	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-	}
+		main.addOrReplaceChild("cube2", CubeListBuilder.create()
+						.texOffs(16, 48)
+						.addBox(-8.0F, -3.01F, -1.0F, 16.0F, 3.0F, 0.0F,
+								new CubeDeformation(0.0F)),
+				PartPose.offsetAndRotation(-7.0F, -16.0F, 0.0F, 0.0F, 1.5708F, 0.0F));
 
-	@Override
-	public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
-		base.render(poseStack, buffer, packedLight, packedOverlay);
+		return LayerDefinition.create(mesh, 64, 64);
 	}
 }

@@ -5,36 +5,40 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.Tags.Blocks;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.data.CustomDataGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.common.CommonBlockTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.common.CommonItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWBlockTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
-import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
-import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
+import tech.anonymoushacker1279.immersiveweapons.item.tool.GauntletItem;
+import tech.anonymoushacker1279.immersiveweapons.item.tool.PikeItem;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Supplier;
 
 public class ItemTagsGenerator extends ItemTagsProvider {
 
-	public ItemTagsGenerator(PackOutput output, CompletableFuture<Provider> lookupProvider, BlockTagsProvider blocks, ExistingFileHelper existingFileHelper) {
-		super(output, lookupProvider, blocks.contentsGetter(), ImmersiveWeapons.MOD_ID, existingFileHelper);
+	public static final List<Item> ALL_ITEMS = new ArrayList<>(250);
+
+	public ItemTagsGenerator(PackOutput output, CompletableFuture<Provider> lookupProvider, BlockTagsProvider blocks) {
+		super(output, lookupProvider, blocks.contentsGetter(), ImmersiveWeapons.MOD_ID);
 	}
 
 	@Override
 	protected void addTags(Provider provider) {
+		ItemRegistry.ITEMS.getEntries().stream().map(Supplier::get).forEach(ALL_ITEMS::add);
+
 		addCommonTags();
 		addImmersiveWeaponsTags();
 		addMinecraftTags();
@@ -66,6 +70,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		tag(Tags.Items.INGOTS).addTag(IWItemTagGroups.STARSTORM_INGOTS);
 		tag(Tags.Items.INGOTS).addTag(IWItemTagGroups.ASTRAL_INGOTS);
 		tag(Tags.Items.INGOTS).addTag(IWItemTagGroups.VOID_INGOTS);
+		tag(Tags.Items.INGOTS).addTag(IWItemTagGroups.HANSIUM_INGOTS);
 
 		// Nugget tags
 		tag(CommonItemTagGroups.COBALT_NUGGETS).add(ItemRegistry.COBALT_NUGGET.get());
@@ -91,11 +96,8 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		tag(Tags.Items.FOODS).add(
 				ItemRegistry.MRE.get(),
 				ItemRegistry.CHOCOLATE_BAR.get(),
-				ItemRegistry.EXPLOSIVE_CHOCOLATE_BAR.get(),
 				ItemRegistry.MOLDY_BREAD.get());
-		tag(Tags.Items.FOODS_CANDY).add(
-				ItemRegistry.CHOCOLATE_BAR.get(),
-				ItemRegistry.EXPLOSIVE_CHOCOLATE_BAR.get());
+		tag(Tags.Items.FOODS_CANDY).add(ItemRegistry.CHOCOLATE_BAR.get());
 		tag(Tags.Items.FOODS_BREAD).add(ItemRegistry.MOLDY_BREAD.get());
 		tag(Tags.Items.FOODS_FOOD_POISONING).add(ItemRegistry.MOLDY_BREAD.get());
 	}
@@ -118,7 +120,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		// Projectile tags
 		tag(IWItemTagGroups.FLARES).add(ItemRegistry.FLARE.get());
 
-		for (Item item : CustomDataGenerator.ALL_ITEMS) {
+		for (Item item : ALL_ITEMS) {
 			if (item.getDescriptionId().contains("musket_ball")) {
 				tag(IWItemTagGroups.MUSKET_BALLS).add(item);
 			}
@@ -137,6 +139,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		tag(IWItemTagGroups.ASTRAL_INGOTS).add(ItemRegistry.ASTRAL_INGOT.get());
 		tag(IWItemTagGroups.STARSTORM_INGOTS).add(ItemRegistry.STARSTORM_INGOT.get());
 		tag(IWItemTagGroups.VOID_INGOTS).add(ItemRegistry.VOID_INGOT.get());
+		tag(IWItemTagGroups.HANSIUM_INGOTS).add(ItemRegistry.HANSIUM_INGOT.get());
 
 		// Shard tags
 		tag(IWItemTagGroups.MOLTEN_SHARDS).add(ItemRegistry.MOLTEN_SHARD.get());
@@ -201,7 +204,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 				ItemRegistry.MEDAL_OF_DISHONOR.get());
 
 		// Smoke grenade tags
-		for (Item item : CustomDataGenerator.ALL_ITEMS) {
+		for (Item item : ALL_ITEMS) {
 			if (item.getDescriptionId().contains("smoke_grenade") && !item.getDescriptionId().contains("arrow")) {
 				tag(IWItemTagGroups.SMOKE_GRENADES).add(item);
 			}
@@ -376,7 +379,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		tag(ItemTags.SIGNS).add(BlockItemRegistry.BURNED_OAK_SIGN_ITEM.get());
 
 		// Arrow tags
-		for (Item item : CustomDataGenerator.ALL_ITEMS) {
+		for (Item item : ALL_ITEMS) {
 			if (item.getDescriptionId().contains("arrow")) {
 				tag(ItemTags.ARROWS).add(item);
 			}
@@ -394,11 +397,14 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 				BlockItemRegistry.CRIMSON_TABLE_ITEM.get());
 
 		// Trimmable armor tag
-		for (DeferredHolder<Item, ? extends Item> item : ItemRegistry.ITEMS.getEntries()) {
-			if (item.get() instanceof ArmorItem armor) {
-				tag(ItemTags.TRIMMABLE_ARMOR).add(armor);
-			}
-		}
+		tag(ItemTags.TRIMMABLE_ARMOR).addTags(
+				IWItemTagGroups.MOLTEN_ARMOR,
+				IWItemTagGroups.TESLA_ARMOR,
+				IWItemTagGroups.VENTUS_ARMOR,
+				IWItemTagGroups.ASTRAL_ARMOR,
+				IWItemTagGroups.STARSTORM_ARMOR,
+				IWItemTagGroups.VOID_ARMOR
+		);
 
 		// Beacon payment tag
 		tag(ItemTags.BEACON_PAYMENT_ITEMS).add(
@@ -443,7 +449,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 				BlockItemRegistry.STORM_CREEPER_HEAD_ITEM.get());
 
 		// Loop through the registry and add groups of items to a tag
-		for (Item item : CustomDataGenerator.ALL_ITEMS) {
+		for (Item item : ALL_ITEMS) {
 			if (item.getDescriptionId().contains("sword")) {
 				tag(ItemTags.SWORDS).add(item);
 			} else if (item.getDescriptionId().contains("pickaxe")) {

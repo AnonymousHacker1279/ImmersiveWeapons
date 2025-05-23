@@ -1,0 +1,15 @@
+{
+  "model": {
+    "type": "minecraft:condition",
+    "name": "The Gunslinger",
+    "on_false": {
+      "type": "minecraft:model",
+      "model": "immersiveweapons:item/iron_gauntlet"
+    },
+    "on_true": {
+      "type": "minecraft:model",
+      "model": "immersiveweapons:item/iron_gauntlet_alt"
+    },
+    "property": "immersiveweapons:has_specific_name"
+  }
+}

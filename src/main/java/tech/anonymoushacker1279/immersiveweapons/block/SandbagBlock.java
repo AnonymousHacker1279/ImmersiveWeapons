@@ -3,7 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.block;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -44,7 +44,7 @@ public class SandbagBlock extends BasicOrientableBlock {
 
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite()).setValue(BAGS, 0);
+		return defaultBlockState().setValue(FACING, context.getHorizontalDirection()).setValue(BAGS, 0);
 	}
 
 	@Override
@@ -65,7 +65,7 @@ public class SandbagBlock extends BasicOrientableBlock {
 	}
 
 	@Override
-	protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
+	protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
 		if (player.getMainHandItem().getItem() == BlockItemRegistry.SANDBAG_ITEM.get()) {
 			int bags = state.getValue(BAGS);
 			if (bags < 3) {
@@ -74,10 +74,10 @@ public class SandbagBlock extends BasicOrientableBlock {
 					player.getMainHandItem().shrink(1);
 				}
 
-				return ItemInteractionResult.CONSUME;
+				return InteractionResult.CONSUME;
 			}
 		}
 
-		return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+		return InteractionResult.PASS;
 	}
 }

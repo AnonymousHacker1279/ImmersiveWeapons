@@ -3,14 +3,20 @@ package tech.anonymoushacker1279.immersiveweapons.block.crafting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.*;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.entity.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -22,6 +28,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.TeslaSynthesizerBlockEntity;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockEntityRegistry;
 import tech.anonymoushacker1279.immersiveweapons.menu.TeslaSynthesizerMenu;
 
 public class TeslaSynthesizerBlock extends Block implements SimpleWaterloggedBlock, EntityBlock {
@@ -82,7 +89,12 @@ public class TeslaSynthesizerBlock extends Block implements SimpleWaterloggedBlo
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState,
 	                                                              BlockEntityType<T> blockEntityType) {
 
-		return level.isClientSide ? null : (world, pos, state, entity) -> ((TeslaSynthesizerBlockEntity) entity).tick(world);
+		if (level instanceof ServerLevel serverLevel && blockEntityType == BlockEntityRegistry.TESLA_SYNTHESIZER_BLOCK_ENTITY.get()) {
+			return (world, pos, state, entity) -> ((TeslaSynthesizerBlockEntity) entity).tick(serverLevel);
+
+		}
+
+		return null;
 	}
 
 	/**
@@ -96,8 +108,7 @@ public class TeslaSynthesizerBlock extends Block implements SimpleWaterloggedBlo
 	}
 
 	/**
-	 * Set FluidState properties.
-	 * Allows the block to exhibit waterlogged behavior.
+	 * Set FluidState properties. Allows the block to exhibit waterlogged behavior.
 	 *
 	 * @param state the <code>BlockState</code> of the block
 	 * @return FluidState
@@ -118,27 +129,6 @@ public class TeslaSynthesizerBlock extends Block implements SimpleWaterloggedBlo
 		}
 
 		return InteractionResult.SUCCESS;
-	}
-
-	/**
-	 * Runs when the block is removed.
-	 *
-	 * @param state    the <code>BlockState</code> of the block
-	 * @param level    the <code>Level</code> the block is in
-	 * @param pos      the <code>BlockPos</code> the block is at
-	 * @param newState the <code>BlockState</code> the block now has
-	 * @param isMoving determines if the block is moving
-	 */
-	@Override
-	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-		if (!state.is(newState.getBlock())) {
-			if (level.getBlockEntity(pos) instanceof TeslaSynthesizerBlockEntity teslaSynthesizerBlockEntity) {
-				Containers.dropContents(level, pos, teslaSynthesizerBlockEntity);
-				level.updateNeighbourForOutputSignal(pos, this);
-			}
-
-			super.onRemove(state, level, pos, newState, isMoving);
-		}
 	}
 
 	/**

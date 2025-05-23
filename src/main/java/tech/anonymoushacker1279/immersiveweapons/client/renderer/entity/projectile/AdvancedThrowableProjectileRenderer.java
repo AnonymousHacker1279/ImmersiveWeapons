@@ -2,49 +2,60 @@ package tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.project
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.item.ItemModelResolver;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemDisplayContext;
+import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.state.ThrowableProjectileRenderState;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.AdvancedThrowableItemProjectile;
 
-public class AdvancedThrowableProjectileRenderer<T extends AdvancedThrowableItemProjectile> extends EntityRenderer<T> {
+public class AdvancedThrowableProjectileRenderer extends EntityRenderer<AdvancedThrowableItemProjectile, ThrowableProjectileRenderState> {
+
+	private final ItemModelResolver itemModelResolver;
 
 	public AdvancedThrowableProjectileRenderer(EntityRendererProvider.Context context) {
 		super(context);
+		itemModelResolver = context.getItemModelResolver();
 	}
 
 	@Override
-	public void render(T entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int light) {
+	public ThrowableProjectileRenderState createRenderState() {
+		return new ThrowableProjectileRenderState();
+	}
+
+	@Override
+	public void render(ThrowableProjectileRenderState state, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
 		poseStack.pushPose();
 
-		if (entity.randomRotation == 0.0f) {
-			entity.randomRotation = entity.level().getRandom().nextFloat() * 360.0f;
-		}
-
-		if (entity.getDeltaMovement().lengthSqr() < 0.01) {
+		if (state.movementLengthSqr < 0.01f) {
 			poseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
-			poseStack.mulPose(Axis.ZP.rotationDegrees(entity.randomRotation));
+			poseStack.mulPose(Axis.ZP.rotationDegrees(state.randomRotation));
 			poseStack.translate(0, 0, -0.1f);
 		} else {
 			// Entity is moving, display it upright
-			poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - entityYaw));
-			poseStack.mulPose(Axis.XP.rotationDegrees(entity.getXRot()));
-			poseStack.mulPose(Axis.ZP.rotationDegrees(entity.getYRot() + entity.randomRotation));
+			poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - state.yRot));
+			poseStack.mulPose(Axis.XP.rotationDegrees(state.xRot));
+			poseStack.mulPose(Axis.ZP.rotationDegrees(state.yRot + state.randomRotation));
 		}
 
 		poseStack.scale(1.25f, 1.25f, 1.25f);
 
-		Minecraft.getInstance().getItemRenderer().renderStatic(entity.getItem(), ItemDisplayContext.GROUND, light, OverlayTexture.NO_OVERLAY, poseStack, bufferSource, entity.level(), 0);
+		state.stackRenderState.render(poseStack, bufferSource, packedLight, OverlayTexture.NO_OVERLAY);
 
 		poseStack.popPose();
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(T pEntity) {
-		return null;
+	public void extractRenderState(AdvancedThrowableItemProjectile entity, ThrowableProjectileRenderState reusedState, float partialTick) {
+		super.extractRenderState(entity, reusedState, partialTick);
+
+		if (reusedState.randomRotation == 0.0f) {
+			reusedState.randomRotation = entity.getRandom().nextFloat() * 360.0F;
+		}
+
+		reusedState.movementLengthSqr = (float) entity.getDeltaMovement().lengthSqr();
+		itemModelResolver.updateForNonLiving(reusedState.stackRenderState, entity.getItem(), ItemDisplayContext.NONE, entity);
 	}
 }

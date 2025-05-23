@@ -5,9 +5,7 @@
     {
       "base_multiplier": 1.3,
       "density": 0.03,
-      "ingredient": {
-        "tag": "immersiveweapons:ingots/void"
-      }
+      "ingredient": "#immersiveweapons:ingots/void"
     }
   ],
   "result": {

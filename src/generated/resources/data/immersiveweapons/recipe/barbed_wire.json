@@ -3,12 +3,8 @@
   "category": "building",
   "group": "barbed_wire",
   "key": {
-    "a": {
-      "tag": "c:ingots/iron"
-    },
-    "b": {
-      "tag": "c:nuggets/metal"
-    }
+    "a": "#c:ingots/iron",
+    "b": "#c:nuggets/metal"
   },
   "pattern": [
     "bab",

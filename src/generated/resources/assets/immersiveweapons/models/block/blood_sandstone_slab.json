@@ -1,8 +1,8 @@
 {
   "parent": "minecraft:block/slab",
   "textures": {
-    "bottom": "immersiveweapons:block/blood_sandstone",
+    "bottom": "immersiveweapons:block/blood_sandstone_bottom",
     "side": "immersiveweapons:block/blood_sandstone",
-    "top": "immersiveweapons:block/blood_sandstone"
+    "top": "immersiveweapons:block/blood_sandstone_top"
   }
 }

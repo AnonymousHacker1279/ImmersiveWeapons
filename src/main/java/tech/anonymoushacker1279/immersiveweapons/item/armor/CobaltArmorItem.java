@@ -1,38 +1,32 @@
 package tech.anonymoushacker1279.immersiveweapons.item.armor;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.equipment.ArmorMaterial;
+import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.PacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
-import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.CobaltArmorPayload;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
-public class CobaltArmorItem extends ArmorItem {
+public class CobaltArmorItem extends Item implements TickableArmor {
 
-	public CobaltArmorItem(Holder<ArmorMaterial> material, Type armorType, Properties properties) {
-		super(material, armorType, properties);
+	public CobaltArmorItem(ArmorMaterial material, ArmorType armorType, Properties properties) {
+		super(properties.humanoidArmor(material, armorType));
 	}
 
 	@Override
-	public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
-		if (entity instanceof Player player && player.getUUID().toString().equals("94f11dac-d1bc-46da-877b-c69f533f2da2")) {
-			if (player.getItemBySlot(EquipmentSlot.HEAD).getItem() == ItemRegistry.COBALT_HELMET.get() &&
-					player.getItemBySlot(EquipmentSlot.CHEST).getItem() == ItemRegistry.COBALT_CHESTPLATE.get() &&
-					player.getItemBySlot(EquipmentSlot.LEGS).getItem() == ItemRegistry.COBALT_LEGGINGS.get() &&
-					player.getItemBySlot(EquipmentSlot.FEET).getItem() == ItemRegistry.COBALT_BOOTS.get()) {
-
-				boolean effectEnabled = player.getPersistentData().getBoolean("CobaltArmorEffectEnabled");
+	public void playerTick(Level level, Player player) {
+		if (player.getUUID().toString().equals("94f11dac-d1bc-46da-877b-c69f533f2da2")) {
+			if (ArmorUtils.isWearingCobaltArmor(player)) {
+				boolean effectEnabled = player.getPersistentData().getBoolean("CobaltArmorEffectEnabled").orElse(false);
 
 				if (level.isClientSide) {
 					if (IWKeyBinds.TOGGLE_ARMOR_EFFECT.consumeClick()) {
@@ -53,11 +47,11 @@ public class CobaltArmorItem extends ArmorItem {
 				}
 
 				if (effectEnabled) {
-					player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST,
+					player.addEffect(new MobEffectInstance(MobEffects.STRENGTH,
 							1, 4, false, false));
-					player.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE,
+					player.addEffect(new MobEffectInstance(MobEffects.RESISTANCE,
 							1, 1, false, false));
-					player.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED,
+					player.addEffect(new MobEffectInstance(MobEffects.SPEED,
 							1, 1, false, false));
 
 					if (level instanceof ServerLevel serverLevel) {

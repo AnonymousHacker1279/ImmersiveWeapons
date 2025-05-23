@@ -2,7 +2,8 @@
 	"credit": "AnonymousHacker1279",
 	"render_type": "minecraft:translucent",
 	"textures": {
-		"1": "minecraft:block/raw_iron_block"
+		"1": "minecraft:block/raw_iron_block",
+		"particle": "minecraft:block/raw_iron_block"
 	},
 	"elements": [
 		{

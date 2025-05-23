@@ -3,9 +3,7 @@
   "category": "misc",
   "group": "shard",
   "ingredients": [
-    {
-      "item": "minecraft:diamond"
-    }
+    "minecraft:diamond"
   ],
   "result": {
     "count": 4,

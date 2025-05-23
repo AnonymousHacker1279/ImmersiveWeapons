@@ -1,6 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.menu;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
@@ -8,18 +8,23 @@ import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.*;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
+import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.PacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.StarForgeBlockEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.MenuTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.StarForgeRecipe;
+import tech.anonymoushacker1279.immersiveweapons.item.crafting.input.StarForgeRecipeInput;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.star_forge.StarForgeMenuPayload;
-import tech.anonymoushacker1279.immersiveweapons.network.payload.star_forge.StarForgeUpdateRecipesPayload;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class StarForgeMenu extends AbstractContainerMenu {
 
@@ -28,10 +33,14 @@ public class StarForgeMenu extends AbstractContainerMenu {
 	private final Player player;
 
 	public List<StarForgeRecipe> availableRecipes = new ArrayList<>(25);
+	public static final List<RecipeHolder<StarForgeRecipe>> ALL_RECIPES = new ArrayList<>(10);
 
-	public StarForgeMenu(int containerID, Inventory inventory, List<ResourceLocation> availableRecipeLocations) {
+	public StarForgeMenu(int containerID, Inventory inventory, List<ResourceKey<Recipe<?>>> availableRecipeLocations) {
 		this(containerID, inventory, new SimpleContainer(3), new SimpleContainerData(5));
-		populateAvailableRecipes(availableRecipeLocations, inventory.player.level(), availableRecipes);
+
+		if (inventory.player.level() instanceof ServerLevel serverLevel) {
+			populateAvailableRecipes(availableRecipeLocations, serverLevel, availableRecipes);
+		}
 	}
 
 	public StarForgeMenu(int containerID, Inventory inventory, Container container, ContainerData containerData) {
@@ -128,21 +137,15 @@ public class StarForgeMenu extends AbstractContainerMenu {
 				availableRecipes.add(holder.value());
 			}
 
-			// Send the packet to the client
-			PacketDistributor.sendToPlayersNear(
-					(ServerLevel) starForgeBlockEntity.getLevel(),
-					null,
-					starForgeBlockEntity.getBlockPos().getX(),
-					starForgeBlockEntity.getBlockPos().getY(),
-					starForgeBlockEntity.getBlockPos().getZ(),
-					16,
-					new StarForgeUpdateRecipesPayload(player.getUUID(), containerId, starForgeBlockEntity.getAvailableRecipeIds())
-			);
-
 			// If there is a recipe already being crafted, cancel it
 			if (containerData.get(2) > 0) {
 				containerData.set(2, 0);
 			}
+		} else {
+			// Update available recipes on the client
+			availableRecipes.clear();
+			StarForgeMenu.ALL_RECIPES.forEach(holder -> availableRecipes.add(holder.value()));
+			availableRecipes.removeIf(recipe -> !recipe.matches(new StarForgeRecipeInput(container.getItem(0), container.getItem(1))));
 		}
 	}
 
@@ -188,9 +191,9 @@ public class StarForgeMenu extends AbstractContainerMenu {
 		return containerData.get(3);
 	}
 
-	public static void populateAvailableRecipes(List<ResourceLocation> recipeLocations, Level level, List<StarForgeRecipe> availableRecipes) {
-		for (ResourceLocation location : recipeLocations) {
-			Optional<StarForgeRecipe> recipe = level.getRecipeManager().byKey(location).map(recipeHolder -> {
+	public static void populateAvailableRecipes(List<ResourceKey<Recipe<?>>> recipeLocations, ServerLevel level, List<StarForgeRecipe> availableRecipes) {
+		for (ResourceKey<Recipe<?>> location : recipeLocations) {
+			Optional<StarForgeRecipe> recipe = level.recipeAccess().byKey(location).map(recipeHolder -> {
 				if (recipeHolder.value() instanceof StarForgeRecipe starForgeRecipe) {
 					return starForgeRecipe;
 				}

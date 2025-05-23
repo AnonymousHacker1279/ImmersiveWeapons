@@ -3,15 +3,9 @@
   "category": "misc",
   "group": "first_aid",
   "ingredients": [
-    {
-      "item": "immersiveweapons:bandage"
-    },
-    {
-      "item": "immersiveweapons:bandage"
-    },
-    {
-      "item": "immersiveweapons:painkillers"
-    }
+    "immersiveweapons:bandage",
+    "immersiveweapons:bandage",
+    "immersiveweapons:painkillers"
   ],
   "result": {
     "count": 1,

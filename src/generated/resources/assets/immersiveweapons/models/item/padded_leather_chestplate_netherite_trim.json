@@ -2,6 +2,7 @@
   "parent": "minecraft:item/generated",
   "textures": {
     "layer0": "immersiveweapons:item/padded_leather_chestplate",
-    "layer1": "minecraft:trims/items/chestplate_trim_netherite"
+    "layer1": "immersiveweapons:item/padded_leather_chestplate_overlay",
+    "layer2": "minecraft:trims/items/chestplate_trim_netherite"
   }
 }

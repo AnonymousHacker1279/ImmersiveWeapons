@@ -3,12 +3,8 @@
   "category": "building",
   "group": "tables",
   "key": {
-    "a": {
-      "item": "minecraft:warped_slab"
-    },
-    "b": {
-      "item": "minecraft:warped_fence"
-    }
+    "a": "minecraft:warped_slab",
+    "b": "minecraft:warped_fence"
   },
   "pattern": [
     "a",

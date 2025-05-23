@@ -2,7 +2,7 @@
   "parent": "minecraft:block/slab_top",
   "textures": {
     "bottom": "immersiveweapons:block/blood_sandstone_top",
-    "side": "immersiveweapons:block/cut_blood_sandstone",
+    "side": "immersiveweapons:block/blood_sandstone",
     "top": "immersiveweapons:block/blood_sandstone_top"
   }
 }

@@ -3,18 +3,10 @@
   "category": "equipment",
   "group": "firearm",
   "key": {
-    "a": {
-      "item": "immersiveweapons:wooden_pistol_handle"
-    },
-    "b": {
-      "item": "immersiveweapons:flintlock_assembly"
-    },
-    "c": {
-      "item": "immersiveweapons:trigger_assembly"
-    },
-    "d": {
-      "item": "immersiveweapons:iron_barrel"
-    }
+    "a": "immersiveweapons:wooden_pistol_handle",
+    "b": "immersiveweapons:flintlock_assembly",
+    "c": "immersiveweapons:trigger_assembly",
+    "d": "immersiveweapons:iron_barrel"
   },
   "pattern": [
     "abd",

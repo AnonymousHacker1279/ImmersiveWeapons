@@ -3,12 +3,8 @@
   "category": "building",
   "group": "wooden_fence",
   "key": {
-    "a": {
-      "item": "immersiveweapons:stardust_planks"
-    },
-    "b": {
-      "tag": "c:rods/wooden"
-    }
+    "a": "immersiveweapons:stardust_planks",
+    "b": "#c:rods/wooden"
   },
   "pattern": [
     "aba",

@@ -1,9 +1,7 @@
 {
   "type": "immersiveweapons:barrel_tap",
   "group": "barrel_tap",
-  "material": {
-    "item": "minecraft:glow_berries"
-  },
+  "material": "minecraft:glow_berries",
   "materialCount": 8,
   "result": {
     "id": "immersiveweapons:bottle_of_wine"

@@ -2,18 +2,10 @@
   "type": "minecraft:crafting_shaped",
   "category": "redstone",
   "key": {
-    "a": {
-      "tag": "c:ingots/metal"
-    },
-    "b": {
-      "tag": "minecraft:planks"
-    },
-    "c": {
-      "item": "minecraft:redstone"
-    },
-    "d": {
-      "item": "minecraft:cobblestone"
-    }
+    "a": "#c:ingots/metal",
+    "b": "#minecraft:planks",
+    "c": "minecraft:redstone",
+    "d": "minecraft:cobblestone"
   },
   "pattern": [
     "bbb",

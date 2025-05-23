@@ -4,8 +4,10 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.windcharge.WindCharge;
@@ -14,7 +16,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
-import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public class VentusStaff extends Item {
 	}
 
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+	public InteractionResult use(Level level, Player player, InteractionHand hand) {
 		ItemStack itemInHand = player.getItemInHand(hand);
 		if (player.isShiftKeyDown()) {
 			launchWindCharge(level, player, itemInHand);
@@ -34,7 +35,7 @@ public class VentusStaff extends Item {
 			pushEntities(level, player, itemInHand);
 		}
 
-		return InteractionResultHolder.sidedSuccess(itemInHand, level.isClientSide());
+		return InteractionResult.SUCCESS;
 	}
 
 	private void spawnParticles(Entity entity, Level level) {
@@ -99,18 +100,8 @@ public class VentusStaff extends Item {
 				SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.PLAYERS, 0.4f, 1.0f, true);
 
 		if (!player.isCreative()) {
-			player.getCooldowns().addCooldown(this, cooldown);
+			player.getCooldowns().addCooldown(itemInHand, cooldown);
 			itemInHand.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
 		}
-	}
-
-	@Override
-	public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
-		return repair.getItem() == ItemRegistry.VENTUS_SHARD.get();
-	}
-
-	@Override
-	public int getEnchantmentValue(ItemStack stack) {
-		return 1;
 	}
 }

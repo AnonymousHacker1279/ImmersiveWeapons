@@ -6,9 +6,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags.Blocks;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.data.CustomDataGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.common.CommonBlockTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWBlockTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
@@ -20,8 +18,8 @@ import java.util.function.Supplier;
 
 public class BlockTagsGenerator extends BlockTagsProvider {
 
-	public BlockTagsGenerator(PackOutput output, CompletableFuture<Provider> lookupProvider, ExistingFileHelper existingFileHelper) {
-		super(output, lookupProvider, ImmersiveWeapons.MOD_ID, existingFileHelper);
+	public BlockTagsGenerator(PackOutput output, CompletableFuture<Provider> lookupProvider) {
+		super(output, lookupProvider, ImmersiveWeapons.MOD_ID);
 	}
 
 	/**
@@ -42,21 +40,48 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 	@SuppressWarnings("unchecked")
 	private void addCommonTags() {
 		// Bulletproof glass tag
-		for (Block block : CustomDataGenerator.ALL_BLOCKS) {
-			if (block.getDescriptionId().contains("bulletproof_glass")) {
-				tag(CommonBlockTagGroups.BULLETPROOF_GLASS).add(block);
-			}
-		}
+		tag(CommonBlockTagGroups.BULLETPROOF_GLASS).add(
+				BlockRegistry.BULLETPROOF_GLASS.get(),
+				BlockRegistry.WHITE_STAINED_BULLETPROOF_GLASS.get(),
+				BlockRegistry.LIGHT_GRAY_STAINED_BULLETPROOF_GLASS.get(),
+				BlockRegistry.GRAY_STAINED_BULLETPROOF_GLASS.get(),
+				BlockRegistry.BLACK_STAINED_BULLETPROOF_GLASS.get(),
+				BlockRegistry.ORANGE_STAINED_BULLETPROOF_GLASS.get(),
+				BlockRegistry.MAGENTA_STAINED_BULLETPROOF_GLASS.get(),
+				BlockRegistry.LIGHT_BLUE_STAINED_BULLETPROOF_GLASS.get(),
+				BlockRegistry.YELLOW_STAINED_BULLETPROOF_GLASS.get(),
+				BlockRegistry.LIME_STAINED_BULLETPROOF_GLASS.get(),
+				BlockRegistry.PINK_STAINED_BULLETPROOF_GLASS.get(),
+				BlockRegistry.CYAN_STAINED_BULLETPROOF_GLASS.get(),
+				BlockRegistry.PURPLE_STAINED_BULLETPROOF_GLASS.get(),
+				BlockRegistry.BLUE_STAINED_BULLETPROOF_GLASS.get(),
+				BlockRegistry.BROWN_STAINED_BULLETPROOF_GLASS.get(),
+				BlockRegistry.GREEN_STAINED_BULLETPROOF_GLASS.get(),
+				BlockRegistry.RED_STAINED_BULLETPROOF_GLASS.get());
+		tag(CommonBlockTagGroups.BULLETPROOF_GLASS_PANES).add(
+				BlockRegistry.BULLETPROOF_GLASS_PANE.get(),
+				BlockRegistry.WHITE_STAINED_BULLETPROOF_GLASS_PANE.get(),
+				BlockRegistry.LIGHT_GRAY_STAINED_BULLETPROOF_GLASS_PANE.get(),
+				BlockRegistry.GRAY_STAINED_BULLETPROOF_GLASS_PANE.get(),
+				BlockRegistry.BLACK_STAINED_BULLETPROOF_GLASS_PANE.get(),
+				BlockRegistry.ORANGE_STAINED_BULLETPROOF_GLASS_PANE.get(),
+				BlockRegistry.MAGENTA_STAINED_BULLETPROOF_GLASS_PANE.get(),
+				BlockRegistry.LIGHT_BLUE_STAINED_BULLETPROOF_GLASS_PANE.get(),
+				BlockRegistry.YELLOW_STAINED_BULLETPROOF_GLASS_PANE.get(),
+				BlockRegistry.LIME_STAINED_BULLETPROOF_GLASS_PANE.get(),
+				BlockRegistry.PINK_STAINED_BULLETPROOF_GLASS_PANE.get(),
+				BlockRegistry.CYAN_STAINED_BULLETPROOF_GLASS_PANE.get(),
+				BlockRegistry.PURPLE_STAINED_BULLETPROOF_GLASS_PANE.get(),
+				BlockRegistry.BLUE_STAINED_BULLETPROOF_GLASS_PANE.get(),
+				BlockRegistry.BROWN_STAINED_BULLETPROOF_GLASS_PANE.get(),
+				BlockRegistry.GREEN_STAINED_BULLETPROOF_GLASS_PANE.get(),
+				BlockRegistry.RED_STAINED_BULLETPROOF_GLASS_PANE.get());
 
 		// Glass tag
 		tag(Blocks.GLASS_BLOCKS).addTag(CommonBlockTagGroups.BULLETPROOF_GLASS);
-
-		// Stained glass tag
-		for (Block block : CustomDataGenerator.ALL_BLOCKS) {
-			if (block.getDescriptionId().contains("stained_bulletproof_glass")) {
-				tag(CommonBlockTagGroups.STAINED_GLASS).add(block);
-			}
-		}
+		tag(Blocks.GLASS_BLOCKS_COLORLESS).add(BlockRegistry.BULLETPROOF_GLASS.get());
+		tag(Blocks.GLASS_PANES).addTag(CommonBlockTagGroups.BULLETPROOF_GLASS_PANES);
+		tag(Blocks.GLASS_PANES_COLORLESS).add(BlockRegistry.BULLETPROOF_GLASS_PANE.get());
 
 		// Ore tags
 		tag(CommonBlockTagGroups.COBALT_ORES).add(
@@ -188,6 +213,7 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 
 		// Sand tag
 		tag(BlockTags.SAND).add(BlockRegistry.BLOOD_SAND.get());
+		tag(BlockTags.PLAYS_AMBIENT_DESERT_BLOCK_SOUNDS).add(BlockRegistry.BLOOD_SAND.get());
 
 		// Saplings tag
 		tag(BlockTags.SAPLINGS).add(BlockRegistry.STARDUST_SAPLING.get());

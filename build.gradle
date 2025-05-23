@@ -1,12 +1,19 @@
 plugins {
 	id 'java-library'
 	id 'maven-publish'
-	id 'net.neoforged.gradle.userdev' version '7.0.181'
+	id 'net.neoforged.moddev' version '2.0.88'
 	id "com.hypherionmc.modutils.modpublisher" version "2.1.6"
 	id 'idea'
 }
 
 apply from: 'optimization_utils.gradle'
+
+tasks.named('wrapper', Wrapper).configure {
+	distributionType = Wrapper.DistributionType.BIN
+}
+
+version = mod_version
+group = mod_group_id
 
 repositories {
 	mavenLocal()
@@ -15,16 +22,8 @@ repositories {
 		url "https://maven.anonymoushacker1279.tech/releases"
 	}
 	maven {
-		name "Jared's Maven"
-		url 'https://maven.blamejared.com'
-	}
-	maven {
-		name "ModMaven"
-		url "https://modmaven.dev/"
-	}
-	maven {
-		name "Maven Central"
-		url "https://repo.maven.apache.org/maven2"
+		name "Forge"
+		url "https://maven.minecraftforge.net/"
 	}
 	maven {
 		name "Bai Maven"
@@ -34,32 +33,15 @@ repositories {
 		name "AzureDoom's Maven"
 		url 'https://maven.azuredoom.com/mods'
 	}
-	maven {
-		url "https://cursemaven.com"
-		content {
-			includeGroup "curse.maven"
-		}
-	}
-	maven {
-		name "Forge"
-		url "https://maven.minecraftforge.net/"
-	}
 }
-
-version = mod_version
-group = mod_group_id
 
 base {
-	archivesName = project.mod_id
+	archivesName = mod_id
 }
-
-jarJar.enable()
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 println('Java: ' + System.getProperty('java.version') + ' | JVM: ' + System.getProperty('java.vm.version') + ' (' + System.getProperty('java.vendor') + ') | Arch: ' + System.getProperty('os.arch'))
-
-minecraft.accessTransformers.file rootProject.file('src/main/resources/META-INF/accesstransformer.cfg')
 
 sourceSets {
 	main {
@@ -76,11 +58,10 @@ sourceSets {
 	}
 }
 
-// Ensure other source sets receive the necessary dependencies
 configurations {
-	extendConfigurations(implementation, testImplementation, datagenImplementation)
-	extendConfigurations(compileOnly, testCompileOnly, datagenCompileOnly)
-	extendConfigurations(runtimeOnly, testRuntimeOnly, datagenRuntimeOnly)
+	extendConfigurations(implementation, datagenImplementation)
+	extendConfigurations(compileOnly, datagenCompileOnly)
+	extendConfigurations(runtimeOnly, datagenRuntimeOnly)
 }
 
 static void extendConfigurations(Configuration base, Configuration... configurations) {
@@ -89,55 +70,72 @@ static void extendConfigurations(Configuration base, Configuration... configurat
 	}
 }
 
-runs {
-	configureEach {
-		systemProperty 'forge.logging.markers', 'REGISTRIES'
-		systemProperty 'forge.logging.console.level', 'debug'
+neoForge {
+	version = project.neo_version
+	addModdingDependenciesTo sourceSets.datagen
 
-		jvmArguments.addAll '-Xmx6G', '-XX:NonProfiledCodeHeapSize=512M'
-
-		// If the selected toolchain is a JBR, enable DCEVM for improved hotswapping
-		if (it.project.javaToolchains.launcherFor(java.toolchain).map { it.metadata.vendor }.getOrElse("").contains("JetBrains")) {
-			jvmArguments.addAll '-XX:+AllowEnhancedClassRedefinition', '-XX:NonProfiledCodeHeapSize=256M', '-XX:ReservedCodeCacheSize=300M'
-		}
-
-		modSources project.sourceSets.main, project.sourceSets.datagen
+	parchment {
+		mappingsVersion = project.parchment_mappings_version
+		minecraftVersion = project.parchment_minecraft_version
 	}
 
-	client {
-		// Setup client information from gradle.properties in the user home
-		// All of these are optional
-		if (project.hasProperty('mc_uuid')) {
-			arguments('--uuid', (String) project.property('mc_uuid'))
+	runs {
+		client {
+			client()
+			devLogin = true
+			systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
 		}
-		if (project.hasProperty('mc_username')) {
-			arguments('--username', (String) project.property('mc_username'))
+
+		server {
+			server()
+			programArgument '--nogui'
+			systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
 		}
-		if (project.hasProperty('mc_accessToken')) {
-			arguments('--accessToken', (String) project.property('mc_accessToken'))
+
+		gameTestServer {
+			type = "gameTestServer"
+			systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+		}
+
+		clientData {
+			clientData()
+
+			programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+		}
+
+		configureEach {
+			systemProperty 'forge.logging.markers', 'REGISTRIES'
+			logLevel = org.slf4j.event.Level.DEBUG
+
+			// If the selected toolchain is a JBR, enable DCEVM for improved hotswapping
+			if (it.project.javaToolchains.launcherFor(java.toolchain).map { it.metadata.vendor }.getOrElse("").contains("JetBrains")) {
+				jvmArguments.addAll '-XX:+AllowEnhancedClassRedefinition', '-XX:NonProfiledCodeHeapSize=256M', '-XX:ReservedCodeCacheSize=300M'
+			}
+
+			systemProperties.put('terminal.jline', "true")
 		}
 	}
 
-	server {
-		argument '--nogui'
-	}
-
-	data {
-		arguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+	mods {
+		"${mod_id}" {
+			sourceSet(sourceSets.main)
+			sourceSet(sourceSets.datagen)
+		}
 	}
 }
 
-// Include resources generated by data generators
+// Include resources generated by data generators.
 sourceSets.main.resources {
 	srcDir 'src/generated/resources'
-	// Exclude the cache directory
-	exclude '.cache'
+	exclude ".cache"
+}
+
+configurations {
+	runtimeClasspath.extendsFrom localRuntime
 }
 
 dependencies {
-	implementation 'org.jetbrains:annotations:24.1.0'
-
-	implementation "net.neoforged:neoforge:${neoforge_version}"
+	implementation 'org.jetbrains:annotations:26.0.2'
 
 	implementation(jarJar("com.github.glitchfiend:TerraBlender-neoforge:[${terrablender_version}]")) {
 		version {
@@ -154,23 +152,25 @@ dependencies {
 	// Include Immersive Weapons Compatibility Bridge (IWCB)
 	implementation "tech.anonymoushacker1279.iwcompatbridge:IWCompatBridge:${iwcb_version}"
 
-	// Include JEI
-	runtimeOnly "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
 	// Include WTHIT and badpackets
 	runtimeOnly "mcp.mobius.waila:wthit:neo-${wthit_version}"
 	runtimeOnly "lol.bai:badpackets:neo-${badpackets_version}"
 }
 
-tasks.named('processResources', ProcessResources).configure {
-	LinkedHashMap<String, String> replaceProperties = [
-			minecraft_version   : minecraft_version, minecraft_version_range: minecraft_version_range,
-			neoforge_version    : neoforge_version, neoforge_version_range: neoforge_version_range,
-			loader_version_range: loader_version_range, mod_version: mod_version
+tasks.named("processResources", ProcessResources).configure {
+	var replaceProperties = [
+			minecraft_version      : minecraft_version,
+			minecraft_version_range: minecraft_version_range,
+			neo_version            : neo_version,
+			neo_version_range      : neo_version_range,
+			loader_version_range   : loader_version_range,
+			mod_id                 : mod_id,
+			mod_version            : mod_version
 	]
-	inputs.properties replaceProperties
 
+	inputs.properties replaceProperties
 	filesMatching(['META-INF/neoforge.mods.toml']) {
-		expand replaceProperties + [project: project]
+		expand(replaceProperties)
 	}
 
 	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
@@ -186,41 +186,15 @@ tasks.named('sourcesJar', Jar).configure {
 	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
-tasks.named('jar', Jar).configure {
-	archiveClassifier = "slim"
-	manifest {
-		attributes([
-				'Specification-Title'     : mod_id,
-				'Specification-Vendor'    : "AnonymousHacker1279",
-				'Specification-Version'   : '1',
-				'Implementation-Title'    : project.name,
-				'Implementation-Version'  : project.jar.archiveVersion,
-				'Implementation-Vendor'   : "AnonymousHacker1279",
-				'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-				"MixinConfigs"            : "mixins.immersiveweapons.json"
-		])
-	}
-}
-
-tasks.jarJar.configure {
-	archiveClassifier = ""
-}
-
-tasks.named('build').configure {
-	dependsOn('jarJar')
-}
-
 artifacts {
 	archives javadocJar
 	archives sourcesJar
-	archives tasks.jarJar
 }
 
 publishing {
 	publications {
 		register('mavenJava', MavenPublication) {
 			artifact jar
-			artifact tasks.jarJar
 			artifact sourcesJar
 			artifact javadocJar
 		}
@@ -271,30 +245,21 @@ if (file("RELEASE_NOTES.md").exists()) {
 		addAdditionalFile(javadocJar, sourcesJar)
 
 		curseDepends {
-			optional "immersive-weapons-compatibility-bridge", "attributefix"
-			embedded 'biomesquisher', 'custom-portal-api-reforged'
+			optional "immersive-weapons-compatibility-bridge"
+			embedded 'terrablender-neoforge', 'custom-portal-api-reforged'
 		}
 
 		modrinthDepends {
-			optional "immersive-weapons-compatibility-bridge", "attributefix"
-			embedded 'biomesquisher', 'custom-portal-api-reforged'
+			optional "immersive-weapons-compatibility-bridge"
+			embedded 'terrablender', 'custom-portal-api-reforged'
 		}
 	}
 } else {
 	println("No RELEASE_NOTES.md found, publishing outside of Maven is disabled.")
 }
 
-tasks.named('javadoc', Javadoc).configure {
-	options {
-		tags = [
-				'reason:a:Mixin Reason'
-		]
-	}
-}
-
 tasks.withType(JavaCompile).configureEach {
 	options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
-	options.fork = true // Use a separate JVM process for Java compilation
 }
 
 idea {

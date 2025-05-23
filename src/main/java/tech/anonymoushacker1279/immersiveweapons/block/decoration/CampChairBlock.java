@@ -26,11 +26,6 @@ public class CampChairBlock extends BasicOrientableBlock implements SimpleWaterl
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	protected static final VoxelShape SHAPE = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 6.0D, 15.0D);
 
-	/**
-	 * Constructor for CampChairBlock.
-	 *
-	 * @param properties the <code>Properties</code> of the block
-	 */
 	public CampChairBlock(Properties properties) {
 		super(properties);
 		registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, Boolean.FALSE));
@@ -48,7 +43,7 @@ public class CampChairBlock extends BasicOrientableBlock implements SimpleWaterl
 
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite()).setValue(WATERLOGGED, Boolean.FALSE);
+		return defaultBlockState().setValue(FACING, context.getHorizontalDirection()).setValue(WATERLOGGED, Boolean.FALSE);
 	}
 
 	@Override

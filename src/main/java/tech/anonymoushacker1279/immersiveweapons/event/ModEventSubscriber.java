@@ -93,7 +93,6 @@ public class ModEventSubscriber {
 		registrar.playToClient(BulletEntityDebugPayload.TYPE, BulletEntityDebugPayload.STREAM_CODEC, BulletEntityDebugPayloadHandler.getInstance()::handleData);
 		registrar.playToClient(SyncPlayerDataPayload.TYPE, SyncPlayerDataPayload.STREAM_CODEC, SyncPlayerDataPayloadHandler.getInstance()::handleData);
 		registrar.playToClient(DebugDataPayload.TYPE, DebugDataPayload.STREAM_CODEC, DebugDataPayloadHandler.getInstance()::handleData);
-		registrar.playToClient(GunScopePayload.TYPE, GunScopePayload.STREAM_CODEC, GunScopePayloadHandler.getInstance()::handleData);
 		registrar.playToServer(AmmunitionTablePayload.TYPE, AmmunitionTablePayload.STREAM_CODEC, AmmunitionTablePayloadHandler.getInstance()::handleData);
 		registrar.playBidirectional(StarForgeMenuPayload.TYPE, StarForgeMenuPayload.STREAM_CODEC, StarForgeMenuPayloadHandler.getInstance()::handleData);
 		registrar.playToClient(StarForgeUpdateRecipesPayload.TYPE, StarForgeUpdateRecipesPayload.STREAM_CODEC, StarForgeUpdateRecipesPayloadHandler.getInstance()::handleData);

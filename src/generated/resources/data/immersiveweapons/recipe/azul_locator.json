@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "azul_keystone",
   "key": {
-    "a": {
-      "tag": "c:ingots/gold"
-    },
-    "b": {
-      "item": "immersiveweapons:azul_keystone_fragment"
-    }
+    "a": "#c:ingots/gold",
+    "b": "immersiveweapons:azul_keystone_fragment"
   },
   "pattern": [
     "aba",

@@ -4,15 +4,13 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.effect.*;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
-import net.neoforged.neoforge.common.EffectCure;
-import net.neoforged.neoforge.common.EffectCures;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.ArmorUtils;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
-
-import java.util.Set;
 
 public class HellfireEffect extends MobEffect {
 
@@ -23,41 +21,39 @@ public class HellfireEffect extends MobEffect {
 	}
 
 	@Override
-	public boolean applyEffectTick(LivingEntity livingEntity, int amplifier) {
-		if (livingEntity.isInWater() || livingEntity.hasEffect(MobEffects.FIRE_RESISTANCE) || ArmorUtils.isWearingMoltenArmor(livingEntity)) {
-			livingEntity.removeEffect(EffectRegistry.HELLFIRE_EFFECT);
+	public boolean applyEffectTick(ServerLevel serverLevel, LivingEntity entity, int amplifier) {
+		if (entity.isInWater() || entity.hasEffect(MobEffects.FIRE_RESISTANCE) || ArmorUtils.isWearingMoltenArmor(entity)) {
+			entity.removeEffect(EffectRegistry.HELLFIRE_EFFECT);
 
 			return false;
 		}
 
-		if (livingEntity.level() instanceof ServerLevel serverLevel) {
-			RandomSource random = livingEntity.getRandom();
-			if (cooldownTicks <= 0) {
-				cooldownTicks = (80 - (amplifier * 10)) - (random.nextInt(10) * amplifier);
+		RandomSource random = entity.getRandom();
+		if (cooldownTicks <= 0) {
+			cooldownTicks = (80 - (amplifier * 10)) - (random.nextInt(10) * amplifier);
 
-				float amount = (1.0f + (amplifier * 0.2f)) + (random.nextFloat() * (amplifier * 0.1f));
+			float amount = (1.0f + (amplifier * 0.2f)) + (random.nextFloat() * (amplifier * 0.1f));
 
-				if (livingEntity.invulnerableTime > cooldownTicks) {
-					livingEntity.invulnerableTime = cooldownTicks;
-				}
-
-				livingEntity.hurt(IWDamageSources.hellfire(serverLevel.registryAccess()), amount);
-				livingEntity.igniteForSeconds(Mth.ceil((float) cooldownTicks / 20));
-			} else {
-				cooldownTicks--;
+			if (entity.invulnerableTime > cooldownTicks) {
+				entity.invulnerableTime = cooldownTicks;
 			}
 
-			serverLevel.sendParticles(
-					ParticleTypes.FLAME,
-					livingEntity.position().x,
-					livingEntity.position().y + (random.nextFloat() * livingEntity.getEyeHeight()),
-					livingEntity.position().z,
-					3,
-					livingEntity.getBbWidth() * 0.5f,
-					livingEntity.getBbHeight() * 0.5f,
-					livingEntity.getBbWidth() * 0.5f,
-					0.1d);
+			entity.hurt(IWDamageSources.hellfire(serverLevel.registryAccess()), amount);
+			entity.igniteForSeconds(Mth.ceil((float) cooldownTicks / 20));
+		} else {
+			cooldownTicks--;
 		}
+
+		serverLevel.sendParticles(
+				ParticleTypes.FLAME,
+				entity.position().x,
+				entity.position().y + (random.nextFloat() * entity.getEyeHeight()),
+				entity.position().z,
+				3,
+				entity.getBbWidth() * 0.5f,
+				entity.getBbHeight() * 0.5f,
+				entity.getBbWidth() * 0.5f,
+				0.1d);
 
 		return true;
 	}
@@ -70,10 +66,5 @@ public class HellfireEffect extends MobEffect {
 	@Override
 	public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
 		return true;
-	}
-
-	@Override
-	public void fillEffectCures(Set<EffectCure> cures, MobEffectInstance effectInstance) {
-		cures.add(EffectCures.PROTECTED_BY_TOTEM);
 	}
 }

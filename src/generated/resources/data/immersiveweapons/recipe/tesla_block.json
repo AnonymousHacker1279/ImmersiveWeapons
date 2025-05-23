@@ -3,9 +3,7 @@
   "category": "building",
   "group": "tesla",
   "key": {
-    "a": {
-      "tag": "immersiveweapons:ingots/tesla"
-    }
+    "a": "#immersiveweapons:ingots/tesla"
   },
   "pattern": [
     "aaa",

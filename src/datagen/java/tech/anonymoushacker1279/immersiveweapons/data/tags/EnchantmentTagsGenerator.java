@@ -4,8 +4,6 @@ import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.EnchantmentTagsProvider;
 import net.minecraft.tags.EnchantmentTags;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.IWEnchantments;
 
@@ -13,8 +11,8 @@ import java.util.concurrent.CompletableFuture;
 
 public class EnchantmentTagsGenerator extends EnchantmentTagsProvider {
 
-	public EnchantmentTagsGenerator(PackOutput output, CompletableFuture<Provider> provider, @Nullable ExistingFileHelper existingFileHelper) {
-		super(output, provider, ImmersiveWeapons.MOD_ID, existingFileHelper);
+	public EnchantmentTagsGenerator(PackOutput output, CompletableFuture<Provider> provider) {
+		super(output, provider, ImmersiveWeapons.MOD_ID);
 	}
 
 	@Override

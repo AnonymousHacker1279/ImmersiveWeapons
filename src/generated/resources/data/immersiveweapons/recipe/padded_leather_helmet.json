@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "padded_leather_armor",
   "key": {
-    "a": {
-      "item": "minecraft:leather_helmet"
-    },
-    "b": {
-      "tag": "minecraft:wool"
-    }
+    "a": "minecraft:leather_helmet",
+    "b": "#minecraft:wool"
   },
   "pattern": [
     "bbb",

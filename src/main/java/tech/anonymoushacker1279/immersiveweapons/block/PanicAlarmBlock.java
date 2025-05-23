@@ -2,20 +2,32 @@ package tech.anonymoushacker1279.immersiveweapons.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.*;
-import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.entity.*;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import tech.anonymoushacker1279.immersiveweapons.block.core.BasicOrientableBlock;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.PanicAlarmBlockEntity;
+
+import javax.annotation.Nullable;
 
 public class PanicAlarmBlock extends BasicOrientableBlock implements SimpleWaterloggedBlock, EntityBlock {
 
@@ -77,9 +89,7 @@ public class PanicAlarmBlock extends BasicOrientableBlock implements SimpleWater
 	}
 
 	@Override
-	public void neighborChanged(BlockState state, Level level, BlockPos pos, Block blockIn,
-	                            BlockPos fromPos, boolean isMoving) {
-
+	protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, @Nullable Orientation orientation, boolean movedByPiston) {
 		if (!level.isClientSide) {
 			checkPowered(level, pos);
 		}
@@ -104,8 +114,8 @@ public class PanicAlarmBlock extends BasicOrientableBlock implements SimpleWater
 	}
 
 	@Override
-	public BlockState updateShape(BlockState pState, Direction pDirection, BlockState pNeighborState, LevelAccessor pLevel, BlockPos pPos, BlockPos pNeighborPos) {
-		return !pState.canSurvive(pLevel, pPos) ? Blocks.AIR.defaultBlockState() : pState;
+	protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess scheduledTickAccess, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
+		return !state.canSurvive(level, pos) ? Blocks.AIR.defaultBlockState() : super.updateShape(state, level, scheduledTickAccess, pos, direction, neighborPos, neighborState, random);
 	}
 
 	/**

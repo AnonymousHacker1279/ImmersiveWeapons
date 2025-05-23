@@ -3,9 +3,7 @@
   "category": "building",
   "group": "wood",
   "key": {
-    "a": {
-      "item": "immersiveweapons:stardust_log"
-    }
+    "a": "immersiveweapons:stardust_log"
   },
   "pattern": [
     "aa",

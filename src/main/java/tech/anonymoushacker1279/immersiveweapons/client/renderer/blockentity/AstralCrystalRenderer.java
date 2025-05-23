@@ -9,17 +9,14 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.AstralCrystalBlockEntity;
 
 public class AstralCrystalRenderer implements BlockEntityRenderer<AstralCrystalBlockEntity> {
 
-	public AstralCrystalRenderer() {
-	}
-
 	@Override
-	public void render(AstralCrystalBlockEntity entity, float partialTick, PoseStack poseStack,
-	                   MultiBufferSource buffer, int packedLight, int packedOverlay) {
-		NonNullList<ItemStack> inventory = entity.getInventory();
+	public void render(AstralCrystalBlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay, Vec3 cameraPos) {
+		NonNullList<ItemStack> inventory = blockEntity.getInventory();
 
 		for (ItemStack stack : inventory) {
 			if (stack != ItemStack.EMPTY) {
@@ -57,7 +54,7 @@ public class AstralCrystalRenderer implements BlockEntityRenderer<AstralCrystalB
 				if (level != null) {
 					poseStack.mulPose(Axis.ZP.rotationDegrees((Minecraft.getInstance().level.getGameTime() + partialTick) * 2f));
 
-					Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemDisplayContext.FIXED, packedLight, packedOverlay, poseStack, buffer, level, 0);
+					Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemDisplayContext.FIXED, packedLight, packedOverlay, poseStack, bufferSource, level, 0);
 				}
 
 				poseStack.popPose();

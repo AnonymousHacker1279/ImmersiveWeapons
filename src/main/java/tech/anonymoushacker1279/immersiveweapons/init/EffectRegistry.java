@@ -17,7 +17,6 @@ public class EffectRegistry {
 	// Effects
 	public static final DeferredHolder<MobEffect, MorphineEffect> MORPHINE_EFFECT = EFFECTS.register("morphine", () -> new MorphineEffect(MobEffectCategory.NEUTRAL, 3484189));
 	public static final DeferredHolder<MobEffect, BleedingEffect> BLEEDING_EFFECT = EFFECTS.register("bleeding", () -> new BleedingEffect(MobEffectCategory.HARMFUL, 8392463));
-	public static final DeferredHolder<MobEffect, AlcoholEffect> ALCOHOL_EFFECT = EFFECTS.register("alcohol", () -> new AlcoholEffect(MobEffectCategory.NEUTRAL, 14465637));
 	public static final DeferredHolder<MobEffect, BasicMobEffect> CELESTIAL_PROTECTION_EFFECT = EFFECTS.register("celestial_protection", () -> new BasicMobEffect(MobEffectCategory.BENEFICIAL, 10011890));
 	public static final DeferredHolder<MobEffect, BasicMobEffect> DAMAGE_VULNERABILITY_EFFECT = EFFECTS.register("damage_vulnerability", () -> new BasicMobEffect(MobEffectCategory.HARMFUL, 9056876));
 	@LanguageEntryOverride("Flashbanged")

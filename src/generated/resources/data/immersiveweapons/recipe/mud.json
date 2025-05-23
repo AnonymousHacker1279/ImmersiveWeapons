@@ -3,33 +3,15 @@
   "category": "building",
   "group": "mud",
   "ingredients": [
-    {
-      "item": "minecraft:water_bucket"
-    },
-    {
-      "item": "minecraft:dirt"
-    },
-    {
-      "item": "minecraft:dirt"
-    },
-    {
-      "item": "minecraft:dirt"
-    },
-    {
-      "item": "minecraft:dirt"
-    },
-    {
-      "item": "minecraft:dirt"
-    },
-    {
-      "item": "minecraft:dirt"
-    },
-    {
-      "item": "minecraft:dirt"
-    },
-    {
-      "item": "minecraft:dirt"
-    }
+    "minecraft:water_bucket",
+    "minecraft:dirt",
+    "minecraft:dirt",
+    "minecraft:dirt",
+    "minecraft:dirt",
+    "minecraft:dirt",
+    "minecraft:dirt",
+    "minecraft:dirt",
+    "minecraft:dirt"
   ],
   "result": {
     "count": 8,

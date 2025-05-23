@@ -1,24 +1,27 @@
 {
-  "carvers": {
-    "air": [
-      "immersiveweapons:tiltros_wastes",
-      "minecraft:cave",
-      "minecraft:cave_extra_underground",
-      "minecraft:canyon"
-    ]
-  },
-  "creature_spawn_probability": 0.65,
+  "carvers": [
+    "immersiveweapons:tiltros_wastes",
+    "minecraft:cave",
+    "minecraft:cave_extra_underground",
+    "minecraft:canyon"
+  ],
   "downfall": 0.0,
   "effects": {
     "fog_color": 2830199,
     "foliage_color": 14665365,
     "grass_color": 16113331,
-    "music": {
-      "max_delay": 24000,
-      "min_delay": 6000,
-      "replace_current_music": true,
-      "sound": "immersiveweapons:tiltros_wastes_music"
-    },
+    "music": [
+      {
+        "data": {
+          "max_delay": 24000,
+          "min_delay": 6000,
+          "replace_current_music": true,
+          "sound": "immersiveweapons:tiltros_wastes_music"
+        },
+        "weight": 1
+      }
+    ],
+    "music_volume": 1.0,
     "sky_color": 461620,
     "water_color": 7031172,
     "water_fog_color": 4732021
@@ -81,7 +84,12 @@
     ]
   ],
   "has_precipitation": false,
-  "spawn_costs": {},
+  "spawn_costs": {
+    "immersiveweapons:lava_revenant": {
+      "charge": 1.0,
+      "energy_budget": 2.0
+    }
+  },
   "spawners": {
     "ambient": [],
     "axolotls": [],
@@ -92,13 +100,13 @@
         "type": "immersiveweapons:rock_spider",
         "maxCount": 4,
         "minCount": 2,
-        "weight": 65
+        "weight": 85
       },
       {
         "type": "immersiveweapons:lava_revenant",
         "maxCount": 1,
         "minCount": 1,
-        "weight": 35
+        "weight": 15
       }
     ],
     "underground_water_creature": [],

@@ -3,33 +3,15 @@
   "category": "misc",
   "group": "gunpowder",
   "ingredients": [
-    {
-      "tag": "minecraft:coals"
-    },
-    {
-      "tag": "minecraft:coals"
-    },
-    {
-      "tag": "c:dusts/sulfur"
-    },
-    {
-      "tag": "c:dusts/sulfur"
-    },
-    {
-      "item": "immersiveweapons:potassium_nitrate"
-    },
-    {
-      "item": "immersiveweapons:potassium_nitrate"
-    },
-    {
-      "item": "immersiveweapons:potassium_nitrate"
-    },
-    {
-      "item": "immersiveweapons:potassium_nitrate"
-    },
-    {
-      "item": "immersiveweapons:mortar_and_pestle"
-    }
+    "#minecraft:coals",
+    "#minecraft:coals",
+    "#c:dusts/sulfur",
+    "#c:dusts/sulfur",
+    "immersiveweapons:potassium_nitrate",
+    "immersiveweapons:potassium_nitrate",
+    "immersiveweapons:potassium_nitrate",
+    "immersiveweapons:potassium_nitrate",
+    "immersiveweapons:mortar_and_pestle"
   ],
   "result": {
     "count": 4,

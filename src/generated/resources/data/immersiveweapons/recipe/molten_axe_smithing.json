@@ -1,16 +1,9 @@
 {
   "type": "minecraft:smithing_transform",
-  "addition": {
-    "tag": "immersiveweapons:ingots/molten"
-  },
-  "base": {
-    "item": "minecraft:netherite_axe"
-  },
+  "addition": "#immersiveweapons:ingots/molten",
+  "base": "minecraft:netherite_axe",
   "result": {
-    "count": 1,
     "id": "immersiveweapons:molten_axe"
   },
-  "template": {
-    "item": "immersiveweapons:molten_smithing_template"
-  }
+  "template": "immersiveweapons:molten_smithing_template"
 }

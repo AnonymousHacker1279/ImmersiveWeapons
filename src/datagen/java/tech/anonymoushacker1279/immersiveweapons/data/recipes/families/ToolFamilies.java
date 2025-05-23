@@ -8,8 +8,8 @@ import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.common.CommonItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
-import tech.anonymoushacker1279.immersiveweapons.item.gauntlet.GauntletItem;
-import tech.anonymoushacker1279.immersiveweapons.item.pike.PikeItem;
+import tech.anonymoushacker1279.immersiveweapons.item.tool.GauntletItem;
+import tech.anonymoushacker1279.immersiveweapons.item.tool.PikeItem;
 
 import java.util.Collection;
 import java.util.function.Supplier;
@@ -17,8 +17,8 @@ import java.util.function.Supplier;
 public record ToolFamilies(TagKey<Item> material,
                            TagKey<Item> nugget,
                            TagKey<Item> handle,
-                           Supplier<? extends SwordItem> sword,
-                           Supplier<? extends PickaxeItem> pickaxe,
+                           Supplier<? extends Item> sword,
+                           Supplier<? extends Item> pickaxe,
                            Supplier<? extends AxeItem> axe,
                            Supplier<? extends ShovelItem> shovel,
                            Supplier<? extends HoeItem> hoe,

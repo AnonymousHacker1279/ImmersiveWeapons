@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "a": {
-      "tag": "c:nuggets/cobalt"
-    },
-    "b": {
-      "tag": "c:ingots/cobalt"
-    }
+    "a": "#c:nuggets/cobalt",
+    "b": "#c:ingots/cobalt"
   },
   "pattern": [
     "a",

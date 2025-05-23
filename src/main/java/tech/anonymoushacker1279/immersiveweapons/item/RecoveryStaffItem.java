@@ -4,13 +4,11 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -20,7 +18,6 @@ import net.neoforged.fml.common.EventBusSubscriber.Bus;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
-import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.GAME)
 public class RecoveryStaffItem extends Item implements SummoningStaff {
@@ -32,11 +29,10 @@ public class RecoveryStaffItem extends Item implements SummoningStaff {
 	}
 
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level level, Player player,
-	                                              InteractionHand hand) {
+	public InteractionResult use(Level level, Player player, InteractionHand hand) {
 
 		if (hand != InteractionHand.MAIN_HAND) {
-			return InteractionResultHolder.pass(player.getItemInHand(hand));
+			return InteractionResult.PASS;
 		}
 
 		Vec3 eyePos = player.getEyePosition();
@@ -75,9 +71,9 @@ public class RecoveryStaffItem extends Item implements SummoningStaff {
 
 		player.playSound(SoundEvents.AMETHYST_BLOCK_CHIME, 3.0F, 1.0F);
 
-		handleCooldown(this, player, hand);
+		handleCooldown(player, hand);
 
-		return InteractionResultHolder.sidedSuccess(player.getItemInHand(hand), level.isClientSide());
+		return InteractionResult.SUCCESS;
 	}
 
 	@Override
@@ -88,16 +84,6 @@ public class RecoveryStaffItem extends Item implements SummoningStaff {
 	@Override
 	public int getMaxRange() {
 		return IWConfigs.SERVER.recoveryStaffMaxUseRange.getAsInt();
-	}
-
-	@Override
-	public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
-		return Ingredient.of(ItemRegistry.HANSIUM_INGOT.get()).test(repair) || super.isValidRepairItem(toRepair, repair);
-	}
-
-	@Override
-	public int getEnchantmentValue(ItemStack stack) {
-		return 1;
 	}
 
 	public void setHealAmount(float healAmount) {
@@ -111,12 +97,11 @@ public class RecoveryStaffItem extends Item implements SummoningStaff {
 	@SubscribeEvent
 	public static void livingHurtEvent(LivingDamageEvent.Post event) {
 		if (event.getEntity() instanceof Player player) {
-			player.getInventory().items.stream()
-					.filter(stack -> stack.getItem() instanceof RecoveryStaffItem)
-					.findFirst().ifPresent(stack -> {
-						RecoveryStaffItem staff = (RecoveryStaffItem) stack.getItem();
-						staff.setHealAmount((event.getNewDamage() / 2) + 4);
-					});
+			for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+				if (player.getInventory().getItem(i).getItem() instanceof RecoveryStaffItem staff) {
+					staff.setHealAmount(event.getNewDamage() / 2 + 4);
+				}
+			}
 		}
 	}
 }

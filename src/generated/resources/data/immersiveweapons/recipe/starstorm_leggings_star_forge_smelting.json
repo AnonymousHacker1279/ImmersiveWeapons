@@ -1,14 +1,11 @@
 {
   "type": "immersiveweapons:star_forge",
   "group": "star_forge",
-  "ingot": {
-    "tag": "immersiveweapons:ingots/starstorm"
-  },
-  "ingot_count": 7,
+  "primary_material": "#immersiveweapons:ingots/starstorm",
+  "primary_material_count": 7,
   "result": {
     "id": "immersiveweapons:starstorm_leggings"
   },
-  "secondary_material": [],
   "secondary_material_count": 0,
   "smelt_time": 600
 }

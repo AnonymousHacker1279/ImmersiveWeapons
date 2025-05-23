@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "bloody_cloth",
   "key": {
-    "a": {
-      "item": "immersiveweapons:cloth_scrap"
-    },
-    "b": {
-      "item": "minecraft:redstone"
-    }
+    "a": "immersiveweapons:cloth_scrap",
+    "b": "minecraft:redstone"
   },
   "pattern": [
     "aaa",

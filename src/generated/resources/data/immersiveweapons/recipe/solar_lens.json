@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "star_forge",
   "key": {
-    "a": {
-      "tag": "c:ingots/cobalt"
-    },
-    "b": {
-      "tag": "c:glass_panes"
-    }
+    "a": "#c:ingots/cobalt",
+    "b": "#c:glass_panes"
   },
   "pattern": [
     " a ",

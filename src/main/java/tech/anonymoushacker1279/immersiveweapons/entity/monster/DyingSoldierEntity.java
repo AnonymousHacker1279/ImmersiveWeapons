@@ -6,17 +6,20 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.MoveThroughVillageGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.IronGolem;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.HurtByTargetWithPredicateGoal;
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.RangedGunAttackGoal;
-import tech.anonymoushacker1279.immersiveweapons.entity.neutral.*;
+import tech.anonymoushacker1279.immersiveweapons.entity.neutral.FieldMedicEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.neutral.MinutemanEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.neutral.RangedSoldierEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
@@ -34,7 +37,7 @@ public class DyingSoldierEntity extends RangedSoldierEntity {
 	}
 
 	public static AttributeSupplier.Builder registerAttributes() {
-		return Monster.createMonsterAttributes()
+		return createSoldierAttributes()
 				.add(Attributes.MOVEMENT_SPEED, 0.27D)
 				.add(Attributes.ARMOR, 5.0D);
 	}
@@ -49,7 +52,7 @@ public class DyingSoldierEntity extends RangedSoldierEntity {
 				6, () -> true));
 
 		targetSelector.addGoal(1, new HurtByTargetWithPredicateGoal(this, this::canTargetEntityWhenHurt, DyingSoldierEntity.class).setAlertOthers(DyingSoldierEntity.class));
-		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true, this::canTargetPlayer));
+		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true, (livingEntity, level) -> canTargetPlayer(livingEntity)));
 		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, IronGolem.class, true));
 		targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, MinutemanEntity.class, true));
 		targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, FieldMedicEntity.class, true));

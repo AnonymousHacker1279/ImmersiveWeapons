@@ -3,12 +3,8 @@
   "category": "building",
   "group": "tables",
   "key": {
-    "a": {
-      "item": "minecraft:acacia_slab"
-    },
-    "b": {
-      "item": "minecraft:acacia_fence"
-    }
+    "a": "minecraft:acacia_slab",
+    "b": "minecraft:acacia_fence"
   },
   "pattern": [
     "a",

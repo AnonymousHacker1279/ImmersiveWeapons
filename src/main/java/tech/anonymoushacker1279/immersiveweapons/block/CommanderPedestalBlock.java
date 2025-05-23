@@ -1,7 +1,8 @@
 package tech.anonymoushacker1279.immersiveweapons.block;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.*;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -11,7 +12,10 @@ import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.shapes.*;
+import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.CommanderPedestalBlockEntity;
 
 import javax.annotation.Nullable;
@@ -46,9 +50,9 @@ public class CommanderPedestalBlock extends Block implements EntityBlock {
 	}
 
 	@Override
-	protected ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
+	protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
 		if (hand != InteractionHand.MAIN_HAND) {
-			return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+			return InteractionResult.PASS;
 		}
 
 		if (level.getBlockEntity(pos) instanceof CommanderPedestalBlockEntity blockEntity) {
@@ -56,24 +60,14 @@ public class CommanderPedestalBlock extends Block implements EntityBlock {
 
 			if (itemInHand.isEmpty()) {
 				blockEntity.removeItem();
-				return ItemInteractionResult.SUCCESS;
+				return InteractionResult.SUCCESS;
 			} else {
 				if (blockEntity.addItem(player.isCreative() ? itemInHand.copy() : itemInHand)) {
-					return ItemInteractionResult.CONSUME;
+					return InteractionResult.CONSUME;
 				}
 			}
 		}
 
-		return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-	}
-
-	@Override
-	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-		if (!state.is(newState.getBlock())) {
-			if (level.getBlockEntity(pos) instanceof CommanderPedestalBlockEntity blockEntity) {
-				Containers.dropContents(level, pos, blockEntity.getInventory());
-			}
-			super.onRemove(state, level, pos, newState, isMoving);
-		}
+		return InteractionResult.PASS;
 	}
 }

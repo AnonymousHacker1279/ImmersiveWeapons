@@ -3,15 +3,9 @@
   "category": "equipment",
   "group": "meteor_staff",
   "key": {
-    "a": {
-      "item": "immersiveweapons:celestial_fragment"
-    },
-    "b": {
-      "item": "immersiveweapons:obsidian_rod"
-    },
-    "c": {
-      "item": "minecraft:obsidian"
-    }
+    "a": "immersiveweapons:celestial_fragment",
+    "b": "immersiveweapons:obsidian_rod",
+    "c": "minecraft:obsidian"
   },
   "pattern": [
     "aca",

@@ -2,10 +2,10 @@ package tech.anonymoushacker1279.immersiveweapons.client.renderer.blockentity;
 
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import tech.anonymoushacker1279.immersiveweapons.entity.misc.ChairEntity;
 
-public class ChairRenderer extends EntityRenderer<ChairEntity> implements EntityRendererProvider<ChairEntity> {
+public class ChairRenderer extends EntityRenderer<ChairEntity, EntityRenderState> implements EntityRendererProvider<ChairEntity> {
 
 	/**
 	 * Constructor for ChairRenderer.
@@ -16,19 +16,13 @@ public class ChairRenderer extends EntityRenderer<ChairEntity> implements Entity
 		super(context);
 	}
 
-	/**
-	 * Get the texture location.
-	 *
-	 * @param entity the <code>ChairEntity</code> instance
-	 * @return ResourceLocation
-	 */
 	@Override
-	public ResourceLocation getTextureLocation(ChairEntity entity) {
-		return null;
+	public EntityRenderState createRenderState() {
+		return new EntityRenderState();
 	}
 
 	@Override
-	public EntityRenderer<ChairEntity> create(Context context) {
+	public EntityRenderer<ChairEntity, EntityRenderState> create(Context context) {
 		return null;
 	}
 }

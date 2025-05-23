@@ -1,47 +1,67 @@
 package tech.anonymoushacker1279.immersiveweapons.blockentity;
 
-import com.google.common.collect.Maps;
-import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
-import net.minecraft.core.*;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.WorldlyContainer;
-import net.minecraft.world.entity.player.*;
-import net.minecraft.world.inventory.*;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.StackedContentsCompatible;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockEntityRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.RecipeTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.TeslaSynthesizerRecipe;
-import tech.anonymoushacker1279.immersiveweapons.item.crafting.TeslaSynthesizerRecipeInput;
+import tech.anonymoushacker1279.immersiveweapons.item.crafting.input.TeslaSynthesizerRecipeInput;
 import tech.anonymoushacker1279.immersiveweapons.menu.TeslaSynthesizerMenu;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, StackedContentsCompatible, EntityBlock {
+public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, StackedContentsCompatible {
 
-	private static final int[] SLOTS_UP = new int[]{0};
-	private static final int[] SLOTS_DOWN = new int[]{2, 1};
-	private static final int[] SLOTS_HORIZONTAL = new int[]{1};
-	private static final Map<Item, Integer> BURN_TIMES_MAP = Maps.newLinkedHashMap();
-	private final Object2IntOpenHashMap<ResourceLocation> recipes = new Object2IntOpenHashMap<>();
-	protected NonNullList<ItemStack> items = NonNullList.withSize(5, ItemStack.EMPTY);
+	// Slot indices
+	private static final int SLOT_INPUT_1 = 0;
+	private static final int SLOT_INPUT_2 = 1;
+	private static final int SLOT_INPUT_3 = 2;
+	private static final int SLOT_FUEL = 3;
+	private static final int SLOT_RESULT = 4;
+	private static final int SLOT_COUNT = 5;
+
+	// Slot access for automation
+	private static final int[] SLOTS_UP = new int[]{SLOT_INPUT_1, SLOT_INPUT_2, SLOT_INPUT_3};
+	private static final int[] SLOTS_DOWN = new int[]{SLOT_RESULT};
+	private static final int[] SLOTS_HORIZONTAL = new int[]{SLOT_FUEL};
+
+	// Burn time for different fuel types
+	private static final Map<Item, Integer> FUEL_BURN_TIMES = new HashMap<>(5);
+
+	// Inventory and process tracking
+	private final NonNullList<ItemStack> items = NonNullList.withSize(SLOT_COUNT, ItemStack.EMPTY);
 	private int burnTime;
 	private int burnTimeTotal;
 	private int cookTime;
-	private int cookTimeTotal;
+	private int cookTimeTotal = 200; // Default cook time
+
+	// Recipe usage tracking
+	private final Map<ResourceLocation, Integer> usedRecipes = new HashMap<>(5);
+
+	// Container data for the GUI
 	public final ContainerData containerData = new ContainerData() {
 		@Override
 		public int get(int index) {
@@ -57,12 +77,11 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 		@Override
 		public void set(int index, int value) {
 			switch (index) {
+				case 0 -> burnTime = value;
 				case 1 -> burnTimeTotal = value;
 				case 2 -> cookTime = value;
 				case 3 -> cookTimeTotal = value;
-				default -> burnTime = value;
 			}
-
 		}
 
 		@Override
@@ -71,12 +90,230 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 		}
 	};
 
-	/**
-	 * Constructor for AbstractTeslaBlockEntity.
-	 */
+	static {
+		// Initialize burn times
+		FUEL_BURN_TIMES.put(ItemRegistry.MOLTEN_INGOT.get(), 24000); // 20 minutes
+	}
+
 	public TeslaSynthesizerBlockEntity(BlockPos blockPos, BlockState blockState) {
 		super(BlockEntityRegistry.TESLA_SYNTHESIZER_BLOCK_ENTITY.get(), blockPos, blockState);
-		setupBurnTimes();
+	}
+
+	/**
+	 * Checks if an item is valid fuel for the Tesla Synthesizer
+	 *
+	 * @param stack The ItemStack to check
+	 * @return true if the item is valid fuel
+	 */
+	public static boolean isFuel(ItemStack stack) {
+		return FUEL_BURN_TIMES.containsKey(stack.getItem());
+	}
+
+	/**
+	 * Gets the burn time for a fuel item
+	 *
+	 * @param fuel The fuel ItemStack
+	 * @return The burn time in ticks, or 0 if not a valid fuel
+	 */
+	private static int getBurnTime(ItemStack fuel) {
+		if (fuel.isEmpty()) {
+			return 0;
+		}
+		return FUEL_BURN_TIMES.getOrDefault(fuel.getItem(), 0);
+	}
+
+	/**
+	 * Processes recipes and manages fuel consumption each tick
+	 */
+	public void tick(ServerLevel level) {
+		boolean wasBurning = isBurning();
+		boolean inventoryChanged = false;
+
+		// Decrease burn time if burning
+		if (isBurning()) {
+			--burnTime;
+		}
+
+		ItemStack fuel = items.get(SLOT_FUEL);
+		ItemStack input1 = items.get(SLOT_INPUT_1);
+		ItemStack input2 = items.get(SLOT_INPUT_2);
+		ItemStack input3 = items.get(SLOT_INPUT_3);
+
+		// Only proceed if we have input materials
+		if (!input1.isEmpty() && !input2.isEmpty() && !input3.isEmpty()) {
+			// Get a matching recipe
+			Optional<RecipeHolder<TeslaSynthesizerRecipe>> recipeHolder = level.recipeAccess()
+					.getRecipeFor(RecipeTypeRegistry.TESLA_SYNTHESIZER_RECIPE_TYPE.get(),
+							new TeslaSynthesizerRecipeInput(input1, input2, input3), level);
+
+			TeslaSynthesizerRecipe recipe = recipeHolder.map(RecipeHolder::value).orElse(null);
+
+			// If we have a valid recipe
+			if (recipe != null) {
+				// Start burning fuel if needed
+				if (!isBurning() && canSmelt(recipe)) {
+					burnTime = getBurnTime(fuel);
+					burnTimeTotal = burnTime;
+
+					if (isBurning()) {
+						inventoryChanged = true;
+
+						if (!fuel.isEmpty()) {
+							Item fuelItem = fuel.getItem();
+							fuel.shrink(1);
+
+							if (fuel.isEmpty()) {
+								items.set(SLOT_FUEL, fuelItem.getCraftingRemainder());
+							}
+						}
+					}
+				}
+
+				// Progress cooking if burning
+				if (isBurning() && canSmelt(recipe)) {
+					// Update cook time if it changed in the recipe
+					if (cookTimeTotal != recipe.getCookTime()) {
+						cookTimeTotal = recipe.getCookTime();
+					}
+
+					// Increment cooking progress
+					cookTime++;
+
+					// Process the recipe when cooking is complete
+					if (cookTime >= cookTimeTotal) {
+						cookTime = 0;
+						smeltRecipe(recipe);
+						inventoryChanged = true;
+
+						// Track recipe usage
+						ResourceLocation recipeId = recipeHolder.get().id().location();
+						usedRecipes.put(recipeId, usedRecipes.getOrDefault(recipeId, 0) + 1);
+					}
+				} else {
+					// Reset cooking progress if we can't smelt
+					cookTime = 0;
+				}
+			} else {
+				// No matching recipe, reset cooking progress
+				cookTime = 0;
+			}
+		} else if (!isBurning() && cookTime > 0) {
+			// If not burning and we were cooking, decrease cookTime
+			cookTime = Mth.clamp(cookTime - 2, 0, cookTimeTotal);
+		}
+
+		// Update block state if burning state changed
+		if (wasBurning != isBurning()) {
+			inventoryChanged = true;
+		}
+
+		if (inventoryChanged) {
+			setChanged();
+		}
+	}
+
+	/**
+	 * Processes a recipe, consuming inputs and producing output
+	 *
+	 * @param recipe The recipe to process
+	 */
+	private void smeltRecipe(TeslaSynthesizerRecipe recipe) {
+		if (!canSmelt(recipe)) {
+			return;
+		}
+
+		ItemStack resultStack = recipe.result();
+		ItemStack outputSlot = items.get(SLOT_RESULT);
+
+		// Add to existing output stack or create new one
+		if (outputSlot.isEmpty()) {
+			items.set(SLOT_RESULT, resultStack.copy());
+		} else if (outputSlot.is(resultStack.getItem())) {
+			outputSlot.grow(resultStack.getCount());
+		}
+
+		// Consume input materials
+		items.get(SLOT_INPUT_1).shrink(1);
+		items.get(SLOT_INPUT_2).shrink(1);
+		items.get(SLOT_INPUT_3).shrink(1);
+	}
+
+	/**
+	 * Determines if a recipe can be processed with current inventory
+	 *
+	 * @param recipe The recipe to check
+	 * @return true if the recipe can be processed
+	 */
+	private boolean canSmelt(@Nullable TeslaSynthesizerRecipe recipe) {
+		if (recipe == null) {
+			return false;
+		}
+
+		// Check if we have all input ingredients
+		if (items.get(SLOT_INPUT_1).isEmpty() ||
+				items.get(SLOT_INPUT_2).isEmpty() ||
+				items.get(SLOT_INPUT_3).isEmpty()) {
+			return false;
+		}
+
+		// Get the recipe result
+		ItemStack resultStack = recipe.result();
+		if (resultStack.isEmpty()) {
+			return false;
+		}
+
+		// Check if the output slot can accept the result
+		ItemStack outputStack = items.get(SLOT_RESULT);
+		if (outputStack.isEmpty()) {
+			return true;
+		}
+
+		// Check if the output item matches and has space
+		if (!outputStack.is(resultStack.getItem())) {
+			return false;
+		}
+
+		int combinedCount = outputStack.getCount() + resultStack.getCount();
+		return (combinedCount <= getMaxStackSize() && combinedCount <= outputStack.getMaxStackSize());
+	}
+
+	/**
+	 * Checks if fuel is currently burning
+	 *
+	 * @return true if burning
+	 */
+	public boolean isBurning() {
+		return burnTime > 0;
+	}
+
+	@Override
+	public int[] getSlotsForFace(Direction side) {
+		return switch (side) {
+			case UP -> SLOTS_UP;
+			case DOWN -> SLOTS_DOWN;
+			default -> SLOTS_HORIZONTAL;
+		};
+	}
+
+	@Override
+	public boolean canPlaceItemThroughFace(int slot, ItemStack stack, @Nullable Direction direction) {
+		return canPlaceItem(slot, stack);
+	}
+
+	@Override
+	public boolean canTakeItemThroughFace(int slot, ItemStack stack, Direction direction) {
+		return slot == SLOT_RESULT;
+	}
+
+	@Override
+	public boolean canPlaceItem(int slot, ItemStack stack) {
+		if (slot == SLOT_RESULT) {
+			return false;
+		} else if (slot == SLOT_FUEL) {
+			return isFuel(stack);
+		} else {
+			return true; // Allow any item in the input slots
+		}
 	}
 
 	@Override
@@ -90,417 +327,130 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	}
 
 	@Override
-	protected void setItems(NonNullList<ItemStack> stacks) {
-		for (int i = 0; i < Math.min(stacks.size(), items.size()); i++) {
-			items.set(i, stacks.get(i));
+	protected void setItems(NonNullList<ItemStack> items) {
+		this.items.clear();
+		this.items.addAll(items);
+	}
+
+	@Override
+	public int getContainerSize() {
+		return items.size();
+	}
+
+	@Override
+	public boolean isEmpty() {
+		for (ItemStack stack : items) {
+			if (!stack.isEmpty()) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	@Override
+	public ItemStack getItem(int slot) {
+		return items.get(slot);
+	}
+
+	@Override
+	public ItemStack removeItem(int slot, int amount) {
+		return ContainerHelper.removeItem(items, slot, amount);
+	}
+
+	@Override
+	public ItemStack removeItemNoUpdate(int slot) {
+		return ContainerHelper.takeItem(items, slot);
+	}
+
+	@Override
+	public void setItem(int slot, ItemStack stack) {
+		ItemStack existingStack = items.get(slot);
+		boolean itemChanged = !stack.isEmpty() && !ItemStack.isSameItemSameComponents(stack, existingStack);
+
+		items.set(slot, stack);
+
+		if (stack.getCount() > getMaxStackSize()) {
+			stack.setCount(getMaxStackSize());
+		}
+
+		// Reset cooking progress when inputs change
+		if (itemChanged && (slot == SLOT_INPUT_1 || slot == SLOT_INPUT_2 || slot == SLOT_INPUT_3)) {
+			cookTime = 0;
+			setChanged();
+		}
+	}
+
+	@Override
+	public boolean stillValid(Player player) {
+		if (level == null || level.getBlockEntity(worldPosition) != this) {
+			return false;
+		}
+
+		return player.distanceToSqr(
+				worldPosition.getX() + 0.5,
+				worldPosition.getY() + 0.5,
+				worldPosition.getZ() + 0.5) <= 64.0;
+	}
+
+	@Override
+	public void clearContent() {
+		items.clear();
+	}
+
+	@Override
+	public void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+		super.loadAdditional(tag, provider);
+
+		// Load inventory
+		ContainerHelper.loadAllItems(tag, items, provider);
+
+		// Load process state
+		burnTime = tag.getInt("BurnTime").orElse(0);
+		cookTime = tag.getInt("CookTime").orElse(0);
+		cookTimeTotal = tag.getInt("CookTimeTotal").orElse(200);
+		burnTimeTotal = getBurnTime(items.get(SLOT_FUEL));
+
+		// Load recipe usage data
+		CompoundTag recipesTag = tag.getCompound("RecipesUsed").orElse(new CompoundTag());
+		for (String key : recipesTag.keySet()) {
+			usedRecipes.put(ResourceLocation.parse(key), recipesTag.getInt(key).orElse(0));
+		}
+	}
+
+	@Override
+	protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
+		super.saveAdditional(tag, provider);
+
+		// Save inventory
+		ContainerHelper.saveAllItems(tag, items, provider);
+
+		// Save process state
+		tag.putInt("BurnTime", burnTime);
+		tag.putInt("CookTime", cookTime);
+		tag.putInt("CookTimeTotal", cookTimeTotal);
+
+		// Save recipe usage data
+		CompoundTag recipesTag = new CompoundTag();
+		usedRecipes.forEach((recipeId, count) -> recipesTag.putInt(recipeId.toString(), count));
+		tag.put("RecipesUsed", recipesTag);
+	}
+
+	@Override
+	public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+		CompoundTag tag = super.getUpdateTag(registries);
+		saveAdditional(tag, registries);
+		return tag;
+	}
+
+	@Override
+	public void fillStackedContents(net.minecraft.world.entity.player.StackedItemContents contents) {
+		for (ItemStack itemstack : items) {
+			contents.accountStack(itemstack);
 		}
 	}
 
 	@Override
 	protected AbstractContainerMenu createMenu(int id, Inventory inventory) {
 		return new TeslaSynthesizerMenu(id, inventory, this, containerData);
-	}
-
-	/**
-	 * Add an item burn time to the map.
-	 *
-	 * @param itemProvider the <code>IItemProvider</code> instance
-	 * @param burnTimeIn   the burn time
-	 */
-	private static void addItemBurnTime(ItemLike itemProvider, int burnTimeIn) {
-		BURN_TIMES_MAP.put(itemProvider.asItem(), burnTimeIn);
-	}
-
-	/**
-	 * Get the burn time for a fuel item.
-	 *
-	 * @param fuel the <code>ItemStack</code> to check
-	 * @return int
-	 */
-	private static int getBurnTime(ItemStack fuel) {
-		if (!fuel.isEmpty()) {
-			Item item = fuel.getItem();
-			if (BURN_TIMES_MAP.containsKey(item)) {
-				return BURN_TIMES_MAP.get(item);
-			}
-		}
-		return 0;
-	}
-
-	/**
-	 * Check if an item is fuel.
-	 *
-	 * @param stack the <code>ItemStack</code> to check
-	 * @return boolean
-	 */
-	public static boolean isFuel(ItemStack stack) {
-		if (BURN_TIMES_MAP.containsKey(stack.getItem())) {
-			return getBurnTime(stack) > 0;
-		}
-		return false;
-	}
-
-	/**
-	 * Runs once per tick. Handle smelting procedures here.
-	 */
-	public void tick(Level level) {
-		boolean isBurning = isBurning();
-		boolean hasChanged = false;
-		if (isBurning()) {
-			--burnTime;
-		}
-
-		ItemStack material1 = items.get(0);
-		ItemStack material2 = items.get(1);
-		ItemStack material3 = items.get(2);
-		ItemStack fuel = items.get(3);
-		if (isBurning() || !material1.isEmpty() && !material2.isEmpty() && !material3.isEmpty() && !fuel.isEmpty()) {
-
-			Optional<RecipeHolder<TeslaSynthesizerRecipe>> recipeHolder = level.getRecipeManager()
-					.getRecipeFor(RecipeTypeRegistry.TESLA_SYNTHESIZER_RECIPE_TYPE.get(), new TeslaSynthesizerRecipeInput(material1, material2, material3), level);
-
-			TeslaSynthesizerRecipe synthesizerRecipe = recipeHolder.map(RecipeHolder::value).orElse(null);
-
-			if (!isBurning() && canSmelt(synthesizerRecipe)) {
-				burnTime = getBurnTime(fuel);
-				burnTimeTotal = burnTime;
-				if (isBurning()) {
-					hasChanged = true;
-					if (fuel.hasCraftingRemainingItem()) {
-						items.set(3, fuel.getCraftingRemainingItem());
-					} else if (!fuel.isEmpty()) {
-						fuel.shrink(1);
-						if (fuel.isEmpty()) {
-							items.set(3, fuel.getCraftingRemainingItem());
-						}
-					}
-				}
-			}
-
-			if (isBurning() && canSmelt(synthesizerRecipe)) {
-				cookTime++;
-				if (cookTime == cookTimeTotal) {
-					cookTime = 0;
-					cookTimeTotal = getCookTime();
-
-					// Smelt the recipe
-					if (synthesizerRecipe != null && canSmelt(synthesizerRecipe)) {
-						ItemStack ingredient1 = items.get(0);
-						ItemStack ingredient2 = items.get(1);
-						ItemStack ingredient3 = items.get(2);
-						ItemStack recipeOutputStack = items.get(4);
-						ItemStack recipeOutput = synthesizerRecipe.getResultItem(level.registryAccess());
-						if (recipeOutputStack.isEmpty()) {
-							items.set(4, recipeOutput.copy());
-						} else if (recipeOutputStack.getItem() == recipeOutput.getItem()) {
-							recipeOutputStack.grow(recipeOutput.getCount());
-						}
-
-						ingredient1.shrink(1);
-						ingredient2.shrink(1);
-						ingredient3.shrink(1);
-
-						hasChanged = true;
-					}
-				}
-			} else {
-				cookTime = 0;
-			}
-		} else if (!isBurning() && cookTime > 0) {
-			cookTime = Mth.clamp(cookTime - 2, 0, cookTimeTotal);
-		}
-
-		if (isBurning != isBurning()) {
-			hasChanged = true;
-		}
-
-		if (hasChanged) {
-			setChanged();
-		}
-	}
-
-	/**
-	 * Create a block entity for the block.
-	 *
-	 * @param blockPos   the <code>BlockPos</code> the block is at
-	 * @param blockState the <code>BlockState</code> of the block
-	 * @return BlockEntity
-	 */
-	@Nullable
-	@Override
-	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-		return new TeslaSynthesizerBlockEntity(blockPos, blockState);
-	}
-
-	/**
-	 * Set up the burn time map
-	 */
-	private void setupBurnTimes() {
-		addItemBurnTime(ItemRegistry.MOLTEN_INGOT.get(), 24000); // 20 minutes
-	}
-
-	/**
-	 * Check if the fuel is burning.
-	 *
-	 * @return boolean
-	 */
-	private boolean isBurning() {
-		return burnTime > 0;
-	}
-
-	@Override
-	public void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-		super.loadAdditional(tag, provider);
-		items = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
-		ContainerHelper.loadAllItems(tag, items, provider);
-		burnTime = tag.getInt("BurnTime");
-		cookTime = tag.getInt("CookTime");
-		cookTimeTotal = tag.getInt("CookTimeTotal");
-		burnTimeTotal = getBurnTime(items.get(3));
-		CompoundTag compoundTag = tag.getCompound("RecipesUsed");
-
-		for (String string : compoundTag.getAllKeys()) {
-			recipes.put(ResourceLocation.parse(string), compoundTag.getInt(string));
-		}
-
-	}
-
-	@Override
-	protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-		super.saveAdditional(tag, provider);
-		tag.putInt("BurnTime", burnTime);
-		tag.putInt("CookTime", cookTime);
-		tag.putInt("CookTimeTotal", cookTimeTotal);
-		ContainerHelper.saveAllItems(tag, items, provider);
-		CompoundTag compoundTag = new CompoundTag();
-		recipes.forEach((recipeId, craftedAmount) -> compoundTag.putInt(recipeId.toString(), craftedAmount));
-		tag.put("RecipesUsed", compoundTag);
-	}
-
-	@Override
-	public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
-		CompoundTag tag = super.getUpdateTag(provider);
-		saveAdditional(tag, provider);
-		return tag;
-	}
-
-	/**
-	 * Determines if the recipe can be smelt.
-	 *
-	 * @param recipe the <code>Recipe</code> instance
-	 * @return boolean
-	 */
-	private boolean canSmelt(@Nullable Recipe<?> recipe) {
-		if (!items.get(0).isEmpty() && !items.get(1).isEmpty() && !items.get(2).isEmpty() && recipe != null) {
-			ItemStack resultItem = recipe.getResultItem(level.registryAccess());
-			if (resultItem.isEmpty()) {
-				return false;
-			} else {
-				ItemStack output = items.get(4);
-				if (output.isEmpty()) {
-					return true;
-				} else if (!output.is(resultItem.getItem())) {
-					return false;
-				} else if (output.getCount() + resultItem.getCount() <= getMaxStackSize() && output.getCount()
-						+ resultItem.getCount() <= output.getMaxStackSize()) {
-					return true;
-				} else {
-					return output.getCount() + resultItem.getCount() <= resultItem.getMaxStackSize();
-				}
-			}
-		} else {
-			return false;
-		}
-	}
-
-	/**
-	 * Get the cook time for a recipe.
-	 *
-	 * @return int
-	 */
-	private int getCookTime() {
-		if (level != null) {
-			Optional<RecipeHolder<TeslaSynthesizerRecipe>> recipe = level.getRecipeManager()
-					.getRecipeFor(RecipeTypeRegistry.TESLA_SYNTHESIZER_RECIPE_TYPE.get(), new TeslaSynthesizerRecipeInput(items.get(0), items.get(1), items.get(2)), level);
-
-			if (recipe.isPresent()) {
-				return recipe.get().value().getCookTime();
-			}
-		}
-
-		return 0;
-	}
-
-	/**
-	 * Get slots for faces.
-	 *
-	 * @param side the <code>Direction</code> to check
-	 * @return int[]
-	 */
-	@Override
-	public int[] getSlotsForFace(Direction side) {
-		if (side == Direction.DOWN) {
-			return SLOTS_DOWN;
-		} else {
-			return side == Direction.UP ? SLOTS_UP : SLOTS_HORIZONTAL;
-		}
-	}
-
-	/**
-	 * Get the number of slots in the inventory.
-	 *
-	 * @return int
-	 */
-	@Override
-	public int getContainerSize() {
-		return items.size();
-	}
-
-	/**
-	 * Check if the inventory is empty.
-	 *
-	 * @return boolean
-	 */
-	@Override
-	public boolean isEmpty() {
-		for (ItemStack itemStack : items) {
-			if (!itemStack.isEmpty()) {
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	/**
-	 * Determine if an item can be placed through a face.
-	 *
-	 * @param index     the slot index
-	 * @param itemStack the <code>ItemStack</code> to insert
-	 * @param direction the <code>Direction</code> the block is facing
-	 * @return boolean
-	 */
-	@Override
-	public boolean canPlaceItemThroughFace(int index, ItemStack itemStack, @Nullable Direction direction) {
-		return false;
-	}
-
-	/**
-	 * Determine if an item can be removed through a face.
-	 *
-	 * @param index     the slot index
-	 * @param itemStack the <code>ItemStack</code> to remove
-	 * @param direction the <code>Direction</code> the block is facing
-	 * @return boolean
-	 */
-	@Override
-	public boolean canTakeItemThroughFace(int index, ItemStack itemStack, Direction direction) {
-		return false;
-	}
-
-	/**
-	 * Get the stack in the given slot.
-	 *
-	 * @param index the slot index
-	 * @return ItemStack
-	 */
-	@Override
-	public ItemStack getItem(int index) {
-		return items.get(index);
-	}
-
-	/**
-	 * Removes up to a specified number of items from an inventory slot and returns them in a new stack.
-	 *
-	 * @param index the slot index
-	 * @param count the number to remove
-	 * @return ItemStack
-	 */
-	@Override
-	public ItemStack removeItem(int index, int count) {
-		return ContainerHelper.removeItem(items, index, count);
-	}
-
-	/**
-	 * Removes a stack from the given slot and returns it.
-	 *
-	 * @param index the slot index
-	 * @return ItemStack
-	 */
-	@Override
-	public ItemStack removeItemNoUpdate(int index) {
-		return ContainerHelper.takeItem(items, index);
-	}
-
-	/**
-	 * Sets the given item stack to the specified slot in the inventory.
-	 *
-	 * @param index the slot index
-	 * @param stack the <code>ItemStack</code> to set
-	 */
-	@Override
-	public void setItem(int index, ItemStack stack) {
-		ItemStack itemStack = items.get(index);
-		boolean flag = !stack.isEmpty() && stack.is(itemStack.getItem());
-		items.set(index, stack);
-		if (stack.getCount() > getMaxStackSize()) {
-			stack.setCount(getMaxStackSize());
-		}
-
-		if (!flag) {
-			if (index == 0 || index == 1 || index == 2) {
-				cookTimeTotal = getCookTime();
-				cookTime = 0;
-				setChanged();
-			}
-		}
-	}
-
-	/**
-	 * Check if the player is still valid.
-	 *
-	 * @param player the <code>PlayerEntity</code> to check
-	 * @return boolean
-	 */
-	@Override
-	public boolean stillValid(Player player) {
-		if ((level != null ? level.getBlockEntity(worldPosition) : null) != this) {
-			return false;
-		} else {
-			return player.distanceToSqr((double) worldPosition.getX() + 0.5D,
-					(double) worldPosition.getY() + 0.5D,
-					(double) worldPosition.getZ() + 0.5D) <= 64.0D;
-		}
-	}
-
-	/**
-	 * Check if automation is allowed to insert the given stack (ignoring stack size) into the given slot.
-	 *
-	 * @param index the slot index
-	 * @param stack the <code>ItemStack</code> to insert
-	 */
-	@Override
-	public boolean canPlaceItem(int index, ItemStack stack) {
-		return false;
-	}
-
-	/**
-	 * Clear the inventory.
-	 */
-	@Override
-	public void clearContent() {
-		items.clear();
-	}
-
-	/**
-	 * Fill stacked contents.
-	 *
-	 * @param helper the <code>RecipeItemHelper</code> instance
-	 */
-	@Override
-	public void fillStackedContents(StackedContents helper) {
-		for (ItemStack itemStack : items) {
-			helper.accountStack(itemStack);
-		}
 	}
 }

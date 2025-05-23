@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "a": {
-      "tag": "c:nuggets/iron"
-    },
-    "b": {
-      "tag": "c:ingots/iron"
-    }
+    "a": "#c:nuggets/iron",
+    "b": "#c:ingots/iron"
   },
   "pattern": [
     "a",

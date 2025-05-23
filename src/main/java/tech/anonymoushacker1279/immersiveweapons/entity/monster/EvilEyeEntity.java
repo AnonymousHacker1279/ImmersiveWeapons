@@ -3,14 +3,19 @@ package tech.anonymoushacker1279.immersiveweapons.entity.monster;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.UUIDUtil;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.syncher.*;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.*;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -18,7 +23,9 @@ import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.*;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -29,11 +36,14 @@ import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.FlyRandomlyGoal;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 
 public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementOnDiscovery {
 
-	private static final EntityDataAccessor<Integer> ID_SIZE = SynchedEntityData.defineId(EvilEyeEntity.class,
+	private static final EntityDataAccessor<Integer> SIZE = SynchedEntityData.defineId(EvilEyeEntity.class,
 			EntityDataSerializers.INT);
 	private static final EntityDataAccessor<Boolean> SUMMONED_BY_STAFF = SynchedEntityData.defineId(EvilEyeEntity.class,
 			EntityDataSerializers.BOOLEAN);
@@ -56,10 +66,10 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 	public EvilEyeEntity(EntityType<? extends FlyingMob> entityType, Level level) {
 		super(entityType, level);
 
-		lowTierDebuffs.add(MobEffects.MOVEMENT_SLOWDOWN);
-		lowTierDebuffs.add(MobEffects.CONFUSION);
+		lowTierDebuffs.add(MobEffects.SLOWNESS);
+		lowTierDebuffs.add(MobEffects.NAUSEA);
 		lowTierDebuffs.add(MobEffects.HUNGER);
-		lowTierDebuffs.add(MobEffects.DIG_SLOWDOWN);
+		lowTierDebuffs.add(MobEffects.MINING_FATIGUE);
 		lowTierDebuffs.add(MobEffects.GLOWING);
 
 		highTierDebuffs.add(MobEffects.WITHER);
@@ -82,7 +92,7 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 
 		if (!level.isClientSide) {
 			entity.finalizeSpawn((ServerLevelAccessor) level, level.getCurrentDifficultyAt(entity.blockPosition()),
-					MobSpawnType.EVENT, null);
+					EntitySpawnReason.EVENT, null);
 		}
 
 		level.addFreshEntity(entity);
@@ -111,7 +121,7 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 	@Override
 	protected void defineSynchedData(SynchedEntityData.Builder builder) {
 		super.defineSynchedData(builder);
-		builder.define(ID_SIZE, 0);
+		builder.define(SIZE, 0);
 		builder.define(SUMMONED_BY_STAFF, false);
 	}
 
@@ -123,12 +133,12 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 		boolean summonedByStaff = entityData.get(SUMMONED_BY_STAFF);
 
 		if (targetedEntityUUID != null) {
-			targetedEntity = (LivingEntity) ((ServerLevel) level()).getEntity(targetedEntityUUID);
+			targetedEntity = (LivingEntity) level().getEntity(targetedEntityUUID);
 			targetedEntityUUID = null;
 		}
 
 		// Find players every 40 ticks if not summoned by a staff
-		if (!level().isClientSide) {
+		if (level() instanceof ServerLevel serverLevel) {
 			if (!summonedByStaff && tickCount % 40 == 0) {
 				// Increase distance based on difficulty and size
 				int scanDistance = 16;
@@ -140,7 +150,7 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 				Player player = level().getNearestPlayer(this, scanDistance);
 				// Check for proper targeting conditions
 				if (player != null) {
-					boolean validTarget = TargetingConditions.forCombat().test(this, player);
+					boolean validTarget = TargetingConditions.forCombat().test(serverLevel, this, player);
 					if (validTarget) {
 						targetedEntity = player;
 
@@ -157,8 +167,8 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 			} else {
 				// Ensure the target is still valid
 				boolean validTarget = !summonedByStaff
-						? TargetingConditions.forCombat().test(this, targetedEntity)
-						: TargetingConditions.forCombat().ignoreLineOfSight().test(this, targetedEntity);
+						? TargetingConditions.forCombat().test(serverLevel, this, targetedEntity)
+						: TargetingConditions.forCombat().ignoreLineOfSight().test(serverLevel, this, targetedEntity);
 
 				if (!validTarget) {
 					targetedEntity = null;
@@ -190,14 +200,14 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 			lookAt(EntityAnchorArgument.Anchor.EYES, targetedEntity.position());
 
 			// If the entity is within 5 blocks of the entity, start increasing the ticks watched
-			if (distanceToSqr(targetedEntity) < 25) {
+			if (distanceTo(targetedEntity) < 5) {
 				ticksWatched++;
 
 				if (ticksWatched >= 100) {
 					// If the entity has been watched for 100 ticks or more, there is a 5% chance every
 					// 20 ticks to inflict a random debuff on the player
 					if (tickCount % 20 == 0 && random.nextFloat() < effectChance) {
-						// If there are at least 3 entities within an 8 block radius, inflict a high tier debuff
+						// If there are at least 3 entities within an 8-block radius, inflict a high tier debuff
 						if (level().getEntitiesOfClass(EvilEyeEntity.class, getBoundingBox().inflate(8), (entity) -> true).size() >= 3) {
 							Holder<MobEffect> effect = highTierDebuffs.get(getRandom().nextIntBetweenInclusive(0, highTierDebuffs.size() - 1));
 							targetedEntity.addEffect(new MobEffectInstance(effect, effectDuration, effectLevel));
@@ -219,30 +229,48 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 	}
 
 	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty,
-	                                    MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData) {
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, EntitySpawnReason reason, @Nullable SpawnGroupData spawnData) {
 		setSize(getRandom().nextIntBetweenInclusive(1, 3));
 		setHealth(getMaxHealth());
 		xpReward = summonedByStaff() ? 0 : 3 * getSize();
-		return super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData);
+
+		for (int i = 0; i < getSize(); i++) {
+			if (getRandom().nextFloat() <= 0.5f) {
+				effectLevel++;
+			}
+			if (getRandom().nextFloat() <= 0.5f) {
+				effectChance += 0.05f;
+			}
+			if (getRandom().nextFloat() <= 0.5f) {
+				effectDuration += 40;
+			}
+		}
+
+		return super.finalizeSpawn(level, difficulty, reason, spawnData);
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundTag pCompound) {
-		super.addAdditionalSaveData(pCompound);
-		pCompound.putInt("Size", getSize());
-		pCompound.putBoolean("SummonedByStaff", entityData.get(SUMMONED_BY_STAFF));
-		pCompound.putUUID("Target", targetedEntity == null ? new UUID(0, 0) : targetedEntity.getUUID());
+	public void addAdditionalSaveData(CompoundTag compound) {
+		super.addAdditionalSaveData(compound);
+		compound.putInt("Size", getSize());
+		compound.putBoolean("SummonedByStaff", entityData.get(SUMMONED_BY_STAFF));
+
+		if (targetedEntityUUID != null) {
+			compound.store("Target", UUIDUtil.CODEC, targetedEntityUUID);
+		}
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundTag pCompound) {
-		super.readAdditionalSaveData(pCompound);
-		setSize(pCompound.getInt("Size"));
-		entityData.set(SUMMONED_BY_STAFF, pCompound.getBoolean("SummonedByStaff"));
+	public void readAdditionalSaveData(CompoundTag compound) {
+		super.readAdditionalSaveData(compound);
+		setSize(compound.getIntOr("Size", 0));
+		entityData.set(SUMMONED_BY_STAFF, compound.getBooleanOr("SummonedByStaff", false));
 
-		UUID uuid = pCompound.getUUID("Target");
-		targetedEntityUUID = uuid.equals(new UUID(0, 0)) ? null : uuid;
+		if (compound.contains("Target")) {
+			compound.read("Target", UUIDUtil.CODEC).ifPresent(uuid -> {
+				targetedEntityUUID = uuid;
+			});
+		}
 	}
 
 	@Override
@@ -256,20 +284,20 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 	}
 
 	public int getSize() {
-		return entityData.get(ID_SIZE);
+		return entityData.get(SIZE);
 	}
 
 	public void setSize(int pSize) {
-		entityData.set(ID_SIZE, Mth.clamp(pSize, 0, 64));
+		entityData.set(SIZE, Mth.clamp(pSize, 0, 64));
 	}
 
 	@Override
-	public void onSyncedDataUpdated(EntityDataAccessor<?> pKey) {
-		if (ID_SIZE.equals(pKey)) {
+	public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
+		if (SIZE.equals(key)) {
 			updateSizeInfo();
 		}
 
-		super.onSyncedDataUpdated(pKey);
+		super.onSyncedDataUpdated(key);
 	}
 
 	@Override
@@ -286,10 +314,10 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 	}
 
 	@Override
-	public boolean hurt(DamageSource source, float amount) {
+	public boolean hurtServer(ServerLevel serverLevel, DamageSource source, float amount) {
 		if (source.getEntity() instanceof LivingEntity entity && !summonedByStaff()) {
 			if (entity instanceof Player player && player.isCreative()) {
-				return super.hurt(source, amount);
+				return super.hurtServer(serverLevel, source, amount);
 			}
 
 			targetedEntity = entity;
@@ -298,7 +326,7 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 			goalSelector.removeGoal(flyRandomlyGoal);
 		}
 
-		return super.hurt(source, amount);
+		return super.hurtServer(serverLevel, source, amount);
 	}
 
 	@Nullable
@@ -314,8 +342,8 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 		return entityData.get(SUMMONED_BY_STAFF);
 	}
 
-	public static boolean checkSpawnRules(EntityType<? extends Mob> type, LevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource random) {
-		boolean validSpawn = checkMobSpawnRules(type, level, spawnType, pos, random);
+	public static boolean checkSpawnRules(EntityType<? extends Mob> type, LevelAccessor level, EntitySpawnReason reason, BlockPos pos, RandomSource random) {
+		boolean validSpawn = checkMobSpawnRules(type, level, reason, pos, random);
 		boolean notUnderground = level.getBlockStates(new AABB(pos)
 						.expandTowards(0, 25, 0))
 				.allMatch((state) -> state.is(Blocks.CAVE_AIR) || state.is(Blocks.AIR));

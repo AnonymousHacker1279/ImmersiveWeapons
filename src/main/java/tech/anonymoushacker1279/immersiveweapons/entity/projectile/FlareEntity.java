@@ -3,8 +3,13 @@ package tech.anonymoushacker1279.immersiveweapons.entity.projectile;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.syncher.*;
-import net.minecraft.world.entity.*;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.projectile.Arrow;
@@ -81,7 +86,8 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 					}
 					lightPositions.clear();
 				}
-				kill();
+
+				discard();
 			}
 		}
 
@@ -111,8 +117,8 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 		}
 
 		// Aggro nearby minutemen to attack the nearest monster
-		if (shouldStopMoving && !level().isClientSide && tickCount % 4 == 0) {
-			aggroNearbyMinutemen();
+		if (shouldStopMoving && level() instanceof ServerLevel serverLevel && tickCount % 4 == 0) {
+			aggroNearbyMinutemen(serverLevel);
 		}
 	}
 
@@ -126,7 +132,10 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 		super.doWhenHitEntity(entity);
 		hasHitEntity = true;
 		entity.igniteForSeconds(6);
-		aggroNearbyMinutemen();
+
+		if (entity.level() instanceof ServerLevel serverLevel) {
+			aggroNearbyMinutemen(serverLevel);
+		}
 	}
 
 	/**
@@ -149,13 +158,13 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 		super.addAdditionalSaveData(pCompound);
 
 		if (!lightPositions.isEmpty()) {
-			List<Integer> xPositions = new ArrayList<>(3);
-			List<Integer> yPositions = new ArrayList<>(3);
-			List<Integer> zPositions = new ArrayList<>(3);
+			int[] xPositions = new int[lightPositions.size()];
+			int[] yPositions = new int[lightPositions.size()];
+			int[] zPositions = new int[lightPositions.size()];
 			for (BlockPos pos : lightPositions) {
-				xPositions.add(pos.getX());
-				yPositions.add(pos.getY());
-				zPositions.add(pos.getZ());
+				xPositions[lightPositions.indexOf(pos)] = pos.getX();
+				yPositions[lightPositions.indexOf(pos)] = pos.getY();
+				zPositions[lightPositions.indexOf(pos)] = pos.getZ();
 			}
 
 			pCompound.putIntArray("xPositions", xPositions);
@@ -173,16 +182,17 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 	public void readAdditionalSaveData(CompoundTag pCompound) {
 		super.readAdditionalSaveData(pCompound);
 
-		int[] xPositions = pCompound.getIntArray("xPositions");
-		int[] yPositions = pCompound.getIntArray("yPositions");
-		int[] zPositions = pCompound.getIntArray("zPositions");
+		int[] xPositions = pCompound.getIntArray("xPositions").orElse(null);
+		int[] yPositions = pCompound.getIntArray("yPositions").orElse(null);
+		int[] zPositions = pCompound.getIntArray("zPositions").orElse(null);
 
 		// Each item in xPositions should match an entry in y/zPositions, so build a list of BlockPos
 		// with each individual position
-		int iteration = 0;
-		for (Integer integer : xPositions) {
-			lightPositions.add(new BlockPos(integer, yPositions[iteration], zPositions[iteration]));
-			iteration++;
+		if (xPositions != null && yPositions != null && zPositions != null) {
+			for (int i = 0; i < xPositions.length; i++) {
+				BlockPos pos = new BlockPos(xPositions[i], yPositions[i], zPositions[i]);
+				lightPositions.add(pos);
+			}
 		}
 	}
 
@@ -208,12 +218,12 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 		}
 	}
 
-	private void aggroNearbyMinutemen() {
-		Monster monster = level().getNearestEntity(Monster.class, TargetingConditions.forCombat(), null, getX(), getY(), getZ(), getBoundingBox().inflate(7));
-		MinutemanEntity minuteman = level().getNearestEntity(MinutemanEntity.class, TargetingConditions.forNonCombat(), null, getX(), getY(), getZ(), getBoundingBox().inflate(16));
+	private void aggroNearbyMinutemen(ServerLevel serverLevel) {
+		Monster monster = serverLevel.getNearestEntity(Monster.class, TargetingConditions.forCombat(), null, getX(), getY(), getZ(), getBoundingBox().inflate(7));
+		MinutemanEntity minuteman = serverLevel.getNearestEntity(MinutemanEntity.class, TargetingConditions.forNonCombat(), null, getX(), getY(), getZ(), getBoundingBox().inflate(16));
 
 		if (monster != null && minuteman != null && getOwner() instanceof LivingEntity owner) {
-			if (!minuteman.isAngryAt(owner)) {
+			if (!minuteman.isAngryAt(owner, serverLevel)) {
 				minuteman.aggroNearbyMinutemen(getBoundingBox(), monster);
 			}
 		}

@@ -3,15 +3,9 @@
   "category": "building",
   "group": "star_forge",
   "key": {
-    "a": {
-      "item": "immersiveweapons:moonglow"
-    },
-    "b": {
-      "tag": "c:ingots/cobalt"
-    },
-    "c": {
-      "item": "minecraft:bricks"
-    }
+    "a": "immersiveweapons:moonglow",
+    "b": "#c:ingots/cobalt",
+    "c": "minecraft:bricks"
   },
   "pattern": [
     "bcb",

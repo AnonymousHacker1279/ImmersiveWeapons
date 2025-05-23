@@ -1,16 +1,9 @@
 {
   "type": "minecraft:smithing_transform",
-  "addition": {
-    "tag": "immersiveweapons:ingots/molten"
-  },
-  "base": {
-    "item": "immersiveweapons:netherite_gauntlet"
-  },
+  "addition": "#immersiveweapons:ingots/molten",
+  "base": "immersiveweapons:netherite_gauntlet",
   "result": {
-    "count": 1,
     "id": "immersiveweapons:molten_gauntlet"
   },
-  "template": {
-    "item": "immersiveweapons:molten_smithing_template"
-  }
+  "template": "immersiveweapons:molten_smithing_template"
 }

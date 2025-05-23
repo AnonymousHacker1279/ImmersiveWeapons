@@ -3,18 +3,10 @@
   "category": "misc",
   "group": "tiltros_portal_frame",
   "key": {
-    "a": {
-      "item": "immersiveweapons:molten_block"
-    },
-    "b": {
-      "tag": "immersiveweapons:ingots/tesla"
-    },
-    "c": {
-      "item": "immersiveweapons:cobalt_block"
-    },
-    "d": {
-      "item": "minecraft:netherite_scrap"
-    }
+    "a": "immersiveweapons:molten_block",
+    "b": "#immersiveweapons:ingots/tesla",
+    "c": "immersiveweapons:cobalt_block",
+    "d": "minecraft:netherite_scrap"
   },
   "pattern": [
     "cdc",

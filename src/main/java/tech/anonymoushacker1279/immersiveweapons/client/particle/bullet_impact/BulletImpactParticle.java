@@ -5,11 +5,10 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
+import net.minecraft.client.renderer.block.model.BlockStateModel;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.client.model.data.ModelData;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
@@ -74,8 +73,8 @@ public class BulletImpactParticle extends TextureSheetParticle {
 		Minecraft minecraft = Minecraft.getInstance();
 		BlockRenderDispatcher blockRendererDispatcher = minecraft.getBlockRenderer();
 		BlockModelShaper blockModelShapes = blockRendererDispatcher.getBlockModelShaper();
-		BakedModel blockModel = blockModelShapes.getBlockModel(Block.stateById(blockID));
-		TextureAtlasSprite textureAtlasSprite = blockModel.getParticleIcon(ModelData.EMPTY);
+		BlockStateModel model = blockModelShapes.getBlockModel(Block.stateById(blockID));
+		TextureAtlasSprite textureAtlasSprite = model.particleIcon();
 
 		int pixelABGR = textureAtlasSprite.getPixelRGBA(0, 0, 0);
 		int r = pixelABGR & 0xff;

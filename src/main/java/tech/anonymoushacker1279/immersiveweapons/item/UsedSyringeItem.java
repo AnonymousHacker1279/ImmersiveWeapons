@@ -1,7 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.item;
 
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
@@ -22,7 +22,7 @@ public class UsedSyringeItem extends Item {
 	}
 
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+	public InteractionResult use(Level level, Player player, InteractionHand hand) {
 		ItemStack itemInHand = player.getItemInHand(hand);
 
 		float randomNumber = level.getRandom().nextFloat();
@@ -37,6 +37,6 @@ public class UsedSyringeItem extends Item {
 			itemInHand.shrink(1);
 		}
 
-		return InteractionResultHolder.sidedSuccess(itemInHand, level.isClientSide());
+		return InteractionResult.SUCCESS;
 	}
 }

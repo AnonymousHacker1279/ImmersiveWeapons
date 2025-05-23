@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "azul_keystone",
   "key": {
-    "a": {
-      "tag": "c:gems/diamond"
-    },
-    "b": {
-      "item": "immersiveweapons:azul_keystone_fragment"
-    }
+    "a": "#c:gems/diamond",
+    "b": "immersiveweapons:azul_keystone_fragment"
   },
   "pattern": [
     " b ",

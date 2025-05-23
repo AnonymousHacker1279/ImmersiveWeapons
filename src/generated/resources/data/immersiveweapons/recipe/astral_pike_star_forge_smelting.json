@@ -1,16 +1,12 @@
 {
   "type": "immersiveweapons:star_forge",
   "group": "star_forge",
-  "ingot": {
-    "tag": "immersiveweapons:ingots/astral"
-  },
-  "ingot_count": 3,
+  "primary_material": "#immersiveweapons:ingots/astral",
+  "primary_material_count": 3,
   "result": {
     "id": "immersiveweapons:astral_pike"
   },
-  "secondary_material": {
-    "item": "immersiveweapons:wooden_tool_rod"
-  },
+  "secondary_material": "immersiveweapons:wooden_tool_rod",
   "secondary_material_count": 1,
   "smelt_time": 300
 }

@@ -4,9 +4,7 @@
   "cookingtime": 1200,
   "experience": 1.2,
   "group": "molten",
-  "ingredient": {
-    "item": "immersiveweapons:molten_ore"
-  },
+  "ingredient": "immersiveweapons:molten_ore",
   "result": {
     "count": 1,
     "id": "immersiveweapons:molten_ingot"

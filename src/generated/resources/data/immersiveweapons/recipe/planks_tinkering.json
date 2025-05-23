@@ -1,12 +1,19 @@
 {
   "type": "immersiveweapons:small_parts",
   "craftables": [
-    "immersiveweapons:gauntlet_scaffolding",
-    "immersiveweapons:heavy_wooden_stock",
-    "immersiveweapons:wooden_pistol_handle"
+    {
+      "count": 1,
+      "id": "immersiveweapons:gauntlet_scaffolding"
+    },
+    {
+      "count": 1,
+      "id": "immersiveweapons:heavy_wooden_stock"
+    },
+    {
+      "count": 1,
+      "id": "immersiveweapons:wooden_pistol_handle"
+    }
   ],
   "group": "small_parts",
-  "material": {
-    "tag": "minecraft:planks"
-  }
+  "material": "#minecraft:planks"
 }

@@ -3,9 +3,7 @@
   "category": "misc",
   "group": "shard",
   "ingredients": [
-    {
-      "item": "minecraft:cobblestone"
-    }
+    "minecraft:cobblestone"
   ],
   "result": {
     "count": 3,

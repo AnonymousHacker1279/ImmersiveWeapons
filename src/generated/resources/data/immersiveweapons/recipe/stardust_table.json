@@ -3,12 +3,8 @@
   "category": "building",
   "group": "tables",
   "key": {
-    "a": {
-      "item": "immersiveweapons:stardust_slab"
-    },
-    "b": {
-      "item": "immersiveweapons:stardust_fence"
-    }
+    "a": "immersiveweapons:stardust_slab",
+    "b": "immersiveweapons:stardust_fence"
   },
   "pattern": [
     "a",

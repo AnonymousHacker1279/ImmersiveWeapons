@@ -43,21 +43,21 @@
             "block_light": 15,
             "sky_light": 3
           },
-          "texture": "#overlay"
+          "texture": "#layer1"
         },
         "north": {
           "neoforge_data": {
             "block_light": 15,
             "sky_light": 3
           },
-          "texture": "#overlay"
+          "texture": "#layer1"
         },
         "south": {
           "neoforge_data": {
             "block_light": 15,
             "sky_light": 3
           },
-          "texture": "#overlay"
+          "texture": "#layer1"
         },
         "up": {
           "texture": "#end"
@@ -67,7 +67,7 @@
             "block_light": 15,
             "sky_light": 3
           },
-          "texture": "#overlay"
+          "texture": "#layer1"
         }
       },
       "from": [
@@ -82,10 +82,10 @@
       ]
     }
   ],
-  "render_type": "minecraft:cutout_mipped",
+  "render_type": "minecraft:cutout",
   "textures": {
     "end": "immersiveweapons:block/stardust_log_top",
-    "overlay": "immersiveweapons:block/stardust_granule_overlay",
+    "layer1": "immersiveweapons:block/stardust_granule_overlay",
     "side": "immersiveweapons:block/stardust_log"
   }
 }

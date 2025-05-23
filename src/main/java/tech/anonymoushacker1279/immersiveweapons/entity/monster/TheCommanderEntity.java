@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerBossEvent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.BossEvent.BossBarColor;
@@ -15,7 +16,6 @@ import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -55,7 +55,7 @@ public class TheCommanderEntity extends DyingSoldierEntity implements AttackerTr
 	}
 
 	public static AttributeSupplier.Builder registerAttributes() {
-		return Monster.createMonsterAttributes()
+		return createSoldierAttributes()
 				.add(Attributes.MOVEMENT_SPEED, 0.27D)
 				.add(Attributes.ARMOR, 15.0D)
 				.add(Attributes.MAX_HEALTH, 100.0D)
@@ -71,7 +71,7 @@ public class TheCommanderEntity extends DyingSoldierEntity implements AttackerTr
 	}
 
 	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData) {
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, EntitySpawnReason reason, @Nullable SpawnGroupData spawnData) {
 		bossEvent.setProgress(0f);
 
 		totalWavesToSpawn = 3;
@@ -104,12 +104,12 @@ public class TheCommanderEntity extends DyingSoldierEntity implements AttackerTr
 	}
 
 	@Override
-	protected boolean canReplaceCurrentItem(ItemStack pCandidate, ItemStack pExisting) {
-		if (pCandidate.getItem() instanceof AbstractGunItem newGun && pExisting.getItem() instanceof AbstractGunItem oldGun) {
+	protected boolean canReplaceCurrentItem(ItemStack newItem, ItemStack currentItem, EquipmentSlot slot) {
+		if (newItem.getItem() instanceof AbstractGunItem newGun && currentItem.getItem() instanceof AbstractGunItem oldGun) {
 			return newGun.getBaseFireVelocity() > oldGun.getBaseFireVelocity();
 		}
 
-		return super.canReplaceCurrentItem(pCandidate, pExisting);
+		return super.canReplaceCurrentItem(newItem, currentItem, slot);
 	}
 
 	@Override
@@ -118,7 +118,7 @@ public class TheCommanderEntity extends DyingSoldierEntity implements AttackerTr
 	}
 
 	@Override
-	public boolean hurt(DamageSource source, float amount) {
+	public boolean hurtServer(ServerLevel serverLevel, DamageSource source, float amount) {
 		if (!source.is(DamageTypes.GENERIC_KILL) && !doneSpawningWaves) {
 			return false;
 		}
@@ -142,7 +142,7 @@ public class TheCommanderEntity extends DyingSoldierEntity implements AttackerTr
 
 		amount *= playerCountReductionFactor;
 
-		boolean doesHurt = super.hurt(source, amount);
+		boolean doesHurt = super.hurtServer(serverLevel, source, amount);
 
 		if (doesHurt) {
 			bossEvent.setProgress(getHealth() / getMaxHealth());
@@ -201,25 +201,23 @@ public class TheCommanderEntity extends DyingSoldierEntity implements AttackerTr
 	public void readAdditionalSaveData(CompoundTag pCompound) {
 		super.readAdditionalSaveData(pCompound);
 
-		if (hasCustomName()) {
-			bossEvent.setName(getDisplayName());
-		}
-
-		totalWavesToSpawn = pCompound.getInt("totalWavesToSpawn");
-		waveSizeModifier = pCompound.getInt("waveSizeModifier");
-		wavesSpawned = pCompound.getInt("wavesSpawned");
-		doneSpawningWaves = pCompound.getBoolean("doneSpawningWaves");
-		breakTowerFences = pCompound.getBoolean("hasJumpedOutOfTower");
+		bossEvent.setName(getDisplayName());
+		totalWavesToSpawn = pCompound.getIntOr("totalWavesToSpawn", 3);
+		waveSizeModifier = pCompound.getIntOr("waveSizeModifier", 1);
+		wavesSpawned = pCompound.getIntOr("wavesSpawned", 0);
+		doneSpawningWaves = pCompound.getBooleanOr("doneSpawningWaves", false);
+		breakTowerFences = pCompound.getBooleanOr("hasJumpedOutOfTower", false);
 
 		if (wavesSpawned > 0 && !doneSpawningWaves) {
 			bossEvent.setName(Component.translatable("immersiveweapons.boss.the_commander.waves", wavesSpawned,
 					totalWavesToSpawn));
 			bossEvent.setProgress((float) wavesSpawned / totalWavesToSpawn);
 		} else {
+			bossEvent.setColor(BossBarColor.GREEN);
 			bossEvent.setProgress(getHealth() / getMaxHealth());
 		}
 
-		xpReward = pCompound.getInt("xpReward");
+		xpReward = pCompound.getIntOr("xpReward", 0);
 	}
 
 	@Override

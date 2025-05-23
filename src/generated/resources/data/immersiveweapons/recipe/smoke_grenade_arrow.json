@@ -3,12 +3,8 @@
   "category": "equipment",
   "group": "smoke_grenade",
   "key": {
-    "a": {
-      "item": "minecraft:arrow"
-    },
-    "b": {
-      "item": "immersiveweapons:smoke_powder"
-    }
+    "a": "minecraft:arrow",
+    "b": "immersiveweapons:smoke_powder"
   },
   "pattern": [
     "aab",

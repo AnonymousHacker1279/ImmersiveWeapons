@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_stone": {
+    "has_cut_blood_sandstone": {
       "conditions": {
         "items": [
           {
-            "items": "immersiveweapons:blood_sandstone"
+            "items": "immersiveweapons:cut_blood_sandstone"
           }
         ]
       },
@@ -21,7 +21,7 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_stone"
+      "has_cut_blood_sandstone"
     ]
   ],
   "rewards": {

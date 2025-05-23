@@ -344,6 +344,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addSubtitle("block.panic_alarm.alarm", "Alarm sounds");
 		addSubtitle("block.mortar.fire", "Mortar fires");
 		addSubtitle("block.tiltros_portal.whoosh", "Portal whooshes");
+		addSubtitle("block.tiltros_portal.travel", "Portal noise fades");
+		addSubtitle("block.tiltros_portal.trigger", "Portal noise intensifies");
 
 		// Entity
 		addSubtitle("entity.soldier.ambient", "Soldier speaking");
@@ -400,6 +402,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("hand_cannon", "A powerful, but inaccurate, handheld cannon");
 		addTooltip("dragons_breath_cannon", "An upgraded hand cannon designed to launch dragon fireballs");
 		// Gun metadata
+		addTooltip("gun.meta.scope", "Scope Equipped");
 		addTooltip("gun.meta.base_velocity", "Base Velocity: %s");
 		addTooltip("gun.meta.base_reload_time", "Base Reload Time: %s seconds");
 		addTooltip("gun.meta.base_knockback", "Base Knockback Level: %sx");
@@ -1109,6 +1112,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addConfigField("celestial_altar.tooltip", "Celestial Altar settings");
 		addConfigField("the_commander", "The Commander Settings");
 		addConfigField("the_commander.tooltip", "The Commander settings");
+		addConfigField("lava_revenant", "Lava Revenant Settings");
+		addConfigField("lava_revenant.tooltip", "Lava Revenant settings");
 		addConfigField("weapons", "Weapon Settings");
 		addConfigField("weapons.tooltip", "Weapon-specific settings");
 		addConfigField("flintlock_pistol", "Flintlock Pistol Settings");

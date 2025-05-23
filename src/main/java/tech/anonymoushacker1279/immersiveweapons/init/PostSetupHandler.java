@@ -1,12 +1,14 @@
 package tech.anonymoushacker1279.immersiveweapons.init;
 
 import net.kyrptonaught.customportalapi.api.CustomPortalBuilder;
-import net.kyrptonaught.customportalapi.util.SHOULDTP;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
@@ -14,7 +16,6 @@ import net.minecraft.world.phys.AABB;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.TooltipHandler;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
-import tech.anonymoushacker1279.immersiveweapons.entity.vehicle.CustomBoatType;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class PostSetupHandler {
@@ -32,35 +33,34 @@ public class PostSetupHandler {
 		emptyPot.addPlant(BuiltInRegistries.BLOCK.getKey(BlockRegistry.MOONGLOW.get()), BlockRegistry.POTTED_MOONGLOW);
 		emptyPot.addPlant(BuiltInRegistries.BLOCK.getKey(BlockRegistry.DEATHWEED.get()), BlockRegistry.POTTED_DEATHWEED);
 
-		// Setup custom boats
-		ItemRegistry.BURNED_OAK_BOAT.get()
-				.postSetup(EntityRegistry.BURNED_OAK_BOAT_ENTITY.get(), CustomBoatType.BURNED_OAK);
-		ItemRegistry.BURNED_OAK_CHEST_BOAT.get()
-				.postSetup(EntityRegistry.BURNED_OAK_CHEST_BOAT_ENTITY.get(), CustomBoatType.BURNED_OAK_CHEST);
-		ItemRegistry.STARDUST_BOAT.get()
-				.postSetup(EntityRegistry.STARDUST_BOAT_ENTITY.get(), CustomBoatType.STARDUST);
-		ItemRegistry.STARDUST_CHEST_BOAT.get()
-				.postSetup(EntityRegistry.STARDUST_CHEST_BOAT_ENTITY.get(), CustomBoatType.STARDUST_CHEST);
-
 		// Compile simple tooltips
 		TooltipHandler.compileTooltips();
 
 		// Initialize custom portals
-		CustomPortalBuilder.beginPortal()
-				.frameBlock(BlockRegistry.TILTROS_PORTAL_FRAME.get())
-				.customPortalBlock(BlockRegistry.TILTROS_PORTAL::get)
+		new CustomPortalBuilder()
+				.frame(BlockRegistry.TILTROS_PORTAL_FRAME.get())
+				.customPortalBlock(BlockRegistry.TILTROS_PORTAL.get())
 				.lightWithItem(ItemRegistry.AZUL_KEYSTONE.get())
-				.destDimID(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "tiltros"))
+				.destination(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "tiltros"))
 				.flatPortal()
-				.registerBeforeTPEvent(entity -> IWConfigs.SERVER.tiltrosEnabled.getAsBoolean() ? SHOULDTP.CONTINUE_TP : SHOULDTP.CANCEL_TP)
-				.registerPostTPEvent(entity -> {
+				.preTeleportEvent(entity -> IWConfigs.SERVER.tiltrosEnabled.getAsBoolean())
+				.postTeleportEvent(entity -> {
+					ImmersiveWeapons.LOGGER.debug("Teleporting entity to Tiltros");
 					if (!entity.level().dimension().equals(TILTROS)) {
 						return;
 					}
 
+					if (entity instanceof LivingEntity livingEntity) {
+						livingEntity.addEffect(new MobEffectInstance(EffectRegistry.CELESTIAL_PROTECTION_EFFECT, 100, 0, false, true));
+					}
+
 					generateBiodome(entity.level(), entity.blockPosition(), 7);
 				})
-				.registerPortal();
+				.ambientSound(SoundEventRegistry.TILTROS_PORTAL_WHOOSH.getId(), (level) -> 0.5F, (level) -> level.random.nextFloat() * 0.4F + 0.8F)
+				.travelSound(SoundEventRegistry.TILTROS_PORTAL_TRAVEL.getId(), (entity) -> 0.5F, (entity) -> entity.getRandom().nextFloat() * 0.4F + 0.8F)
+				.triggerSound(SoundEventRegistry.TILTROS_PORTAL_TRAVEL.getId(), (entity) -> 0.5F, (entity) -> entity.getRandom().nextFloat() * 0.4F + 0.8F)
+				.portalParticle((level, pos) -> ParticleTypesRegistry.TILTROS_PORTAL_PARTICLE.get())
+				.build();
 	}
 
 	public static void generateBiodome(Level level, BlockPos center, int radius) {
@@ -77,7 +77,7 @@ public class PostSetupHandler {
 					double distance = Math.sqrt(x * x + y * y + z * z);
 					if (distance <= radius) {
 						if (level.getBlockState(pos).is(BlockRegistry.BLOOD_SAND.get())) {
-							if (level.getBlockState(pos.above()).isAir()) {
+							if (level.getBlockState(pos.above()).is(BlockTags.REPLACEABLE)) {
 								level.setBlock(pos, Blocks.GRASS_BLOCK.defaultBlockState(), 3);
 							} else {
 								level.setBlock(pos, Blocks.DIRT.defaultBlockState(), 3);
@@ -87,7 +87,7 @@ public class PostSetupHandler {
 						}
 					}
 					if (distance >= radius - 1 && distance <= radius) {
-						if (level.getBlockState(pos).isAir()) {
+						if (level.getBlockState(pos).is(BlockTags.REPLACEABLE)) {
 							level.setBlock(pos, Blocks.GLASS.defaultBlockState(), 3);
 						}
 					}
@@ -100,10 +100,10 @@ public class PostSetupHandler {
 		BlockPos pos2 = center.offset(radius - 4, -radius, radius - 4);
 
 		// Move upwards until we find a grass block or reach past the radius
-		while (!level.getBlockState(pos1).is(Blocks.GRASS_BLOCK) && pos1.getY() < center.getY() + radius) {
+		while (!(level.getBlockState(pos1).is(Blocks.GRASS_BLOCK) || level.getBlockState(pos1).is(BlockTags.REPLACEABLE)) && pos1.getY() < center.getY() + radius) {
 			pos1 = pos1.above();
 		}
-		while (!level.getBlockState(pos2).is(Blocks.GRASS_BLOCK) && pos2.getY() < center.getY() + radius) {
+		while (!(level.getBlockState(pos2).is(Blocks.GRASS_BLOCK) || level.getBlockState(pos2).is(BlockTags.REPLACEABLE)) && pos2.getY() < center.getY() + radius) {
 			pos2 = pos2.above();
 		}
 
@@ -129,7 +129,7 @@ public class PostSetupHandler {
 				pos = pos.above();
 			}
 
-			if (level.getBlockState(pos).is(Blocks.GRASS_BLOCK) && level.getBlockState(pos.above()).isAir()) {
+			if (level.getBlockState(pos).is(Blocks.GRASS_BLOCK) && level.getBlockState(pos.above()).is(BlockTags.REPLACEABLE)) {
 				level.setBlock(pos.above(), BlockRegistry.MOONGLOW.get().defaultBlockState(), 3);
 				retries = 0;
 			} else {

@@ -3,18 +3,10 @@
   "category": "equipment",
   "group": "recovery_staff",
   "key": {
-    "a": {
-      "item": "immersiveweapons:bloated_heart"
-    },
-    "b": {
-      "item": "immersiveweapons:hansium_ingot"
-    },
-    "c": {
-      "item": "immersiveweapons:obsidian_rod"
-    },
-    "d": {
-      "item": "minecraft:amethyst_shard"
-    }
+    "a": "immersiveweapons:bloated_heart",
+    "b": "immersiveweapons:hansium_ingot",
+    "c": "immersiveweapons:obsidian_rod",
+    "d": "minecraft:amethyst_shard"
   },
   "pattern": [
     "bab",

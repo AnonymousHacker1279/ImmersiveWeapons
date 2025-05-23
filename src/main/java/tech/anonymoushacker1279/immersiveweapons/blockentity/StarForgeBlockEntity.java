@@ -1,11 +1,13 @@
 package tech.anonymoushacker1279.immersiveweapons.blockentity;
 
-import net.minecraft.core.*;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.ContainerHelper;
@@ -14,8 +16,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.item.crafting.RecipeMap;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -25,6 +29,7 @@ import tech.anonymoushacker1279.immersiveweapons.block.star_forge.StarForgeContr
 import tech.anonymoushacker1279.immersiveweapons.init.BlockEntityRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.RecipeTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.StarForgeRecipe;
+import tech.anonymoushacker1279.immersiveweapons.item.crafting.input.StarForgeRecipeInput;
 import tech.anonymoushacker1279.immersiveweapons.menu.StarForgeMenu;
 
 import java.util.ArrayList;
@@ -85,15 +90,18 @@ public class StarForgeBlockEntity extends BaseContainerBlockEntity implements En
 
 	public static final List<RecipeHolder<StarForgeRecipe>> ALL_RECIPES = new ArrayList<>(20);
 	public List<RecipeHolder<StarForgeRecipe>> availableRecipes = new ArrayList<>(20);
-	private final List<ResourceLocation> savedRecipes = new ArrayList<>(20);
 
 	public StarForgeBlockEntity(BlockPos blockPos, BlockState blockState) {
 		super(BlockEntityRegistry.STAR_FORGE_BLOCK_ENTITY.get(), blockPos, blockState);
 	}
 
-	public void initializeRecipes(RecipeManager manager) {
+	public void initializeRecipes(RecipeManager manager, ServerLevel serverLevel) {
 		ALL_RECIPES.clear();
-		ALL_RECIPES.addAll(manager.getAllRecipesFor(RecipeTypeRegistry.STAR_FORGE_RECIPE_TYPE.get()));
+
+		RecipeMap.create(manager.getRecipes())
+				.getRecipesFor(RecipeTypeRegistry.STAR_FORGE_RECIPE_TYPE.get(),
+						new StarForgeRecipeInput(inventory.getFirst(), inventory.get(1)), serverLevel)
+				.forEach(recipeHolder -> ALL_RECIPES.add(new RecipeHolder<>(recipeHolder.id(), recipeHolder.value())));
 	}
 
 	@Nullable
@@ -105,14 +113,14 @@ public class StarForgeBlockEntity extends BaseContainerBlockEntity implements En
 	public void tick(ServerLevel level, BlockPos pos, BlockState state) {
 		if (level.getGameTime() % 20 == 0) {
 			Direction controllerDirection = state.getValue(StarForgeControllerBlock.FACING);
-			hasSolarEnergy = level.isDay()
+			hasSolarEnergy = level.isBrightOutside()
 					&& level.canSeeSky(pos.above(3).relative(controllerDirection))
 					&& StarForgeControllerBlock.checkForValidMultiBlock(state, pos, level);
 
 			float biomeTemperature = level.getBiome(pos).value().getBaseTemperature();
 			float temperatureModifier = 1.0f + (biomeTemperature * 5);
 			temperature = Mth.clamp((int) (temperature + (hasSolarEnergy ? 1 : -1) * temperatureModifier), 0, 1000);
-
+			
 			if (temperature == 1000 && !inventory.getFirst().isEmpty()) {
 				if (!state.getValue(StarForgeControllerBlock.LIT)) {
 					level.setBlock(pos, state.setValue(StarForgeControllerBlock.LIT, true), 3);
@@ -134,7 +142,7 @@ public class StarForgeBlockEntity extends BaseContainerBlockEntity implements En
 				updateResult();
 
 				// Decrement the input slots
-				inventory.get(0).shrink(availableRecipes.get(menuSelectionIndex).value().ingotCount());
+				inventory.get(0).shrink(availableRecipes.get(menuSelectionIndex).value().primaryMaterialCount());
 				inventory.get(1).shrink(availableRecipes.get(menuSelectionIndex).value().secondaryMaterialCount());
 
 				// Reset the menu selection index
@@ -152,35 +160,9 @@ public class StarForgeBlockEntity extends BaseContainerBlockEntity implements En
 
 		inventory.clear();
 		ContainerHelper.loadAllItems(tag, inventory, provider);
-		hasSolarEnergy = tag.getBoolean("hasSolarEnergy");
-		temperature = tag.getInt("temperature");
-		smeltTime = tag.getInt("smeltTime");
-
-		ListTag availableRecipesTag = tag.getList("availableRecipes", 10);
-		for (int i = 0; i < availableRecipesTag.size(); i++) {
-			CompoundTag recipeTag = availableRecipesTag.getCompound(i);
-			ResourceLocation recipeId = ResourceLocation.parse(recipeTag.getString("recipeId"));
-			savedRecipes.add(recipeId);
-		}
-	}
-
-	@Override
-	public void onLoad() {
-		super.onLoad();
-
-		if (level != null) {
-			availableRecipes.clear();
-
-			for (ResourceLocation recipeId : savedRecipes) {
-				level.getRecipeManager().byKey(recipeId).ifPresent(recipeHolder -> {
-					if (recipeHolder.value() instanceof StarForgeRecipe recipe) {
-						availableRecipes.add(new RecipeHolder<>(recipeId, recipe));
-					}
-				});
-			}
-
-			initializeRecipes(level.getRecipeManager());
-		}
+		hasSolarEnergy = tag.getBoolean("hasSolarEnergy").orElse(false);
+		temperature = tag.getInt("temperature").orElse(0);
+		smeltTime = tag.getInt("smeltTime").orElse(0);
 	}
 
 	@Override
@@ -191,14 +173,6 @@ public class StarForgeBlockEntity extends BaseContainerBlockEntity implements En
 		tag.putBoolean("hasSolarEnergy", hasSolarEnergy);
 		tag.putInt("temperature", temperature);
 		tag.putInt("smeltTime", smeltTime);
-
-		ListTag availableRecipesTag = new ListTag();
-		for (RecipeHolder<StarForgeRecipe> holder : availableRecipes) {
-			CompoundTag recipeTag = new CompoundTag();
-			recipeTag.putString("recipeId", holder.id().toString());
-			availableRecipesTag.add(recipeTag);
-		}
-		tag.put("availableRecipes", availableRecipesTag);
 	}
 
 	@Override
@@ -254,9 +228,9 @@ public class StarForgeBlockEntity extends BaseContainerBlockEntity implements En
 	/**
 	 * Create a list of available recipes based on the current inputs.
 	 */
-	public List<RecipeHolder<StarForgeRecipe>> getAvailableRecipes(ItemStack ingot, ItemStack secondaryMaterial) {
-		if (ALL_RECIPES.isEmpty() && level != null) {
-			initializeRecipes(level.getRecipeManager());
+	public List<RecipeHolder<StarForgeRecipe>> getAvailableRecipes(ItemStack primaryMaterial, ItemStack secondaryMaterial) {
+		if (level instanceof ServerLevel serverLevel) {
+			initializeRecipes(serverLevel.recipeAccess(), serverLevel);
 		}
 
 		List<RecipeHolder<StarForgeRecipe>> availableRecipes = new ArrayList<>(ALL_RECIPES.size());
@@ -264,15 +238,21 @@ public class StarForgeBlockEntity extends BaseContainerBlockEntity implements En
 		for (RecipeHolder<StarForgeRecipe> holder : ALL_RECIPES) {
 			StarForgeRecipe recipe = holder.value();
 
-			if (ingot.getItem().equals(recipe.getIngot().getItem()) && secondaryMaterial.getItem().equals(recipe.getSecondaryMaterial().getItem())) {
-				availableRecipes.add(holder);
+			if (recipe.primaryMaterial().test(primaryMaterial)) {
+				if (recipe.secondaryMaterial().isPresent() && recipe.secondaryMaterial().get().test(secondaryMaterial)) {
+					availableRecipes.add(holder);
+				} else {
+					if (recipe.secondaryMaterialCount() == 0) {
+						availableRecipes.add(holder);
+					}
+				}
 			}
 		}
 
 		return availableRecipes;
 	}
 
-	public List<ResourceLocation> getAvailableRecipeIds() {
+	public List<ResourceKey<Recipe<?>>> getAvailableRecipeKeys() {
 		if (availableRecipes.isEmpty()) {
 			availableRecipes = getAvailableRecipes(inventory.get(0), inventory.get(1));
 		}
@@ -326,7 +306,7 @@ public class StarForgeBlockEntity extends BaseContainerBlockEntity implements En
 		if (!availableRecipes.isEmpty() && containerData.get(1) == 1000 && containerData.get(2) == 0) {
 			StarForgeRecipe recipe = availableRecipes.get(containerData.get(3)).value();
 			// Check if the inputs are sufficient
-			if (recipe.ingotCount() <= inventory.get(0).getCount() && recipe.secondaryMaterialCount() <= inventory.get(1).getCount()) {
+			if (recipe.primaryMaterialCount() <= inventory.get(0).getCount() && recipe.secondaryMaterialCount() <= inventory.get(1).getCount()) {
 				// Set the result slot
 				setItem(2, recipe.result());
 			} else {

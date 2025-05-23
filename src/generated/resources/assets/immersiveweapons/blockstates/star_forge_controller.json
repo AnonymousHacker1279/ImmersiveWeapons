@@ -2,33 +2,33 @@
   "variants": {
     "facing=east,lit=false": {
       "model": "immersiveweapons:block/star_forge_controller",
-      "y": 270
+      "y": 90
     },
     "facing=east,lit=true": {
-      "model": "immersiveweapons:block/star_forge_controller_lit",
-      "y": 270
+      "model": "immersiveweapons:block/star_forge_controller_on",
+      "y": 90
     },
     "facing=north,lit=false": {
+      "model": "immersiveweapons:block/star_forge_controller"
+    },
+    "facing=north,lit=true": {
+      "model": "immersiveweapons:block/star_forge_controller_on"
+    },
+    "facing=south,lit=false": {
       "model": "immersiveweapons:block/star_forge_controller",
       "y": 180
     },
-    "facing=north,lit=true": {
-      "model": "immersiveweapons:block/star_forge_controller_lit",
-      "y": 180
-    },
-    "facing=south,lit=false": {
-      "model": "immersiveweapons:block/star_forge_controller"
-    },
     "facing=south,lit=true": {
-      "model": "immersiveweapons:block/star_forge_controller_lit"
+      "model": "immersiveweapons:block/star_forge_controller_on",
+      "y": 180
     },
     "facing=west,lit=false": {
       "model": "immersiveweapons:block/star_forge_controller",
-      "y": 90
+      "y": 270
     },
     "facing=west,lit=true": {
-      "model": "immersiveweapons:block/star_forge_controller_lit",
-      "y": 90
+      "model": "immersiveweapons:block/star_forge_controller_on",
+      "y": 270
     }
   }
 }

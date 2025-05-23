@@ -1,28 +1,29 @@
 package tech.anonymoushacker1279.immersiveweapons.client.model;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.model.geom.*;
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.entity.ambient.FireflyEntity;
 
-public class FireflyModel<T extends FireflyEntity> extends EntityModel<T> {
+public class FireflyModel extends EntityModel<LivingEntityRenderState> {
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(
 			ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "firefly"),
 			"main");
 
-	private final ModelPart wings;
 	private final ModelPart body;
 	private final ModelPart rightWing;
 	private final ModelPart leftWing;
 
 	public FireflyModel(ModelPart root) {
+		super(root, RenderType::entityCutout);
 		ModelPart main = root.getChild("main");
-		wings = main.getChild("wings");
+		ModelPart wings = main.getChild("wings");
 		body = main.getChild("body");
 
 		rightWing = wings.getChild("right_wing");
@@ -60,32 +61,15 @@ public class FireflyModel<T extends FireflyEntity> extends EntityModel<T> {
 	}
 
 	@Override
-	public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		if (entity.isResting()) {
-			rightWing.xRot = -0.15707964F;
-			rightWing.yRot = 0.567232F;
-			leftWing.xRot = rightWing.xRot;
+	public void setupAnim(LivingEntityRenderState renderState) {
+		super.setupAnim(renderState);
 
-			// The body should be vertical, as if it was attached to a wall
-			body.xRot = 1.57079633F;
+		body.xRot = 0.0F;
+		body.z = 0.0F;
+		rightWing.z = 0.0F;
+		leftWing.z = rightWing.z;
 
-			body.z = -2.0F;
-			rightWing.z = -1.5F;
-			leftWing.z = rightWing.z;
-		} else {
-			body.xRot = 0.0F;
-			body.z = 0.0F;
-			rightWing.z = 0.0F;
-			leftWing.z = rightWing.z;
-
-			rightWing.xRot = Mth.cos(ageInTicks * 74.48451F * ((float) Math.PI / 180F)) * (float) Math.PI * 0.25F;
-			leftWing.xRot = -rightWing.xRot;
-		}
-	}
-
-	@Override
-	public void renderToBuffer(PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, int color) {
-		wings.render(poseStack, buffer, packedLight, packedOverlay, color);
-		body.render(poseStack, buffer, packedLight, packedOverlay, color);
+		rightWing.xRot = Mth.cos(renderState.ageInTicks * 74.48451F * ((float) Math.PI / 180F)) * (float) Math.PI * 0.25F;
+		leftWing.xRot = -rightWing.xRot;
 	}
 }

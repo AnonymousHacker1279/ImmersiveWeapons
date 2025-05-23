@@ -7,11 +7,14 @@ import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.EnchantmentTags;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.enchantment.*;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
+import net.minecraft.world.item.enchantment.LevelBasedValue;
 import net.minecraft.world.item.enchantment.effects.AddValue;
 import net.minecraft.world.item.enchantment.effects.EnchantmentAttributeEffect;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -26,6 +29,7 @@ public class EnchantmentsGenerator {
 	public static void bootstrap(BootstrapContext<Enchantment> context) {
 		HolderGetter<Enchantment> enchantmentGetter = context.lookup(Registries.ENCHANTMENT);
 		HolderGetter<Item> itemGetter = context.lookup(Registries.ITEM);
+		HolderGetter<EntityType<?>> entityTypeGetter = context.lookup(Registries.ENTITY_TYPE);
 
 		register(context,
 				IWEnchantments.FIREPOWER,
@@ -56,7 +60,7 @@ public class EnchantmentsGenerator {
 								LootItemEntityPropertyCondition.hasProperties(
 										LootContext.EntityTarget.DIRECT_ATTACKER,
 										EntityPredicate.Builder.entity()
-												.of(IWEntityTypeTagGroups.MUSKET_BALLS)
+												.of(entityTypeGetter, IWEntityTypeTagGroups.MUSKET_BALLS)
 												.build()
 								)
 						));

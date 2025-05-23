@@ -3,9 +3,7 @@
   "category": "building",
   "group": "sulfur",
   "key": {
-    "a": {
-      "item": "immersiveweapons:sulfur"
-    }
+    "a": "immersiveweapons:sulfur"
   },
   "pattern": [
     "aaa",

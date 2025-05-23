@@ -65,7 +65,7 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 		goalSelector.addGoal(4, new OpenDoorGoal(this, false));
 		goalSelector.addGoal(1, new FloatGoal(this));
 		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Monster.class, 1,
-				true, true, (targetPredicate) -> !(targetPredicate instanceof Creeper)));
+				true, true, (entity, level) -> !(entity instanceof Creeper)));
 		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, MinutemanEntity.class, true));
 		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, FieldMedicEntity.class, true));
 		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
@@ -122,20 +122,9 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 		}
 	}
 
-	/**
-	 * Finalize spawn information.
-	 *
-	 * @param level      the <code>ServerLevelAccessor</code> the entity is in
-	 * @param difficulty the <code>DifficultyInstance</code> of the world
-	 * @param spawnType  the <code>MobSpawnType</code> for the entity
-	 * @param groupData  the <code>SpawnGroupData</code> for the entity
-	 * @return SpawnGroupData
-	 */
+	@Nullable
 	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty,
-	                                    MobSpawnType spawnType, @Nullable SpawnGroupData groupData) {
-
-		groupData = super.finalizeSpawn(level, difficulty, spawnType, groupData);
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, EntitySpawnReason spawnReason, @javax.annotation.Nullable SpawnGroupData spawnGroupData) {
 		populateDefaultEquipmentSlots(random, difficulty);
 		populateDefaultEquipmentEnchantments(level, random, difficulty);
 		setCombatTask();
@@ -149,11 +138,11 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 				setItemSlot(EquipmentSlot.HEAD,
 						new ItemStack(random.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
 
-				armorDropChances[EquipmentSlot.HEAD.getIndex()] = 0.0F;
+				setDropChance(EquipmentSlot.HEAD, 0.0F);
 			}
 		}
 
-		return groupData;
+		return super.finalizeSpawn(level, difficulty, spawnReason, spawnGroupData);
 	}
 
 	/**

@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "immersiveweapons:block/star_forge_controller"
+  }
+}

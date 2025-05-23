@@ -55,7 +55,7 @@ public class DragonFireballBulletEntity extends BulletEntity implements ItemSupp
 		cloud.setRadius(3.0f);
 		cloud.setDuration(120);
 		cloud.setRadiusPerTick((3.0f - cloud.getRadius()) / (float) cloud.getDuration());
-		cloud.addEffect(new MobEffectInstance(MobEffects.HARM, 1, 2));
+		cloud.addEffect(new MobEffectInstance(MobEffects.INSTANT_DAMAGE, 1, 2));
 		level().addFreshEntity(cloud);
 
 		level().playSound(null, blockPosition(), SoundEvents.DRAGON_FIREBALL_EXPLODE, getSoundSource(), 1.0f, Mth.randomBetween(getRandom(), 0.8f, 1.1f));
@@ -67,7 +67,7 @@ public class DragonFireballBulletEntity extends BulletEntity implements ItemSupp
 	protected void doWhileTicking() {
 		super.doWhileTicking();
 
-		if (!inGround && level() instanceof ServerLevel serverLevel) {
+		if (!isInGround() && level() instanceof ServerLevel serverLevel) {
 			serverLevel.sendParticles(
 					ParticleTypes.DRAGON_BREATH,
 					position().x, position().y, position().z,

@@ -96,7 +96,7 @@ public class BulletItem<T extends BulletEntity> extends ArrowItem {
 	}
 
 	/**
-	 * Check if the bullet is infinite. Restricts the ability to lower level bullets, for balance.
+	 * Check if the bullet is infinite. Restricts the ability to lower level bullets for balance.
 	 *
 	 * @param bullet  the bullet being checked
 	 * @param gun     the gun firing the bullet

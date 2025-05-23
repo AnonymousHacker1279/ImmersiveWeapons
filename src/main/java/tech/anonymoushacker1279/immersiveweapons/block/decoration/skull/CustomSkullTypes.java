@@ -16,6 +16,7 @@ public enum CustomSkullTypes implements SkullBlock.Type {
 
 	CustomSkullTypes(String name) {
 		this.name = name;
+		TYPES.put(name, this);
 	}
 
 	@Override

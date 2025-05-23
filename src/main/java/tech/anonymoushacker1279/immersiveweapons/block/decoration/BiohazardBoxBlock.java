@@ -24,20 +24,13 @@ public class BiohazardBoxBlock extends BasicOrientableBlock implements SimpleWat
 	private static final VoxelShape SHAPE_EAST = Block.box(0.0D, 3.0D, 2.0D, 5.0D, 13.0D, 14.0D);
 	private static final VoxelShape SHAPE_WEST = Block.box(11.0D, 3.0D, 2.0D, 16.0D, 13.0D, 14.0D);
 
-	/**
-	 * Constructor for BiohazardBoxBlock.
-	 *
-	 * @param properties the <code>Properties</code> of the block
-	 */
 	public BiohazardBoxBlock(Properties properties) {
 		super(properties);
 		registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false));
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos,
-	                           CollisionContext collisionContext) {
-
+	public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext collisionContext) {
 		return switch (state.getValue(FACING)) {
 			case SOUTH -> SHAPE_SOUTH;
 			case EAST -> SHAPE_EAST;

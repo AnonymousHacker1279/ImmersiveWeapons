@@ -7,30 +7,33 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.layers.CrossedArmsItemLayer;
 import net.minecraft.client.renderer.entity.layers.CustomHeadLayer;
+import net.minecraft.client.renderer.entity.state.VillagerRenderState;
 import net.minecraft.resources.ResourceLocation;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.entity.npc.SkygazerEntity;
 
-public class SkygazerRenderer extends MobRenderer<SkygazerEntity, VillagerModel<SkygazerEntity>> {
+public class SkygazerRenderer extends MobRenderer<SkygazerEntity, VillagerRenderState, VillagerModel> {
 
 	private static final ResourceLocation TEXTURE_LOCATION = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/entity/skygazer/skygazer.png");
 
 	public SkygazerRenderer(EntityRendererProvider.Context context) {
-		super(context, new VillagerModel<>(context.bakeLayer(ModelLayers.WANDERING_TRADER)), 0.5F);
-		addLayer(new CustomHeadLayer<>(this, context.getModelSet(), context.getItemInHandRenderer()));
-		addLayer(new CrossedArmsItemLayer<>(this, context.getItemInHandRenderer()));
+		super(context, new VillagerModel(context.bakeLayer(ModelLayers.WANDERING_TRADER)), 0.5F);
+		addLayer(new CustomHeadLayer<>(this, context.getModelSet()));
+		addLayer(new CrossedArmsItemLayer<>(this));
 	}
 
-	/**
-	 * Returns the location of an entity's texture.
-	 */
 	@Override
-	public ResourceLocation getTextureLocation(SkygazerEntity pEntity) {
+	public VillagerRenderState createRenderState() {
+		return new VillagerRenderState();
+	}
+
+	@Override
+	public ResourceLocation getTextureLocation(VillagerRenderState pEntity) {
 		return TEXTURE_LOCATION;
 	}
 
 	@Override
-	protected void scale(SkygazerEntity pLivingEntity, PoseStack pMatrixStack, float pPartialTickTime) {
+	protected void scale(VillagerRenderState state, PoseStack pMatrixStack) {
 		pMatrixStack.scale(0.9375F, 0.9375F, 0.9375F);
 	}
 }

@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "key": {
-    "a": {
-      "tag": "immersiveweapons:shards/starstorm"
-    },
-    "b": {
-      "item": "minecraft:stick"
-    },
-    "c": {
-      "item": "minecraft:feather"
-    }
+    "a": "#immersiveweapons:shards/starstorm",
+    "b": "minecraft:stick",
+    "c": "minecraft:feather"
   },
   "pattern": [
     "a",

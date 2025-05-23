@@ -4,9 +4,7 @@
   "cookingtime": 200,
   "experience": 0.8,
   "group": "cobalt",
-  "ingredient": {
-    "item": "immersiveweapons:cobalt_ore"
-  },
+  "ingredient": "immersiveweapons:cobalt_ore",
   "result": {
     "count": 1,
     "id": "immersiveweapons:cobalt_ingot"

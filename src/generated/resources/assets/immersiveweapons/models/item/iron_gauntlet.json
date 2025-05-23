@@ -1,13 +1,5 @@
 {
   "parent": "immersiveweapons:item/gauntlet",
-  "overrides": [
-    {
-      "model": "immersiveweapons:item/iron_gauntlet_alt",
-      "predicate": {
-        "immersiveweapons:gunslinger": 1.0
-      }
-    }
-  ],
   "textures": {
     "material": "minecraft:block/iron_block"
   }

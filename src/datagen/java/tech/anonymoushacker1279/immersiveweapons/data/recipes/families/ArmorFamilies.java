@@ -2,7 +2,8 @@ package tech.anonymoushacker1279.immersiveweapons.data.recipes.families;
 
 import com.google.common.collect.ImmutableList;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.common.Tags;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.common.CommonItemTagGroups;
@@ -12,10 +13,10 @@ import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import java.util.function.Supplier;
 
 public record ArmorFamilies(TagKey<Item> material,
-                            Supplier<? extends ArmorItem> helmet,
-                            Supplier<? extends ArmorItem> chestplate,
-                            Supplier<? extends ArmorItem> leggings,
-                            Supplier<? extends ArmorItem> boots,
+                            Supplier<? extends Item> helmet,
+                            Supplier<? extends Item> chestplate,
+                            Supplier<? extends Item> leggings,
+                            Supplier<? extends Item> boots,
                             @Nullable Supplier<? extends Item> smithingTemplateItem,
                             @Nullable ImmutableList<Item> smithingBaseUpgrades) {
 

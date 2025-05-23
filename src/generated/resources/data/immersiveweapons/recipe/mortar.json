@@ -3,12 +3,8 @@
   "category": "equipment",
   "group": "artillery",
   "key": {
-    "a": {
-      "tag": "c:ingots/metal"
-    },
-    "b": {
-      "tag": "c:stones"
-    }
+    "a": "#c:ingots/metal",
+    "b": "#c:stones"
   },
   "pattern": [
     "b b",

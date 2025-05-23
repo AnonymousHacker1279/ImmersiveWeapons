@@ -4,13 +4,18 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.util.TimeUtil;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.OpenDoorGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -19,10 +24,10 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
+import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
-import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -47,8 +52,13 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 		goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.8D, 0.35f));
 	}
 
+	public static AttributeSupplier.Builder createSoldierAttributes() {
+		return Mob.createMobAttributes()
+				.add(Attributes.ATTACK_DAMAGE, 2.0D);
+	}
+
 	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData) {
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, EntitySpawnReason reason, @Nullable SpawnGroupData spawnData) {
 
 		populateDefaultEquipmentSlots(random, difficulty);
 		populateDefaultEquipmentEnchantments(level, random, difficulty);
@@ -63,7 +73,7 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 				setItemSlot(EquipmentSlot.HEAD,
 						new ItemStack(random.nextFloat() < 0.1F ? Blocks.JACK_O_LANTERN : Blocks.CARVED_PUMPKIN));
 
-				armorDropChances[EquipmentSlot.HEAD.getIndex()] = 0.0F;
+				setDropChance(EquipmentSlot.HEAD, 0.0F);
 			}
 		}
 
@@ -76,7 +86,7 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 		int baseXP = Mth.ceil(100 * difficultyMultiplier);
 
 		int armorXP = 0;
-		for (ItemStack stack : getArmorSlots()) {
+		for (ItemStack stack : List.of(getItemBySlot(EquipmentSlot.HEAD), getItemBySlot(EquipmentSlot.CHEST), getItemBySlot(EquipmentSlot.LEGS), getItemBySlot(EquipmentSlot.FEET))) {
 			if (!stack.isEmpty()) {
 				armorXP += 2 + random.nextInt(3);
 
@@ -98,13 +108,10 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 		return baseXP + armorXP + weaponXP;
 	}
 
+	@Nullable
 	@Override
-	protected boolean canReplaceCurrentItem(ItemStack pCandidate, ItemStack pExisting) {
-		if (pCandidate.getItem() instanceof AbstractGunItem && pExisting.getItem() instanceof AbstractGunItem) {
-			return true;
-		}
-
-		return super.canReplaceCurrentItem(pCandidate, pExisting);
+	public TagKey<Item> getPreferredWeaponType() {
+		return IWItemTagGroups.FIREARMS;
 	}
 
 	@Override
@@ -123,7 +130,7 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 	}
 
 	@Override
-	public boolean hurt(DamageSource source, float amount) {
+	public boolean hurtServer(ServerLevel serverLevel, DamageSource source, float amount) {
 		if (source.getEntity() != null) {
 			for (Class<? extends Entity> clazz : ignoresDamageFrom) {
 				if (clazz.isInstance(source.getEntity())) {
@@ -133,7 +140,7 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 
 			if (source.getEntity() instanceof Player player) {
 				if (player.isCreative()) {
-					return super.hurt(source, amount);
+					return super.hurtServer(serverLevel, source, amount);
 				} else {
 					if (Accessory.isAccessoryActive(player, getPeaceAccessory())) {
 						return false;
@@ -146,11 +153,11 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 				setTarget(livingEntity);
 				setPersistentAngerTarget(source.getEntity().getUUID());
 
-				return super.hurt(source, amount);
+				return super.hurtServer(serverLevel, source, amount);
 			}
 		}
 
-		return super.hurt(source, amount);
+		return super.hurtServer(serverLevel, source, amount);
 	}
 
 	@Override
@@ -236,9 +243,9 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 	protected abstract Item getAggroAccessory();
 
 	protected boolean canTargetEntityWhenHurt(LivingEntity entity) {
-		if (entity instanceof Player player) {
+		if (entity instanceof Player player && player.level() instanceof ServerLevel serverLevel) {
 			return !player.isCreative()
-					&& ((isAngryAt(player) || Accessory.isAccessoryActive(player, getAggroAccessory()))
+					&& ((isAngryAt(player, serverLevel) || Accessory.isAccessoryActive(player, getAggroAccessory()))
 					&& !Accessory.isAccessoryActive(player, getPeaceAccessory()));
 		} else {
 			for (Class<? extends Entity> clazz : ignoresDamageFrom) {

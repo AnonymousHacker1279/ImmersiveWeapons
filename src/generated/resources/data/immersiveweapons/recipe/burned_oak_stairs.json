@@ -3,9 +3,7 @@
   "category": "building",
   "group": "wooden_stairs",
   "key": {
-    "a": {
-      "item": "immersiveweapons:burned_oak_planks"
-    }
+    "a": "immersiveweapons:burned_oak_planks"
   },
   "pattern": [
     "a  ",

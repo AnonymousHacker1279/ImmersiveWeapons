@@ -3,12 +3,8 @@
   "category": "building",
   "group": "chairs",
   "key": {
-    "a": {
-      "tag": "c:ingots/metal"
-    },
-    "b": {
-      "tag": "minecraft:wool"
-    }
+    "a": "#c:ingots/metal",
+    "b": "#minecraft:wool"
   },
   "pattern": [
     "b  ",

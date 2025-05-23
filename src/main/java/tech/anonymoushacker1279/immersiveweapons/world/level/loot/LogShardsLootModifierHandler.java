@@ -62,7 +62,7 @@ public class LogShardsLootModifierHandler extends LootModifier {
 	public @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
 		int shardCount = 0;
 		for (ItemStack stack : generatedLoot) {
-			// Each wooden log stack can generate shards
+			// Each wooden log ingredient can generate shards
 			if (stack.is(tag)) {
 				shardCount += stack.getCount() * context.getRandom().nextIntBetweenInclusive(minShards, maxShards);
 			}

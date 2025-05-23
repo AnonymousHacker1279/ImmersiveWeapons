@@ -3,9 +3,7 @@
   "category": "building",
   "group": "mud",
   "key": {
-    "a": {
-      "item": "immersiveweapons:hardened_mud"
-    }
+    "a": "immersiveweapons:hardened_mud"
   },
   "pattern": [
     "a  ",

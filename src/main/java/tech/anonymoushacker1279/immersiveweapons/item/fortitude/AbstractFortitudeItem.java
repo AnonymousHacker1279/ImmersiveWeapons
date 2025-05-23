@@ -2,7 +2,8 @@ package tech.anonymoushacker1279.immersiveweapons.item.fortitude;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.*;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -40,12 +41,11 @@ public abstract class AbstractFortitudeItem extends Item {
 	}
 
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level level, Player player,
-	                                              InteractionHand hand) {
+	public InteractionResult use(Level level, Player player, InteractionHand hand) {
 
 		if (usedOnEntity) {
 			usedOnEntity = false;
-			return InteractionResultHolder.pass(player.getItemInHand(hand));
+			return InteractionResult.SUCCESS;
 		}
 
 		ItemStack itemInHand = player.getItemInHand(hand);
@@ -56,7 +56,8 @@ public abstract class AbstractFortitudeItem extends Item {
 					player.displayClientMessage(Component.translatable("immersiveweapons.item.first_aid_kit.player")
 							.withStyle(ChatFormatting.RED), true);
 				}
-				return InteractionResultHolder.pass(itemInHand);
+
+				return InteractionResult.FAIL;
 			}
 		}
 
@@ -67,15 +68,15 @@ public abstract class AbstractFortitudeItem extends Item {
 			if (getContainerItem() != null) {
 				player.getInventory().add(getContainerItem());
 			}
-			player.getCooldowns().addCooldown(this, getCooldown());
+
+			player.getCooldowns().addCooldown(itemInHand, getCooldown());
 		}
 
-		return InteractionResultHolder.sidedSuccess(itemInHand, level.isClientSide());
+		return InteractionResult.SUCCESS;
 	}
 
 	@Override
-	public InteractionResult interactLivingEntity(ItemStack stack, Player player,
-	                                              LivingEntity entity, InteractionHand hand) {
+	public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity entity, InteractionHand hand) {
 
 		usedOnEntity = true;
 
@@ -85,6 +86,7 @@ public abstract class AbstractFortitudeItem extends Item {
 					player.displayClientMessage(Component.translatable("immersiveweapons.item.first_aid_kit.entity")
 							.withStyle(ChatFormatting.RED), true);
 				}
+
 				return InteractionResult.PASS;
 			}
 		}

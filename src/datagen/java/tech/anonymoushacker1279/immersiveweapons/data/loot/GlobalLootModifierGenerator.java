@@ -35,6 +35,8 @@ import java.util.concurrent.ExecutionException;
 public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 
 	private final Provider registries;
+	private final HolderGetter<EntityType<?>> entityTypeGetter;
+	private final HolderGetter<Item> itemGetter;
 
 	public GlobalLootModifierGenerator(PackOutput output, CompletableFuture<Provider> lookupProvider) {
 		super(output, lookupProvider, ImmersiveWeapons.MOD_ID);
@@ -42,6 +44,8 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 		Provider provider;
 		try {
 			provider = lookupProvider.get();
+			entityTypeGetter = provider.lookupOrThrow(Registries.ENTITY_TYPE);
+			itemGetter = provider.lookupOrThrow(Registries.ITEM);
 		} catch (InterruptedException | ExecutionException e) {
 			throw new RuntimeException(e);
 		}
@@ -269,7 +273,7 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 		return new LootItemCondition[]{
 				LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS,
 								EntityPredicate.Builder.entity()
-										.of(entityType)
+										.of(entityTypeGetter, entityType)
 										.build())
 						.and(LootItemKilledByPlayerCondition.killedByPlayer())
 						.build()};
@@ -287,7 +291,7 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 		return new LootItemCondition[]{
 				LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS,
 								EntityPredicate.Builder.entity()
-										.of(entityType)
+										.of(entityTypeGetter, entityType)
 										.build())
 						.and(LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(registries, chance, lootingMultiplier))
 						.and(LootItemKilledByPlayerCondition.killedByPlayer())
@@ -304,14 +308,14 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 		return new LootItemCondition[]{
 				LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS,
 						EntityPredicate.Builder.entity()
-								.of(entityType)
+								.of(entityTypeGetter, entityType)
 								.build())
 						.build()};
 	}
 
 	private LootItemCondition[] matchToolCondition(TagKey<Item> tagKey) {
 		return new LootItemCondition[]{
-				MatchTool.toolMatches(ItemPredicate.Builder.item().of(tagKey)).build()};
+				MatchTool.toolMatches(ItemPredicate.Builder.item().of(itemGetter, tagKey)).build()};
 	}
 
 	/**

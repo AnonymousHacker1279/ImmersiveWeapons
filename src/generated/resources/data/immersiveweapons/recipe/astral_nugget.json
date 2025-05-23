@@ -3,9 +3,7 @@
   "category": "misc",
   "group": "astral",
   "ingredients": [
-    {
-      "tag": "immersiveweapons:ingots/astral"
-    }
+    "#immersiveweapons:ingots/astral"
   ],
   "result": {
     "count": 9,

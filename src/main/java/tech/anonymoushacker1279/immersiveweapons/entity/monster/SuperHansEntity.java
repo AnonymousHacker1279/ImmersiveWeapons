@@ -8,7 +8,9 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.*;
+import net.minecraft.server.level.ServerBossEvent;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.BossEvent.BossBarColor;
@@ -20,7 +22,9 @@ import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.*;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.monster.Monster;
@@ -30,14 +34,18 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.levelgen.structure.*;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.entity.AttackerTracker;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 public class SuperHansEntity extends HansEntity implements AttackerTracker {
 
@@ -78,7 +86,7 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 	}
 
 	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData) {
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, EntitySpawnReason reason, @Nullable SpawnGroupData spawnData) {
 		bossEvent.setProgress(1.0f);
 
 		switch (difficulty.getDifficulty()) {
@@ -104,7 +112,7 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 	}
 
 	@Override
-	public boolean hurt(DamageSource source, float amount) {
+	public boolean hurtServer(ServerLevel serverLevel, DamageSource source, float amount) {
 		if (!source.is(DamageTypes.GENERIC_KILL) && towerMinibossesAlive) {
 			if (source.getEntity() instanceof Player player) {
 				player.displayClientMessage(Component.translatable("immersiveweapons.entity.super_hans.tower_minibosses_alive")
@@ -137,10 +145,10 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 
 		// Add strength effect if health is low
 		if (getHealth() / getMaxHealth() <= 0.25f) {
-			addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 300, 1));
+			addEffect(new MobEffectInstance(MobEffects.STRENGTH, 300, 1));
 		}
 
-		boolean doesHurt = super.hurt(source, amount);
+		boolean doesHurt = super.hurtServer(serverLevel, source, amount);
 
 		if (doesHurt) {
 			bossEvent.setProgress(getHealth() / getMaxHealth());
@@ -164,8 +172,8 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 	}
 
 	@Override
-	public boolean doHurtTarget(Entity entity) {
-		boolean hurtTarget = super.doHurtTarget(entity);
+	public boolean doHurtTarget(ServerLevel serverLevel, Entity entity) {
+		boolean hurtTarget = super.doHurtTarget(serverLevel, entity);
 
 		if (hurtTarget) {
 			if (entity instanceof LivingEntity livingEntity) {
@@ -188,7 +196,7 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 		// This has to run before the super call otherwise firstTick is always false
 		if (firstTick) {
 			if (level() instanceof ServerLevel serverLevel) {
-				Structure structure = serverLevel.structureManager().registryAccess().registryOrThrow(Registries.STRUCTURE).get(CHAMPION_TOWER_KEY);
+				Structure structure = serverLevel.structureManager().registryAccess().lookupOrThrow(Registries.STRUCTURE).getValue(CHAMPION_TOWER_KEY);
 
 				if (structure != null) {
 					StructureStart structureStart = serverLevel.structureManager().getStructureAt(blockPosition(), structure);
@@ -265,7 +273,7 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 
 					if (optionalEntity.isPresent()) {
 						if (optionalEntity.get() instanceof Player player) {
-							player.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 60, 4, true, true));
+							player.addEffect(new MobEffectInstance(MobEffects.MINING_FATIGUE, 60, 4, true, true));
 						}
 					}
 
@@ -333,7 +341,7 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 	public void load(CompoundTag pCompound) {
 		super.load(pCompound);
 
-		xpReward = pCompound.getInt("xpReward");
+		xpReward = pCompound.getIntOr("xpReward", 0);
 	}
 
 	public int getAttackingEntities() {

@@ -24,7 +24,7 @@ public class EnvironmentEffects {
 			float celestialProtectionChanceForNoDamage = 0.0f;
 
 			if (!damagedEntity.getPersistentData().isEmpty()) {
-				celestialProtectionChanceForNoDamage = damagedEntity.getPersistentData().getFloat("celestialProtectionChanceForNoDamage");
+				celestialProtectionChanceForNoDamage = damagedEntity.getPersistentData().getFloatOr("celestialProtectionChanceForNoDamage", 0.0f);
 			}
 
 			// Check if the damage should be neutralized

@@ -3,9 +3,7 @@
   "category": "misc",
   "group": "molten",
   "ingredients": [
-    {
-      "item": "immersiveweapons:molten_block"
-    }
+    "immersiveweapons:molten_block"
   ],
   "result": {
     "count": 9,

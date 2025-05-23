@@ -6,17 +6,15 @@ import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.data.IWEnchantments;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MeteorEntity;
-import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
 public class MeteorStaffItem extends Item implements SummoningStaff {
 
@@ -24,9 +22,8 @@ public class MeteorStaffItem extends Item implements SummoningStaff {
 		super(properties);
 	}
 
-	// Summon a meteor entity at the location the player is looking at on right-click
 	@Override
-	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+	public InteractionResult use(Level level, Player player, InteractionHand hand) {
 
 		BlockPos lookingAt = getBlockLookingAt(player, level, getMaxRange());
 		ItemStack itemInHand = player.getItemInHand(hand);
@@ -40,30 +37,26 @@ public class MeteorStaffItem extends Item implements SummoningStaff {
 				if (enchantmentLevel > 0 && player.isCrouching()) {
 					for (int i = 0; i < 3; i++) {
 						if (!MeteorEntity.create(level, player, itemInHand, lookingAt, null)) {
-							// If the meteor entity could not be created (because the starting position was inside a solid block)
-							// send a message to the player
 							player.displayClientMessage(Component.translatable("immersiveweapons.item.meteor_staff.not_enough_clearance")
 									.withStyle(ChatFormatting.RED), true);
-							return InteractionResultHolder.fail(itemInHand);
+							return InteractionResult.FAIL;
 						}
 					}
-					handleCooldown(this, lookingAt, player, hand, getStaffCooldown() * 3);
+					handleCooldown(lookingAt, player, hand, getStaffCooldown() * 3);
 				} else {
 					if (!MeteorEntity.create(level, player, itemInHand, lookingAt, null)) {
-						// If the meteor entity could not be created (because the starting position was inside a solid block)
-						// send a message to the player
 						player.displayClientMessage(Component.translatable("immersiveweapons.item.meteor_staff.not_enough_clearance")
 								.withStyle(ChatFormatting.RED), true);
-						return InteractionResultHolder.fail(itemInHand);
+						return InteractionResult.FAIL;
 					}
-					handleCooldown(this, lookingAt, player, hand);
+					handleCooldown(lookingAt, player, hand);
 				}
 			} else {
-				return InteractionResultHolder.pass(itemInHand);
+				return InteractionResult.PASS;
 			}
 		}
 
-		return InteractionResultHolder.sidedSuccess(itemInHand, level.isClientSide());
+		return InteractionResult.SUCCESS;
 	}
 
 	@Override
@@ -72,17 +65,7 @@ public class MeteorStaffItem extends Item implements SummoningStaff {
 	}
 
 	@Override
-	public boolean isValidRepairItem(ItemStack toRepair, ItemStack repair) {
-		return Ingredient.of(ItemRegistry.CELESTIAL_FRAGMENT.get()).test(repair) || super.isValidRepairItem(toRepair, repair);
-	}
-
-	@Override
 	public int getMaxRange() {
 		return IWConfigs.SERVER.meteorStaffMaxUseRange.getAsInt();
-	}
-
-	@Override
-	public int getEnchantmentValue(ItemStack stack) {
-		return 3;
 	}
 }

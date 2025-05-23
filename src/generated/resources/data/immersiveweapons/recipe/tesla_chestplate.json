@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "key": {
-    "a": {
-      "tag": "immersiveweapons:ingots/tesla"
-    }
+    "a": "#immersiveweapons:ingots/tesla"
   },
   "pattern": [
     "a a",

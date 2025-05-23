@@ -1,0 +1,14 @@
+{
+  "layers": {
+    "humanoid": [
+      {
+        "texture": "immersiveweapons:tesla"
+      }
+    ],
+    "humanoid_leggings": [
+      {
+        "texture": "immersiveweapons:tesla"
+      }
+    ]
+  }
+}

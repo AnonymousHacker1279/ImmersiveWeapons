@@ -8,13 +8,14 @@ import net.minecraft.world.level.biome.*;
 import net.minecraft.world.level.biome.Biome.TemperatureModifier;
 import net.minecraft.world.level.biome.BiomeSpecialEffects.GrassColorModifier;
 import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
-import net.minecraft.world.level.levelgen.GenerationStep.Carving;
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import tech.anonymoushacker1279.immersiveweapons.data.features.IWConfiguredCarvers;
 import tech.anonymoushacker1279.immersiveweapons.data.features.IWPlacedFeatures;
-import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.ParticleTypesRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 
 public class BiomesGenerator {
 
@@ -83,7 +84,7 @@ public class BiomesGenerator {
 
 	public static Biome deadmansDesertBiome(HolderGetter<PlacedFeature> placedFeatures, HolderGetter<ConfiguredWorldCarver<?>> worldCarvers) {
 		return new Biome.BiomeBuilder()
-				.temperature(0.2f)
+				.temperature(0.35f)
 				.downfall(0.0f)
 				.hasPrecipitation(false)
 				.temperatureAdjustment(TemperatureModifier.NONE)
@@ -107,8 +108,8 @@ public class BiomesGenerator {
 
 	private static MobSpawnSettings getBattlefieldSpawns() {
 		MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder()
-				.addSpawn(MobCategory.MONSTER, new SpawnerData(
-						EntityRegistry.DYING_SOLDIER_ENTITY.get(), 95, 1, 3));
+				.addSpawn(MobCategory.MONSTER, 95, new SpawnerData(
+						EntityRegistry.DYING_SOLDIER_ENTITY.get(), 1, 3));
 
 		BiomeDefaultFeatures.commonSpawns(spawnBuilder);
 
@@ -117,21 +118,21 @@ public class BiomesGenerator {
 
 	private static MobSpawnSettings getTiltrosWastesSpawns() {
 		MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder()
-				.creatureGenerationProbability(0.65f)
-				.addSpawn(MobCategory.MONSTER, new SpawnerData(
-						EntityRegistry.ROCK_SPIDER_ENTITY.get(), 65, 2, 4))
-				.addSpawn(MobCategory.MONSTER, new SpawnerData(
-						EntityRegistry.LAVA_REVENANT_ENTITY.get(), 35, 1, 1));
+				.addSpawn(MobCategory.MONSTER, 85, new SpawnerData(
+						EntityRegistry.ROCK_SPIDER_ENTITY.get(), 2, 4))
+				.addSpawn(MobCategory.MONSTER, 15, new SpawnerData(
+						EntityRegistry.LAVA_REVENANT_ENTITY.get(), 1, 1))
+				.addMobCharge(EntityRegistry.LAVA_REVENANT_ENTITY.get(), 1d, 2d);
 
 		return spawnBuilder.build();
 	}
 
 	private static MobSpawnSettings getStarlightPlainsSpawns() {
 		MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder()
-				.addSpawn(MobCategory.CREATURE, new SpawnerData(
-						EntityRegistry.FIREFLY_ENTITY.get(), 10, 1, 4))
-				.addSpawn(MobCategory.CREATURE, new SpawnerData(
-						EntityRegistry.STAR_WOLF_ENTITY.get(), 2, 1, 2))
+				.addSpawn(MobCategory.CREATURE, 10, new SpawnerData(
+						EntityRegistry.FIREFLY_ENTITY.get(), 4, 20))
+				.addSpawn(MobCategory.CREATURE, 2, new SpawnerData(
+						EntityRegistry.STAR_WOLF_ENTITY.get(), 1, 2))
 				.addMobCharge(EntityRegistry.FIREFLY_ENTITY.get(), 0.01d, 15d)
 				.addMobCharge(EntityRegistry.STAR_WOLF_ENTITY.get(), 0.1d, 7d);
 
@@ -140,13 +141,12 @@ public class BiomesGenerator {
 
 	private static MobSpawnSettings getDeadmansDesertSpawns() {
 		MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder()
-				.creatureGenerationProbability(0.85f)
-				.addSpawn(MobCategory.MONSTER, new SpawnerData(
-						EntityRegistry.CELESTIAL_TOWER_ENTITY.get(), 5, 1, 1))
-				.addSpawn(MobCategory.MONSTER, new SpawnerData(
-						EntityRegistry.STORM_CREEPER_ENTITY.get(), 10, 1, 1))
-				.addSpawn(MobCategory.MONSTER, new SpawnerData(
-						EntityRegistry.EVIL_EYE_ENTITY.get(), 7, 1, 2))
+				.addSpawn(MobCategory.MONSTER, 5, new SpawnerData(
+						EntityRegistry.CELESTIAL_TOWER_ENTITY.get(), 1, 1))
+				.addSpawn(MobCategory.MONSTER, 10, new SpawnerData(
+						EntityRegistry.STORM_CREEPER_ENTITY.get(), 1, 1))
+				.addSpawn(MobCategory.MONSTER, 7, new SpawnerData(
+						EntityRegistry.EVIL_EYE_ENTITY.get(), 1, 2))
 				.addMobCharge(EntityRegistry.EVIL_EYE_ENTITY.get(), 0.15d, 12d);
 
 		return spawnBuilder.build();
@@ -156,7 +156,7 @@ public class BiomesGenerator {
 	                                                                        HolderGetter<ConfiguredWorldCarver<?>> worldCarvers) {
 
 		BiomeGenerationSettings.Builder generationBuilder = new BiomeGenerationSettings.Builder(placedFeatures, worldCarvers)
-				.addCarver(Carving.AIR, IWConfiguredCarvers.TRENCH)
+				.addCarver(IWConfiguredCarvers.TRENCH)
 				.addFeature(Decoration.VEGETAL_DECORATION, IWPlacedFeatures.PATCH_WOODEN_SPIKES)
 				.addFeature(Decoration.VEGETAL_DECORATION, IWPlacedFeatures.BURNED_OAK_TREE);
 
@@ -170,7 +170,7 @@ public class BiomesGenerator {
 	                                                                          HolderGetter<ConfiguredWorldCarver<?>> worldCarvers) {
 
 		BiomeGenerationSettings.Builder generationBuilder = new BiomeGenerationSettings.Builder(placedFeatures, worldCarvers)
-				.addCarver(Carving.AIR, IWConfiguredCarvers.TILTROS_WASTES)
+				.addCarver(IWConfiguredCarvers.TILTROS_WASTES)
 				.addFeature(Decoration.LOCAL_MODIFICATIONS, IWPlacedFeatures.ASTRAL_GEODE);
 
 		VanillaFeatures.getOverworldBaseGeneration(generationBuilder);
@@ -184,7 +184,8 @@ public class BiomesGenerator {
 
 		BiomeGenerationSettings.Builder generationBuilder = new BiomeGenerationSettings.Builder(placedFeatures, worldCarvers)
 				.addFeature(Decoration.VEGETAL_DECORATION, IWPlacedFeatures.PATCH_MOONGLOW)
-				.addFeature(Decoration.VEGETAL_DECORATION, IWPlacedFeatures.STARDUST_TREE);
+				.addFeature(Decoration.VEGETAL_DECORATION, IWPlacedFeatures.STARDUST_TREE)
+				.addFeature(Decoration.VEGETAL_DECORATION, IWPlacedFeatures.PATCH_FIREFLY_BUSH);
 
 		VanillaFeatures.getOverworldBaseGeneration(generationBuilder);
 		VanillaFeatures.addPlainGrass(generationBuilder);

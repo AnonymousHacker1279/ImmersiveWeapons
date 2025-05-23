@@ -3,12 +3,8 @@
   "category": "misc",
   "group": "ring",
   "key": {
-    "a": {
-      "tag": "c:ingots/iron"
-    },
-    "b": {
-      "item": "immersiveweapons:copper_ring"
-    }
+    "a": "#c:ingots/iron",
+    "b": "immersiveweapons:copper_ring"
   },
   "pattern": [
     " a ",

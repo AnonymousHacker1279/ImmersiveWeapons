@@ -3,15 +3,9 @@
   "category": "misc",
   "group": "hand_of_doom",
   "ingredients": [
-    {
-      "item": "immersiveweapons:melee_masters_molten_glove"
-    },
-    {
-      "item": "immersiveweapons:iron_fist"
-    },
-    {
-      "item": "immersiveweapons:glove_of_rapid_swinging"
-    }
+    "immersiveweapons:melee_masters_molten_glove",
+    "immersiveweapons:iron_fist",
+    "immersiveweapons:glove_of_rapid_swinging"
   ],
   "result": {
     "count": 1,

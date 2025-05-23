@@ -3,18 +3,10 @@
   "category": "building",
   "group": "flag",
   "key": {
-    "a": {
-      "item": "immersiveweapons:flag_pole"
-    },
-    "b": {
-      "item": "minecraft:yellow_wool"
-    },
-    "c": {
-      "item": "minecraft:black_wool"
-    },
-    "d": {
-      "item": "minecraft:green_wool"
-    }
+    "a": "immersiveweapons:flag_pole",
+    "b": "minecraft:yellow_wool",
+    "c": "minecraft:black_wool",
+    "d": "minecraft:green_wool"
   },
   "pattern": [
     "bcb",

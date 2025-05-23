@@ -3,9 +3,7 @@
   "category": "blocks",
   "cookingtime": 200,
   "experience": 0.1,
-  "ingredient": {
-    "item": "immersiveweapons:blood_sandstone"
-  },
+  "ingredient": "immersiveweapons:blood_sandstone",
   "result": {
     "count": 1,
     "id": "immersiveweapons:smooth_blood_sandstone"

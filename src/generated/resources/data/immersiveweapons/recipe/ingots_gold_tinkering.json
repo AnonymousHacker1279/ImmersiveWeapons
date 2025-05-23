@@ -1,12 +1,19 @@
 {
   "type": "immersiveweapons:small_parts",
   "craftables": [
-    "immersiveweapons:wide_golden_barrel",
-    "immersiveweapons:trigger_assembly",
-    "immersiveweapons:scope_mount"
+    {
+      "count": 1,
+      "id": "immersiveweapons:wide_golden_barrel"
+    },
+    {
+      "count": 1,
+      "id": "immersiveweapons:trigger_assembly"
+    },
+    {
+      "count": 1,
+      "id": "immersiveweapons:scope_mount"
+    }
   ],
   "group": "small_parts",
-  "material": {
-    "tag": "c:ingots/gold"
-  }
+  "material": "#c:ingots/gold"
 }
