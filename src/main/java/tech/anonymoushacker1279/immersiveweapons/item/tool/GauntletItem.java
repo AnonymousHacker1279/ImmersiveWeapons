@@ -120,13 +120,6 @@ public class GauntletItem extends Item implements HitEffectUtils {
 								4 + attackSpeedModifier,
 								AttributeModifier.Operation.ADD_VALUE),
 						EquipmentSlotGroup.MAINHAND)
-				.add(
-						Attributes.ENTITY_INTERACTION_RANGE,
-						new AttributeModifier(
-								ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "attack_range"),
-								-2.0D,
-								AttributeModifier.Operation.ADD_VALUE),
-						EquipmentSlotGroup.MAINHAND)
 				.build();
 	}
 }

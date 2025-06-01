@@ -1,6 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.item.utility;
 
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 public class CraftingToolItem extends Item {
 
@@ -11,6 +12,10 @@ public class CraftingToolItem extends Item {
 	 */
 	public CraftingToolItem(Properties properties) {
 		super(properties);
-		properties.craftRemainder(asItem());
+	}
+
+	@Override
+	public ItemStack getCraftingRemainder(ItemStack itemStack) {
+		return itemStack.copy();
 	}
 }

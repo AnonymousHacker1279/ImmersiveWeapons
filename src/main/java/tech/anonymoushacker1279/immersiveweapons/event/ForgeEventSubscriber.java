@@ -416,7 +416,7 @@ public class ForgeEventSubscriber {
 		}
 
 		// Handle Big Slime in the Champion Tower, because size is overridden during finalizeSpawn...
-		if (event.getEntity() instanceof Slime slime && slime.getTags().contains("ChampionTowerMiniboss")) {
+		if (event.getEntity() instanceof Slime slime && slime.getTags().contains("ChampionTowerMiniboss") && slime.getSpawnType() == EntitySpawnReason.STRUCTURE) {
 			slime.setSize(4, true);
 			slime.getAttribute(Attributes.MAX_HEALTH).setBaseValue(150.0d);
 			slime.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(50.0d);
@@ -578,7 +578,7 @@ public class ForgeEventSubscriber {
 			ItemStack output = event.getLeft().copy();
 			KillCountWeapon.initialize(output);
 			event.setOutput(output);
-			event.setCost(5);
+			event.setXpCost(5);
 		}
 		// Add scope to musket
 		if (event.getRight().is(ItemRegistry.SCOPE.get()) && event.getLeft().is(ItemRegistry.MUSKET.get())) {
@@ -586,7 +586,7 @@ public class ForgeEventSubscriber {
 				ItemStack output = event.getLeft().copy();
 				output.set(DataComponentTypeRegistry.SCOPE, Unit.INSTANCE);
 				event.setOutput(output);
-				event.setCost(3);
+				event.setXpCost(3);
 			}
 		}
 	}

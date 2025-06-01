@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 
 @Mixin(Item.Properties.class)
-public class ItemPropertiesMixin {
+public abstract class ItemPropertiesMixin {
 
 	/**
 	 * Allow wolf armor to be equipped on Star Wolves.

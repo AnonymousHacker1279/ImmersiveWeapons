@@ -103,9 +103,6 @@ public class AstralCrystalBlock extends AmethystClusterBlock implements EntityBl
 
 						itemEntity.remove(RemovalReason.DISCARDED);
 					}
-				} else {
-					blockEntity.getInventory().clear();
-					serverLevel.destroyBlock(pos, false);
 				}
 			}
 		}
