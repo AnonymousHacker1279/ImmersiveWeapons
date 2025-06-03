@@ -3,6 +3,7 @@
     "#immersiveweapons:weapons/pikes",
     "#immersiveweapons:weapons/gauntlets",
     "#immersiveweapons:weapons/firearms",
-    "#immersiveweapons:weapons/staffs"
+    "#immersiveweapons:weapons/staffs",
+    "#c:tools/bow"
   ]
 }

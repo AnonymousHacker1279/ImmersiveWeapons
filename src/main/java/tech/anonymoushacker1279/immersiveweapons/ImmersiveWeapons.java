@@ -13,7 +13,7 @@ import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import org.slf4j.Logger;
 import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
-import tech.anonymoushacker1279.immersiveweapons.block.properties.WoodTypes;
+import tech.anonymoushacker1279.immersiveweapons.block.core.WoodTypes;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import tech.anonymoushacker1279.immersiveweapons.init.DispenserBehaviorRegistry;

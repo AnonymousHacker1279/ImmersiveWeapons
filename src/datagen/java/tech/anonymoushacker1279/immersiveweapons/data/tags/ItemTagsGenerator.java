@@ -429,7 +429,8 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 				IWItemTagGroups.PIKES,
 				IWItemTagGroups.GAUNTLETS,
 				IWItemTagGroups.FIREARMS,
-				IWItemTagGroups.STAFFS
+				IWItemTagGroups.STAFFS,
+				Tags.Items.TOOLS_BOW
 		);
 		tag(ItemTags.SHARP_WEAPON_ENCHANTABLE).addTag(IWItemTagGroups.PIKES);
 		tag(ItemTags.WEAPON_ENCHANTABLE).addTags(

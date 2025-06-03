@@ -25,7 +25,7 @@ import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.block.star_forge.StarForgeControllerBlock;
+import tech.anonymoushacker1279.immersiveweapons.block.crafting.StarForgeControllerBlock;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockEntityRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.RecipeTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.StarForgeRecipe;
@@ -120,7 +120,7 @@ public class StarForgeBlockEntity extends BaseContainerBlockEntity implements En
 			float biomeTemperature = level.getBiome(pos).value().getBaseTemperature();
 			float temperatureModifier = 1.0f + (biomeTemperature * 5);
 			temperature = Mth.clamp((int) (temperature + (hasSolarEnergy ? 1 : -1) * temperatureModifier), 0, 1000);
-			
+
 			if (temperature == 1000 && !inventory.getFirst().isEmpty()) {
 				if (!state.getValue(StarForgeControllerBlock.LIT)) {
 					level.setBlock(pos, state.setValue(StarForgeControllerBlock.LIT, true), 3);

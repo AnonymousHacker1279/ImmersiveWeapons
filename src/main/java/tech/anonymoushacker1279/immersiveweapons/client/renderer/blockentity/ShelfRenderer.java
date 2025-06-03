@@ -10,7 +10,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
-import tech.anonymoushacker1279.immersiveweapons.block.decoration.ShelfBlock;
+import tech.anonymoushacker1279.immersiveweapons.block.ShelfBlock;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.ShelfBlockEntity;
 
 public class ShelfRenderer implements BlockEntityRenderer<ShelfBlockEntity> {

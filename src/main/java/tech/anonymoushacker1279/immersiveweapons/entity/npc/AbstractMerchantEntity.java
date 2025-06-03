@@ -173,10 +173,7 @@ public abstract class AbstractMerchantEntity extends AbstractVillager implements
 
 	@Override
 	public void addAdditionalSaveData(CompoundTag compound) {
-		// Before saving, remove any IdentifiableMerchantOffers
-
 		super.addAdditionalSaveData(compound);
-
 		compound.putInt("tradeRefreshTime", entityData.get(TRADE_REFRESH_TIME));
 	}
 

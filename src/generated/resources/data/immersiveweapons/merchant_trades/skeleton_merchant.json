@@ -101,6 +101,17 @@
             "count": 3,
             "id": "immersiveweapons:mortar_shell"
           }
+        },
+        {
+          "item_1": {
+            "count": 16,
+            "id": "minecraft:emerald"
+          },
+          "max_uses": 1,
+          "result": {
+            "count": 1,
+            "id": "immersiveweapons:agility_bracelet"
+          }
         }
       ]
     },
