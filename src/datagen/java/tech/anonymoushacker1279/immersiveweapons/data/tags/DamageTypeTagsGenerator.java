@@ -51,6 +51,16 @@ public class DamageTypeTagsGenerator extends TagsProvider<DamageType> {
 		tag(DamageTypeTags.IS_FIRE)
 				.add(IWDamageTypes.HELLFIRE_KEY);
 
+		tag(DamageTypeTags.NO_KNOCKBACK)
+				.add(IWDamageTypes.BARBED_WIRE_KEY)
+				.add(IWDamageTypes.BEAR_TRAP_KEY)
+				.add(IWDamageTypes.BLEEDING_KEY)
+				.add(IWDamageTypes.DEADMANS_DESERT_ATMOSPHERE_KEY)
+				.add(IWDamageTypes.HELLFIRE_KEY)
+				.add(IWDamageTypes.PUNJI_STICKS_KEY)
+				.add(IWDamageTypes.PUNJI_STICKS_FALL_KEY)
+				.add(IWDamageTypes.WOODEN_SPIKES_KEY);
+		
 		addForgeTags();
 	}
 

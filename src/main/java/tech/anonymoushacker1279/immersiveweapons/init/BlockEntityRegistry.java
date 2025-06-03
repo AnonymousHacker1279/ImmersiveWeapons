@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.SkullBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.block.decoration.skull.CustomWallSkullBlock;
+import tech.anonymoushacker1279.immersiveweapons.block.skull.CustomWallSkullBlock;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.*;
 
 import java.util.function.Supplier;

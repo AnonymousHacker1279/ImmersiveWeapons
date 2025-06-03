@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "group": "stained_bulletproof_glass",
+  "key": {
+    "a": "immersiveweapons:bulletproof_glass_pane",
+    "b": "#c:dyes/lime"
+  },
+  "pattern": [
+    "aaa",
+    "aba",
+    "aaa"
+  ],
+  "result": {
+    "count": 8,
+    "id": "immersiveweapons:lime_stained_bulletproof_glass_pane"
+  }
+}

@@ -33,6 +33,10 @@ repositories {
 		name "AzureDoom's Maven"
 		url 'https://maven.azuredoom.com/mods'
 	}
+	maven {
+		name "Jared's maven"
+		url "https://maven.blamejared.com/"
+	}
 }
 
 base {
@@ -155,6 +159,10 @@ dependencies {
 	// Include WTHIT and badpackets
 	runtimeOnly "mcp.mobius.waila:wthit:neo-${wthit_version}"
 	runtimeOnly "lol.bai:badpackets:neo-${badpackets_version}"
+
+	// Include JEI
+	compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
+	runtimeOnly "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
 }
 
 tasks.named("processResources", ProcessResources).configure {
@@ -240,7 +248,7 @@ if (file("RELEASE_NOTES.md").exists()) {
 		setGameVersions([minecraft_version])
 		setLoaders("neoforge")
 		setCurseEnvironment("both")
-		setArtifact(tasks.jarJar)
+		setArtifact(tasks.jar)
 		setJavaVersions([JavaVersion.VERSION_21])
 		addAdditionalFile(javadocJar, sourcesJar)
 

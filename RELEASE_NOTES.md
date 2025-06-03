@@ -1,29 +1,23 @@
-This major update ports to MC 1.21.5.
+This minor update fixes a handful of bugs discovered since the initial port to MC 1.21.5. It also adds support for the
+stable release of NeoForge. The minimum required version is now `21.5.74`.
 
 ### Feature Changes / Additions
 
-- Changes to Tiltros:
-    - Increased Tiltros max logical height from 192 to 256 blocks.
-    - Warmed up the Deadman's Desert slightly to reduce the amount of snow.
-    - Skybox now has a different texture more similar to The End.
-    - Portal has a new set of sound effects.
-    - Ambient light has been disabled to allow glowing blocks to be more visible.
-    - Firefly bushes naturally generate in Starlight Plains.
-- Adjusted various block models to consistently face the same direction in the inventory.
-- Flag blocks now check to ensure they have stable ground.
-- Changes to the scoped musket:
-    - The zoom animation is smoother.
-    - No longer a separate item; it is handled with a data component.
-    - Adding a scope to the musket is now done via an anvil.
-- Changes to the Lava Revenant:
-    - Hitboxes have been significantly adjusted.
-    - A configuration option has been added to adjust the strength of blocks it can destroy.
-- Evil Eye attributes are now affected by their size.
-- Added the Dying Soldier and The Commander to the `minecraft:raiders` tag, allowing bells to identify them.
-- The explosive chocolate bar is now almost entirely indistinguishable from a normal chocolate bar.
+- Improved Molten Armor lava swimming mechanic.
+- Removed knockback from several categories of custom damage sources.
 
 ### Bugfixes
 
-- Unclamped damage resistance attributes on accessories; this fixes the Berserker's Amulet not having a damage
-  vulnerability downside.
-- Fix occasional crashes when some soldier-type entities lose their firearms and try to perform melee attacks.
+- Fix camp chairs in some structures facing the wrong direction.
+- Fix the Copper Axe dealing less damage than intended.
+- Add missing recipes for bulletproof glass panes.
+- Add missing blast furnace recipe for raw cobalt.
+- Fix Starstorm Crystals being unable to be broken into shards.
+- Fix the Mortar and Pestle being consumed during crafting.
+- Fix Astral Crystals breaking when any item is dropped on them, rather than the correct catalyst.
+- Fix some entities being named incorrectly in the Champion Tower.
+- Fix Big Slime in the Champion Tower not shrinking when splitting and eventually becoming a massive headache for
+  performance.
+- Fix custom bows not being enchantable with durability type enchantments.
+- Fix barbed wire / wooden spikes not hurting players.
+- Fix the Skeleton Merchant playing villager sounds when trading.

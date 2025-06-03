@@ -1,6 +1,9 @@
 package tech.anonymoushacker1279.immersiveweapons.block;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.InsideBlockEffectApplier;
@@ -26,11 +29,6 @@ public class WoodenSpikesBlock extends DamageableBlock {
 	protected static final VoxelShape SHAPE = Block.box(1.0D, 0.0D, 1.0D, 15D, 14D, 15D);
 	public static final IntegerProperty DAMAGE_STAGE = IntegerProperty.create("damage_stage", 0, 3);
 
-	/**
-	 * Constructor for WoodenSpikesBlock.
-	 *
-	 * @param properties the <code>Properties</code> of the block
-	 */
 	public WoodenSpikesBlock(Properties properties) {
 		super(properties, 96, 3, Items.STICK, DAMAGE_STAGE);
 		registerDefaultState(stateDefinition.any().setValue(WATERLOGGED, Boolean.FALSE).setValue(DAMAGE_STAGE, 0));
@@ -50,25 +48,31 @@ public class WoodenSpikesBlock extends DamageableBlock {
 	protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier) {
 		if (entity instanceof LivingEntity livingEntity) {
 			entity.makeStuckInBlock(state, new Vec3(0.85F, 0.80D, 0.85F));
-			if (!level.isClientSide && (entity.xOld != entity.getX() || entity.zOld != entity.getZ())) {
-				double deltaX = Math.abs(entity.getX() - entity.xOld);
-				double deltaZ = Math.abs(entity.getZ() - entity.zOld);
-				if (deltaX >= 0.003F || deltaZ >= 0.003F) {
+			if (level instanceof ServerLevel serverLevel) {
+				Vec3 movement = entity.getKnownMovement();
+				if (movement.x >= 0.001F || movement.z >= 0.001F) {
 					if (entity instanceof Player player && player.isCreative()) {
 						return;
 					}
 
-					if (level.getBlockEntity(pos) instanceof DamageableBlockEntity damageable && level.getGameTime() % 10 == 0) {
-						entity.hurt(IWDamageSources.woodenSpikes(level.registryAccess()), damageable.calculateDamage(1.5f, 0.33f));
+					if (level.getBlockEntity(pos) instanceof DamageableBlockEntity damageable) {
+						if (level.getGameTime() % 10 == 0) {
+							damageable.takeDamage(state, level, pos, DAMAGE_STAGE);
+							entity.hurtServer(serverLevel,
+									IWDamageSources.woodenSpikes(level.registryAccess()),
+									damageable.calculateDamage(1.5f, 0.33f));
 
-						if (livingEntity.getRandom().nextFloat() <= 0.15f) {
-							livingEntity.addEffect(new MobEffectInstance(EffectRegistry.BLEEDING_EFFECT,
-									200, 0, true, false));
+							if (livingEntity.getRandom().nextFloat() <= 0.15f) {
+								livingEntity.addEffect(new MobEffectInstance(EffectRegistry.BLEEDING_EFFECT,
+										200, 0, true, true));
+							}
 						}
-
-						damageable.takeDamage(state, level, pos, DAMAGE_STAGE);
 					}
 				}
+			}
+
+			if (entity instanceof Player player && player.getRandom().nextFloat() <= 0.2f) {
+				level.playSound(player, pos, SoundEvents.WOOD_HIT, SoundSource.BLOCKS, 1f, player.getRandom().nextFloat() * 0.2f + 0.9f);
 			}
 		}
 	}

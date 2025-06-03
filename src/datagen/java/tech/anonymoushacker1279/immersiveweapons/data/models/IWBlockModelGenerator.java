@@ -20,9 +20,7 @@ import net.neoforged.neoforge.client.model.generators.template.ExtendedModelTemp
 import net.neoforged.neoforge.client.model.generators.template.ExtendedModelTemplateBuilder;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.*;
-import tech.anonymoushacker1279.immersiveweapons.block.barbed_wire.BarbedWireBlock;
-import tech.anonymoushacker1279.immersiveweapons.block.decoration.FlagPoleBlock;
-import tech.anonymoushacker1279.immersiveweapons.block.decoration.skull.CustomSkullTypes;
+import tech.anonymoushacker1279.immersiveweapons.block.skull.CustomSkullTypes;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
 
 public class IWBlockModelGenerator {

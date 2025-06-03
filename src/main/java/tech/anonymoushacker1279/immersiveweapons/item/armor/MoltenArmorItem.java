@@ -7,8 +7,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.equipment.ArmorMaterial;
 import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.phys.Vec3;
 
 public class MoltenArmorItem extends Item implements TickableArmor {
 
@@ -21,7 +19,6 @@ public class MoltenArmorItem extends Item implements TickableArmor {
 		if (ArmorUtils.isWearingMoltenArmor(player)) {
 			if (player.isInLava()) {
 				player.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 140, 0, false, false));
-				player.makeStuckInBlock(Blocks.LAVA.defaultBlockState(), new Vec3(5.5D, 5.5D, 5.5D));
 				player.clearFire();
 			} else if (player.isOnFire()) {
 				player.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 140, 0, false, false));

@@ -73,7 +73,7 @@ public class ItemRegistry {
 	public static final Supplier<MoltenHoe> MOLTEN_HOE = ITEMS.registerItem("molten_hoe", MoltenHoe::new);
 	public static final Supplier<Item> COPPER_SWORD = ITEMS.registerItem("copper_sword", (properties) -> new Item(properties.sword(IWToolMaterials.COPPER, 3, -2.4f)));
 	public static final Supplier<Item> COPPER_PICKAXE = ITEMS.registerItem("copper_pickaxe", (properties) -> new Item(properties.pickaxe(IWToolMaterials.COPPER, 1, -2.8f)));
-	public static final Supplier<AxeItem> COPPER_AXE = ITEMS.registerItem("copper_axe", (properties) -> new AxeItem(IWToolMaterials.COPPER, 6, -3.1f, properties));
+	public static final Supplier<AxeItem> COPPER_AXE = ITEMS.registerItem("copper_axe", (properties) -> new AxeItem(IWToolMaterials.COPPER, 7, -3.1f, properties));
 	public static final Supplier<ShovelItem> COPPER_SHOVEL = ITEMS.registerItem("copper_shovel", (properties) -> new ShovelItem(IWToolMaterials.COPPER, 1.5f, -3.0f, properties));
 	public static final Supplier<HoeItem> COPPER_HOE = ITEMS.registerItem("copper_hoe", (properties) -> new HoeItem(IWToolMaterials.COPPER, -1, -1.0f, properties));
 	@TextureMetadataMarker(frameTime = 2)

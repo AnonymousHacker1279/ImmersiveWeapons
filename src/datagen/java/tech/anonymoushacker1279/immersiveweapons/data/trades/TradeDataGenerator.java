@@ -6,7 +6,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import tech.anonymoushacker1279.immersiveweapons.entity.npc.trading.SimpleItemListing;
 import tech.anonymoushacker1279.immersiveweapons.entity.npc.trading.TradeGroup;
-import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
 import java.util.List;
 import java.util.Map;
@@ -63,7 +65,8 @@ public class TradeDataGenerator extends TradeDataProvider {
 								new SimpleItemListing(16, new ItemStack(ItemRegistry.SATCHEL.get()), 3),
 								new SimpleItemListing(16, new ItemStack(ItemRegistry.POWDER_HORN.get()), 3),
 								new SimpleItemListing(5, new ItemStack(ItemRegistry.BLOODY_SACRIFICE.get()), 1),
-								new SimpleItemListing(2, new ItemStack(ItemRegistry.MORTAR_SHELL.get(), 3), 6)
+								new SimpleItemListing(2, new ItemStack(ItemRegistry.MORTAR_SHELL.get(), 3), 6),
+								new SimpleItemListing(16, new ItemStack(ItemRegistry.AGILITY_BRACELET.get()), 1)
 						)),
 						new TradeGroup(1, List.of(
 								new SimpleItemListing(6, new ItemStack(ItemRegistry.BLOATED_HEART.get()), 3),

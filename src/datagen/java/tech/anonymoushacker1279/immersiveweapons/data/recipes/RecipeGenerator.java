@@ -22,7 +22,6 @@ import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.crafting.DataComponentIngredient;
 import org.jetbrains.annotations.Nullable;
@@ -183,36 +182,52 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 
 	private void createGlassItems() {
 		createBulletproofStainedGlass(BlockItemRegistry.BLACK_STAINED_BULLETPROOF_GLASS_ITEM.get(),
+				BlockItemRegistry.BLACK_STAINED_BULLETPROOF_GLASS_PANE_ITEM.get(),
 				Tags.Items.DYES_BLACK);
 		createBulletproofStainedGlass(BlockItemRegistry.BLUE_STAINED_BULLETPROOF_GLASS_ITEM.get(),
+				BlockItemRegistry.BLUE_STAINED_BULLETPROOF_GLASS_PANE_ITEM.get(),
 				Tags.Items.DYES_BLUE);
 		createBulletproofStainedGlass(BlockItemRegistry.BROWN_STAINED_BULLETPROOF_GLASS_ITEM.get(),
+				BlockItemRegistry.BROWN_STAINED_BULLETPROOF_GLASS_PANE_ITEM.get(),
 				Tags.Items.DYES_BROWN);
 		createBulletproofStainedGlass(BlockItemRegistry.CYAN_STAINED_BULLETPROOF_GLASS_ITEM.get(),
+				BlockItemRegistry.CYAN_STAINED_BULLETPROOF_GLASS_PANE_ITEM.get(),
 				Tags.Items.DYES_CYAN);
 		createBulletproofStainedGlass(BlockItemRegistry.GRAY_STAINED_BULLETPROOF_GLASS_ITEM.get(),
+				BlockItemRegistry.GRAY_STAINED_BULLETPROOF_GLASS_PANE_ITEM.get(),
 				Tags.Items.DYES_GRAY);
 		createBulletproofStainedGlass(BlockItemRegistry.GREEN_STAINED_BULLETPROOF_GLASS_ITEM.get(),
+				BlockItemRegistry.GREEN_STAINED_BULLETPROOF_GLASS_PANE_ITEM.get(),
 				Tags.Items.DYES_GREEN);
 		createBulletproofStainedGlass(BlockItemRegistry.LIGHT_BLUE_STAINED_BULLETPROOF_GLASS_ITEM.get(),
+				BlockItemRegistry.LIGHT_BLUE_STAINED_BULLETPROOF_GLASS_PANE_ITEM.get(),
 				Tags.Items.DYES_LIGHT_BLUE);
 		createBulletproofStainedGlass(BlockItemRegistry.LIGHT_GRAY_STAINED_BULLETPROOF_GLASS_ITEM.get(),
+				BlockItemRegistry.LIGHT_GRAY_STAINED_BULLETPROOF_GLASS_PANE_ITEM.get(),
 				Tags.Items.DYES_LIGHT_GRAY);
 		createBulletproofStainedGlass(BlockItemRegistry.LIME_STAINED_BULLETPROOF_GLASS_ITEM.get(),
+				BlockItemRegistry.LIME_STAINED_BULLETPROOF_GLASS_PANE_ITEM.get(),
 				Tags.Items.DYES_LIME);
 		createBulletproofStainedGlass(BlockItemRegistry.MAGENTA_STAINED_BULLETPROOF_GLASS_ITEM.get(),
+				BlockItemRegistry.MAGENTA_STAINED_BULLETPROOF_GLASS_PANE_ITEM.get(),
 				Tags.Items.DYES_MAGENTA);
 		createBulletproofStainedGlass(BlockItemRegistry.ORANGE_STAINED_BULLETPROOF_GLASS_ITEM.get(),
+				BlockItemRegistry.ORANGE_STAINED_BULLETPROOF_GLASS_PANE_ITEM.get(),
 				Tags.Items.DYES_ORANGE);
 		createBulletproofStainedGlass(BlockItemRegistry.PINK_STAINED_BULLETPROOF_GLASS_ITEM.get(),
+				BlockItemRegistry.PINK_STAINED_BULLETPROOF_GLASS_PANE_ITEM.get(),
 				Tags.Items.DYES_PINK);
 		createBulletproofStainedGlass(BlockItemRegistry.PURPLE_STAINED_BULLETPROOF_GLASS_ITEM.get(),
+				BlockItemRegistry.PURPLE_STAINED_BULLETPROOF_GLASS_PANE_ITEM.get(),
 				Tags.Items.DYES_PURPLE);
 		createBulletproofStainedGlass(BlockItemRegistry.RED_STAINED_BULLETPROOF_GLASS_ITEM.get(),
+				BlockItemRegistry.RED_STAINED_BULLETPROOF_GLASS_PANE_ITEM.get(),
 				Tags.Items.DYES_RED);
 		createBulletproofStainedGlass(BlockItemRegistry.WHITE_STAINED_BULLETPROOF_GLASS_ITEM.get(),
+				BlockItemRegistry.WHITE_STAINED_BULLETPROOF_GLASS_PANE_ITEM.get(),
 				Tags.Items.DYES_WHITE);
 		createBulletproofStainedGlass(BlockItemRegistry.YELLOW_STAINED_BULLETPROOF_GLASS_ITEM.get(),
+				BlockItemRegistry.YELLOW_STAINED_BULLETPROOF_GLASS_PANE_ITEM.get(),
 				Tags.Items.DYES_YELLOW);
 
 		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.BULLETPROOF_GLASS_ITEM.get(), 8)
@@ -223,6 +238,14 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.pattern("aaa")
 				.group("bulletproof_glass")
 				.unlockedBy("glass", has(Items.GLASS))
+				.save(output);
+
+		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.BULLETPROOF_GLASS_PANE_ITEM.get(), 16)
+				.define('a', BlockItemRegistry.BULLETPROOF_GLASS_ITEM.get())
+				.pattern("aaa")
+				.pattern("aaa")
+				.group("bulletproof_glass")
+				.unlockedBy("bulletproof_glass", has(BlockItemRegistry.BULLETPROOF_GLASS_ITEM.get()))
 				.save(output);
 	}
 
@@ -438,7 +461,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.save(output);
 
 		// Shards from crushing crystals
-		pistonCrushing(BlockItemRegistry.STARSTORM_BLOCK_ITEM.get(), ItemRegistry.STARSTORM_SHARD.get(), 2, 4);
+		pistonCrushing(BlockItemRegistry.STARSTORM_CRYSTAL_ITEM.get(), ItemRegistry.STARSTORM_SHARD.get(), 2, 4);
 
 		// Starstorm block
 		ShapedRecipeBuilder shapedRecipeBuilder = ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.STARSTORM_BLOCK_ITEM.get())
@@ -1032,7 +1055,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.group("firearm")
 				.unlockedBy("flintlock_assembly", has(ItemRegistry.FLINTLOCK_ASSEMBLY.get()))
 				.save(output);
-		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.COMBAT, ItemRegistry.CANNONBALL.get(), 2)
+		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.COMBAT, ItemRegistry.CANNONBALL.get(), 4)
 				.define('a', Tags.Items.INGOTS_IRON)
 				.define('b', Tags.Items.INGOTS_COPPER)
 				.pattern(" a ")
@@ -1657,116 +1680,6 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.group("copper_ingot")
 				.unlockedBy("copper_nugget", has(CommonItemTagGroups.COPPER_NUGGETS));
 		create3x3Object(shapedRecipeBuilder, CommonItemTagGroups.COPPER_NUGGETS);
-
-		// Replace some recipes that are hardcoded to use certain ingots to use a tag for any "metal" ingot
-
-		// Blast furnace
-		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.MISC, Blocks.BLAST_FURNACE)
-				.define('a', CommonItemTagGroups.METAL_INGOTS)
-				.define('b', Blocks.FURNACE)
-				.define('c', Items.SMOOTH_STONE)
-				.pattern("aaa")
-				.pattern("aba")
-				.pattern("ccc")
-				.unlockedBy("furnace", has(Blocks.FURNACE))
-				.save(output);
-
-		// Bucket
-		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.MISC, Items.BUCKET)
-				.define('a', CommonItemTagGroups.METAL_INGOTS)
-				.pattern("a a")
-				.pattern(" a ")
-				.unlockedBy("metal_ingot", has(CommonItemTagGroups.METAL_INGOTS))
-				.save(output);
-
-		// Cauldron
-		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.MISC, Blocks.CAULDRON)
-				.define('a', CommonItemTagGroups.METAL_INGOTS)
-				.pattern("a a")
-				.pattern("a a")
-				.pattern("aaa")
-				.unlockedBy("metal_ingot", has(CommonItemTagGroups.METAL_INGOTS))
-				.save(output);
-
-		// Chain
-		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.MISC, Items.CHAIN)
-				.define('a', CommonItemTagGroups.METAL_INGOTS)
-				.define('b', CommonItemTagGroups.METAL_NUGGETS)
-				.pattern(" b ")
-				.pattern(" a ")
-				.pattern(" b ")
-				.unlockedBy("metal_ingot", has(CommonItemTagGroups.METAL_INGOTS))
-				.save(output);
-
-		// Hopper
-		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.REDSTONE, Blocks.HOPPER)
-				.define('a', CommonItemTagGroups.METAL_INGOTS)
-				.define('b', Items.CHEST)
-				.pattern("a a")
-				.pattern("aba")
-				.pattern(" a ")
-				.unlockedBy("chest", has(Items.CHEST))
-				.save(output);
-
-		// Lantern
-		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.MISC, Blocks.LANTERN)
-				.define('a', CommonItemTagGroups.METAL_NUGGETS)
-				.define('b', Items.TORCH)
-				.pattern("aaa")
-				.pattern("aba")
-				.pattern("aaa")
-				.unlockedBy("torch", has(Items.TORCH))
-				.save(output);
-
-		// Minecart
-		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.MISC, Items.MINECART)
-				.define('a', CommonItemTagGroups.METAL_INGOTS)
-				.pattern("a a")
-				.pattern("aaa")
-				.unlockedBy("metal_ingot", has(CommonItemTagGroups.METAL_INGOTS))
-				.save(output);
-
-		// Piston
-		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.REDSTONE, Blocks.PISTON)
-				.define('a', CommonItemTagGroups.METAL_INGOTS)
-				.define('b', ItemTags.PLANKS)
-				.define('c', Items.REDSTONE)
-				.define('d', Items.COBBLESTONE)
-				.pattern("bbb")
-				.pattern("dad")
-				.pattern("dcd")
-				.unlockedBy("redstone", has(Items.REDSTONE))
-				.save(output);
-
-		// Soul Lantern
-		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.MISC, Blocks.SOUL_LANTERN)
-				.define('a', CommonItemTagGroups.METAL_NUGGETS)
-				.define('b', Items.SOUL_TORCH)
-				.pattern("aaa")
-				.pattern("aba")
-				.pattern("aaa")
-				.unlockedBy("soul_torch", has(Items.SOUL_TORCH))
-				.save(output);
-
-		// Stonecutter
-		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.MISC, Blocks.STONECUTTER)
-				.define('a', CommonItemTagGroups.METAL_INGOTS)
-				.define('b', Blocks.STONE)
-				.pattern(" a ")
-				.pattern("bbb")
-				.unlockedBy("stone", has(Blocks.STONE))
-				.save(output);
-
-		// Tripwire Hook
-		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.REDSTONE, Items.TRIPWIRE_HOOK)
-				.define('a', CommonItemTagGroups.METAL_INGOTS)
-				.define('b', Items.STICK)
-				.define('c', ItemTags.PLANKS)
-				.pattern(" a ")
-				.pattern(" b ")
-				.pattern(" c ")
-				.unlockedBy("string", has(Items.STRING))
-				.save(output);
 	}
 
 	public void createArrow(ArrowItem arrow, TagKey<Item> material) {
@@ -1877,7 +1790,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				1.3f, 100, "tesla");
 	}
 
-	private void createBulletproofStainedGlass(ItemLike stainedGlassItem, TagKey<Item> colorTag) {
+	private void createBulletproofStainedGlass(ItemLike stainedGlassItem, ItemLike stainedGlassPaneItem, TagKey<Item> colorTag) {
 		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.BUILDING_BLOCKS, stainedGlassItem, 8)
 				.define('a', BlockRegistry.BULLETPROOF_GLASS.get())
 				.define('b', colorTag)
@@ -1887,6 +1800,24 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.group("stained_bulletproof_glass")
 				.unlockedBy("bulletproof_glass", has(BlockRegistry.BULLETPROOF_GLASS.get()))
 				.save(output);
+
+		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.BUILDING_BLOCKS, stainedGlassPaneItem, 16)
+				.define('a', stainedGlassItem)
+				.pattern("aaa")
+				.pattern("aaa")
+				.group("stained_bulletproof_glass")
+				.unlockedBy("stained_bulletproof_glass", has(stainedGlassItem))
+				.save(output);
+
+		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.BUILDING_BLOCKS, stainedGlassPaneItem, 8)
+				.define('a', BlockRegistry.BULLETPROOF_GLASS_PANE.get())
+				.define('b', colorTag)
+				.pattern("aaa")
+				.pattern("aba")
+				.pattern("aaa")
+				.group("stained_bulletproof_glass")
+				.unlockedBy("bulletproof_glass", has(BlockRegistry.BULLETPROOF_GLASS.get()))
+				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(stainedGlassPaneItem) + "_alt");
 	}
 
 	private void create3x3Object(ShapedRecipeBuilder builder, TagKey<Item> material) {
@@ -2004,7 +1935,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 
 	private void createBlastingRecipe(List<ItemLike> ingredients, ItemLike result, float experience, int cookTime, @Nullable String group) {
 		for (ItemLike itemlike : ingredients) {
-			SimpleCookingRecipeBuilder.smelting(Ingredient.of(itemlike), RecipeCategory.MISC, result, experience, cookTime)
+			SimpleCookingRecipeBuilder.blasting(Ingredient.of(itemlike), RecipeCategory.MISC, result, experience, cookTime)
 					.group(group)
 					.unlockedBy(getHasName(itemlike), has(itemlike))
 					.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_from_blasting_" + getItemName(itemlike));
