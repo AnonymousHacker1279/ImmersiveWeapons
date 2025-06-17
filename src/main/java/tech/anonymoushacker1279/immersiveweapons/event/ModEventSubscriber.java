@@ -1,14 +1,21 @@
 package tech.anonymoushacker1279.immersiveweapons.event;
 
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.SpawnPlacementTypes;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.EventBusSubscriber.Bus;
+import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent.Operation;
@@ -31,6 +38,7 @@ import tech.anonymoushacker1279.immersiveweapons.init.AccessoryEffectScalingType
 import tech.anonymoushacker1279.immersiveweapons.init.AccessoryEffectTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
+import tech.anonymoushacker1279.immersiveweapons.item.armor.VentusArmorItem;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
 import tech.anonymoushacker1279.immersiveweapons.network.handler.*;
 import tech.anonymoushacker1279.immersiveweapons.network.handler.star_forge.StarForgeMenuPayloadHandler;
@@ -39,14 +47,11 @@ import tech.anonymoushacker1279.immersiveweapons.network.payload.*;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.star_forge.StarForgeMenuPayload;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.star_forge.StarForgeUpdateRecipesPayload;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.MOD)
 public class ModEventSubscriber {
 
-	/**
-	 * Event handler for the EntityAttributeCreationEvent.
-	 *
-	 * @param event the <code>EntityAttributeCreationEvent</code> instance
-	 */
 	@SubscribeEvent
 	public static void entityAttributeCreationEvent(EntityAttributeCreationEvent event) {
 		ImmersiveWeapons.LOGGER.info("Applying entity attributes");
@@ -130,5 +135,27 @@ public class ModEventSubscriber {
 		ImmersiveWeapons.LOGGER.info("Registering custom registries");
 		event.register(AccessoryEffectTypeRegistry.ACCESSORY_EFFECT_TYPE_REGISTRY);
 		event.register(AccessoryEffectScalingTypeRegistry.ACCESSORY_EFFECT_SCALING_TYPE_REGISTRY);
+	}
+
+	@SubscribeEvent
+	public static void modifyDefaultComponentsEvent(ModifyDefaultComponentsEvent event) {
+		ImmersiveWeapons.LOGGER.info("Modifying default components");
+
+		AtomicReference<ItemAttributeModifiers> modifiers = new AtomicReference<>(ItemAttributeModifiers.EMPTY);
+		event.modifyMatching(item -> {
+			if (item instanceof VentusArmorItem) {
+				modifiers.set(item.components().get(DataComponents.ATTRIBUTE_MODIFIERS));
+				return true;
+			}
+
+			return false;
+		}, patch -> patch.set(DataComponents.ATTRIBUTE_MODIFIERS, modifiers.get().withModifierAdded(
+				Attributes.SAFE_FALL_DISTANCE,
+				new AttributeModifier(
+						ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "ventus_safe_fall_distance"),
+						10d,
+						AttributeModifier.Operation.ADD_VALUE),
+				EquipmentSlotGroup.ARMOR
+		)));
 	}
 }
