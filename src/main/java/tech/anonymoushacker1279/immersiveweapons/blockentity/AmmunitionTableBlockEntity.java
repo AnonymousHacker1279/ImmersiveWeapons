@@ -196,16 +196,6 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 		inventory.set(index, stack);
 	}
 
-	// TODO: re-implement
-	/*@Override
-	public CompoundTag getUpdateTag(Provider provider) {
-		CompoundTag tag = new CompoundTag();
-		super.saveAdditional(tag, provider);
-		ContainerHelper.saveAllItems(tag, inventory, provider);
-		tag.putFloat("densityModifier", densityModifier);
-		return tag;
-	}*/
-
 	@Override
 	public void setChanged() {
 		super.setChanged();

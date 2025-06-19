@@ -50,7 +50,6 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.common.EventBusSubscriber.Bus;
 import net.neoforged.neoforge.event.AddServerReloadListenersEvent;
 import net.neoforged.neoforge.event.AnvilUpdateEvent;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
@@ -92,7 +91,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 
-@EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.GAME)
+@EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID)
 public class ForgeEventSubscriber {
 
 	public static final AttributeModifier JONNYS_CURSE_SPEED_MODIFIER = new AttributeModifier(

@@ -3,7 +3,6 @@ package tech.anonymoushacker1279.immersiveweapons.client.gui.screen;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -35,7 +34,7 @@ public class CelestialAltarScreen extends AbstractContainerScreen<CelestialAltar
 					" : " + menu.getFragmentCost(),
 					leftPos + 100,
 					topPos + 15,
-					0x000000,
+					0xFF000000,
 					false
 			);
 		}

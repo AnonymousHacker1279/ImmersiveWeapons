@@ -416,14 +416,6 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 		valueOutput.putInt("CookTimeTotal", cookTimeTotal);
 	}
 
-	// TODO: reimplement
-	/*@Override
-	public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
-		CompoundTag tag = super.getUpdateTag(registries);
-		saveAdditional(tag, registries);
-		return tag;
-	}*/
-
 	@Override
 	public void fillStackedContents(net.minecraft.world.entity.player.StackedItemContents contents) {
 		for (ItemStack itemstack : items) {

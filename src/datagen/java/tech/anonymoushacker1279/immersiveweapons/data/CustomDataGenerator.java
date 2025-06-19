@@ -11,7 +11,6 @@ import net.minecraft.server.packs.resources.MultiPackResourceManager;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.common.EventBusSubscriber.Bus;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import tech.anonymoushacker1279.immersiveweapons.data.advancements.AdvancementGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.data_maps.DataMapsGenerator;
@@ -31,7 +30,7 @@ import tech.anonymoushacker1279.immersiveweapons.data.trades.TradeDataGenerator;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-@EventBusSubscriber(bus = Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(value = Dist.CLIENT)
 public class CustomDataGenerator {
 
 	@SubscribeEvent

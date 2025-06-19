@@ -63,14 +63,6 @@ public class DamageableBlockEntity extends BlockEntity {
 		return ClientboundBlockEntityDataPacket.create(this);
 	}
 
-	// TODO: reimplement
-	/*@Override
-	public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
-		CompoundTag tag = new CompoundTag();
-		saveAdditional(tag, provider);
-		return tag;
-	}*/
-
 	/**
 	 * Damage the block, which takes care of stage changes and destruction.
 	 *

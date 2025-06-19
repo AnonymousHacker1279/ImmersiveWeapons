@@ -14,7 +14,6 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.common.EventBusSubscriber.Bus;
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
@@ -49,7 +48,7 @@ import tech.anonymoushacker1279.immersiveweapons.network.payload.star_forge.Star
 
 import java.util.concurrent.atomic.AtomicReference;
 
-@EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.MOD)
+@EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID)
 public class ModEventSubscriber {
 
 	@SubscribeEvent

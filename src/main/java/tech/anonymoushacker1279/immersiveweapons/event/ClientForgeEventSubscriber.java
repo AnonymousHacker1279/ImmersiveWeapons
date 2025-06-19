@@ -11,9 +11,9 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.common.EventBusSubscriber.Bus;
 import net.neoforged.neoforge.client.event.InputEvent;
 import net.neoforged.neoforge.client.event.RecipesReceivedEvent;
 import net.neoforged.neoforge.client.event.RenderBlockScreenEffectEvent;
@@ -37,7 +37,7 @@ import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem;
 import tech.anonymoushacker1279.immersiveweapons.menu.SmallPartsMenu;
 import tech.anonymoushacker1279.immersiveweapons.menu.StarForgeMenu;
 
-@EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.GAME, value = Dist.CLIENT)
+@EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, value = Dist.CLIENT)
 public class ClientForgeEventSubscriber {
 
 
@@ -68,14 +68,8 @@ public class ClientForgeEventSubscriber {
 		}
 	}
 
-	/**
-	 * Event handler for the RenderFogEvent event.
-	 *
-	 * @param event the <code>RenderFogEvent</code> instance
-	 */
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public static void renderFogEvent(RenderFog event) {
-		// TODO: ensure still works
 		// Reduce lava fog from players wearing a full set of molten armor
 		Player player = Minecraft.getInstance().player;
 		Level level = Minecraft.getInstance().level;
@@ -108,8 +102,7 @@ public class ClientForgeEventSubscriber {
 
 		if (player.getItemInHand(player.getUsedItemHand()).getItem() instanceof CursedItem && player.isUsingItem()) {
 			event.setNearPlaneDistance(0.0f);
-			event.setFarPlaneDistance(Math.max(CursedItem.CURSE_EFFECT_FADE * 512, 16.0f));
-			event.scaleFarPlaneDistance(0.5f);
+			event.setFarPlaneDistance(Math.max(CursedItem.CURSE_EFFECT_FADE * 512, 8.0f));
 		}
 
 		if (player.hasEffect(EffectRegistry.FLASHBANG_EFFECT)) {
@@ -118,7 +111,8 @@ public class ClientForgeEventSubscriber {
 
 			event.setNearPlaneDistance(0.0f);
 			event.setFarPlaneDistance(Math.max(distance * 32, 0.25f));
-			event.scaleFarPlaneDistance(0.5f);
+			event.getFogData().skyEnd = 0.1f;
+			event.getFogData().cloudEnd = 0.1f;
 		}
 	}
 

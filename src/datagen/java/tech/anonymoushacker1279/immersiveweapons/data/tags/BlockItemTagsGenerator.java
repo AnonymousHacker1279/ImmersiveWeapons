@@ -43,8 +43,7 @@ public abstract class BlockItemTagsGenerator extends BlockItemTagsProvider {
 						BlockRegistry.DEEPSLATE_SULFUR_ORE.get(),
 						BlockRegistry.NETHER_SULFUR_ORE.get());
 		tag(CommonBlockTagGroups.POTASSIUM_NITRATE_ORES, CommonItemTagGroups.POTASSIUM_NITRATE_ORES)
-				.add(BlockRegistry.POTASSIUM_NITRATE_ORE.get(),
-						BlockRegistry.POTASSIUM_NITRATE_ORE.get());
+				.add(BlockRegistry.POTASSIUM_NITRATE_ORE.get());
 		tag(Tags.Blocks.ORES, Tags.Items.ORES).addTags(
 				CommonBlockTagGroups.COBALT_ORES,
 				CommonBlockTagGroups.SULFUR_ORES,

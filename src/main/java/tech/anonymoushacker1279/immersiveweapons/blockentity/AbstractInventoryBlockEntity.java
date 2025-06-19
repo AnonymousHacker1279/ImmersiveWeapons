@@ -5,6 +5,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.Containers;
@@ -14,8 +15,10 @@ import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
 public abstract class AbstractInventoryBlockEntity extends BlockEntity implements EntityBlock, Container {
 
@@ -163,14 +166,16 @@ public abstract class AbstractInventoryBlockEntity extends BlockEntity implement
 		return ClientboundBlockEntityDataPacket.create(this);
 	}
 
-	/**
-	 * Get the update tag.
-	 *
-	 * @return CompoundTag
-	 */
 	@Override
 	public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
-		return super.getUpdateTag(provider);    // TODO: re-implement
+		CompoundTag tag;
+		try (ProblemReporter.ScopedCollector collector = new ProblemReporter.ScopedCollector(this.problemPath(), ImmersiveWeapons.LOGGER)) {
+			TagValueOutput output = TagValueOutput.createWithContext(collector, provider);
+			ContainerHelper.saveAllItems(output, inventory, true);
+			tag = output.buildResult();
+		}
+
+		return tag;
 	}
 
 	/**

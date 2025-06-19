@@ -1,13 +1,7 @@
 {
   "variants": {
-    "axis=x": {
-      "model": "immersiveweapons:block/tiltros_portal_ns"
-    },
-    "axis=y": {
-      "model": "immersiveweapons:block/tiltros_portal_ud"
-    },
-    "axis=z": {
-      "model": "immersiveweapons:block/tiltros_portal_ew"
+    "": {
+      "model": "immersiveweapons:block/tiltros_portal"
     }
   }
 }

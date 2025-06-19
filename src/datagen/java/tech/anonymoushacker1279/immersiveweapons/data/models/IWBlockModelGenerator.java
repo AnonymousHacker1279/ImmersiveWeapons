@@ -201,6 +201,7 @@ public class IWBlockModelGenerator {
 		blockModels.createTrivialCube(BlockRegistry.CHAMPION_KEYCARD_BRICKS.get());
 		blockModels.createTrivialCube(BlockRegistry.VOID_ORE.get());
 		// generateTiltrosPortal(blockModels, BlockRegistry.TILTROS_PORTAL.get());
+		blockModels.createTrivialCube(BlockRegistry.TILTROS_PORTAL.get());
 	}
 
 	/**

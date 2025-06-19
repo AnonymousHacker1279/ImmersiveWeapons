@@ -85,7 +85,7 @@ public class DebugTracingOverlay {
 					str,
 					5,
 					textHeightPosition,
-					0xFFFFFF,
+					0xFFFFFFFF,
 					false
 			);
 		}

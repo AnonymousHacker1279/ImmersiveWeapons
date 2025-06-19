@@ -42,7 +42,7 @@ public class AmmunitionTableScreen extends AbstractContainerScreen<AmmunitionTab
 				densityModifier,
 				leftPos + 110,
 				topPos + 19,
-				0x000000,
+				0xFF000000,
 				false
 		);
 

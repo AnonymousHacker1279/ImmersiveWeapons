@@ -30,7 +30,7 @@ import java.util.List;
 
 public class FlareEntity extends BulletEntity implements ItemSupplier {
 
-	private int explodeDelay = 60;
+	private int explodeDelay = 45;
 	private int deathDelay = 600;
 	private BlockPos previousLightPosition = BlockPos.ZERO;
 	private final List<BlockPos> lightPositions = new ArrayList<>(10);
@@ -72,7 +72,7 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 			if (deathDelay >= 0) {
 				shouldStopMoving = true;
 				if (level().isClientSide && (tickCount % 4) == 0) {
-					for (int i = 8; --i >= 0; ) {
+					for (int i = 0; i < 8; i++) {
 						level().addAlwaysVisibleParticle(ParticleTypes.FLAME, true, x, y, z, random.nextGaussian() * 0.1D, -deltaMovement.y * 0.25D, random.nextGaussian() * 0.1D);
 					}
 				}
@@ -120,6 +120,7 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 		// Aggro nearby minutemen to attack the nearest monster
 		if (shouldStopMoving && level() instanceof ServerLevel serverLevel && tickCount % 4 == 0) {
 			aggroNearbyMinutemen(serverLevel);
+			setDeltaMovement(deltaMovement.multiply(1, 0.05, 1));
 		}
 	}
 

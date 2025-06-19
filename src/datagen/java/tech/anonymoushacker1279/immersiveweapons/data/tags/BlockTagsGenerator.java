@@ -2,7 +2,10 @@ package tech.anonymoushacker1279.immersiveweapons.data.tags;
 
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
+import net.minecraft.data.tags.TagAppender;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags.Blocks;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
@@ -31,6 +34,13 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 		addMinecraftTags();
 		addToolTags();
 		addMiningBlockTags();
+
+		new BlockItemTagsGenerator() {
+			@Override
+			protected TagAppender<Block, Block> tag(TagKey<Block> blockTagKey, TagKey<Item> itemTagKey) {
+				return BlockTagsGenerator.this.tag(blockTagKey);
+			}
+		}.run();
 	}
 
 	/**

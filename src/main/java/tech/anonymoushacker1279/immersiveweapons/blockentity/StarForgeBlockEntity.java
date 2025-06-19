@@ -175,14 +175,6 @@ public class StarForgeBlockEntity extends BaseContainerBlockEntity implements En
 		valueOutput.putInt("smeltTime", smeltTime);
 	}
 
-	// TODO: reimplement
-	/*@Override
-	public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
-		CompoundTag tag = super.getUpdateTag(provider);
-		saveAdditional(tag, provider);
-		return tag;
-	}*/
-
 	@Override
 	public ClientboundBlockEntityDataPacket getUpdatePacket() {
 		return ClientboundBlockEntityDataPacket.create(this);
