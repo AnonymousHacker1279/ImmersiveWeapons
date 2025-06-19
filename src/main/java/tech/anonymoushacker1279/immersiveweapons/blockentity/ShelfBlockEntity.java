@@ -5,6 +5,8 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockEntityRegistry;
 
@@ -38,15 +40,15 @@ public class ShelfBlockEntity extends AbstractInventoryBlockEntity {
 	}
 
 	@Override
-	protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-		super.saveAdditional(tag, provider);
-		tag.putBoolean("isLocked", isLocked);
+	protected void saveAdditional(ValueOutput valueOutput) {
+		super.saveAdditional(valueOutput);
+		valueOutput.putBoolean("isLocked", isLocked);
 	}
 
 	@Override
-	public void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-		super.loadAdditional(tag, provider);
-		isLocked = tag.getBoolean("isLocked").orElse(false);
+	public void loadAdditional(ValueInput valueInput) {
+		super.loadAdditional(valueInput);
+		isLocked = valueInput.getBooleanOr("isLocked", false);
 	}
 
 	@Override

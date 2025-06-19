@@ -1,11 +1,9 @@
 package tech.anonymoushacker1279.immersiveweapons.blockentity;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceLocation;
@@ -22,6 +20,8 @@ import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockEntityRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.DataComponentTypeRegistry;
@@ -102,27 +102,27 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 	}
 
 	@Override
-	public void loadAdditional(CompoundTag tag, Provider provider) {
-		super.loadAdditional(tag, provider);
+	public void loadAdditional(ValueInput valueInput) {
+		super.loadAdditional(valueInput);
 		inventory.clear();
-		ContainerHelper.loadAllItems(tag, inventory, provider);
-		densityModifier = tag.getFloat("densityModifier").orElse(0.0f);
-		containerData.set(1, tag.getInt("excessStackSize").orElse(0));
+		ContainerHelper.loadAllItems(valueInput, inventory);
+		densityModifier = valueInput.getFloatOr("densityModifier", 0.0f);
+		containerData.set(1, valueInput.getIntOr("excessStackSize", 0));
 
-		if (tag.contains("excessStack")) {
-			String itemName = tag.getString("excessStack").orElse("");
+		String itemName = valueInput.getStringOr("excessStack", "");
+		if (!itemName.isEmpty()) {
 			excessStack = BuiltInRegistries.ITEM.getValue(ResourceLocation.parse(itemName)).getDefaultInstance();
 			excessStack.set(DENSITY_MODIFIER, densityModifier);
 		}
 	}
 
 	@Override
-	protected void saveAdditional(CompoundTag tag, Provider provider) {
-		super.saveAdditional(tag, provider);
-		ContainerHelper.saveAllItems(tag, inventory, provider);
-		tag.putFloat("densityModifier", densityModifier);
-		tag.putInt("excessStackSize", excessStackSize);
-		tag.putString("excessStack", excessStack.getItemHolder().getRegisteredName());
+	protected void saveAdditional(ValueOutput valueOutput) {
+		super.saveAdditional(valueOutput);
+		ContainerHelper.saveAllItems(valueOutput, inventory);
+		valueOutput.putFloat("densityModifier", densityModifier);
+		valueOutput.putInt("excessStackSize", excessStackSize);
+		valueOutput.putString("excessStack", excessStack.getItemHolder().getRegisteredName());
 	}
 
 	/**
@@ -196,14 +196,15 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 		inventory.set(index, stack);
 	}
 
-	@Override
+	// TODO: re-implement
+	/*@Override
 	public CompoundTag getUpdateTag(Provider provider) {
 		CompoundTag tag = new CompoundTag();
 		super.saveAdditional(tag, provider);
 		ContainerHelper.saveAllItems(tag, inventory, provider);
 		tag.putFloat("densityModifier", densityModifier);
 		return tag;
-	}
+	}*/
 
 	@Override
 	public void setChanged() {

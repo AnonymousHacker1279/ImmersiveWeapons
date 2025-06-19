@@ -1,6 +1,5 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.monster.lava_revenant;
 
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
@@ -8,6 +7,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.neoforged.neoforge.entity.PartEntity;
 
 import javax.annotation.Nullable;
@@ -34,11 +35,11 @@ public class LavaRevenantPart extends PartEntity<LavaRevenantEntity> {
 	}
 
 	@Override
-	protected void readAdditionalSaveData(CompoundTag pCompound) {
+	protected void readAdditionalSaveData(ValueInput valueInput) {
 	}
 
 	@Override
-	protected void addAdditionalSaveData(CompoundTag pCompound) {
+	protected void addAdditionalSaveData(ValueOutput valueOutput) {
 	}
 
 	@Override
@@ -75,10 +76,5 @@ public class LavaRevenantPart extends PartEntity<LavaRevenantEntity> {
 	@Override
 	public boolean shouldBeSaved() {
 		return false;
-	}
-
-	@Override
-	public boolean canBeCollidedWith() {
-		return true;
 	}
 }

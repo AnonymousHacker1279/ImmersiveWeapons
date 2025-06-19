@@ -1,8 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.blockentity;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -11,6 +9,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockEntityRegistry;
 
@@ -34,23 +34,23 @@ public class DamageableBlockEntity extends BlockEntity {
 	}
 
 	@Override
-	public void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-		super.loadAdditional(tag, provider);
+	public void loadAdditional(ValueInput valueInput) {
+		super.loadAdditional(valueInput);
 
-		maxHealth = tag.getInt("maxHealth").orElse(1);
-		health = tag.getInt("health").orElse(maxHealth);
-		stages = tag.getInt("stages").orElse(1);
-		currentStage = tag.getInt("currentStage").orElse(0);
+		maxHealth = valueInput.getIntOr("maxHealth", 1);
+		health = valueInput.getIntOr("health", maxHealth);
+		stages = valueInput.getIntOr("stages", 1);
+		currentStage = valueInput.getIntOr("currentStage", 0);
 	}
 
 	@Override
-	protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-		super.saveAdditional(tag, provider);
+	protected void saveAdditional(ValueOutput valueOutput) {
+		super.saveAdditional(valueOutput);
 
-		tag.putInt("maxHealth", maxHealth);
-		tag.putInt("health", health);
-		tag.putInt("stages", stages);
-		tag.putInt("currentStage", currentStage);
+		valueOutput.putInt("maxHealth", maxHealth);
+		valueOutput.putInt("health", health);
+		valueOutput.putInt("stages", stages);
+		valueOutput.putInt("currentStage", currentStage);
 	}
 
 	/**
@@ -63,17 +63,13 @@ public class DamageableBlockEntity extends BlockEntity {
 		return ClientboundBlockEntityDataPacket.create(this);
 	}
 
-	/**
-	 * Get the update tag.
-	 *
-	 * @return CompoundTag
-	 */
-	@Override
+	// TODO: reimplement
+	/*@Override
 	public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
 		CompoundTag tag = new CompoundTag();
 		saveAdditional(tag, provider);
 		return tag;
-	}
+	}*/
 
 	/**
 	 * Damage the block, which takes care of stage changes and destruction.

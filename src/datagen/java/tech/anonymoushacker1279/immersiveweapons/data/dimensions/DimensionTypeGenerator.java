@@ -9,6 +9,7 @@ import net.minecraft.util.valueproviders.BiasedToBottomInt;
 import net.minecraft.world.level.dimension.DimensionType;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
+import java.util.Optional;
 import java.util.OptionalLong;
 
 public class DimensionTypeGenerator {
@@ -32,6 +33,7 @@ public class DimensionTypeGenerator {
 				BlockTags.INFINIBURN_OVERWORLD,
 				TILTROS_LEVEL_ID,
 				0.0F,
+				Optional.empty(),
 				new DimensionType.MonsterSettings(false,
 						false,
 						BiasedToBottomInt.of(0, 7),

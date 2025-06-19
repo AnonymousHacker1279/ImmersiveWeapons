@@ -1,21 +1,17 @@
 package tech.anonymoushacker1279.immersiveweapons.init;
 
-import net.kyrptonaught.customportalapi.api.CustomPortalBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.world.phys.AABB;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.TooltipHandler;
-import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class PostSetupHandler {
@@ -37,7 +33,8 @@ public class PostSetupHandler {
 		TooltipHandler.compileTooltips();
 
 		// Initialize custom portals
-		new CustomPortalBuilder()
+		// TODO: reimplement
+		/*new CustomPortalBuilder()
 				.frame(BlockRegistry.TILTROS_PORTAL_FRAME.get())
 				.customPortalBlock(BlockRegistry.TILTROS_PORTAL.get())
 				.lightWithItem(ItemRegistry.AZUL_KEYSTONE.get())
@@ -60,7 +57,7 @@ public class PostSetupHandler {
 				.travelSound(SoundEventRegistry.TILTROS_PORTAL_TRAVEL.getId(), (entity) -> 0.5F, (entity) -> entity.getRandom().nextFloat() * 0.4F + 0.8F)
 				.triggerSound(SoundEventRegistry.TILTROS_PORTAL_TRAVEL.getId(), (entity) -> 0.5F, (entity) -> entity.getRandom().nextFloat() * 0.4F + 0.8F)
 				.portalParticle((level, pos) -> ParticleTypesRegistry.TILTROS_PORTAL_PARTICLE.get())
-				.build();
+				.build();*/
 	}
 
 	public static void generateBiodome(Level level, BlockPos center, int radius) {

@@ -46,7 +46,7 @@ public class RecoveryStaffItem extends Item implements SummoningStaff {
 				player.getBoundingBox()
 						.expandTowards(lookVec.scale(getMaxRange()))
 						.inflate(1.0D),
-				(entity) -> !entity.isSpectator() && entity.isPickable() && player.hasLineOfSight(entity));
+				(entity) -> !entity.isSpectator() && entity.isPickable() && player.hasLineOfSight(entity), 0.0f);
 
 		if (hitResult != null && hitResult.getEntity() instanceof LivingEntity nearestEntity) {
 			double particleDistance = eyePos.distanceTo(nearestEntity.position());

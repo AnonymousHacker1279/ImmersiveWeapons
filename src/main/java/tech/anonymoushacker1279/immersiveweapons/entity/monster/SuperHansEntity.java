@@ -5,7 +5,6 @@ import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerBossEvent;
@@ -37,6 +36,8 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
@@ -320,8 +321,8 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundTag pCompound) {
-		super.readAdditionalSaveData(pCompound);
+	public void readAdditionalSaveData(ValueInput valueInput) {
+		super.readAdditionalSaveData(valueInput);
 
 		if (hasCustomName()) {
 			bossEvent.setName(getDisplayName());
@@ -331,17 +332,17 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundTag pCompound) {
-		super.addAdditionalSaveData(pCompound);
+	public void addAdditionalSaveData(ValueOutput valueOutput) {
+		super.addAdditionalSaveData(valueOutput);
 
-		pCompound.putInt("xpReward", xpReward);
+		valueOutput.putInt("xpReward", xpReward);
 	}
 
 	@Override
-	public void load(CompoundTag pCompound) {
-		super.load(pCompound);
+	public void load(ValueInput valueInput) {
+		super.load(valueInput);
 
-		xpReward = pCompound.getIntOr("xpReward", 0);
+		xpReward = valueInput.getIntOr("xpReward", 0);
 	}
 
 	public int getAttackingEntities() {

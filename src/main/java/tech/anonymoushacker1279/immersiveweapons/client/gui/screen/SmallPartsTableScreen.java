@@ -1,10 +1,9 @@
 package tech.anonymoushacker1279.immersiveweapons.client.gui.screen;
 
-import com.mojang.blaze3d.platform.Lighting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -55,15 +54,15 @@ public class SmallPartsTableScreen extends AbstractContainerScreen<SmallPartsMen
 	protected void renderBg(GuiGraphics guiGraphics, float partialTick, int pX, int pY) {
 		int leftPos = this.leftPos;
 		int topPos = this.topPos;
-		guiGraphics.blit(RenderType::guiTextured, BG_LOCATION, leftPos, topPos, 0, 0, imageWidth, imageHeight, 256, 256);
+		guiGraphics.blit(RenderPipelines.GUI_TEXTURED, BG_LOCATION, leftPos, topPos, 0, 0, imageWidth, imageHeight, 256, 256);
 		Slot materialSlot = menu.getMaterialSlot();
 
 		if (!materialSlot.hasItem()) {
-			guiGraphics.blit(RenderType::guiTextured, BG_LOCATION, leftPos + materialSlot.x, topPos + materialSlot.y, imageWidth, 0, 16, 16, 256, 256);
+			guiGraphics.blit(RenderPipelines.GUI_TEXTURED, BG_LOCATION, leftPos + materialSlot.x, topPos + materialSlot.y, imageWidth, 0, 16, 16, 256, 256);
 		}
 
 		int scrollOffset = (int) (41.0F * scrollOffs);
-		guiGraphics.blit(RenderType::guiTextured, BG_LOCATION, leftPos + 119, topPos + PATTERNS_Y - 4 + scrollOffset,
+		guiGraphics.blit(RenderPipelines.GUI_TEXTURED, BG_LOCATION, leftPos + 119, topPos + PATTERNS_Y - 4 + scrollOffset,
 				232 + (displayPatterns ? 0 : SCROLLER_WIDTH),
 				0, SCROLLER_WIDTH, SCROLLER_HEIGHT, 256, 256);
 
@@ -90,14 +89,12 @@ public class SmallPartsTableScreen extends AbstractContainerScreen<SmallPartsMen
 					vOffset += 32;
 				}
 
-				guiGraphics.blit(RenderType::guiTextured, BG_LOCATION, x, y, 0, vOffset, PATTERN_IMAGE_SIZE, PATTERN_IMAGE_SIZE, 256, 256);
+				guiGraphics.blit(RenderPipelines.GUI_TEXTURED, BG_LOCATION, x, y, 0, vOffset, PATTERN_IMAGE_SIZE, PATTERN_IMAGE_SIZE, 256, 256);
 				if (startIndex + indexOffset - 1 <= resultPatterns.size() - 1) {
 					guiGraphics.renderItem(new ItemStack(resultPatterns.get(startIndex + indexOffset - 1)), x, y);
 				}
 			}
 		}
-
-		Lighting.setupFor3DItems();
 	}
 
 	@Override

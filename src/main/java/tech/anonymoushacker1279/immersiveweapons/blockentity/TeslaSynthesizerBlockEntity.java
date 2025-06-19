@@ -2,11 +2,8 @@ package tech.anonymoushacker1279.immersiveweapons.blockentity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.ContainerHelper;
@@ -21,6 +18,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockEntityRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
@@ -57,9 +56,6 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	private int burnTimeTotal;
 	private int cookTime;
 	private int cookTimeTotal = 200; // Default cook time
-
-	// Recipe usage tracking
-	private final Map<ResourceLocation, Integer> usedRecipes = new HashMap<>(5);
 
 	// Container data for the GUI
 	public final ContainerData containerData = new ContainerData() {
@@ -184,10 +180,6 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 						cookTime = 0;
 						smeltRecipe(recipe);
 						inventoryChanged = true;
-
-						// Track recipe usage
-						ResourceLocation recipeId = recipeHolder.get().id().location();
-						usedRecipes.put(recipeId, usedRecipes.getOrDefault(recipeId, 0) + 1);
 					}
 				} else {
 					// Reset cooking progress if we can't smelt
@@ -398,49 +390,39 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	}
 
 	@Override
-	public void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-		super.loadAdditional(tag, provider);
+	public void loadAdditional(ValueInput valueInput) {
+		super.loadAdditional(valueInput);
 
 		// Load inventory
-		ContainerHelper.loadAllItems(tag, items, provider);
+		ContainerHelper.loadAllItems(valueInput, items);
 
 		// Load process state
-		burnTime = tag.getInt("BurnTime").orElse(0);
-		cookTime = tag.getInt("CookTime").orElse(0);
-		cookTimeTotal = tag.getInt("CookTimeTotal").orElse(200);
+		burnTime = valueInput.getIntOr("BurnTime", 0);
+		cookTime = valueInput.getIntOr("CookTime", 0);
+		cookTimeTotal = valueInput.getIntOr("CookTimeTotal", 200);
 		burnTimeTotal = getBurnTime(items.get(SLOT_FUEL));
-
-		// Load recipe usage data
-		CompoundTag recipesTag = tag.getCompound("RecipesUsed").orElse(new CompoundTag());
-		for (String key : recipesTag.keySet()) {
-			usedRecipes.put(ResourceLocation.parse(key), recipesTag.getInt(key).orElse(0));
-		}
 	}
 
 	@Override
-	protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-		super.saveAdditional(tag, provider);
+	protected void saveAdditional(ValueOutput valueOutput) {
+		super.saveAdditional(valueOutput);
 
 		// Save inventory
-		ContainerHelper.saveAllItems(tag, items, provider);
+		ContainerHelper.saveAllItems(valueOutput, items);
 
 		// Save process state
-		tag.putInt("BurnTime", burnTime);
-		tag.putInt("CookTime", cookTime);
-		tag.putInt("CookTimeTotal", cookTimeTotal);
-
-		// Save recipe usage data
-		CompoundTag recipesTag = new CompoundTag();
-		usedRecipes.forEach((recipeId, count) -> recipesTag.putInt(recipeId.toString(), count));
-		tag.put("RecipesUsed", recipesTag);
+		valueOutput.putInt("BurnTime", burnTime);
+		valueOutput.putInt("CookTime", cookTime);
+		valueOutput.putInt("CookTimeTotal", cookTimeTotal);
 	}
 
-	@Override
+	// TODO: reimplement
+	/*@Override
 	public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
 		CompoundTag tag = super.getUpdateTag(registries);
 		saveAdditional(tag, registries);
 		return tag;
-	}
+	}*/
 
 	@Override
 	public void fillStackedContents(net.minecraft.world.entity.player.StackedItemContents contents) {

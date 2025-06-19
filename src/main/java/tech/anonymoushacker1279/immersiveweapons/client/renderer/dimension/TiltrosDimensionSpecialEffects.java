@@ -1,11 +1,10 @@
 package tech.anonymoushacker1279.immersiveweapons.client.renderer.dimension;
 
-import com.mojang.blaze3d.buffers.BufferType;
-import com.mojang.blaze3d.buffers.BufferUsage;
 import com.mojang.blaze3d.buffers.GpuBuffer;
+import com.mojang.blaze3d.buffers.GpuBufferSlice;
 import com.mojang.blaze3d.systems.RenderPass;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.textures.GpuTexture;
+import com.mojang.blaze3d.textures.GpuTextureView;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
@@ -15,9 +14,10 @@ import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.texture.AbstractTexture;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.TriState;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
+import org.joml.Vector3f;
+import org.joml.Vector4f;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
 import java.util.OptionalDouble;
@@ -30,7 +30,7 @@ public class TiltrosDimensionSpecialEffects extends DimensionSpecialEffects {
 	private final GpuBuffer skyBuffer;
 
 	public TiltrosDimensionSpecialEffects() {
-		super(Float.NaN, true, SkyType.END, true, false);
+		super(SkyType.END, true, false);
 		skyBuffer = buildBuffer();
 	}
 
@@ -50,23 +50,27 @@ public class TiltrosDimensionSpecialEffects extends DimensionSpecialEffects {
 	}
 
 	@Override
-	public boolean renderSky(ClientLevel level, int ticks, float partialTick, Matrix4f modelViewMatrix, Camera camera, Matrix4f projectionMatrix, Runnable setupFog) {
+	public boolean renderSky(ClientLevel level, int ticks, float partialTick, Matrix4f modelViewMatrix, Camera camera, Runnable setupFog) {
 		TextureManager textureManager = Minecraft.getInstance().getTextureManager();
 		AbstractTexture texture = textureManager.getTexture(SKY_LOCATION);
-		texture.setFilter(TriState.FALSE, false);
-		RenderSystem.AutoStorageIndexBuffer indexBuffer = RenderSystem.getSequentialBuffer(VertexFormat.Mode.QUADS);
-		GpuBuffer buffer = indexBuffer.getBuffer(36);
-		GpuTexture colorTexture = Minecraft.getInstance().getMainRenderTarget().getColorTexture();
-		GpuTexture depthTexture = Minecraft.getInstance().getMainRenderTarget().getDepthTexture();
+		texture.setUseMipmaps(false);
+		RenderSystem.AutoStorageIndexBuffer sequentialBuffer = RenderSystem.getSequentialBuffer(VertexFormat.Mode.QUADS);
+		GpuBuffer gpuBuffer = sequentialBuffer.getBuffer(36);
+		GpuTextureView colorTextureView = Minecraft.getInstance().getMainRenderTarget().getColorTextureView();
+		GpuTextureView depthTextureView = Minecraft.getInstance().getMainRenderTarget().getDepthTextureView();
+		GpuBufferSlice bufferSlice = RenderSystem.getDynamicUniforms()
+				.writeTransform(RenderSystem.getModelViewMatrix(), new Vector4f(1.0F, 1.0F, 1.0F, 1.0F), new Vector3f(), new Matrix4f(), 0.0F);
 
-		try (RenderPass renderpass = RenderSystem.getDevice()
+		try (RenderPass pass = RenderSystem.getDevice()
 				.createCommandEncoder()
-				.createRenderPass(colorTexture, OptionalInt.empty(), depthTexture, OptionalDouble.empty())) {
-			renderpass.setPipeline(RenderPipelines.END_SKY);
-			renderpass.bindSampler("Sampler0", texture.getTexture());
-			renderpass.setVertexBuffer(0, skyBuffer);
-			renderpass.setIndexBuffer(buffer, indexBuffer.type());
-			renderpass.drawIndexed(0, 36);
+				.createRenderPass(() -> "Tiltros sky", colorTextureView, OptionalInt.empty(), depthTextureView, OptionalDouble.empty())) {
+			pass.setPipeline(RenderPipelines.END_SKY);
+			RenderSystem.bindDefaultUniforms(pass);
+			pass.setUniform("DynamicTransforms", bufferSlice);
+			pass.bindSampler("Sampler0", texture.getTextureView());
+			pass.setVertexBuffer(0, skyBuffer);
+			pass.setIndexBuffer(gpuBuffer, sequentialBuffer.type());
+			pass.drawIndexed(0, 0, 36, 1);
 		}
 
 		return true;
@@ -103,8 +107,7 @@ public class TiltrosDimensionSpecialEffects extends DimensionSpecialEffects {
 			}
 
 			try (MeshData mesh = bufferBuilder.buildOrThrow()) {
-				buffer = RenderSystem.getDevice().createBuffer(() ->
-						"End sky vertex buffer", BufferType.VERTICES, BufferUsage.STATIC_WRITE, mesh.vertexBuffer());
+				buffer = RenderSystem.getDevice().createBuffer(() -> "Tiltros sky vertex buffer", 40, mesh.vertexBuffer());
 			}
 		}
 

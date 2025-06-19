@@ -1,7 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.projectile;
 
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -12,6 +11,8 @@ import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.HitResult.Type;
@@ -160,21 +161,21 @@ public abstract class AdvancedThrowableItemProjectile extends ThrowableItemProje
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundTag pCompound) {
-		super.addAdditionalSaveData(pCompound);
+	public void addAdditionalSaveData(ValueOutput valueOutput) {
+		super.addAdditionalSaveData(valueOutput);
 
-		pCompound.putBoolean("stopMoving", stopMoving);
-		pCompound.putBoolean("hasActivated", hasActivated);
-		pCompound.putInt("ticksInGround", ticksInGround);
+		valueOutput.putBoolean("stopMoving", stopMoving);
+		valueOutput.putBoolean("hasActivated", hasActivated);
+		valueOutput.putInt("ticksInGround", ticksInGround);
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundTag pCompound) {
-		super.readAdditionalSaveData(pCompound);
+	public void readAdditionalSaveData(ValueInput valueInput) {
+		super.readAdditionalSaveData(valueInput);
 
-		stopMoving = pCompound.getBooleanOr("stopMoving", false);
-		hasActivated = pCompound.getBooleanOr("hasActivated", false);
-		ticksInGround = pCompound.getIntOr("ticksInGround", 0);
+		stopMoving = valueInput.getBooleanOr("stopMoving", false);
+		hasActivated = valueInput.getBooleanOr("hasActivated", false);
+		ticksInGround = valueInput.getIntOr("ticksInGround", 0);
 	}
 
 	/**

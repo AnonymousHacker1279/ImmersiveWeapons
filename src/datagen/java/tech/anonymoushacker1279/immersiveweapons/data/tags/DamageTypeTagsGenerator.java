@@ -3,7 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.data.tags;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.data.tags.KeyTagProvider;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageType;
 import net.neoforged.neoforge.common.Tags.DamageTypes;
@@ -12,7 +12,7 @@ import tech.anonymoushacker1279.immersiveweapons.data.damage_types.IWDamageTypes
 
 import java.util.concurrent.CompletableFuture;
 
-public class DamageTypeTagsGenerator extends TagsProvider<DamageType> {
+public class DamageTypeTagsGenerator extends KeyTagProvider<DamageType> {
 
 	public DamageTypeTagsGenerator(PackOutput output, CompletableFuture<Provider> provider) {
 		super(output, Registries.DAMAGE_TYPE, provider, ImmersiveWeapons.MOD_ID);
@@ -60,7 +60,7 @@ public class DamageTypeTagsGenerator extends TagsProvider<DamageType> {
 				.add(IWDamageTypes.PUNJI_STICKS_KEY)
 				.add(IWDamageTypes.PUNJI_STICKS_FALL_KEY)
 				.add(IWDamageTypes.WOODEN_SPIKES_KEY);
-		
+
 		addForgeTags();
 	}
 

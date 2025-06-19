@@ -2,7 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.client.gui.screen;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -27,13 +27,13 @@ public class AmmunitionTableScreen extends AbstractContainerScreen<AmmunitionTab
 
 	@Override
 	protected void renderBg(GuiGraphics guiGraphics, float pPartialTick, int pX, int pY) {
-		guiGraphics.blit(RenderType::guiTextured, GUI_TEXTURE, leftPos, topPos, 0, 0, imageWidth, imageHeight, 256, 256);
+		guiGraphics.blit(RenderPipelines.GUI_TEXTURED, GUI_TEXTURE, leftPos, topPos, 0, 0, imageWidth, imageHeight, 256, 256);
 
 		/*Render the density scroller
 		The scroller itself is at (253, 0) in the texture and is 3x8 pixels
 		It should be placed starting at (72, 19) and can be moved to (102, 19)*/
 		int scrollOffset = (int) Mth.clamp((menu.getDensityModifier() * 30), 0, 30);
-		guiGraphics.blit(RenderType::guiTextured, GUI_TEXTURE, leftPos + 72 + scrollOffset, topPos + 19, 253, 0, 3, 8, 256, 256);
+		guiGraphics.blit(RenderPipelines.GUI_TEXTURED, GUI_TEXTURE, leftPos + 72 + scrollOffset, topPos + 19, 253, 0, 3, 8, 256, 256);
 
 		// Render the percent modifier next to the scrollbar
 		String densityModifier = "+" + String.format("%.0f", menu.getDensityModifier() * 100) + "%";

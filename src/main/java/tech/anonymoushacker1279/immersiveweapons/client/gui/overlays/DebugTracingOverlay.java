@@ -83,7 +83,7 @@ public class DebugTracingOverlay {
 			guiGraphics.drawString(
 					fontRenderer,
 					str,
-					5f,
+					5,
 					textHeightPosition,
 					0xFFFFFF,
 					false

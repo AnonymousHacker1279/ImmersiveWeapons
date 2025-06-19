@@ -1,7 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.monster;
 
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
@@ -13,6 +12,8 @@ import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 
@@ -67,17 +68,17 @@ public class WanderingWarriorEntity extends AbstractWanderingWarriorEntity {
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundTag compound) {
-		super.addAdditionalSaveData(compound);
+	public void addAdditionalSaveData(ValueOutput valueOutput) {
+		super.addAdditionalSaveData(valueOutput);
 
-		compound.putBoolean("isBerserk", isBerserk);
+		valueOutput.putBoolean("isBerserk", isBerserk);
 	}
 
 	@Override
-	public void load(CompoundTag compound) {
-		super.load(compound);
+	public void load(ValueInput valueInput) {
+		super.load(valueInput);
 
-		isBerserk = compound.getBooleanOr("isBerserk", false);
+		isBerserk = valueInput.getBooleanOr("isBerserk", false);
 	}
 
 	@Override

@@ -4,7 +4,6 @@ import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.UUIDUtil;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -27,6 +26,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
@@ -41,7 +42,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementOnDiscovery {
+public class EvilEyeEntity extends Mob implements Enemy, GrantAdvancementOnDiscovery {
 
 	private static final EntityDataAccessor<Integer> SIZE = SynchedEntityData.defineId(EvilEyeEntity.class,
 			EntityDataSerializers.INT);
@@ -63,7 +64,7 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 	private int effectDuration = 100;
 	private int effectLevel = 0;
 
-	public EvilEyeEntity(EntityType<? extends FlyingMob> entityType, Level level) {
+	public EvilEyeEntity(EntityType<? extends Mob> entityType, Level level) {
 		super(entityType, level);
 
 		lowTierDebuffs.add(MobEffects.SLOWNESS);
@@ -192,6 +193,11 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 	}
 
 	@Override
+	public HumanoidArm getMainArm() {
+		return HumanoidArm.RIGHT;
+	}
+
+	@Override
 	public void tick() {
 		super.tick();
 
@@ -250,27 +256,25 @@ public class EvilEyeEntity extends FlyingMob implements Enemy, GrantAdvancementO
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundTag compound) {
-		super.addAdditionalSaveData(compound);
-		compound.putInt("Size", getSize());
-		compound.putBoolean("SummonedByStaff", entityData.get(SUMMONED_BY_STAFF));
+	public void addAdditionalSaveData(ValueOutput valueOutput) {
+		super.addAdditionalSaveData(valueOutput);
+		valueOutput.putInt("Size", getSize());
+		valueOutput.putBoolean("SummonedByStaff", entityData.get(SUMMONED_BY_STAFF));
 
 		if (targetedEntityUUID != null) {
-			compound.store("Target", UUIDUtil.CODEC, targetedEntityUUID);
+			valueOutput.store("Target", UUIDUtil.CODEC, targetedEntityUUID);
 		}
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundTag compound) {
-		super.readAdditionalSaveData(compound);
-		setSize(compound.getIntOr("Size", 0));
-		entityData.set(SUMMONED_BY_STAFF, compound.getBooleanOr("SummonedByStaff", false));
+	public void readAdditionalSaveData(ValueInput valueInput) {
+		super.readAdditionalSaveData(valueInput);
+		setSize(valueInput.getIntOr("Size", 0));
+		entityData.set(SUMMONED_BY_STAFF, valueInput.getBooleanOr("SummonedByStaff", false));
 
-		if (compound.contains("Target")) {
-			compound.read("Target", UUIDUtil.CODEC).ifPresent(uuid -> {
-				targetedEntityUUID = uuid;
-			});
-		}
+		valueInput.read("Target", UUIDUtil.CODEC).ifPresent(uuid -> {
+			targetedEntityUUID = uuid;
+		});
 	}
 
 	@Override

@@ -1,7 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.event;
 
 import com.mojang.blaze3d.platform.InputConstants;
-import com.mojang.blaze3d.shaders.FogShape;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -76,6 +75,7 @@ public class ClientForgeEventSubscriber {
 	 */
 	@SubscribeEvent
 	public static void renderFogEvent(RenderFog event) {
+		// TODO: ensure still works
 		// Reduce lava fog from players wearing a full set of molten armor
 		Player player = Minecraft.getInstance().player;
 		Level level = Minecraft.getInstance().level;
@@ -93,7 +93,6 @@ public class ClientForgeEventSubscriber {
 						float modifier = hasLavaGoggles ? 1.5f : 1.0f;
 						event.setNearPlaneDistance(16.0f * modifier);
 						event.setFarPlaneDistance(32.0f * modifier);
-						event.setCanceled(true);
 					}
 				}
 			} else if (hasLavaGoggles) {
@@ -102,7 +101,6 @@ public class ClientForgeEventSubscriber {
 					if (state.is(Blocks.LAVA)) {
 						event.setNearPlaneDistance(8.0f);
 						event.setFarPlaneDistance(16.0f);
-						event.setCanceled(true);
 					}
 				}
 			}
@@ -112,9 +110,6 @@ public class ClientForgeEventSubscriber {
 			event.setNearPlaneDistance(0.0f);
 			event.setFarPlaneDistance(Math.max(CursedItem.CURSE_EFFECT_FADE * 512, 16.0f));
 			event.scaleFarPlaneDistance(0.5f);
-
-			event.setFogShape(FogShape.SPHERE);
-			event.setCanceled(true);
 		}
 
 		if (player.hasEffect(EffectRegistry.FLASHBANG_EFFECT)) {
@@ -124,9 +119,6 @@ public class ClientForgeEventSubscriber {
 			event.setNearPlaneDistance(0.0f);
 			event.setFarPlaneDistance(Math.max(distance * 32, 0.25f));
 			event.scaleFarPlaneDistance(0.5f);
-
-			event.setFogShape(FogShape.SPHERE);
-			event.setCanceled(true);
 		}
 	}
 

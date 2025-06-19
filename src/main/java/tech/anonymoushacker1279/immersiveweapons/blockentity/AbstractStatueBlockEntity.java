@@ -1,10 +1,8 @@
 package tech.anonymoushacker1279.immersiveweapons.blockentity;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -23,6 +21,8 @@ import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
@@ -172,14 +172,14 @@ public abstract class AbstractStatueBlockEntity<T extends SoldierEntity> extends
 	protected abstract T createEntity(Level level);
 
 	@Override
-	protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-		super.saveAdditional(tag, provider);
-		tag.putInt("scanCooldown", cooldown);
+	protected void saveAdditional(ValueOutput valueOutput) {
+		super.saveAdditional(valueOutput);
+		valueOutput.putInt("scanCooldown", cooldown);
 	}
 
 	@Override
-	public void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-		super.loadAdditional(tag, provider);
-		cooldown = tag.getInt("scanCooldown").orElse(0);
+	public void loadAdditional(ValueInput valueInput) {
+		super.loadAdditional(valueInput);
+		cooldown = valueInput.getIntOr("scanCooldown", 0);
 	}
 }

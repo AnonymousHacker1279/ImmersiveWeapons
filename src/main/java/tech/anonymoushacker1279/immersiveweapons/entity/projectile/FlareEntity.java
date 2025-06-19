@@ -2,7 +2,6 @@ package tech.anonymoushacker1279.immersiveweapons.entity.projectile;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -18,6 +17,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
@@ -148,14 +149,9 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 		return new ItemStack(ItemRegistry.FLARE.get());
 	}
 
-	/**
-	 * Add additional save data.
-	 *
-	 * @param pCompound the <code>CompoundTag</code> containing the save data
-	 */
 	@Override
-	public void addAdditionalSaveData(CompoundTag pCompound) {
-		super.addAdditionalSaveData(pCompound);
+	public void addAdditionalSaveData(ValueOutput valueOutput) {
+		super.addAdditionalSaveData(valueOutput);
 
 		if (!lightPositions.isEmpty()) {
 			int[] xPositions = new int[lightPositions.size()];
@@ -167,24 +163,19 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 				zPositions[lightPositions.indexOf(pos)] = pos.getZ();
 			}
 
-			pCompound.putIntArray("xPositions", xPositions);
-			pCompound.putIntArray("yPositions", yPositions);
-			pCompound.putIntArray("zPositions", zPositions);
+			valueOutput.putIntArray("xPositions", xPositions);
+			valueOutput.putIntArray("yPositions", yPositions);
+			valueOutput.putIntArray("zPositions", zPositions);
 		}
 	}
 
-	/**
-	 * Read additional save data.
-	 *
-	 * @param pCompound the <code>CompoundTag</code> containing the save data
-	 */
 	@Override
-	public void readAdditionalSaveData(CompoundTag pCompound) {
-		super.readAdditionalSaveData(pCompound);
+	public void readAdditionalSaveData(ValueInput valueInput) {
+		super.readAdditionalSaveData(valueInput);
 
-		int[] xPositions = pCompound.getIntArray("xPositions").orElse(null);
-		int[] yPositions = pCompound.getIntArray("yPositions").orElse(null);
-		int[] zPositions = pCompound.getIntArray("zPositions").orElse(null);
+		int[] xPositions = valueInput.getIntArray("xPositions").orElse(null);
+		int[] yPositions = valueInput.getIntArray("yPositions").orElse(null);
+		int[] zPositions = valueInput.getIntArray("zPositions").orElse(null);
 
 		// Each item in xPositions should match an entry in y/zPositions, so build a list of BlockPos
 		// with each individual position
