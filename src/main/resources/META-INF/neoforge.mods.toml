@@ -40,8 +40,8 @@ side = "BOTH"
 
 [[dependencies.immersiveweapons]]
 modId = "cpapireforged"
-type = "optional" # TODO: Change to required when updated
-versionRange = "[1.4.0,)"
+type = "required"
+versionRange = "[1.4.0,)"   # TODO: bump version range
 ordering = "NONE"
 side = "BOTH"
 

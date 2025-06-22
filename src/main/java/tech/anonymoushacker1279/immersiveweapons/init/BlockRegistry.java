@@ -1,5 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.init;
 
+import net.kyrptonaught.customportalapi.CustomPortalBlock;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -284,6 +285,5 @@ public class BlockRegistry {
 	public static final Supplier<SaplingBlock> STARDUST_SAPLING = BLOCKS.registerBlock("stardust_sapling", (properties) -> new SaplingBlock(new TreeGrower("stardust_sapling", Optional.empty(), Optional.of(STARDUST_TREE_CONFIGURATION), Optional.empty()), properties.mapColor(MapColor.PLANT).pushReaction(PushReaction.DESTROY).strength(0.0f).sound(SoundType.GRASS).noCollission().instabreak().offsetType(OffsetType.NONE)));
 	public static final Supplier<SolarLensBlock> SOLAR_LENS = BLOCKS.registerBlock("solar_lens", (properties) -> new SolarLensBlock(properties.mapColor(MapColor.METAL).pushReaction(PushReaction.DESTROY).strength(0.5f).sound(SoundType.GLASS).noOcclusion()));
 	@TextureMetadataMarker
-	// TODO: reimplement custom portal block once updated
-	public static final Supplier<Block> TILTROS_PORTAL = BLOCKS.registerBlock("tiltros_portal", (properties) -> new Block(properties.mapColor(MapColor.COLOR_BLACK).pushReaction(PushReaction.BLOCK).strength(-1.0f, 3600000f).noCollission().lightLevel(state -> 15).noLootTable()));
+	public static final Supplier<CustomPortalBlock> TILTROS_PORTAL = BLOCKS.registerBlock("tiltros_portal", (properties) -> new CustomPortalBlock(properties.mapColor(MapColor.COLOR_BLACK).pushReaction(PushReaction.BLOCK).strength(-1.0f, 3600000f).noCollission().lightLevel(state -> 15).noLootTable()));
 }

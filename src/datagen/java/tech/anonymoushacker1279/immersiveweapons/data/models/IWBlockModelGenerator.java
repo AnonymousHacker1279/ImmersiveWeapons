@@ -1,5 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.data.models;
 
+import net.kyrptonaught.customportalapi.CustomPortalBlock;
 import net.minecraft.client.color.item.GrassColorSource;
 import net.minecraft.client.color.item.ItemTintSource;
 import net.minecraft.client.data.models.BlockModelGenerators;
@@ -9,11 +10,14 @@ import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.model.*;
 import net.minecraft.client.renderer.block.model.VariantMutator;
+import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.neoforged.neoforge.client.model.generators.template.ExtendedModelTemplate;
+import net.neoforged.neoforge.client.model.generators.template.ExtendedModelTemplateBuilder;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.*;
 import tech.anonymoushacker1279.immersiveweapons.block.skull.CustomSkullTypes;
@@ -200,8 +204,7 @@ public class IWBlockModelGenerator {
 		blockModels.createTrivialCube(BlockRegistry.CHAMPION_BASE.get());
 		blockModels.createTrivialCube(BlockRegistry.CHAMPION_KEYCARD_BRICKS.get());
 		blockModels.createTrivialCube(BlockRegistry.VOID_ORE.get());
-		// generateTiltrosPortal(blockModels, BlockRegistry.TILTROS_PORTAL.get());
-		blockModels.createTrivialCube(BlockRegistry.TILTROS_PORTAL.get());
+		generateTiltrosPortal(blockModels, BlockRegistry.TILTROS_PORTAL.get());
 	}
 
 	/**
@@ -941,8 +944,7 @@ public class IWBlockModelGenerator {
 	 * @param models the block model generator
 	 * @param block  the block to generate the state and model for
 	 */
-	// TODO: reimplement
-	/*private static void generateTiltrosPortal(BlockModelGenerators models, CustomPortalBlock block) {
+	private static void generateTiltrosPortal(BlockModelGenerators models, CustomPortalBlock block) {
 		TextureMapping mapping = TextureMapping.defaultTexture(block)
 				.put(TextureSlot.PARTICLE, ModelLocationUtils.getModelLocation(block));
 
@@ -992,5 +994,5 @@ public class IWBlockModelGenerator {
 						.select(Direction.Axis.Y, BlockModelGenerators.plainVariant(templateUD.create(block, mapping, models.modelOutput)))
 				)
 		);
-	}*/
+	}
 }
