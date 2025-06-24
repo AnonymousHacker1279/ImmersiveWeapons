@@ -563,7 +563,6 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("accessory.effect_type.experience_modifier", "Experience Modifier: %s");
 		addTooltip("accessory.effect_type.sonic_boom_resistance", "Sonic Boom Resistance: %s");
 		addTooltip("accessory.effect_type.looting_level", "Looting Level Bonus: %s");
-		// Add tooltips for each AccessoryItem$EffectScalingType (excluding NO_SCALING)
 		addTooltip("accessory.effect_scaling_type.depth", "(Scales with depth)");
 		addTooltip("accessory.effect_scaling_type.insomnia", "(Scales with insomnia)");
 

@@ -4,5 +4,21 @@
   "effects": [],
   "item": "immersiveweapons:celestial_spirit",
   "mob_effects": [],
-  "slot": "spirit"
+  "slot": "spirit",
+  "tooltips": [
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.celestial_spirit_1"
+    },
+    {
+      "formats": [
+        "dark_green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.celestial_spirit_2"
+    }
+  ]
 }

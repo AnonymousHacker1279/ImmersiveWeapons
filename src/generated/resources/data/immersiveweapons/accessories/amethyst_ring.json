@@ -12,5 +12,14 @@
   ],
   "item": "immersiveweapons:amethyst_ring",
   "mob_effects": [],
-  "slot": "ring"
+  "slot": "ring",
+  "tooltips": [
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.amethyst_ring"
+    }
+  ]
 }

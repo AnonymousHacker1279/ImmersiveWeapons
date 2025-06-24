@@ -12,5 +12,14 @@
   ],
   "item": "immersiveweapons:satchel",
   "mob_effects": [],
-  "slot": "belt"
+  "slot": "belt",
+  "tooltips": [
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.satchel"
+    }
+  ]
 }

@@ -19,5 +19,21 @@
   ],
   "item": "immersiveweapons:iron_fist",
   "mob_effects": [],
-  "slot": "hand"
+  "slot": "hand",
+  "tooltips": [
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.iron_fist_1"
+    },
+    {
+      "formats": [
+        "dark_purple",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.iron_fist_2"
+    }
+  ]
 }

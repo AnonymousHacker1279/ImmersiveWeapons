@@ -11,5 +11,14 @@
       "show_icon": true
     }
   ],
-  "slot": "head"
+  "slot": "head",
+  "tooltips": [
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.night_vision_goggles"
+    }
+  ]
 }

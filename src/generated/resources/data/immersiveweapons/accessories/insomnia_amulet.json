@@ -13,5 +13,21 @@
   ],
   "item": "immersiveweapons:insomnia_amulet",
   "mob_effects": [],
-  "slot": "necklace"
+  "slot": "necklace",
+  "tooltips": [
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.insomnia_amulet_1"
+    },
+    {
+      "formats": [
+        "dark_red",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.insomnia_amulet_2"
+    }
+  ]
 }

@@ -4,5 +4,14 @@
   "effects": [],
   "item": "immersiveweapons:venstral_jar",
   "mob_effects": [],
-  "slot": "belt"
+  "slot": "belt",
+  "tooltips": [
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.venstral_jar"
+    }
+  ]
 }

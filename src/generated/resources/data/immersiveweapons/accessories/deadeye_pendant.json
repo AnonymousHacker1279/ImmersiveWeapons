@@ -4,5 +4,21 @@
   "effects": [],
   "item": "immersiveweapons:deadeye_pendant",
   "mob_effects": [],
-  "slot": "necklace"
+  "slot": "necklace",
+  "tooltips": [
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.deadeye_pendant_1"
+    },
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.deadeye_pendant_2"
+    }
+  ]
 }

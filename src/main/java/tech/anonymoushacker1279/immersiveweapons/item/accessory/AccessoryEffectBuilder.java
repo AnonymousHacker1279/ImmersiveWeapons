@@ -1,9 +1,11 @@
 package tech.anonymoushacker1279.immersiveweapons.item.accessory;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import tech.anonymoushacker1279.immersiveweapons.client.tooltip.SerializableTooltip;
 import tech.anonymoushacker1279.immersiveweapons.init.AccessoryEffectTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.scaling.AccessoryEffectScalingType;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.scaling.AttributeOperation;
@@ -22,6 +24,7 @@ public class AccessoryEffectBuilder {
 	private final List<AttributeOperation> attributeModifiers = new ArrayList<>(5);
 	private final List<DynamicAttributeOperationInstance> dynamicAttributeModifiers = new ArrayList<>(5);
 	private final List<MobEffectInstance> mobEffects = new ArrayList<>(5);
+	private final List<SerializableTooltip> tooltips = new ArrayList<>(5);
 
 	/**
 	 * Add an effect to the accessory. See {@link AccessoryEffectTypeRegistry} for a list of available effects.
@@ -87,6 +90,18 @@ public class AccessoryEffectBuilder {
 	}
 
 	/**
+	 * Add a tooltip to the accessory.
+	 *
+	 * @param key     the translation key for the tooltip
+	 * @param formats the <code>ChatFormatting</code> to apply to the tooltip
+	 * @return the <code>EffectBuilder</code> for chaining
+	 */
+	public AccessoryEffectBuilder addTooltip(String key, ChatFormatting... formats) {
+		tooltips.add(SerializableTooltip.fromComponent(key, formats));
+		return this;
+	}
+
+	/**
 	 * Add all effects from another builder to this builder.
 	 *
 	 * @param builder the <code>EffectBuilder</code> to add from
@@ -97,6 +112,7 @@ public class AccessoryEffectBuilder {
 		attributeModifiers.addAll(builder.getAttributeModifiers());
 		dynamicAttributeModifiers.addAll(builder.getDynamicAttributeModifiers());
 		mobEffects.addAll(builder.getMobEffects());
+		tooltips.addAll(builder.getTooltips());
 		return this;
 	}
 
@@ -114,5 +130,9 @@ public class AccessoryEffectBuilder {
 
 	public List<MobEffectInstance> getMobEffects() {
 		return mobEffects;
+	}
+
+	public List<SerializableTooltip> getTooltips() {
+		return tooltips;
 	}
 }

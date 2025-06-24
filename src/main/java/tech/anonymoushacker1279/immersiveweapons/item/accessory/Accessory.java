@@ -12,6 +12,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
+import tech.anonymoushacker1279.immersiveweapons.client.tooltip.SerializableTooltip;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.scaling.AttributeOperation;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.scaling.DynamicAttributeOperationInstance;
 import tech.anonymoushacker1279.immersiveweapons.util.IWCBBridge;
@@ -27,7 +28,8 @@ public record Accessory(Holder<Item> item,
                         List<AccessoryEffectInstance> effects,
                         List<AttributeOperation> attributeModifiers,
                         List<DynamicAttributeOperationInstance> dynamicAttributeModifiers,
-                        List<MobEffectInstance> mobEffectInstances) {
+                        List<MobEffectInstance> mobEffectInstances,
+                        List<SerializableTooltip> tooltips) {
 
 	public static final Codec<Accessory> CODEC = RecordCodecBuilder.create(instance -> instance.group(
 			Item.CODEC.fieldOf("item").forGetter(Accessory::item),
@@ -35,7 +37,8 @@ public record Accessory(Holder<Item> item,
 			Codec.list(AccessoryEffectInstance.CODEC).fieldOf("effects").forGetter(Accessory::effects),
 			Codec.list(AttributeOperation.CODEC).fieldOf("attribute_modifiers").forGetter(Accessory::attributeModifiers),
 			Codec.list(DynamicAttributeOperationInstance.CODEC).fieldOf("dynamic_attribute_modifiers").forGetter(Accessory::dynamicAttributeModifiers),
-			Codec.list(MobEffectInstance.CODEC).fieldOf("mob_effects").forGetter(Accessory::mobEffectInstances)
+			Codec.list(MobEffectInstance.CODEC).fieldOf("mob_effects").forGetter(Accessory::mobEffectInstances),
+			Codec.list(SerializableTooltip.CODEC).optionalFieldOf("tooltips", List.of()).forGetter(Accessory::tooltips)
 	).apply(instance, Accessory::new));
 
 	public static final StreamCodec<RegistryFriendlyByteBuf, Accessory> STREAM_CODEC = StreamCodec.composite(
@@ -51,22 +54,28 @@ public record Accessory(Holder<Item> item,
 			Accessory::dynamicAttributeModifiers,
 			MobEffectInstance.STREAM_CODEC.apply(ByteBufCodecs.list()),
 			Accessory::mobEffectInstances,
+			SerializableTooltip.STREAM_CODEC.apply(ByteBufCodecs.list()),
+			Accessory::tooltips,
 			Accessory::new
 	);
 
 	private static final Set<AttributeOperation> GLOBAL_ATTRIBUTE_MODIFIER_MAP = new HashSet<>(10);
 
 	public Accessory(Holder<Item> item, AccessorySlot slot, AccessoryEffectBuilder builder) {
-		this(item, slot, builder.getEffects(), builder.getAttributeModifiers(), builder.getDynamicAttributeModifiers(), builder.getMobEffects());
+		this(item, slot, builder.getEffects(), builder.getAttributeModifiers(), builder.getDynamicAttributeModifiers(), builder.getMobEffects(), builder.getTooltips());
 	}
 
-	public Accessory(Holder<Item> item, AccessorySlot slot, List<AccessoryEffectInstance> effects, List<AttributeOperation> attributeModifiers, List<DynamicAttributeOperationInstance> dynamicAttributeModifiers, List<MobEffectInstance> mobEffectInstances) {
+	public Accessory(Holder<Item> item, AccessorySlot slot, List<AccessoryEffectInstance> effects,
+	                 List<AttributeOperation> attributeModifiers, List<DynamicAttributeOperationInstance> dynamicAttributeModifiers,
+	                 List<MobEffectInstance> mobEffectInstances, List<SerializableTooltip> tooltips) {
+
 		this.item = item;
 		this.slot = slot;
 		this.effects = effects;
 		this.attributeModifiers = attributeModifiers;
 		this.dynamicAttributeModifiers = dynamicAttributeModifiers;
 		this.mobEffectInstances = mobEffectInstances;
+		this.tooltips = tooltips;
 
 		GLOBAL_ATTRIBUTE_MODIFIER_MAP.addAll(attributeModifiers);
 		GLOBAL_ATTRIBUTE_MODIFIER_MAP.addAll(dynamicAttributeModifiers.stream()

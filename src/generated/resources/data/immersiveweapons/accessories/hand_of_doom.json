@@ -42,5 +42,49 @@
   ],
   "item": "immersiveweapons:hand_of_doom",
   "mob_effects": [],
-  "slot": "hand"
+  "slot": "hand",
+  "tooltips": [
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.melee_masters_molten_glove"
+    },
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.iron_fist_1"
+    },
+    {
+      "formats": [
+        "dark_purple",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.iron_fist_2"
+    },
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.glove_of_rapid_swinging"
+    },
+    {
+      "formats": [
+        "dark_purple",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.hand_of_doom_1"
+    },
+    {
+      "formats": [
+        "dark_purple",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.hand_of_doom_2"
+    }
+  ]
 }

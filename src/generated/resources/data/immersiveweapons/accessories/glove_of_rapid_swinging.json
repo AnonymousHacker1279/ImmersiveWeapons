@@ -13,5 +13,14 @@
   "effects": [],
   "item": "immersiveweapons:glove_of_rapid_swinging",
   "mob_effects": [],
-  "slot": "hand"
+  "slot": "hand",
+  "tooltips": [
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.glove_of_rapid_swinging"
+    }
+  ]
 }

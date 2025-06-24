@@ -24,5 +24,14 @@
   ],
   "item": "immersiveweapons:netherite_shield",
   "mob_effects": [],
-  "slot": "body"
+  "slot": "body",
+  "tooltips": [
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.netherite_shield"
+    }
+  ]
 }

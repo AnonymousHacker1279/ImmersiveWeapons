@@ -10,8 +10,17 @@
     }
   ],
   "dynamic_attribute_modifiers": [],
-  "effects": {},
+  "effects": [],
   "item": "immersiveweapons:bloated_heart",
   "mob_effects": [],
-  "slot": "body"
+  "slot": "body",
+  "tooltips": [
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.bloated_heart"
+    }
+  ]
 }

@@ -36,5 +36,14 @@
   ],
   "item": "immersiveweapons:reinforced_depth_charm",
   "mob_effects": [],
-  "slot": "charm"
+  "slot": "charm",
+  "tooltips": [
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.reinforced_depth_charm"
+    }
+  ]
 }

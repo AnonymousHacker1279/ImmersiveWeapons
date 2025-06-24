@@ -19,5 +19,14 @@
   ],
   "item": "immersiveweapons:bloody_cloth",
   "mob_effects": [],
-  "slot": "head"
+  "slot": "head",
+  "tooltips": [
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.bloody_cloth"
+    }
+  ]
 }

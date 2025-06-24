@@ -12,5 +12,14 @@
   ],
   "item": "immersiveweapons:ancient_scroll",
   "mob_effects": [],
-  "slot": "charm"
+  "slot": "charm",
+  "tooltips": [
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.ancient_scroll"
+    }
+  ]
 }

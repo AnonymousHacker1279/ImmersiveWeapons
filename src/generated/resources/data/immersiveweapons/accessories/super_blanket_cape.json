@@ -26,5 +26,21 @@
       "show_icon": true
     }
   ],
-  "slot": "body"
+  "slot": "body",
+  "tooltips": [
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.super_blanket_cape_1"
+    },
+    {
+      "formats": [
+        "dark_purple",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.super_blanket_cape_2"
+    }
+  ]
 }

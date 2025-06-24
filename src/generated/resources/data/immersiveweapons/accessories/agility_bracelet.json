@@ -21,5 +21,14 @@
   "effects": [],
   "item": "immersiveweapons:agility_bracelet",
   "mob_effects": [],
-  "slot": "bracelet"
+  "slot": "bracelet",
+  "tooltips": [
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.agility_bracelet"
+    }
+  ]
 }

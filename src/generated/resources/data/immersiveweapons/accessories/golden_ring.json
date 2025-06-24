@@ -19,5 +19,14 @@
   ],
   "item": "immersiveweapons:golden_ring",
   "mob_effects": [],
-  "slot": "ring"
+  "slot": "ring",
+  "tooltips": [
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.golden_ring"
+    }
+  ]
 }

@@ -4,5 +4,14 @@
   "effects": [],
   "item": "immersiveweapons:lava_goggles",
   "mob_effects": [],
-  "slot": "head"
+  "slot": "head",
+  "tooltips": [
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.lava_goggles"
+    }
+  ]
 }

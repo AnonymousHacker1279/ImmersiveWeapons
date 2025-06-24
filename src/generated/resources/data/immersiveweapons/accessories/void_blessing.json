@@ -12,5 +12,28 @@
   ],
   "item": "immersiveweapons:void_blessing",
   "mob_effects": [],
-  "slot": "spirit"
+  "slot": "spirit",
+  "tooltips": [
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.hans_blessing_1"
+    },
+    {
+      "formats": [
+        "light_purple",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.hans_blessing_2"
+    },
+    {
+      "formats": [
+        "dark_purple",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.void_blessing"
+    }
+  ]
 }

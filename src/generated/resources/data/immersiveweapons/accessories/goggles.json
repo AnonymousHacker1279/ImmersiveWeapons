@@ -12,5 +12,14 @@
   ],
   "item": "immersiveweapons:goggles",
   "mob_effects": [],
-  "slot": "head"
+  "slot": "head",
+  "tooltips": [
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.goggles"
+    }
+  ]
 }

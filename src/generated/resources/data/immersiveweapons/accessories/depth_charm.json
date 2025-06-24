@@ -29,5 +29,21 @@
   ],
   "item": "immersiveweapons:depth_charm",
   "mob_effects": [],
-  "slot": "charm"
+  "slot": "charm",
+  "tooltips": [
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.depth_charm_1"
+    },
+    {
+      "formats": [
+        "light_purple",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.depth_charm_2"
+    }
+  ]
 }

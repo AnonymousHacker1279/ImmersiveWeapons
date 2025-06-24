@@ -11,5 +11,14 @@
       "show_icon": true
     }
   ],
-  "slot": "ring"
+  "slot": "ring",
+  "tooltips": [
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.emerald_ring"
+    }
+  ]
 }

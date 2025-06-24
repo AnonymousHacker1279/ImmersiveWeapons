@@ -19,5 +19,14 @@
   ],
   "item": "immersiveweapons:melee_masters_molten_glove",
   "mob_effects": [],
-  "slot": "hand"
+  "slot": "hand",
+  "tooltips": [
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.melee_masters_molten_glove"
+    }
+  ]
 }
