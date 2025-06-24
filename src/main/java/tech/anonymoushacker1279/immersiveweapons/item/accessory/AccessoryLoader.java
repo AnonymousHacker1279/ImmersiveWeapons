@@ -12,6 +12,7 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.SyncAccessoryDataPayload;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 public class AccessoryLoader extends SimpleJsonResourceReloadListener<Accessory> {
@@ -37,10 +38,8 @@ public class AccessoryLoader extends SimpleJsonResourceReloadListener<Accessory>
 
 		// Sync accessories to clients
 		if (ServerLifecycleHooks.getCurrentServer() != null) {
-			for (Accessory entry : map.values()) {
-				final SyncAccessoryDataPayload payload = new SyncAccessoryDataPayload(entry.item(), entry);
-				PacketDistributor.sendToAllPlayers(payload);
-			}
+			final SyncAccessoryDataPayload payload = new SyncAccessoryDataPayload(new HashSet<>(ACCESSORIES.values()));
+			PacketDistributor.sendToAllPlayers(payload);
 		}
 	}
 }

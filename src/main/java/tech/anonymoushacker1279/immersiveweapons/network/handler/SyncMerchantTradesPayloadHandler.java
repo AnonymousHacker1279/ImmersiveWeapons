@@ -14,10 +14,7 @@ public class SyncMerchantTradesPayloadHandler {
 	}
 
 	public void handleData(final SyncMerchantTradesPayload data, final IPayloadContext context) {
-		context.enqueueWork(() -> {
-					TradeLoader.TRADES.clear();
-					TradeLoader.TRADES.put(data.entityType(), data.trades());
-				})
+		context.enqueueWork(() -> TradeLoader.TRADES.put(data.entityType(), data.trades()))
 				.exceptionally(e -> {
 					context.disconnect(Component.translatable("immersiveweapons.networking.failure.generic", e.getMessage()));
 					return null;
