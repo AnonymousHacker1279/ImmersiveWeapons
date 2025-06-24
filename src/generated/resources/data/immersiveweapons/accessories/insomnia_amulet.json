@@ -1,0 +1,17 @@
+{
+  "attribute_modifiers": [],
+  "dynamic_attribute_modifiers": [],
+  "effects": [
+    {
+      "type": {
+        "clamp": false,
+        "name": "general_damage"
+      },
+      "scaling_type": "insomnia",
+      "value": 0.003
+    }
+  ],
+  "item": "immersiveweapons:insomnia_amulet",
+  "mob_effects": [],
+  "slot": "necklace"
+}

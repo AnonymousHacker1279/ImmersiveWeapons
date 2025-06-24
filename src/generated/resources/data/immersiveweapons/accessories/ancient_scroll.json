@@ -1,0 +1,16 @@
+{
+  "attribute_modifiers": [],
+  "dynamic_attribute_modifiers": [],
+  "effects": [
+    {
+      "type": {
+        "clamp": false,
+        "name": "experience_modifier"
+      },
+      "value": 0.35
+    }
+  ],
+  "item": "immersiveweapons:ancient_scroll",
+  "mob_effects": [],
+  "slot": "charm"
+}

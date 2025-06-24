@@ -1,0 +1,16 @@
+{
+  "attribute_modifiers": [],
+  "dynamic_attribute_modifiers": [],
+  "effects": [
+    {
+      "type": {
+        "clamp": false,
+        "name": "damage_resistance"
+      },
+      "value": 0.15
+    }
+  ],
+  "item": "immersiveweapons:hans_blessing",
+  "mob_effects": [],
+  "slot": "spirit"
+}

@@ -1,0 +1,16 @@
+{
+  "attribute_modifiers": [],
+  "dynamic_attribute_modifiers": [],
+  "effects": [
+    {
+      "type": {
+        "clamp": true,
+        "name": "firearm_ammo_conservation_chance"
+      },
+      "value": 0.1
+    }
+  ],
+  "item": "immersiveweapons:satchel",
+  "mob_effects": [],
+  "slot": "belt"
+}

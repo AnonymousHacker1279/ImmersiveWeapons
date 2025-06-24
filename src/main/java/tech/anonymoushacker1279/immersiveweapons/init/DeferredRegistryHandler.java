@@ -85,8 +85,5 @@ public class DeferredRegistryHandler {
 
 		ImmersiveWeapons.LOGGER.info("Initializing deferred registry for accessory effect types");
 		AccessoryEffectTypeRegistry.ACCESSORY_EFFECT_TYPES.register(modEventBus);
-
-		ImmersiveWeapons.LOGGER.info("Initializing deferred registry for accessory effect scaling types");
-		AccessoryEffectScalingTypeRegistry.ACCESSORY_EFFECT_SCALING_TYPES.register(modEventBus);
 	}
 }

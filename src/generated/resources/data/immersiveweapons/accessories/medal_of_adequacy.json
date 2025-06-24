@@ -1,0 +1,16 @@
+{
+  "attribute_modifiers": [],
+  "dynamic_attribute_modifiers": [],
+  "effects": [
+    {
+      "type": {
+        "clamp": false,
+        "name": "damage_resistance"
+      },
+      "value": 0.01
+    }
+  ],
+  "item": "immersiveweapons:medal_of_adequacy",
+  "mob_effects": [],
+  "slot": "necklace"
+}

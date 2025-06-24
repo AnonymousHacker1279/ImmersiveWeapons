@@ -3,14 +3,18 @@ package tech.anonymoushacker1279.immersiveweapons.event.game_effects;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.ai.attributes.*;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.AccessoryEffectType;
-import tech.anonymoushacker1279.immersiveweapons.item.accessory.scaling.*;
+import tech.anonymoushacker1279.immersiveweapons.item.accessory.AccessoryLoader;
+import tech.anonymoushacker1279.immersiveweapons.item.accessory.scaling.AttributeOperation;
+import tech.anonymoushacker1279.immersiveweapons.item.accessory.scaling.DynamicAttributeOperationInstance;
 import tech.anonymoushacker1279.immersiveweapons.util.IWCBBridge;
 
 import java.util.ArrayList;
@@ -21,7 +25,8 @@ public class AccessoryManager {
 	/**
 	 * Collect the value of the given effect from all accessories in the player's inventory.
 	 * <p>
-	 * This will check to see if IWCB is loaded, and if so, defer to it for collecting effects as it will utilize Curios.
+	 * This will check to see if IWCB is loaded, and if so, defer to it for collecting effects as it will utilize
+	 * Curios.
 	 *
 	 * @param type   the <code>EffectType</code> to collect
 	 * @param player the <code>Player</code> to collect from
@@ -34,13 +39,10 @@ public class AccessoryManager {
 		} else {
 			for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
 				ItemStack stack = player.getInventory().getItem(i);
-				Accessory accessory = stack.getItemHolder().getData(Accessory.ACCESSORY);
+				Accessory accessory = AccessoryLoader.ACCESSORIES.get(stack.getItem());
 				if (accessory != null) {
 					if (accessory.isActive(player, stack, accessory.slot())) {
-						AccessoryEffectScalingType scalingType = accessory.effectScalingTypes().get(type.name());
-						if (scalingType != null) {
-							effectValue += scalingType.getEffectValue(accessory, type, player);
-						}
+						effectValue += accessory.getEffectValue(type, player);
 					}
 				}
 			}
@@ -52,7 +54,8 @@ public class AccessoryManager {
 	/**
 	 * Collect the attribute modifiers from all active accessories in the player's inventory.
 	 * <p>
-	 * This will check to see if IWCB is loaded, and if so, defer to it for collecting attributes as it will utilize Curios.
+	 * This will check to see if IWCB is loaded, and if so, defer to it for collecting attributes as it will utilize
+	 * Curios.
 	 *
 	 * @param player the <code>Player</code> to collect from
 	 * @return a <code>Map</code> of attribute modifiers
@@ -64,7 +67,7 @@ public class AccessoryManager {
 		} else {
 			for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
 				ItemStack stack = player.getInventory().getItem(i);
-				Accessory accessory = stack.getItemHolder().getData(Accessory.ACCESSORY);
+				Accessory accessory = AccessoryLoader.ACCESSORIES.get(stack.getItem());
 				if (accessory != null) {
 					if (accessory.isActive(player, stack, accessory.slot())) {
 						attributes.addAll(accessory.attributeModifiers());
@@ -79,7 +82,8 @@ public class AccessoryManager {
 	/**
 	 * Collect the dynamic attribute modifiers from all active accessories in the player's inventory.
 	 * <p>
-	 * This will check to see if IWCB is loaded, and if so, defer to it for collecting attributes as it will utilize Curios.
+	 * This will check to see if IWCB is loaded, and if so, defer to it for collecting attributes as it will utilize
+	 * Curios.
 	 *
 	 * @param player the <code>Player</code> to collect from
 	 * @return a <code>Map</code> of dynamic attribute modifiers with their target values
@@ -91,7 +95,7 @@ public class AccessoryManager {
 		} else {
 			for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
 				ItemStack stack = player.getInventory().getItem(i);
-				Accessory accessory = stack.getItemHolder().getData(Accessory.ACCESSORY);
+				Accessory accessory = AccessoryLoader.ACCESSORIES.get(stack.getItem());
 				if (accessory != null) {
 					if (accessory.isActive(player, stack, accessory.slot())) {
 						dynamicAttributes.addAll(accessory.dynamicAttributeModifiers());
@@ -106,7 +110,8 @@ public class AccessoryManager {
 	/**
 	 * Collect the mob effect instances from all active accessories in the player's inventory.
 	 * <p>
-	 * This will check to see if IWCB is loaded, and if so, defer to it for collecting mob effects as it will utilize Curios.
+	 * This will check to see if IWCB is loaded, and if so, defer to it for collecting mob effects as it will utilize
+	 * Curios.
 	 *
 	 * @param player the <code>Player</code> to collect from
 	 * @return a <code>List</code> of mob effect instances
@@ -118,7 +123,7 @@ public class AccessoryManager {
 		} else {
 			for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
 				ItemStack stack = player.getInventory().getItem(i);
-				Accessory accessory = stack.getItemHolder().getData(Accessory.ACCESSORY);
+				Accessory accessory = AccessoryLoader.ACCESSORIES.get(stack.getItem());
 				if (accessory != null) {
 					if (accessory.isActive(player, stack, accessory.slot())) {
 						effectList.addAll(accessory.mobEffectInstances());

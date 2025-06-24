@@ -79,6 +79,7 @@ import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.CursedItem;
 import tech.anonymoushacker1279.immersiveweapons.item.KillCountWeapon;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
+import tech.anonymoushacker1279.immersiveweapons.item.accessory.AccessoryLoader;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.TickableArmor;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.PistonCrushingRecipe;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.DebugDataPayload;
@@ -593,6 +594,7 @@ public class ForgeEventSubscriber {
 	@SubscribeEvent
 	public static void addReloadListenerEvent(AddServerReloadListenersEvent event) {
 		event.addListener(TradeLoader.ID, new TradeLoader());
+		event.addListener(AccessoryLoader.ID, new AccessoryLoader());
 	}
 
 	@SubscribeEvent

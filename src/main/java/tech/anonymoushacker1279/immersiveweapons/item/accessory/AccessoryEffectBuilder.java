@@ -4,16 +4,14 @@ import net.minecraft.core.Holder;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import tech.anonymoushacker1279.immersiveweapons.init.AccessoryEffectScalingTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.AccessoryEffectTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.scaling.AccessoryEffectScalingType;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.scaling.AttributeOperation;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.scaling.DynamicAttributeOperationInstance;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
 /**
  * Builder for creating accessory effects.
@@ -21,7 +19,6 @@ import java.util.Map;
 public class AccessoryEffectBuilder {
 
 	private final List<AccessoryEffectInstance> effects = new ArrayList<>(5);
-	private final Map<String, AccessoryEffectScalingType> effectScalingTypes = new HashMap<>(5);
 	private final List<AttributeOperation> attributeModifiers = new ArrayList<>(5);
 	private final List<DynamicAttributeOperationInstance> dynamicAttributeModifiers = new ArrayList<>(5);
 	private final List<MobEffectInstance> mobEffects = new ArrayList<>(5);
@@ -34,8 +31,7 @@ public class AccessoryEffectBuilder {
 	 * @return the <code>EffectBuilder</code> for chaining
 	 */
 	public AccessoryEffectBuilder addEffect(AccessoryEffectType type, double value) {
-		effects.add(new AccessoryEffectInstance(type, value));
-		effectScalingTypes.put(type.name(), AccessoryEffectScalingTypeRegistry.NONE.get());
+		effects.add(new AccessoryEffectInstance(type, Optional.empty(), value));
 		return this;
 	}
 
@@ -49,8 +45,7 @@ public class AccessoryEffectBuilder {
 	 * @return the <code>EffectBuilder</code> for chaining
 	 */
 	public AccessoryEffectBuilder addEffect(AccessoryEffectType type, double value, AccessoryEffectScalingType scalingType) {
-		effects.add(new AccessoryEffectInstance(type, value));
-		effectScalingTypes.put(type.name(), scalingType);
+		effects.add(new AccessoryEffectInstance(type, Optional.of(scalingType), value));
 		return this;
 	}
 
@@ -99,7 +94,6 @@ public class AccessoryEffectBuilder {
 	 */
 	public AccessoryEffectBuilder addObjectsFromBuilder(AccessoryEffectBuilder builder) {
 		effects.addAll(builder.getEffects());
-		effectScalingTypes.putAll(builder.getEffectScalingTypes());
 		attributeModifiers.addAll(builder.getAttributeModifiers());
 		dynamicAttributeModifiers.addAll(builder.getDynamicAttributeModifiers());
 		mobEffects.addAll(builder.getMobEffects());
@@ -108,10 +102,6 @@ public class AccessoryEffectBuilder {
 
 	public List<AccessoryEffectInstance> getEffects() {
 		return effects;
-	}
-
-	public Map<String, AccessoryEffectScalingType> getEffectScalingTypes() {
-		return effectScalingTypes;
 	}
 
 	public List<AttributeOperation> getAttributeModifiers() {

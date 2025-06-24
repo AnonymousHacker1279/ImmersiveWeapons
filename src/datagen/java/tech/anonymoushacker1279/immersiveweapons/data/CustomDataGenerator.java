@@ -12,6 +12,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+import tech.anonymoushacker1279.immersiveweapons.data.accessories.AccessoryDataGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.advancements.AdvancementGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.data_maps.DataMapsGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.lang.LanguageGenerator;
@@ -65,6 +66,7 @@ public class CustomDataGenerator {
 		generator.addProvider(true, new GlobalLootModifierGenerator(output, lookupProvider));
 		generator.addProvider(true, new StructureUpdater(output, (MultiPackResourceManager) event.getResourceManager(PackType.SERVER_DATA)));
 		generator.addProvider(true, new TradeDataGenerator(output));
+		generator.addProvider(true, new AccessoryDataGenerator(output));
 		generator.addProvider(true, PackMetadataGenerator.forFeaturePack(output, Component.translatable("immersiveweapons.datapack.description")));
 		generator.addProvider(true, new BiomeTagsGenerator(output, lookupProvider));
 		generator.addProvider(true, new DamageTypeTagsGenerator(output, lookupProvider));

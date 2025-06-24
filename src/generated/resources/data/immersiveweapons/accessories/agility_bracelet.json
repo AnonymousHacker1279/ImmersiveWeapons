@@ -1,0 +1,25 @@
+{
+  "attribute_modifiers": [
+    {
+      "attribute": "minecraft:movement_speed",
+      "modifier": {
+        "amount": 0.05,
+        "id": "immersiveweapons:agility_bracelet_speed_modifier",
+        "operation": "add_multiplied_base"
+      }
+    },
+    {
+      "attribute": "minecraft:step_height",
+      "modifier": {
+        "amount": 0.5,
+        "id": "immersiveweapons:agility_bracelet_step_height_modifier",
+        "operation": "add_value"
+      }
+    }
+  ],
+  "dynamic_attribute_modifiers": [],
+  "effects": [],
+  "item": "immersiveweapons:agility_bracelet",
+  "mob_effects": [],
+  "slot": "bracelet"
+}

@@ -33,10 +33,8 @@ import tech.anonymoushacker1279.immersiveweapons.entity.neutral.FieldMedicEntity
 import tech.anonymoushacker1279.immersiveweapons.entity.neutral.MinutemanEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.npc.SkeletonMerchantEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.npc.SkygazerEntity;
-import tech.anonymoushacker1279.immersiveweapons.init.AccessoryEffectScalingTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.AccessoryEffectTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
-import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.VentusArmorItem;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
 import tech.anonymoushacker1279.immersiveweapons.network.handler.*;
@@ -104,6 +102,7 @@ public class ModEventSubscriber {
 		registrar.playToClient(GunShotBloodParticlePayload.TYPE, GunShotBloodParticlePayload.STREAM_CODEC, GunShotBloodParticlePayloadHandler.getInstance()::handleData);
 		registrar.playToClient(PlayerSoundPayload.TYPE, PlayerSoundPayload.STREAM_CODEC, PlayerSoundPayloadHandler.getInstance()::handleData);
 		registrar.playToClient(SyncMerchantTradesPayload.TYPE, SyncMerchantTradesPayload.STREAM_CODEC, SyncMerchantTradesPayloadHandler.getInstance()::handleData);
+		registrar.playToClient(SyncAccessoryDataPayload.TYPE, SyncAccessoryDataPayload.STREAM_CODEC, SyncAccessoryDataPayloadHandler.getInstance()::handleData);
 		registrar.playToClient(ArrowGravityPayload.TYPE, ArrowGravityPayload.STREAM_CODEC, ArrowGravityPayloadHandler.getInstance()::handleData);
 	}
 
@@ -126,14 +125,12 @@ public class ModEventSubscriber {
 	public static void registerDataMapsEvent(RegisterDataMapTypesEvent event) {
 		ImmersiveWeapons.LOGGER.info("Registering custom data maps");
 		event.register(AbstractGunItem.POWDER_TYPE);
-		event.register(Accessory.ACCESSORY);
 	}
 
 	@SubscribeEvent
 	public static void registerRegistryEvent(NewRegistryEvent event) {
 		ImmersiveWeapons.LOGGER.info("Registering custom registries");
 		event.register(AccessoryEffectTypeRegistry.ACCESSORY_EFFECT_TYPE_REGISTRY);
-		event.register(AccessoryEffectScalingTypeRegistry.ACCESSORY_EFFECT_SCALING_TYPE_REGISTRY);
 	}
 
 	@SubscribeEvent

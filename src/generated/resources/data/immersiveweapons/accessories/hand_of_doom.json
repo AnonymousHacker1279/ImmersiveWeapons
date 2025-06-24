@@ -1,0 +1,46 @@
+{
+  "attribute_modifiers": [
+    {
+      "attribute": "minecraft:attack_speed",
+      "modifier": {
+        "amount": 0.25,
+        "id": "immersiveweapons:glove_of_rapid_swinging_attack_speed_modifier",
+        "operation": "add_value"
+      }
+    }
+  ],
+  "dynamic_attribute_modifiers": [],
+  "effects": [
+    {
+      "type": {
+        "clamp": false,
+        "name": "melee_damage"
+      },
+      "value": 0.1
+    },
+    {
+      "type": {
+        "clamp": false,
+        "name": "melee_knockback"
+      },
+      "value": 0.75
+    },
+    {
+      "type": {
+        "clamp": false,
+        "name": "melee_crit_damage_bonus"
+      },
+      "value": 0.25
+    },
+    {
+      "type": {
+        "clamp": true,
+        "name": "melee_crit_chance"
+      },
+      "value": 0.15
+    }
+  ],
+  "item": "immersiveweapons:hand_of_doom",
+  "mob_effects": [],
+  "slot": "hand"
+}

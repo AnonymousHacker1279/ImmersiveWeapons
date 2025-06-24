@@ -1,0 +1,17 @@
+{
+  "attribute_modifiers": [
+    {
+      "attribute": "minecraft:max_health",
+      "modifier": {
+        "amount": 4.0,
+        "id": "immersiveweapons:bloated_heart_health_modifier",
+        "operation": "add_value"
+      }
+    }
+  ],
+  "dynamic_attribute_modifiers": [],
+  "effects": {},
+  "item": "immersiveweapons:bloated_heart",
+  "mob_effects": [],
+  "slot": "body"
+}

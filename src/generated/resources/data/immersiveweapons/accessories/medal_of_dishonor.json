@@ -1,0 +1,16 @@
+{
+  "attribute_modifiers": [],
+  "dynamic_attribute_modifiers": [],
+  "effects": [
+    {
+      "type": {
+        "clamp": false,
+        "name": "general_damage"
+      },
+      "value": 0.05
+    }
+  ],
+  "item": "immersiveweapons:medal_of_dishonor",
+  "mob_effects": [],
+  "slot": "charm"
+}

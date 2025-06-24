@@ -1,0 +1,23 @@
+{
+  "attribute_modifiers": [],
+  "dynamic_attribute_modifiers": [],
+  "effects": [
+    {
+      "type": {
+        "clamp": false,
+        "name": "melee_damage"
+      },
+      "value": 0.1
+    },
+    {
+      "type": {
+        "clamp": false,
+        "name": "melee_knockback"
+      },
+      "value": 0.75
+    }
+  ],
+  "item": "immersiveweapons:melee_masters_molten_glove",
+  "mob_effects": [],
+  "slot": "hand"
+}

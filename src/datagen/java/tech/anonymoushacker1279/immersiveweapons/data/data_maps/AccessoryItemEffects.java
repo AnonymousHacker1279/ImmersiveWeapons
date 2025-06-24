@@ -7,9 +7,9 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.init.AccessoryEffectScalingTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.AccessoryEffectTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.AccessoryEffectBuilder;
+import tech.anonymoushacker1279.immersiveweapons.item.accessory.scaling.AccessoryEffectScalingType;
 
 public class AccessoryItemEffects {
 
@@ -93,16 +93,16 @@ public class AccessoryItemEffects {
 	public static final AccessoryEffectBuilder MEDAL_OF_ADEQUACY = new AccessoryEffectBuilder()
 			.addEffect(AccessoryEffectTypeRegistry.DAMAGE_RESISTANCE.get(), 0.01d);
 	public static final AccessoryEffectBuilder DEPTH_CHARM = new AccessoryEffectBuilder()
-			.addEffect(AccessoryEffectTypeRegistry.DAMAGE_RESISTANCE.get(), 0.003d, AccessoryEffectScalingTypeRegistry.DEPTH.get())
-			.addEffect(AccessoryEffectTypeRegistry.GENERAL_DAMAGE.get(), 0.002d, AccessoryEffectScalingTypeRegistry.DEPTH.get())
-			.addEffect(AccessoryEffectTypeRegistry.MELEE_KNOCKBACK.get(), 0.001d, AccessoryEffectScalingTypeRegistry.DEPTH.get());
+			.addEffect(AccessoryEffectTypeRegistry.DAMAGE_RESISTANCE.get(), 0.003d, AccessoryEffectScalingType.DEPTH)
+			.addEffect(AccessoryEffectTypeRegistry.GENERAL_DAMAGE.get(), 0.002d, AccessoryEffectScalingType.DEPTH)
+			.addEffect(AccessoryEffectTypeRegistry.MELEE_KNOCKBACK.get(), 0.001d, AccessoryEffectScalingType.DEPTH);
 	public static final AccessoryEffectBuilder REINFORCED_DEPTH_CHARM = new AccessoryEffectBuilder()
-			.addEffect(AccessoryEffectTypeRegistry.DAMAGE_RESISTANCE.get(), 0.003d, AccessoryEffectScalingTypeRegistry.DEPTH.get())
-			.addEffect(AccessoryEffectTypeRegistry.GENERAL_DAMAGE.get(), 0.002d, AccessoryEffectScalingTypeRegistry.DEPTH.get())
-			.addEffect(AccessoryEffectTypeRegistry.MELEE_KNOCKBACK.get(), 0.001d, AccessoryEffectScalingTypeRegistry.DEPTH.get())
+			.addEffect(AccessoryEffectTypeRegistry.DAMAGE_RESISTANCE.get(), 0.003d, AccessoryEffectScalingType.DEPTH)
+			.addEffect(AccessoryEffectTypeRegistry.GENERAL_DAMAGE.get(), 0.002d, AccessoryEffectScalingType.DEPTH)
+			.addEffect(AccessoryEffectTypeRegistry.MELEE_KNOCKBACK.get(), 0.001d, AccessoryEffectScalingType.DEPTH)
 			.addEffect(AccessoryEffectTypeRegistry.SONIC_BOOM_RESISTANCE.get(), 0.5d);
 	public static final AccessoryEffectBuilder INSOMNIA_AMULET = new AccessoryEffectBuilder()
-			.addEffect(AccessoryEffectTypeRegistry.GENERAL_DAMAGE.get(), 0.003d, AccessoryEffectScalingTypeRegistry.INSOMNIA.get());
+			.addEffect(AccessoryEffectTypeRegistry.GENERAL_DAMAGE.get(), 0.003d, AccessoryEffectScalingType.INSOMNIA);
 	public static final AccessoryEffectBuilder GOGGLES = new AccessoryEffectBuilder()
 			.addEffect(AccessoryEffectTypeRegistry.PROJECTILE_DAMAGE.get(), 0.03d);
 	public static final AccessoryEffectBuilder LAVA_GOGGLES = new AccessoryEffectBuilder();

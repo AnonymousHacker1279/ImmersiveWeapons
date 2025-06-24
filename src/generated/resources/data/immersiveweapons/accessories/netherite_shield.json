@@ -1,0 +1,28 @@
+{
+  "attribute_modifiers": [],
+  "dynamic_attribute_modifiers": [
+    {
+      "attributeOperation": {
+        "attribute": "minecraft:knockback_resistance",
+        "modifier": {
+          "amount": 0.0,
+          "id": "immersiveweapons:netherite_shield_knockback_resistance",
+          "operation": "add_value"
+        }
+      },
+      "targetValue": 1.0
+    }
+  ],
+  "effects": [
+    {
+      "type": {
+        "clamp": false,
+        "name": "damage_resistance"
+      },
+      "value": 0.03
+    }
+  ],
+  "item": "immersiveweapons:netherite_shield",
+  "mob_effects": [],
+  "slot": "body"
+}

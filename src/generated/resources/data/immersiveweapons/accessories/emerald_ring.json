@@ -1,0 +1,15 @@
+{
+  "attribute_modifiers": [],
+  "dynamic_attribute_modifiers": [],
+  "effects": [],
+  "item": "immersiveweapons:emerald_ring",
+  "mob_effects": [
+    {
+      "ambient": true,
+      "duration": 60,
+      "id": "minecraft:hero_of_the_village",
+      "show_icon": true
+    }
+  ],
+  "slot": "ring"
+}

@@ -20,12 +20,16 @@ import oshi.util.tuples.Triplet;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
 import tech.anonymoushacker1279.immersiveweapons.client.tooltip.DynamicTooltip;
-import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.init.AccessoryEffectTypeRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.DataComponentTypeRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.CursedItem;
 import tech.anonymoushacker1279.immersiveweapons.item.KillCountWeapon;
 import tech.anonymoushacker1279.immersiveweapons.item.RecoveryStaffItem;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.AccessoryEffectInstance;
+import tech.anonymoushacker1279.immersiveweapons.item.accessory.AccessoryLoader;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.scaling.AccessoryEffectScalingType;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.scaling.AttributeOperation;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.scaling.DynamicAttributeOperationInstance;
@@ -33,10 +37,7 @@ import tech.anonymoushacker1279.immersiveweapons.util.markers.TooltipMarker;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Supplier;
 
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, value = Dist.CLIENT)
@@ -168,7 +169,7 @@ public class TooltipHandler {
 		}
 
 		// Accessories
-		Accessory accessory = stack.getItemHolder().getData(Accessory.ACCESSORY);
+		Accessory accessory = AccessoryLoader.ACCESSORIES.get(stack.getItem());
 		if (event.getEntity() != null && accessory != null) {
 			if (stack.getItem() == ItemRegistry.SATCHEL.get()) {
 				event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.satchel").withStyle(ChatFormatting.GREEN, ChatFormatting.ITALIC));
@@ -371,10 +372,9 @@ public class TooltipHandler {
 						value = (float) Math.round(entry.value() * 1000f) / 10f + "%";
 					}
 
-					AccessoryEffectScalingType scalingType = accessory.effectScalingTypes().get(entry.type().name());
-
-					if (scalingType != null && !scalingType.getName().equals(AccessoryEffectScalingTypeRegistry.NONE.get().getName())) {
-						Component scaling = Component.translatable(accessory.effectScalingTypes().get(entry.type().name()).createTranslation());
+					Optional<AccessoryEffectScalingType> scalingType = entry.scalingType();
+					if (scalingType.isPresent()) {
+						Component scaling = Component.translatable(scalingType.get().createTranslation());
 						altTooltips.add(Component.translatable(entry.type().createTranslation(), value).append(" ").append(scaling).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
 					} else {
 						altTooltips.add(Component.translatable(entry.type().createTranslation(), value).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));
