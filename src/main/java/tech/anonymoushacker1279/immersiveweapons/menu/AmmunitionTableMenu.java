@@ -11,7 +11,7 @@ import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.AmmunitionTableBlockEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.MenuTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.AmmunitionTablePayload;
@@ -125,7 +125,7 @@ public class AmmunitionTableMenu extends AbstractContainerMenu {
 		modifier = (float) Math.round(modifier * 100.0F) / 100.0F;
 		containerData.set(0, (int) (modifier * 100.0F));
 
-		PacketDistributor.sendToServer(new AmmunitionTablePayload(containerId, modifier));
+		ClientPacketDistributor.sendToServer(new AmmunitionTablePayload(containerId, modifier));
 	}
 
 	public static void setDensityModifierOnServer(ServerPlayer player, int containerId, float densityModifier) {

@@ -14,7 +14,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.equipment.ArmorMaterial;
 import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.VentusArmorPayload;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
@@ -39,7 +39,7 @@ public class VentusArmorItem extends Item implements TickableArmor {
 					player.getPersistentData().putBoolean("VentusArmorEffectEnabled", !effectEnabled);
 
 					// Send packet to server
-					PacketDistributor.sendToServer(new VentusArmorPayload(PacketTypes.CHANGE_STATE, !effectEnabled));
+					ClientPacketDistributor.sendToServer(new VentusArmorPayload(PacketTypes.CHANGE_STATE, !effectEnabled));
 
 					if (effectEnabled) {
 						player.displayClientMessage(Component.translatable("immersiveweapons.armor_effects.disabled")
@@ -70,7 +70,7 @@ public class VentusArmorItem extends Item implements TickableArmor {
 				if (windShieldCooldown > 0) {
 					if (windShieldDuration > 0) {
 						handleProjectileReflection(level, player);
-						PacketDistributor.sendToServer(new VentusArmorPayload(PacketTypes.HANDLE_PROJECTILE_REFLECTION, effectEnabled));
+						ClientPacketDistributor.sendToServer(new VentusArmorPayload(PacketTypes.HANDLE_PROJECTILE_REFLECTION, effectEnabled));
 
 						windShieldDuration--;
 					}

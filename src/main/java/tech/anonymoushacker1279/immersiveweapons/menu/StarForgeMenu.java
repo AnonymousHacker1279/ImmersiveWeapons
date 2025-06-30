@@ -15,7 +15,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.StarForgeBlockEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.MenuTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.StarForgeRecipe;
@@ -172,7 +172,7 @@ public class StarForgeMenu extends AbstractContainerMenu {
 		containerData.set(3, index);
 
 		// Send the packet to the server
-		PacketDistributor.sendToServer(new StarForgeMenuPayload(containerId, index, beginCrafting));
+		ClientPacketDistributor.sendToServer(new StarForgeMenuPayload(containerId, index, beginCrafting));
 	}
 
 	public boolean hasSolarEnergy() {
