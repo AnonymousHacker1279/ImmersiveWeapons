@@ -66,7 +66,7 @@ public class IWToolMaterials {
 			IWBlockTagGroups.INCORRECT_FOR_STARSTORM_TOOL,
 			1800,
 			14.0F,
-			7.0F,
+			8.0F,
 			20,
 			IWItemTagGroups.STARSTORM_INGOTS
 	);

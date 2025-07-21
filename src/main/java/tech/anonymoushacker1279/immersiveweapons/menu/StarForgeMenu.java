@@ -30,7 +30,6 @@ public class StarForgeMenu extends AbstractContainerMenu {
 
 	public final Container container;
 	private final ContainerData containerData;
-	private final Player player;
 
 	public List<StarForgeRecipe> availableRecipes = new ArrayList<>(25);
 	public static final List<RecipeHolder<StarForgeRecipe>> ALL_RECIPES = new ArrayList<>(10);
@@ -47,7 +46,6 @@ public class StarForgeMenu extends AbstractContainerMenu {
 		super(MenuTypeRegistry.STAR_FORGE_MENU.get(), containerID);
 		this.container = container;
 		this.containerData = containerData;
-		player = inventory.player;
 
 		// Primary input slot at (8, 52)
 		addSlot(new Slot(container, 0, 8, 52) {

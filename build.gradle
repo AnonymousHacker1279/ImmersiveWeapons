@@ -1,7 +1,7 @@
 plugins {
 	id 'java-library'
 	id 'maven-publish'
-	id 'net.neoforged.moddev' version '2.0.96'
+	id 'net.neoforged.moddev' version '2.0.99'
 	id "com.hypherionmc.modutils.modpublisher" version "2.1.6"
 	id 'idea'
 }
@@ -36,6 +36,10 @@ repositories {
 	maven {
 		name "Jared's maven"
 		url "https://maven.blamejared.com/"
+	}
+	maven {
+		name "Su5eD's maven"
+		url "https://maven.su5ed.dev/releases"
 	}
 }
 
@@ -107,6 +111,11 @@ neoForge {
 			programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
 		}
 
+		exportClient {
+			client()
+			systemProperty 'wiki_exporter.enabled', 'true'
+		}
+
 		configureEach {
 			systemProperty 'forge.logging.markers', 'REGISTRIES'
 			logLevel = org.slf4j.event.Level.DEBUG
@@ -153,6 +162,8 @@ dependencies {
 		}
 	}
 
+	runtimeOnly "org.sinytra:wiki-exporter-neoforge:${wiki_exporter_version}"
+
 	// Include Immersive Weapons Compatibility Bridge (IWCB)
 	// implementation "tech.anonymoushacker1279.iwcompatbridge:IWCompatBridge:${iwcb_version}"
 
@@ -161,8 +172,8 @@ dependencies {
 	runtimeOnly "lol.bai:badpackets:neo-${badpackets_version}"
 
 	// Include JEI
-	// compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
-	// runtimeOnly "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
+	compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
+	runtimeOnly "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
 }
 
 tasks.named("processResources", ProcessResources).configure {

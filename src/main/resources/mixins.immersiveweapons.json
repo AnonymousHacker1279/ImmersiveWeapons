@@ -12,6 +12,7 @@
 		"ItemPropertiesMixin",
 		"LivingEntityMixin",
 		"ProjectileMixin",
+		"RangedAttributeAccessor",
 		"WindChargeMixin",
 		"loot.EnchantedCountIncreaseFunctionMixin",
 		"loot.EnchantmentHelperMixin",

@@ -9,6 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FlowerPotBlock;
@@ -16,6 +17,7 @@ import net.minecraft.world.phys.AABB;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.TooltipHandler;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
+import tech.anonymoushacker1279.immersiveweapons.mixin.RangedAttributeAccessor;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class PostSetupHandler {
@@ -36,12 +38,17 @@ public class PostSetupHandler {
 		// Compile simple tooltips
 		TooltipHandler.compileTooltips();
 
+		// Adjust max value of attributes
+		if (Attributes.ARMOR.value() instanceof RangedAttributeAccessor accessor) {
+			accessor.setMaxValue(100);
+		}
+
 		// Initialize custom portals
 		new CustomPortalBuilder()
 				.frame(BlockRegistry.TILTROS_PORTAL_FRAME.get())
 				.customPortalBlock(BlockRegistry.TILTROS_PORTAL.get())
 				.lightWithItem(ItemRegistry.AZUL_KEYSTONE.get())
-				.destination(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "tiltros"))
+				.destination(TILTROS.location())
 				.flatPortal()
 				.preTeleportEvent(entity -> IWConfigs.SERVER.tiltrosEnabled.getAsBoolean())
 				.postTeleportEvent(entity -> {
