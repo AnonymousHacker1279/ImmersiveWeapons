@@ -17,7 +17,6 @@ public class DebugTracingData {
 
 	public static boolean isDebugTracingEnabled = false;
 
-	public static float lastDamageDealt = 0;
 	public static float lastDamageTaken = 0;
 
 	public static float gunBaseVelocity = 0;

@@ -1101,6 +1101,10 @@ public class LanguageGenerator extends IWLanguageProvider {
 
 	private void addConfigDescriptions() {
 		addConfigField("title", "Immersive Weapons Configuration");
+		// Client options
+		addConfigField("damageIndicators", "Damage Indicators");
+		addConfigField("damageIndicators.tooltip", "Damage Indicator particle settings");
+		// Server options
 		addConfigField("general", "General Settings");
 		addConfigField("general.tooltip", "General, miscellaneous settings");
 		addConfigField("entity", "Entity Settings");
@@ -1212,7 +1216,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		add("immersiveweapons.debug_tracing.live_bullet_damage", "Live Bullet Damage: %s (is crit: %s)");
 		add("immersiveweapons.debug_tracing.damage_bonus", "Damage Bonus: %s general, %s melee, %s projectile");
 		add("immersiveweapons.debug_tracing.celestial_protection_chance_for_no_damage", "Celestial Protection Chance: %s");
-		add("immersiveweapons.debug_tracing.last_damage_values", "Last Damage Dealt: %s, Last Damage Taken: %s");
+		add("immersiveweapons.debug_tracing.last_damage_values", "Last Damage Taken: %s");
 		add("immersiveweapons.debug_tracing.armor_values", "Total Armor Value: %s, Armor Toughness: %s");
 		add("immersiveweapons.debug_tracing.dr_and_kbr", "General Damage Resistance: %s, Knockback Resistance: %s");
 

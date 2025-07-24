@@ -19,6 +19,7 @@ import net.minecraft.util.Unit;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -66,6 +67,8 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.api.events.ComputeEnchantedLootBonusEvent;
 import tech.anonymoushacker1279.immersiveweapons.block.StarstormCrystalBlock;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
+import tech.anonymoushacker1279.immersiveweapons.client.particle.damage_indicator.DamageIndicatorParticleOptions;
+import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.data.IWEnchantments;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.StarmiteEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.npc.trading.MerchantTrades;
@@ -341,6 +344,31 @@ public class ForgeEventSubscriber {
 		if (damagedEntity instanceof ServerPlayer serverPlayer) {
 			// Handle debug tracing
 			PacketDistributor.sendToPlayer(serverPlayer, new DebugDataPayload(serverPlayer.getUUID(), -1f, event.getNewDamage(), -1));
+		}
+	}
+
+	@SubscribeEvent
+	public static void postLivingDamageEvent(LivingDamageEvent.Post event) {
+		Entity entity = event.getEntity();
+
+		if (IWConfigs.CLIENT.enableDamageIndicatorParticles.getAsBoolean()
+				&& entity.level() instanceof ServerLevel serverLevel
+				&& event.getSource().getEntity() instanceof ServerPlayer player) {
+
+			serverLevel.sendParticles(
+					player,
+					new DamageIndicatorParticleOptions(event.getNewDamage()),
+					true,
+					true,
+					entity.getX(),
+					entity.getY() + entity.getBbHeight() + 0.5D,
+					entity.getZ(),
+					1,
+					entity.getRandom().nextGaussian() * 0.65D,
+					0.0D,
+					entity.getRandom().nextGaussian() * 0.65D,
+					0.035D
+			);
 		}
 	}
 

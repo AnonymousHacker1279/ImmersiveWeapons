@@ -14,7 +14,7 @@ public class DebugDataPayloadHandler {
 	}
 
 	public void handleData(final DebugDataPayload data, final IPayloadContext context) {
-		context.enqueueWork(() -> SyncHandler.debugDataHandler(data.lastDamageDealt(), data.lastDamageTaken(), data.ticksSinceRest(), data.playerUUID()))
+		context.enqueueWork(() -> SyncHandler.debugDataHandler(data.lastDamageTaken(), data.ticksSinceRest(), data.playerUUID()))
 				.exceptionally(e -> {
 					context.disconnect(Component.translatable("immersiveweapons.networking.failure.generic", e.getMessage()));
 					return null;

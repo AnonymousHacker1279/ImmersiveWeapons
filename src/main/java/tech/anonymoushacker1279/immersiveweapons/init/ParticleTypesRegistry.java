@@ -7,6 +7,8 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact.BulletImpactParticleOptions;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact.BulletImpactParticleType;
+import tech.anonymoushacker1279.immersiveweapons.client.particle.damage_indicator.DamageIndicatorParticleOptions;
+import tech.anonymoushacker1279.immersiveweapons.client.particle.damage_indicator.DamageIndicatorParticleType;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.smoke_grenade.SmokeGrenadeParticleOptions;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.smoke_grenade.SmokeGrenadeParticleType;
 
@@ -26,4 +28,5 @@ public class ParticleTypesRegistry {
 	public static final Supplier<SimpleParticleType> STARDUST_LEAVES_PARTICLE = PARTICLE_TYPES.register("stardust_leaves", () -> new SimpleParticleType(false));
 	public static final Supplier<SimpleParticleType> DEADMANS_DESERT_AMBIENT_PARTICLE = PARTICLE_TYPES.register("deadmans_desert_ambient", () -> new SimpleParticleType(false));
 	public static final Supplier<SimpleParticleType> TILTROS_PORTAL_PARTICLE = PARTICLE_TYPES.register("tiltros_portal", () -> new SimpleParticleType(false));
+	public static final Supplier<ParticleType<DamageIndicatorParticleOptions>> DAMAGE_INDICATOR_PARTICLE = PARTICLE_TYPES.register("damage_indicator", () -> new DamageIndicatorParticleType(true));
 }

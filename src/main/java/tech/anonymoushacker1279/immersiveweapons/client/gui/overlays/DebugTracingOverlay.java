@@ -47,9 +47,8 @@ public class DebugTracingOverlay {
 
 			overlayItems.add(liveBulletDamage);
 		}
-		if (DebugTracingData.lastDamageDealt + DebugTracingData.lastDamageTaken > 0) {
+		if (DebugTracingData.lastDamageTaken > 0) {
 			String lastDamageDealt = appendData(LAST_DAMAGE_VALUES,
-					Math.round(DebugTracingData.lastDamageDealt),
 					Math.round(DebugTracingData.lastDamageTaken));
 
 			overlayItems.add(lastDamageDealt);

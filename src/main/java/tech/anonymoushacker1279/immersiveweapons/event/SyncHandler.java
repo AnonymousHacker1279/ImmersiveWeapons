@@ -33,17 +33,13 @@ public class SyncHandler {
 	 * Sync values for debug tracing data from server to client. This is in a separate class to avoid loading client
 	 * classes on the dedicated server. All parameters which are not being updated should be passed as -1.
 	 *
-	 * @param lastDamageDealt the damage dealt
 	 * @param lastDamageTaken the damage taken
 	 * @param ticksSinceRest  the number of ticks since the player last slept
 	 * @param playerUUID      the <code>UUID</code> of the player to sync to
 	 */
-	public static void debugDataHandler(float lastDamageDealt, float lastDamageTaken, int ticksSinceRest, UUID playerUUID) {
+	public static void debugDataHandler(float lastDamageTaken, int ticksSinceRest, UUID playerUUID) {
 		Player player = Minecraft.getInstance().player;
 		if (player != null && player.getUUID().equals(playerUUID)) {
-			if (lastDamageDealt >= 0) {
-				DebugTracingData.lastDamageDealt = lastDamageDealt;
-			}
 			if (lastDamageTaken >= 0) {
 				DebugTracingData.lastDamageTaken = lastDamageTaken;
 			}
