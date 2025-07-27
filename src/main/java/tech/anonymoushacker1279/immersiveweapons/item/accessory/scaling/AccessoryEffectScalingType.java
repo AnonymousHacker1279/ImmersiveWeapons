@@ -9,7 +9,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.network.codec.NeoForgeStreamCodecs;
-import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
+import tech.anonymoushacker1279.immersiveweapons.event.ClientDataHandler;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.AccessoryEffectType;
 
@@ -53,7 +53,7 @@ public enum AccessoryEffectScalingType implements StringRepresentable {
 			return baseValue * depthScaling;
 		}
 
-		return baseValue;
+		return 0.0d;
 	}
 
 	private double handleInsomniaScaling(Accessory accessory, AccessoryEffectType type, Player player) {
@@ -62,9 +62,7 @@ public enum AccessoryEffectScalingType implements StringRepresentable {
 		if (player instanceof ServerPlayer serverPlayer) {
 			timeSinceRest = serverPlayer.getStats().getValue(Stats.CUSTOM.get(Stats.TIME_SINCE_REST));
 		} else {
-			// If this is on the client, use the debug tracing data. The result here does not need to be accurate
-			// since it will only ever be used in the debug overlay
-			timeSinceRest = DebugTracingData.TICKS_SINCE_REST;
+			timeSinceRest = ClientDataHandler.getTicksSinceRest();
 		}
 
 		if (timeSinceRest > 24000) {
@@ -73,6 +71,6 @@ public enum AccessoryEffectScalingType implements StringRepresentable {
 			return baseValue * insomniaScaling;
 		}
 
-		return baseValue;
+		return 0.0d;
 	}
 }

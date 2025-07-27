@@ -1,14 +1,17 @@
 package tech.anonymoushacker1279.immersiveweapons.event;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientPacketListener;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.game.ServerboundClientCommandPacket;
+import net.minecraft.stats.Stats;
 import net.minecraft.world.entity.player.Player;
-import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
 
 import java.util.Objects;
 import java.util.UUID;
 
-public class SyncHandler {
+public class ClientDataHandler {
 
 	/**
 	 * Sync persistent data from server to client. This is in a separate class to avoid loading client classes on the
@@ -29,23 +32,24 @@ public class SyncHandler {
 		}
 	}
 
-	/**
-	 * Sync values for debug tracing data from server to client. This is in a separate class to avoid loading client
-	 * classes on the dedicated server. All parameters which are not being updated should be passed as -1.
-	 *
-	 * @param lastDamageTaken the damage taken
-	 * @param ticksSinceRest  the number of ticks since the player last slept
-	 * @param playerUUID      the <code>UUID</code> of the player to sync to
-	 */
-	public static void debugDataHandler(float lastDamageTaken, int ticksSinceRest, UUID playerUUID) {
-		Player player = Minecraft.getInstance().player;
-		if (player != null && player.getUUID().equals(playerUUID)) {
-			if (lastDamageTaken >= 0) {
-				DebugTracingData.lastDamageTaken = lastDamageTaken;
-			}
-			if (ticksSinceRest >= 0) {
-				DebugTracingData.TICKS_SINCE_REST = ticksSinceRest;
-			}
+	public static int getTicksSinceRest() {
+		LocalPlayer player = Minecraft.getInstance().player;
+
+		if (player == null) {
+			return 0;
+		}
+
+		if (player.tickCount % 20 == 0) {
+			updateStats();
+		}
+
+		return player.getStats().getValue(Stats.CUSTOM, Stats.TIME_SINCE_REST);
+	}
+
+	private static void updateStats() {
+		ClientPacketListener connection = Minecraft.getInstance().getConnection();
+		if (connection != null) {
+			connection.send(new ServerboundClientCommandPacket(ServerboundClientCommandPacket.Action.REQUEST_STATS));
 		}
 	}
 }

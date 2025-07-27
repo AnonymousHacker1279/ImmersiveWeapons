@@ -20,9 +20,4 @@ public class IWKeyBinds {
 			Type.MOUSE,
 			4, // Mouse button 5
 			CATEGORY);
-	public static final KeyMapping DEBUG_TRACING = new KeyMapping("key." + ImmersiveWeapons.MOD_ID + ".debugTracing",
-			KeyConflictContext.IN_GAME,
-			Type.KEYSYM,
-			InputConstants.KEY_F9,
-			CATEGORY);
 }

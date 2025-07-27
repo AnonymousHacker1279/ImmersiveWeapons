@@ -352,7 +352,6 @@ public class ClientModEventSubscriber {
 
 		event.register(IWKeyBinds.TOGGLE_ARMOR_EFFECT);
 		event.register(IWKeyBinds.ARMOR_ACTION);
-		event.register(IWKeyBinds.DEBUG_TRACING);
 	}
 
 	@SubscribeEvent
@@ -377,10 +376,6 @@ public class ClientModEventSubscriber {
 		event.registerAbove(VanillaGuiLayers.CROSSHAIR,
 				ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "scope"),
 				IWOverlays.SCOPE_ELEMENT);
-
-		event.registerAbove(VanillaGuiLayers.DEBUG_OVERLAY,
-				ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "debug_overlay"),
-				IWOverlays.DEBUG_TRACING_ELEMENT);
 	}
 
 	@SubscribeEvent

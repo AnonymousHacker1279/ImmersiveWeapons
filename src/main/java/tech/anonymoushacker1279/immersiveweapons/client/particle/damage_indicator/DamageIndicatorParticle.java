@@ -65,7 +65,8 @@ public class DamageIndicatorParticle extends Particle {
 
 		Font font = Minecraft.getInstance().font;
 		float textX = font.width(damage) / -2.0F;
-		float textY = 0.0F;
+		// Ensure the text does not clip into the ground
+		float textY = -0.5F - (font.lineHeight / 2.0F);
 
 		// Fadeout
 		int fadeTime = IWConfigs.CLIENT.damageIndicatorParticleLifetime.getAsInt() * 20 - 10;

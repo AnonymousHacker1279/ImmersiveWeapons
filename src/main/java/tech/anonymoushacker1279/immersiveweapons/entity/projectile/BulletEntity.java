@@ -27,7 +27,6 @@ import net.neoforged.neoforge.common.Tags.Blocks;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact.BulletImpactParticleOptions;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
@@ -35,7 +34,6 @@ import tech.anonymoushacker1279.immersiveweapons.init.ParticleTypesRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
-import tech.anonymoushacker1279.immersiveweapons.network.payload.BulletEntityDebugPayload;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.GunShotBloodParticlePayload;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
@@ -198,20 +196,7 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 	}
 
 	@Override
-	public void remove(RemovalReason removalReason) {
-		super.remove(removalReason);
-		DebugTracingData.liveBulletDamage = 0;
-		DebugTracingData.isBulletCritical = false;
-	}
-
-	@Override
 	protected void doWhileTicking() {
-		if (tickCount % 10 == 0 && !isInGround() && getOwner() instanceof ServerPlayer player) {
-			if (!level().isClientSide) {
-				PacketDistributor.sendToPlayer(player, new BulletEntityDebugPayload(calculateDamage(), isCritArrow()));
-			}
-		}
-
 		if (!isInGround() && flameTrail && level() instanceof ServerLevel serverLevel) {
 			serverLevel.sendParticles(
 					ParticleTypes.SMALL_FLAME,

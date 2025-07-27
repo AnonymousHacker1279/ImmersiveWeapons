@@ -17,14 +17,10 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.InputEvent;
 import net.neoforged.neoforge.client.event.RecipesReceivedEvent;
 import net.neoforged.neoforge.client.event.RenderBlockScreenEffectEvent;
-import net.neoforged.neoforge.client.event.RenderGuiLayerEvent;
 import net.neoforged.neoforge.client.event.ViewportEvent.ComputeFogColor;
 import net.neoforged.neoforge.client.event.ViewportEvent.ComputeFov;
 import net.neoforged.neoforge.client.event.ViewportEvent.RenderFog;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
-import tech.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
-import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.init.DataComponentTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
@@ -162,17 +158,6 @@ public class ClientForgeEventSubscriber {
 				fov *= 1.0F - fovModifier * 0.15F;
 				event.setFOV(fov);
 			}
-		}
-	}
-
-	@SubscribeEvent
-	public static void renderGuiOverlayPostEvent(RenderGuiLayerEvent.Post event) {
-		if (IWKeyBinds.DEBUG_TRACING.consumeClick()) {
-			DebugTracingData.isDebugTracingEnabled = !DebugTracingData.isDebugTracingEnabled;
-		}
-
-		if (DebugTracingData.isDebugTracingEnabled) {
-			IWOverlays.DEBUG_TRACING_ELEMENT.render(event.getGuiGraphics(), event.getPartialTick());
 		}
 	}
 

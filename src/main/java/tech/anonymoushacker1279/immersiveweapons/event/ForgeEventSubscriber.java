@@ -63,12 +63,10 @@ import net.neoforged.neoforge.event.level.PistonEvent;
 import net.neoforged.neoforge.event.level.PistonEvent.PistonMoveType;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
+import org.joml.Vector3f;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.api.events.ComputeEnchantedLootBonusEvent;
 import tech.anonymoushacker1279.immersiveweapons.block.StarstormCrystalBlock;
-import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
-import tech.anonymoushacker1279.immersiveweapons.client.particle.damage_indicator.DamageIndicatorParticleOptions;
-import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.data.IWEnchantments;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.StarmiteEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.npc.trading.MerchantTrades;
@@ -85,12 +83,14 @@ import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.AccessoryLoader;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.TickableArmor;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.PistonCrushingRecipe;
-import tech.anonymoushacker1279.immersiveweapons.network.payload.DebugDataPayload;
+import tech.anonymoushacker1279.immersiveweapons.network.payload.DamageIndicatorPayload;
+import tech.anonymoushacker1279.immersiveweapons.network.payload.SyncAccessoryDataPayload;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.SyncMerchantTradesPayload;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.SyncPlayerDataPayload;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -204,17 +204,6 @@ public class ForgeEventSubscriber {
 				tickable.playerTick(player.level(), player);
 			}
 		});
-
-		// Debug tracing
-		if (DebugTracingData.isDebugTracingEnabled) {
-			if (player.isLocalPlayer()) {
-				DebugTracingData.handleTracing(player);
-			}
-		}
-		if (player.tickCount % 100 == 0 && player instanceof ServerPlayer serverPlayer) {
-			int ticksSinceRest = serverPlayer.getStats().getValue(Stats.CUSTOM.get(Stats.TIME_SINCE_REST));
-			PacketDistributor.sendToPlayer(serverPlayer, new DebugDataPayload(player.getUUID(), -1f, -1f, ticksSinceRest));
-		}
 	}
 
 	@SubscribeEvent
@@ -335,40 +324,20 @@ public class ForgeEventSubscriber {
 						serverPlayer.getAdvancements().award(advancement, "");
 					}
 				}
-
-				// Handle debug tracing
-				PacketDistributor.sendToPlayer(serverPlayer, new DebugDataPayload(player.getUUID(), event.getNewDamage(), -1f, -1));
 			}
-		}
-
-		if (damagedEntity instanceof ServerPlayer serverPlayer) {
-			// Handle debug tracing
-			PacketDistributor.sendToPlayer(serverPlayer, new DebugDataPayload(serverPlayer.getUUID(), -1f, event.getNewDamage(), -1));
 		}
 	}
 
 	@SubscribeEvent
 	public static void postLivingDamageEvent(LivingDamageEvent.Post event) {
-		Entity entity = event.getEntity();
+		Entity damagedEntity = event.getEntity();
 
-		if (IWConfigs.CLIENT.enableDamageIndicatorParticles.getAsBoolean()
-				&& entity.level() instanceof ServerLevel serverLevel
-				&& event.getSource().getEntity() instanceof ServerPlayer player) {
-
-			serverLevel.sendParticles(
-					player,
-					new DamageIndicatorParticleOptions(event.getNewDamage()),
-					true,
-					true,
-					entity.getX(),
-					entity.getY() + entity.getBbHeight() + 0.5D,
-					entity.getZ(),
-					1,
-					entity.getRandom().nextGaussian() * 0.65D,
-					0.0D,
-					entity.getRandom().nextGaussian() * 0.65D,
-					0.035D
-			);
+		if (event.getSource().getEntity() instanceof ServerPlayer player) {
+			PacketDistributor.sendToPlayer(player, new DamageIndicatorPayload(event.getNewDamage(), new Vector3f(
+					(float) damagedEntity.getX(),
+					(float) (damagedEntity.getY() + damagedEntity.getBbHeight() + 0.5f),
+					(float) damagedEntity.getZ()
+			)));
 		}
 	}
 
@@ -422,8 +391,9 @@ public class ForgeEventSubscriber {
 	public static void entityJoinLevelEvent(EntityJoinLevelEvent event) {
 		// Sync player data from server to client
 		if (event.getEntity() instanceof ServerPlayer player) {
-			// Send update packet
+			// Send update packets
 			PacketDistributor.sendToPlayer(player, new SyncPlayerDataPayload(player.getPersistentData(), player.getUUID()));
+			PacketDistributor.sendToPlayer(player, new SyncAccessoryDataPayload(new HashSet<>(AccessoryLoader.ACCESSORIES.values())));
 		}
 
 		// Handle the Velocity enchantment on bows (guns are handled in the gun code)

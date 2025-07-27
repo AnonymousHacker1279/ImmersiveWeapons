@@ -1,13 +1,10 @@
 package tech.anonymoushacker1279.immersiveweapons.client.gui;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Font;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.neoforged.neoforge.client.gui.GuiLayer;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
-import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingOverlay;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.ScopeOverlay;
 import tech.anonymoushacker1279.immersiveweapons.init.DataComponentTypeRegistry;
 
@@ -16,7 +13,6 @@ public class IWOverlays {
 	public static final ResourceLocation SCOPE_LOCATION = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/gui/overlay/musket_scope.png");
 
 	private static final Minecraft MINECRAFT = Minecraft.getInstance();
-	private static final Font FONT_RENDERER = MINECRAFT.font;
 	private static float scopeScale = 0f;
 
 	public static final GuiLayer SCOPE_ELEMENT = (gui, deltaTracker) -> {
@@ -36,12 +32,6 @@ public class IWOverlays {
 
 		if (scopeScale > 0f) {
 			ScopeOverlay.renderOverlay(gui, gui.guiWidth(), gui.guiHeight(), scopeScale);
-		}
-	};
-
-	public static final GuiLayer DEBUG_TRACING_ELEMENT = (gui, deltaTracker) -> {
-		if (DebugTracingData.isDebugTracingEnabled) {
-			DebugTracingOverlay.renderOverlay(gui, FONT_RENDERER, gui.guiHeight());
 		}
 	};
 }
