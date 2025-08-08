@@ -273,8 +273,3 @@ tasks.register("optimizeOgg", FileOptimizationTask) {
 tasks.named("processResources").configure {
 	finalizedBy tasks.named("minifyJson")
 }
-
-// Hook up the optimization tasks to jar
-tasks.named('jar').configure {
-	dependsOn('optimizePng', 'optimizeOgg')
-}
