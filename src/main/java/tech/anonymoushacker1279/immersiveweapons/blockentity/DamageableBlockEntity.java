@@ -1,6 +1,8 @@
 package tech.anonymoushacker1279.immersiveweapons.blockentity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -51,6 +53,16 @@ public class DamageableBlockEntity extends BlockEntity {
 		valueOutput.putInt("health", health);
 		valueOutput.putInt("stages", stages);
 		valueOutput.putInt("currentStage", currentStage);
+	}
+
+	@Override
+	public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+		CompoundTag tag = super.getUpdateTag(registries);
+		tag.putInt("maxHealth", maxHealth);
+		tag.putInt("health", health);
+		tag.putInt("stages", stages);
+		tag.putInt("currentStage", currentStage);
+		return tag;
 	}
 
 	/**

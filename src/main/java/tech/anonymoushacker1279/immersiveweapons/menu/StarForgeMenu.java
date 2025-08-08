@@ -207,7 +207,7 @@ public class StarForgeMenu extends AbstractContainerMenu {
 
 		if (menu.containerId == containerId && menu instanceof StarForgeMenu starForgeMenu) {
 			starForgeMenu.containerData.set(3, menuSelectionIndex);
-			if (beginCrafting) {
+			if (beginCrafting && menuSelectionIndex >= 0 && menuSelectionIndex < starForgeMenu.availableRecipes.size()) {
 				// Start the smelting process
 				StarForgeRecipe selectedRecipe = starForgeMenu.availableRecipes.get(menuSelectionIndex);
 				starForgeMenu.containerData.set(2, selectedRecipe.smeltTime());

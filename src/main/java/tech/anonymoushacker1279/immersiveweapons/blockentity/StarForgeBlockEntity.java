@@ -2,7 +2,9 @@ package tech.anonymoushacker1279.immersiveweapons.blockentity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.resources.ResourceKey;
@@ -173,6 +175,15 @@ public class StarForgeBlockEntity extends BaseContainerBlockEntity implements En
 		valueOutput.putBoolean("hasSolarEnergy", hasSolarEnergy);
 		valueOutput.putInt("temperature", temperature);
 		valueOutput.putInt("smeltTime", smeltTime);
+	}
+
+	@Override
+	public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+		CompoundTag tag = super.getUpdateTag(registries);
+		tag.putBoolean("hasSolarEnergy", hasSolarEnergy);
+		tag.putInt("temperature", temperature);
+		tag.putInt("smeltTime", smeltTime);
+		return tag;
 	}
 
 	@Override

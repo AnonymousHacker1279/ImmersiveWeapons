@@ -48,6 +48,7 @@ public class AccessoryManager {
 			}
 		}
 
+		effectValue = Math.round(effectValue * 100.0d) / 100.0d;
 		return type.clamp() ? Mth.clamp(effectValue, 0, 1) : effectValue;
 	}
 

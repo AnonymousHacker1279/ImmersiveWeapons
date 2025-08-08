@@ -2,7 +2,9 @@ package tech.anonymoushacker1279.immersiveweapons.blockentity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
@@ -414,6 +416,15 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 		valueOutput.putInt("BurnTime", burnTime);
 		valueOutput.putInt("CookTime", cookTime);
 		valueOutput.putInt("CookTimeTotal", cookTimeTotal);
+	}
+
+	@Override
+	public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+		CompoundTag tag = super.getUpdateTag(registries);
+		tag.putInt("BurnTime", burnTime);
+		tag.putInt("CookTime", cookTime);
+		tag.putInt("CookTimeTotal", cookTimeTotal);
+		return tag;
 	}
 
 	@Override

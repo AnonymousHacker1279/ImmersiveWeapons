@@ -47,7 +47,7 @@ public class PlayerStatTooltips {
 		}
 
 		float knockbackResist = Math.round(player.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE) * 100f) / 100f;
-		if (knockbackResist > 0) {
+		if (knockbackResist != 0) {
 			tooltips.add(createClientTooltip("immersiveweapons.player_stats.knockback_resistance", Math.round(knockbackResist * 100)));
 		}
 
@@ -55,16 +55,16 @@ public class PlayerStatTooltips {
 		double bleedResist = AccessoryManager.collectEffects(AccessoryEffectTypeRegistry.BLEED_RESISTANCE.get(), player);
 		double sonicResist = AccessoryManager.collectEffects(AccessoryEffectTypeRegistry.SONIC_BOOM_RESISTANCE.get(), player);
 
-		if (accessoryGeneralResist > 0 || bleedResist > 0 || sonicResist > 0) {
+		if (accessoryGeneralResist != 0 || bleedResist != 0 || sonicResist != 0) {
 			insertSpacer(tooltips);
 			tooltips.add(createClientTooltip("immersiveweapons.player_stats.accessory_resistance"));
-			if (accessoryGeneralResist > 0) {
+			if (accessoryGeneralResist != 0) {
 				tooltips.add(createClientTooltip("immersiveweapons.player_stats.accessory_resistance.general", Math.round(accessoryGeneralResist * 100)));
 			}
-			if (bleedResist > 0) {
+			if (bleedResist != 0) {
 				tooltips.add(createClientTooltip("immersiveweapons.player_stats.accessory_resistance.bleed", Math.round(bleedResist * 100)));
 			}
-			if (sonicResist > 0) {
+			if (sonicResist != 0) {
 				tooltips.add(createClientTooltip("immersiveweapons.player_stats.accessory_resistance.sonic_boom", Math.round(sonicResist * 100)));
 			}
 		}
@@ -74,19 +74,19 @@ public class PlayerStatTooltips {
 		double projectileDamage = AccessoryManager.collectEffects(AccessoryEffectTypeRegistry.PROJECTILE_DAMAGE.get(), player);
 		double meleeCritDamageBonus = AccessoryManager.collectEffects(AccessoryEffectTypeRegistry.MELEE_CRIT_DAMAGE_BONUS.get(), player);
 
-		if (generalDamage > 0 || meleeDamage > 0 || projectileDamage > 0 || meleeCritDamageBonus > 0) {
+		if (generalDamage != 0 || meleeDamage != 0 || projectileDamage != 0 || meleeCritDamageBonus != 0) {
 			insertSpacer(tooltips);
 			tooltips.add(createClientTooltip("immersiveweapons.player_stats.accessory_damage"));
-			if (generalDamage > 0) {
+			if (generalDamage != 0) {
 				tooltips.add(createClientTooltip("immersiveweapons.player_stats.accessory_damage.general", Math.round(generalDamage * 100)));
 			}
-			if (meleeDamage > 0) {
+			if (meleeDamage != 0) {
 				tooltips.add(createClientTooltip("immersiveweapons.player_stats.accessory_damage.melee", Math.round(meleeDamage * 100)));
 			}
-			if (projectileDamage > 0) {
+			if (projectileDamage != 0) {
 				tooltips.add(createClientTooltip("immersiveweapons.player_stats.accessory_damage.projectile", Math.round(projectileDamage * 100)));
 			}
-			if (meleeCritDamageBonus > 0) {
+			if (meleeCritDamageBonus != 0) {
 				tooltips.add(createClientTooltip("immersiveweapons.player_stats.accessory_damage.melee_crit_damage", Math.round((meleeCritDamageBonus + 0.5d) * 100)));
 			}
 		}

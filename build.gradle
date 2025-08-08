@@ -1,8 +1,8 @@
 plugins {
 	id 'java-library'
 	id 'maven-publish'
-	id 'net.neoforged.moddev' version '2.0.103'
-	id "com.hypherionmc.modutils.modpublisher" version "2.1.6"
+	id 'net.neoforged.moddev' version '2.0.107'
+	id "com.hypherionmc.modutils.modpublisher" version "2.1.7"
 	id 'idea'
 }
 
@@ -170,15 +170,15 @@ dependencies {
 	runtimeOnly "org.sinytra:wiki-exporter-neoforge:${wiki_exporter_version}"
 
 	// Include Immersive Weapons Compatibility Bridge (IWCB)
-	// implementation "tech.anonymoushacker1279.iwcompatbridge:IWCompatBridge:${iwcb_version}"
+	implementation "tech.anonymoushacker1279.iwcompatbridge:IWCompatBridge:${iwcb_version}"
 
 	// Include WTHIT and badpackets
 	runtimeOnly "mcp.mobius.waila:wthit:neo-${wthit_version}"
 	runtimeOnly "lol.bai:badpackets:neo-${badpackets_version}"
 
 	// Include JEI
-	// compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
-	// runtimeOnly "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
+	compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
+	runtimeOnly "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
 }
 
 tasks.named("processResources", ProcessResources).configure {
