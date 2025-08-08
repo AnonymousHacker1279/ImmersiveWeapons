@@ -40,4 +40,9 @@ public record AccessoryEffectType(String name, boolean clamp) {
 				&& this.name.equals(name1)
 				&& this.clamp == clamp1;
 	}
+
+	@Override
+	public int hashCode() {
+		return name.hashCode() + Boolean.hashCode(clamp);
+	}
 }
