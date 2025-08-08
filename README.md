@@ -51,24 +51,27 @@ This table lists the latest Immersive Weapons version for a Minecraft version. I
 **Latest**, consider it to be at the End of Life. In some cases, an older version will receive bugfixes should the
 community describe an interest in it (This excludes versions listed as **N/A - Build From Source**).
 
-| MC Version | Immersive Weapons Latest Version                                                                             |
-|------------|--------------------------------------------------------------------------------------------------------------|
-| 1.21.5     | [Latest](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases)                                   |
-| 1.21.1     | [v1.31.2](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.31.2)                      |
-| 1.20.6     | [N/A - Build From Source](https://github.com/AnonymousHacker1279/ImmersiveWeapons/tree/1.20.6-dev)           |
-| 1.20.4     | [1.29.2](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.29.2)                       |
-| 1.20.2     | [1.28.0](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.28.0)                       |
-| 1.20.1     | [1.27.7](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.27.7)                       |
-| 1.19.4     | [1.23.2](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.23.2)                       |
-| 1.19.3     | [1.21.0](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.21.0)                       |
-| 1.19.2     | [N/A - Build From Source](https://github.com/AnonymousHacker1279/ImmersiveWeapons/tree/1.19.2-dev)           |
-| 1.19       | [1.18.4](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/1.18.4)                        |
-| 1.18.2     | [1.17.4](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.17.4)                       |
-| 1.18.1     | [(ALPHA) 1.14.0-alpha1](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.14.0-alpha1) |
-| 1.17.1     | [1.12.1](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.12.1)                       |
-| 1.16.5     | [1.4.3](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.4.3)                         |
-| 1.16.4     | [1.1.1](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.1.1)                         |
-| 1.15.2     | [N/A - Build From Source](https://github.com/AnonymousHacker1279/ImmersiveWeapons/tree/1.15.2-dev)           |
+| MC Version | Immersive Weapons Latest Version                                                                     |
+|------------|------------------------------------------------------------------------------------------------------|
+| 1.21.8     | [Latest](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases)                           |
+| 1.21.7     | [N/A - Build From Source](https://github.com/AnonymousHacker1279/ImmersiveWeapons/tree/1.21.7-dev)   |
+| 1.21.6     | [N/A - Build From Source](https://github.com/AnonymousHacker1279/ImmersiveWeapons/tree/1.21.6-dev)   |
+| 1.21.5     | [1.32.1](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.32.1)               |
+| 1.21.1     | [1.31.2](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.31.2)               |
+| 1.20.6     | [N/A - Build From Source](https://github.com/AnonymousHacker1279/ImmersiveWeapons/tree/1.20.6-dev)   |
+| 1.20.4     | [1.29.2](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.29.2)               |
+| 1.20.2     | [1.28.0](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.28.0)               |
+| 1.20.1     | [1.27.7](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.27.7)               |
+| 1.19.4     | [1.23.2](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.23.2)               |
+| 1.19.3     | [1.21.0](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.21.0)               |
+| 1.19.2     | [N/A - Build From Source](https://github.com/AnonymousHacker1279/ImmersiveWeapons/tree/1.19.2-dev)   |
+| 1.19       | [1.18.4](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/1.18.4)                |
+| 1.18.2     | [1.17.4](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.17.4)               |
+| 1.18.1     | [1.14.0-alpha1](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.14.0-alpha1) |
+| 1.17.1     | [1.12.1](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.12.1)               |
+| 1.16.5     | [1.4.3](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.4.3)                 |
+| 1.16.4     | [1.1.1](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.1.1)                 |
+| 1.15.2     | [N/A - Build From Source](https://github.com/AnonymousHacker1279/ImmersiveWeapons/tree/1.15.2-dev)   |
 
 ### NeoForge vs Forge
 

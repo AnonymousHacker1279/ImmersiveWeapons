@@ -3,7 +3,6 @@ package tech.anonymoushacker1279.immersiveweapons.entity.monster;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
@@ -22,6 +21,8 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.entity.AttackerTracker;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
@@ -171,14 +172,14 @@ public class CelestialTowerEntity extends Monster implements AttackerTracker, Gr
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundTag pCompound) {
-		super.readAdditionalSaveData(pCompound);
+	public void readAdditionalSaveData(ValueInput valueInput) {
+		super.readAdditionalSaveData(valueInput);
 
 		bossEvent.setName(getDisplayName());
-		totalWavesToSpawn = pCompound.getIntOr("totalWavesToSpawn", 3);
-		waveSizeModifier = pCompound.getIntOr("waveSizeModifier", 1);
-		wavesSpawned = pCompound.getIntOr("wavesSpawned", 0);
-		doneSpawningWaves = pCompound.getBooleanOr("doneSpawningWaves", false);
+		totalWavesToSpawn = valueInput.getIntOr("totalWavesToSpawn", 3);
+		waveSizeModifier = valueInput.getIntOr("waveSizeModifier", 1);
+		wavesSpawned = valueInput.getIntOr("wavesSpawned", 0);
+		doneSpawningWaves = valueInput.getBooleanOr("doneSpawningWaves", false);
 
 		if (wavesSpawned > 0 && !doneSpawningWaves) {
 			bossEvent.setName(Component.translatable("immersiveweapons.boss.celestial_tower.waves", wavesSpawned,
@@ -188,18 +189,18 @@ public class CelestialTowerEntity extends Monster implements AttackerTracker, Gr
 			bossEvent.setColor(BossBarColor.GREEN);
 		}
 
-		xpReward = pCompound.getIntOr("xpReward", 0);
+		xpReward = valueInput.getIntOr("xpReward", 0);
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundTag pCompound) {
-		super.addAdditionalSaveData(pCompound);
+	public void addAdditionalSaveData(ValueOutput valueOutput) {
+		super.addAdditionalSaveData(valueOutput);
 
-		pCompound.putInt("totalWavesToSpawn", totalWavesToSpawn);
-		pCompound.putInt("waveSizeModifier", waveSizeModifier);
-		pCompound.putInt("wavesSpawned", wavesSpawned);
-		pCompound.putBoolean("doneSpawningWaves", doneSpawningWaves);
-		pCompound.putInt("xpReward", xpReward);
+		valueOutput.putInt("totalWavesToSpawn", totalWavesToSpawn);
+		valueOutput.putInt("waveSizeModifier", waveSizeModifier);
+		valueOutput.putInt("wavesSpawned", wavesSpawned);
+		valueOutput.putBoolean("doneSpawningWaves", doneSpawningWaves);
+		valueOutput.putInt("xpReward", xpReward);
 	}
 
 	@Override

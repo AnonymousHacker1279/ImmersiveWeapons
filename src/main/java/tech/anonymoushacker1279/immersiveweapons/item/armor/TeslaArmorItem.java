@@ -13,7 +13,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.equipment.ArmorMaterial;
 import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
@@ -42,7 +42,7 @@ public class TeslaArmorItem extends Item implements TickableArmor {
 
 					// Send packet to server
 					state = state.getNext();
-					PacketDistributor.sendToServer(new TeslaArmorPayload(state));
+					ClientPacketDistributor.sendToServer(new TeslaArmorPayload(state));
 
 					if (state == EffectState.DISABLED) {
 						level.playSound(player,

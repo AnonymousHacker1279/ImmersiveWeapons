@@ -9,7 +9,7 @@ import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
 public class TeslaShovel extends ShovelItem implements HitEffectUtils {
 
 	public TeslaShovel(Properties properties) {
-		super(IWToolMaterials.TESLA, -1.5f, -3.0f, properties);
+		super(IWToolMaterials.TESLA, 1.5f, -3.0f, properties);
 	}
 
 	@Override

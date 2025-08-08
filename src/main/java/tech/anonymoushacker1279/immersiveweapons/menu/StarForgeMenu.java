@@ -15,7 +15,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.StarForgeBlockEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.MenuTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.StarForgeRecipe;
@@ -30,7 +30,6 @@ public class StarForgeMenu extends AbstractContainerMenu {
 
 	public final Container container;
 	private final ContainerData containerData;
-	private final Player player;
 
 	public List<StarForgeRecipe> availableRecipes = new ArrayList<>(25);
 	public static final List<RecipeHolder<StarForgeRecipe>> ALL_RECIPES = new ArrayList<>(10);
@@ -47,7 +46,6 @@ public class StarForgeMenu extends AbstractContainerMenu {
 		super(MenuTypeRegistry.STAR_FORGE_MENU.get(), containerID);
 		this.container = container;
 		this.containerData = containerData;
-		player = inventory.player;
 
 		// Primary input slot at (8, 52)
 		addSlot(new Slot(container, 0, 8, 52) {
@@ -172,7 +170,7 @@ public class StarForgeMenu extends AbstractContainerMenu {
 		containerData.set(3, index);
 
 		// Send the packet to the server
-		PacketDistributor.sendToServer(new StarForgeMenuPayload(containerId, index, beginCrafting));
+		ClientPacketDistributor.sendToServer(new StarForgeMenuPayload(containerId, index, beginCrafting));
 	}
 
 	public boolean hasSolarEnergy() {
@@ -209,7 +207,7 @@ public class StarForgeMenu extends AbstractContainerMenu {
 
 		if (menu.containerId == containerId && menu instanceof StarForgeMenu starForgeMenu) {
 			starForgeMenu.containerData.set(3, menuSelectionIndex);
-			if (beginCrafting) {
+			if (beginCrafting && menuSelectionIndex >= 0 && menuSelectionIndex < starForgeMenu.availableRecipes.size()) {
 				// Start the smelting process
 				StarForgeRecipe selectedRecipe = starForgeMenu.availableRecipes.get(menuSelectionIndex);
 				starForgeMenu.containerData.set(2, selectedRecipe.smeltTime());

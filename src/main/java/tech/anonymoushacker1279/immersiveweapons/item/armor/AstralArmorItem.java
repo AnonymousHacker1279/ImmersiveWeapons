@@ -13,7 +13,7 @@ import net.minecraft.world.item.equipment.ArmorMaterial;
 import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.AstralArmorPayload;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
@@ -37,7 +37,7 @@ public class AstralArmorItem extends Item implements TickableArmor {
 					player.getPersistentData().putBoolean("AstralArmorEffectEnabled", !effectEnabled);
 
 					// Send packet to server
-					PacketDistributor.sendToServer(new AstralArmorPayload(!effectEnabled));
+					ClientPacketDistributor.sendToServer(new AstralArmorPayload(!effectEnabled));
 
 					if (effectEnabled) {
 						player.displayClientMessage(Component.translatable("immersiveweapons.armor_effects.disabled")

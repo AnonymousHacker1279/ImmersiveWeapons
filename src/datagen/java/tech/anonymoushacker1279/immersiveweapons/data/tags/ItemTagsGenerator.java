@@ -1,20 +1,20 @@
 package tech.anonymoushacker1279.immersiveweapons.data.tags;
 
 import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.tags.ItemTagsProvider;
-import net.minecraft.tags.BlockTags;
+import net.minecraft.data.tags.TagAppender;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagEntry;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.common.Tags.Blocks;
-import net.neoforged.neoforge.common.data.BlockTagsProvider;
+import net.neoforged.neoforge.common.data.ItemTagsProvider;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.data.groups.common.CommonBlockTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.common.CommonItemTagGroups;
-import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWBlockTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
@@ -24,6 +24,7 @@ import tech.anonymoushacker1279.immersiveweapons.item.tool.PikeItem;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
@@ -31,8 +32,8 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 
 	public static final List<Item> ALL_ITEMS = new ArrayList<>(250);
 
-	public ItemTagsGenerator(PackOutput output, CompletableFuture<Provider> lookupProvider, BlockTagsProvider blocks) {
-		super(output, lookupProvider, blocks.contentsGetter(), ImmersiveWeapons.MOD_ID);
+	public ItemTagsGenerator(PackOutput output, CompletableFuture<Provider> lookupProvider) {
+		super(output, lookupProvider, ImmersiveWeapons.MOD_ID);
 	}
 
 	@Override
@@ -42,6 +43,13 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		addCommonTags();
 		addImmersiveWeaponsTags();
 		addMinecraftTags();
+
+		new BlockItemTagsGenerator() {
+			@Override
+			protected TagAppender<Block, Block> tag(TagKey<Block> blockTagKey, TagKey<Item> itemTagKey) {
+				return new BlockToItemConverter(ItemTagsGenerator.this.tag(itemTagKey));
+			}
+		}.run();
 	}
 
 	/**
@@ -49,12 +57,6 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 	 */
 	@SuppressWarnings("unchecked")
 	private void addCommonTags() {
-		// Copy item tags from block tags
-		copy(CommonBlockTagGroups.COBALT_ORES, CommonItemTagGroups.COBALT_ORES);
-		copy(CommonBlockTagGroups.SULFUR_ORES, CommonItemTagGroups.SULFUR_ORES);
-		copy(CommonBlockTagGroups.POTASSIUM_NITRATE_ORES, CommonItemTagGroups.POTASSIUM_NITRATE_ORES);
-		copy(Blocks.ORES, Tags.Items.ORES);
-
 		// Ingot tags
 		tag(CommonItemTagGroups.COBALT_INGOTS).add(ItemRegistry.COBALT_INGOT.get());
 		tag(Tags.Items.INGOTS_COPPER).add(Items.COPPER_INGOT);
@@ -107,16 +109,6 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 	 */
 	@SuppressWarnings("unchecked")
 	private void addImmersiveWeaponsTags() {
-		// Copy item tags from block tags
-		copy(IWBlockTagGroups.BURNED_OAK_LOGS, IWItemTagGroups.BURNED_OAK_LOGS);
-		copy(IWBlockTagGroups.STARDUST_LOGS, IWItemTagGroups.STARDUST_LOGS);
-		copy(IWBlockTagGroups.ELECTRIC_ORES, IWItemTagGroups.ELECTRIC_ORES);
-		copy(IWBlockTagGroups.MOLTEN_ORES, IWItemTagGroups.MOLTEN_ORES);
-		copy(IWBlockTagGroups.VENTUS_ORES, IWItemTagGroups.VENTUS_ORES);
-		copy(IWBlockTagGroups.ASTRAL_ORES, IWItemTagGroups.ASTRAL_ORES);
-		copy(IWBlockTagGroups.VOID_ORES, IWItemTagGroups.VOID_ORES);
-		copy(Blocks.ORES, Tags.Items.ORES);
-
 		// Projectile tags
 		tag(IWItemTagGroups.FLARES).add(ItemRegistry.FLARE.get());
 
@@ -355,28 +347,9 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 	 */
 	@SuppressWarnings("unchecked")
 	private void addMinecraftTags() {
-		// Copy item tags from block tags
-		copy(BlockTags.FENCES, ItemTags.FENCES);
-		copy(BlockTags.LOGS_THAT_BURN, ItemTags.LOGS_THAT_BURN);
-		copy(BlockTags.PLANKS, ItemTags.PLANKS);
-		copy(BlockTags.SLABS, ItemTags.SLABS);
-		copy(BlockTags.STAIRS, ItemTags.STAIRS);
-		copy(BlockTags.WOODEN_BUTTONS, ItemTags.WOODEN_BUTTONS);
-		copy(BlockTags.WOODEN_DOORS, ItemTags.WOODEN_DOORS);
-		copy(BlockTags.WOODEN_FENCES, ItemTags.WOODEN_FENCES);
-		copy(BlockTags.WOODEN_PRESSURE_PLATES, ItemTags.WOODEN_PRESSURE_PLATES);
-		copy(BlockTags.WOODEN_SLABS, ItemTags.WOODEN_SLABS);
-		copy(BlockTags.WOODEN_STAIRS, ItemTags.WOODEN_STAIRS);
-		copy(BlockTags.WOODEN_TRAPDOORS, ItemTags.WOODEN_TRAPDOORS);
-		copy(BlockTags.SMALL_FLOWERS, ItemTags.SMALL_FLOWERS);
-		copy(BlockTags.LEAVES, ItemTags.LEAVES);
-		copy(BlockTags.SAND, ItemTags.SAND);
-		copy(BlockTags.SAPLINGS, ItemTags.SAPLINGS);
-		copy(BlockTags.WALLS, ItemTags.WALLS);
-		copy(BlockTags.SMELTS_TO_GLASS, ItemTags.SMELTS_TO_GLASS);
-
 		// Sign tags
-		tag(ItemTags.SIGNS).add(BlockItemRegistry.BURNED_OAK_SIGN_ITEM.get());
+		tag(ItemTags.SIGNS).add(BlockItemRegistry.BURNED_OAK_SIGN_ITEM.get(),
+				BlockItemRegistry.STARDUST_SIGN_ITEM.get());
 
 		// Arrow tags
 		for (Item item : ALL_ITEMS) {
@@ -432,7 +405,6 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 				IWItemTagGroups.STAFFS,
 				Tags.Items.TOOLS_BOW
 		);
-		tag(ItemTags.SHARP_WEAPON_ENCHANTABLE).addTag(IWItemTagGroups.PIKES);
 		tag(ItemTags.WEAPON_ENCHANTABLE).addTags(
 				IWItemTagGroups.PIKES,
 				IWItemTagGroups.GAUNTLETS,
@@ -470,6 +442,58 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 			} else if (item.getDescriptionId().contains("boots")) {
 				tag(ItemTags.FOOT_ARMOR).add(item);
 			}
+		}
+	}
+
+	static class BlockToItemConverter implements TagAppender<Block, Block> {
+		private final TagAppender<Item, Item> itemAppender;
+
+		public BlockToItemConverter(TagAppender<Item, Item> appender) {
+			this.itemAppender = appender;
+		}
+
+		public TagAppender<Block, Block> add(Block block) {
+			this.itemAppender.add(Objects.requireNonNull(block.asItem()));
+			return this;
+		}
+
+		public TagAppender<Block, Block> addOptional(Block block) {
+			this.itemAppender.addOptional(Objects.requireNonNull(block.asItem()));
+			return this;
+		}
+
+		private static TagKey<Item> blockTagToItemTag(TagKey<Block> key) {
+			return TagKey.create(Registries.ITEM, key.location());
+		}
+
+		public TagAppender<Block, Block> addTag(TagKey<Block> key) {
+			this.itemAppender.addTag(blockTagToItemTag(key));
+			return this;
+		}
+
+		public TagAppender<Block, Block> addOptionalTag(TagKey<Block> key) {
+			this.itemAppender.addOptionalTag(blockTagToItemTag(key));
+			return this;
+		}
+
+		public TagAppender<Block, Block> add(TagEntry entry) {
+			this.itemAppender.add(entry);
+			return this;
+		}
+
+		public TagAppender<Block, Block> replace(boolean value) {
+			this.itemAppender.replace(value);
+			return this;
+		}
+
+		public TagAppender<Block, Block> remove(Block block) {
+			this.itemAppender.remove(block.asItem());
+			return this;
+		}
+
+		public TagAppender<Block, Block> remove(TagKey<Block> tag) {
+			this.itemAppender.remove(blockTagToItemTag(tag));
+			return this;
 		}
 	}
 }

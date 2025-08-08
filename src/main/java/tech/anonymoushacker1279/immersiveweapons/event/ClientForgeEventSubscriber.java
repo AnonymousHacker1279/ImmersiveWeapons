@@ -1,7 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.event;
 
 import com.mojang.blaze3d.platform.InputConstants;
-import com.mojang.blaze3d.shaders.FogShape;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -12,20 +11,16 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.common.EventBusSubscriber.Bus;
 import net.neoforged.neoforge.client.event.InputEvent;
 import net.neoforged.neoforge.client.event.RecipesReceivedEvent;
 import net.neoforged.neoforge.client.event.RenderBlockScreenEffectEvent;
-import net.neoforged.neoforge.client.event.RenderGuiLayerEvent;
 import net.neoforged.neoforge.client.event.ViewportEvent.ComputeFogColor;
 import net.neoforged.neoforge.client.event.ViewportEvent.ComputeFov;
 import net.neoforged.neoforge.client.event.ViewportEvent.RenderFog;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
-import tech.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
-import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.DebugTracingData;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.init.DataComponentTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
@@ -38,7 +33,7 @@ import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem;
 import tech.anonymoushacker1279.immersiveweapons.menu.SmallPartsMenu;
 import tech.anonymoushacker1279.immersiveweapons.menu.StarForgeMenu;
 
-@EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.GAME, value = Dist.CLIENT)
+@EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, value = Dist.CLIENT)
 public class ClientForgeEventSubscriber {
 
 
@@ -69,12 +64,7 @@ public class ClientForgeEventSubscriber {
 		}
 	}
 
-	/**
-	 * Event handler for the RenderFogEvent event.
-	 *
-	 * @param event the <code>RenderFogEvent</code> instance
-	 */
-	@SubscribeEvent
+	@SubscribeEvent(priority = EventPriority.HIGHEST)
 	public static void renderFogEvent(RenderFog event) {
 		// Reduce lava fog from players wearing a full set of molten armor
 		Player player = Minecraft.getInstance().player;
@@ -93,7 +83,6 @@ public class ClientForgeEventSubscriber {
 						float modifier = hasLavaGoggles ? 1.5f : 1.0f;
 						event.setNearPlaneDistance(16.0f * modifier);
 						event.setFarPlaneDistance(32.0f * modifier);
-						event.setCanceled(true);
 					}
 				}
 			} else if (hasLavaGoggles) {
@@ -102,7 +91,6 @@ public class ClientForgeEventSubscriber {
 					if (state.is(Blocks.LAVA)) {
 						event.setNearPlaneDistance(8.0f);
 						event.setFarPlaneDistance(16.0f);
-						event.setCanceled(true);
 					}
 				}
 			}
@@ -110,11 +98,7 @@ public class ClientForgeEventSubscriber {
 
 		if (player.getItemInHand(player.getUsedItemHand()).getItem() instanceof CursedItem && player.isUsingItem()) {
 			event.setNearPlaneDistance(0.0f);
-			event.setFarPlaneDistance(Math.max(CursedItem.CURSE_EFFECT_FADE * 512, 16.0f));
-			event.scaleFarPlaneDistance(0.5f);
-
-			event.setFogShape(FogShape.SPHERE);
-			event.setCanceled(true);
+			event.setFarPlaneDistance(Math.max(CursedItem.CURSE_EFFECT_FADE * 512, 8.0f));
 		}
 
 		if (player.hasEffect(EffectRegistry.FLASHBANG_EFFECT)) {
@@ -123,10 +107,8 @@ public class ClientForgeEventSubscriber {
 
 			event.setNearPlaneDistance(0.0f);
 			event.setFarPlaneDistance(Math.max(distance * 32, 0.25f));
-			event.scaleFarPlaneDistance(0.5f);
-
-			event.setFogShape(FogShape.SPHERE);
-			event.setCanceled(true);
+			event.getFogData().skyEnd = 0.1f;
+			event.getFogData().cloudEnd = 0.1f;
 		}
 	}
 
@@ -176,17 +158,6 @@ public class ClientForgeEventSubscriber {
 				fov *= 1.0F - fovModifier * 0.15F;
 				event.setFOV(fov);
 			}
-		}
-	}
-
-	@SubscribeEvent
-	public static void renderGuiOverlayPostEvent(RenderGuiLayerEvent.Post event) {
-		if (IWKeyBinds.DEBUG_TRACING.consumeClick()) {
-			DebugTracingData.isDebugTracingEnabled = !DebugTracingData.isDebugTracingEnabled;
-		}
-
-		if (DebugTracingData.isDebugTracingEnabled) {
-			IWOverlays.DEBUG_TRACING_ELEMENT.render(event.getGuiGraphics(), event.getPartialTick());
 		}
 	}
 

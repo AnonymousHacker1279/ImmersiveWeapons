@@ -1,0 +1,31 @@
+{
+  "attribute_modifiers": [],
+  "dynamic_attribute_modifiers": [],
+  "effects": [],
+  "item": "immersiveweapons:holy_mantle",
+  "mob_effects": [],
+  "slot": "belt",
+  "tooltips": [
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.holy_mantle_1"
+    },
+    {
+      "formats": [
+        "gold",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.holy_mantle_2"
+    },
+    {
+      "formats": [
+        "dark_gray",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.holy_mantle_3"
+    }
+  ]
+}

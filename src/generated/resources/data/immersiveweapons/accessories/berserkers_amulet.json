@@ -1,0 +1,46 @@
+{
+  "attribute_modifiers": [],
+  "dynamic_attribute_modifiers": [],
+  "effects": [
+    {
+      "type": {
+        "clamp": false,
+        "name": "melee_damage"
+      },
+      "value": 0.2
+    },
+    {
+      "type": {
+        "clamp": false,
+        "name": "projectile_damage"
+      },
+      "value": 0.1
+    },
+    {
+      "type": {
+        "clamp": false,
+        "name": "damage_resistance"
+      },
+      "value": -0.2
+    }
+  ],
+  "item": "immersiveweapons:berserkers_amulet",
+  "mob_effects": [],
+  "slot": "charm",
+  "tooltips": [
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.berserkers_amulet_1"
+    },
+    {
+      "formats": [
+        "dark_red",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.berserkers_amulet_2"
+    }
+  ]
+}

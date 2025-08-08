@@ -13,7 +13,7 @@ import net.minecraft.world.item.equipment.ArmorMaterial;
 import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.VoidArmorPayload;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
@@ -37,7 +37,7 @@ public class VoidArmorItem extends Item implements TickableArmor {
 					player.getPersistentData().putBoolean("VoidArmorEffectEnabled", !effectEnabled);
 
 					// Send packet to server
-					PacketDistributor.sendToServer(new VoidArmorPayload(!effectEnabled, false));
+					ClientPacketDistributor.sendToServer(new VoidArmorPayload(!effectEnabled, false));
 
 					if (effectEnabled) {
 						player.displayClientMessage(Component.translatable("immersiveweapons.armor_effects.disabled")
@@ -65,7 +65,7 @@ public class VoidArmorItem extends Item implements TickableArmor {
 							player.setDeltaMovement(dashVector);
 
 							if (player.isShiftKeyDown()) {
-								PacketDistributor.sendToServer(new VoidArmorPayload(true, true));
+								ClientPacketDistributor.sendToServer(new VoidArmorPayload(true, true));
 							}
 
 							dashCooldown = 60;

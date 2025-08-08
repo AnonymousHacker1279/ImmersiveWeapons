@@ -5,6 +5,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.equipment.ArmorType;
 import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.tooltip.DynamicTooltips;
@@ -157,9 +158,9 @@ public class ItemRegistry {
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
 	public static final Supplier<PikeItem> MOLTEN_PIKE = ITEMS.registerItem("molten_pike", (properties) -> new PikeItem(IWToolMaterials.MOLTEN, -2.6f, properties.fireResistant().repairable(IWItemTagGroups.MOLTEN_INGOTS)));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> TESLA_PIKE = ITEMS.registerItem("tesla_pike", (properties) -> new PikeItem(IWToolMaterials.TESLA, -2.6f, properties.fireResistant().repairable(IWItemTagGroups.TESLA_INGOTS)));
+	public static final Supplier<PikeItem> TESLA_PIKE = ITEMS.registerItem("tesla_pike", (properties) -> new PikeItem(IWToolMaterials.TESLA, -2.6f, properties.repairable(IWItemTagGroups.TESLA_INGOTS)));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> VENTUS_PIKE = ITEMS.registerItem("ventus_pike", (properties) -> new PikeItem(IWToolMaterials.VENTUS, -2.2f, properties.fireResistant().repairable(IWItemTagGroups.VENTUS_SHARDS)));
+	public static final Supplier<PikeItem> VENTUS_PIKE = ITEMS.registerItem("ventus_pike", (properties) -> new PikeItem(IWToolMaterials.VENTUS, -2.2f, properties.repairable(IWItemTagGroups.VENTUS_SHARDS)));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
 	public static final Supplier<PikeItem> ASTRAL_PIKE = ITEMS.registerItem("astral_pike", (properties) -> new PikeItem(IWToolMaterials.ASTRAL, -1.7f, properties.repairable(IWItemTagGroups.ASTRAL_INGOTS)));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
@@ -446,47 +447,47 @@ public class ItemRegistry {
 	public static final Supplier<BoatItem> STARDUST_BOAT = ITEMS.registerItem("stardust_boat", (properties) -> new BoatItem(EntityRegistry.STARDUST_BOAT_ENTITY.get(), properties.stacksTo(1)));
 	public static final Supplier<BoatItem> STARDUST_CHEST_BOAT = ITEMS.registerItem("stardust_chest_boat", (properties) -> new BoatItem(EntityRegistry.STARDUST_CHEST_BOAT_ENTITY.get(), properties.stacksTo(1)));
 	public static final Supplier<CurseCleaningSoapItem> CURSE_CLEANING_SOAP = ITEMS.registerItem("curse_cleaning_soap", (properties) -> new CurseCleaningSoapItem(properties.stacksTo(1)));
-	public static final Supplier<Item> SATCHEL = ITEMS.registerItem("satchel", (properties) -> new Item(properties.stacksTo(1)));
-	public static final Supplier<Item> POWDER_HORN = ITEMS.registerItem("powder_horn", (properties) -> new Item(properties.stacksTo(1)));
+	public static final DeferredHolder<Item, Item> SATCHEL = ITEMS.registerItem("satchel", (properties) -> new Item(properties.stacksTo(1)));
+	public static final DeferredHolder<Item, Item> POWDER_HORN = ITEMS.registerItem("powder_horn", (properties) -> new Item(properties.stacksTo(1)));
 	@LanguageEntryOverride("Berserker's Amulet")
-	public static final Supplier<Item> BERSERKERS_AMULET = ITEMS.registerItem("berserkers_amulet", (properties) -> new Item(properties.stacksTo(1)));
+	public static final DeferredHolder<Item, Item> BERSERKERS_AMULET = ITEMS.registerItem("berserkers_amulet", (properties) -> new Item(properties.stacksTo(1)));
 	@LanguageEntryOverride("Hans' Blessing")
-	public static final Supplier<Item> HANS_BLESSING = ITEMS.registerItem("hans_blessing", (properties) -> new Item(properties.stacksTo(1)));
-	public static final Supplier<Item> CELESTIAL_SPIRIT = ITEMS.registerItem("celestial_spirit", (properties) -> new Item(properties.stacksTo(1)));
-	public static final Supplier<Item> VOID_BLESSING = ITEMS.registerItem("void_blessing", (properties) -> new Item(properties.stacksTo(1)));
-	public static final Supplier<Item> BLADEMASTER_EMBLEM = ITEMS.registerItem("blademaster_emblem", (properties) -> new Item(properties.stacksTo(1)));
-	public static final Supplier<Item> DEADEYE_PENDANT = ITEMS.registerItem("deadeye_pendant", (properties) -> new Item(properties.stacksTo(1)));
-	public static final Supplier<Item> BLOATED_HEART = ITEMS.registerItem("bloated_heart", (properties) -> new Item(properties.stacksTo(1)));
-	public static final Supplier<Item> NETHERITE_SHIELD = ITEMS.registerItem("netherite_shield", (properties) -> new Item(properties.stacksTo(1)));
+	public static final DeferredHolder<Item, Item> HANS_BLESSING = ITEMS.registerItem("hans_blessing", (properties) -> new Item(properties.stacksTo(1)));
+	public static final DeferredHolder<Item, Item> CELESTIAL_SPIRIT = ITEMS.registerItem("celestial_spirit", (properties) -> new Item(properties.stacksTo(1)));
+	public static final DeferredHolder<Item, Item> VOID_BLESSING = ITEMS.registerItem("void_blessing", (properties) -> new Item(properties.stacksTo(1)));
+	public static final DeferredHolder<Item, Item> BLADEMASTER_EMBLEM = ITEMS.registerItem("blademaster_emblem", (properties) -> new Item(properties.stacksTo(1)));
+	public static final DeferredHolder<Item, Item> DEADEYE_PENDANT = ITEMS.registerItem("deadeye_pendant", (properties) -> new Item(properties.stacksTo(1)));
+	public static final DeferredHolder<Item, Item> BLOATED_HEART = ITEMS.registerItem("bloated_heart", (properties) -> new Item(properties.stacksTo(1)));
+	public static final DeferredHolder<Item, Item> NETHERITE_SHIELD = ITEMS.registerItem("netherite_shield", (properties) -> new Item(properties.stacksTo(1)));
 	@LanguageEntryOverride("Melee Master's Molten Glove")
-	public static final Supplier<Item> MELEE_MASTERS_MOLTEN_GLOVE = ITEMS.registerItem("melee_masters_molten_glove", (properties) -> new Item(properties.stacksTo(1)));
-	public static final Supplier<Item> IRON_FIST = ITEMS.registerItem("iron_fist", (properties) -> new Item(properties.stacksTo(1)));
-	public static final Supplier<Item> GLOVE_OF_RAPID_SWINGING = ITEMS.registerItem("glove_of_rapid_swinging", (properties) -> new Item(properties.stacksTo(1)));
-	public static final Supplier<Item> HAND_OF_DOOM = ITEMS.registerItem("hand_of_doom", (properties) -> new Item(properties.stacksTo(1)));
-	public static final Supplier<Item> COPPER_RING = ITEMS.registerItem("copper_ring", (properties) -> new Item(properties.stacksTo(1)));
-	public static final Supplier<Item> IRON_RING = ITEMS.registerItem("iron_ring", (properties) -> new Item(properties.stacksTo(1)));
-	public static final Supplier<Item> COBALT_RING = ITEMS.registerItem("cobalt_ring", (properties) -> new Item(properties.stacksTo(1)));
-	public static final Supplier<Item> GOLDEN_RING = ITEMS.registerItem("golden_ring", (properties) -> new Item(properties.stacksTo(1)));
-	public static final Supplier<Item> AMETHYST_RING = ITEMS.registerItem("amethyst_ring", (properties) -> new Item(properties.stacksTo(1)));
-	public static final Supplier<Item> EMERALD_RING = ITEMS.registerItem("emerald_ring", (properties) -> new Item(properties.stacksTo(1)));
-	public static final Supplier<Item> DIAMOND_RING = ITEMS.registerItem("diamond_ring", (properties) -> new Item(properties.stacksTo(1)));
-	public static final Supplier<Item> NETHERITE_RING = ITEMS.registerItem("netherite_ring", (properties) -> new Item(properties.stacksTo(1)));
-	public static final Supplier<Item> DEATH_GEM_RING = ITEMS.registerItem("death_gem_ring", (properties) -> new Item(properties.stacksTo(1)));
-	public static final Supplier<Item> MEDAL_OF_ADEQUACY = ITEMS.registerItem("medal_of_adequacy", (properties) -> new Item(properties.stacksTo(1)));
-	public static final Supplier<Item> DEPTH_CHARM = ITEMS.registerItem("depth_charm", (properties) -> new Item(properties.stacksTo(1)));
-	public static final Supplier<Item> REINFORCED_DEPTH_CHARM = ITEMS.registerItem("reinforced_depth_charm", (properties) -> new Item(properties.stacksTo(1)));
-	public static final Supplier<Item> INSOMNIA_AMULET = ITEMS.registerItem("insomnia_amulet", (properties) -> new Item(properties.stacksTo(1)));
-	public static final Supplier<Item> GOGGLES = ITEMS.registerItem("goggles", (properties) -> new Item(properties.stacksTo(1)));
-	public static final Supplier<Item> LAVA_GOGGLES = ITEMS.registerItem("lava_goggles", (properties) -> new Item(properties.stacksTo(1)));
-	public static final Supplier<Item> NIGHT_VISION_GOGGLES = ITEMS.registerItem("night_vision_goggles", (properties) -> new Item(properties.stacksTo(1)));
-	public static final Supplier<Item> AGILITY_BRACELET = ITEMS.registerItem("agility_bracelet", (properties) -> new Item(properties.stacksTo(1)));
-	public static final Supplier<Item> BLOODY_CLOTH = ITEMS.registerItem("bloody_cloth", (properties) -> new Item(properties.stacksTo(1)));
-	public static final Supplier<Item> ANCIENT_SCROLL = ITEMS.registerItem("ancient_scroll", (properties) -> new Item(properties.stacksTo(1)));
-	public static final Supplier<Item> HOLY_MANTLE = ITEMS.registerItem("holy_mantle", (properties) -> new Item(properties.stacksTo(1)));
-	public static final Supplier<Item> VENSTRAL_JAR = ITEMS.registerItem("venstral_jar", (properties) -> new Item(properties.stacksTo(1)));
-	public static final Supplier<Item> SUPER_BLANKET_CAPE = ITEMS.registerItem("super_blanket_cape", (properties) -> new Item(properties.stacksTo(1)));
-	public static final Supplier<Item> MEDAL_OF_HONOR = ITEMS.registerItem("medal_of_honor", (properties) -> new Item(properties.stacksTo(1)));
-	public static final Supplier<Item> MEDAL_OF_DISHONOR = ITEMS.registerItem("medal_of_dishonor", (properties) -> new Item(properties.stacksTo(1)));
+	public static final DeferredHolder<Item, Item> MELEE_MASTERS_MOLTEN_GLOVE = ITEMS.registerItem("melee_masters_molten_glove", (properties) -> new Item(properties.stacksTo(1)));
+	public static final DeferredHolder<Item, Item> IRON_FIST = ITEMS.registerItem("iron_fist", (properties) -> new Item(properties.stacksTo(1)));
+	public static final DeferredHolder<Item, Item> GLOVE_OF_RAPID_SWINGING = ITEMS.registerItem("glove_of_rapid_swinging", (properties) -> new Item(properties.stacksTo(1)));
+	public static final DeferredHolder<Item, Item> HAND_OF_DOOM = ITEMS.registerItem("hand_of_doom", (properties) -> new Item(properties.stacksTo(1)));
+	public static final DeferredHolder<Item, Item> COPPER_RING = ITEMS.registerItem("copper_ring", (properties) -> new Item(properties.stacksTo(1)));
+	public static final DeferredHolder<Item, Item> IRON_RING = ITEMS.registerItem("iron_ring", (properties) -> new Item(properties.stacksTo(1)));
+	public static final DeferredHolder<Item, Item> COBALT_RING = ITEMS.registerItem("cobalt_ring", (properties) -> new Item(properties.stacksTo(1)));
+	public static final DeferredHolder<Item, Item> GOLDEN_RING = ITEMS.registerItem("golden_ring", (properties) -> new Item(properties.stacksTo(1)));
+	public static final DeferredHolder<Item, Item> AMETHYST_RING = ITEMS.registerItem("amethyst_ring", (properties) -> new Item(properties.stacksTo(1)));
+	public static final DeferredHolder<Item, Item> EMERALD_RING = ITEMS.registerItem("emerald_ring", (properties) -> new Item(properties.stacksTo(1)));
+	public static final DeferredHolder<Item, Item> DIAMOND_RING = ITEMS.registerItem("diamond_ring", (properties) -> new Item(properties.stacksTo(1)));
+	public static final DeferredHolder<Item, Item> NETHERITE_RING = ITEMS.registerItem("netherite_ring", (properties) -> new Item(properties.stacksTo(1)));
+	public static final DeferredHolder<Item, Item> DEATH_GEM_RING = ITEMS.registerItem("death_gem_ring", (properties) -> new Item(properties.stacksTo(1)));
+	public static final DeferredHolder<Item, Item> MEDAL_OF_ADEQUACY = ITEMS.registerItem("medal_of_adequacy", (properties) -> new Item(properties.stacksTo(1)));
+	public static final DeferredHolder<Item, Item> DEPTH_CHARM = ITEMS.registerItem("depth_charm", (properties) -> new Item(properties.stacksTo(1)));
+	public static final DeferredHolder<Item, Item> REINFORCED_DEPTH_CHARM = ITEMS.registerItem("reinforced_depth_charm", (properties) -> new Item(properties.stacksTo(1)));
+	public static final DeferredHolder<Item, Item> INSOMNIA_AMULET = ITEMS.registerItem("insomnia_amulet", (properties) -> new Item(properties.stacksTo(1)));
+	public static final DeferredHolder<Item, Item> GOGGLES = ITEMS.registerItem("goggles", (properties) -> new Item(properties.stacksTo(1)));
+	public static final DeferredHolder<Item, Item> LAVA_GOGGLES = ITEMS.registerItem("lava_goggles", (properties) -> new Item(properties.stacksTo(1)));
+	public static final DeferredHolder<Item, Item> NIGHT_VISION_GOGGLES = ITEMS.registerItem("night_vision_goggles", (properties) -> new Item(properties.stacksTo(1)));
+	public static final DeferredHolder<Item, Item> AGILITY_BRACELET = ITEMS.registerItem("agility_bracelet", (properties) -> new Item(properties.stacksTo(1)));
+	public static final DeferredHolder<Item, Item> BLOODY_CLOTH = ITEMS.registerItem("bloody_cloth", (properties) -> new Item(properties.stacksTo(1)));
+	public static final DeferredHolder<Item, Item> ANCIENT_SCROLL = ITEMS.registerItem("ancient_scroll", (properties) -> new Item(properties.stacksTo(1)));
+	public static final DeferredHolder<Item, Item> HOLY_MANTLE = ITEMS.registerItem("holy_mantle", (properties) -> new Item(properties.stacksTo(1)));
+	public static final DeferredHolder<Item, Item> VENSTRAL_JAR = ITEMS.registerItem("venstral_jar", (properties) -> new Item(properties.stacksTo(1)));
+	public static final DeferredHolder<Item, Item> SUPER_BLANKET_CAPE = ITEMS.registerItem("super_blanket_cape", (properties) -> new Item(properties.stacksTo(1)));
+	public static final DeferredHolder<Item, Item> MEDAL_OF_HONOR = ITEMS.registerItem("medal_of_honor", (properties) -> new Item(properties.stacksTo(1)));
+	public static final DeferredHolder<Item, Item> MEDAL_OF_DISHONOR = ITEMS.registerItem("medal_of_dishonor", (properties) -> new Item(properties.stacksTo(1)));
 	public static final Supplier<CursedItem> BLOODY_SACRIFICE = ITEMS.registerItem("bloody_sacrifice", (properties) -> new CursedItem(properties.stacksTo(1).durability(100), "bloody_sacrifice"));
 	@LanguageEntryOverride("Jonny's Curse")
 	public static final Supplier<CursedItem> JONNYS_CURSE = ITEMS.registerItem("jonnys_curse", (properties) -> new CursedItem(properties.stacksTo(1).durability(100), "jonnys_curse"));

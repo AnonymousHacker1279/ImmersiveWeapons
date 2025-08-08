@@ -51,7 +51,7 @@ public class DragonFireballBulletEntity extends BulletEntity implements ItemSupp
 			cloud.setOwner(livingEntity);
 		}
 
-		cloud.setParticle(ParticleTypes.DRAGON_BREATH);
+		cloud.setCustomParticle(ParticleTypes.DRAGON_BREATH);
 		cloud.setRadius(3.0f);
 		cloud.setDuration(120);
 		cloud.setRadiusPerTick((3.0f - cloud.getRadius()) / (float) cloud.getDuration());

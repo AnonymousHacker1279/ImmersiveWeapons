@@ -11,7 +11,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.equipment.ArmorMaterial;
 import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.CobaltArmorPayload;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
@@ -34,7 +34,7 @@ public class CobaltArmorItem extends Item implements TickableArmor {
 						player.getPersistentData().putBoolean("CobaltArmorEffectEnabled", !effectEnabled);
 
 						// Send packet to server
-						PacketDistributor.sendToServer(new CobaltArmorPayload(!effectEnabled));
+						ClientPacketDistributor.sendToServer(new CobaltArmorPayload(!effectEnabled));
 
 						if (effectEnabled) {
 							player.displayClientMessage(Component.translatable("immersiveweapons.armor_effects.disabled")

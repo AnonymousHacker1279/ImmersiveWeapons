@@ -4,25 +4,17 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlotGroup;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.equipment.ArmorMaterial;
 import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.network.PacketDistributor;
-import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.VentusArmorPayload;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
@@ -37,17 +29,6 @@ public class VentusArmorItem extends Item implements TickableArmor {
 	}
 
 	@Override
-	public ItemAttributeModifiers getDefaultAttributeModifiers(ItemStack stack) {
-		return super.getDefaultAttributeModifiers(stack).withModifierAdded(
-				Attributes.SAFE_FALL_DISTANCE,
-				new AttributeModifier(
-						ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "ventus_safe_fall_distance"),
-						10d,
-						Operation.ADD_VALUE),
-				EquipmentSlotGroup.ARMOR);
-	}
-
-	@Override
 	public void playerTick(Level level, Player player) {
 		if (ArmorUtils.isWearingVentusArmor(player)) {
 			boolean effectEnabled = player.getPersistentData().getBoolean("VentusArmorEffectEnabled").orElse(false);
@@ -58,7 +39,7 @@ public class VentusArmorItem extends Item implements TickableArmor {
 					player.getPersistentData().putBoolean("VentusArmorEffectEnabled", !effectEnabled);
 
 					// Send packet to server
-					PacketDistributor.sendToServer(new VentusArmorPayload(PacketTypes.CHANGE_STATE, !effectEnabled));
+					ClientPacketDistributor.sendToServer(new VentusArmorPayload(PacketTypes.CHANGE_STATE, !effectEnabled));
 
 					if (effectEnabled) {
 						player.displayClientMessage(Component.translatable("immersiveweapons.armor_effects.disabled")
@@ -89,7 +70,7 @@ public class VentusArmorItem extends Item implements TickableArmor {
 				if (windShieldCooldown > 0) {
 					if (windShieldDuration > 0) {
 						handleProjectileReflection(level, player);
-						PacketDistributor.sendToServer(new VentusArmorPayload(PacketTypes.HANDLE_PROJECTILE_REFLECTION, effectEnabled));
+						ClientPacketDistributor.sendToServer(new VentusArmorPayload(PacketTypes.HANDLE_PROJECTILE_REFLECTION, effectEnabled));
 
 						windShieldDuration--;
 					}

@@ -1,0 +1,17 @@
+{
+  "attribute_modifiers": [],
+  "dynamic_attribute_modifiers": [],
+  "effects": [],
+  "item": "immersiveweapons:venstral_jar",
+  "mob_effects": [],
+  "slot": "belt",
+  "tooltips": [
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.venstral_jar"
+    }
+  ]
+}

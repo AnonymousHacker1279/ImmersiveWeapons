@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.InsideBlockEffectApplier;
@@ -49,8 +50,8 @@ public class WoodenSpikesBlock extends DamageableBlock {
 		if (entity instanceof LivingEntity livingEntity) {
 			entity.makeStuckInBlock(state, new Vec3(0.85F, 0.80D, 0.85F));
 			if (level instanceof ServerLevel serverLevel) {
-				Vec3 movement = entity.getKnownMovement();
-				if (movement.x >= 0.001F || movement.z >= 0.001F) {
+				Vec3 movement = entity instanceof Player ? entity.getKnownMovement() : entity.position().subtract(entity.oldPosition());
+				if (Mth.abs((float) movement.x) >= 0.001F || Mth.abs((float) movement.z) >= 0.001F) {
 					if (entity instanceof Player player && player.isCreative()) {
 						return;
 					}

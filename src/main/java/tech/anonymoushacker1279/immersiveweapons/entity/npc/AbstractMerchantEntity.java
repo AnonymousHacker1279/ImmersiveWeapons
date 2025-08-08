@@ -1,7 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.npc;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -20,6 +19,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
 import tech.anonymoushacker1279.immersiveweapons.entity.npc.trading.SimpleItemListing;
@@ -172,15 +173,15 @@ public abstract class AbstractMerchantEntity extends AbstractVillager implements
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundTag compound) {
-		super.addAdditionalSaveData(compound);
-		compound.putInt("tradeRefreshTime", entityData.get(TRADE_REFRESH_TIME));
+	public void addAdditionalSaveData(ValueOutput valueOutput) {
+		super.addAdditionalSaveData(valueOutput);
+		valueOutput.putInt("tradeRefreshTime", entityData.get(TRADE_REFRESH_TIME));
 	}
 
 	@Override
-	public void load(CompoundTag compound) {
-		super.load(compound);
+	public void load(ValueInput valueInput) {
+		super.load(valueInput);
 
-		entityData.set(TRADE_REFRESH_TIME, compound.getIntOr("tradeRefreshTime", 24000));
+		entityData.set(TRADE_REFRESH_TIME, valueInput.getIntOr("tradeRefreshTime", 24000));
 	}
 }

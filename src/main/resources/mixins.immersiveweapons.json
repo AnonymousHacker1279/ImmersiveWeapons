@@ -12,12 +12,14 @@
 		"ItemPropertiesMixin",
 		"LivingEntityMixin",
 		"ProjectileMixin",
+		"RangedAttributeAccessor",
 		"WindChargeMixin",
 		"loot.EnchantedCountIncreaseFunctionMixin",
 		"loot.EnchantmentHelperMixin",
 		"loot.LootItemRandomChanceWithEnchantedBonusConditionMixin"
 	],
 	"client": [
+		"AbstractContainerScreenMixin",
 		"EnchantmentMixin"
 	],
 	"injectors": {

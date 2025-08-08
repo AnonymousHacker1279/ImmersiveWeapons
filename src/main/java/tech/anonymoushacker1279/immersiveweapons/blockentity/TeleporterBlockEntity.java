@@ -1,14 +1,14 @@
 package tech.anonymoushacker1279.immersiveweapons.blockentity;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockEntityRegistry;
 
@@ -39,22 +39,24 @@ public class TeleporterBlockEntity extends BlockEntity {
 	}
 
 	@Override
-	protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-		super.saveAdditional(tag, registries);
+	protected void saveAdditional(ValueOutput valueOutput) {
+		super.saveAdditional(valueOutput);
 
 		if (linkedTeleporterPos != null && linkedTeleporterDimension != null) {
-			tag.putLong("linkedTeleporterPos", linkedTeleporterPos.asLong());
-			tag.putString("linkedTeleporterDimension", linkedTeleporterDimension.toString());
+			valueOutput.putLong("linkedTeleporterPos", linkedTeleporterPos.asLong());
+			valueOutput.putString("linkedTeleporterDimension", linkedTeleporterDimension.toString());
 		}
 	}
 
 	@Override
-	protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-		super.loadAdditional(tag, registries);
+	protected void loadAdditional(ValueInput valueInput) {
+		super.loadAdditional(valueInput);
 
-		if (tag.contains("linkedTeleporterPos") && tag.contains("linkedTeleporterDimension")) {
-			linkedTeleporterPos = BlockPos.of(tag.getLong("linkedTeleporterPos").orElse(0L));
-			linkedTeleporterDimension = ResourceLocation.parse(tag.getString("linkedTeleporterDimension").orElse(""));
+		Long teleporterPosLong = valueInput.getLong("linkedTeleporterPos").orElse(null);
+		String teleporterDimensionString = valueInput.getString("linkedTeleporterDimension").orElse(null);
+		if (teleporterPosLong != null && teleporterDimensionString != null) {
+			linkedTeleporterPos = BlockPos.of(teleporterPosLong);
+			linkedTeleporterDimension = ResourceLocation.parse(teleporterDimensionString);
 		}
 	}
 }

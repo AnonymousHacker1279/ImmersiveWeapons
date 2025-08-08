@@ -563,7 +563,6 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("accessory.effect_type.experience_modifier", "Experience Modifier: %s");
 		addTooltip("accessory.effect_type.sonic_boom_resistance", "Sonic Boom Resistance: %s");
 		addTooltip("accessory.effect_type.looting_level", "Looting Level Bonus: %s");
-		// Add tooltips for each AccessoryItem$EffectScalingType (excluding NO_SCALING)
 		addTooltip("accessory.effect_scaling_type.depth", "(Scales with depth)");
 		addTooltip("accessory.effect_scaling_type.insomnia", "(Scales with insomnia)");
 
@@ -1102,6 +1101,10 @@ public class LanguageGenerator extends IWLanguageProvider {
 
 	private void addConfigDescriptions() {
 		addConfigField("title", "Immersive Weapons Configuration");
+		// Client options
+		addConfigField("damageIndicators", "Damage Indicators");
+		addConfigField("damageIndicators.tooltip", "Damage Indicator particle settings");
+		// Server options
 		addConfigField("general", "General Settings");
 		addConfigField("general.tooltip", "General, miscellaneous settings");
 		addConfigField("entity", "Entity Settings");
@@ -1207,15 +1210,22 @@ public class LanguageGenerator extends IWLanguageProvider {
 			add("enchantment.level." + i, GeneralUtilities.convertToRoman(i));
 		}
 
-		// Debug tracing strings
-		add("immersiveweapons.debug_tracing.melee_item_damage", "Melee Item Damage: %s");
-		add("immersiveweapons.debug_tracing.gun_base_velocity", "Gun Base Velocity: %s");
-		add("immersiveweapons.debug_tracing.live_bullet_damage", "Live Bullet Damage: %s (is crit: %s)");
-		add("immersiveweapons.debug_tracing.damage_bonus", "Damage Bonus: %s general, %s melee, %s projectile");
-		add("immersiveweapons.debug_tracing.celestial_protection_chance_for_no_damage", "Celestial Protection Chance: %s");
-		add("immersiveweapons.debug_tracing.last_damage_values", "Last Damage Dealt: %s, Last Damage Taken: %s");
-		add("immersiveweapons.debug_tracing.armor_values", "Total Armor Value: %s, Armor Toughness: %s");
-		add("immersiveweapons.debug_tracing.dr_and_kbr", "General Damage Resistance: %s, Knockback Resistance: %s");
+		// Player stats strings
+		add("immersiveweapons.player_stats.title", "Player Stats");
+		add("immersiveweapons.player_stats.health", "Health: %s/%s");
+		add("immersiveweapons.player_stats.armor", "Armor: %s (%s toughness)");
+		add("immersiveweapons.player_stats.armor.additional_resistance", "Additional Armor Resistance: %s%%");
+		add("immersiveweapons.player_stats.celestial_protection", "General Resistance: 5% (%s%% chance to negate damage next hit)");
+		add("immersiveweapons.player_stats.knockback_resistance", "Knockback Resistance: %s%%");
+		add("immersiveweapons.player_stats.accessory_resistance", "Accessory Resistance");
+		add("immersiveweapons.player_stats.accessory_resistance.general", "General Resistance: %s%%");
+		add("immersiveweapons.player_stats.accessory_resistance.bleed", "Bleed Resistance: %s%%");
+		add("immersiveweapons.player_stats.accessory_resistance.sonic_boom", "Sonic Boom Resistance: %s%%");
+		add("immersiveweapons.player_stats.accessory_damage", "Accessory Damage");
+		add("immersiveweapons.player_stats.accessory_damage.general", "General Damage: %s%%");
+		add("immersiveweapons.player_stats.accessory_damage.melee", "Melee Damage: %s%%");
+		add("immersiveweapons.player_stats.accessory_damage.projectile", "Projectile Damage: %s%%");
+		add("immersiveweapons.player_stats.accessory_damage.melee_crit_damage", "Melee Crit Damage: %s%%");
 
 		// Kill count weapon strings
 		add("immersiveweapons.kill_count_weapon.total_kills", "Total Kills: %s");

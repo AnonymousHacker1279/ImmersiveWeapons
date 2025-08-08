@@ -1,0 +1,32 @@
+{
+  "attribute_modifiers": [],
+  "dynamic_attribute_modifiers": [],
+  "effects": [
+    {
+      "type": {
+        "clamp": false,
+        "name": "melee_damage"
+      },
+      "value": 0.1
+    },
+    {
+      "type": {
+        "clamp": true,
+        "name": "melee_bleed_chance"
+      },
+      "value": 0.3
+    }
+  ],
+  "item": "immersiveweapons:blademaster_emblem",
+  "mob_effects": [],
+  "slot": "charm",
+  "tooltips": [
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.blademaster_emblem"
+    }
+  ]
+}

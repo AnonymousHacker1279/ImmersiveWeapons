@@ -1,8 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.blockentity;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
@@ -11,6 +9,8 @@ import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockEntityRegistry;
@@ -83,18 +83,18 @@ public class PanicAlarmBlockEntity extends BlockEntity implements EntityBlock {
 	}
 
 	@Override
-	protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-		super.saveAdditional(tag, provider);
+	protected void saveAdditional(ValueOutput valueOutput) {
+		super.saveAdditional(valueOutput);
 
-		tag.putInt("cooldown", cooldown);
-		tag.putBoolean("isPowered", isPowered);
+		valueOutput.putInt("cooldown", cooldown);
+		valueOutput.putBoolean("isPowered", isPowered);
 	}
 
 	@Override
-	public void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-		super.loadAdditional(tag, provider);
+	public void loadAdditional(ValueInput valueInput) {
+		super.loadAdditional(valueInput);
 
-		cooldown = tag.getInt("cooldown").orElse(0);
-		isPowered = tag.getBoolean("isPowered").orElse(false);
+		cooldown = valueInput.getIntOr("cooldown", 0);
+		isPowered = valueInput.getBooleanOr("isPowered", false);
 	}
 }

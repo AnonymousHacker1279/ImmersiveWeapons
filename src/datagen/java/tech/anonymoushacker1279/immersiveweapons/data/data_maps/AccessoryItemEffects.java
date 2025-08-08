@@ -1,5 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.data.data_maps;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -7,9 +8,9 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.init.AccessoryEffectScalingTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.AccessoryEffectTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.AccessoryEffectBuilder;
+import tech.anonymoushacker1279.immersiveweapons.item.accessory.scaling.AccessoryEffectScalingType;
 
 public class AccessoryItemEffects {
 
@@ -33,95 +34,143 @@ public class AccessoryItemEffects {
 			0.05d, Operation.ADD_MULTIPLIED_BASE);
 
 	public static final AccessoryEffectBuilder SATCHEL = new AccessoryEffectBuilder()
-			.addEffect(AccessoryEffectTypeRegistry.FIREARM_AMMO_CONSERVATION_CHANCE.get(), 0.1d);
+			.addEffect(AccessoryEffectTypeRegistry.FIREARM_AMMO_CONSERVATION_CHANCE.get(), 0.1d)
+			.addTooltip("tooltip.immersiveweapons.satchel", ChatFormatting.GREEN, ChatFormatting.ITALIC);
 	public static final AccessoryEffectBuilder POWDER_HORN = new AccessoryEffectBuilder()
-			.addEffect(AccessoryEffectTypeRegistry.FIREARM_RELOAD_SPEED.get(), 0.15d);
+			.addEffect(AccessoryEffectTypeRegistry.FIREARM_RELOAD_SPEED.get(), 0.15d)
+			.addTooltip("tooltip.immersiveweapons.powder_horn_1", ChatFormatting.GREEN, ChatFormatting.ITALIC)
+			.addTooltip("tooltip.immersiveweapons.powder_horn_2", ChatFormatting.GREEN, ChatFormatting.ITALIC);
 	public static final AccessoryEffectBuilder BERSERKERS_AMULET = new AccessoryEffectBuilder()
 			.addEffect(AccessoryEffectTypeRegistry.MELEE_DAMAGE.get(), 0.2d)
 			.addEffect(AccessoryEffectTypeRegistry.PROJECTILE_DAMAGE.get(), 0.1d)
-			.addEffect(AccessoryEffectTypeRegistry.DAMAGE_RESISTANCE.get(), -0.2d);
+			.addEffect(AccessoryEffectTypeRegistry.DAMAGE_RESISTANCE.get(), -0.2d)
+			.addTooltip("tooltip.immersiveweapons.berserkers_amulet_1", ChatFormatting.GREEN, ChatFormatting.ITALIC)
+			.addTooltip("tooltip.immersiveweapons.berserkers_amulet_2", ChatFormatting.DARK_RED, ChatFormatting.ITALIC);
 	public static final AccessoryEffectBuilder HANS_BLESSING = new AccessoryEffectBuilder()
-			.addEffect(AccessoryEffectTypeRegistry.DAMAGE_RESISTANCE.get(), 0.15d);
-	public static final AccessoryEffectBuilder CELESTIAL_SPIRIT = new AccessoryEffectBuilder();
+			.addEffect(AccessoryEffectTypeRegistry.DAMAGE_RESISTANCE.get(), 0.15d)
+			.addTooltip("tooltip.immersiveweapons.hans_blessing_1", ChatFormatting.GREEN, ChatFormatting.ITALIC)
+			.addTooltip("tooltip.immersiveweapons.hans_blessing_2", ChatFormatting.LIGHT_PURPLE, ChatFormatting.ITALIC);
+	public static final AccessoryEffectBuilder CELESTIAL_SPIRIT = new AccessoryEffectBuilder()
+			.addTooltip("tooltip.immersiveweapons.celestial_spirit_1", ChatFormatting.GREEN, ChatFormatting.ITALIC)
+			.addTooltip("tooltip.immersiveweapons.celestial_spirit_2", ChatFormatting.DARK_GREEN, ChatFormatting.ITALIC);
 	public static final AccessoryEffectBuilder VOID_BLESSING = new AccessoryEffectBuilder()
-			.addObjectsFromBuilder(HANS_BLESSING);
+			.addObjectsFromBuilder(HANS_BLESSING)
+			.addTooltip("tooltip.immersiveweapons.void_blessing", ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC);
 	public static final AccessoryEffectBuilder BLADEMASTER_EMBLEM = new AccessoryEffectBuilder()
 			.addEffect(AccessoryEffectTypeRegistry.MELEE_DAMAGE.get(), 0.1d)
-			.addEffect(AccessoryEffectTypeRegistry.MELEE_BLEED_CHANCE.get(), 0.3d);
-	public static final AccessoryEffectBuilder DEADEYE_PENDANT = new AccessoryEffectBuilder();
+			.addEffect(AccessoryEffectTypeRegistry.MELEE_BLEED_CHANCE.get(), 0.3d)
+			.addTooltip("tooltip.immersiveweapons.blademaster_emblem", ChatFormatting.GREEN, ChatFormatting.ITALIC);
+	public static final AccessoryEffectBuilder DEADEYE_PENDANT = new AccessoryEffectBuilder()
+			.addTooltip("tooltip.immersiveweapons.deadeye_pendant_1", ChatFormatting.GREEN, ChatFormatting.ITALIC)
+			.addTooltip("tooltip.immersiveweapons.deadeye_pendant_2", ChatFormatting.GREEN, ChatFormatting.ITALIC);
 	public static final AccessoryEffectBuilder BLOATED_HEART = new AccessoryEffectBuilder()
-			.addAttributeModifier(BLOATED_HEART_HEALTH_MODIFIER, Attributes.MAX_HEALTH);
+			.addAttributeModifier(BLOATED_HEART_HEALTH_MODIFIER, Attributes.MAX_HEALTH)
+			.addTooltip("tooltip.immersiveweapons.bloated_heart", ChatFormatting.GREEN, ChatFormatting.ITALIC);
 	public static final AccessoryEffectBuilder NETHERITE_SHIELD = new AccessoryEffectBuilder()
 			.addEffect(AccessoryEffectTypeRegistry.DAMAGE_RESISTANCE.get(), 0.03d)
-			.addDynamicAttributeModifier(NETHERITE_SHIELD_KB_MODIFIER, Attributes.KNOCKBACK_RESISTANCE, 1.0d);
+			.addDynamicAttributeModifier(NETHERITE_SHIELD_KB_MODIFIER, Attributes.KNOCKBACK_RESISTANCE, 1.0d)
+			.addTooltip("tooltip.immersiveweapons.netherite_shield", ChatFormatting.GREEN, ChatFormatting.ITALIC);
 	public static final AccessoryEffectBuilder MELEE_MASTERS_MOLTEN_GLOVE = new AccessoryEffectBuilder()
 			.addEffect(AccessoryEffectTypeRegistry.MELEE_DAMAGE.get(), 0.1d)
-			.addEffect(AccessoryEffectTypeRegistry.MELEE_KNOCKBACK.get(), 0.75d);
+			.addEffect(AccessoryEffectTypeRegistry.MELEE_KNOCKBACK.get(), 0.75d)
+			.addTooltip("tooltip.immersiveweapons.melee_masters_molten_glove", ChatFormatting.GREEN, ChatFormatting.ITALIC);
 	public static final AccessoryEffectBuilder IRON_FIST = new AccessoryEffectBuilder()
 			.addEffect(AccessoryEffectTypeRegistry.MELEE_CRIT_DAMAGE_BONUS.get(), 0.25d)
-			.addEffect(AccessoryEffectTypeRegistry.MELEE_CRIT_CHANCE.get(), 0.15d);
+			.addEffect(AccessoryEffectTypeRegistry.MELEE_CRIT_CHANCE.get(), 0.15d)
+			.addTooltip("tooltip.immersiveweapons.iron_fist_1", ChatFormatting.GREEN, ChatFormatting.ITALIC)
+			.addTooltip("tooltip.immersiveweapons.iron_fist_2", ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC);
 	public static final AccessoryEffectBuilder GLOVE_OF_RAPID_SWINGING = new AccessoryEffectBuilder()
-			.addAttributeModifier(GLOVE_OF_RAPID_SWINGING_ATTACK_SPEED_MODIFIER, Attributes.ATTACK_SPEED);
+			.addAttributeModifier(GLOVE_OF_RAPID_SWINGING_ATTACK_SPEED_MODIFIER, Attributes.ATTACK_SPEED)
+			.addTooltip("tooltip.immersiveweapons.glove_of_rapid_swinging", ChatFormatting.GREEN, ChatFormatting.ITALIC);
 	public static final AccessoryEffectBuilder HAND_OF_DOOM = new AccessoryEffectBuilder()
 			.addObjectsFromBuilder(MELEE_MASTERS_MOLTEN_GLOVE)
 			.addObjectsFromBuilder(IRON_FIST)
-			.addObjectsFromBuilder(GLOVE_OF_RAPID_SWINGING);
+			.addObjectsFromBuilder(GLOVE_OF_RAPID_SWINGING)
+			.addTooltip("tooltip.immersiveweapons.hand_of_doom_1", ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC)
+			.addTooltip("tooltip.immersiveweapons.hand_of_doom_2", ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC);
 	public static final AccessoryEffectBuilder COPPER_RING = new AccessoryEffectBuilder()
 			.addEffect(AccessoryEffectTypeRegistry.GENERAL_DAMAGE.get(), 0.01d)
-			.addEffect(AccessoryEffectTypeRegistry.DAMAGE_RESISTANCE.get(), 0.01d);
+			.addEffect(AccessoryEffectTypeRegistry.DAMAGE_RESISTANCE.get(), 0.01d)
+			.addTooltip("tooltip.immersiveweapons.copper_ring", ChatFormatting.GREEN, ChatFormatting.ITALIC);
 	public static final AccessoryEffectBuilder IRON_RING = new AccessoryEffectBuilder()
 			.addEffect(AccessoryEffectTypeRegistry.GENERAL_DAMAGE.get(), 0.02d)
-			.addEffect(AccessoryEffectTypeRegistry.DAMAGE_RESISTANCE.get(), 0.02d);
+			.addEffect(AccessoryEffectTypeRegistry.DAMAGE_RESISTANCE.get(), 0.02d)
+			.addTooltip("tooltip.immersiveweapons.iron_ring", ChatFormatting.GREEN, ChatFormatting.ITALIC);
 	public static final AccessoryEffectBuilder COBALT_RING = new AccessoryEffectBuilder()
 			.addEffect(AccessoryEffectTypeRegistry.GENERAL_DAMAGE.get(), 0.025d)
-			.addEffect(AccessoryEffectTypeRegistry.DAMAGE_RESISTANCE.get(), 0.025d);
+			.addEffect(AccessoryEffectTypeRegistry.DAMAGE_RESISTANCE.get(), 0.025d)
+			.addTooltip("tooltip.immersiveweapons.cobalt_ring", ChatFormatting.GREEN, ChatFormatting.ITALIC);
 	public static final AccessoryEffectBuilder GOLDEN_RING = new AccessoryEffectBuilder()
 			.addEffect(AccessoryEffectTypeRegistry.GENERAL_DAMAGE.get(), 0.03d)
-			.addEffect(AccessoryEffectTypeRegistry.DAMAGE_RESISTANCE.get(), 0.03d);
+			.addEffect(AccessoryEffectTypeRegistry.DAMAGE_RESISTANCE.get(), 0.03d)
+			.addTooltip("tooltip.immersiveweapons.golden_ring", ChatFormatting.GREEN, ChatFormatting.ITALIC);
 	public static final AccessoryEffectBuilder EMERALD_RING = new AccessoryEffectBuilder()
-			.addMobEffect(new MobEffectInstance(MobEffects.HERO_OF_THE_VILLAGE, 60, 0, true, true));
+			.addMobEffect(new MobEffectInstance(MobEffects.HERO_OF_THE_VILLAGE, 60, 0, true, true))
+			.addTooltip("tooltip.immersiveweapons.emerald_ring", ChatFormatting.GREEN, ChatFormatting.ITALIC);
 	public static final AccessoryEffectBuilder AMETHYST_RING = new AccessoryEffectBuilder()
-			.addEffect(AccessoryEffectTypeRegistry.LOOTING_LEVEL.get(), 2);
+			.addEffect(AccessoryEffectTypeRegistry.LOOTING_LEVEL.get(), 2)
+			.addTooltip("tooltip.immersiveweapons.amethyst_ring", ChatFormatting.GREEN, ChatFormatting.ITALIC);
 	public static final AccessoryEffectBuilder DIAMOND_RING = new AccessoryEffectBuilder()
 			.addEffect(AccessoryEffectTypeRegistry.GENERAL_DAMAGE.get(), 0.04d)
-			.addEffect(AccessoryEffectTypeRegistry.DAMAGE_RESISTANCE.get(), 0.04d);
+			.addEffect(AccessoryEffectTypeRegistry.DAMAGE_RESISTANCE.get(), 0.04d)
+			.addTooltip("tooltip.immersiveweapons.diamond_ring", ChatFormatting.GREEN, ChatFormatting.ITALIC);
 	public static final AccessoryEffectBuilder NETHERITE_RING = new AccessoryEffectBuilder()
 			.addEffect(AccessoryEffectTypeRegistry.GENERAL_DAMAGE.get(), 0.05d)
-			.addEffect(AccessoryEffectTypeRegistry.DAMAGE_RESISTANCE.get(), 0.05d);
+			.addEffect(AccessoryEffectTypeRegistry.DAMAGE_RESISTANCE.get(), 0.05d)
+			.addTooltip("tooltip.immersiveweapons.netherite_ring", ChatFormatting.GREEN, ChatFormatting.ITALIC);
 	public static final AccessoryEffectBuilder DEATH_GEM_RING = new AccessoryEffectBuilder()
-			.addEffect(AccessoryEffectTypeRegistry.GENERAL_WITHER_CHANCE.get(), 1.0d);
+			.addEffect(AccessoryEffectTypeRegistry.GENERAL_WITHER_CHANCE.get(), 1.0d)
+			.addTooltip("tooltip.immersiveweapons.death_gem_ring", ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC);
 	public static final AccessoryEffectBuilder MEDAL_OF_ADEQUACY = new AccessoryEffectBuilder()
-			.addEffect(AccessoryEffectTypeRegistry.DAMAGE_RESISTANCE.get(), 0.01d);
+			.addEffect(AccessoryEffectTypeRegistry.DAMAGE_RESISTANCE.get(), 0.01d)
+			.addTooltip("tooltip.immersiveweapons.medal_of_adequacy", ChatFormatting.WHITE, ChatFormatting.ITALIC);
 	public static final AccessoryEffectBuilder DEPTH_CHARM = new AccessoryEffectBuilder()
-			.addEffect(AccessoryEffectTypeRegistry.DAMAGE_RESISTANCE.get(), 0.003d, AccessoryEffectScalingTypeRegistry.DEPTH.get())
-			.addEffect(AccessoryEffectTypeRegistry.GENERAL_DAMAGE.get(), 0.002d, AccessoryEffectScalingTypeRegistry.DEPTH.get())
-			.addEffect(AccessoryEffectTypeRegistry.MELEE_KNOCKBACK.get(), 0.001d, AccessoryEffectScalingTypeRegistry.DEPTH.get());
+			.addEffect(AccessoryEffectTypeRegistry.DAMAGE_RESISTANCE.get(), 0.003d, AccessoryEffectScalingType.DEPTH)
+			.addEffect(AccessoryEffectTypeRegistry.GENERAL_DAMAGE.get(), 0.002d, AccessoryEffectScalingType.DEPTH)
+			.addEffect(AccessoryEffectTypeRegistry.MELEE_KNOCKBACK.get(), 0.001d, AccessoryEffectScalingType.DEPTH)
+			.addTooltip("tooltip.immersiveweapons.depth_charm_1", ChatFormatting.GREEN, ChatFormatting.ITALIC)
+			.addTooltip("tooltip.immersiveweapons.depth_charm_2", ChatFormatting.LIGHT_PURPLE, ChatFormatting.ITALIC);
 	public static final AccessoryEffectBuilder REINFORCED_DEPTH_CHARM = new AccessoryEffectBuilder()
-			.addEffect(AccessoryEffectTypeRegistry.DAMAGE_RESISTANCE.get(), 0.003d, AccessoryEffectScalingTypeRegistry.DEPTH.get())
-			.addEffect(AccessoryEffectTypeRegistry.GENERAL_DAMAGE.get(), 0.002d, AccessoryEffectScalingTypeRegistry.DEPTH.get())
-			.addEffect(AccessoryEffectTypeRegistry.MELEE_KNOCKBACK.get(), 0.001d, AccessoryEffectScalingTypeRegistry.DEPTH.get())
-			.addEffect(AccessoryEffectTypeRegistry.SONIC_BOOM_RESISTANCE.get(), 0.5d);
+			.addEffect(AccessoryEffectTypeRegistry.DAMAGE_RESISTANCE.get(), 0.003d, AccessoryEffectScalingType.DEPTH)
+			.addEffect(AccessoryEffectTypeRegistry.GENERAL_DAMAGE.get(), 0.002d, AccessoryEffectScalingType.DEPTH)
+			.addEffect(AccessoryEffectTypeRegistry.MELEE_KNOCKBACK.get(), 0.001d, AccessoryEffectScalingType.DEPTH)
+			.addEffect(AccessoryEffectTypeRegistry.SONIC_BOOM_RESISTANCE.get(), 0.5d)
+			.addTooltip("tooltip.immersiveweapons.reinforced_depth_charm", ChatFormatting.GREEN, ChatFormatting.ITALIC);
 	public static final AccessoryEffectBuilder INSOMNIA_AMULET = new AccessoryEffectBuilder()
-			.addEffect(AccessoryEffectTypeRegistry.GENERAL_DAMAGE.get(), 0.003d, AccessoryEffectScalingTypeRegistry.INSOMNIA.get());
+			.addEffect(AccessoryEffectTypeRegistry.GENERAL_DAMAGE.get(), 0.003d, AccessoryEffectScalingType.INSOMNIA)
+			.addTooltip("tooltip.immersiveweapons.insomnia_amulet_1", ChatFormatting.GREEN, ChatFormatting.ITALIC)
+			.addTooltip("tooltip.immersiveweapons.insomnia_amulet_2", ChatFormatting.DARK_RED, ChatFormatting.ITALIC);
 	public static final AccessoryEffectBuilder GOGGLES = new AccessoryEffectBuilder()
-			.addEffect(AccessoryEffectTypeRegistry.PROJECTILE_DAMAGE.get(), 0.03d);
-	public static final AccessoryEffectBuilder LAVA_GOGGLES = new AccessoryEffectBuilder();
+			.addEffect(AccessoryEffectTypeRegistry.PROJECTILE_DAMAGE.get(), 0.03d)
+			.addTooltip("tooltip.immersiveweapons.goggles", ChatFormatting.GREEN, ChatFormatting.ITALIC);
+	public static final AccessoryEffectBuilder LAVA_GOGGLES = new AccessoryEffectBuilder()
+			.addTooltip("tooltip.immersiveweapons.lava_goggles", ChatFormatting.GREEN, ChatFormatting.ITALIC);
 	public static final AccessoryEffectBuilder NIGHT_VISION_GOGGLES = new AccessoryEffectBuilder()
-			.addMobEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 220, 0, true, true));
+			.addMobEffect(new MobEffectInstance(MobEffects.NIGHT_VISION, 220, 0, true, true))
+			.addTooltip("tooltip.immersiveweapons.night_vision_goggles", ChatFormatting.GREEN, ChatFormatting.ITALIC);
 	public static final AccessoryEffectBuilder AGILITY_BRACELET = new AccessoryEffectBuilder()
 			.addAttributeModifier(AGILITY_BRACELET_SPEED_MODIFIER, Attributes.MOVEMENT_SPEED)
-			.addAttributeModifier(AGILITY_BRACELET_STEP_HEIGHT_MODIFIER, Attributes.STEP_HEIGHT);
+			.addAttributeModifier(AGILITY_BRACELET_STEP_HEIGHT_MODIFIER, Attributes.STEP_HEIGHT)
+			.addTooltip("tooltip.immersiveweapons.agility_bracelet", ChatFormatting.GREEN, ChatFormatting.ITALIC);
 	public static final AccessoryEffectBuilder BLOODY_CLOTH = new AccessoryEffectBuilder()
 			.addEffect(AccessoryEffectTypeRegistry.BLEED_CANCEL_CHANCE.get(), 0.15d)
-			.addEffect(AccessoryEffectTypeRegistry.BLEED_RESISTANCE.get(), 0.30d);
+			.addEffect(AccessoryEffectTypeRegistry.BLEED_RESISTANCE.get(), 0.30d)
+			.addTooltip("tooltip.immersiveweapons.bloody_cloth", ChatFormatting.GREEN, ChatFormatting.ITALIC);
 	public static final AccessoryEffectBuilder ANCIENT_SCROLL = new AccessoryEffectBuilder()
-			.addEffect(AccessoryEffectTypeRegistry.EXPERIENCE_MODIFIER.get(), 0.35d);
-	public static final AccessoryEffectBuilder HOLY_MANTLE = new AccessoryEffectBuilder();
-	public static final AccessoryEffectBuilder VENSTRAL_JAR = new AccessoryEffectBuilder();
+			.addEffect(AccessoryEffectTypeRegistry.EXPERIENCE_MODIFIER.get(), 0.35d)
+			.addTooltip("tooltip.immersiveweapons.ancient_scroll", ChatFormatting.GREEN, ChatFormatting.ITALIC);
+	public static final AccessoryEffectBuilder HOLY_MANTLE = new AccessoryEffectBuilder()
+			.addTooltip("tooltip.immersiveweapons.holy_mantle_1", ChatFormatting.GREEN, ChatFormatting.ITALIC)
+			.addTooltip("tooltip.immersiveweapons.holy_mantle_2", ChatFormatting.GOLD, ChatFormatting.ITALIC)
+			.addTooltip("tooltip.immersiveweapons.holy_mantle_3", ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC);
+	public static final AccessoryEffectBuilder VENSTRAL_JAR = new AccessoryEffectBuilder()
+			.addTooltip("tooltip.immersiveweapons.venstral_jar", ChatFormatting.GREEN, ChatFormatting.ITALIC);
 	public static final AccessoryEffectBuilder SUPER_BLANKET_CAPE = new AccessoryEffectBuilder()
 			.addAttributeModifier(SUPER_BLANKET_CAPE_SPEED_MODIFIER, Attributes.MOVEMENT_SPEED)
 			.addMobEffect(new MobEffectInstance(MobEffects.JUMP_BOOST, 60, 0, true, true))
-			.addMobEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 60, 0, true, true));
+			.addMobEffect(new MobEffectInstance(MobEffects.SLOW_FALLING, 60, 0, true, true))
+			.addTooltip("tooltip.immersiveweapons.super_blanket_cape_1", ChatFormatting.GREEN, ChatFormatting.ITALIC)
+			.addTooltip("tooltip.immersiveweapons.super_blanket_cape_2", ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC);
 	public static final AccessoryEffectBuilder MEDAL_OF_HONOR = new AccessoryEffectBuilder()
 			.addEffect(AccessoryEffectTypeRegistry.DAMAGE_RESISTANCE.get(), 0.05d);
 	public static final AccessoryEffectBuilder MEDAL_OF_DISHONOR = new AccessoryEffectBuilder()

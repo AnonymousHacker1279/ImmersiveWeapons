@@ -1,0 +1,25 @@
+{
+  "attribute_modifiers": [],
+  "dynamic_attribute_modifiers": [],
+  "effects": [
+    {
+      "type": {
+        "clamp": false,
+        "name": "projectile_damage"
+      },
+      "value": 0.03
+    }
+  ],
+  "item": "immersiveweapons:goggles",
+  "mob_effects": [],
+  "slot": "head",
+  "tooltips": [
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.goggles"
+    }
+  ]
+}

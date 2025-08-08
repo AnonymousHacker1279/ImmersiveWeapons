@@ -47,7 +47,7 @@ public class SculkStaffItem extends Item implements SummoningStaff {
 					} else {
 						return !entity.isSpectator() && entity.isPickable() && player.hasLineOfSight(entity);
 					}
-				});
+				}, 0.0f);
 
 		BlockPos lookingAt = getBlockLookingAt(player, level, getMaxRange());
 		double particleDistance = (lookingAt != null && !canBlastThroughWalls) ? eyePos.distanceTo(lookingAt.getCenter()) : getMaxRange();

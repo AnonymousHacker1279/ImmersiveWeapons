@@ -6,7 +6,6 @@ import net.minecraft.core.HolderGetter;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -21,6 +20,8 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.Level.ExplosionInteraction;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
@@ -237,17 +238,17 @@ public class MeteorEntity extends Projectile {
 	}
 
 	@Override
-	protected void readAdditionalSaveData(CompoundTag nbt) {
-		targetPos = BlockPos.of(nbt.getLongOr("target", 0L));
-		startPos = BlockPos.of(nbt.getLongOr("start", 0L));
-		distToTarget = nbt.getDoubleOr("distToTarget", 0.0);
+	protected void readAdditionalSaveData(ValueInput valueInput) {
+		targetPos = BlockPos.of(valueInput.getLongOr("target", 0L));
+		startPos = BlockPos.of(valueInput.getLongOr("start", 0L));
+		distToTarget = valueInput.getDoubleOr("distToTarget", 0.0);
 	}
 
 	@Override
-	protected void addAdditionalSaveData(CompoundTag nbt) {
-		nbt.putLong("target", targetPos.asLong());
-		nbt.putLong("start", startPos.asLong());
-		nbt.putDouble("distToTarget", distToTarget);
+	protected void addAdditionalSaveData(ValueOutput valueOutput) {
+		valueOutput.putLong("target", targetPos.asLong());
+		valueOutput.putLong("start", startPos.asLong());
+		valueOutput.putDouble("distToTarget", distToTarget);
 	}
 
 	@Override

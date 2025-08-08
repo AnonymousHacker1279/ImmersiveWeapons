@@ -1,0 +1,32 @@
+{
+  "attribute_modifiers": [],
+  "dynamic_attribute_modifiers": [],
+  "effects": [
+    {
+      "type": {
+        "clamp": false,
+        "name": "firearm_reload_speed"
+      },
+      "value": 0.15
+    }
+  ],
+  "item": "immersiveweapons:powder_horn",
+  "mob_effects": [],
+  "slot": "body",
+  "tooltips": [
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.powder_horn_1"
+    },
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.powder_horn_2"
+    }
+  ]
+}

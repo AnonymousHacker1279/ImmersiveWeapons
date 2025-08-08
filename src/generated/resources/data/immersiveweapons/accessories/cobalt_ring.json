@@ -1,0 +1,32 @@
+{
+  "attribute_modifiers": [],
+  "dynamic_attribute_modifiers": [],
+  "effects": [
+    {
+      "type": {
+        "clamp": false,
+        "name": "general_damage"
+      },
+      "value": 0.025
+    },
+    {
+      "type": {
+        "clamp": false,
+        "name": "damage_resistance"
+      },
+      "value": 0.025
+    }
+  ],
+  "item": "immersiveweapons:cobalt_ring",
+  "mob_effects": [],
+  "slot": "ring",
+  "tooltips": [
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.cobalt_ring"
+    }
+  ]
+}

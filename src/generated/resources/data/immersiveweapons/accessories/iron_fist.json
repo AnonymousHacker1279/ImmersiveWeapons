@@ -1,0 +1,39 @@
+{
+  "attribute_modifiers": [],
+  "dynamic_attribute_modifiers": [],
+  "effects": [
+    {
+      "type": {
+        "clamp": false,
+        "name": "melee_crit_damage_bonus"
+      },
+      "value": 0.25
+    },
+    {
+      "type": {
+        "clamp": true,
+        "name": "melee_crit_chance"
+      },
+      "value": 0.15
+    }
+  ],
+  "item": "immersiveweapons:iron_fist",
+  "mob_effects": [],
+  "slot": "hand",
+  "tooltips": [
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.iron_fist_1"
+    },
+    {
+      "formats": [
+        "dark_purple",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.iron_fist_2"
+    }
+  ]
+}

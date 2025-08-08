@@ -1,0 +1,24 @@
+{
+  "attribute_modifiers": [],
+  "dynamic_attribute_modifiers": [],
+  "effects": [],
+  "item": "immersiveweapons:night_vision_goggles",
+  "mob_effects": [
+    {
+      "ambient": true,
+      "duration": 220,
+      "id": "minecraft:night_vision",
+      "show_icon": true
+    }
+  ],
+  "slot": "head",
+  "tooltips": [
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.night_vision_goggles"
+    }
+  ]
+}

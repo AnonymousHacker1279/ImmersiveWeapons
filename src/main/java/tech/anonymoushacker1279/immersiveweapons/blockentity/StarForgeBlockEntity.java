@@ -24,6 +24,8 @@ import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.block.crafting.StarForgeControllerBlock;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockEntityRegistry;
@@ -155,30 +157,32 @@ public class StarForgeBlockEntity extends BaseContainerBlockEntity implements En
 	}
 
 	@Override
-	public void loadAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-		super.loadAdditional(tag, provider);
+	public void loadAdditional(ValueInput valueInput) {
+		super.loadAdditional(valueInput);
 
 		inventory.clear();
-		ContainerHelper.loadAllItems(tag, inventory, provider);
-		hasSolarEnergy = tag.getBoolean("hasSolarEnergy").orElse(false);
-		temperature = tag.getInt("temperature").orElse(0);
-		smeltTime = tag.getInt("smeltTime").orElse(0);
+		ContainerHelper.loadAllItems(valueInput, inventory);
+		hasSolarEnergy = valueInput.getBooleanOr("hasSolarEnergy", false);
+		temperature = valueInput.getIntOr("temperature", 0);
+		smeltTime = valueInput.getIntOr("smeltTime", 0);
 	}
 
 	@Override
-	protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-		super.saveAdditional(tag, provider);
+	protected void saveAdditional(ValueOutput valueOutput) {
+		super.saveAdditional(valueOutput);
 
-		ContainerHelper.saveAllItems(tag, inventory, provider);
+		ContainerHelper.saveAllItems(valueOutput, inventory);
+		valueOutput.putBoolean("hasSolarEnergy", hasSolarEnergy);
+		valueOutput.putInt("temperature", temperature);
+		valueOutput.putInt("smeltTime", smeltTime);
+	}
+
+	@Override
+	public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+		CompoundTag tag = super.getUpdateTag(registries);
 		tag.putBoolean("hasSolarEnergy", hasSolarEnergy);
 		tag.putInt("temperature", temperature);
 		tag.putInt("smeltTime", smeltTime);
-	}
-
-	@Override
-	public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
-		CompoundTag tag = super.getUpdateTag(provider);
-		saveAdditional(tag, provider);
 		return tag;
 	}
 

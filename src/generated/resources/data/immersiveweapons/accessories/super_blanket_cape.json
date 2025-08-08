@@ -1,0 +1,46 @@
+{
+  "attribute_modifiers": [
+    {
+      "attribute": "minecraft:movement_speed",
+      "modifier": {
+        "amount": 0.05,
+        "id": "immersiveweapons:super_blanket_cape_speed_modifier",
+        "operation": "add_multiplied_base"
+      }
+    }
+  ],
+  "dynamic_attribute_modifiers": [],
+  "effects": [],
+  "item": "immersiveweapons:super_blanket_cape",
+  "mob_effects": [
+    {
+      "ambient": true,
+      "duration": 60,
+      "id": "minecraft:jump_boost",
+      "show_icon": true
+    },
+    {
+      "ambient": true,
+      "duration": 60,
+      "id": "minecraft:slow_falling",
+      "show_icon": true
+    }
+  ],
+  "slot": "body",
+  "tooltips": [
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.super_blanket_cape_1"
+    },
+    {
+      "formats": [
+        "dark_purple",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.super_blanket_cape_2"
+    }
+  ]
+}

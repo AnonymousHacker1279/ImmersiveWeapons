@@ -2,7 +2,10 @@ package tech.anonymoushacker1279.immersiveweapons.data.tags;
 
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
+import net.minecraft.data.tags.TagAppender;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags.Blocks;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
@@ -28,16 +31,21 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 	@Override
 	protected void addTags(Provider provider) {
 		addCommonTags();
-		addImmersiveWeaponsTags();
 		addMinecraftTags();
 		addToolTags();
 		addMiningBlockTags();
+
+		new BlockItemTagsGenerator() {
+			@Override
+			protected TagAppender<Block, Block> tag(TagKey<Block> blockTagKey, TagKey<Item> itemTagKey) {
+				return BlockTagsGenerator.this.tag(blockTagKey);
+			}
+		}.run();
 	}
 
 	/**
 	 * Add tags under the Forge namespace
 	 */
-	@SuppressWarnings("unchecked")
 	private void addCommonTags() {
 		// Bulletproof glass tag
 		tag(CommonBlockTagGroups.BULLETPROOF_GLASS).add(
@@ -82,146 +90,19 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 		tag(Blocks.GLASS_BLOCKS_COLORLESS).add(BlockRegistry.BULLETPROOF_GLASS.get());
 		tag(Blocks.GLASS_PANES).addTag(CommonBlockTagGroups.BULLETPROOF_GLASS_PANES);
 		tag(Blocks.GLASS_PANES_COLORLESS).add(BlockRegistry.BULLETPROOF_GLASS_PANE.get());
-
-		// Ore tags
-		tag(CommonBlockTagGroups.COBALT_ORES).add(
-				BlockRegistry.COBALT_ORE.get(),
-				BlockRegistry.DEEPSLATE_COBALT_ORE.get());
-		tag(CommonBlockTagGroups.SULFUR_ORES).add(
-				BlockRegistry.SULFUR_ORE.get(),
-				BlockRegistry.DEEPSLATE_SULFUR_ORE.get(),
-				BlockRegistry.NETHER_SULFUR_ORE.get());
-		tag(CommonBlockTagGroups.POTASSIUM_NITRATE_ORES).add(
-				BlockRegistry.POTASSIUM_NITRATE_ORE.get());
-		tag(Blocks.ORES).addTags(
-				CommonBlockTagGroups.COBALT_ORES,
-				CommonBlockTagGroups.SULFUR_ORES,
-				CommonBlockTagGroups.POTASSIUM_NITRATE_ORES,
-				IWBlockTagGroups.ELECTRIC_ORES,
-				IWBlockTagGroups.MOLTEN_ORES,
-				IWBlockTagGroups.VENTUS_ORES,
-				IWBlockTagGroups.ASTRAL_ORES,
-				IWBlockTagGroups.VOID_ORES);
-	}
-
-	/**
-	 * Add tags under the Immersive Weapons namespace
-	 */
-	private void addImmersiveWeaponsTags() {
-		// Burned oak logs tag
-		tag(IWBlockTagGroups.BURNED_OAK_LOGS).add(
-				BlockRegistry.BURNED_OAK_LOG.get(),
-				BlockRegistry.BURNED_OAK_WOOD.get(),
-				BlockRegistry.STRIPPED_BURNED_OAK_LOG.get(),
-				BlockRegistry.STRIPPED_BURNED_OAK_WOOD.get());
-
-		// Stardust logs tag
-		tag(IWBlockTagGroups.STARDUST_LOGS).add(
-				BlockRegistry.STARDUST_LOG.get(),
-				BlockRegistry.STARDUST_WOOD.get(),
-				BlockRegistry.STRIPPED_STARDUST_LOG.get(),
-				BlockRegistry.STRIPPED_STARDUST_WOOD.get());
-
-		tag(IWBlockTagGroups.ELECTRIC_ORES).add(
-				BlockRegistry.ELECTRIC_ORE.get());
-		tag(IWBlockTagGroups.MOLTEN_ORES).add(
-				BlockRegistry.MOLTEN_ORE.get());
-		tag(IWBlockTagGroups.VENTUS_ORES).add(
-				BlockRegistry.VENTUS_ORE.get());
-		tag(IWBlockTagGroups.ASTRAL_ORES).add(
-				BlockRegistry.ASTRAL_ORE.get());
-		tag(IWBlockTagGroups.VOID_ORES).add(
-				BlockRegistry.VOID_ORE.get());
 	}
 
 	/**
 	 * Add tags under the Minecraft namespace
 	 */
-	@SuppressWarnings("unchecked")
 	private void addMinecraftTags() {
-		// Fence tag
-		tag(BlockTags.FENCES).add(BlockRegistry.BARBED_WIRE_FENCE.get());
+		tag(BlockTags.STANDING_SIGNS).add(BlockRegistry.BURNED_OAK_SIGN.get(),
+				BlockRegistry.STARDUST_SIGN.get());
 
-		// Burnable logs tag
-		tag(BlockTags.LOGS_THAT_BURN).addTags(
-				IWBlockTagGroups.BURNED_OAK_LOGS,
-				IWBlockTagGroups.STARDUST_LOGS);
+		tag(BlockTags.WALL_SIGNS).add(BlockRegistry.BURNED_OAK_SIGN.get(),
+				BlockRegistry.STARDUST_SIGN.get());
 
-		// Planks tag
-		tag(BlockTags.PLANKS).add(
-				BlockRegistry.BURNED_OAK_PLANKS.get(),
-				BlockRegistry.STARDUST_PLANKS.get());
-
-		// Slabs tag
-		tag(BlockTags.SLABS).add(
-				BlockRegistry.CLOUD_MARBLE_BRICK_SLAB.get(),
-				BlockRegistry.BLOOD_SANDSTONE_SLAB.get(),
-				BlockRegistry.SMOOTH_BLOOD_SANDSTONE_SLAB.get());
-
-		// Stairs tag
-		tag(BlockTags.STAIRS).add(
-				BlockRegistry.CLOUD_MARBLE_BRICK_STAIRS.get(),
-				BlockRegistry.BLOOD_SANDSTONE_STAIRS.get(),
-				BlockRegistry.SMOOTH_BLOOD_SANDSTONE_STAIRS.get());
-
-		// Standing signs tag
-		tag(BlockTags.STANDING_SIGNS).add(BlockRegistry.BURNED_OAK_SIGN.get());
-
-		// Wall signs tag
-		tag(BlockTags.WALL_SIGNS).add(BlockRegistry.BURNED_OAK_SIGN.get());
-
-		// Wooden buttons tag
-		tag(BlockTags.WOODEN_BUTTONS).add(
-				BlockRegistry.BURNED_OAK_BUTTON.get(),
-				BlockRegistry.STARDUST_BUTTON.get());
-
-		// Wooden doors tag
-		tag(BlockTags.WOODEN_DOORS).add(
-				BlockRegistry.BURNED_OAK_DOOR.get(),
-				BlockRegistry.STARDUST_DOOR.get());
-
-		// Wooden fences tag
-		tag(BlockTags.WOODEN_FENCES).add(
-				BlockRegistry.BURNED_OAK_FENCE.get(),
-				BlockRegistry.STARDUST_FENCE.get());
-
-		// Wooden pressure plates tag
-		tag(BlockTags.WOODEN_PRESSURE_PLATES).add(
-				BlockRegistry.BURNED_OAK_PRESSURE_PLATE.get(),
-				BlockRegistry.STARDUST_PRESSURE_PLATE.get());
-
-		// Wooden slabs tag
-		tag(BlockTags.WOODEN_SLABS).add(
-				BlockRegistry.BURNED_OAK_SLAB.get(),
-				BlockRegistry.STARDUST_SLAB.get());
-
-		// Wooden stairs tag
-		tag(BlockTags.WOODEN_STAIRS).add(
-				BlockRegistry.BURNED_OAK_STAIRS.get(),
-				BlockRegistry.STARDUST_STAIRS.get());
-
-		// Wooden trapdoors tag
-		tag(BlockTags.WOODEN_TRAPDOORS).add(
-				BlockRegistry.BURNED_OAK_TRAPDOOR.get(),
-				BlockRegistry.STARDUST_TRAPDOOR.get());
-
-		// Small flowers tag
-		tag(BlockTags.SMALL_FLOWERS).add(BlockRegistry.MOONGLOW.get());
-
-		// Leaves tag
-		tag(BlockTags.LEAVES).add(BlockRegistry.STARDUST_LEAVES.get());
-
-		// Sand tag
-		tag(BlockTags.SAND).add(BlockRegistry.BLOOD_SAND.get());
-		tag(BlockTags.PLAYS_AMBIENT_DESERT_BLOCK_SOUNDS).add(BlockRegistry.BLOOD_SAND.get());
-
-		// Saplings tag
-		tag(BlockTags.SAPLINGS).add(BlockRegistry.STARDUST_SAPLING.get());
-
-		// Walls tag
-		tag(BlockTags.WALLS).add(
-				BlockRegistry.CLOUD_MARBLE_BRICK_WALL.get(),
-				BlockRegistry.BLOOD_SANDSTONE_WALL.get());
+		tag(BlockTags.TRIGGERS_AMBIENT_DESERT_SAND_BLOCK_SOUNDS).add(BlockRegistry.BLOOD_SAND.get());
 
 		// Beacon base tag
 		tag(BlockTags.BEACON_BASE_BLOCKS)
@@ -230,11 +111,6 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 				.add(BlockRegistry.TESLA_BLOCK.get())
 				.add(BlockRegistry.ASTRAL_BLOCK.get())
 				.add(BlockRegistry.STARSTORM_BLOCK.get());
-
-		// Smelts-to-glass tag
-		tag(BlockTags.SMELTS_TO_GLASS).add(BlockRegistry.BLOOD_SAND.get());
-
-
 	}
 
 	private void addToolTags() {

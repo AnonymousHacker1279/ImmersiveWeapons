@@ -1,7 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.misc;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
@@ -10,6 +9,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 
@@ -69,11 +70,11 @@ public class ChairEntity extends Entity {
 	}
 
 	@Override
-	protected void readAdditionalSaveData(CompoundTag nbt) {
+	protected void readAdditionalSaveData(ValueInput valueInput) {
 	}
 
 	@Override
-	protected void addAdditionalSaveData(CompoundTag nbt) {
+	protected void addAdditionalSaveData(ValueOutput valueOutput) {
 	}
 
 }

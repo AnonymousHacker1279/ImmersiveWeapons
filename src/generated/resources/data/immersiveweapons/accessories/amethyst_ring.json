@@ -1,0 +1,25 @@
+{
+  "attribute_modifiers": [],
+  "dynamic_attribute_modifiers": [],
+  "effects": [
+    {
+      "type": {
+        "clamp": false,
+        "name": "looting_level"
+      },
+      "value": 2.0
+    }
+  ],
+  "item": "immersiveweapons:amethyst_ring",
+  "mob_effects": [],
+  "slot": "ring",
+  "tooltips": [
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.amethyst_ring"
+    }
+  ]
+}

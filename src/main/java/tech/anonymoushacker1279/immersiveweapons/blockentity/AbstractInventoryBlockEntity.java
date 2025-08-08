@@ -5,6 +5,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.Containers;
@@ -14,6 +15,10 @@ import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.TagValueOutput;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
 public abstract class AbstractInventoryBlockEntity extends BlockEntity implements EntityBlock, Container {
 
@@ -132,16 +137,11 @@ public abstract class AbstractInventoryBlockEntity extends BlockEntity implement
 		return inventory;
 	}
 
-	/**
-	 * Load NBT data.
-	 *
-	 * @param nbt the <code>CompoundNBT</code> to load
-	 */
 	@Override
-	public void loadAdditional(CompoundTag nbt, HolderLookup.Provider provider) {
-		super.loadAdditional(nbt, provider);
+	protected void loadAdditional(ValueInput valueInput) {
+		super.loadAdditional(valueInput);
 		inventory.clear();
-		ContainerHelper.loadAllItems(nbt, inventory, provider);
+		ContainerHelper.loadAllItems(valueInput, inventory);
 
 		for (ItemStack itemStack : inventory) {
 			if (!itemStack.isEmpty()) {
@@ -150,26 +150,10 @@ public abstract class AbstractInventoryBlockEntity extends BlockEntity implement
 		}
 	}
 
-	/**
-	 * Save NBT data.
-	 *
-	 * @param tag the <code>CompoundNBT</code> to save
-	 */
 	@Override
-	protected void saveAdditional(CompoundTag tag, HolderLookup.Provider provider) {
-		writeItems(tag, provider);
-	}
-
-	/**
-	 * Write items to NBT.
-	 *
-	 * @param tag the <code>CompoundTag</code> to write to
-	 * @return CompoundTag
-	 */
-	private CompoundTag writeItems(CompoundTag tag, HolderLookup.Provider provider) {
-		super.saveAdditional(tag, provider);
-		ContainerHelper.saveAllItems(tag, inventory, provider);
-		return tag;
+	protected void saveAdditional(ValueOutput valueOutput) {
+		super.saveAdditional(valueOutput);
+		ContainerHelper.saveAllItems(valueOutput, inventory);
 	}
 
 	/**
@@ -182,14 +166,16 @@ public abstract class AbstractInventoryBlockEntity extends BlockEntity implement
 		return ClientboundBlockEntityDataPacket.create(this);
 	}
 
-	/**
-	 * Get the update tag.
-	 *
-	 * @return CompoundTag
-	 */
 	@Override
 	public CompoundTag getUpdateTag(HolderLookup.Provider provider) {
-		return writeItems(new CompoundTag(), provider);
+		CompoundTag tag;
+		try (ProblemReporter.ScopedCollector collector = new ProblemReporter.ScopedCollector(this.problemPath(), ImmersiveWeapons.LOGGER)) {
+			TagValueOutput output = TagValueOutput.createWithContext(collector, provider);
+			ContainerHelper.saveAllItems(output, inventory, true);
+			tag = output.buildResult();
+		}
+
+		return tag;
 	}
 
 	/**

@@ -1,0 +1,26 @@
+{
+  "attribute_modifiers": [
+    {
+      "attribute": "minecraft:attack_speed",
+      "modifier": {
+        "amount": 0.25,
+        "id": "immersiveweapons:glove_of_rapid_swinging_attack_speed_modifier",
+        "operation": "add_value"
+      }
+    }
+  ],
+  "dynamic_attribute_modifiers": [],
+  "effects": [],
+  "item": "immersiveweapons:glove_of_rapid_swinging",
+  "mob_effects": [],
+  "slot": "hand",
+  "tooltips": [
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.glove_of_rapid_swinging"
+    }
+  ]
+}

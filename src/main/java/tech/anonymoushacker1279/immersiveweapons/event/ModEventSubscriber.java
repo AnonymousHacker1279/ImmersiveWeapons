@@ -1,14 +1,20 @@
 package tech.anonymoushacker1279.immersiveweapons.event;
 
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.SpawnPlacementTypes;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.common.EventBusSubscriber.Bus;
+import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent.Operation;
@@ -27,10 +33,9 @@ import tech.anonymoushacker1279.immersiveweapons.entity.neutral.FieldMedicEntity
 import tech.anonymoushacker1279.immersiveweapons.entity.neutral.MinutemanEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.npc.SkeletonMerchantEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.npc.SkygazerEntity;
-import tech.anonymoushacker1279.immersiveweapons.init.AccessoryEffectScalingTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.AccessoryEffectTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
-import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
+import tech.anonymoushacker1279.immersiveweapons.item.armor.VentusArmorItem;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
 import tech.anonymoushacker1279.immersiveweapons.network.handler.*;
 import tech.anonymoushacker1279.immersiveweapons.network.handler.star_forge.StarForgeMenuPayloadHandler;
@@ -39,14 +44,11 @@ import tech.anonymoushacker1279.immersiveweapons.network.payload.*;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.star_forge.StarForgeMenuPayload;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.star_forge.StarForgeUpdateRecipesPayload;
 
-@EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.MOD)
+import java.util.concurrent.atomic.AtomicReference;
+
+@EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID)
 public class ModEventSubscriber {
 
-	/**
-	 * Event handler for the EntityAttributeCreationEvent.
-	 *
-	 * @param event the <code>EntityAttributeCreationEvent</code> instance
-	 */
 	@SubscribeEvent
 	public static void entityAttributeCreationEvent(EntityAttributeCreationEvent event) {
 		ImmersiveWeapons.LOGGER.info("Applying entity attributes");
@@ -90,17 +92,17 @@ public class ModEventSubscriber {
 		registrar.playToServer(AstralArmorPayload.TYPE, AstralArmorPayload.STREAM_CODEC, AstralArmorPayloadHandler.getInstance()::handleData);
 		registrar.playToServer(VoidArmorPayload.TYPE, VoidArmorPayload.STREAM_CODEC, VoidArmorPayloadHandler.getInstance()::handleData);
 		registrar.playToClient(AstralCrystalPayload.TYPE, AstralCrystalPayload.STREAM_CODEC, AstralCrystalPayloadHandler.getInstance()::handleData);
-		registrar.playToClient(BulletEntityDebugPayload.TYPE, BulletEntityDebugPayload.STREAM_CODEC, BulletEntityDebugPayloadHandler.getInstance()::handleData);
 		registrar.playToClient(SyncPlayerDataPayload.TYPE, SyncPlayerDataPayload.STREAM_CODEC, SyncPlayerDataPayloadHandler.getInstance()::handleData);
-		registrar.playToClient(DebugDataPayload.TYPE, DebugDataPayload.STREAM_CODEC, DebugDataPayloadHandler.getInstance()::handleData);
 		registrar.playToServer(AmmunitionTablePayload.TYPE, AmmunitionTablePayload.STREAM_CODEC, AmmunitionTablePayloadHandler.getInstance()::handleData);
-		registrar.playBidirectional(StarForgeMenuPayload.TYPE, StarForgeMenuPayload.STREAM_CODEC, StarForgeMenuPayloadHandler.getInstance()::handleData);
+		registrar.playToServer(StarForgeMenuPayload.TYPE, StarForgeMenuPayload.STREAM_CODEC, StarForgeMenuPayloadHandler.getInstance()::handleData);
 		registrar.playToClient(StarForgeUpdateRecipesPayload.TYPE, StarForgeUpdateRecipesPayload.STREAM_CODEC, StarForgeUpdateRecipesPayloadHandler.getInstance()::handleData);
 		registrar.playToClient(LocalSoundPayload.TYPE, LocalSoundPayload.STREAM_CODEC, LocalSoundPayloadHandler.getInstance()::handleData);
 		registrar.playToClient(GunShotBloodParticlePayload.TYPE, GunShotBloodParticlePayload.STREAM_CODEC, GunShotBloodParticlePayloadHandler.getInstance()::handleData);
 		registrar.playToClient(PlayerSoundPayload.TYPE, PlayerSoundPayload.STREAM_CODEC, PlayerSoundPayloadHandler.getInstance()::handleData);
 		registrar.playToClient(SyncMerchantTradesPayload.TYPE, SyncMerchantTradesPayload.STREAM_CODEC, SyncMerchantTradesPayloadHandler.getInstance()::handleData);
+		registrar.playToClient(SyncAccessoryDataPayload.TYPE, SyncAccessoryDataPayload.STREAM_CODEC, SyncAccessoryDataPayloadHandler.getInstance()::handleData);
 		registrar.playToClient(ArrowGravityPayload.TYPE, ArrowGravityPayload.STREAM_CODEC, ArrowGravityPayloadHandler.getInstance()::handleData);
+		registrar.playToClient(DamageIndicatorPayload.TYPE, DamageIndicatorPayload.STREAM_CODEC, DamageIndicatorPayloadHandler.getInstance()::handleData);
 	}
 
 	@SubscribeEvent
@@ -122,13 +124,33 @@ public class ModEventSubscriber {
 	public static void registerDataMapsEvent(RegisterDataMapTypesEvent event) {
 		ImmersiveWeapons.LOGGER.info("Registering custom data maps");
 		event.register(AbstractGunItem.POWDER_TYPE);
-		event.register(Accessory.ACCESSORY);
 	}
 
 	@SubscribeEvent
 	public static void registerRegistryEvent(NewRegistryEvent event) {
 		ImmersiveWeapons.LOGGER.info("Registering custom registries");
 		event.register(AccessoryEffectTypeRegistry.ACCESSORY_EFFECT_TYPE_REGISTRY);
-		event.register(AccessoryEffectScalingTypeRegistry.ACCESSORY_EFFECT_SCALING_TYPE_REGISTRY);
+	}
+
+	@SubscribeEvent
+	public static void modifyDefaultComponentsEvent(ModifyDefaultComponentsEvent event) {
+		ImmersiveWeapons.LOGGER.info("Modifying default components");
+
+		AtomicReference<ItemAttributeModifiers> modifiers = new AtomicReference<>(ItemAttributeModifiers.EMPTY);
+		event.modifyMatching(item -> {
+			if (item instanceof VentusArmorItem) {
+				modifiers.set(item.components().get(DataComponents.ATTRIBUTE_MODIFIERS));
+				return true;
+			}
+
+			return false;
+		}, patch -> patch.set(DataComponents.ATTRIBUTE_MODIFIERS, modifiers.get().withModifierAdded(
+				Attributes.SAFE_FALL_DISTANCE,
+				new AttributeModifier(
+						ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "ventus_safe_fall_distance"),
+						10d,
+						AttributeModifier.Operation.ADD_VALUE),
+				EquipmentSlotGroup.ARMOR
+		)));
 	}
 }

@@ -2,7 +2,6 @@ package tech.anonymoushacker1279.immersiveweapons.entity.monster.lava_revenant;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -31,6 +30,8 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.CommonHooks;
@@ -48,7 +49,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvancementOnDiscovery {
+public class LavaRevenantEntity extends Mob implements Enemy, GrantAdvancementOnDiscovery {
 
 	private static final int TICKS_PER_FLAP = Mth.ceil(24.166098F);
 	private static final EntityDataAccessor<Integer> ID_SIZE = SynchedEntityData.defineId(LavaRevenantEntity.class, EntityDataSerializers.INT);
@@ -451,24 +452,22 @@ public class LavaRevenantEntity extends FlyingMob implements Enemy, GrantAdvance
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundTag compound) {
-		super.readAdditionalSaveData(compound);
-		if (compound.contains("AX")) {
-			anchorPoint = new BlockPos(compound.getIntOr("AX", 0),
-					compound.getIntOr("AY", 0),
-					compound.getIntOr("AZ", 0));
-		}
+	public void readAdditionalSaveData(ValueInput valueInput) {
+		super.readAdditionalSaveData(valueInput);
+		anchorPoint = new BlockPos(valueInput.getIntOr("AX", 0),
+				valueInput.getIntOr("AY", 0),
+				valueInput.getIntOr("AZ", 0));
 
-		setSize(compound.getIntOr("Size", 0));
+		setSize(valueInput.getIntOr("Size", 0));
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundTag compound) {
-		super.addAdditionalSaveData(compound);
-		compound.putInt("AX", anchorPoint.getX());
-		compound.putInt("AY", anchorPoint.getY());
-		compound.putInt("AZ", anchorPoint.getZ());
-		compound.putInt("Size", getSize());
+	public void addAdditionalSaveData(ValueOutput valueOutput) {
+		super.addAdditionalSaveData(valueOutput);
+		valueOutput.putInt("AX", anchorPoint.getX());
+		valueOutput.putInt("AY", anchorPoint.getY());
+		valueOutput.putInt("AZ", anchorPoint.getZ());
+		valueOutput.putInt("Size", getSize());
 	}
 
 	@Override

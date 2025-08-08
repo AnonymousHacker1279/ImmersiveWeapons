@@ -1,0 +1,32 @@
+{
+  "attribute_modifiers": [],
+  "dynamic_attribute_modifiers": [],
+  "effects": [
+    {
+      "type": {
+        "clamp": true,
+        "name": "bleed_cancel_chance"
+      },
+      "value": 0.15
+    },
+    {
+      "type": {
+        "clamp": true,
+        "name": "bleed_resistance"
+      },
+      "value": 0.3
+    }
+  ],
+  "item": "immersiveweapons:bloody_cloth",
+  "mob_effects": [],
+  "slot": "head",
+  "tooltips": [
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.bloody_cloth"
+    }
+  ]
+}

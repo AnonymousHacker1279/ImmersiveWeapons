@@ -1,0 +1,49 @@
+{
+  "attribute_modifiers": [],
+  "dynamic_attribute_modifiers": [],
+  "effects": [
+    {
+      "type": {
+        "clamp": false,
+        "name": "damage_resistance"
+      },
+      "scaling_type": "depth",
+      "value": 0.003
+    },
+    {
+      "type": {
+        "clamp": false,
+        "name": "general_damage"
+      },
+      "scaling_type": "depth",
+      "value": 0.002
+    },
+    {
+      "type": {
+        "clamp": false,
+        "name": "melee_knockback"
+      },
+      "scaling_type": "depth",
+      "value": 0.001
+    },
+    {
+      "type": {
+        "clamp": true,
+        "name": "sonic_boom_resistance"
+      },
+      "value": 0.5
+    }
+  ],
+  "item": "immersiveweapons:reinforced_depth_charm",
+  "mob_effects": [],
+  "slot": "charm",
+  "tooltips": [
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.reinforced_depth_charm"
+    }
+  ]
+}

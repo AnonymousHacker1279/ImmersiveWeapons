@@ -1,0 +1,24 @@
+{
+  "attribute_modifiers": [],
+  "dynamic_attribute_modifiers": [],
+  "effects": [],
+  "item": "immersiveweapons:deadeye_pendant",
+  "mob_effects": [],
+  "slot": "necklace",
+  "tooltips": [
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.deadeye_pendant_1"
+    },
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.deadeye_pendant_2"
+    }
+  ]
+}

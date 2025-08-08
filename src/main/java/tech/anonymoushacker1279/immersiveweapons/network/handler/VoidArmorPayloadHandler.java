@@ -57,7 +57,7 @@ public class VoidArmorPayloadHandler {
 
 		AreaEffectCloud cloud = new AreaEffectCloud(level, player.getX(), yPos, player.getZ());
 		cloud.setOwner(player);
-		cloud.setParticle(ParticleTypes.DRAGON_BREATH);
+		cloud.setCustomParticle(ParticleTypes.DRAGON_BREATH);
 		cloud.setRadius(2.0f);
 		cloud.setDuration(100);
 		cloud.setRadiusPerTick((2.0f - cloud.getRadius()) / (float) cloud.getDuration());

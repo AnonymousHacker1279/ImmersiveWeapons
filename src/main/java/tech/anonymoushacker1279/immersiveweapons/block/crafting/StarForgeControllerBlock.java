@@ -73,7 +73,7 @@ public class StarForgeControllerBlock extends BasicOrientableBlock implements En
 			return InteractionResult.SUCCESS;
 		} else {
 			if (level.getBlockEntity(pos) instanceof StarForgeBlockEntity blockEntity && player instanceof ServerPlayer serverPlayer) {
-				if (player.isHolding(Items.LAVA_BUCKET)) {
+				if (player.getItemInHand(hand).is(Items.LAVA_BUCKET)) {
 					blockEntity.raiseTemperature(150);
 
 					if (!player.isCreative()) {

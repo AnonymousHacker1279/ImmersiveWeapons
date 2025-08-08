@@ -2,7 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.network.handler;
 
 import net.minecraft.network.chat.Component;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
-import tech.anonymoushacker1279.immersiveweapons.event.SyncHandler;
+import tech.anonymoushacker1279.immersiveweapons.event.ClientDataHandler;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.SyncPlayerDataPayload;
 
 public class SyncPlayerDataPayloadHandler {
@@ -14,7 +14,7 @@ public class SyncPlayerDataPayloadHandler {
 	}
 
 	public void handleData(final SyncPlayerDataPayload data, final IPayloadContext context) {
-		context.enqueueWork(() -> SyncHandler.syncPersistentData(data.tag(), data.playerUUID()))
+		context.enqueueWork(() -> ClientDataHandler.syncPersistentData(data.tag(), data.playerUUID()))
 				.exceptionally(e -> {
 					context.disconnect(Component.translatable("immersiveweapons.networking.failure.generic", e.getMessage()));
 					return null;

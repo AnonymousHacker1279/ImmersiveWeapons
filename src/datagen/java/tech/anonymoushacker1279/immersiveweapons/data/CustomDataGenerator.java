@@ -11,8 +11,8 @@ import net.minecraft.server.packs.resources.MultiPackResourceManager;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.common.EventBusSubscriber.Bus;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+import tech.anonymoushacker1279.immersiveweapons.data.accessories.AccessoryDataGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.advancements.AdvancementGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.data_maps.DataMapsGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.lang.LanguageGenerator;
@@ -31,7 +31,7 @@ import tech.anonymoushacker1279.immersiveweapons.data.trades.TradeDataGenerator;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-@EventBusSubscriber(bus = Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(value = Dist.CLIENT)
 public class CustomDataGenerator {
 
 	@SubscribeEvent
@@ -57,7 +57,7 @@ public class CustomDataGenerator {
 		generator.addProvider(true, new LootTableGenerator(output, lookupProvider));
 		BlockTagsGenerator blockTagsGenerator = new BlockTagsGenerator(output, lookupProvider);
 		generator.addProvider(true, blockTagsGenerator);
-		generator.addProvider(true, new ItemTagsGenerator(output, lookupProvider, blockTagsGenerator));
+		generator.addProvider(true, new ItemTagsGenerator(output, lookupProvider));
 		generator.addProvider(true, new FamilyGenerator.Runner(output, lookupProvider));
 		generator.addProvider(true, new EntityTypeTagsGenerator(output, lookupProvider));
 		generator.addProvider(true, new GameEventTagsGenerator(output, lookupProvider));
@@ -66,6 +66,7 @@ public class CustomDataGenerator {
 		generator.addProvider(true, new GlobalLootModifierGenerator(output, lookupProvider));
 		generator.addProvider(true, new StructureUpdater(output, (MultiPackResourceManager) event.getResourceManager(PackType.SERVER_DATA)));
 		generator.addProvider(true, new TradeDataGenerator(output));
+		generator.addProvider(true, new AccessoryDataGenerator(output));
 		generator.addProvider(true, PackMetadataGenerator.forFeaturePack(output, Component.translatable("immersiveweapons.datapack.description")));
 		generator.addProvider(true, new BiomeTagsGenerator(output, lookupProvider));
 		generator.addProvider(true, new DamageTypeTagsGenerator(output, lookupProvider));

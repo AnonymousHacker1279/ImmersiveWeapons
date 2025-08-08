@@ -1,0 +1,32 @@
+{
+  "attribute_modifiers": [],
+  "dynamic_attribute_modifiers": [],
+  "effects": [
+    {
+      "type": {
+        "clamp": false,
+        "name": "damage_resistance"
+      },
+      "value": 0.15
+    }
+  ],
+  "item": "immersiveweapons:hans_blessing",
+  "mob_effects": [],
+  "slot": "spirit",
+  "tooltips": [
+    {
+      "formats": [
+        "green",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.hans_blessing_1"
+    },
+    {
+      "formats": [
+        "light_purple",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.hans_blessing_2"
+    }
+  ]
+}

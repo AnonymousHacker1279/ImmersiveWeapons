@@ -1,0 +1,25 @@
+{
+  "attribute_modifiers": [],
+  "dynamic_attribute_modifiers": [],
+  "effects": [
+    {
+      "type": {
+        "clamp": true,
+        "name": "general_wither_chance"
+      },
+      "value": 1.0
+    }
+  ],
+  "item": "immersiveweapons:death_gem_ring",
+  "mob_effects": [],
+  "slot": "ring",
+  "tooltips": [
+    {
+      "formats": [
+        "dark_purple",
+        "italic"
+      ],
+      "key": "tooltip.immersiveweapons.death_gem_ring"
+    }
+  ]
+}

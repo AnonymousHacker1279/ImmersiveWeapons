@@ -20,7 +20,6 @@ import net.minecraft.world.level.GrassColor;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.common.EventBusSubscriber.Bus;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
@@ -39,6 +38,7 @@ import tech.anonymoushacker1279.immersiveweapons.client.gui.screen.*;
 import tech.anonymoushacker1279.immersiveweapons.client.model.*;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.*;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact.BulletImpactParticle;
+import tech.anonymoushacker1279.immersiveweapons.client.particle.damage_indicator.DamageIndicatorParticle;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.smoke_grenade.SmokeGrenadeParticle;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.*;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.dimension.TiltrosDimensionSpecialEffects;
@@ -52,7 +52,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.Supplier;
 
-@EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, bus = Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, value = Dist.CLIENT)
 public class ClientModEventSubscriber {
 
 	/**
@@ -331,6 +331,7 @@ public class ClientModEventSubscriber {
 		event.registerSpriteSet(ParticleTypesRegistry.STARDUST_LEAVES_PARTICLE.get(), StardustLeavesParticle.Provider::new);
 		event.registerSpriteSet(ParticleTypesRegistry.DEADMANS_DESERT_AMBIENT_PARTICLE.get(), DeadmansDesertAmbientParticle.Provider::new);
 		event.registerSpriteSet(ParticleTypesRegistry.TILTROS_PORTAL_PARTICLE.get(), TiltrosPortalParticle.Provider::new);
+		event.registerSpecial(ParticleTypesRegistry.DAMAGE_INDICATOR_PARTICLE.get(), new DamageIndicatorParticle.Provider());
 	}
 
 	@SubscribeEvent
@@ -351,7 +352,6 @@ public class ClientModEventSubscriber {
 
 		event.register(IWKeyBinds.TOGGLE_ARMOR_EFFECT);
 		event.register(IWKeyBinds.ARMOR_ACTION);
-		event.register(IWKeyBinds.DEBUG_TRACING);
 	}
 
 	@SubscribeEvent
@@ -376,10 +376,6 @@ public class ClientModEventSubscriber {
 		event.registerAbove(VanillaGuiLayers.CROSSHAIR,
 				ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "scope"),
 				IWOverlays.SCOPE_ELEMENT);
-
-		event.registerAbove(VanillaGuiLayers.DEBUG_OVERLAY,
-				ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "debug_overlay"),
-				IWOverlays.DEBUG_TRACING_ELEMENT);
 	}
 
 	@SubscribeEvent
