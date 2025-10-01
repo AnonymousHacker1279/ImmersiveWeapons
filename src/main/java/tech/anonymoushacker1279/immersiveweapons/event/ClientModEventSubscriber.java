@@ -12,7 +12,7 @@ import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.item.properties.conditional.ConditionalItemModelProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Unit;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionContents;
@@ -25,7 +25,6 @@ import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
-import net.neoforged.neoforge.registries.DeferredHolder;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.core.WoodTypes;
 import tech.anonymoushacker1279.immersiveweapons.block.skull.CustomSkullTypes;
@@ -46,11 +45,6 @@ import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.mob.*;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.projectile.*;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.properties.HasSpecificName;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.function.Supplier;
 
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, value = Dist.CLIENT)
 public class ClientModEventSubscriber {
@@ -103,25 +97,13 @@ public class ClientModEventSubscriber {
 	@SubscribeEvent
 	public static void setupCreativeTabs(BuildCreativeModeTabContentsEvent event) {
 		if (event.getTab() == DeferredRegistryHandler.IMMERSIVE_WEAPONS_TAB.get()) {
-			Collection<DeferredHolder<Item, ? extends Item>> registryObjects = ItemRegistry.ITEMS.getEntries();
-			List<Item> items = new ArrayList<>(registryObjects.size());
-			registryObjects.stream().map(Supplier::get).forEach(items::add);
+			ItemStack musketScope = ItemRegistry.MUSKET.get().getDefaultInstance();
+			musketScope.set(DataComponentTypeRegistry.SCOPE, Unit.INSTANCE);
+			event.insertAfter(ItemRegistry.MUSKET.get().getDefaultInstance(), musketScope, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
 
-			for (Item item : items) {
-				event.accept(item);
-
-				if (item == ItemRegistry.MUSKET.get()) {
-					ItemStack musketScope = item.getDefaultInstance();
-					musketScope.set(DataComponentTypeRegistry.SCOPE, Unit.INSTANCE);
-					event.accept(musketScope);
-				}
-
-				if (item == ItemRegistry.CHOCOLATE_BAR.get()) {
-					ItemStack chocolateBar = item.getDefaultInstance();
-					chocolateBar.set(DataComponentTypeRegistry.IS_EXPLOSIVE, true);
-					event.accept(chocolateBar);
-				}
-			}
+			ItemStack chocolateBar = ItemRegistry.CHOCOLATE_BAR.get().getDefaultInstance();
+			chocolateBar.set(DataComponentTypeRegistry.IS_EXPLOSIVE, true);
+			event.insertAfter(ItemRegistry.CHOCOLATE_BAR.get().getDefaultInstance(), chocolateBar, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
 
 			// Add potion items, which are not in the item registry.
 			// Celestial potions

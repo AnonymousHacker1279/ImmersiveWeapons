@@ -19,6 +19,7 @@ public class DeferredRegistryHandler {
 			.title(Component.translatable("itemGroup.immersiveweapons.creative_tab"))
 			.withSearchBar(65)
 			.backgroundTexture(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/gui/container/creative_inventory_tab.png"))
+			.displayItems(ItemRegistry.ITEMS.getEntries())
 			.build());
 
 	/**
