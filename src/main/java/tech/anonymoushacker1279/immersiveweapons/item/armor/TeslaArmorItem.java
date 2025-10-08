@@ -35,7 +35,7 @@ public class TeslaArmorItem extends Item implements TickableArmor {
 			String data = player.getPersistentData().getString("TeslaArmorEffectState").orElse("");
 			EffectState state = data.isEmpty() ? EffectState.DISABLED : EffectState.getFromString(data);
 
-			if (level.isClientSide) {
+			if (level.isClientSide()) {
 				if (IWKeyBinds.TOGGLE_ARMOR_EFFECT.consumeClick()) {
 					// Store the toggle variable in the player's NBT
 					player.getPersistentData().putString("TeslaArmorEffectState", state.getNext().getSerializedName());
@@ -108,7 +108,7 @@ public class TeslaArmorItem extends Item implements TickableArmor {
 		livingEntity.addEffect(new MobEffectInstance(MobEffects.NAUSEA,
 				100, 0, false, false));
 
-		if (level.isClientSide) {
+		if (level.isClientSide()) {
 			effectNoise(level, player);
 		}
 	}

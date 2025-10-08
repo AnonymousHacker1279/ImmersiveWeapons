@@ -76,7 +76,7 @@ public class CursedItem extends Item {
 		super.onUseTick(level, livingEntity, stack, remainingUseDuration);
 
 		if (livingEntity instanceof Player player) {
-			if (level.isClientSide) {
+			if (level.isClientSide()) {
 				if (player.tickCount % 8 == 0) {
 					player.displayClientMessage(Component.translatable("immersiveweapons.item.%s.using".formatted(name))
 							.withStyle(ChatFormatting.RED), true);
@@ -113,7 +113,7 @@ public class CursedItem extends Item {
 
 		if (getDamage(stack) == 0) {
 			if (player.getPersistentData().getBoolean("used_curse_accessory_" + name).orElse(false)) {
-				if (player.level().isClientSide) {
+				if (player.level().isClientSide()) {
 					player.displayClientMessage(Component.translatable("immersiveweapons.item.%s.used".formatted(name))
 							.withStyle(ChatFormatting.RED), true);
 				}
@@ -126,7 +126,7 @@ public class CursedItem extends Item {
 				return InteractionResult.SUCCESS;
 			}
 		} else {
-			if (player.level().isClientSide) {
+			if (player.level().isClientSide()) {
 				player.displayClientMessage(Component.translatable("immersiveweapons.item.%s.not_enough_charge".formatted(name))
 						.withStyle(ChatFormatting.RED), true);
 			}
@@ -139,7 +139,7 @@ public class CursedItem extends Item {
 	public boolean releaseUsing(ItemStack stack, Level level, LivingEntity livingEntity, int timeCharged) {
 		if (livingEntity instanceof Player player && getDamage(stack) == 0) {
 			if (timeCharged > 0) {
-				if (level.isClientSide) {
+				if (level.isClientSide()) {
 					player.displayClientMessage(Component.translatable("immersiveweapons.item.%s.canceled".formatted(name))
 							.withStyle(ChatFormatting.YELLOW), true);
 				}
@@ -150,7 +150,7 @@ public class CursedItem extends Item {
 			// This is used to prevent the item from being used again
 			player.getPersistentData().putBoolean("used_curse_accessory_" + name, true);
 
-			if (level.isClientSide) {
+			if (level.isClientSide()) {
 				player.displayClientMessage(Component.translatable("immersiveweapons.item.%s.used".formatted(name))
 						.withStyle(ChatFormatting.RED), true);
 

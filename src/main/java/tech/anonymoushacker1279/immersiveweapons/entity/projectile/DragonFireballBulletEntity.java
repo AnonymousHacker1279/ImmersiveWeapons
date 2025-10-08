@@ -1,6 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.projectile;
 
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.PowerParticleOption;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
@@ -51,7 +52,7 @@ public class DragonFireballBulletEntity extends BulletEntity implements ItemSupp
 			cloud.setOwner(livingEntity);
 		}
 
-		cloud.setCustomParticle(ParticleTypes.DRAGON_BREATH);
+		cloud.setCustomParticle(PowerParticleOption.create(ParticleTypes.DRAGON_BREATH, 1.0f));
 		cloud.setRadius(3.0f);
 		cloud.setDuration(120);
 		cloud.setRadiusPerTick((3.0f - cloud.getRadius()) / (float) cloud.getDuration());
@@ -69,7 +70,7 @@ public class DragonFireballBulletEntity extends BulletEntity implements ItemSupp
 
 		if (!isInGround() && level() instanceof ServerLevel serverLevel) {
 			serverLevel.sendParticles(
-					ParticleTypes.DRAGON_BREATH,
+					PowerParticleOption.create(ParticleTypes.DRAGON_BREATH, 1.0f),
 					position().x, position().y, position().z,
 					12,
 					random.nextGaussian() * 0.25,

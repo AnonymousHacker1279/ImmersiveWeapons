@@ -235,20 +235,18 @@ public class ForgeEventSubscriber {
 		if (damagedEntity instanceof ServerPlayer player) {
 			if (event.getSource().is(DamageTypes.FELL_OUT_OF_WORLD) && Accessory.isAccessoryActive(player, ItemRegistry.VOID_BLESSING.get())) {
 				// Warp back to spawn
-				if (player.getServer() != null) {
-					if (player.getRespawnConfig() != null) {
-						ServerLevel targetLevel = player.getServer().getLevel(player.getRespawnConfig().dimension());
-						if (targetLevel != null) {
-							player.resetFallDistance();
-							BlockPos respawnPos = player.getRespawnConfig().pos();
-							player.teleportTo(targetLevel, respawnPos.getX(), respawnPos.getY(), respawnPos.getZ(), Set.of(), player.getYRot(), player.getXRot(), false);
-						}
-					} else {
-						BlockPos spawnPos = player.level().getSharedSpawnPos();
-						ServerLevel targetLevel = player.getServer().getLevel(player.level().dimension());
-						if (targetLevel != null) {
-							player.teleportTo(targetLevel, spawnPos.getX(), spawnPos.getY(), spawnPos.getZ(), Set.of(), player.getYRot(), player.getXRot(), false);
-						}
+				if (player.getRespawnConfig() != null) {
+					ServerLevel targetLevel = player.level().getServer().getLevel(player.getRespawnConfig().respawnData().dimension());
+					if (targetLevel != null) {
+						player.resetFallDistance();
+						BlockPos respawnPos = player.getRespawnConfig().respawnData().pos();
+						player.teleportTo(targetLevel, respawnPos.getX(), respawnPos.getY(), respawnPos.getZ(), Set.of(), player.getYRot(), player.getXRot(), false);
+					}
+				} else {
+					BlockPos spawnPos = player.level().getRespawnData().pos();
+					ServerLevel targetLevel = player.level().getServer().getLevel(player.level().dimension());
+					if (targetLevel != null) {
+						player.teleportTo(targetLevel, spawnPos.getX(), spawnPos.getY(), spawnPos.getZ(), Set.of(), player.getYRot(), player.getXRot(), false);
 					}
 				}
 			}
@@ -276,10 +274,10 @@ public class ForgeEventSubscriber {
 		AccessoryEffects.jonnysCurseEffect(event, damagedEntity);
 
 
-		if (sourceEntity instanceof ServerPlayer serverPlayer && serverPlayer.getServer() != null) {
+		if (sourceEntity instanceof ServerPlayer serverPlayer) {
 			// If a Mud Ball was thrown, add an advancement
 			if (event.getSource().getDirectEntity() instanceof MudBallEntity) {
-				AdvancementHolder advancement = serverPlayer.getServer().getAdvancements().get(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "mud_ball"));
+				AdvancementHolder advancement = serverPlayer.level().getServer().getAdvancements().get(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "mud_ball"));
 
 				if (advancement != null) {
 					serverPlayer.getAdvancements().award(advancement, "");
@@ -315,10 +313,10 @@ public class ForgeEventSubscriber {
 				player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 1.0f, 1.0f);
 			}
 
-			if (player instanceof ServerPlayer serverPlayer && serverPlayer.getServer() != null) {
+			if (player instanceof ServerPlayer serverPlayer) {
 				// If over 175 damage was dealt, add an advancement
 				if (event.getNewDamage() >= 175.0f) {
-					AdvancementHolder advancement = serverPlayer.getServer().getAdvancements().get(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "overkill"));
+					AdvancementHolder advancement = serverPlayer.level().getServer().getAdvancements().get(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "overkill"));
 
 					if (advancement != null) {
 						serverPlayer.getAdvancements().award(advancement, "");

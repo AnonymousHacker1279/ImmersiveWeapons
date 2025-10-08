@@ -113,7 +113,7 @@ public abstract class AbstractGunItem extends Item {
 					powder = new PowderType(new ItemStack(defaultPowder()));
 				}
 
-				if (!level.isClientSide) {
+				if (!level.isClientSide()) {
 					BulletItem<?> bulletItem = (BulletItem<?>) (ammo.getItem() instanceof BulletItem<?> ? ammo.getItem() : defaultAmmo());
 
 					for (int i = 0; i < bulletsToFire; ++i) {
@@ -453,7 +453,7 @@ public abstract class AbstractGunItem extends Item {
 		if (!player.isCreative() && ammo.getItem() instanceof BulletItem<?> bulletItem) {
 			if (!bulletItem.isInfinite(ammo, gun, player)) {
 				float ammoConservationChance = (float) AccessoryManager.collectEffects(AccessoryEffectTypeRegistry.FIREARM_AMMO_CONSERVATION_CHANCE.get(), player);
-				if (!player.level().isClientSide) {
+				if (!player.level().isClientSide()) {
 					if (player.getRandom().nextFloat() <= ammoConservationChance) {
 						player.getInventory().setChanged(); // Resync the inventory because the client may not roll the same number
 						return;
@@ -476,7 +476,7 @@ public abstract class AbstractGunItem extends Item {
 			}
 
 			float consumeChance = powderType.data.consumeChance();
-			if (!player.level().isClientSide) {
+			if (!player.level().isClientSide()) {
 				if (player.getRandom().nextFloat() <= consumeChance) {
 					player.getInventory().setChanged(); // Resync the inventory because the client may not roll the same number
 					return;

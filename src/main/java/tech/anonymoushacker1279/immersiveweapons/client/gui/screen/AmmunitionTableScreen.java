@@ -2,6 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.client.gui.screen;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -71,12 +72,12 @@ public class AmmunitionTableScreen extends AbstractContainerScreen<AmmunitionTab
 	}
 
 	@Override
-	public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
-		if (isOverDensityScrollbar(mouseX, mouseY)) {
+	public boolean mouseDragged(MouseButtonEvent event, double dragX, double dragY) {
+		if (isOverDensityScrollbar(event.x(), event.y())) {
 			menu.setDensityModifier(menu.getDensityModifier() + (float) dragX / 30.0F);
 		}
 
-		return super.mouseDragged(mouseX, mouseY, button, dragX, dragY);
+		return super.mouseDragged(event, dragX, dragY);
 	}
 
 	/**

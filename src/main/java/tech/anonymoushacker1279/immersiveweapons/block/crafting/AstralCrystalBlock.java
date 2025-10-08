@@ -52,7 +52,7 @@ public class AstralCrystalBlock extends AmethystClusterBlock implements EntityBl
 					crystalBlockEntity.removeItem();
 					return InteractionResult.SUCCESS;
 				}
-				if (!level.isClientSide) {
+				if (!level.isClientSide()) {
 					crystalBlockEntity.addItem(player.isCreative() ? itemStack.copy() : itemStack);
 
 					return InteractionResult.SUCCESS;
@@ -83,7 +83,7 @@ public class AstralCrystalBlock extends AmethystClusterBlock implements EntityBl
 	}
 
 	@Override
-	protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier) {
+	protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier, boolean inside) {
 		if (entity instanceof ItemEntity itemEntity && isBuiltOnPlatform(level, pos)) {
 			if (level.getBlockEntity(pos) instanceof AstralCrystalBlockEntity blockEntity && level instanceof ServerLevel serverLevel) {
 				RecipeHolder<AstralCrystalRecipe> holder = blockEntity.getRecipe(serverLevel.recipeAccess(), serverLevel);

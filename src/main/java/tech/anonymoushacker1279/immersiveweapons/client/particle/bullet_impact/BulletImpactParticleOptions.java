@@ -5,18 +5,11 @@ import net.minecraft.core.particles.ParticleType;
 import net.minecraft.util.Mth;
 import tech.anonymoushacker1279.immersiveweapons.init.ParticleTypesRegistry;
 
-public class BulletImpactParticleOptions implements ParticleOptions {
+public record BulletImpactParticleOptions(float scale, int blockID) implements ParticleOptions {
 
-	protected final float scale;
-	protected final int blockID;
-
-	public BulletImpactParticleOptions(float vibrancy, int blockID) {
-		scale = Mth.clamp(vibrancy, 0.001F, 100.0F);
+	public BulletImpactParticleOptions(float scale, int blockID) {
+		this.scale = Mth.clamp(scale, 0.001F, 100.0F);
 		this.blockID = blockID;
-	}
-
-	public int getBlockID() {
-		return blockID;
 	}
 
 	@Override

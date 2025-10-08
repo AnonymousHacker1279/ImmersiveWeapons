@@ -49,16 +49,14 @@ public class AzulLocatorItem extends Item {
 								.withStyle(ChatFormatting.RED), true);
 						player.getCooldowns().addCooldown(stack, 60);
 					} else {
-						BlockPos spawnPos = serverPlayer.getRespawnConfig().pos();
-						if (serverPlayer.getServer() != null) {
-							ServerLevel spawnLevel = serverPlayer.getServer().getLevel(serverPlayer.getRespawnConfig().dimension());
+						BlockPos spawnPos = serverPlayer.getRespawnConfig().respawnData().pos();
+						ServerLevel spawnLevel = serverPlayer.level().getServer().getLevel(serverPlayer.getRespawnConfig().respawnData().dimension());
 
-							if (spawnLevel != null) {
-								serverPlayer.teleportTo(spawnLevel, spawnPos.getX() + 0.5f, spawnPos.getY(), spawnPos.getZ() + 0.5f, Set.of(), player.getYRot(), player.getXRot(), false);
-								player.teleportTo(spawnPos.getX() + 0.5f, spawnPos.getY(), spawnPos.getZ() + 0.5f);
-								player.displayClientMessage(Component.translatable("immersiveweapons.item.azul_locator.teleported")
-										.withStyle(ChatFormatting.GREEN), true);
-							}
+						if (spawnLevel != null) {
+							serverPlayer.teleportTo(spawnLevel, spawnPos.getX() + 0.5f, spawnPos.getY(), spawnPos.getZ() + 0.5f, Set.of(), player.getYRot(), player.getXRot(), false);
+							player.teleportTo(spawnPos.getX() + 0.5f, spawnPos.getY(), spawnPos.getZ() + 0.5f);
+							player.displayClientMessage(Component.translatable("immersiveweapons.item.azul_locator.teleported")
+									.withStyle(ChatFormatting.GREEN), true);
 						}
 
 						if (!player.isCreative()) {

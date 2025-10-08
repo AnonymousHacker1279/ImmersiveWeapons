@@ -1,7 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.mixin;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
@@ -34,12 +34,12 @@ public abstract class AbstractContainerScreenMixin {
 		}
 
 		if (screen instanceof InventoryScreen) {
-			if (isHovering(26, 8, 49, 70, x, y) && Screen.hasShiftDown()) {
+			if (isHovering(26, 8, 49, 70, x, y) && Minecraft.getInstance().hasShiftDown()) {
 				immersiveWeapons$renderPlayerStats(guiGraphics, screen, x, y, PlayerStatTooltips.getStatTooltips(player));
 			}
 		}
 
-		if (screen instanceof CreativeModeInventoryScreen creativeScreen && creativeScreen.isInventoryOpen() && Screen.hasShiftDown()) {
+		if (screen instanceof CreativeModeInventoryScreen creativeScreen && creativeScreen.isInventoryOpen() && Minecraft.getInstance().hasShiftDown()) {
 			if (isHovering(73, 6, 32, 42, x, y)) {
 				immersiveWeapons$renderPlayerStats(guiGraphics, screen, x, y, PlayerStatTooltips.getStatTooltips(player));
 			}

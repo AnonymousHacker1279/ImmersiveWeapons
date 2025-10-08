@@ -57,7 +57,7 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 	}
 
 	private static void explode(Level level, BlockPos pos, @Nullable LivingEntity livingEntity) {
-		if (!level.isClientSide) {
+		if (!level.isClientSide()) {
 			level.explode(livingEntity, IWDamageSources.landmine(level.registryAccess()), null, pos.getX(), pos.getY(), pos.getZ(), 2.0F, false, ExplosionInteraction.BLOCK);
 			level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.TNT_PRIMED, SoundSource.BLOCKS, 1.0F, 1.0F, false);
 		}
@@ -65,7 +65,7 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 
 	@Override
 	protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
-		if (!level.isClientSide) {
+		if (!level.isClientSide()) {
 			ItemStack currentlyHeldItem = player.getMainHandItem();
 
 			// Disarm with pliers if armed
@@ -127,7 +127,7 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 	}
 
 	@Override
-	protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier) {
+	protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier, boolean inside) {
 		if (state.getValue(ARMED) && !state.getValue(WATERLOGGED)) {
 			if (entity instanceof Player player && player.isCreative()) {
 				return;

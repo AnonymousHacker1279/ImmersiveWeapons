@@ -1,7 +1,9 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.neutral;
 
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.*;
+import net.minecraft.world.Difficulty;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.monster.RangedAttackMob;
@@ -11,8 +13,10 @@ import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.RangedGunAttackGoal;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
-import tech.anonymoushacker1279.immersiveweapons.item.gun.*;
+import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem.PowderType;
+import tech.anonymoushacker1279.immersiveweapons.item.gun.FlareGunItem;
+import tech.anonymoushacker1279.immersiveweapons.item.gun.HandCannonItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem;
 
 import java.util.List;
@@ -32,7 +36,7 @@ public abstract class RangedSoldierEntity extends SoldierEntity implements Range
 	}
 
 	public void prepareForCombat() {
-		if (!level().isClientSide) {
+		if (!level().isClientSide()) {
 			goalSelector.removeGoal(getRangedGunAttackGoal());
 			goalSelector.removeGoal(meleeAttackGoal);
 

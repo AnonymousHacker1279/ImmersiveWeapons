@@ -1,34 +1,25 @@
 package tech.anonymoushacker1279.immersiveweapons.client.particle;
 
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.particle.*;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.SingleQuadParticle;
+import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
-public class MuzzleFlashParticle extends TextureSheetParticle {
+public class MuzzleFlashParticle extends SingleQuadParticle {
 
 	protected static SpriteSet sprites;
-
-	public static class Provider implements ParticleProvider<SimpleParticleType> {
-
-		public Provider(SpriteSet pSprites) {
-			sprites = pSprites;
-		}
-
-		@Override
-		public Particle createParticle(SimpleParticleType pType, ClientLevel pLevel, double pX, double pY, double pZ,
-		                               double pXSpeed, double pYSpeed, double pZSpeed) {
-
-			return new MuzzleFlashParticle(pLevel, pX, pY, pZ, pXSpeed, pYSpeed, pZSpeed, sprites);
-		}
-	}
 
 	protected MuzzleFlashParticle(ClientLevel level, double x, double y, double z,
 	                              double xSpeed, double ySpeed,
 	                              double zSpeed, SpriteSet spriteSet) {
 
-		super(level, x, y, z, 0.0D, 0.0D, 0.0D);
+		super(level, x, y, z, spriteSet.first());
 		friction = 0.46F;
 		gravity = (float) 0.075;
 		speedUpWhenYMotionIsBlocked = true;
@@ -53,8 +44,8 @@ public class MuzzleFlashParticle extends TextureSheetParticle {
 	}
 
 	@Override
-	public ParticleRenderType getRenderType() {
-		return ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT;
+	protected Layer getLayer() {
+		return Layer.TRANSLUCENT;
 	}
 
 	@Override
@@ -71,5 +62,18 @@ public class MuzzleFlashParticle extends TextureSheetParticle {
 	@Override
 	protected int getLightColor(float pPartialTick) {
 		return 255;
+	}
+
+	public static class Provider implements ParticleProvider<SimpleParticleType> {
+
+		public Provider(SpriteSet pSprites) {
+			sprites = pSprites;
+		}
+
+		@Nullable
+		@Override
+		public Particle createParticle(SimpleParticleType type, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, RandomSource random) {
+			return sprites != null ? new MuzzleFlashParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, sprites) : null;
+		}
 	}
 }

@@ -154,12 +154,12 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 	protected void onHit(HitResult result) {
 		super.onHit(result);
 
-		if (!level().isClientSide && getOwner() instanceof ServerPlayer player && initialPos != Vec3.ZERO) {
+		if (!level().isClientSide() && getOwner() instanceof ServerPlayer player && initialPos != Vec3.ZERO) {
 			Vec3 location = result.getLocation();
 			double distance = Math.sqrt(Math.pow(location.x - initialPos.x, 2) + Math.pow(location.y - initialPos.y, 2) + Math.pow(location.z - initialPos.z, 2));
 
-			if (distance > 200 && player.getServer() != null) {
-				AdvancementHolder advancement = player.getServer().getAdvancements().get(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "firearm_long_range"));
+			if (distance > 200) {
+				AdvancementHolder advancement = player.level().getServer().getAdvancements().get(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "firearm_long_range"));
 
 				if (advancement != null) {
 					player.getAdvancements().award(advancement, "");
@@ -208,7 +208,7 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 					random.nextGaussian() * 0.025);
 		}
 
-		if (!isInGround() && tickCount % 2 == 0 && level().isClientSide) {
+		if (!isInGround() && tickCount % 2 == 0 && level().isClientSide()) {
 			Player player = level().getNearestPlayer(this, 5.0D);
 			if (player != null) {
 				float pitch = (float) (0.8F + (getDeltaMovement().length() * 0.2) + (distanceTo(player) * 0.05));

@@ -1,4 +1,4 @@
-package tech.anonymoushacker1279.immersiveweapons.client.renderer.blockentity;
+package tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.misc;
 
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

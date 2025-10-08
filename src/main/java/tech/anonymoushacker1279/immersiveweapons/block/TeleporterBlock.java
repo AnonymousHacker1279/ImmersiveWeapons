@@ -50,7 +50,7 @@ public class TeleporterBlock extends Block implements EntityBlock, SimpleWaterlo
 
 	@Override
 	protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, @Nullable Orientation orientation, boolean movedByPiston) {
-		if (!level.isClientSide) {
+		if (!level.isClientSide()) {
 			boolean isPowered = level.hasNeighborSignal(pos);
 			if (isPowered && level.getBlockEntity(pos) instanceof TeleporterBlockEntity blockEntity) {
 				ResourceKey<Level> dimension = blockEntity.getLinkedTeleporterDimension();

@@ -4,6 +4,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.gui.screens.inventory.tooltip.DefaultTooltipPositioner;
+import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -135,25 +136,25 @@ public class StarForgeScreen extends AbstractContainerScreen<StarForgeMenu> {
 	}
 
 	@Override
-	public boolean mouseClicked(double mouseX, double mouseY, int button) {
+	public boolean mouseClicked(MouseButtonEvent event, boolean flag) {
 		// Check if the mouse click is within the selection area
-		if (mouseX >= leftPos + 61 && mouseX < leftPos + 116 && mouseY >= topPos + 17 && mouseY < topPos + 65) {
+		if (event.x() >= leftPos + 61 && event.x() < leftPos + 116 && event.y() >= topPos + 17 && event.y() < topPos + 65) {
 			// Check if the forge is currently active
 			if (menu.getSmeltTime() == 0) {
 				// Calculate which entry is clicked
-				int clickedEntry = menu.getMenuSelectionIndex() + (int) ((mouseY - (topPos + 17)) / 24);
+				int clickedEntry = menu.getMenuSelectionIndex() + (int) ((event.y() - (topPos + 17)) / 24);
 				menu.setMenuSelectionIndex(clickedEntry, false);
 				return true;
 			}
 		}
 
 		// Check if the mouse click is within the scrollbar area
-		if (mouseX >= leftPos + 119 && mouseX < leftPos + 119 + 11 && mouseY >= topPos + 13 && mouseY < topPos + 13 + 56) {
+		if (event.x() >= leftPos + 119 && event.x() < leftPos + 119 + 11 && event.y() >= topPos + 13 && event.y() < topPos + 13 + 56) {
 			return true;
 		}
 
 		// Check if the mouse click is within the crafting icon area
-		if (isOverCraftingIcon((int) mouseX, (int) mouseY)) {
+		if (isOverCraftingIcon((int) event.x(), (int) event.y())) {
 			// Check if the currently selected recipe is valid
 			if (isRecipeValid(menu.availableRecipes)) {
 				menu.setMenuSelectionIndex(menu.getMenuSelectionIndex(), true);
@@ -161,7 +162,7 @@ public class StarForgeScreen extends AbstractContainerScreen<StarForgeMenu> {
 			return true;
 		}
 
-		return super.mouseClicked(mouseX, mouseY, button);
+		return super.mouseClicked(event, flag);
 	}
 
 	@Override
@@ -175,16 +176,16 @@ public class StarForgeScreen extends AbstractContainerScreen<StarForgeMenu> {
 	}
 
 	@Override
-	public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
+	public boolean mouseDragged(MouseButtonEvent event, double dragX, double dragY) {
 		// Check if the scrollbar is being dragged
-		if (isOverScrollbar((int) mouseX, (int) mouseY) && menu.getSmeltTime() == 0 && Mth.abs((float) dragY) >= 1.5f) {
+		if (isOverScrollbar((int) event.x(), (int) event.y()) && menu.getSmeltTime() == 0 && Mth.abs((float) dragY) >= 1.5f) {
 			// Calculate the new menu selection index
-			int newMenuSelectionIndex = (int) ((mouseY - (topPos + 13)) / (56 - 15) * menu.availableRecipes.size());
+			int newMenuSelectionIndex = (int) ((event.y() - (topPos + 13)) / (56 - 15) * menu.availableRecipes.size());
 			menu.setMenuSelectionIndex(newMenuSelectionIndex, false);
 			return true;
 		}
 
-		return super.mouseDragged(mouseX, mouseY, button, dragX, dragY);
+		return super.mouseDragged(event, dragX, dragY);
 	}
 
 	@Override

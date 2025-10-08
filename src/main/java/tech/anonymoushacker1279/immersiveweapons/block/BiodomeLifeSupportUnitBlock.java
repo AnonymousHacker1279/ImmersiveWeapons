@@ -37,7 +37,7 @@ public class BiodomeLifeSupportUnitBlock extends Block implements EntityBlock {
 
 	@Override
 	protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, @javax.annotation.Nullable Orientation orientation, boolean movedByPiston) {
-		if (!level.isClientSide) {
+		if (!level.isClientSide()) {
 			boolean isPowered = level.hasNeighborSignal(pos);
 			if (isPowered) {
 				if (level.getBlockEntity(pos) instanceof BiodomeLifeSupportUnitBlockEntity blockEntity) {
@@ -76,6 +76,6 @@ public class BiodomeLifeSupportUnitBlock extends Block implements EntityBlock {
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState,
 	                                                              BlockEntityType<T> blockEntityType) {
 
-		return level.isClientSide ? null : (world, pos, state, entity) -> ((BiodomeLifeSupportUnitBlockEntity) entity).tick(world, pos, state);
+		return level.isClientSide() ? null : (world, pos, state, entity) -> ((BiodomeLifeSupportUnitBlockEntity) entity).tick(world, pos, state);
 	}
 }

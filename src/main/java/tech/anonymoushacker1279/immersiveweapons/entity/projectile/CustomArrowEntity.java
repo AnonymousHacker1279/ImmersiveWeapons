@@ -201,7 +201,7 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 	}
 
 	protected void explode(float radius) {
-		if (!level().isClientSide && getOwner() != null) {
+		if (!level().isClientSide() && getOwner() != null) {
 			level().explode(this,
 					getDamageSource(getOwner()),
 					null,

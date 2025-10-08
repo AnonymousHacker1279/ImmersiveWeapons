@@ -1,6 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.network.handler;
 
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.PowerParticleOption;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -57,7 +58,7 @@ public class VoidArmorPayloadHandler {
 
 		AreaEffectCloud cloud = new AreaEffectCloud(level, player.getX(), yPos, player.getZ());
 		cloud.setOwner(player);
-		cloud.setCustomParticle(ParticleTypes.DRAGON_BREATH);
+		cloud.setCustomParticle(PowerParticleOption.create(ParticleTypes.DRAGON_BREATH, 1.0f));
 		cloud.setRadius(2.0f);
 		cloud.setDuration(100);
 		cloud.setRadiusPerTick((2.0f - cloud.getRadius()) / (float) cloud.getDuration());

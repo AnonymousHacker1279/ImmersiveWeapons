@@ -183,11 +183,6 @@ public class LavaRevenantEntity extends Mob implements Enemy, GrantAdvancementOn
 	}
 
 	@Override
-	protected boolean shouldDespawnInPeaceful() {
-		return true;
-	}
-
-	@Override
 	public void aiStep() {
 		super.aiStep();
 		checkForDiscovery(this);
@@ -199,7 +194,7 @@ public class LavaRevenantEntity extends Mob implements Enemy, GrantAdvancementOn
 
 		float scaleFactor = getDimensionScaleFactor();
 
-		if (level().isClientSide) {
+		if (level().isClientSide()) {
 			float flapTick = Mth.cos((float) (getUniqueFlapTickOffset() + tickCount) * 7.448451F
 					* ((float) Math.PI / 180F) + (float) Math.PI);
 			float nextFlapTick = Mth.cos((float) (getUniqueFlapTickOffset() + tickCount + 1) * 7.448451F

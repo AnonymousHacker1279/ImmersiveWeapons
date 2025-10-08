@@ -1,32 +1,23 @@
 package tech.anonymoushacker1279.immersiveweapons.client.particle;
 
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.particle.*;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.SingleQuadParticle;
+import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.util.RandomSource;
+import org.jetbrains.annotations.Nullable;
 
-public class DeadmansDesertAmbientParticle extends TextureSheetParticle {
+public class DeadmansDesertAmbientParticle extends SingleQuadParticle {
 
 	protected static SpriteSet sprites;
-
-	public static class Provider implements ParticleProvider<SimpleParticleType> {
-
-		public Provider(SpriteSet pSprites) {
-			sprites = pSprites;
-		}
-
-		@Override
-		public Particle createParticle(SimpleParticleType pType, ClientLevel pLevel, double pX, double pY, double pZ,
-		                               double pXSpeed, double pYSpeed, double pZSpeed) {
-
-			return new DeadmansDesertAmbientParticle(pLevel, pX, pY, pZ, pXSpeed, pYSpeed, pZSpeed, sprites);
-		}
-	}
 
 	protected DeadmansDesertAmbientParticle(ClientLevel level, double x, double y, double z,
 	                                        double xSpeed, double ySpeed,
 	                                        double zSpeed, SpriteSet spriteSet) {
 
-		super(level, x, y, z, xSpeed, ySpeed, zSpeed);
+		super(level, x, y, z, spriteSet.first());
 		friction = 0.66F;
 		gravity = 0.16F;
 		speedUpWhenYMotionIsBlocked = true;
@@ -42,12 +33,25 @@ public class DeadmansDesertAmbientParticle extends TextureSheetParticle {
 		bCol = 1.0F;
 		quadSize *= 0.8F;
 		lifetime = (int) (200.0D / (level.random.nextFloat() * 0.4D + 0.6D));
-		pickSprite(spriteSet);
+		setSprite(spriteSet.get(level.random));
 		hasPhysics = true;
 	}
 
 	@Override
-	public ParticleRenderType getRenderType() {
-		return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
+	protected Layer getLayer() {
+		return Layer.OPAQUE;
+	}
+
+	public static class Provider implements ParticleProvider<SimpleParticleType> {
+
+		public Provider(SpriteSet pSprites) {
+			sprites = pSprites;
+		}
+
+		@Nullable
+		@Override
+		public Particle createParticle(SimpleParticleType type, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, RandomSource random) {
+			return sprites != null ? new DeadmansDesertAmbientParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, sprites) : null;
+		}
 	}
 }

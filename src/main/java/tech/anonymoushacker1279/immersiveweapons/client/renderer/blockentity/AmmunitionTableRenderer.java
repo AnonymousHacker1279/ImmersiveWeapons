@@ -2,87 +2,111 @@ package tech.anonymoushacker1279.immersiveweapons.client.renderer.blockentity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.core.Direction;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
+import net.minecraft.client.renderer.item.ItemModelResolver;
+import net.minecraft.client.renderer.item.ItemStackRenderState;
+import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.block.crafting.AmmunitionTableBlock;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.AmmunitionTableBlockEntity;
+import tech.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.state.GenericDirectionalInventoryRenderState;
 
-public class AmmunitionTableRenderer implements BlockEntityRenderer<AmmunitionTableBlockEntity> {
+public class AmmunitionTableRenderer implements BlockEntityRenderer<AmmunitionTableBlockEntity, GenericDirectionalInventoryRenderState> {
+
+	private final ItemModelResolver itemModelResolver;
+
+	public AmmunitionTableRenderer(BlockEntityRendererProvider.Context context) {
+		itemModelResolver = context.itemModelResolver();
+	}
 
 	@Override
-	public void render(AmmunitionTableBlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay, Vec3 cameraPos) {
-		NonNullList<ItemStack> inventory = blockEntity.getInventory();
+	public GenericDirectionalInventoryRenderState createRenderState() {
+		return new GenericDirectionalInventoryRenderState(6);
+	}
 
-		Direction direction = blockEntity.getBlockState().getValue(AmmunitionTableBlock.FACING);
-		for (ItemStack stack : inventory) {
-			if (stack != ItemStack.EMPTY) {
-				poseStack.pushPose();
+	@Override
+	public void extractRenderState(AmmunitionTableBlockEntity blockEntity, GenericDirectionalInventoryRenderState state, float partialTick, Vec3 cameraPos, @Nullable ModelFeatureRenderer.CrumblingOverlay crumblingOverlay) {
+		BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTick, cameraPos, crumblingOverlay);
+
+		state.facing = blockEntity.getBlockState().getValue(AmmunitionTableBlock.FACING);
+		NonNullList<ItemStack> inventory = blockEntity.getInventory();
+		for (int i = 0; i < inventory.size(); i++) {
+			itemModelResolver.updateForTopItem(state.items[i], inventory.get(i), ItemDisplayContext.FIXED, blockEntity.getLevel(), null, 0);
+		}
+	}
+
+	@Override
+	public void submit(GenericDirectionalInventoryRenderState state, PoseStack stack, SubmitNodeCollector collector, CameraRenderState cameraState) {
+		for (ItemStackRenderState itemStackRenderState : state.items) {
+			if (itemStackRenderState != null) {
+				stack.pushPose();
 				// Translate to the center of the block
-				poseStack.translate(0.5D, 0.0D, 0.5D);
+				stack.translate(0.5D, 0.0D, 0.5D);
 
 				// Rotate by direction
-				switch (direction) {
-					case EAST -> poseStack.mulPose(Axis.YP.rotationDegrees(270f));
-					case SOUTH -> poseStack.mulPose(Axis.YP.rotationDegrees(180f));
-					case WEST -> poseStack.mulPose(Axis.YP.rotationDegrees(90f));
-					default -> poseStack.mulPose(Axis.YP.rotationDegrees(0f));
+				switch (state.facing) {
+					case EAST -> stack.mulPose(Axis.YP.rotationDegrees(270f));
+					case SOUTH -> stack.mulPose(Axis.YP.rotationDegrees(180f));
+					case WEST -> stack.mulPose(Axis.YP.rotationDegrees(90f));
+					default -> stack.mulPose(Axis.YP.rotationDegrees(0f));
 				}
 
 				// Render the material inventory
-				if (inventory.get(0) == stack) {
+				if (state.items[0] == itemStackRenderState) {
 					// Top left
-					poseStack.translate(-0.38D, 0.8D, 0.065D);
-				} else if (inventory.get(1) == stack) {
+					stack.translate(-0.38D, 0.8D, 0.065D);
+				} else if (state.items[1] == itemStackRenderState) {
 					// Top right
-					poseStack.translate(-0.295D, 0.8D, 0.065D);
-				} else if (inventory.get(2) == stack) {
+					stack.translate(-0.295D, 0.8D, 0.065D);
+				} else if (state.items[2] == itemStackRenderState) {
 					// Center left
-					poseStack.translate(-0.38D, 0.8D, 0.175D);
-				} else if (inventory.get(3) == stack) {
+					stack.translate(-0.38D, 0.8D, 0.175D);
+				} else if (state.items[3] == itemStackRenderState) {
 					// Center right
-					poseStack.translate(-0.295D, 0.8D, 0.175D);
-				} else if (inventory.get(4) == stack) {
+					stack.translate(-0.295D, 0.8D, 0.175D);
+				} else if (state.items[4] == itemStackRenderState) {
 					// Bottom left
-					poseStack.translate(-0.38D, 0.8D, 0.285D);
-				} else if (inventory.get(5) == stack) {
+					stack.translate(-0.38D, 0.8D, 0.285D);
+				} else if (state.items[5] == itemStackRenderState) {
 					// Bottom right
-					poseStack.translate(-0.295D, 0.8D, 0.285D);
+					stack.translate(-0.295D, 0.8D, 0.285D);
 				}
 
-				if (inventory.get(6) != stack) {
-					poseStack.scale(0.075f, 0.075f, 0.075f);
-					poseStack.mulPose(Axis.XP.rotationDegrees(-25f));
+				if (state.items[6] != itemStackRenderState) {
+					stack.scale(0.075f, 0.075f, 0.075f);
+					stack.mulPose(Axis.XP.rotationDegrees(-25f));
 
 					// Render the item
-					Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemDisplayContext.FIXED, packedLight, packedOverlay, poseStack, bufferSource, blockEntity.getLevel(), 0);
+					itemStackRenderState.submit(stack, collector, 0, 0, 0);
 				} else {
-					poseStack.translate(0.225D, 0.775D, -0.05D); // Baseline position
-					poseStack.scale(0.25f, 0.25f, 0.25f);
+					stack.translate(0.225D, 0.775D, -0.05D); // Baseline position
+					stack.scale(0.25f, 0.25f, 0.25f);
 					float prevX = 0.0f;
 					float prevZ = 0.0f;
-					for (int i = 0; i < stack.getCount(); i++) {
+					for (int i = 0; i < state.items.length; i++) {
 						// Render the items in an Archimede spiral
 						float theta = i * 0.5f;
 						float x = (float) (theta * 0.0235f * Math.cos(theta));
 						float z = (float) (theta * 0.0235f * Math.sin(theta));
 
-						poseStack.translate(x - prevX, 0.00001D, z - prevZ);
+						stack.translate(x - prevX, 0.00001D, z - prevZ);
 
 						prevX = x;
 						prevZ = z;
 
 						// Render the item
-						Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemDisplayContext.FIXED, packedLight, packedOverlay, poseStack, bufferSource, blockEntity.getLevel(), 0);
+						itemStackRenderState.submit(stack, collector, 0, 0, 0);
 					}
 				}
 
-				poseStack.popPose();
+				stack.popPose();
 			}
 		}
 	}

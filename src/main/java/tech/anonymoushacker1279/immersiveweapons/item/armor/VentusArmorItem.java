@@ -33,7 +33,7 @@ public class VentusArmorItem extends Item implements TickableArmor {
 		if (ArmorUtils.isWearingVentusArmor(player)) {
 			boolean effectEnabled = player.getPersistentData().getBoolean("VentusArmorEffectEnabled").orElse(false);
 
-			if (level.isClientSide) {
+			if (level.isClientSide()) {
 				if (IWKeyBinds.TOGGLE_ARMOR_EFFECT.consumeClick()) {
 					// Store the toggle variable in the player's NBT
 					player.getPersistentData().putBoolean("VentusArmorEffectEnabled", !effectEnabled);

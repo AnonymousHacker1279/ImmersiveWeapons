@@ -2,6 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.entity.monster;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.AdvancementHolder;
+import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.Registries;
@@ -158,9 +159,9 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 				attackedByEntity(source.getEntity(), attackingEntities);
 			}
 
-			if ((source.getWeaponItem() != null && source.getWeaponItem().is(Items.MACE)) && (source.getEntity() instanceof ServerPlayer serverPlayer && getServer() != null)) {
+			if ((source.getWeaponItem() != null && source.getWeaponItem().is(Items.MACE)) && (source.getEntity() instanceof ServerPlayer serverPlayer)) {
 				if ((serverPlayer.fallDistance > 1.5f) && shadowDodgeAchievementTimer > 0) {
-					AdvancementHolder advancement = getServer().getAdvancements().get(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "rapid_reflexes"));
+					AdvancementHolder advancement = serverLevel.getServer().getAdvancements().get(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "rapid_reflexes"));
 
 					if (advancement != null) {
 						serverPlayer.getAdvancements().award(advancement, "");
@@ -398,7 +399,7 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 					double x = hans.getX() + 8 * Math.cos(i);
 					double z = hans.getZ() + 8 * Math.sin(i);
 					((ServerLevel) hans.level()).sendParticles(
-							ParticleTypes.FLASH,
+							ColorParticleOption.create(ParticleTypes.FLASH, i),
 							x,
 							hans.getY(),
 							z,

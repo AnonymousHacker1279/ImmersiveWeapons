@@ -31,7 +31,7 @@ public class VoidArmorItem extends Item implements TickableArmor {
 		if (ArmorUtils.isWearingVoidArmor(player)) {
 			boolean effectEnabled = player.getPersistentData().getBoolean("VoidArmorEffectEnabled").orElse(false);
 
-			if (level.isClientSide) {
+			if (level.isClientSide()) {
 				if (IWKeyBinds.TOGGLE_ARMOR_EFFECT.consumeClick()) {
 					// Store the toggle variable in the player's NBT
 					player.getPersistentData().putBoolean("VoidArmorEffectEnabled", !effectEnabled);

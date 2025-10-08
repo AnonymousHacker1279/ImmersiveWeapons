@@ -24,7 +24,7 @@ public class PliersItem extends Item {
 
 	@Override
 	public InteractionResult useOn(UseOnContext context) {
-		if (context.getLevel().isClientSide) {
+		if (context.getLevel().isClientSide()) {
 			return InteractionResult.SUCCESS;
 		}
 

@@ -91,7 +91,7 @@ public class EvilEyeEntity extends Mob implements Enemy, GrantAdvancementOnDisco
 	public static EvilEyeEntity create(Level level, Vec3 position, boolean staff) {
 		EvilEyeEntity entity = new EvilEyeEntity(level, position, staff);
 
-		if (!level.isClientSide) {
+		if (!level.isClientSide()) {
 			entity.finalizeSpawn((ServerLevelAccessor) level, level.getCurrentDifficultyAt(entity.blockPosition()),
 					EntitySpawnReason.EVENT, null);
 		}
@@ -278,7 +278,7 @@ public class EvilEyeEntity extends Mob implements Enemy, GrantAdvancementOnDisco
 	}
 
 	@Override
-	protected boolean shouldDropLoot() {
+	protected boolean shouldDropLoot(ServerLevel level) {
 		return !entityData.get(SUMMONED_BY_STAFF);
 	}
 
@@ -302,11 +302,6 @@ public class EvilEyeEntity extends Mob implements Enemy, GrantAdvancementOnDisco
 		}
 
 		super.onSyncedDataUpdated(key);
-	}
-
-	@Override
-	protected boolean shouldDespawnInPeaceful() {
-		return true;
 	}
 
 	@Override

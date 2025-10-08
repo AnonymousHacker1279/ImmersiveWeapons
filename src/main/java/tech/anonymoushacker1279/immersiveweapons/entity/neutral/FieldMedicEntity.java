@@ -81,7 +81,7 @@ public class FieldMedicEntity extends SoldierEntity {
 
 	@Override
 	protected void prepareForCombat() {
-		if (!level().isClientSide) {
+		if (!level().isClientSide()) {
 			goalSelector.removeGoal(meleeAttackGoal);
 			setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ItemRegistry.USED_SYRINGE.get()));
 			goalSelector.addGoal(3, meleeAttackGoal);

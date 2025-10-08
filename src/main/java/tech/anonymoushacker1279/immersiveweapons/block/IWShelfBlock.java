@@ -28,7 +28,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import tech.anonymoushacker1279.immersiveweapons.block.core.BasicOrientableBlock;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.ShelfBlockEntity;
 
-public class ShelfBlock extends BasicOrientableBlock implements EntityBlock, SimpleWaterloggedBlock {
+public class IWShelfBlock extends BasicOrientableBlock implements EntityBlock, SimpleWaterloggedBlock {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	private static final VoxelShape SHAPE_NORTH = Block.box(0.0D, 0.0D, 10.0D, 16.0D, 16.0D, 16.0D);
@@ -36,7 +36,7 @@ public class ShelfBlock extends BasicOrientableBlock implements EntityBlock, Sim
 	private static final VoxelShape SHAPE_EAST = Block.box(0.0D, 0.0D, 0.0D, 6.0D, 16.0D, 16.0D);
 	private static final VoxelShape SHAPE_WEST = Block.box(10.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
 
-	public ShelfBlock(Properties properties) {
+	public IWShelfBlock(Properties properties) {
 		super(properties);
 		registerDefaultState(stateDefinition.any()
 				.setValue(FACING, Direction.NORTH)

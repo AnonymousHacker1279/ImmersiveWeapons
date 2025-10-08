@@ -27,9 +27,9 @@ public class DeathweedBlock extends FlowerBlock {
 	}
 
 	@Override
-	protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier) {
+	protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier, boolean inside) {
 		if (entity instanceof LivingEntity livingEntity) {
-			if (!level.isClientSide) {
+			if (!level.isClientSide()) {
 				float chance = livingEntity.getRandom().nextFloat();
 				if (livingEntity.tickCount % 8 == 0 && chance <= 0.65f) {
 					livingEntity.hurt(IWDamageSources.deathweed(level.registryAccess()), 1.0f);

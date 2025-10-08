@@ -592,25 +592,25 @@ public class ItemRegistry {
 	public static final Supplier<VoidArmorItem> VOID_BOOTS = ITEMS.registerItem("void_boots", (properties) -> new VoidArmorItem(IWArmorMaterials.VOID, ArmorType.BOOTS, properties));
 
 	// Spawn eggs
-	public static final Supplier<SpawnEggItem> DYING_SOLDIER_SPAWN_EGG = ITEMS.registerItem("dying_soldier_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.DYING_SOLDIER_ENTITY.get(), properties.stacksTo(16)));
-	public static final Supplier<SpawnEggItem> THE_COMMANDER_SPAWN_EGG = ITEMS.registerItem("the_commander_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.THE_COMMANDER_ENTITY.get(), properties.stacksTo(16)));
-	public static final Supplier<SpawnEggItem> MINUTEMAN_SPAWN_EGG = ITEMS.registerItem("minuteman_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.MINUTEMAN_ENTITY.get(), properties.stacksTo(16)));
-	public static final Supplier<SpawnEggItem> FIELD_MEDIC_SPAWN_EGG = ITEMS.registerItem("field_medic_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.FIELD_MEDIC_ENTITY.get(), properties.stacksTo(16)));
-	public static final Supplier<SpawnEggItem> WANDERING_WARRIOR_SPAWN_EGG = ITEMS.registerItem("wandering_warrior_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.WANDERING_WARRIOR_ENTITY.get(), properties.stacksTo(16)));
+	public static final Supplier<SpawnEggItem> DYING_SOLDIER_SPAWN_EGG = ITEMS.registerItem("dying_soldier_spawn_egg", (properties) -> new SpawnEggItem(properties.spawnEgg(EntityRegistry.DYING_SOLDIER_ENTITY.get()).stacksTo(16)));
+	public static final Supplier<SpawnEggItem> THE_COMMANDER_SPAWN_EGG = ITEMS.registerItem("the_commander_spawn_egg", (properties) -> new SpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.THE_COMMANDER_ENTITY.get())));
+	public static final Supplier<SpawnEggItem> MINUTEMAN_SPAWN_EGG = ITEMS.registerItem("minuteman_spawn_egg", (properties) -> new SpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.MINUTEMAN_ENTITY.get())));
+	public static final Supplier<SpawnEggItem> FIELD_MEDIC_SPAWN_EGG = ITEMS.registerItem("field_medic_spawn_egg", (properties) -> new SpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.FIELD_MEDIC_ENTITY.get())));
+	public static final Supplier<SpawnEggItem> WANDERING_WARRIOR_SPAWN_EGG = ITEMS.registerItem("wandering_warrior_spawn_egg", (properties) -> new SpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.WANDERING_WARRIOR_ENTITY.get())));
 	@LanguageEntryOverride("Hans the Almighty Spawn Egg")
 	@TooltipMarker(style = {ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC})
-	public static final Supplier<SpawnEggItem> HANS_SPAWN_EGG = ITEMS.registerItem("hans_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.HANS_ENTITY.get(), properties.stacksTo(16)));
+	public static final Supplier<SpawnEggItem> HANS_SPAWN_EGG = ITEMS.registerItem("hans_spawn_egg", (properties) -> new SpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.HANS_ENTITY.get())));
 	@LanguageEntryOverride("Super Hans the Almighty Spawn Egg")
 	@TooltipMarker(style = {ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC})
-	public static final Supplier<SpawnEggItem> SUPER_HANS_SPAWN_EGG = ITEMS.registerItem("super_hans_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.SUPER_HANS_ENTITY.get(), properties.stacksTo(16)));
-	public static final Supplier<SpawnEggItem> LAVA_REVENANT_SPAWN_EGG = ITEMS.registerItem("lava_revenant_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.LAVA_REVENANT_ENTITY.get(), properties.stacksTo(16)));
-	public static final Supplier<SpawnEggItem> ROCK_SPIDER_SPAWN_EGG = ITEMS.registerItem("rock_spider_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.ROCK_SPIDER_ENTITY.get(), properties.stacksTo(16)));
-	public static final Supplier<SpawnEggItem> CELESTIAL_TOWER_SPAWN_EGG = ITEMS.registerItem("celestial_tower_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.CELESTIAL_TOWER_ENTITY.get(), properties.stacksTo(16)));
-	public static final Supplier<SpawnEggItem> STARMITE_SPAWN_EGG = ITEMS.registerItem("starmite_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.STARMITE_ENTITY.get(), properties.stacksTo(16)));
-	public static final Supplier<SpawnEggItem> FIREFLY_SPAWN_EGG = ITEMS.registerItem("firefly_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.FIREFLY_ENTITY.get(), properties.stacksTo(16)));
-	public static final Supplier<SpawnEggItem> STORM_CREEPER_SPAWN_EGG = ITEMS.registerItem("storm_creeper_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.STORM_CREEPER_ENTITY.get(), properties.stacksTo(16)));
-	public static final Supplier<SpawnEggItem> EVIL_EYE_SPAWN_EGG = ITEMS.registerItem("evil_eye_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.EVIL_EYE_ENTITY.get(), properties.stacksTo(16)));
-	public static final Supplier<SpawnEggItem> STAR_WOLF_SPAWN_EGG = ITEMS.registerItem("star_wolf_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.STAR_WOLF_ENTITY.get(), properties.stacksTo(16)));
-	public static final Supplier<SpawnEggItem> SKYGAZER_SPAWN_EGG = ITEMS.registerItem("skygazer_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.SKYGAZER_ENTITY.get(), properties.stacksTo(16)));
-	public static final Supplier<SpawnEggItem> SKELETON_MERCHANT_SPAWN_EGG = ITEMS.registerItem("skeleton_merchant_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.SKELETON_MERCHANT_ENTITY.get(), properties.stacksTo(16)));
+	public static final Supplier<SpawnEggItem> SUPER_HANS_SPAWN_EGG = ITEMS.registerItem("super_hans_spawn_egg", (properties) -> new SpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.SUPER_HANS_ENTITY.get())));
+	public static final Supplier<SpawnEggItem> LAVA_REVENANT_SPAWN_EGG = ITEMS.registerItem("lava_revenant_spawn_egg", (properties) -> new SpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.LAVA_REVENANT_ENTITY.get())));
+	public static final Supplier<SpawnEggItem> ROCK_SPIDER_SPAWN_EGG = ITEMS.registerItem("rock_spider_spawn_egg", (properties) -> new SpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.ROCK_SPIDER_ENTITY.get())));
+	public static final Supplier<SpawnEggItem> CELESTIAL_TOWER_SPAWN_EGG = ITEMS.registerItem("celestial_tower_spawn_egg", (properties) -> new SpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.CELESTIAL_TOWER_ENTITY.get())));
+	public static final Supplier<SpawnEggItem> STARMITE_SPAWN_EGG = ITEMS.registerItem("starmite_spawn_egg", (properties) -> new SpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.STARMITE_ENTITY.get())));
+	public static final Supplier<SpawnEggItem> FIREFLY_SPAWN_EGG = ITEMS.registerItem("firefly_spawn_egg", (properties) -> new SpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.FIREFLY_ENTITY.get())));
+	public static final Supplier<SpawnEggItem> STORM_CREEPER_SPAWN_EGG = ITEMS.registerItem("storm_creeper_spawn_egg", (properties) -> new SpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.STORM_CREEPER_ENTITY.get())));
+	public static final Supplier<SpawnEggItem> EVIL_EYE_SPAWN_EGG = ITEMS.registerItem("evil_eye_spawn_egg", (properties) -> new SpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.EVIL_EYE_ENTITY.get())));
+	public static final Supplier<SpawnEggItem> STAR_WOLF_SPAWN_EGG = ITEMS.registerItem("star_wolf_spawn_egg", (properties) -> new SpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.STAR_WOLF_ENTITY.get())));
+	public static final Supplier<SpawnEggItem> SKYGAZER_SPAWN_EGG = ITEMS.registerItem("skygazer_spawn_egg", (properties) -> new SpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.SKYGAZER_ENTITY.get())));
+	public static final Supplier<SpawnEggItem> SKELETON_MERCHANT_SPAWN_EGG = ITEMS.registerItem("skeleton_merchant_spawn_egg", (properties) -> new SpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.SKELETON_MERCHANT_ENTITY.get())));
 }

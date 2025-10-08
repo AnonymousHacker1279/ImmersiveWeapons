@@ -39,8 +39,12 @@ import tech.anonymoushacker1279.immersiveweapons.client.particle.*;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact.BulletImpactParticle;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.damage_indicator.DamageIndicatorParticle;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.smoke_grenade.SmokeGrenadeParticle;
-import tech.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.*;
+import tech.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.AmmunitionTableRenderer;
+import tech.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.AstralCrystalRenderer;
+import tech.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.CommanderPedestalRenderer;
+import tech.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.ShelfRenderer;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.dimension.TiltrosDimensionSpecialEffects;
+import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.misc.ChairRenderer;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.mob.*;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.projectile.*;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
@@ -257,13 +261,13 @@ public class ClientModEventSubscriber {
 		event.registerEntityRenderer(EntityRegistry.SKYGAZER_ENTITY.get(), SkygazerRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.SKELETON_MERCHANT_ENTITY.get(), SkeletonMerchantRenderer::new);
 
-		event.registerBlockEntityRenderer(BlockEntityRegistry.SHELF_BLOCK_ENTITY.get(), context -> new ShelfRenderer());
+		event.registerBlockEntityRenderer(BlockEntityRegistry.SHELF_BLOCK_ENTITY.get(), ShelfRenderer::new);
 		event.registerBlockEntityRenderer(BlockEntityRegistry.CUSTOM_SIGN_ENTITY.get(), SignRenderer::new);
 		event.registerBlockEntityRenderer(BlockEntityRegistry.CUSTOM_HANGING_SIGN_ENTITY.get(), HangingSignRenderer::new);
 		event.registerBlockEntityRenderer(BlockEntityRegistry.CUSTOM_SKULL_BLOCK_ENTITY.get(), SkullBlockRenderer::new);
-		event.registerBlockEntityRenderer(BlockEntityRegistry.ASTRAL_CRYSTAL_BLOCK_ENTITY.get(), context -> new AstralCrystalRenderer());
-		event.registerBlockEntityRenderer(BlockEntityRegistry.AMMUNITION_TABLE_BLOCK_ENTITY.get(), context -> new AmmunitionTableRenderer());
-		event.registerBlockEntityRenderer(BlockEntityRegistry.COMMANDER_PEDESTAL_BLOCK_ENTITY.get(), context -> new CommanderPedestalRenderer());
+		event.registerBlockEntityRenderer(BlockEntityRegistry.ASTRAL_CRYSTAL_BLOCK_ENTITY.get(), AstralCrystalRenderer::new);
+		event.registerBlockEntityRenderer(BlockEntityRegistry.AMMUNITION_TABLE_BLOCK_ENTITY.get(), AmmunitionTableRenderer::new);
+		event.registerBlockEntityRenderer(BlockEntityRegistry.COMMANDER_PEDESTAL_BLOCK_ENTITY.get(), CommanderPedestalRenderer::new);
 	}
 
 	/**

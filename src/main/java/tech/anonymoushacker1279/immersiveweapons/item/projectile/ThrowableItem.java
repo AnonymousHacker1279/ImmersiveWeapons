@@ -64,7 +64,7 @@ public class ThrowableItem extends Item {
 				0.4F / (GeneralUtilities.getRandomNumber(0.2f, 0.6f) + 0.8F),
 				false);
 
-		if (!level.isClientSide) {
+		if (!level.isClientSide()) {
 			ThrowableItemProjectile throwable = null;
 
 			switch (type) {
@@ -92,7 +92,7 @@ public class ThrowableItem extends Item {
 			}
 
 			float charge = BowItem.getPowerForTime(i);
-			if (charge > 0.1f && !pLevel.isClientSide) {
+			if (charge > 0.1f && !pLevel.isClientSide()) {
 				ThrowableItemProjectile throwable = null;
 
 				switch (type) {

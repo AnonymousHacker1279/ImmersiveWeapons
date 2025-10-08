@@ -46,7 +46,7 @@ public class WoodenSpikesBlock extends DamageableBlock {
 	}
 
 	@Override
-	protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier) {
+	protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier, boolean inside) {
 		if (entity instanceof LivingEntity livingEntity) {
 			entity.makeStuckInBlock(state, new Vec3(0.85F, 0.80D, 0.85F));
 			if (level instanceof ServerLevel serverLevel) {

@@ -6,6 +6,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.windcharge.WindCharge;
@@ -48,6 +49,7 @@ public abstract class WindChargeMixin {
 									Level.ExplosionInteraction.TRIGGER,
 									ParticleTypes.GUST_EMITTER_SMALL,
 									ParticleTypes.GUST_EMITTER_LARGE,
+									WeightedList.of(),
 									SoundEvents.WIND_CHARGE_BURST
 							);
 

@@ -59,7 +59,7 @@ public class MudBallEntity extends AdvancedThrowableItemProjectile {
 	@Override
 	protected void onHit(HitResult pResult) {
 		super.onHit(pResult);
-		if (!level().isClientSide) {
+		if (!level().isClientSide()) {
 			level().broadcastEntityEvent(this, (byte) 3);
 			discard();
 		}

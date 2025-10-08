@@ -31,7 +31,7 @@ public class AstralArmorItem extends Item implements TickableArmor {
 		if (ArmorUtils.isWearingAstralArmor(player)) {
 			boolean effectEnabled = player.getPersistentData().getBoolean("AstralArmorEffectEnabled").orElse(false);
 
-			if (level.isClientSide) {
+			if (level.isClientSide()) {
 				if (IWKeyBinds.TOGGLE_ARMOR_EFFECT.consumeClick()) {
 					// Store the toggle variable in the player's NBT
 					player.getPersistentData().putBoolean("AstralArmorEffectEnabled", !effectEnabled);

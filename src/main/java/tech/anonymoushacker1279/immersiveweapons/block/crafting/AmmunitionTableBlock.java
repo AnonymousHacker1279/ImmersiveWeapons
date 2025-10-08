@@ -62,7 +62,7 @@ public class AmmunitionTableBlock extends BasicOrientableBlock implements Entity
 	@Override
 	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
 
-		if (level.isClientSide) {
+		if (level.isClientSide()) {
 			return InteractionResult.SUCCESS;
 		} else {
 			if (level.getBlockEntity(pos) instanceof AmmunitionTableBlockEntity blockEntity && player instanceof ServerPlayer serverPlayer) {

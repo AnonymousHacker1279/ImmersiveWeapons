@@ -13,15 +13,15 @@ public class BulletImpactParticleType extends ParticleType<BulletImpactParticleO
 
 	public static final MapCodec<BulletImpactParticleOptions> CODEC = RecordCodecBuilder.mapCodec(instance ->
 			instance.group(
-							Codec.FLOAT.fieldOf("scale").forGetter((particleOptions) -> particleOptions.scale),
-							Codec.INT.fieldOf("blockID").forGetter((particleOptions) -> particleOptions.blockID))
+							Codec.FLOAT.fieldOf("scale").forGetter(BulletImpactParticleOptions::scale),
+							Codec.INT.fieldOf("blockID").forGetter(BulletImpactParticleOptions::blockID))
 					.apply(instance, BulletImpactParticleOptions::new));
 
 	public static final StreamCodec<FriendlyByteBuf, BulletImpactParticleOptions> STREAM_CODEC = StreamCodec.composite(
 			ByteBufCodecs.FLOAT,
-			options -> options.scale,
+			BulletImpactParticleOptions::scale,
 			ByteBufCodecs.INT,
-			options -> options.blockID,
+			BulletImpactParticleOptions::blockID,
 			BulletImpactParticleOptions::new
 	);
 

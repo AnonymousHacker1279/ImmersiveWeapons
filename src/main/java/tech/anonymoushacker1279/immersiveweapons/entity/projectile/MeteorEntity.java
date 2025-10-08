@@ -56,7 +56,7 @@ public class MeteorEntity extends Projectile {
 	 * @return true if the meteor was successfully created, false otherwise
 	 */
 	public static boolean create(Level level, LivingEntity owner, @Nullable ItemStack staff, BlockPos targetPos, @Nullable LivingEntity targetEntity) {
-		if (!level.isClientSide) {
+		if (!level.isClientSide()) {
 			MeteorEntity meteorEntity = new MeteorEntity(EntityRegistry.METEOR_ENTITY.get(), level);
 
 			// Determine a starting position 40 blocks above the target position, and within a 15 block radius
@@ -147,7 +147,7 @@ public class MeteorEntity extends Projectile {
 		}
 
 		// Handle movement
-		if (!level().isClientSide) {
+		if (!level().isClientSide()) {
 			lookAt(Anchor.EYES, targetPos.getCenter());
 
 			// Calculate the speed of the meteor
@@ -201,7 +201,7 @@ public class MeteorEntity extends Projectile {
 
 		ExplosionInteraction explosionInteraction = IWConfigs.SERVER.meteorStaffExplosionBreakBlocks.getAsBoolean() ? ExplosionInteraction.MOB : ExplosionInteraction.NONE;
 
-		if (!level().isClientSide) {
+		if (!level().isClientSide()) {
 			if (getOwner() != null) {
 				level().explode(this,
 						IWDamageSources.meteor(this, getOwner()),

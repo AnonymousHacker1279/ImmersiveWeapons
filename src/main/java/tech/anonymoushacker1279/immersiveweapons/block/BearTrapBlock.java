@@ -59,7 +59,7 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 
 	@Override
 	protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
-		if (!level.isClientSide && hand.equals(InteractionHand.MAIN_HAND) && level.getBlockEntity(pos) instanceof BearTrapBlockEntity blockEntity) {
+		if (!level.isClientSide() && hand.equals(InteractionHand.MAIN_HAND) && level.getBlockEntity(pos) instanceof BearTrapBlockEntity blockEntity) {
 			ItemStack mainHandItem = player.getMainHandItem();
 
 			if (!state.getValue(VINES) && !state.getValue(TRIGGERED) && mainHandItem.getItem() == Items.VINE) {
@@ -118,7 +118,7 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 	}
 
 	@Override
-	protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier) {
+	protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier, boolean inside) {
 		if (entity instanceof Player player && player.isCreative() || entity.getType().is(EntityTypes.BOSSES)) {
 			return;
 		}
@@ -172,7 +172,7 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 	}
 
 	@Override
-	public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+	protected int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos, Direction direction) {
 		return state.getValue(TRIGGERED) ? 15 : 0;
 	}
 

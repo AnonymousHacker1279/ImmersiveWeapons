@@ -2,44 +2,31 @@ package tech.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.particle.*;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.SingleQuadParticle;
+import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.block.model.BlockStateModel;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
-public class BulletImpactParticle extends TextureSheetParticle {
+public class BulletImpactParticle extends SingleQuadParticle {
 
 	@Nullable
 	static SpriteSet sprites;
-
-	public static class Provider implements ParticleProvider<BulletImpactParticleOptions> {
-
-		public Provider(SpriteSet pSprites) {
-			sprites = pSprites;
-		}
-
-		@Override
-		public Particle createParticle(BulletImpactParticleOptions pType, ClientLevel pLevel, double pX, double pY, double pZ,
-		                               double pXSpeed, double pYSpeed, double pZSpeed) {
-
-			if (sprites != null) {
-				return new BulletImpactParticle(pLevel, pX, pY, pZ, pXSpeed, pYSpeed, pZSpeed, sprites, pType.getBlockID());
-			}
-			return null;
-		}
-	}
 
 	protected BulletImpactParticle(ClientLevel level, double x, double y, double z,
 	                               double xSpeed, double ySpeed,
 	                               double zSpeed, SpriteSet spriteSet, int blockID) {
 
-		super(level, x, y, z, 0.0D, 0.0D, 0.0D);
+		super(level, x, y, z, spriteSet.first());
 
 		Vector3f color = getColorFromBlock(blockID);
 
@@ -84,13 +71,13 @@ public class BulletImpactParticle extends TextureSheetParticle {
 	}
 
 	@Override
-	public ParticleRenderType getRenderType() {
-		return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
+	public float getQuadSize(float pScaleFactor) {
+		return quadSize * Mth.clamp(((float) age + pScaleFactor) / (float) lifetime * 32.0F, 0.0F, 1.0F);
 	}
 
 	@Override
-	public float getQuadSize(float pScaleFactor) {
-		return quadSize * Mth.clamp(((float) age + pScaleFactor) / (float) lifetime * 32.0F, 0.0F, 1.0F);
+	protected Layer getLayer() {
+		return Layer.OPAQUE;
 	}
 
 	@Override
@@ -98,6 +85,19 @@ public class BulletImpactParticle extends TextureSheetParticle {
 		super.tick();
 		if (sprites != null) {
 			setSpriteFromAge(sprites);
+		}
+	}
+
+	public static class Provider implements ParticleProvider<BulletImpactParticleOptions> {
+
+		public Provider(SpriteSet pSprites) {
+			sprites = pSprites;
+		}
+
+		@Nullable
+		@Override
+		public Particle createParticle(BulletImpactParticleOptions type, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, RandomSource random) {
+			return sprites != null ? new BulletImpactParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, sprites, type.blockID()) : null;
 		}
 	}
 }

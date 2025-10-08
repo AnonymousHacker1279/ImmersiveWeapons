@@ -20,7 +20,7 @@ public abstract class ProjectileMixin {
 	private void tick(CallbackInfo ci) {
 		Entity self = (Entity) (Object) this;
 
-		if (hasBeenShot && !self.level().isClientSide) {
+		if (hasBeenShot && !self.level().isClientSide()) {
 			PacketDistributor.sendToPlayersTrackingEntity(self, new ArrowGravityPayload(self.getGravity(), self.getId()));
 		}
 

@@ -120,7 +120,7 @@ public class FamilyGenerator extends RecipeGenerator {
 			ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.BUILDING_BLOCKS, family.ceilingHangingSign().get(), 6)
 					.group("sign")
 					.define('a', family.strippedLog().get())
-					.define('b', Items.CHAIN)
+					.define('b', Items.IRON_CHAIN)  // TODO: check if vanilla recipe uses tag or item
 					.pattern("b b")
 					.pattern("aaa")
 					.pattern("aaa")

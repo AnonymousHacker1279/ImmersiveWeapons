@@ -149,7 +149,7 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 	 * Set the entity's combat AI.
 	 */
 	void setCombatTask() {
-		if (!level().isClientSide) {
+		if (!level().isClientSide()) {
 			goalSelector.removeGoal(meleeAttackGoal);
 			if (getItemInHand(InteractionHand.MAIN_HAND).getItem() == Items.AIR) {
 				populateDefaultEquipmentSlots(random, level().getCurrentDifficultyAt(blockPosition()));

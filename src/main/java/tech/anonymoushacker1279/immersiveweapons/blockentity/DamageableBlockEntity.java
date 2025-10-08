@@ -83,7 +83,7 @@ public class DamageableBlockEntity extends BlockEntity {
 	 * @param pos   the <code>BlockPos</code> the block is at
 	 */
 	public void takeDamage(BlockState state, Level level, BlockPos pos, IntegerProperty damageStage) {
-		if (level.isClientSide || !IWConfigs.SERVER.blockDecay.getAsBoolean()) {
+		if (level.isClientSide() || !IWConfigs.SERVER.blockDecay.getAsBoolean()) {
 			return;
 		}
 
@@ -113,7 +113,7 @@ public class DamageableBlockEntity extends BlockEntity {
 	 * @return true if the block was repaired, false otherwise
 	 */
 	public boolean repair(ItemStack repairStack, Item repairItem, BlockState state, Level level, BlockPos pos, Player player, IntegerProperty damageStage) {
-		if (level.isClientSide) {
+		if (level.isClientSide()) {
 			return false;
 		}
 
