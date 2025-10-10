@@ -4,24 +4,20 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.item.ItemModelResolver;
 import net.minecraft.client.renderer.item.ItemStackRenderState;
 import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.world.level.block.ShelfBlock;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.ShelfBlockEntity;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.state.GenericDirectionalInventoryRenderState;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.state.GenericInventoryRenderState;
 
-public class ShelfRenderer implements BlockEntityRenderer<ShelfBlockEntity, GenericDirectionalInventoryRenderState> {
-
-	private final ItemModelResolver itemModelResolver;
-
-	public ShelfRenderer(BlockEntityRendererProvider.Context context) {
-		itemModelResolver = context.itemModelResolver();
-	}
+public record ShelfRenderer(
+		ItemModelResolver itemModelResolver) implements BlockEntityRenderer<ShelfBlockEntity, GenericDirectionalInventoryRenderState> {
 
 	@Override
 	public GenericDirectionalInventoryRenderState createRenderState() {
@@ -30,7 +26,8 @@ public class ShelfRenderer implements BlockEntityRenderer<ShelfBlockEntity, Gene
 
 	@Override
 	public void extractRenderState(ShelfBlockEntity blockEntity, GenericDirectionalInventoryRenderState state, float partialTick, Vec3 cameraPos, @Nullable ModelFeatureRenderer.CrumblingOverlay crumblingOverlay) {
-		GenericInventoryRenderState.extractBaseState(blockEntity, state, itemModelResolver, partialTick, cameraPos, crumblingOverlay);
+		GenericInventoryRenderState.extractBaseState(blockEntity, state, itemModelResolver, partialTick, crumblingOverlay);
+		state.facing = blockEntity.getBlockState().getValue(ShelfBlock.FACING);
 	}
 
 	@Override
@@ -69,7 +66,7 @@ public class ShelfRenderer implements BlockEntityRenderer<ShelfBlockEntity, Gene
 				// Scale render
 				stack.scale(0.375F, 0.375F, 0.375F);
 
-				itemStackRenderState.submit(stack, collector, 0, 0, 0);
+				itemStackRenderState.submit(stack, collector, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
 
 				stack.popPose();
 			}

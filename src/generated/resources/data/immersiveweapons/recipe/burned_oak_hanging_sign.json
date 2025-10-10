@@ -4,7 +4,7 @@
   "group": "sign",
   "key": {
     "a": "immersiveweapons:stripped_burned_oak_log",
-    "b": "minecraft:chain"
+    "b": "minecraft:iron_chain"
   },
   "pattern": [
     "b b",

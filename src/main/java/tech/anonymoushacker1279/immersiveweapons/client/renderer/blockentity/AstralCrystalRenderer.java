@@ -5,24 +5,19 @@ import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.item.ItemModelResolver;
 import net.minecraft.client.renderer.item.ItemStackRenderState;
 import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.AstralCrystalBlockEntity;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.state.GenericInventoryRenderState;
 
-public class AstralCrystalRenderer implements BlockEntityRenderer<AstralCrystalBlockEntity, GenericInventoryRenderState> {
-
-	private final ItemModelResolver itemModelResolver;
-
-	public AstralCrystalRenderer(BlockEntityRendererProvider.Context context) {
-		itemModelResolver = context.itemModelResolver();
-	}
+public record AstralCrystalRenderer(
+		ItemModelResolver itemModelResolver) implements BlockEntityRenderer<AstralCrystalBlockEntity, GenericInventoryRenderState> {
 
 	@Override
 	public GenericInventoryRenderState createRenderState() {
@@ -31,7 +26,7 @@ public class AstralCrystalRenderer implements BlockEntityRenderer<AstralCrystalB
 
 	@Override
 	public void extractRenderState(AstralCrystalBlockEntity blockEntity, GenericInventoryRenderState state, float partialTick, Vec3 cameraPos, @Nullable ModelFeatureRenderer.CrumblingOverlay crumblingOverlay) {
-		GenericInventoryRenderState.extractBaseState(blockEntity, state, itemModelResolver, partialTick, cameraPos, crumblingOverlay);
+		GenericInventoryRenderState.extractBaseState(blockEntity, state, itemModelResolver, partialTick, crumblingOverlay);
 	}
 
 	@Override
@@ -71,7 +66,7 @@ public class AstralCrystalRenderer implements BlockEntityRenderer<AstralCrystalB
 				// All the items should smoothly rotate around the center of the block
 				if (level != null) {
 					stack.mulPose(Axis.ZP.rotationDegrees((Minecraft.getInstance().level.getGameTime() + state.partialTick) * 2f));
-					itemStackRenderState.submit(stack, collector, 0, 0, 0);
+					itemStackRenderState.submit(stack, collector, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
 				}
 
 				stack.popPose();

@@ -4,11 +4,11 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.item.ItemModelResolver;
 import net.minecraft.client.renderer.item.ItemStackRenderState;
 import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
@@ -16,34 +16,34 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.block.crafting.AmmunitionTableBlock;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.AmmunitionTableBlockEntity;
-import tech.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.state.GenericDirectionalInventoryRenderState;
+import tech.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.state.AmmunitionTableRenderState;
 
-public class AmmunitionTableRenderer implements BlockEntityRenderer<AmmunitionTableBlockEntity, GenericDirectionalInventoryRenderState> {
+public record AmmunitionTableRenderer(
+		ItemModelResolver itemModelResolver) implements BlockEntityRenderer<AmmunitionTableBlockEntity, AmmunitionTableRenderState> {
 
-	private final ItemModelResolver itemModelResolver;
-
-	public AmmunitionTableRenderer(BlockEntityRendererProvider.Context context) {
-		itemModelResolver = context.itemModelResolver();
+	@Override
+	public AmmunitionTableRenderState createRenderState() {
+		return new AmmunitionTableRenderState();
 	}
 
 	@Override
-	public GenericDirectionalInventoryRenderState createRenderState() {
-		return new GenericDirectionalInventoryRenderState(6);
-	}
-
-	@Override
-	public void extractRenderState(AmmunitionTableBlockEntity blockEntity, GenericDirectionalInventoryRenderState state, float partialTick, Vec3 cameraPos, @Nullable ModelFeatureRenderer.CrumblingOverlay crumblingOverlay) {
+	public void extractRenderState(AmmunitionTableBlockEntity blockEntity, AmmunitionTableRenderState state, float partialTick, Vec3 cameraPos, @Nullable ModelFeatureRenderer.CrumblingOverlay crumblingOverlay) {
 		BlockEntityRenderer.super.extractRenderState(blockEntity, state, partialTick, cameraPos, crumblingOverlay);
 
 		state.facing = blockEntity.getBlockState().getValue(AmmunitionTableBlock.FACING);
 		NonNullList<ItemStack> inventory = blockEntity.getInventory();
+		state.outputCount = inventory.getLast().getCount();
 		for (int i = 0; i < inventory.size(); i++) {
-			itemModelResolver.updateForTopItem(state.items[i], inventory.get(i), ItemDisplayContext.FIXED, blockEntity.getLevel(), null, 0);
+			if (inventory.get(i).isEmpty()) {
+				state.items[i] = new ItemStackRenderState();
+			} else {
+				itemModelResolver.updateForTopItem(state.items[i], inventory.get(i), ItemDisplayContext.FIXED, blockEntity.getLevel(), null, 0);
+			}
 		}
 	}
 
 	@Override
-	public void submit(GenericDirectionalInventoryRenderState state, PoseStack stack, SubmitNodeCollector collector, CameraRenderState cameraState) {
+	public void submit(AmmunitionTableRenderState state, PoseStack stack, SubmitNodeCollector collector, CameraRenderState cameraState) {
 		for (ItemStackRenderState itemStackRenderState : state.items) {
 			if (itemStackRenderState != null) {
 				stack.pushPose();
@@ -84,13 +84,13 @@ public class AmmunitionTableRenderer implements BlockEntityRenderer<AmmunitionTa
 					stack.mulPose(Axis.XP.rotationDegrees(-25f));
 
 					// Render the item
-					itemStackRenderState.submit(stack, collector, 0, 0, 0);
+					itemStackRenderState.submit(stack, collector, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
 				} else {
 					stack.translate(0.225D, 0.775D, -0.05D); // Baseline position
 					stack.scale(0.25f, 0.25f, 0.25f);
 					float prevX = 0.0f;
 					float prevZ = 0.0f;
-					for (int i = 0; i < state.items.length; i++) {
+					for (int i = 0; i < state.outputCount; i++) {
 						// Render the items in an Archimede spiral
 						float theta = i * 0.5f;
 						float x = (float) (theta * 0.0235f * Math.cos(theta));
@@ -102,7 +102,7 @@ public class AmmunitionTableRenderer implements BlockEntityRenderer<AmmunitionTa
 						prevZ = z;
 
 						// Render the item
-						itemStackRenderState.submit(stack, collector, 0, 0, 0);
+						itemStackRenderState.submit(stack, collector, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
 					}
 				}
 

@@ -64,7 +64,7 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 		goalSelector.addGoal(100, new RandomLookAroundGoal(this));
 		goalSelector.addGoal(4, new OpenDoorGoal(this, false));
 		goalSelector.addGoal(1, new FloatGoal(this));
-		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Monster.class, 1,
+		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Mob.class, 1,
 				true, true, (entity, level) -> !(entity instanceof Creeper)));
 		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, MinutemanEntity.class, true));
 		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, FieldMedicEntity.class, true));

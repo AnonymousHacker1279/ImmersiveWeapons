@@ -5,23 +5,18 @@ import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.item.ItemModelResolver;
 import net.minecraft.client.renderer.item.ItemStackRenderState;
 import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.CommanderPedestalBlockEntity;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.state.GenericInventoryRenderState;
 
-public class CommanderPedestalRenderer implements BlockEntityRenderer<CommanderPedestalBlockEntity, GenericInventoryRenderState> {
-
-	private final ItemModelResolver itemModelResolver;
-
-	public CommanderPedestalRenderer(BlockEntityRendererProvider.Context context) {
-		itemModelResolver = context.itemModelResolver();
-	}
+public record CommanderPedestalRenderer(
+		ItemModelResolver itemModelResolver) implements BlockEntityRenderer<CommanderPedestalBlockEntity, GenericInventoryRenderState> {
 
 	@Override
 	public GenericInventoryRenderState createRenderState() {
@@ -30,7 +25,7 @@ public class CommanderPedestalRenderer implements BlockEntityRenderer<CommanderP
 
 	@Override
 	public void extractRenderState(CommanderPedestalBlockEntity blockEntity, GenericInventoryRenderState state, float partialTick, Vec3 cameraPos, @Nullable ModelFeatureRenderer.CrumblingOverlay crumblingOverlay) {
-		GenericInventoryRenderState.extractBaseState(blockEntity, state, itemModelResolver, partialTick, cameraPos, crumblingOverlay);
+		GenericInventoryRenderState.extractBaseState(blockEntity, state, itemModelResolver, partialTick, crumblingOverlay);
 	}
 
 	@Override
@@ -60,7 +55,7 @@ public class CommanderPedestalRenderer implements BlockEntityRenderer<CommanderP
 				// Scale the item
 				stack.scale(0.25F, 0.25F, 0.25F);
 
-				itemStackRenderState.submit(stack, collector, 0, 0, 0);
+				itemStackRenderState.submit(stack, collector, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
 
 				stack.popPose();
 			}

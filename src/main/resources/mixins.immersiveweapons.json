@@ -4,7 +4,6 @@
 	"mixins": [
 		"AbstractArrowMixin",
 		"BaseFireBlockMixin",
-		"ClientboundSetEntityMotionPacketMixin",
 		"CombatRulesMixin",
 		"EnchantmentMixin",
 		"EntityMixin",

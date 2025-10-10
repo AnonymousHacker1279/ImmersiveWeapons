@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.model.MusketBallModel;
@@ -43,7 +44,7 @@ public class MusketBallRenderer extends EntityRenderer<BulletEntity, LivingEntit
 		stack.scale(1.25f, 1.25f, 1.25f);
 		stack.translate(-0.025f, 0.025f, -0.025f);
 
-		collector.submitModelPart(model.root(), stack, renderType, 0, 0, null);
+		collector.submitModelPart(model.root(), stack, renderType, state.lightCoords, OverlayTexture.NO_OVERLAY, null);
 
 		stack.popPose();
 	}

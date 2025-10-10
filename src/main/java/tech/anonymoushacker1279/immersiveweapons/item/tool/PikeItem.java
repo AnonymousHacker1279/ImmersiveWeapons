@@ -11,6 +11,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.item.ToolMaterial;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.level.Level;
@@ -95,5 +96,10 @@ public class PikeItem extends Item implements HitEffectUtils {
 								Operation.ADD_VALUE),
 						EquipmentSlotGroup.MAINHAND)
 				.build();
+	}
+
+	@Override
+	public ItemUseAnimation getUseAnimation(ItemStack stack) {
+		return ItemUseAnimation.SPEAR;
 	}
 }

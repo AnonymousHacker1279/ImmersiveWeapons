@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.model.CannonballModel;
@@ -39,7 +40,7 @@ public class CannonballRenderer extends EntityRenderer<CannonballEntity, LivingE
 		stack.scale(1.25f, 1.25f, 1.25f);
 		stack.translate(-0.125f, 0.0125f, -0.125f);
 
-		collector.submitModelPart(model.root(), stack, RENDER_TYPE, 0, 0, null);
+		collector.submitModelPart(model.root(), stack, RENDER_TYPE, state.lightCoords, OverlayTexture.NO_OVERLAY, null);
 
 		stack.popPose();
 	}
