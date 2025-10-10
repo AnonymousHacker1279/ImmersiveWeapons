@@ -272,9 +272,7 @@ public class EvilEyeEntity extends Mob implements Enemy, GrantAdvancementOnDisco
 		setSize(valueInput.getIntOr("Size", 0));
 		entityData.set(SUMMONED_BY_STAFF, valueInput.getBooleanOr("SummonedByStaff", false));
 
-		valueInput.read("Target", UUIDUtil.CODEC).ifPresent(uuid -> {
-			targetedEntityUUID = uuid;
-		});
+		valueInput.read("Target", UUIDUtil.CODEC).ifPresent(uuid -> targetedEntityUUID = uuid);
 	}
 
 	@Override

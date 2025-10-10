@@ -4,17 +4,19 @@ import net.minecraft.core.Holder;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceWithEnchantedBonusCondition;
-import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import tech.anonymoushacker1279.immersiveweapons.api.events.ComputeEnchantedLootBonusEvent;
 
 /**
- * Loot-related mixins in this package are based on Puzzles Lib's implementation.
- * Provided as a solution to NeoForge
+ * Loot-related mixins in this package are based on Puzzles Lib's implementation. Provided as a solution to NeoForge
  * <a href="https://github.com/neoforged/NeoForge/issues/1112">issue #1112</a>.
  * <br>
- * <a href="https://github.com/Fuzss/puzzleslib/blob/main/1.21.1/NeoForge/src/main/java/fuzs/puzzleslib/neoforge/mixin/LootItemRandomChanceWithEnchantedBonusConditionNeoForgeMixin.java">Source</a>
+ * <a
+ * href="https://github.com/Fuzss/puzzleslib/blob/main/1.21.1/NeoForge/src/main/java/fuzs/puzzleslib/neoforge/mixin/LootItemRandomChanceWithEnchantedBonusConditionNeoForgeMixin.java">Source</a>
  */
 @Mixin(LootItemRandomChanceWithEnchantedBonusCondition.class)
 public class LootItemRandomChanceWithEnchantedBonusConditionMixin {

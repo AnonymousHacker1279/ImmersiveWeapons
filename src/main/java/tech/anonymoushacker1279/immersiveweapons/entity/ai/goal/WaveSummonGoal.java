@@ -11,7 +11,9 @@ import net.minecraft.world.phys.AABB;
 import tech.anonymoushacker1279.immersiveweapons.entity.WaveSummoningBoss;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public abstract class WaveSummonGoal<T extends Mob & WaveSummoningBoss> extends Goal {
 

@@ -214,8 +214,8 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 		Monster monster = serverLevel.getNearestEntity(Monster.class, TargetingConditions.forCombat(), null, getX(), getY(), getZ(), getBoundingBox().inflate(7));
 		MinutemanEntity minuteman = serverLevel.getNearestEntity(MinutemanEntity.class, TargetingConditions.forNonCombat(), null, getX(), getY(), getZ(), getBoundingBox().inflate(16));
 
-		if (monster != null && minuteman != null && getOwner() instanceof LivingEntity owner) {
-			if (!minuteman.isAngryAt(owner, serverLevel)) {
+		if (monster != null && minuteman != null && getOwner() instanceof LivingEntity ownerEntity) {
+			if (!minuteman.isAngryAt(ownerEntity, serverLevel)) {
 				minuteman.aggroNearbyMinutemen(getBoundingBox(), monster);
 			}
 		}

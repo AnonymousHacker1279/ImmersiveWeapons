@@ -5,7 +5,9 @@ import org.jetbrains.annotations.ApiStatus.AvailableSince;
 import org.jetbrains.annotations.ApiStatus.Internal;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
 
 @SuppressWarnings("unused")
 public class PluginHandler {
@@ -15,8 +17,8 @@ public class PluginHandler {
 	private static final LinkedHashSet<String> PLUGIN_NAMES = new LinkedHashSet<>(0);
 
 	/**
-	 * Initialize plugins. This should NOT be called in your own code, IW will automatically initialize plugins
-	 * during its common setup stage.
+	 * Initialize plugins. This should NOT be called in your own code, IW will automatically initialize plugins during
+	 * its common setup stage.
 	 *
 	 * @param event the {@link FMLCommonSetupEvent} instance
 	 */
@@ -64,8 +66,8 @@ public class PluginHandler {
 	}
 
 	/**
-	 * Check if a plugin has been registered. Note, a plugin may be registered but not active. If you are checking
-	 * if a plugin is active, use {@link #isPluginActive(String)} instead.
+	 * Check if a plugin has been registered. Note, a plugin may be registered but not active. If you are checking if a
+	 * plugin is active, use {@link #isPluginActive(String)} instead.
 	 *
 	 * @param name the name of the plugin
 	 * @return true if the plugin has been registered, false otherwise

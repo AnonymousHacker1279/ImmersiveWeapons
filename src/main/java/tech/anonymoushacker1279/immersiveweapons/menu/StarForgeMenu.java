@@ -31,7 +31,7 @@ public class StarForgeMenu extends AbstractContainerMenu {
 	public final Container container;
 	private final ContainerData containerData;
 
-	public List<StarForgeRecipe> availableRecipes = new ArrayList<>(25);
+	public final List<StarForgeRecipe> availableRecipes = new ArrayList<>(25);
 	public static final List<RecipeHolder<StarForgeRecipe>> ALL_RECIPES = new ArrayList<>(10);
 
 	public StarForgeMenu(int containerID, Inventory inventory, List<ResourceKey<Recipe<?>>> availableRecipeLocations) {

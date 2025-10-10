@@ -22,21 +22,16 @@ import java.nio.file.Path;
 import java.util.Map.Entry;
 import java.util.concurrent.CompletableFuture;
 
-public class StructureUpdater implements DataProvider {
-
-	private final PackOutput output;
-	private final MultiPackResourceManager resources;
+public record StructureUpdater(PackOutput output, MultiPackResourceManager resources) implements DataProvider {
 
 	/**
 	 * This data provider is used to update old NBT structures to the latest version. Any updated structure files will
 	 * need to be copied out of the generated data folder and into the appropriate resource pack folder.
 	 *
-	 * @param output          a <code>PackOutput</code> instance
-	 * @param resourceManager a <code>MultiPackResourceManager</code> instance
+	 * @param output    a <code>PackOutput</code> instance
+	 * @param resources a <code>MultiPackResourceManager</code> instance
 	 */
-	public StructureUpdater(PackOutput output, MultiPackResourceManager resourceManager) {
-		this.output = output;
-		this.resources = resourceManager;
+	public StructureUpdater {
 	}
 
 	@Override

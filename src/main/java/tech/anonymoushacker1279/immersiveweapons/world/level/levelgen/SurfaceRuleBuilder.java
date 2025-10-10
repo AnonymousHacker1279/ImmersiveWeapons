@@ -102,7 +102,7 @@ public class SurfaceRuleBuilder {
 	 */
 	public SurfaceRules.RuleSource build() {
 		Collections.sort(rules);
-		List<SurfaceRules.RuleSource> ruleList = rules.stream().map(SurfaceRuleEntry::getRule).toList();
+		List<SurfaceRules.RuleSource> ruleList = rules.stream().map(SurfaceRuleEntry::rule).toList();
 		SurfaceRules.RuleSource[] ruleArray = ruleList.toArray(RULE_SOURCES);
 		SurfaceRules.RuleSource rule = SurfaceRules.sequence(ruleArray);
 		if (biomeKey != null) {
@@ -139,18 +139,7 @@ public class SurfaceRuleBuilder {
 		return this;
 	}
 
-	public static class SurfaceRuleEntry implements Comparable<SurfaceRuleEntry> {
-		private final SurfaceRules.RuleSource rule;
-		private final byte priority;
-
-		public SurfaceRuleEntry(int priority, SurfaceRules.RuleSource rule) {
-			this.priority = (byte) priority;
-			this.rule = rule;
-		}
-
-		protected SurfaceRules.RuleSource getRule() {
-			return rule;
-		}
+	public record SurfaceRuleEntry(int priority, SurfaceRules.RuleSource rule) implements Comparable<SurfaceRuleEntry> {
 
 		@Override
 		public int compareTo(SurfaceRuleEntry entry) {

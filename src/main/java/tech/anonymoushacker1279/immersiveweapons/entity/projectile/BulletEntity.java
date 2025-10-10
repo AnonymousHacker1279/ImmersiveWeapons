@@ -60,15 +60,8 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 		initialPos = shooter.position();
 	}
 
-	public static class BulletEntityBuilder implements HitEffectUtils {
-
-		private final EntityType<? extends Arrow> entityType;
-		private final Item referenceItem;
-
-		public BulletEntityBuilder(EntityType<? extends Arrow> entityType, Item referenceItem) {
-			this.entityType = entityType;
-			this.referenceItem = referenceItem;
-		}
+	public record BulletEntityBuilder(EntityType<? extends Arrow> entityType,
+	                                  Item referenceItem) implements HitEffectUtils {
 
 		public BulletEntity build(Level level) {
 			BulletEntity bulletEntity = new BulletEntity(entityType, level);

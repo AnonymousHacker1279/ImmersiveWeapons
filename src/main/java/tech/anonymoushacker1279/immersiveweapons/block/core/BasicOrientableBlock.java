@@ -13,8 +13,7 @@ public class BasicOrientableBlock extends HorizontalDirectionalBlock {
 	public static final MapCodec<BasicOrientableBlock> CODEC = simpleCodec(BasicOrientableBlock::new);
 
 	/**
-	 * Constructor for BasicOrientableBlock.
-	 * This class creates a block with a DirectionProperty.
+	 * Constructor for BasicOrientableBlock. This class creates a block with a DirectionProperty.
 	 *
 	 * @param properties the <code>Properties</code> of the block
 	 */
@@ -39,8 +38,7 @@ public class BasicOrientableBlock extends HorizontalDirectionalBlock {
 	}
 
 	/**
-	 * Set placement properties.
-	 * Sets the facing direction of the block for placement.
+	 * Set placement properties. Sets the facing direction of the block for placement.
 	 *
 	 * @param context the <code>BlockItemUseContext</code> during placement
 	 * @return BlockState

@@ -77,15 +77,8 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 		}
 	}
 
-	public static class ArrowEntityBuilder implements HitEffectUtils {
-
-		private final EntityType<? extends Arrow> entityType;
-		private final Item referenceItem;
-
-		public ArrowEntityBuilder(EntityType<? extends Arrow> entityType, Item referenceItem) {
-			this.entityType = entityType;
-			this.referenceItem = referenceItem;
-		}
+	public record ArrowEntityBuilder(EntityType<? extends Arrow> entityType,
+	                                 Item referenceItem) implements HitEffectUtils {
 
 		public CustomArrowEntity build(Level level) {
 			CustomArrowEntity arrowEntity = new CustomArrowEntity(entityType, level);
@@ -152,8 +145,8 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 			// Apply any hit effects from the arrow
 			switch (hitEffect) {
 				case MOLTEN -> {
-					if (getOwner() instanceof LivingEntity owner) {
-						addMoltenEffects(livingEntity, owner);
+					if (getOwner() instanceof LivingEntity ownerEntity) {
+						addMoltenEffects(livingEntity, ownerEntity);
 					}
 				}
 				case TESLA -> addTeslaEffects(livingEntity);

@@ -2,9 +2,13 @@ package tech.anonymoushacker1279.immersiveweapons.data.textures;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.mojang.serialization.*;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.data.*;
+import net.minecraft.data.CachedOutput;
+import net.minecraft.data.DataProvider;
+import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
@@ -23,14 +27,9 @@ import java.util.concurrent.CompletableFuture;
  * <p>
  * Fields under {@link ItemRegistry} and {@link BlockRegistry} are automatically scanned for the annotation.
  */
-public class TextureMetadataGenerator implements DataProvider {
+public record TextureMetadataGenerator(PackOutput packOutput) implements DataProvider {
 
-	private final PackOutput packOutput;
-	protected static final List<TextureMetadata> METADATA = new ArrayList<>(5);
-
-	public TextureMetadataGenerator(PackOutput output) {
-		this.packOutput = output;
-	}
+	private static final List<TextureMetadata> METADATA = new ArrayList<>(5);
 
 	@Override
 	public CompletableFuture<?> run(CachedOutput pOutput) {
