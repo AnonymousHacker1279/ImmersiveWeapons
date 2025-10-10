@@ -117,7 +117,7 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 			} else if (random <= 0.5f) {
 				setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.IRON_SWORD));
 			} else {
-				setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ItemRegistry.COPPER_SWORD.get()));
+				setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.COPPER_SWORD));
 			}
 		}
 	}

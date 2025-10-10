@@ -76,7 +76,6 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 
 		// Nugget tags
 		tag(CommonItemTagGroups.COBALT_NUGGETS).add(ItemRegistry.COBALT_NUGGET.get());
-		tag(CommonItemTagGroups.COPPER_NUGGETS).add(ItemRegistry.COPPER_NUGGET.get());
 		tag(CommonItemTagGroups.METAL_NUGGETS).addTags(
 				CommonItemTagGroups.COBALT_NUGGETS,
 				CommonItemTagGroups.COPPER_NUGGETS,

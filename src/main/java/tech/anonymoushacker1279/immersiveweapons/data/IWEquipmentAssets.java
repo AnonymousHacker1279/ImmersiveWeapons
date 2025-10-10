@@ -12,7 +12,6 @@ public class IWEquipmentAssets {
 			ResourceLocation.withDefaultNamespace("equipment_asset"));
 
 	public static final ResourceKey<EquipmentAsset> MOLTEN = create("molten");
-	public static final ResourceKey<EquipmentAsset> COPPER = create("copper");
 	public static final ResourceKey<EquipmentAsset> TESLA = create("tesla");
 	public static final ResourceKey<EquipmentAsset> COBALT = create("cobalt");
 	public static final ResourceKey<EquipmentAsset> VENTUS = create("ventus");

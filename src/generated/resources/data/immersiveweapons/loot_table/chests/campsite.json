@@ -81,7 +81,7 @@
               "options": "#minecraft:on_random_loot"
             }
           ],
-          "name": "immersiveweapons:copper_axe",
+          "name": "minecraft:copper_axe",
           "weight": 6
         },
         {

@@ -1,5 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.item.materials;
 
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.ToolMaterial;
 import net.neoforged.neoforge.common.Tags;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.common.CommonItemTagGroups;
@@ -9,7 +10,7 @@ import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IW
 public class IWToolMaterials {
 
 	public static final ToolMaterial COPPER = new ToolMaterial(
-			IWBlockTagGroups.INCORRECT_FOR_COPPER_TOOL,
+			BlockTags.INCORRECT_FOR_COPPER_TOOL,
 			180,
 			5.9F,
 			1.0F,

@@ -70,18 +70,6 @@ public class SoundGenerator extends SoundDefinitionsProvider {
 								"armor/equip/ventus/equip_2"),
 						SoundType.SOUND)));
 
-		add(SoundEventRegistry.COPPER_ARMOR_EQUIP.get(), definition()
-				.subtitle("subtitles.immersiveweapons.armor.copper.equip")
-				.with(Sound.sound(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
-								"armor/equip/copper/equip_0"),
-						SoundType.SOUND))
-				.with(Sound.sound(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
-								"armor/equip/copper/equip_1"),
-						SoundType.SOUND))
-				.with(Sound.sound(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
-								"armor/equip/copper/equip_2"),
-						SoundType.SOUND)));
-
 		add(SoundEventRegistry.COBALT_ARMOR_EQUIP.get(), definition()
 				.subtitle("subtitles.immersiveweapons.armor.cobalt.equip")
 				.with(Sound.sound(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,

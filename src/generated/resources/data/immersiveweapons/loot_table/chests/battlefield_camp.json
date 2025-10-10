@@ -81,7 +81,7 @@
               "options": "#minecraft:on_random_loot"
             }
           ],
-          "name": "immersiveweapons:copper_shovel",
+          "name": "minecraft:copper_shovel",
           "weight": 6
         },
         {

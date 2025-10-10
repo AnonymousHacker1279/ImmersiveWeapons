@@ -33,7 +33,7 @@
               "function": "minecraft:set_count"
             }
           ],
-          "name": "immersiveweapons:copper_nugget",
+          "name": "minecraft:copper_nugget",
           "weight": 10
         },
         {
@@ -81,7 +81,7 @@
               "options": "#minecraft:on_random_loot"
             }
           ],
-          "name": "immersiveweapons:copper_pickaxe",
+          "name": "minecraft:copper_pickaxe",
           "weight": 5
         },
         {

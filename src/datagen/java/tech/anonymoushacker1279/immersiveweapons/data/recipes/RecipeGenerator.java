@@ -55,7 +55,6 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		createFlagItems();
 		createGlassItems();
 		createCobaltItems();
-		createCopperItems();
 		createMoltenItems();
 		createVentusItems();
 		createTeslaItems();
@@ -320,14 +319,6 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.group("cobalt")
 				.unlockedBy("raw_cobalt", has(ItemRegistry.RAW_COBALT.get()));
 		create3x3Object(shapedBuilder, ItemRegistry.RAW_COBALT.get());
-	}
-
-	private void createCopperItems() {
-		// Copper nugget
-		ShapelessRecipeBuilder shapelessRecipeBuilder = ShapelessRecipeBuilder.shapeless(itemGetter, RecipeCategory.MISC, ItemRegistry.COPPER_NUGGET.get(), 9)
-				.group("copper_nugget")
-				.unlockedBy("copper_ingot", has(Tags.Items.INGOTS_COPPER));
-		createNuggetFromIngot(shapelessRecipeBuilder, Tags.Items.INGOTS_COPPER);
 	}
 
 	private void createMoltenItems() {

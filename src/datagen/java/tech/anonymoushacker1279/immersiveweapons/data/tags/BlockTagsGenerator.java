@@ -123,9 +123,7 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 		tag(BlockTags.INCORRECT_FOR_GOLD_TOOL)
 				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL)
 				.addTag(IWBlockTagGroups.NEEDS_VOID_TOOL);
-		tag(IWBlockTagGroups.INCORRECT_FOR_COPPER_TOOL)
-				.addTag(BlockTags.NEEDS_DIAMOND_TOOL)
-				.addTag(Blocks.NEEDS_NETHERITE_TOOL)
+		tag(BlockTags.INCORRECT_FOR_COPPER_TOOL)
 				.addTag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL)
 				.addTag(IWBlockTagGroups.NEEDS_VOID_TOOL);
 		tag(BlockTags.INCORRECT_FOR_IRON_TOOL)

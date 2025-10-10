@@ -23,11 +23,6 @@ public class IWItemModelGenerator {
 		itemModels.generateFlatItem(ItemRegistry.MOLTEN_AXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.MOLTEN_SHOVEL.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.MOLTEN_HOE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
-		itemModels.generateFlatItem(ItemRegistry.COPPER_SWORD.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
-		itemModels.generateFlatItem(ItemRegistry.COPPER_PICKAXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
-		itemModels.generateFlatItem(ItemRegistry.COPPER_AXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
-		itemModels.generateFlatItem(ItemRegistry.COPPER_SHOVEL.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
-		itemModels.generateFlatItem(ItemRegistry.COPPER_HOE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.TESLA_SWORD.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.TESLA_PICKAXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.TESLA_AXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
@@ -111,7 +106,6 @@ public class IWItemModelGenerator {
 		itemModels.generateFlatItem(ItemRegistry.OBSIDIAN_ROD.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.WOODEN_TOOL_ROD.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.COBALT_NUGGET.get(), ModelTemplates.FLAT_ITEM);
-		itemModels.generateFlatItem(ItemRegistry.COPPER_NUGGET.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.COBALT_INGOT.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.RAW_COBALT.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.STARSTORM_INGOT.get(), ModelTemplates.FLAT_ITEM);
@@ -284,10 +278,6 @@ public class IWItemModelGenerator {
 		itemModels.generateTrimmableItem(ItemRegistry.MOLTEN_CHESTPLATE.get(), IWEquipmentAssets.MOLTEN, ItemModelGenerators.TRIM_PREFIX_CHESTPLATE, false);
 		itemModels.generateTrimmableItem(ItemRegistry.MOLTEN_LEGGINGS.get(), IWEquipmentAssets.MOLTEN, ItemModelGenerators.TRIM_PREFIX_LEGGINGS, false);
 		itemModels.generateTrimmableItem(ItemRegistry.MOLTEN_BOOTS.get(), IWEquipmentAssets.MOLTEN, ItemModelGenerators.TRIM_PREFIX_BOOTS, false);
-		itemModels.generateTrimmableItem(ItemRegistry.COPPER_HELMET.get(), IWEquipmentAssets.COPPER, ItemModelGenerators.TRIM_PREFIX_HELMET, false);
-		itemModels.generateTrimmableItem(ItemRegistry.COPPER_CHESTPLATE.get(), IWEquipmentAssets.COPPER, ItemModelGenerators.TRIM_PREFIX_CHESTPLATE, false);
-		itemModels.generateTrimmableItem(ItemRegistry.COPPER_LEGGINGS.get(), IWEquipmentAssets.COPPER, ItemModelGenerators.TRIM_PREFIX_LEGGINGS, false);
-		itemModels.generateTrimmableItem(ItemRegistry.COPPER_BOOTS.get(), IWEquipmentAssets.COPPER, ItemModelGenerators.TRIM_PREFIX_BOOTS, false);
 		itemModels.generateTrimmableItem(ItemRegistry.TESLA_HELMET.get(), IWEquipmentAssets.TESLA, ItemModelGenerators.TRIM_PREFIX_HELMET, false);
 		itemModels.generateTrimmableItem(ItemRegistry.TESLA_CHESTPLATE.get(), IWEquipmentAssets.TESLA, ItemModelGenerators.TRIM_PREFIX_CHESTPLATE, false);
 		itemModels.generateTrimmableItem(ItemRegistry.TESLA_LEGGINGS.get(), IWEquipmentAssets.TESLA, ItemModelGenerators.TRIM_PREFIX_LEGGINGS, false);

@@ -19,7 +19,6 @@ public class SoundEventRegistry {
 	public static final DeferredHolder<SoundEvent, SoundEvent> TESLA_ARMOR_EQUIP = register("tesla_armor_equip");
 	public static final DeferredHolder<SoundEvent, SoundEvent> MOLTEN_ARMOR_EQUIP = register("molten_armor_equip");
 	public static final DeferredHolder<SoundEvent, SoundEvent> VENTUS_ARMOR_EQUIP = register("ventus_armor_equip");
-	public static final DeferredHolder<SoundEvent, SoundEvent> COPPER_ARMOR_EQUIP = register("copper_armor_equip");
 	public static final DeferredHolder<SoundEvent, SoundEvent> COBALT_ARMOR_EQUIP = register("cobalt_armor_equip");
 	public static final DeferredHolder<SoundEvent, SoundEvent> ASTRAL_ARMOR_EQUIP = register("astral_armor_equip");
 	public static final DeferredHolder<SoundEvent, SoundEvent> STARSTORM_ARMOR_EQUIP = register("starstorm_armor_equip");

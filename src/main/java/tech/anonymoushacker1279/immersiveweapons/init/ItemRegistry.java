@@ -72,11 +72,6 @@ public class ItemRegistry {
 	@TextureMetadataMarker(frameTime = 5)
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "molten_tool")
 	public static final Supplier<MoltenHoe> MOLTEN_HOE = ITEMS.registerItem("molten_hoe", MoltenHoe::new);
-	public static final Supplier<Item> COPPER_SWORD = ITEMS.registerItem("copper_sword", (properties) -> new Item(properties.sword(IWToolMaterials.COPPER, 3, -2.4f)));
-	public static final Supplier<Item> COPPER_PICKAXE = ITEMS.registerItem("copper_pickaxe", (properties) -> new Item(properties.pickaxe(IWToolMaterials.COPPER, 1, -2.8f)));
-	public static final Supplier<AxeItem> COPPER_AXE = ITEMS.registerItem("copper_axe", (properties) -> new AxeItem(IWToolMaterials.COPPER, 7, -3.1f, properties));
-	public static final Supplier<ShovelItem> COPPER_SHOVEL = ITEMS.registerItem("copper_shovel", (properties) -> new ShovelItem(IWToolMaterials.COPPER, 1.5f, -3.0f, properties));
-	public static final Supplier<HoeItem> COPPER_HOE = ITEMS.registerItem("copper_hoe", (properties) -> new HoeItem(IWToolMaterials.COPPER, -1, -1.0f, properties));
 	@TextureMetadataMarker(frameTime = 2)
 	@TooltipMarker(style = {ChatFormatting.AQUA, ChatFormatting.ITALIC})
 	public static final Supplier<TeslaSword> TESLA_SWORD = ITEMS.registerItem("tesla_sword", TeslaSword::new);
@@ -242,7 +237,6 @@ public class ItemRegistry {
 	public static final Supplier<Item> OBSIDIAN_ROD = ITEMS.registerItem("obsidian_rod", Item::new);
 	public static final Supplier<Item> WOODEN_TOOL_ROD = ITEMS.registerItem("wooden_tool_rod", Item::new);
 	public static final Supplier<Item> COBALT_NUGGET = ITEMS.registerItem("cobalt_nugget", Item::new);
-	public static final Supplier<Item> COPPER_NUGGET = ITEMS.registerItem("copper_nugget", Item::new);
 	public static final Supplier<Item> COBALT_INGOT = ITEMS.registerItem("cobalt_ingot", Item::new);
 	public static final Supplier<Item> RAW_COBALT = ITEMS.registerItem("raw_cobalt", Item::new);
 	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.STARSTORM_ITEMS)
@@ -523,10 +517,6 @@ public class ItemRegistry {
 	public static final Supplier<MoltenArmorItem> MOLTEN_LEGGINGS = ITEMS.registerItem("molten_leggings", (properties) -> new MoltenArmorItem(IWArmorMaterials.MOLTEN, ArmorType.LEGGINGS, properties.fireResistant()));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "molten_armor")
 	public static final Supplier<MoltenArmorItem> MOLTEN_BOOTS = ITEMS.registerItem("molten_boots", (properties) -> new MoltenArmorItem(IWArmorMaterials.MOLTEN, ArmorType.BOOTS, properties.fireResistant()));
-	public static final Supplier<Item> COPPER_HELMET = ITEMS.registerItem("copper_helmet", (properties) -> new Item(properties.humanoidArmor(IWArmorMaterials.COPPER, ArmorType.HELMET)));
-	public static final Supplier<Item> COPPER_CHESTPLATE = ITEMS.registerItem("copper_chestplate", (properties) -> new Item(properties.humanoidArmor(IWArmorMaterials.COPPER, ArmorType.CHESTPLATE)));
-	public static final Supplier<Item> COPPER_LEGGINGS = ITEMS.registerItem("copper_leggings", (properties) -> new Item(properties.humanoidArmor(IWArmorMaterials.COPPER, ArmorType.LEGGINGS)));
-	public static final Supplier<Item> COPPER_BOOTS = ITEMS.registerItem("copper_boots", (properties) -> new Item(properties.humanoidArmor(IWArmorMaterials.COPPER, ArmorType.BOOTS)));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "tesla_armor")
 	public static final Supplier<TeslaArmorItem> TESLA_HELMET = ITEMS.registerItem("tesla_helmet", (properties) -> new TeslaArmorItem(IWArmorMaterials.TESLA, ArmorType.HELMET, properties));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "tesla_armor")
