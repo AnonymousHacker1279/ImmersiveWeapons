@@ -5,7 +5,6 @@ import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Climate.Parameter;
@@ -17,13 +16,13 @@ import net.minecraft.world.level.dimension.LevelStem;
 import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 import tech.anonymoushacker1279.immersiveweapons.data.biomes.IWBiomes;
+import tech.anonymoushacker1279.immersiveweapons.data.noise.NoiseGenerator;
 
 import java.util.List;
 
 public class DimensionGenerator {
 
 	public static final ResourceKey<LevelStem> TILTROS_STEM = ResourceKey.create(Registries.LEVEL_STEM, DimensionTypeGenerator.TILTROS_LEVEL_ID);
-	public static final ResourceKey<NoiseGeneratorSettings> TILTROS_NOISE = ResourceKey.create(Registries.NOISE_SETTINGS, DimensionTypeGenerator.TILTROS_LEVEL_ID);
 	public static final ResourceKey<Level> TILTROS_LEVEL = ResourceKey.create(Registries.DIMENSION, DimensionTypeGenerator.TILTROS_LEVEL_ID);
 
 	public static void bootstrap(BootstrapContext<LevelStem> context) {
@@ -38,10 +37,10 @@ public class DimensionGenerator {
 										List.of(
 												Pair.of(
 														new ParameterPoint(
-																Parameter.point(0.3f),
-																Parameter.point(0.1f),
+																Parameter.point(0.25f),
+																Parameter.point(0.175f),
 																Parameter.point(1.0f),
-																Parameter.point(0.85f),
+																Parameter.point(0.75f),
 																Parameter.point(0.3f),
 																Parameter.point(0.1f),
 																0
@@ -75,7 +74,7 @@ public class DimensionGenerator {
 										)
 								)
 						),
-						noiseGeneratorSettingsHolderGetter.getOrThrow(ResourceKey.create(Registries.NOISE_SETTINGS, ResourceLocation.withDefaultNamespace("overworld")))    // TODO: recreate custom noise settings
+						noiseGeneratorSettingsHolderGetter.getOrThrow(NoiseGenerator.TILTROS)
 				)));
 	}
 

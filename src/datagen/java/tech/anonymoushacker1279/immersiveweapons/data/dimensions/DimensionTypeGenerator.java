@@ -32,7 +32,7 @@ public class DimensionTypeGenerator {
 				256,
 				BlockTags.INFINIBURN_OVERWORLD,
 				TILTROS_LEVEL_ID,
-				0.0F,
+				0.05F,
 				Optional.empty(),
 				new DimensionType.MonsterSettings(false,
 						false,

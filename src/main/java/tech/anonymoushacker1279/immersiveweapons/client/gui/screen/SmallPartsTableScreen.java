@@ -168,11 +168,6 @@ public class SmallPartsTableScreen extends AbstractContainerScreen<SmallPartsMen
 		return true;
 	}
 
-	@Override
-	protected boolean hasClickedOutside(double mouseX, double mouseY, int guiLeft, int guiTop) {
-		return super.hasClickedOutside(mouseX, mouseY, guiLeft, guiTop);    // TODO: check if override needed
-	}
-
 	private void containerChanged() {
 		ItemStack materialStack = menu.getMaterialSlot().getItem();
 		if (materialStack.isEmpty()) {
