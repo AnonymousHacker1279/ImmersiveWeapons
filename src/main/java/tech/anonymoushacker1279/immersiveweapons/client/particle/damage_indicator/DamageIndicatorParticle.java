@@ -5,16 +5,17 @@ import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.phys.Vec3;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 
-import javax.annotation.Nullable;
 import java.awt.*;
 
-// TODO: rework entire class to use TextDisplayElements instead of particles
 public class DamageIndicatorParticle extends Particle {
 
-	private final String damage;
-	private int color;
+	public static final ParticleRenderType RENDER_TYPE = new ParticleRenderType("DAMAGE_INDICATOR");
+
+	final String damage;
+	int color;
 
 	public DamageIndicatorParticle(ClientLevel level, double x, double y, double z,
 	                               double xSpeed, double ySpeed, double zSpeed, float damage) {
@@ -25,11 +26,6 @@ public class DamageIndicatorParticle extends Particle {
 		yd = ySpeed;
 		zd = zSpeed;
 		color = setColorFromDamage(damage);
-	}
-
-	@Override
-	public ParticleRenderType getGroup() {
-		return ParticleRenderType.SINGLE_QUADS;
 	}
 
 	private int setColorFromDamage(float damage) {
@@ -59,12 +55,23 @@ public class DamageIndicatorParticle extends Particle {
 				(int) (startColor.getBlue() + (endColor.getBlue() - startColor.getBlue()) * delta));
 	}
 
-	public static class Provider implements ParticleProvider<DamageIndicatorParticleOptions> {
+	public Vec3 getOldPos() {
+		return new Vec3(xo, yo, zo);
+	}
 
-		@Nullable
+	public int getAge() {
+		return age;
+	}
+
+	@Override
+	public ParticleRenderType getGroup() {
+		return RENDER_TYPE;
+	}
+
+	public static class Provider implements ParticleProvider<DamageIndicatorParticleOptions> {
 		@Override
-		public Particle createParticle(DamageIndicatorParticleOptions type, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, RandomSource p_447205_) {
-			return null;
+		public Particle createParticle(DamageIndicatorParticleOptions type, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, RandomSource random) {
+			return new DamageIndicatorParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, type.damage());
 		}
 	}
 }
