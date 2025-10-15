@@ -30,7 +30,7 @@ public class TiltrosDimensionSpecialEffects extends DimensionSpecialEffects {
 	private final GpuBuffer skyBuffer;
 
 	public TiltrosDimensionSpecialEffects() {
-		super(SkyType.END, true, false);
+		super(SkyType.END, false, false);
 		skyBuffer = buildBuffer();
 	}
 

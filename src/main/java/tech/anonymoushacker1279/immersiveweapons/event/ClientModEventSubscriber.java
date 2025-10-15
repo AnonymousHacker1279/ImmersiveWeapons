@@ -24,6 +24,7 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
+import net.neoforged.neoforge.client.renderstate.RegisterRenderStateModifiersEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.core.WoodTypes;
@@ -279,6 +280,11 @@ public class ClientModEventSubscriber {
 		event.registerBlockEntityRenderer(BlockEntityRegistry.ASTRAL_CRYSTAL_BLOCK_ENTITY.get(), (context) -> new AstralCrystalRenderer(context.itemModelResolver()));
 		event.registerBlockEntityRenderer(BlockEntityRegistry.AMMUNITION_TABLE_BLOCK_ENTITY.get(), (context) -> new AmmunitionTableRenderer(context.itemModelResolver()));
 		event.registerBlockEntityRenderer(BlockEntityRegistry.COMMANDER_PEDESTAL_BLOCK_ENTITY.get(), (context) -> new CommanderPedestalRenderer(context.itemModelResolver()));
+	}
+
+	@SubscribeEvent
+	public static void registerRenderStateModifiers(RegisterRenderStateModifiersEvent event) {
+		event.registerEntityModifier(RockSpiderRenderer.class, (entity, state) -> state.setRenderData(RockSpiderRenderer.DEEPSLATE_VARIANT, entity.isDeepslateVariant()));
 	}
 
 	/**
