@@ -321,6 +321,7 @@ public class IWItemModelGenerator {
 		itemModels.generateFlatItem(ItemRegistry.STORM_CREEPER_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.EVIL_EYE_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.STAR_WOLF_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
+		itemModels.generateFlatItem(ItemRegistry.MOOGLOW_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.SKYGAZER_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.SKELETON_MERCHANT_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
 	}

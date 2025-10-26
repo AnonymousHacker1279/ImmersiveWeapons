@@ -26,6 +26,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
@@ -115,7 +117,7 @@ public class EvilEyeEntity extends Mob implements Enemy, GrantAdvancementOnDisco
 
 	public static AttributeSupplier.Builder registerAttributes() {
 		return Monster.createMonsterAttributes()
-				.add(Attributes.FLYING_SPEED, 0.85D)
+				.add(Attributes.FLYING_SPEED, 0.02D)
 				.add(Attributes.ARMOR, 2.0D);
 	}
 
@@ -252,6 +254,13 @@ public class EvilEyeEntity extends Mob implements Enemy, GrantAdvancementOnDisco
 			}
 		}
 
+		setNoGravity(true);
+
+		BlockPos spawnPos = blockPosition();
+		int groundY = level.getHeightmapPos(Heightmap.Types.WORLD_SURFACE, spawnPos).getY();
+		int spawnY = groundY + 10 + getRandom().nextInt(21);
+		setPos(spawnPos.getX() + 0.5, spawnY, spawnPos.getZ() + 0.5);
+
 		return super.finalizeSpawn(level, difficulty, reason, spawnData);
 	}
 
@@ -273,6 +282,10 @@ public class EvilEyeEntity extends Mob implements Enemy, GrantAdvancementOnDisco
 		entityData.set(SUMMONED_BY_STAFF, valueInput.getBooleanOr("SummonedByStaff", false));
 
 		valueInput.read("Target", UUIDUtil.CODEC).ifPresent(uuid -> targetedEntityUUID = uuid);
+	}
+
+	@Override
+	protected void checkFallDamage(double y, boolean onGround, BlockState state, BlockPos pos) {
 	}
 
 	@Override

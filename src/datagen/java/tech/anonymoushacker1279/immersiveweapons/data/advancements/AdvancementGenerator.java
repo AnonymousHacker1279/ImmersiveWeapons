@@ -47,9 +47,9 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 		// Root advancement
 		AdvancementHolder root = Builder.advancement()
 				.display(ItemRegistry.TESLA_SWORD.get(),
-						createTitle("root").withStyle(ChatFormatting.RED),
+						createTitle("root").withStyle(ChatFormatting.DARK_RED),
 						createDescription("root"),
-						ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/block/red_stained_bulletproof_glass.png"),
+						ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/red_stained_bulletproof_glass"),
 						AdvancementType.TASK, false, false, false)
 				.addCriterion("exist",
 						PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.inDimension(Level.OVERWORLD)))
@@ -1121,6 +1121,7 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 				.addCriterion("discover_storm_creeper", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.STORM_CREEPER_ENTITY.get()))
 				.addCriterion("discover_evil_eye", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.EVIL_EYE_ENTITY.get()))
 				.addCriterion("discover_star_wolf", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.STAR_WOLF_ENTITY.get()))
+				.addCriterion("discover_mooglow", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.MOOGLOW_ENTITY.get()))
 				.addCriterion("discover_skygazer", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.SKYGAZER_ENTITY.get()))
 				.addCriterion("discover_skeleton_merchant", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.SKELETON_MERCHANT_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(150))
@@ -1242,6 +1243,15 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.STAR_WOLF_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, prefixString("discover_star_wolf"));
+
+		Builder.advancement().parent(entityDiscovery)
+				.display(BlockItemRegistry.MOONGLOW_ITEM.get(),
+						createTitle("discover_mooglow"),
+						createDescription("discover_mooglow"),
+						null, AdvancementType.TASK, true, true, false)
+				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.MOOGLOW_ENTITY.get()))
+				.rewards(AdvancementRewards.Builder.experience(20))
+				.save(consumer, prefixString("discover_mooglow"));
 
 		Builder.advancement().parent(entityDiscovery)
 				.display(Items.BOOK,

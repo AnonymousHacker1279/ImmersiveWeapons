@@ -1076,6 +1076,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("discover_evil_eye.description", "Discover an Evil Eye, a detached eye which wanders the Deadman's Desert");
 		addAdvancement("discover_star_wolf.title", "Bigger Dogs");
 		addAdvancement("discover_star_wolf.description", "Discover a Star Wolf, a stronger and larger wolf");
+		addAdvancement("discover_mooglow.title", "Bovine Botanist");
+		addAdvancement("discover_mooglow.description", "Discover a Mooglow, a bovine creature sporting Moonglow plants");
 		addAdvancement("discover_skygazer.title", "Finally, Some Decent Trades");
 		addAdvancement("discover_skygazer.description", "Discover a Skygazer, a trader which resides in the Starlight Plains");
 		addAdvancement("discover_skeleton_merchant.title", "Cavern Trader");

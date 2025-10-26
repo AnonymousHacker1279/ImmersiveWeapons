@@ -601,6 +601,7 @@ public class ItemRegistry {
 	public static final Supplier<SpawnEggItem> STORM_CREEPER_SPAWN_EGG = ITEMS.registerItem("storm_creeper_spawn_egg", (properties) -> new SpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.STORM_CREEPER_ENTITY.get())));
 	public static final Supplier<SpawnEggItem> EVIL_EYE_SPAWN_EGG = ITEMS.registerItem("evil_eye_spawn_egg", (properties) -> new SpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.EVIL_EYE_ENTITY.get())));
 	public static final Supplier<SpawnEggItem> STAR_WOLF_SPAWN_EGG = ITEMS.registerItem("star_wolf_spawn_egg", (properties) -> new SpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.STAR_WOLF_ENTITY.get())));
+	public static final Supplier<SpawnEggItem> MOOGLOW_SPAWN_EGG = ITEMS.registerItem("mooglow_spawn_egg", (properties) -> new SpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.MOOGLOW_ENTITY.get())));
 	public static final Supplier<SpawnEggItem> SKYGAZER_SPAWN_EGG = ITEMS.registerItem("skygazer_spawn_egg", (properties) -> new SpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.SKYGAZER_ENTITY.get())));
 	public static final Supplier<SpawnEggItem> SKELETON_MERCHANT_SPAWN_EGG = ITEMS.registerItem("skeleton_merchant_spawn_egg", (properties) -> new SpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.SKELETON_MERCHANT_ENTITY.get())));
 }

@@ -106,7 +106,7 @@
         "type": "immersiveweapons:lava_revenant",
         "maxCount": 1,
         "minCount": 1,
-        "weight": 15
+        "weight": 10
       }
     ],
     "underground_water_creature": [],

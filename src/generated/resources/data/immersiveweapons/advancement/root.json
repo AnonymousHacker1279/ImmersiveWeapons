@@ -19,7 +19,7 @@
   },
   "display": {
     "announce_to_chat": false,
-    "background": "immersiveweapons:textures/block/red_stained_bulletproof_glass.png",
+    "background": "immersiveweapons:block/red_stained_bulletproof_glass",
     "description": {
       "translate": "advancements.immersiveweapons.root.description"
     },
@@ -29,7 +29,7 @@
     },
     "show_toast": false,
     "title": {
-      "color": "red",
+      "color": "dark_red",
       "translate": "advancements.immersiveweapons.root.title"
     }
   },
