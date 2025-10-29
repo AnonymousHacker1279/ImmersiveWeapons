@@ -83,11 +83,11 @@ public class LavaRevenantEntity extends Mob implements Enemy, GrantAdvancementOn
 		moveControl = new LavaRevenantMoveControl(this);
 		lookControl = new LookControl(this);
 
-		wing1 = new LavaRevenantPart(this, "wing", 3.0F, 1F);
-		wing2 = new LavaRevenantPart(this, "wing", 3.0F, 1F);
-		head = new LavaRevenantPart(this, "head", 2.0F, 1.5F);
-		body = new LavaRevenantPart(this, "body", 3.5F, 1.5F);
-		tail = new LavaRevenantPart(this, "tail", 1.25F, 1.0F);
+		wing1 = new LavaRevenantPart(this, "wing", 3.25F, 1.25F);
+		wing2 = new LavaRevenantPart(this, "wing", 3.25F, 1.25F);
+		head = new LavaRevenantPart(this, "head", 2.5F, 1.75F);
+		body = new LavaRevenantPart(this, "body", 4.0F, 1.75F);
+		tail = new LavaRevenantPart(this, "tail", 1.25F, 1.25F);
 		subEntities = new LavaRevenantPart[]{wing1, wing2, head, body, tail};
 		noPhysics = true;
 		setId(ENTITY_COUNTER.getAndAdd(subEntities.length + 1) + 1);

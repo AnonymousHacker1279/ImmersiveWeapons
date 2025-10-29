@@ -4,10 +4,14 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
@@ -15,6 +19,7 @@ import net.minecraft.world.item.equipment.ArmorMaterial;
 import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
+import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.VentusArmorPayload;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
@@ -25,7 +30,20 @@ public class VentusArmorItem extends Item implements TickableArmor {
 	private int windShieldDuration = 0;
 
 	public VentusArmorItem(ArmorMaterial material, ArmorType armorType, Properties properties) {
-		super(properties.humanoidArmor(material, armorType));
+		super(properties.humanoidArmor(material, armorType)
+				.attributes(material.createAttributes(armorType)
+						.withModifierAdded(Attributes.FALL_DAMAGE_MULTIPLIER,
+								new AttributeModifier(
+										ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "ventus_fall_damage_reduction_" + armorType.getName()),
+										-0.15d,
+										AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
+								EquipmentSlotGroup.ARMOR)
+						.withModifierAdded(Attributes.SAFE_FALL_DISTANCE,
+								new AttributeModifier(
+										ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "ventus_safe_fall_distance_" + armorType.getName()),
+										10d,
+										AttributeModifier.Operation.ADD_VALUE),
+								EquipmentSlotGroup.ARMOR)));
 	}
 
 	@Override
@@ -85,9 +103,9 @@ public class VentusArmorItem extends Item implements TickableArmor {
 
 			if (effectEnabled) {
 				player.addEffect(new MobEffectInstance(MobEffects.JUMP_BOOST,
-						0, 2, false, false));
+						10, 2, false, false));
 				player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING,
-						0, 0, false, false));
+						10, 0, false, false));
 			}
 		}
 	}
