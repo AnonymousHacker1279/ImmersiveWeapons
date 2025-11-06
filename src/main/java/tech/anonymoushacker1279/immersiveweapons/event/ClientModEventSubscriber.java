@@ -41,6 +41,7 @@ import tech.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact.B
 import tech.anonymoushacker1279.immersiveweapons.client.particle.damage_indicator.DamageIndicatorParticle;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.damage_indicator.DamageIndicatorParticleGroup;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.smoke_grenade.SmokeGrenadeParticle;
+import tech.anonymoushacker1279.immersiveweapons.client.particle.wisp.WispParticle;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.AmmunitionTableRenderer;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.AstralCrystalRenderer;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.CommanderPedestalRenderer;
@@ -271,6 +272,7 @@ public class ClientModEventSubscriber {
 		event.registerEntityRenderer(EntityRegistry.EVIL_EYE_ENTITY.get(), EvilEyeRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.STAR_WOLF_ENTITY.get(), StarWolfRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.MOOGLOW_ENTITY.get(), MooGlowRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.WISP_ENTITY.get(), WispRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.SKYGAZER_ENTITY.get(), SkygazerRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.SKELETON_MERCHANT_ENTITY.get(), SkeletonMerchantRenderer::new);
 
@@ -335,6 +337,7 @@ public class ClientModEventSubscriber {
 		event.registerSpriteSet(ParticleTypesRegistry.STARDUST_LEAVES_PARTICLE.get(), StardustLeavesParticle.Provider::new);
 		event.registerSpriteSet(ParticleTypesRegistry.DEADMANS_DESERT_AMBIENT_PARTICLE.get(), DeadmansDesertAmbientParticle.Provider::new);
 		event.registerSpriteSet(ParticleTypesRegistry.TILTROS_PORTAL_PARTICLE.get(), TiltrosPortalParticle.Provider::new);
+		event.registerSpriteSet(ParticleTypesRegistry.WISP_PARTICLE.get(), WispParticle.Provider::new);
 		event.registerSpecial(ParticleTypesRegistry.DAMAGE_INDICATOR_PARTICLE.get(), new DamageIndicatorParticle.Provider());
 	}
 

@@ -34,8 +34,8 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
-import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.FlyAroundEntityGoal;
-import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.FlyRandomlyGoal;
+import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.EvilEyeFlyRandomlyGoal;
+import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.EvilEyeMoveTowardsTargetGoal;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 
@@ -54,7 +54,7 @@ public class EvilEyeEntity extends Mob implements Enemy, GrantAdvancementOnDisco
 	private final List<Holder<MobEffect>> lowTierDebuffs = new ArrayList<>(5);
 	private final List<Holder<MobEffect>> highTierDebuffs = new ArrayList<>(5);
 
-	private final FlyRandomlyGoal flyRandomlyGoal = new FlyRandomlyGoal(this);
+	private final EvilEyeFlyRandomlyGoal flyRandomlyGoal = new EvilEyeFlyRandomlyGoal(this);
 
 	@Nullable
 	private LivingEntity targetedEntity;
@@ -233,7 +233,7 @@ public class EvilEyeEntity extends Mob implements Enemy, GrantAdvancementOnDisco
 
 	@Override
 	protected void registerGoals() {
-		goalSelector.addGoal(1, new FlyAroundEntityGoal(this));
+		goalSelector.addGoal(1, new EvilEyeMoveTowardsTargetGoal(this));
 	}
 
 	@Override

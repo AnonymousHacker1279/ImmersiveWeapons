@@ -19,6 +19,7 @@ import net.neoforged.neoforgespi.language.IModInfo;
 import org.apache.maven.artifact.versioning.ArtifactVersion;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.entity.ambient.FireflyEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.ambient.WispEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.animal.MooGlowEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.animal.StarWolfEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.*;
@@ -60,6 +61,7 @@ public class ModEventSubscriber {
 		event.put(EntityRegistry.EVIL_EYE_ENTITY.get(), EvilEyeEntity.registerAttributes().build());
 		event.put(EntityRegistry.STAR_WOLF_ENTITY.get(), StarWolfEntity.createAttributes().build());
 		event.put(EntityRegistry.MOOGLOW_ENTITY.get(), MooGlowEntity.createAttributes().build());
+		event.put(EntityRegistry.WISP_ENTITY.get(), WispEntity.createAttributes().build());
 		event.put(EntityRegistry.SKYGAZER_ENTITY.get(), SkygazerEntity.createMobAttributes().build());
 		event.put(EntityRegistry.SKELETON_MERCHANT_ENTITY.get(), SkeletonMerchantEntity.createMobAttributes().build());
 	}
@@ -111,6 +113,7 @@ public class ModEventSubscriber {
 		event.register(EntityRegistry.STAR_WOLF_ENTITY.get(), SpawnPlacementTypes.ON_GROUND, Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules, Operation.REPLACE);
 		event.register(EntityRegistry.MOOGLOW_ENTITY.get(), SpawnPlacementTypes.ON_GROUND, Types.MOTION_BLOCKING_NO_LEAVES, MooGlowEntity::checkSpawnRules, Operation.REPLACE);
 		event.register(EntityRegistry.FIREFLY_ENTITY.get(), SpawnPlacementTypes.ON_GROUND, Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules, Operation.REPLACE);
+		event.register(EntityRegistry.WISP_ENTITY.get(), SpawnPlacementTypes.NO_RESTRICTIONS, Types.MOTION_BLOCKING_NO_LEAVES, WispEntity::checkSpawnRules, Operation.REPLACE);
 	}
 
 	@SubscribeEvent

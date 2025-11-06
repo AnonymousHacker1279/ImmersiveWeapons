@@ -317,11 +317,16 @@ public class IWItemModelGenerator {
 		itemModels.generateFlatItem(ItemRegistry.ROCK_SPIDER_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.CELESTIAL_TOWER_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.STARMITE_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
-		itemModels.generateFlatItem(ItemRegistry.FIREFLY_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
+		itemModels.generateFlatItem(ItemRegistry.FIREFLY_IN_A_BOTTLE.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.STORM_CREEPER_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.EVIL_EYE_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.STAR_WOLF_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.MOOGLOW_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
+		itemModels.generateFlatItem(ItemRegistry.WISP_IN_A_BOTTLE_PURPLE.get(), ModelTemplates.FLAT_ITEM);
+		itemModels.generateFlatItem(ItemRegistry.WISP_IN_A_BOTTLE_RED.get(), ModelTemplates.FLAT_ITEM);
+		itemModels.generateFlatItem(ItemRegistry.WISP_IN_A_BOTTLE_GREEN.get(), ModelTemplates.FLAT_ITEM);
+		itemModels.generateFlatItem(ItemRegistry.WISP_IN_A_BOTTLE_BLUE.get(), ModelTemplates.FLAT_ITEM);
+		itemModels.generateFlatItem(ItemRegistry.WISP_IN_A_BOTTLE_ORANGE.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.SKYGAZER_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.SKELETON_MERCHANT_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
 	}

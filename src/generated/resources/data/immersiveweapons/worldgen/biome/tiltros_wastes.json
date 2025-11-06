@@ -91,7 +91,14 @@
     }
   },
   "spawners": {
-    "ambient": [],
+    "ambient": [
+      {
+        "type": "immersiveweapons:wisp",
+        "maxCount": 2,
+        "minCount": 1,
+        "weight": 50
+      }
+    ],
     "axolotls": [],
     "creature": [],
     "misc": [],

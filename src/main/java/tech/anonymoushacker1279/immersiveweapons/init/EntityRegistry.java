@@ -12,6 +12,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.entity.ambient.FireflyEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.ambient.WispEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.animal.MooGlowEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.animal.StarWolfEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.misc.ChairEntity;
@@ -90,12 +91,13 @@ public class EntityRegistry {
 	@LanguageEntryOverride("Stardust Boat with Chest")
 	public static final Supplier<EntityType<ChestBoat>> STARDUST_CHEST_BOAT_ENTITY = register("stardust_chest_boat", EntityType.Builder.<ChestBoat>of((type, level) -> new ChestBoat(type, level, ItemRegistry.STARDUST_CHEST_BOAT::get), MobCategory.MISC).noLootTable().sized(1.375f, 0.5625f));
 	public static final Supplier<EntityType<StarmiteEntity>> STARMITE_ENTITY = register("starmite", EntityType.Builder.of(StarmiteEntity::new, MobCategory.MONSTER).sized(0.4f, 0.3f).clientTrackingRange(8).notInPeaceful());
-	public static final Supplier<EntityType<FireflyEntity>> FIREFLY_ENTITY = register("firefly", EntityType.Builder.of(FireflyEntity::new, MobCategory.CREATURE).sized(0.15f, 0.15f).clientTrackingRange(8));
+	public static final Supplier<EntityType<FireflyEntity>> FIREFLY_ENTITY = register("firefly", EntityType.Builder.of(FireflyEntity::new, MobCategory.CREATURE).sized(0.15f, 0.15f).noLootTable().clientTrackingRange(8));
 	public static final Supplier<EntityType<MeteorEntity>> METEOR_ENTITY = register("meteor", EntityType.Builder.of(MeteorEntity::new, MobCategory.MISC).noLootTable().sized(0.5f, 0.5f).clientTrackingRange(8));
 	public static final Supplier<EntityType<StormCreeperEntity>> STORM_CREEPER_ENTITY = register("storm_creeper", EntityType.Builder.of(StormCreeperEntity::new, MobCategory.MONSTER).sized(0.6f, 1.7f).clientTrackingRange(8).notInPeaceful());
 	public static final Supplier<EntityType<EvilEyeEntity>> EVIL_EYE_ENTITY = register("evil_eye", EntityType.Builder.of(EvilEyeEntity::new, MobCategory.MONSTER).sized(0.15f, 0.15f).clientTrackingRange(16).notInPeaceful());
 	public static final DeferredHolder<EntityType<?>, EntityType<StarWolfEntity>> STAR_WOLF_ENTITY = registerHolder("star_wolf", EntityType.Builder.of(StarWolfEntity::new, MobCategory.CREATURE).sized(0.7f, 0.95f).clientTrackingRange(8));
 	public static final Supplier<EntityType<MooGlowEntity>> MOOGLOW_ENTITY = register("mooglow", EntityType.Builder.of(MooGlowEntity::new, MobCategory.CREATURE).sized(0.9f, 1.4f).clientTrackingRange(10).eyeHeight(1.3f).passengerAttachments(1.36875F));
+	public static final Supplier<EntityType<WispEntity>> WISP_ENTITY = register("wisp", EntityType.Builder.of(WispEntity::new, MobCategory.AMBIENT).sized(0.25f, 0.25f).noLootTable().clientTrackingRange(8));
 	public static final Supplier<EntityType<SkygazerEntity>> SKYGAZER_ENTITY = register("skygazer", EntityType.Builder.of(SkygazerEntity::new, MobCategory.CREATURE).sized(0.6f, 1.95f).clientTrackingRange(10));
 	public static final Supplier<EntityType<SkeletonMerchantEntity>> SKELETON_MERCHANT_ENTITY = register("skeleton_merchant", EntityType.Builder.of(SkeletonMerchantEntity::new, MobCategory.CREATURE).sized(0.6f, 1.99f).clientTrackingRange(10));
 

@@ -18,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.EvilEyeEntity;
 
-public class FlyRandomlyGoal extends Goal {
+public class EvilEyeFlyRandomlyGoal extends Goal {
 
 	private final EvilEyeEntity entity;
 	@Nullable
@@ -28,7 +28,7 @@ public class FlyRandomlyGoal extends Goal {
 	private static final ResourceKey<Biome> DEADMANS_DESERT = ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "deadmans_desert"));
 	private static final ResourceKey<Level> TILTROS = ResourceKey.create(Registries.DIMENSION, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "tiltros"));
 
-	public FlyRandomlyGoal(EvilEyeEntity eye) {
+	public EvilEyeFlyRandomlyGoal(EvilEyeEntity eye) {
 		entity = eye;
 	}
 

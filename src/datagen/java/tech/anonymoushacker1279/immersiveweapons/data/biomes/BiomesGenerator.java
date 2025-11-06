@@ -122,6 +122,8 @@ public class BiomesGenerator {
 						EntityRegistry.ROCK_SPIDER_ENTITY.get(), 2, 4))
 				.addSpawn(MobCategory.MONSTER, 10, new SpawnerData(
 						EntityRegistry.LAVA_REVENANT_ENTITY.get(), 1, 1))
+				.addSpawn(MobCategory.AMBIENT, 50, new SpawnerData(
+						EntityRegistry.WISP_ENTITY.get(), 1, 2))
 				.addMobCharge(EntityRegistry.LAVA_REVENANT_ENTITY.get(), 1d, 2d);
 
 		return spawnBuilder.build();

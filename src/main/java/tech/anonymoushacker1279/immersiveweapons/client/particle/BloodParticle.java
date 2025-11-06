@@ -20,7 +20,7 @@ public class BloodParticle extends SingleQuadParticle {
 
 		super(level, x, y, z, spriteSet.first());
 		friction = 0.96F;
-		gravity = (float) 0.2;
+		gravity = 0.2f;
 		speedUpWhenYMotionIsBlocked = true;
 		sprites = spriteSet;
 		xd *= (float) 0.0;

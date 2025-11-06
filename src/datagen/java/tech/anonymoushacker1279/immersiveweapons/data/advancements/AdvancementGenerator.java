@@ -1122,6 +1122,7 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 				.addCriterion("discover_evil_eye", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.EVIL_EYE_ENTITY.get()))
 				.addCriterion("discover_star_wolf", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.STAR_WOLF_ENTITY.get()))
 				.addCriterion("discover_mooglow", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.MOOGLOW_ENTITY.get()))
+				.addCriterion("discover_wisp", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.WISP_ENTITY.get()))
 				.addCriterion("discover_skygazer", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.SKYGAZER_ENTITY.get()))
 				.addCriterion("discover_skeleton_merchant", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.SKELETON_MERCHANT_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(150))
@@ -1252,6 +1253,15 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.MOOGLOW_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, prefixString("discover_mooglow"));
+
+		Builder.advancement().parent(entityDiscovery)
+				.display(ItemRegistry.WISP_IN_A_BOTTLE_BLUE.get(),
+						createTitle("discover_wisp"),
+						createDescription("discover_wisp"),
+						null, AdvancementType.TASK, true, true, false)
+				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.WISP_ENTITY.get()))
+				.rewards(AdvancementRewards.Builder.experience(20))
+				.save(consumer, prefixString("discover_wisp"));
 
 		Builder.advancement().parent(entityDiscovery)
 				.display(Items.BOOK,

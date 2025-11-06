@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "immersiveweapons:item/wisp_in_a_bottle_red"
+  }
+}

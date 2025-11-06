@@ -4,11 +4,11 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.EvilEyeEntity;
 
-public class FlyAroundEntityGoal extends Goal {
+public class EvilEyeMoveTowardsTargetGoal extends Goal {
 
 	private final EvilEyeEntity evilEyeEntity;
 
-	public FlyAroundEntityGoal(EvilEyeEntity pMob) {
+	public EvilEyeMoveTowardsTargetGoal(EvilEyeEntity pMob) {
 		evilEyeEntity = pMob;
 	}
 
