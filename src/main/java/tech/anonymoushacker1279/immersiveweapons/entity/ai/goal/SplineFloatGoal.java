@@ -2,43 +2,50 @@ package tech.anonymoushacker1279.immersiveweapons.entity.ai.goal;
 
 import net.minecraft.commands.arguments.EntityAnchorArgument.Anchor;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.entity.ambient.WispEntity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 
-public class WispFloatGoal extends Goal {
+public class SplineFloatGoal extends Goal {
 
-	private final WispEntity entity;
+	private final Mob entity;
+	private final SplineFloatGoalConfig config;
+	private final Predicate<Mob> canUseCondition;
+
 	@Nullable
 	private List<Vec3> splinePath;
 	private int currentPathIndex = 0;
 	private int targetingCooldown;
 	private int pathRecalculationTimer = 0;
 
-	private static final int WAYPOINT_COUNT = 8; // Number of waypoints to generate
-	private static final int SPLINE_SEGMENTS = 12; // Interpolation points between waypoints
-	private static final int SEARCH_RADIUS_HORIZONTAL = 48; // Horizontal search range
-	private static final int SEARCH_RADIUS_VERTICAL = 32; // Vertical search range
-	private static final int MIN_WAYPOINT_DISTANCE = 12; // Minimum distance between waypoints
-	private static final double ARRIVAL_THRESHOLD = 1.5d; // Distance to consider "arrived" at a point
-	private static final int PATH_RECALCULATION_INTERVAL = 600; // Recalculate path every 30 seconds
-	private static final int MAX_Y_LEVEL = 128; // Maximum height for pathfinding
-
-	public WispFloatGoal(WispEntity wisp) {
-		entity = wisp;
+	/**
+	 * Constructor with custom configuration.
+	 *
+	 * @param entity          The mob to control.
+	 * @param config          Configuration for pathfinding behavior.
+	 * @param canUseCondition Additional condition for when the goal can be used.
+	 */
+	public SplineFloatGoal(Mob entity, SplineFloatGoalConfig config, Predicate<Mob> canUseCondition) {
+		this.entity = entity;
+		this.config = config;
+		this.canUseCondition = canUseCondition;
 	}
+
 
 	@Override
 	public boolean canUse() {
-		return entity.getTargetEntity() == null;
+		return canUseCondition.test(entity);
 	}
 
 	@Override
@@ -50,7 +57,7 @@ public class WispFloatGoal extends Goal {
 
 		// Recalculate path periodically to keep movement dynamic
 		pathRecalculationTimer++;
-		if (pathRecalculationTimer >= PATH_RECALCULATION_INTERVAL) {
+		if (pathRecalculationTimer >= config.pathRecalculationInterval()) {
 			splinePath = null;
 			currentPathIndex = 0;
 			pathRecalculationTimer = 0;
@@ -74,7 +81,7 @@ public class WispFloatGoal extends Goal {
 			moveTowards(targetPoint);
 
 			// Check if we've arrived at the current point
-			if (entity.position().distanceTo(targetPoint) < ARRIVAL_THRESHOLD) {
+			if (entity.position().distanceTo(targetPoint) < config.arrivalThreshold()) {
 				currentPathIndex++;
 			}
 		}
@@ -93,8 +100,8 @@ public class WispFloatGoal extends Goal {
 		}
 
 		// Generate spline path from waypoints
-		// Estimate capacity: (waypoints - 1) segments * (SPLINE_SEGMENTS + 1) points per segment
-		int estimatedCapacity = (waypoints.size() - 1) * (SPLINE_SEGMENTS + 1);
+		// Estimate capacity: (waypoints - 1) segments * (splineSegments + 1) points per segment
+		int estimatedCapacity = (waypoints.size() - 1) * (config.splineSegments() + 1);
 		List<Vec3> pathPoints = new ArrayList<>(estimatedCapacity);
 
 		// For Catmull-Rom spline, we need to handle the first and last segments specially
@@ -105,8 +112,8 @@ public class WispFloatGoal extends Goal {
 			Vec3 p3 = i < waypoints.size() - 2 ? waypoints.get(i + 2) : waypoints.get(i + 1);
 
 			// Interpolate between p1 and p2 using Catmull-Rom
-			for (int j = 0; j <= SPLINE_SEGMENTS; j++) {
-				double t = (double) j / SPLINE_SEGMENTS;
+			for (int j = 0; j <= config.splineSegments(); j++) {
+				double t = (double) j / config.splineSegments();
 				Vec3 point = catmullRomInterpolate(p0, p1, p2, p3, t);
 
 				// Verify the point is in open space
@@ -128,11 +135,11 @@ public class WispFloatGoal extends Goal {
 	 * Generates waypoints in open air spaces. Attempts to find positions that are far from obstacles.
 	 */
 	private List<Vec3> generateWaypoints() {
-		List<Vec3> waypoints = new ArrayList<>(WAYPOINT_COUNT);
+		List<Vec3> waypoints = new ArrayList<>(config.waypointCount());
 		Vec3 currentPos = entity.position();
 		waypoints.add(currentPos);
 
-		for (int attempt = 0; attempt < WAYPOINT_COUNT && waypoints.size() < WAYPOINT_COUNT; attempt++) {
+		for (int attempt = 0; attempt < config.waypointCount() && waypoints.size() < config.waypointCount(); attempt++) {
 			Vec3 lastWaypoint = waypoints.getLast();
 
 			// Try multiple times to find a valid waypoint
@@ -157,15 +164,26 @@ public class WispFloatGoal extends Goal {
 	 * @return A candidate waypoint position.
 	 */
 	private Vec3 generateCandidateWaypoint(Vec3 from) {
-		double xOffset = (entity.getRandom().nextDouble() - 0.5d) * 2 * SEARCH_RADIUS_HORIZONTAL;
-		double yOffset = (entity.getRandom().nextDouble() - 0.5d) * 2 * SEARCH_RADIUS_VERTICAL;
-		double zOffset = (entity.getRandom().nextDouble() - 0.5d) * 2 * SEARCH_RADIUS_HORIZONTAL;
+		double xOffset = (entity.getRandom().nextDouble() - 0.5d) * 2 * config.searchRadiusHorizontal();
+		double yOffset = (entity.getRandom().nextDouble() - 0.5d) * 2 * config.searchRadiusVertical();
+		double zOffset = (entity.getRandom().nextDouble() - 0.5d) * 2 * config.searchRadiusHorizontal();
 
 		Vec3 candidate = from.add(xOffset, yOffset, zOffset);
 
+		// If average height above ground is specified, bias the waypoint towards that height
+		if (config.averageHeightAboveGround() > 0) {
+			int groundLevel = entity.level().getHeight(Heightmap.Types.WORLD_SURFACE, BlockPos.containing(candidate));
+			int targetY = groundLevel + config.averageHeightAboveGround();
+
+			// Bias towards the target height (not forced, allows some variation)
+			double currentYDiff = candidate.y - targetY;
+			candidate = new Vec3(candidate.x, candidate.y - (currentYDiff * 0.5d), candidate.z);
+		}
+
 		// Clamp Y coordinate to maximum height
-		if (candidate.y > MAX_Y_LEVEL) {
-			candidate = new Vec3(candidate.x, MAX_Y_LEVEL, candidate.z);
+		int maxY = entity.level().getHeight(Heightmap.Types.WORLD_SURFACE, BlockPos.containing(candidate)) + config.maxYLevelAboveWorld();
+		if (candidate.y > maxY) {
+			candidate = new Vec3(candidate.x, maxY, candidate.z);
 		}
 
 		return candidate;
@@ -180,13 +198,24 @@ public class WispFloatGoal extends Goal {
 	 */
 	private boolean isValidWaypoint(Vec3 from, Vec3 candidate) {
 		// Check minimum distance
-		if (from.distanceTo(candidate) < MIN_WAYPOINT_DISTANCE) {
+		if (from.distanceTo(candidate) < config.minWaypointDistance()) {
 			return false;
 		}
 
 		// Check if the waypoint itself is in open space
 		if (!isOpenSpace(candidate)) {
 			return false;
+		}
+
+		// Check biome constraint if applicable
+		if (config.requiredBiome() != null && config.requiredDimension() != null) {
+			// Only enforce biome constraint if entity was naturally spawned and is in the required dimension
+			if (entity.getSpawnType() == EntitySpawnReason.NATURAL && entity.level().dimension() == config.requiredDimension()) {
+				BlockPos candidatePos = BlockPos.containing(candidate);
+				if (!entity.level().getBiome(candidatePos).is(config.requiredBiome())) {
+					return false;
+				}
+			}
 		}
 
 		// Check if there's a relatively clear path to the waypoint
@@ -247,9 +276,9 @@ public class WispFloatGoal extends Goal {
 		double b3 = t3 - t2;
 
 		// Interpolate each coordinate
-		double x = 0.5 * (b0 * p0.x + b1 * p1.x + b2 * p2.x + b3 * p3.x);
-		double y = 0.5 * (b0 * p0.y + b1 * p1.y + b2 * p2.y + b3 * p3.y);
-		double z = 0.5 * (b0 * p0.z + b1 * p1.z + b2 * p2.z + b3 * p3.z);
+		double x = 0.5d * (b0 * p0.x + b1 * p1.x + b2 * p2.x + b3 * p3.x);
+		double y = 0.5d * (b0 * p0.y + b1 * p1.y + b2 * p2.y + b3 * p3.y);
+		double z = 0.5d * (b0 * p0.z + b1 * p1.z + b2 * p2.z + b3 * p3.z);
 
 		return new Vec3(x, y, z);
 	}

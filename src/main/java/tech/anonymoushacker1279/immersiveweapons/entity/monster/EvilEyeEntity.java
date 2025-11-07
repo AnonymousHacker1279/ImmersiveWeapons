@@ -4,9 +4,12 @@ import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.UUIDUtil;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -25,6 +28,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -33,9 +37,11 @@ import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
+import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
-import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.EvilEyeFlyRandomlyGoal;
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.EvilEyeMoveTowardsTargetGoal;
+import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.SplineFloatGoal;
+import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.SplineFloatGoalConfig;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 
@@ -51,10 +57,21 @@ public class EvilEyeEntity extends Mob implements Enemy, GrantAdvancementOnDisco
 	private static final EntityDataAccessor<Boolean> SUMMONED_BY_STAFF = SynchedEntityData.defineId(EvilEyeEntity.class,
 			EntityDataSerializers.BOOLEAN);
 
+	private static final ResourceKey<Biome> DEADMANS_DESERT = ResourceKey.create(
+			Registries.BIOME,
+			ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "deadmans_desert")
+	);
+	private static final ResourceKey<Level> TILTROS = ResourceKey.create(
+			Registries.DIMENSION,
+			ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "tiltros")
+	);
+
 	private final List<Holder<MobEffect>> lowTierDebuffs = new ArrayList<>(5);
 	private final List<Holder<MobEffect>> highTierDebuffs = new ArrayList<>(5);
 
-	private final EvilEyeFlyRandomlyGoal flyRandomlyGoal = new EvilEyeFlyRandomlyGoal(this);
+	private final SplineFloatGoal splineFloatGoal = new SplineFloatGoal(this,
+			SplineFloatGoalConfig.evilEye(DEADMANS_DESERT, TILTROS),
+			mob -> true);
 
 	@Nullable
 	private LivingEntity targetedEntity;
@@ -117,7 +134,7 @@ public class EvilEyeEntity extends Mob implements Enemy, GrantAdvancementOnDisco
 
 	public static AttributeSupplier.Builder registerAttributes() {
 		return Monster.createMonsterAttributes()
-				.add(Attributes.FLYING_SPEED, 0.02D)
+				.add(Attributes.FLYING_SPEED, 0.05D)
 				.add(Attributes.ARMOR, 2.0D);
 	}
 
@@ -157,8 +174,8 @@ public class EvilEyeEntity extends Mob implements Enemy, GrantAdvancementOnDisco
 					if (validTarget) {
 						targetedEntity = player;
 
-						// Remove the random flying goal
-						goalSelector.removeGoal(flyRandomlyGoal);
+						// Remove the spline flying goal
+						goalSelector.removeGoal(splineFloatGoal);
 					} else {
 						targetedEntity = null;
 					}
@@ -166,7 +183,7 @@ public class EvilEyeEntity extends Mob implements Enemy, GrantAdvancementOnDisco
 			}
 
 			if (targetedEntity == null) {
-				goalSelector.addGoal(2, flyRandomlyGoal);
+				goalSelector.addGoal(2, splineFloatGoal);
 			} else {
 				// Ensure the target is still valid
 				boolean validTarget = !summonedByStaff
@@ -332,8 +349,8 @@ public class EvilEyeEntity extends Mob implements Enemy, GrantAdvancementOnDisco
 
 			targetedEntity = entity;
 
-			// Remove the random flying goal if it exists
-			goalSelector.removeGoal(flyRandomlyGoal);
+			// Remove the spline flying goal if it exists
+			goalSelector.removeGoal(splineFloatGoal);
 		}
 
 		return super.hurtServer(serverLevel, source, amount);

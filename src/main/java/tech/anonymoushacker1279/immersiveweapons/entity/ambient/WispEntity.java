@@ -28,7 +28,8 @@ import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.wisp.WispParticleOptions;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
-import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.WispFloatGoal;
+import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.SplineFloatGoal;
+import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.SplineFloatGoalConfig;
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.WispOrbitEntityGoal;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
@@ -74,7 +75,9 @@ public class WispEntity extends AmbientCreature implements GrantAdvancementOnDis
 	@Override
 	protected void registerGoals() {
 		goalSelector.addGoal(1, new WispOrbitEntityGoal(this));
-		goalSelector.addGoal(2, new WispFloatGoal(this));
+		goalSelector.addGoal(2, new SplineFloatGoal(this,
+				SplineFloatGoalConfig.wisp(),
+				mob -> mob instanceof WispEntity wispEntity && wispEntity.getTargetEntity() == null));
 	}
 
 	@Override
