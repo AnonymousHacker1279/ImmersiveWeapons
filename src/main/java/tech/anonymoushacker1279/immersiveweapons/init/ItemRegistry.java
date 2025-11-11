@@ -135,33 +135,33 @@ public class ItemRegistry {
 
 	// Weapons
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> WOODEN_PIKE = ITEMS.registerItem("wooden_pike", (properties) -> new PikeItem(ToolMaterial.WOOD, -2.6f, properties.repairable(ItemTags.PLANKS)));
+	public static final Supplier<PikeItem> WOODEN_PIKE = ITEMS.registerItem("wooden_pike", (properties) -> new PikeItem(ToolMaterial.WOOD, -3.0f, properties.repairable(ItemTags.PLANKS)));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> STONE_PIKE = ITEMS.registerItem("stone_pike", (properties) -> new PikeItem(ToolMaterial.STONE, -2.6f, properties.repairable(ItemTags.STONE_TOOL_MATERIALS)));
+	public static final Supplier<PikeItem> STONE_PIKE = ITEMS.registerItem("stone_pike", (properties) -> new PikeItem(ToolMaterial.STONE, -3.0f, properties.repairable(ItemTags.STONE_TOOL_MATERIALS)));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> GOLDEN_PIKE = ITEMS.registerItem("golden_pike", (properties) -> new PikeItem(ToolMaterial.GOLD, -2.6f, properties.repairable(Tags.Items.INGOTS_GOLD)));
+	public static final Supplier<PikeItem> GOLDEN_PIKE = ITEMS.registerItem("golden_pike", (properties) -> new PikeItem(ToolMaterial.GOLD, -3.0f, properties.repairable(Tags.Items.INGOTS_GOLD)));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> COPPER_PIKE = ITEMS.registerItem("copper_pike", (properties) -> new PikeItem(IWToolMaterials.COPPER, -2.6f, properties.repairable(Tags.Items.INGOTS_COPPER)));
+	public static final Supplier<PikeItem> COPPER_PIKE = ITEMS.registerItem("copper_pike", (properties) -> new PikeItem(IWToolMaterials.COPPER, -3.0f, properties.repairable(Tags.Items.INGOTS_COPPER)));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> IRON_PIKE = ITEMS.registerItem("iron_pike", (properties) -> new PikeItem(ToolMaterial.IRON, -2.6f, properties.repairable(Tags.Items.INGOTS_IRON)));
+	public static final Supplier<PikeItem> IRON_PIKE = ITEMS.registerItem("iron_pike", (properties) -> new PikeItem(ToolMaterial.IRON, -3.0f, properties.repairable(Tags.Items.INGOTS_IRON)));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> COBALT_PIKE = ITEMS.registerItem("cobalt_pike", (properties) -> new PikeItem(IWToolMaterials.COBALT, -2.6f, properties.repairable(CommonItemTagGroups.COBALT_INGOTS)));
+	public static final Supplier<PikeItem> COBALT_PIKE = ITEMS.registerItem("cobalt_pike", (properties) -> new PikeItem(IWToolMaterials.COBALT, -3.0f, properties.repairable(CommonItemTagGroups.COBALT_INGOTS)));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> DIAMOND_PIKE = ITEMS.registerItem("diamond_pike", (properties) -> new PikeItem(ToolMaterial.DIAMOND, -2.6f, properties.repairable(Tags.Items.GEMS_DIAMOND)));
+	public static final Supplier<PikeItem> DIAMOND_PIKE = ITEMS.registerItem("diamond_pike", (properties) -> new PikeItem(ToolMaterial.DIAMOND, -3.0f, properties.repairable(Tags.Items.GEMS_DIAMOND)));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> NETHERITE_PIKE = ITEMS.registerItem("netherite_pike", (properties) -> new PikeItem(ToolMaterial.NETHERITE, -2.6f, properties.fireResistant().repairable(Tags.Items.INGOTS_NETHERITE)));
+	public static final Supplier<PikeItem> NETHERITE_PIKE = ITEMS.registerItem("netherite_pike", (properties) -> new PikeItem(ToolMaterial.NETHERITE, -3.0f, properties.fireResistant().repairable(Tags.Items.INGOTS_NETHERITE)));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> MOLTEN_PIKE = ITEMS.registerItem("molten_pike", (properties) -> new PikeItem(IWToolMaterials.MOLTEN, -2.6f, properties.fireResistant().repairable(IWItemTagGroups.MOLTEN_INGOTS)));
+	public static final Supplier<PikeItem> MOLTEN_PIKE = ITEMS.registerItem("molten_pike", (properties) -> new PikeItem(IWToolMaterials.MOLTEN, -3.0f, properties.fireResistant().repairable(IWItemTagGroups.MOLTEN_INGOTS)));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> TESLA_PIKE = ITEMS.registerItem("tesla_pike", (properties) -> new PikeItem(IWToolMaterials.TESLA, -2.6f, properties.repairable(IWItemTagGroups.TESLA_INGOTS)));
+	public static final Supplier<PikeItem> TESLA_PIKE = ITEMS.registerItem("tesla_pike", (properties) -> new PikeItem(IWToolMaterials.TESLA, -3.0f, properties.repairable(IWItemTagGroups.TESLA_INGOTS)));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> VENTUS_PIKE = ITEMS.registerItem("ventus_pike", (properties) -> new PikeItem(IWToolMaterials.VENTUS, -2.2f, properties.repairable(IWItemTagGroups.VENTUS_SHARDS)));
+	public static final Supplier<PikeItem> VENTUS_PIKE = ITEMS.registerItem("ventus_pike", (properties) -> new PikeItem(IWToolMaterials.VENTUS, -2.6f, properties.repairable(IWItemTagGroups.VENTUS_SHARDS)));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> ASTRAL_PIKE = ITEMS.registerItem("astral_pike", (properties) -> new PikeItem(IWToolMaterials.ASTRAL, -1.7f, properties.repairable(IWItemTagGroups.ASTRAL_INGOTS)));
+	public static final Supplier<PikeItem> ASTRAL_PIKE = ITEMS.registerItem("astral_pike", (properties) -> new PikeItem(IWToolMaterials.ASTRAL, -2.3f, properties.repairable(IWItemTagGroups.ASTRAL_INGOTS)));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> STARSTORM_PIKE = ITEMS.registerItem("starstorm_pike", (properties) -> new PikeItem(IWToolMaterials.STARSTORM, -2.6f, properties.repairable(IWItemTagGroups.STARSTORM_INGOTS)));
+	public static final Supplier<PikeItem> STARSTORM_PIKE = ITEMS.registerItem("starstorm_pike", (properties) -> new PikeItem(IWToolMaterials.STARSTORM, -3.0f, properties.repairable(IWItemTagGroups.STARSTORM_INGOTS)));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> VOID_PIKE = ITEMS.registerItem("void_pike", (properties) -> new PikeItem(IWToolMaterials.VOID, -1.5f, properties.repairable(IWItemTagGroups.VOID_INGOTS)));
+	public static final Supplier<PikeItem> VOID_PIKE = ITEMS.registerItem("void_pike", (properties) -> new PikeItem(IWToolMaterials.VOID, -1.9f, properties.repairable(IWItemTagGroups.VOID_INGOTS)));
 	@DatagenExclusionMarker(Type.MODEL_GENERATOR_ITEM)
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, dynamicTooltip = DynamicTooltips.FirearmTooltip.class)
 	public static final Supplier<SimplePistolItem> FLINTLOCK_PISTOL = ITEMS.registerItem("flintlock_pistol", (properties) -> new SimplePistolItem(properties.durability(499).enchantable(1)));

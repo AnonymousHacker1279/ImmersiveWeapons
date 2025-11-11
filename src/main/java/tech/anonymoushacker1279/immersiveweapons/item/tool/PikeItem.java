@@ -1,6 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.item.tool;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EquipmentSlotGroup;
@@ -14,6 +15,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemUseAnimation;
 import net.minecraft.world.item.ToolMaterial;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
+import net.minecraft.world.item.component.Weapon;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
@@ -25,7 +27,9 @@ public class PikeItem extends Item implements HitEffectUtils {
 	private final HitEffect hitEffect;
 
 	public PikeItem(ToolMaterial material, float attackSpeedModifier, Properties properties) {
-		super(material.applyCommonProperties(properties).attributes(createAttributes(material, attackSpeedModifier)));
+		super(material.applyCommonProperties(properties)
+				.attributes(createAttributes(material, attackSpeedModifier))
+				.component(DataComponents.WEAPON, new Weapon(1)));
 
 		if (material == IWToolMaterials.MOLTEN) {
 			hitEffect = HitEffect.MOLTEN;
@@ -71,16 +75,16 @@ public class PikeItem extends Item implements HitEffectUtils {
 				.add(
 						Attributes.ATTACK_DAMAGE,
 						new AttributeModifier(
-								ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "attack_damage"),
-								(float) 3 + material.attackDamageBonus(),
+								BASE_ATTACK_DAMAGE_ID,
+								(float) 1 + material.attackDamageBonus(),
 								Operation.ADD_VALUE
 						),
 						EquipmentSlotGroup.MAINHAND)
 				.add(
 						Attributes.ATTACK_SPEED,
 						new AttributeModifier(
-								ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "attack_speed"),
-								4 + attackSpeedModifier,
+								BASE_ATTACK_SPEED_ID,
+								attackSpeedModifier,
 								Operation.ADD_VALUE),
 						EquipmentSlotGroup.MAINHAND)
 				.add(Attributes.ENTITY_INTERACTION_RANGE,

@@ -3,7 +3,6 @@ package tech.anonymoushacker1279.immersiveweapons.item.tool;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -19,7 +18,6 @@ import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.IWEnchantments;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.materials.IWToolMaterials;
@@ -108,7 +106,7 @@ public class GauntletItem extends Item implements HitEffectUtils {
 				.add(
 						Attributes.ATTACK_DAMAGE,
 						new AttributeModifier(
-								ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "attack_damage"),
+								BASE_ATTACK_DAMAGE_ID,
 								(float) 2 + material.attackDamageBonus(),
 								AttributeModifier.Operation.ADD_VALUE
 						),
@@ -116,8 +114,8 @@ public class GauntletItem extends Item implements HitEffectUtils {
 				.add(
 						Attributes.ATTACK_SPEED,
 						new AttributeModifier(
-								ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "attack_speed"),
-								4 + attackSpeedModifier,
+								BASE_ATTACK_SPEED_ID,
+								attackSpeedModifier,
 								AttributeModifier.Operation.ADD_VALUE),
 						EquipmentSlotGroup.MAINHAND)
 				.build();
