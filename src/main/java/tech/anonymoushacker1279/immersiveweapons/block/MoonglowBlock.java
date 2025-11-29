@@ -8,7 +8,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.FlowerBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import tech.anonymoushacker1279.immersiveweapons.init.ParticleTypesRegistry;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class MoonglowBlock extends FlowerBlock {
 
@@ -17,13 +16,13 @@ public class MoonglowBlock extends FlowerBlock {
 	}
 
 	@Override
-	public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource randomSource) {
+	public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
 		level.addParticle(ParticleTypesRegistry.MOONGLOW_PARTICLE.get(),
-				pos.getX() + 0.5D + (GeneralUtilities.getRandomNumber(-0.1D, 0.1D)),
-				pos.getY() + 0.7D + (GeneralUtilities.getRandomNumber(-0.1D, 0.1D)),
-				pos.getZ() + 0.5D + (GeneralUtilities.getRandomNumber(-0.1D, 0.1D)),
-				0.0D + (GeneralUtilities.getRandomNumber(-0.03D, 0.03D)),
-				0.0D + (GeneralUtilities.getRandomNumber(-0.01D, 0.01D)),
-				0.0D + (GeneralUtilities.getRandomNumber(-0.03D, 0.03D)));
+				pos.getX() + 0.5D + (0.1D * random.nextGaussian()),
+				pos.getY() + 0.7D + (0.1D * random.nextGaussian()),
+				pos.getZ() + 0.5D + (0.1D * random.nextGaussian()),
+				0.03D * random.nextGaussian(),
+				0.03D * random.nextGaussian(),
+				0.03D * random.nextGaussian());
 	}
 }

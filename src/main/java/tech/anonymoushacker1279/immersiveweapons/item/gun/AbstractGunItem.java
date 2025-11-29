@@ -14,9 +14,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -32,7 +30,6 @@ import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem;
 import tech.anonymoushacker1279.immersiveweapons.util.ArrowAttributeAccessor;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -84,9 +81,14 @@ public abstract class AbstractGunItem extends Item {
 				}
 
 				if (misfire) {
-					level.playSound(null, player.getX(), player.getY(), player.getZ(),
-							getMisfireSound(), SoundSource.PLAYERS, 1.0F,
-							1.0F / (GeneralUtilities.getRandomNumber(0.2f, 0.6f) + 1.2F) + 0.5F);
+					level.playSound(null,
+							player.getX(),
+							player.getY(),
+							player.getZ(),
+							getMisfireSound(),
+							SoundSource.PLAYERS,
+							1.0F,
+							1.0F + (-0.6f + player.getRandom().nextFloat() * 0.2f));
 
 					handleAmmoStack(gun, ammo, bulletsToFire, player);
 					handlePowderStack(powder, player);
@@ -134,13 +136,18 @@ public abstract class AbstractGunItem extends Item {
 					}
 				} else {
 					// Handle recoil
-					player.yHeadRot = player.yHeadRot + GeneralUtilities.getRandomNumber(getMaxYRecoil(), 0.5f);
-					player.setXRot(player.getXRot() + GeneralUtilities.getRandomNumber(getMaxXRecoil(), -3.0f));
+					player.setYRot(player.getYRot() + (getMaxYRecoil() + level.random.nextFloat() * 10f) * (level.random.nextBoolean() ? 1 : -1));
+					player.setXRot(player.getXRot() + (getMaxXRecoil() + level.random.nextFloat() * 0.5f));
 				}
 
-				level.playSound(null, player.getX(), player.getY(), player.getZ(),
-						getFireSound(), SoundSource.PLAYERS, 1.0F,
-						1.0F / (GeneralUtilities.getRandomNumber(0.2f, 0.6f) + 1.2F) + 0.5F);
+				level.playSound(null,
+						player.getX(),
+						player.getY(),
+						player.getZ(),
+						getFireSound(),
+						SoundSource.PLAYERS,
+						1.0F,
+						1.0F + (-0.3f + player.getRandom().nextFloat() * 0.5f));
 
 				handleAmmoStack(gun, ammo, bulletsToFire, player);
 				handlePowderStack(powder, player);

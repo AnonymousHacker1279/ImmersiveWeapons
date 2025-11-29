@@ -22,7 +22,6 @@ import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.VentusArmorPayload;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class VentusArmorItem extends Item implements TickableArmor {
 
@@ -73,9 +72,9 @@ public class VentusArmorItem extends Item implements TickableArmor {
 								player.getX(),
 								player.getY() + 0.1d,
 								player.getZ(),
-								GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
-								GeneralUtilities.getRandomNumber(0.0d, 0.03d),
-								GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
+								(0.03d * level.random.nextGaussian()),
+								(0.015d * level.random.nextGaussian()),
+								(0.03d * level.random.nextGaussian()));
 					}
 					if (IWKeyBinds.ARMOR_ACTION.consumeClick()) {
 						if (windShieldCooldown == 0) {
@@ -142,9 +141,9 @@ public class VentusArmorItem extends Item implements TickableArmor {
 			double z = player.getZ() + 1.5d * Math.sin(Math.toRadians(i));
 			level.addParticle(ParticleTypes.CLOUD,
 					x, player.getY() + 0.5d, z,
-					GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
-					GeneralUtilities.getRandomNumber(0.0d, 0.03d),
-					GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
+					(0.03d * level.random.nextGaussian()),
+					(0.015d * level.random.nextGaussian()),
+					(0.03d * level.random.nextGaussian()));
 		}
 	}
 

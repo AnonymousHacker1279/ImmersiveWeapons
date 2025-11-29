@@ -1,15 +1,11 @@
 package tech.anonymoushacker1279.immersiveweapons.client.particle;
 
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.ParticleProvider;
-import net.minecraft.client.particle.SingleQuadParticle;
-import net.minecraft.client.particle.SpriteSet;
+import net.minecraft.client.particle.*;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class MuzzleFlashParticle extends SingleQuadParticle {
 
@@ -30,13 +26,13 @@ public class MuzzleFlashParticle extends SingleQuadParticle {
 		xd += xSpeed;
 		yd += ySpeed;
 		zd += zSpeed;
-		float vibrancyModifier = GeneralUtilities.getRandomNumber(0.6f, 1.0f);
+		float vibrancyModifier = 0.6F + level.random.nextFloat() * 0.4F;
 		rCol = vibrancyModifier;
 		gCol = vibrancyModifier;
 		bCol = vibrancyModifier;
-		quadSize *= 0.75F * (float) 1.5;
+		quadSize *= 1.125F;
 		lifetime = (int) ((double) 20 / ((double) level.random.nextFloat() * 0.1D + 0.9D));
-		lifetime = (int) ((float) lifetime * (float) 0.075);
+		lifetime = (int) ((float) lifetime * 0.075F);
 		lifetime = Math.max(lifetime, 1);
 		setSpriteFromAge(spriteSet);
 		hasPhysics = true;

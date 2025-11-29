@@ -10,16 +10,11 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.ConversionParams;
-import net.minecraft.world.entity.EntitySpawnReason;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.AbstractCow;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemUtils;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.SuspiciousStewEffects;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -28,10 +23,7 @@ import net.neoforged.neoforge.common.IShearable;
 import net.neoforged.neoforge.event.EventHooks;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
-import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
-import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
-import tech.anonymoushacker1279.immersiveweapons.init.ParticleTypesRegistry;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
+import tech.anonymoushacker1279.immersiveweapons.init.*;
 
 import java.util.List;
 
@@ -112,12 +104,12 @@ public class MooGlowEntity extends AbstractCow implements IShearable, GrantAdvan
 
 		if (tickCount % 8 == 0) {
 			level().addParticle(ParticleTypesRegistry.MOONGLOW_PARTICLE.get(),
-					getX() + (GeneralUtilities.getRandomNumber(-0.3D, 0.3D)),
-					getY() + getEyeHeight() + (GeneralUtilities.getRandomNumber(-0.05D, 0.2D)),
-					getZ() + (GeneralUtilities.getRandomNumber(-0.3D, 0.3D)),
-					0.0D + (GeneralUtilities.getRandomNumber(-0.03D, 0.03D)),
-					0.0D + (GeneralUtilities.getRandomNumber(-0.01D, 0.01D)),
-					0.0D + (GeneralUtilities.getRandomNumber(-0.03D, 0.03D)));
+					getX() + (0.3D * random.nextGaussian()),
+					getY() + getEyeHeight() + (0.15D * random.nextGaussian()),
+					getZ() + (0.3D * random.nextGaussian()),
+					(0.03D * random.nextGaussian()),
+					(0.01D * random.nextGaussian()),
+					(0.03D * random.nextGaussian()));
 		}
 	}
 

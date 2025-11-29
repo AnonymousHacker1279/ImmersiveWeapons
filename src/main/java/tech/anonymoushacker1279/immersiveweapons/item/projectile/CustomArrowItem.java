@@ -1,9 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.item.projectile;
 
-import net.minecraft.core.Direction;
+import net.minecraft.core.*;
 import net.minecraft.core.Holder.Reference;
-import net.minecraft.core.HolderGetter;
-import net.minecraft.core.Position;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -20,8 +18,6 @@ import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils.HitEff
 import tech.anonymoushacker1279.immersiveweapons.util.ArrowAttributeAccessor;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
 
@@ -31,7 +27,7 @@ public class CustomArrowItem<T extends CustomArrowEntity> extends ArrowItem {
 	private final int pierceLevel;
 	private final boolean canBeInfinite;
 	final double gravityModifier;
-	private final List<Double> shootingVectorInputs;
+	private final InaccuracySettings inaccuracySettings;
 	private final int knockbackStrength;
 	public final double damage;
 	private final HitEffect hitEffect;
@@ -39,14 +35,14 @@ public class CustomArrowItem<T extends CustomArrowEntity> extends ArrowItem {
 
 	protected CustomArrowItem(Properties properties, double damage, Supplier<EntityType<T>> arrowEntity,
 	                          int pierceLevel, boolean canBeInfinite, double gravityModifier,
-	                          List<Double> shootingVectorInputs, int knockbackStrength, HitEffect hitEffect, int color) {
+	                          InaccuracySettings inaccuracySettings, int knockbackStrength, HitEffect hitEffect, int color) {
 		super(properties);
 		this.damage = damage;
 		this.entitySupplier = arrowEntity;
 		this.pierceLevel = pierceLevel;
 		this.canBeInfinite = canBeInfinite;
 		this.gravityModifier = gravityModifier;
-		this.shootingVectorInputs = shootingVectorInputs;
+		this.inaccuracySettings = inaccuracySettings;
 		this.knockbackStrength = knockbackStrength;
 		this.hitEffect = hitEffect;
 		this.color = color;
@@ -79,7 +75,7 @@ public class CustomArrowItem<T extends CustomArrowEntity> extends ArrowItem {
 		arrowEntity.setBaseDamage(damage);
 		((ArrowAttributeAccessor) arrowEntity).immersiveWeapons$setBaseKnockback(knockbackStrength);
 		((ArrowAttributeAccessor) arrowEntity).immersiveWeapons$setGravity(gravityModifier);
-		arrowEntity.shootingVectorInputs = shootingVectorInputs;
+		arrowEntity.inaccuracySettings = inaccuracySettings;
 		arrowEntity.hitEffect = hitEffect;
 		arrowEntity.color = color;
 		arrowEntity.referenceItem = this;
@@ -119,7 +115,7 @@ public class CustomArrowItem<T extends CustomArrowEntity> extends ArrowItem {
 		private int pierceLevel = 0;
 		private boolean canBeInfinite = true;
 		private double gravityModifier = 0.05d;
-		private List<Double> shootingVectorInputs = List.of(0.0075d, -0.0095d, 0.0075d);
+		private InaccuracySettings inaccuracySettings = new InaccuracySettings(0.0075d, -0.0095d, 0.0075d);
 		private int knockbackStrength = 0;
 		private HitEffect hitEffect = HitEffect.NONE;
 		private int color = -1;
@@ -145,11 +141,13 @@ public class CustomArrowItem<T extends CustomArrowEntity> extends ArrowItem {
 			return this;
 		}
 
-		public ArrowBuilder<T> shootingVector(double inaccuracyBaseMultiplier, double inaccuracyRandomModifierLow, double inaccuracyRandomModifierHigh) {
-			shootingVectorInputs = new ArrayList<>(5);
-			shootingVectorInputs.add(inaccuracyBaseMultiplier);
-			shootingVectorInputs.add(inaccuracyRandomModifierLow);
-			shootingVectorInputs.add(inaccuracyRandomModifierHigh);
+		public ArrowBuilder<T> inaccuracySettings(double modifier) {
+			this.inaccuracySettings = new InaccuracySettings(modifier);
+			return this;
+		}
+
+		public ArrowBuilder<T> inaccuracySettings(double xModifier, double yModifier, double zModifier) {
+			this.inaccuracySettings = new InaccuracySettings(xModifier, yModifier, zModifier);
 			return this;
 		}
 
@@ -169,7 +167,14 @@ public class CustomArrowItem<T extends CustomArrowEntity> extends ArrowItem {
 		}
 
 		public CustomArrowItem<T> build() {
-			return new CustomArrowItem<>(properties, damage, arrowEntity, pierceLevel, canBeInfinite, gravityModifier, shootingVectorInputs, knockbackStrength, hitEffect, color);
+			return new CustomArrowItem<>(properties, damage, arrowEntity, pierceLevel, canBeInfinite, gravityModifier, inaccuracySettings, knockbackStrength, hitEffect, color);
+		}
+	}
+
+	public record InaccuracySettings(double xMultiplier, double yModifier, double zModifier) {
+
+		public InaccuracySettings(double multiplier) {
+			this(multiplier, multiplier, multiplier);
 		}
 	}
 }

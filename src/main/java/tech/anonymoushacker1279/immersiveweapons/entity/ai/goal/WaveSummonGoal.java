@@ -9,11 +9,8 @@ import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.phys.AABB;
 import tech.anonymoushacker1279.immersiveweapons.entity.WaveSummoningBoss;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public abstract class WaveSummonGoal<T extends Mob & WaveSummoningBoss> extends Goal {
 
@@ -70,9 +67,10 @@ public abstract class WaveSummonGoal<T extends Mob & WaveSummoningBoss> extends 
 				mob.position().y,
 				mob.position().z,
 				1,
-				GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
-				GeneralUtilities.getRandomNumber(-0.1d, -0.08d),
-				GeneralUtilities.getRandomNumber(-0.03d, 0.03d), 1.0f);
+				(0.03D * mob.getRandom().nextGaussian()),
+				(-0.1D + 0.03D * mob.getRandom().nextGaussian()),
+				(0.03D * mob.getRandom().nextGaussian()),
+				1.0f);
 	}
 
 	protected void spawnEntity(ServerLevel level, Mob mob, BlockPos summonPos, boolean isFodder) {

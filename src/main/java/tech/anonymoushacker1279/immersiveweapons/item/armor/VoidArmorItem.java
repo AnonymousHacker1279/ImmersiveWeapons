@@ -16,7 +16,6 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.VoidArmorPayload;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class VoidArmorItem extends Item implements TickableArmor {
 
@@ -53,9 +52,9 @@ public class VoidArmorItem extends Item implements TickableArmor {
 								player.getX(),
 								player.getY() + 0.1d,
 								player.getZ(),
-								GeneralUtilities.getRandomNumber(-0.04d, 0.04d),
-								GeneralUtilities.getRandomNumber(0.0d, 0.04d),
-								GeneralUtilities.getRandomNumber(-0.04d, 0.04d));
+								(0.03d * level.random.nextGaussian()),
+								(0.015d * level.random.nextGaussian()),
+								(0.03d * level.random.nextGaussian()));
 					}
 					if (IWKeyBinds.ARMOR_ACTION.consumeClick()) {
 						if (dashCooldown == 0) {
@@ -80,9 +79,9 @@ public class VoidArmorItem extends Item implements TickableArmor {
 
 					level.addParticle(ParticleTypes.ELECTRIC_SPARK,
 							player.getX(), player.getY(), player.getZ(),
-							GeneralUtilities.getRandomNumber(-0.04d, 0.04d),
-							GeneralUtilities.getRandomNumber(0.0d, 0.04d),
-							GeneralUtilities.getRandomNumber(-0.04d, 0.04d));
+							(0.03d * level.random.nextGaussian()),
+							(0.015d * level.random.nextGaussian()),
+							(0.03d * level.random.nextGaussian()));
 
 					dashCooldown--;
 

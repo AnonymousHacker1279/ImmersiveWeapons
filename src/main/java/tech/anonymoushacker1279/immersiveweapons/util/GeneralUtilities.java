@@ -17,54 +17,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.shapes.BooleanOp;
-import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.shapes.*;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * A collection of random utility methods for general use.
  */
 public class GeneralUtilities {
-
-	public static final UUID ATTACK_REACH_MODIFIER = UUID.fromString("9f470b49-0445-4341-ae85-55b9e5ec2a1c");
-
-
-	/**
-	 * Get a random number between a minimum and maximum.
-	 *
-	 * @param min minimum number (inclusive)
-	 * @param max maximum number (not inclusive)
-	 * @return float
-	 */
-	public static float getRandomNumber(float min, float max) {
-		return (float) ((Math.random() * (max - min)) + min);
-	}
-
-	/**
-	 * Get a random number between a minimum and maximum.
-	 *
-	 * @param min minimum number (inclusive)
-	 * @param max maximum number (not inclusive)
-	 * @return double
-	 */
-	public static double getRandomNumber(double min, double max) {
-		return (Math.random() * (max - min)) + min;
-	}
-
-	/**
-	 * Get a random number between a minimum and maximum.
-	 *
-	 * @param min minimum number (inclusive)
-	 * @param max maximum number (not inclusive)
-	 * @return int
-	 */
-	public static int getRandomNumber(int min, int max) {
-		return (int) ((Math.random() * (max - min)) + min);
-	}
 
 	/**
 	 * Convert an integer to a Roman numeral.

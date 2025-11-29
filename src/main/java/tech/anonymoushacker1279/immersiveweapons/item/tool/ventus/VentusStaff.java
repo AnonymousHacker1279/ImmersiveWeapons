@@ -5,9 +5,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.windcharge.WindCharge;
@@ -16,7 +14,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.List;
 
@@ -43,9 +40,9 @@ public class VentusStaff extends Item {
 				entity.getX(),
 				entity.getY() + 0.3d,
 				entity.getZ(),
-				GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
-				GeneralUtilities.getRandomNumber(0.0d, 0.03d),
-				GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
+				(0.03d * level.random.nextGaussian()),
+				(0.015d * level.random.nextGaussian()),
+				(0.03d * level.random.nextGaussian()));
 	}
 
 	/**

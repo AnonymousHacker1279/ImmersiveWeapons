@@ -4,9 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerBossEvent;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.level.*;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.BossEvent.BossBarColor;
 import net.minecraft.world.BossEvent.BossBarOverlay;
@@ -18,26 +16,17 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.*;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
-import tech.anonymoushacker1279.immersiveweapons.entity.AttackerTracker;
-import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
-import tech.anonymoushacker1279.immersiveweapons.entity.WaveSummoningBoss;
-import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.CelestialTowerSummonGoal;
-import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.CelestialTowerSummonMeteorGoal;
-import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.HoverGoal;
+import tech.anonymoushacker1279.immersiveweapons.entity.*;
+import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.*;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import tech.anonymoushacker1279.immersiveweapons.world.level.saveddata.CelestialLanternData;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class CelestialTowerEntity extends Monster implements AttackerTracker, GrantAdvancementOnDiscovery, WaveSummoningBoss {
 
@@ -130,11 +119,13 @@ public class CelestialTowerEntity extends Monster implements AttackerTracker, Gr
 		super.tick();
 
 		if (tickCount % 8 == 0) {
-			level().addParticle(ParticleTypes.LAVA, getX() + GeneralUtilities.getRandomNumber(-1d, 1.01d), getY(),
-					getZ() + GeneralUtilities.getRandomNumber(-1d, 1.01d),
-					GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
-					GeneralUtilities.getRandomNumber(-0.1d, -0.08d),
-					GeneralUtilities.getRandomNumber(-0.03d, 0.03d));
+			level().addParticle(ParticleTypes.LAVA,
+					getX() + random.nextGaussian(),
+					getY(),
+					getZ() + random.nextGaussian(),
+					(0.03D * random.nextGaussian()),
+					(0.01D * random.nextGaussian()),
+					(0.03D * random.nextGaussian()));
 		}
 	}
 
@@ -315,13 +306,13 @@ public class CelestialTowerEntity extends Monster implements AttackerTracker, Gr
 	public void playSummonSound() {
 		playSound(SoundEventRegistry.CELESTIAL_TOWER_SUMMON.get(),
 				1.0f,
-				1.0f + GeneralUtilities.getRandomNumber(-0.3f, 0.2f));
+				1.0f + (-0.3F + getRandom().nextFloat() * 0.2f));
 	}
 
 	@Override
 	public void playVulnerableSound() {
 		playSound(SoundEventRegistry.CELESTIAL_TOWER_VULNERABLE.get(),
 				1.0f,
-				1.0f + GeneralUtilities.getRandomNumber(-0.3f, 0.2f));
+				1.0f + (-0.3F + getRandom().nextFloat() * 0.2f));
 	}
 }

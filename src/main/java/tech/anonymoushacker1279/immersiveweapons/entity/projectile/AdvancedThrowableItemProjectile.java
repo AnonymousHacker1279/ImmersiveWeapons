@@ -4,21 +4,16 @@ import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.*;
 import net.minecraft.world.phys.HitResult.Type;
-import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public abstract class AdvancedThrowableItemProjectile extends ThrowableItemProjectile {
 
@@ -50,29 +45,34 @@ public abstract class AdvancedThrowableItemProjectile extends ThrowableItemProje
 
 			if (hitResult.getType() == HitResult.Type.BLOCK) {
 				BlockHitResult blockHitResult = (BlockHitResult) hitResult;
+				double modifier = 0.4D + (0.1D * random.nextGaussian());
 				switch (blockHitResult.getDirection()) {
 					case UP:
 					case DOWN:
-						y = -y * 0.4d + GeneralUtilities.getRandomNumber(-0.1d, 0.1d);
+						y = -y * modifier;
 						break;
 					case NORTH:
 					case SOUTH:
-						z = -z * 0.4d + GeneralUtilities.getRandomNumber(-0.1d, 0.1d);
+						z = -z * modifier;
 						break;
 					case EAST:
 					case WEST:
-						x = -x * 0.4d + GeneralUtilities.getRandomNumber(-0.1d, 0.1d);
+						x = -x * modifier;
 						break;
 				}
 			} else if (hitResult.getType() == Type.ENTITY) {
-				x = -x * 0.3d + GeneralUtilities.getRandomNumber(-0.1d, 0.1d);
-				y = -y * 0.3d + GeneralUtilities.getRandomNumber(-0.1d, 0.1d);
-				z = -z * 0.3d + GeneralUtilities.getRandomNumber(-0.1d, 0.1d);
+				x = -x * 0.3d + (0.1D * random.nextGaussian());
+				y = -y * 0.3d + (0.1D * random.nextGaussian());
+				z = -z * 0.3d + (0.1D * random.nextGaussian());
 			}
 
 			setDeltaMovement(x, y, z);
 
-			level().playLocalSound(this, SoundEvents.METAL_HIT, SoundSource.NEUTRAL, 1.0f, 0.6f / (GeneralUtilities.getRandomNumber(0.2f, 0.6f) + 0.8f));
+			level().playLocalSound(this,
+					SoundEvents.METAL_HIT,
+					SoundSource.NEUTRAL,
+					1.0f,
+					1.0f + (-0.2f + getRandom().nextFloat() * 0.2f));
 
 			if (getDeltaMovement().lengthSqr() < 0.1d) {
 				stopMoving = true;

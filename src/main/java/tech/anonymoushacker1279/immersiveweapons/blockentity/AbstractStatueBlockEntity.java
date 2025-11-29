@@ -7,11 +7,9 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.EntitySpawnReason;
-import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.EquipmentSlot.Type;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -122,23 +120,23 @@ public abstract class AbstractStatueBlockEntity<T extends SoldierEntity> extends
 			if (level != null && level.getBlockState(randomPositionInArea) == Blocks.AIR.defaultBlockState()) {
 				entity.snapTo(randomPositionInArea, 0.0F, 0.0F);
 				level.addFreshEntity(entity);
-				spawnParticles();
+				spawnParticles(entity.getRandom());
 				break;
 			}
 		}
 	}
 
-	protected void spawnParticles() {
+	protected void spawnParticles(RandomSource random) {
 		if (getLevel() instanceof ServerLevel serverLevel) {
 			serverLevel.sendParticles(ParticleTypes.HAPPY_VILLAGER,
 					getBlockPos().getX() + 0.5d,
 					getBlockPos().getY(),
 					getBlockPos().getZ() + 0.75d,
 					5,
-					GeneralUtilities.getRandomNumber(-0.05d, 0.05d),
-					GeneralUtilities.getRandomNumber(-0.25d, 0.25d),
-					GeneralUtilities.getRandomNumber(-0.05d, 0.05d),
-					GeneralUtilities.getRandomNumber(-0.15d, 0.15d));
+					(0.05D * random.nextGaussian()),
+					(0.05D * random.nextGaussian()),
+					(0.05D * random.nextGaussian()),
+					(0.15D * random.nextGaussian()));
 		}
 	}
 
@@ -148,9 +146,13 @@ public abstract class AbstractStatueBlockEntity<T extends SoldierEntity> extends
 	 * @return BlockPos
 	 */
 	protected BlockPos getRandomPositionInArea() {
-		return new BlockPos(getBlockPos().getX() + GeneralUtilities.getRandomNumber(-8, 8),
+		if (getLevel() == null) {
+			return getBlockPos();
+		}
+
+		return new BlockPos(getBlockPos().getX() + getLevel().getRandom().nextIntBetweenInclusive(-8, 8),
 				getBlockPos().getY(),
-				getBlockPos().getZ() + GeneralUtilities.getRandomNumber(-8, 8));
+				getBlockPos().getZ() + getLevel().getRandom().nextIntBetweenInclusive(-8, 8));
 	}
 
 	@Nullable

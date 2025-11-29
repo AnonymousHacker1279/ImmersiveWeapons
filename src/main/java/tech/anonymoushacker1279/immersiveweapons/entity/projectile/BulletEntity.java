@@ -10,18 +10,14 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.*;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.Tags.Blocks;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -29,23 +25,17 @@ import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact.BulletImpactParticleOptions;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
-import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
-import tech.anonymoushacker1279.immersiveweapons.init.ParticleTypesRegistry;
-import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.GunShotBloodParticlePayload;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
-
-import java.util.List;
 
 public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 
 	private final SoundEvent hitSound = getDefaultHitGroundSoundEvent();
 	private boolean hasAlreadyBrokeGlass = false;
 	private Vec3 initialPos = Vec3.ZERO;
-	public List<Double> shootingVectorInputs = List.of(0.0025d, 0.2d, 1.1d);
 	public HitEffect hitEffect = HitEffect.NONE;
 	public boolean flameTrail = false;
 	private static final TagKey<Block> BULLETPROOF_GLASS = BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "bulletproof_glass"));
@@ -136,10 +126,12 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 		// Check if a solid block was hit
 		if (!didPassThroughBlock) {
 			level().addParticle(new BulletImpactParticleOptions(1.0F, Block.getId(lastState)),
-					hitResult.getLocation().x, hitResult.getLocation().y, hitResult.getLocation().z,
-					GeneralUtilities.getRandomNumber(-0.01d, 0.01d),
-					GeneralUtilities.getRandomNumber(-0.01d, 0.01d),
-					GeneralUtilities.getRandomNumber(-0.01d, 0.01d));
+					hitResult.getLocation().x,
+					hitResult.getLocation().y,
+					hitResult.getLocation().z,
+					(0.01D * random.nextGaussian()),
+					(0.01D * random.nextGaussian()),
+					(0.01D * random.nextGaussian()));
 		}
 	}
 

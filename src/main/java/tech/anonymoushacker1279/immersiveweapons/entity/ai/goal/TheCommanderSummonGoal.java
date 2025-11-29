@@ -107,9 +107,10 @@ public class TheCommanderSummonGoal extends WaveSummonGoal<TheCommanderEntity> {
 					mob.position().y,
 					mob.position().z,
 					1,
-					GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
-					GeneralUtilities.getRandomNumber(-0.1d, -0.08d),
-					GeneralUtilities.getRandomNumber(-0.03d, 0.03d), 1.0f);
+					(0.03D * mob.getRandom().nextGaussian()),
+					(-0.01D * mob.getRandom().nextGaussian()),
+					(0.03D * mob.getRandom().nextGaussian()),
+					1.0f);
 		}
 	}
 }

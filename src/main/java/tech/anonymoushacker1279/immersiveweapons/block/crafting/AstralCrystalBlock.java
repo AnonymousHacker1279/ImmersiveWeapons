@@ -14,10 +14,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.AmethystClusterBlock;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
@@ -25,7 +22,6 @@ import net.neoforged.neoforge.network.PacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.AstralCrystalBlockEntity;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.AstralCrystalRecipe;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.AstralCrystalPayload;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.Arrays;
 import java.util.List;
@@ -72,12 +68,12 @@ public class AstralCrystalBlock extends AmethystClusterBlock implements EntityBl
 
 			if (random.nextFloat() <= particleChance) {
 				level.addParticle(ParticleTypes.ELECTRIC_SPARK,
-						pos.getX() + 0.5D + (GeneralUtilities.getRandomNumber(-0.2D, 0.2D)),
-						pos.getY() + 0.4D + (GeneralUtilities.getRandomNumber(0.2D, 0.5D)),
-						pos.getZ() + 0.5D + (GeneralUtilities.getRandomNumber(-0.2D, 0.2D)),
-						(GeneralUtilities.getRandomNumber(-0.16D, 0.16D)),
-						(GeneralUtilities.getRandomNumber(0.13D, 0.16D)),
-						(GeneralUtilities.getRandomNumber(-0.16D, 0.16D)));
+						pos.getX() + 0.5D + (0.2D * random.nextGaussian()),
+						pos.getY() + 0.4D + (0.5D * random.nextGaussian()),
+						pos.getZ() + 0.5D + (0.2D * random.nextGaussian()),
+						0.15D * random.nextGaussian(),
+						0.2D * random.nextGaussian(),
+						0.15D * random.nextGaussian());
 			}
 		}
 	}

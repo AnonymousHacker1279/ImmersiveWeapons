@@ -14,7 +14,6 @@ import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.CobaltArmorPayload;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class CobaltArmorItem extends Item implements TickableArmor {
 
@@ -60,18 +59,18 @@ public class CobaltArmorItem extends Item implements TickableArmor {
 								player.getY() + 2.2D,
 								player.getZ(),
 								5,
-								GeneralUtilities.getRandomNumber(-0.01d, 0.01d),
-								GeneralUtilities.getRandomNumber(0.0d, 0.001d),
-								GeneralUtilities.getRandomNumber(-0.01d, 0.01d),
+								(0.01d * level.random.nextGaussian()),
+								(0.001d * level.random.nextGaussian()),
+								(0.01d * level.random.nextGaussian()),
 								0.0D);
 						serverLevel.sendParticles(ParticleTypes.FLAME,
 								player.getX(),
 								player.getY() + 2.2D,
 								player.getZ(),
 								5,
-								GeneralUtilities.getRandomNumber(-0.01d, 0.01d),
-								GeneralUtilities.getRandomNumber(0.0d, 0.001d),
-								GeneralUtilities.getRandomNumber(-0.01d, 0.01d),
+								(0.01d * level.random.nextGaussian()),
+								(0.001d * level.random.nextGaussian()),
+								(0.01d * level.random.nextGaussian()),
 								0.0D);
 					}
 				}

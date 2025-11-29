@@ -12,24 +12,24 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.phys.Vec3;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.DragonFireballBulletEntity;
+import tech.anonymoushacker1279.immersiveweapons.item.projectile.CustomArrowItem.InaccuracySettings;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
 
-import java.util.List;
 import java.util.function.Supplier;
 
 public class DragonFireballItem extends BulletItem<DragonFireballBulletEntity> {
 
 	public DragonFireballItem(Properties properties, double damage, Supplier<EntityType<DragonFireballBulletEntity>> bulletEntity, int pierceLevel,
-	                          boolean canBeInfinite, float misfireChance, double gravityModifier, List<Double> shootingVectorInputs,
+	                          boolean canBeInfinite, float misfireChance, double gravityModifier, InaccuracySettings inaccuracySettings,
 	                          int knockbackStrength, HitEffectUtils.HitEffect hitEffect, boolean isExplosive) {
 
 		super(properties, damage, bulletEntity, pierceLevel, canBeInfinite, misfireChance, gravityModifier,
-				shootingVectorInputs, knockbackStrength, hitEffect, isExplosive);
+				inaccuracySettings, knockbackStrength, hitEffect, isExplosive);
 	}
 
 	public static DragonFireballItem createFromBulletBuilder(BulletBuilder<DragonFireballBulletEntity> builder) {
 		return new DragonFireballItem(builder.properties, builder.damage, builder.bulletEntity, builder.pierceLevel,
-				builder.canBeInfinite, builder.misfireChance, builder.gravityModifier, builder.shootingVectorInputs,
+				builder.canBeInfinite, builder.misfireChance, builder.gravityModifier, builder.inaccuracySettings,
 				builder.knockbackStrength, builder.hitEffect, builder.isExplosive);
 	}
 

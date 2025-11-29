@@ -2,10 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.ParticleProvider;
-import net.minecraft.client.particle.SingleQuadParticle;
-import net.minecraft.client.particle.SpriteSet;
+import net.minecraft.client.particle.*;
 import net.minecraft.client.renderer.block.BlockModelShaper;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.block.model.BlockStateModel;
@@ -15,7 +12,6 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class BulletImpactParticle extends SingleQuadParticle {
 
@@ -34,19 +30,19 @@ public class BulletImpactParticle extends SingleQuadParticle {
 		gravity = (float) 0.175;
 		speedUpWhenYMotionIsBlocked = true;
 		sprites = spriteSet;
-		xd *= (float) 0.0;
-		yd *= (float) 0.0;
-		zd *= (float) 0.0;
+		xd *= 0.0F;
+		yd *= 0.0F;
+		zd *= 0.0F;
 		xd += xSpeed;
 		yd += ySpeed;
 		zd += zSpeed;
-		float vibrancyModifier = GeneralUtilities.getRandomNumber(0.6f, 1.0f);
+		float vibrancyModifier = 0.6F + level.random.nextFloat() * 0.4F;
 		rCol = randomizeColor(color.x(), vibrancyModifier);
 		gCol = randomizeColor(color.y(), vibrancyModifier);
 		bCol = randomizeColor(color.z(), vibrancyModifier);
 		quadSize *= 2.5f;
 		lifetime = (int) ((double) 20 / ((double) level.random.nextFloat() * 0.8D + 0.2D));
-		lifetime = (int) ((float) lifetime * (float) 1.5);
+		lifetime = (int) ((float) lifetime * 1.5F);
 		lifetime = Math.max(lifetime, 1);
 		setSpriteFromAge(spriteSet);
 		hasPhysics = true;
@@ -63,11 +59,11 @@ public class BulletImpactParticle extends SingleQuadParticle {
 		BlockStateModel model = blockModelShapes.getBlockModel(Block.stateById(blockID));
 		TextureAtlasSprite textureAtlasSprite = model.particleIcon();
 
-		int pixelABGR = textureAtlasSprite.getPixelRGBA(0, 0, 0);
-		int r = pixelABGR & 0xff;
-		int g = pixelABGR >> 8 & 0xff;
-		int b = pixelABGR >> 16 & 0xff;
-		return new Vector3f(r / 255f, g / 255f, b / 255f);
+		int pixelRGBA = textureAtlasSprite.getPixelRGBA(0, 0, 0);
+		float red = (float) (pixelRGBA >> 16 & 255) / 255.0F;
+		float green = (float) (pixelRGBA >> 8 & 255) / 255.0F;
+		float blue = (float) (pixelRGBA & 255) / 255.0F;
+		return new Vector3f(red, green, blue);
 	}
 
 	@Override
