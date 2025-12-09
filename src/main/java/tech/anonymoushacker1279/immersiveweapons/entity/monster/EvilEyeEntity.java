@@ -274,9 +274,11 @@ public class EvilEyeEntity extends Mob implements Enemy, GrantAdvancementOnDisco
 		setNoGravity(true);
 
 		BlockPos spawnPos = blockPosition();
-		int groundY = level.getHeightmapPos(Heightmap.Types.WORLD_SURFACE, spawnPos).getY();
-		int spawnY = groundY + 10 + getRandom().nextInt(21);
-		setPos(spawnPos.getX() + 0.5, spawnY, spawnPos.getZ() + 0.5);
+		if (!summonedByStaff()) {
+			int groundY = level.getHeightmapPos(Heightmap.Types.WORLD_SURFACE, spawnPos).getY();
+			spawnPos = spawnPos.atY(groundY + 10 + getRandom().nextInt(21));
+		}
+		setPos(spawnPos.getX() + 0.5, spawnPos.getY(), spawnPos.getZ() + 0.5);
 
 		return super.finalizeSpawn(level, difficulty, reason, spawnData);
 	}
