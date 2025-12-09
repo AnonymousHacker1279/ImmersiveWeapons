@@ -73,7 +73,7 @@ public class PanicAlarmBlock extends BasicOrientableBlock implements SimpleWater
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState,
 	                                                              BlockEntityType<T> blockEntityType) {
 
-		return level.isClientSide ? null : (world, pos, state, entity) -> ((PanicAlarmBlockEntity) entity).tick(world, pos);
+		return level.isClientSide() ? null : (world, pos, state, entity) -> ((PanicAlarmBlockEntity) entity).tick(world, pos);
 	}
 
 	@Override
@@ -90,7 +90,7 @@ public class PanicAlarmBlock extends BasicOrientableBlock implements SimpleWater
 
 	@Override
 	protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, @Nullable Orientation orientation, boolean movedByPiston) {
-		if (!level.isClientSide) {
+		if (!level.isClientSide()) {
 			checkPowered(level, pos);
 		}
 	}
@@ -99,7 +99,7 @@ public class PanicAlarmBlock extends BasicOrientableBlock implements SimpleWater
 	public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
 		if (!oldState.is(state.getBlock())) {
 			if (level.hasNeighborSignal(pos)) {
-				if (!level.isClientSide) {
+				if (!level.isClientSide()) {
 					checkPowered(level, pos);
 				}
 			}

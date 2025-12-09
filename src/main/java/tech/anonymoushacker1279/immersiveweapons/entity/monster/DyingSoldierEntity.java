@@ -104,11 +104,6 @@ public class DyingSoldierEntity extends RangedSoldierEntity {
 		return SoundSource.HOSTILE;
 	}
 
-	@Override
-	protected boolean shouldDespawnInPeaceful() {
-		return true;
-	}
-
 	protected void updateNoActionTime() {
 		float magicValue = getLightLevelDependentMagicValue();
 		if (magicValue > 0.5F) {

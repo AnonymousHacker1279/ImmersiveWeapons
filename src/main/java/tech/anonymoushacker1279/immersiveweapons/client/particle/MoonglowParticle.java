@@ -1,32 +1,23 @@
 package tech.anonymoushacker1279.immersiveweapons.client.particle;
 
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.particle.*;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.SingleQuadParticle;
+import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.util.RandomSource;
+import org.jetbrains.annotations.Nullable;
 
-public class MoonglowParticle extends TextureSheetParticle {
+public class MoonglowParticle extends SingleQuadParticle {
 
 	protected static SpriteSet sprites;
-
-	public static class Provider implements ParticleProvider<SimpleParticleType> {
-
-		public Provider(SpriteSet pSprites) {
-			sprites = pSprites;
-		}
-
-		@Override
-		public Particle createParticle(SimpleParticleType pType, ClientLevel pLevel, double pX, double pY, double pZ,
-		                               double pXSpeed, double pYSpeed, double pZSpeed) {
-
-			return new MoonglowParticle(pLevel, pX, pY, pZ, pXSpeed, pYSpeed, pZSpeed, sprites);
-		}
-	}
 
 	protected MoonglowParticle(ClientLevel level, double x, double y, double z,
 	                           double xSpeed, double ySpeed,
 	                           double zSpeed, SpriteSet spriteSet) {
 
-		super(level, x, y, z, 0.0D, 0.0D, 0.0D);
+		super(level, x, y, z, spriteSet.first());
 		friction = 0.96F;
 		gravity = 0.01F;
 		speedUpWhenYMotionIsBlocked = true;
@@ -42,12 +33,25 @@ public class MoonglowParticle extends TextureSheetParticle {
 		bCol = 1.0F;
 		quadSize *= 0.95F;
 		lifetime = (int) (40.0D / (level.random.nextFloat() * 0.8D + 0.2D));
-		pickSprite(spriteSet);
+		setSprite(spriteSet.get(level.random));
 		hasPhysics = true;
 	}
 
 	@Override
-	public ParticleRenderType getRenderType() {
-		return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
+	protected Layer getLayer() {
+		return Layer.OPAQUE;
+	}
+
+	public static class Provider implements ParticleProvider<SimpleParticleType> {
+
+		public Provider(SpriteSet pSprites) {
+			sprites = pSprites;
+		}
+
+		@Nullable
+		@Override
+		public Particle createParticle(SimpleParticleType type, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, RandomSource random) {
+			return sprites != null ? new MoonglowParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, sprites) : null;
+		}
 	}
 }

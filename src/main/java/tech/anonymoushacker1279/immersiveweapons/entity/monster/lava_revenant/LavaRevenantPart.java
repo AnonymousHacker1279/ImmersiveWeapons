@@ -17,8 +17,8 @@ public class LavaRevenantPart extends PartEntity<LavaRevenantEntity> {
 	public final LavaRevenantEntity parentMob;
 	public final String name;
 	private EntityDimensions size;
-	public float baseWidth;
-	public float baseHeight;
+	public final float baseWidth;
+	public final float baseHeight;
 
 	public LavaRevenantPart(LavaRevenantEntity entity, String name, float width, float height) {
 		super(entity);

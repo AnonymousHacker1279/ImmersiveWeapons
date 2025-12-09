@@ -30,22 +30,6 @@ public class IWArmorMaterials {
 			IWEquipmentAssets.MOLTEN
 	);
 
-	public static final ArmorMaterial COPPER = new ArmorMaterial(
-			13,
-			Util.make(new EnumMap<>(ArmorType.class), map -> {
-				map.put(ArmorType.BOOTS, 1);
-				map.put(ArmorType.LEGGINGS, 4);
-				map.put(ArmorType.CHESTPLATE, 5);
-				map.put(ArmorType.HELMET, 1);
-			}),
-			9,
-			SoundEventRegistry.COPPER_ARMOR_EQUIP,
-			0.0F,
-			0.0F,
-			Tags.Items.INGOTS_COPPER,
-			IWEquipmentAssets.COPPER
-	);
-
 	public static final ArmorMaterial TESLA = new ArmorMaterial(
 			42,
 			Util.make(new EnumMap<>(ArmorType.class), map -> {

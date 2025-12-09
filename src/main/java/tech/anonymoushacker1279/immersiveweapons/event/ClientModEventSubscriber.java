@@ -12,7 +12,7 @@ import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.item.properties.conditional.ConditionalItemModelProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Unit;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionContents;
@@ -24,8 +24,8 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.*;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
+import net.neoforged.neoforge.client.renderstate.RegisterRenderStateModifiersEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
-import net.neoforged.neoforge.registries.DeferredHolder;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.core.WoodTypes;
 import tech.anonymoushacker1279.immersiveweapons.block.skull.CustomSkullTypes;
@@ -39,18 +39,19 @@ import tech.anonymoushacker1279.immersiveweapons.client.model.*;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.*;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact.BulletImpactParticle;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.damage_indicator.DamageIndicatorParticle;
+import tech.anonymoushacker1279.immersiveweapons.client.particle.damage_indicator.DamageIndicatorParticleGroup;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.smoke_grenade.SmokeGrenadeParticle;
-import tech.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.*;
+import tech.anonymoushacker1279.immersiveweapons.client.particle.wisp.WispParticle;
+import tech.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.AmmunitionTableRenderer;
+import tech.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.AstralCrystalRenderer;
+import tech.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.CommanderPedestalRenderer;
+import tech.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.ShelfRenderer;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.dimension.TiltrosDimensionSpecialEffects;
+import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.misc.ChairRenderer;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.mob.*;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.projectile.*;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.properties.HasSpecificName;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.function.Supplier;
 
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, value = Dist.CLIENT)
 public class ClientModEventSubscriber {
@@ -103,25 +104,13 @@ public class ClientModEventSubscriber {
 	@SubscribeEvent
 	public static void setupCreativeTabs(BuildCreativeModeTabContentsEvent event) {
 		if (event.getTab() == DeferredRegistryHandler.IMMERSIVE_WEAPONS_TAB.get()) {
-			Collection<DeferredHolder<Item, ? extends Item>> registryObjects = ItemRegistry.ITEMS.getEntries();
-			List<Item> items = new ArrayList<>(registryObjects.size());
-			registryObjects.stream().map(Supplier::get).forEach(items::add);
+			ItemStack musketScope = ItemRegistry.MUSKET.get().getDefaultInstance();
+			musketScope.set(DataComponentTypeRegistry.SCOPE, Unit.INSTANCE);
+			event.insertAfter(ItemRegistry.MUSKET.get().getDefaultInstance(), musketScope, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
 
-			for (Item item : items) {
-				event.accept(item);
-
-				if (item == ItemRegistry.MUSKET.get()) {
-					ItemStack musketScope = item.getDefaultInstance();
-					musketScope.set(DataComponentTypeRegistry.SCOPE, Unit.INSTANCE);
-					event.accept(musketScope);
-				}
-
-				if (item == ItemRegistry.CHOCOLATE_BAR.get()) {
-					ItemStack chocolateBar = item.getDefaultInstance();
-					chocolateBar.set(DataComponentTypeRegistry.IS_EXPLOSIVE, true);
-					event.accept(chocolateBar);
-				}
-			}
+			ItemStack chocolateBar = ItemRegistry.CHOCOLATE_BAR.get().getDefaultInstance();
+			chocolateBar.set(DataComponentTypeRegistry.IS_EXPLOSIVE, true);
+			event.insertAfter(ItemRegistry.CHOCOLATE_BAR.get().getDefaultInstance(), chocolateBar, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
 
 			// Add potion items, which are not in the item registry.
 			// Celestial potions
@@ -240,17 +229,27 @@ public class ClientModEventSubscriber {
 		event.registerEntityRenderer(EntityRegistry.SMOKE_GRENADE_ENTITY.get(), AdvancedThrowableProjectileRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.FLASHBANG_ENTITY.get(), AdvancedThrowableProjectileRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.MOLOTOV_COCKTAIL_ENTITY.get(), ThrownItemRenderer::new);
-		event.registerEntityRenderer(EntityRegistry.DYING_SOLDIER_ENTITY.get(), context -> new SoldierRenderer(context, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
-				"textures/entity/dying_soldier/dying_soldier.png")));
-		event.registerEntityRenderer(EntityRegistry.THE_COMMANDER_ENTITY.get(), context -> new SoldierRenderer(context, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
-				"textures/entity/the_commander/the_commander.png")));
-		event.registerEntityRenderer(EntityRegistry.MINUTEMAN_ENTITY.get(), context -> new SoldierRenderer(context, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
-				"textures/entity/minuteman/minuteman.png")));
-		event.registerEntityRenderer(EntityRegistry.FIELD_MEDIC_ENTITY.get(), context -> new SoldierRenderer(context, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
-				"textures/entity/field_medic/field_medic.png")));
-		event.registerEntityRenderer(EntityRegistry.WANDERING_WARRIOR_ENTITY.get(), WanderingWarriorRenderer::new);
-		event.registerEntityRenderer(EntityRegistry.HANS_ENTITY.get(), HansRenderer::new);
-		event.registerEntityRenderer(EntityRegistry.SUPER_HANS_ENTITY.get(), SuperHansRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.DYING_SOLDIER_ENTITY.get(), context -> new SoldierRenderer(context,
+				ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+						"textures/entity/dying_soldier/dying_soldier.png")));
+		event.registerEntityRenderer(EntityRegistry.THE_COMMANDER_ENTITY.get(), context -> new SoldierRenderer(context,
+				ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+						"textures/entity/the_commander/the_commander.png")));
+		event.registerEntityRenderer(EntityRegistry.MINUTEMAN_ENTITY.get(), context -> new SoldierRenderer(context,
+				ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+						"textures/entity/minuteman/minuteman.png")));
+		event.registerEntityRenderer(EntityRegistry.FIELD_MEDIC_ENTITY.get(), context -> new SoldierRenderer(context,
+				ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+						"textures/entity/field_medic/field_medic.png")));
+		event.registerEntityRenderer(EntityRegistry.WANDERING_WARRIOR_ENTITY.get(), context -> new SimpleHumanoidRenderer<>(context,
+				ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+						"textures/entity/wandering_warrior/wandering_warrior.png")));
+		event.registerEntityRenderer(EntityRegistry.HANS_ENTITY.get(), context -> new SimpleHumanoidRenderer<>(context,
+				ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+						"textures/entity/hans/hans.png")));
+		event.registerEntityRenderer(EntityRegistry.SUPER_HANS_ENTITY.get(), context -> new SuperHansRenderer(context,
+				ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+						"textures/entity/hans/hans.png")));
 		event.registerEntityRenderer(EntityRegistry.CHAIR_ENTITY.get(), ChairRenderer::new);
 
 		event.registerEntityRenderer(EntityRegistry.BURNED_OAK_BOAT_ENTITY.get(),
@@ -272,16 +271,23 @@ public class ClientModEventSubscriber {
 		event.registerEntityRenderer(EntityRegistry.STORM_CREEPER_ENTITY.get(), StormCreeperRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.EVIL_EYE_ENTITY.get(), EvilEyeRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.STAR_WOLF_ENTITY.get(), StarWolfRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.MOOGLOW_ENTITY.get(), MooGlowRenderer::new);
+		event.registerEntityRenderer(EntityRegistry.WISP_ENTITY.get(), WispRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.SKYGAZER_ENTITY.get(), SkygazerRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.SKELETON_MERCHANT_ENTITY.get(), SkeletonMerchantRenderer::new);
 
-		event.registerBlockEntityRenderer(BlockEntityRegistry.SHELF_BLOCK_ENTITY.get(), context -> new ShelfRenderer());
+		event.registerBlockEntityRenderer(BlockEntityRegistry.SHELF_BLOCK_ENTITY.get(), (context) -> new ShelfRenderer(context.itemModelResolver()));
 		event.registerBlockEntityRenderer(BlockEntityRegistry.CUSTOM_SIGN_ENTITY.get(), SignRenderer::new);
 		event.registerBlockEntityRenderer(BlockEntityRegistry.CUSTOM_HANGING_SIGN_ENTITY.get(), HangingSignRenderer::new);
 		event.registerBlockEntityRenderer(BlockEntityRegistry.CUSTOM_SKULL_BLOCK_ENTITY.get(), SkullBlockRenderer::new);
-		event.registerBlockEntityRenderer(BlockEntityRegistry.ASTRAL_CRYSTAL_BLOCK_ENTITY.get(), context -> new AstralCrystalRenderer());
-		event.registerBlockEntityRenderer(BlockEntityRegistry.AMMUNITION_TABLE_BLOCK_ENTITY.get(), context -> new AmmunitionTableRenderer());
-		event.registerBlockEntityRenderer(BlockEntityRegistry.COMMANDER_PEDESTAL_BLOCK_ENTITY.get(), context -> new CommanderPedestalRenderer());
+		event.registerBlockEntityRenderer(BlockEntityRegistry.ASTRAL_CRYSTAL_BLOCK_ENTITY.get(), (context) -> new AstralCrystalRenderer(context.itemModelResolver()));
+		event.registerBlockEntityRenderer(BlockEntityRegistry.AMMUNITION_TABLE_BLOCK_ENTITY.get(), (context) -> new AmmunitionTableRenderer(context.itemModelResolver()));
+		event.registerBlockEntityRenderer(BlockEntityRegistry.COMMANDER_PEDESTAL_BLOCK_ENTITY.get(), (context) -> new CommanderPedestalRenderer(context.itemModelResolver()));
+	}
+
+	@SubscribeEvent
+	public static void registerRenderStateModifiers(RegisterRenderStateModifiersEvent event) {
+		event.registerEntityModifier(RockSpiderRenderer.class, (entity, state) -> state.setRenderData(RockSpiderRenderer.DEEPSLATE_VARIANT, entity.isDeepslateVariant()));
 	}
 
 	/**
@@ -331,19 +337,25 @@ public class ClientModEventSubscriber {
 		event.registerSpriteSet(ParticleTypesRegistry.STARDUST_LEAVES_PARTICLE.get(), StardustLeavesParticle.Provider::new);
 		event.registerSpriteSet(ParticleTypesRegistry.DEADMANS_DESERT_AMBIENT_PARTICLE.get(), DeadmansDesertAmbientParticle.Provider::new);
 		event.registerSpriteSet(ParticleTypesRegistry.TILTROS_PORTAL_PARTICLE.get(), TiltrosPortalParticle.Provider::new);
+		event.registerSpriteSet(ParticleTypesRegistry.WISP_PARTICLE.get(), WispParticle.Provider::new);
 		event.registerSpecial(ParticleTypesRegistry.DAMAGE_INDICATOR_PARTICLE.get(), new DamageIndicatorParticle.Provider());
 	}
 
 	@SubscribeEvent
+	public static void registerParticleGroups(RegisterParticleGroupsEvent event) {
+		event.register(DamageIndicatorParticle.RENDER_TYPE, DamageIndicatorParticleGroup::new);
+	}
+
+	@SubscribeEvent
 	public static void registerSkullModel(EntityRenderersEvent.CreateSkullModels event) {
-		event.registerSkullModel(CustomSkullTypes.MINUTEMAN, ModelLayerLocations.MINUTEMAN_HEAD_LAYER);
-		event.registerSkullModel(CustomSkullTypes.FIELD_MEDIC, ModelLayerLocations.FIELD_MEDIC_HEAD_LAYER);
-		event.registerSkullModel(CustomSkullTypes.DYING_SOLDIER, ModelLayerLocations.DYING_SOLDIER_HEAD_LAYER);
-		event.registerSkullModel(CustomSkullTypes.THE_COMMANDER, ModelLayerLocations.THE_COMMANDER_HEAD_LAYER);
-		event.registerSkullModel(CustomSkullTypes.WANDERING_WARRIOR, ModelLayerLocations.WANDERING_WARRIOR_HEAD_LAYER);
-		event.registerSkullModel(CustomSkullTypes.HANS, ModelLayerLocations.HANS_HEAD_LAYER);
-		event.registerSkullModel(CustomSkullTypes.STORM_CREEPER, ModelLayerLocations.STORM_CREEPER_HEAD_LAYER);
-		event.registerSkullModel(CustomSkullTypes.SKELETON_MERCHANT, ModelLayerLocations.SKELETON_MERCHANT_HEAD_LAYER);
+		event.registerSkullModel(CustomSkullTypes.MINUTEMAN, ModelLayerLocations.MINUTEMAN_HEAD_LAYER, ModelLayerLocations.MINUTEMAN_HEAD_LAYER.model());
+		event.registerSkullModel(CustomSkullTypes.FIELD_MEDIC, ModelLayerLocations.FIELD_MEDIC_HEAD_LAYER, ModelLayerLocations.FIELD_MEDIC_HEAD_LAYER.model());
+		event.registerSkullModel(CustomSkullTypes.DYING_SOLDIER, ModelLayerLocations.DYING_SOLDIER_HEAD_LAYER, ModelLayerLocations.DYING_SOLDIER_HEAD_LAYER.model());
+		event.registerSkullModel(CustomSkullTypes.THE_COMMANDER, ModelLayerLocations.THE_COMMANDER_HEAD_LAYER, ModelLayerLocations.THE_COMMANDER_HEAD_LAYER.model());
+		event.registerSkullModel(CustomSkullTypes.WANDERING_WARRIOR, ModelLayerLocations.WANDERING_WARRIOR_HEAD_LAYER, ModelLayerLocations.WANDERING_WARRIOR_HEAD_LAYER.model());
+		event.registerSkullModel(CustomSkullTypes.HANS, ModelLayerLocations.HANS_HEAD_LAYER, ModelLayerLocations.HANS_HEAD_LAYER.model());
+		event.registerSkullModel(CustomSkullTypes.STORM_CREEPER, ModelLayerLocations.STORM_CREEPER_HEAD_LAYER, ModelLayerLocations.STORM_CREEPER_HEAD_LAYER.model());
+		event.registerSkullModel(CustomSkullTypes.SKELETON_MERCHANT, ModelLayerLocations.SKELETON_MERCHANT_HEAD_LAYER, ModelLayerLocations.SKELETON_MERCHANT_HEAD_LAYER.model());
 	}
 
 	@SubscribeEvent

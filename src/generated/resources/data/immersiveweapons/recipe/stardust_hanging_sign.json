@@ -4,7 +4,7 @@
   "group": "sign",
   "key": {
     "a": "immersiveweapons:stripped_stardust_log",
-    "b": "minecraft:chain"
+    "b": "minecraft:iron_chain"
   },
   "pattern": [
     "b b",

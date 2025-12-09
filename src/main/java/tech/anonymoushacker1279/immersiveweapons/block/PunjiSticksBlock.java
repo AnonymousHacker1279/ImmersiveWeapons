@@ -63,7 +63,7 @@ public class PunjiSticksBlock extends Block implements SimpleWaterloggedBlock {
 	}
 
 	@Override
-	protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier) {
+	protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier, boolean inside) {
 		if (entity instanceof LivingEntity livingEntity) {
 			if (livingEntity.fallDistance >= 2.5f) {
 				int featherFallingLevel = getFeatherFallingLevel(livingEntity);

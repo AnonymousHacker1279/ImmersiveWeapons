@@ -14,15 +14,15 @@ public class SmokeGrenadeParticleType extends ParticleType<SmokeGrenadeParticleO
 
 	public static final MapCodec<SmokeGrenadeParticleOptions> CODEC = RecordCodecBuilder.mapCodec(instance ->
 			instance.group(
-							ExtraCodecs.VECTOR3F.fieldOf("color").forGetter(options -> options.color),
-							Codec.FLOAT.fieldOf("scale").forGetter(options -> options.scale))
+							ExtraCodecs.VECTOR3F.fieldOf("color").forGetter(SmokeGrenadeParticleOptions::color),
+							Codec.FLOAT.fieldOf("scale").forGetter(SmokeGrenadeParticleOptions::scale))
 					.apply(instance, SmokeGrenadeParticleOptions::new));
 
 	public static final StreamCodec<FriendlyByteBuf, SmokeGrenadeParticleOptions> STREAM_CODEC = StreamCodec.composite(
 			ByteBufCodecs.VECTOR3F,
-			options -> options.color,
+			SmokeGrenadeParticleOptions::color,
 			ByteBufCodecs.FLOAT,
-			options -> options.scale,
+			SmokeGrenadeParticleOptions::scale,
 			SmokeGrenadeParticleOptions::new
 	);
 

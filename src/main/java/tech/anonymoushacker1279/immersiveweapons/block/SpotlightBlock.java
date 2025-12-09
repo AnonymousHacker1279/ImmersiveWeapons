@@ -73,7 +73,7 @@ public class SpotlightBlock extends BasicOrientableBlock implements SimpleWaterl
 
 	@Override
 	protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, @Nullable Orientation orientation, boolean movedByPiston) {
-		if (!level.isClientSide) {
+		if (!level.isClientSide()) {
 			boolean isLit = state.getValue(LIT);
 			if (!isLit && level.hasNeighborSignal(pos)) {
 				stateToggled(pos, level, state, state.getValue(LIT));
@@ -97,7 +97,7 @@ public class SpotlightBlock extends BasicOrientableBlock implements SimpleWaterl
 
 	private void stateToggled(BlockPos pos, Level level, BlockState state, boolean lit) {
 		// Start building a list of light positions in front of the block
-		if (!level.isClientSide) {
+		if (!level.isClientSide()) {
 			Direction facing = state.getValue(FACING);
 			BlockPos orientedPos = pos.relative(facing);
 			lightPositions.add(orientedPos.below());

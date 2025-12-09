@@ -47,9 +47,9 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 		// Root advancement
 		AdvancementHolder root = Builder.advancement()
 				.display(ItemRegistry.TESLA_SWORD.get(),
-						createTitle("root").withStyle(ChatFormatting.RED),
+						createTitle("root").withStyle(ChatFormatting.DARK_RED),
 						createDescription("root"),
-						ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/block/red_stained_bulletproof_glass.png"),
+						ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/red_stained_bulletproof_glass"),
 						AdvancementType.TASK, false, false, false)
 				.addCriterion("exist",
 						PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.inDimension(Level.OVERWORLD)))
@@ -1002,86 +1002,6 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 				)
 				.save(consumer, prefixString("nuggets"));
 
-		// Copper advancements
-		AdvancementHolder copperIngot = Builder.advancement().parent(ingots)
-				.display(Items.COPPER_INGOT,
-						createTitle("copper_ingot"),
-						createDescription("copper_ingot"),
-						null, AdvancementType.TASK, true, true, false)
-				.addCriterion("hold",
-						InventoryChangeTrigger.TriggerInstance.hasItems(Items.COPPER_INGOT))
-				.save(consumer, prefixString("copper_ingot"));
-
-		Builder.advancement().parent(copperIngot)
-				.display(ItemRegistry.COPPER_SWORD.get(),
-						createTitle("copper_sword"),
-						createDescription("copper_sword"),
-						null, AdvancementType.TASK, true, true, false)
-				.addCriterion("hold",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.COPPER_SWORD.get()))
-				.save(consumer, prefixString("copper_sword"));
-
-		Builder.advancement().parent(copperIngot)
-				.display(ItemRegistry.COPPER_PICKAXE.get(),
-						createTitle("copper_pickaxe"),
-						createDescription("copper_pickaxe"),
-						null, AdvancementType.TASK, true, true, false)
-				.addCriterion("hold",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.COPPER_PICKAXE.get()))
-				.save(consumer, prefixString("copper_pickaxe"));
-
-		Builder.advancement().parent(copperIngot)
-				.display(ItemRegistry.COPPER_AXE.get(),
-						createTitle("copper_axe"),
-						createDescription("copper_axe"),
-						null, AdvancementType.GOAL, true, true, false)
-				.addCriterion("hold",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.COPPER_AXE.get()))
-				.save(consumer, prefixString("copper_axe"));
-
-		Builder.advancement().parent(copperIngot)
-				.display(ItemRegistry.COPPER_SHOVEL.get(),
-						createTitle("copper_shovel"),
-						createDescription("copper_shovel"),
-						null, AdvancementType.GOAL, true, true, false)
-				.addCriterion("hold",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.COPPER_SHOVEL.get()))
-				.save(consumer, prefixString("copper_shovel"));
-
-		Builder.advancement().parent(copperIngot)
-				.display(ItemRegistry.COPPER_HOE.get(),
-						createTitle("copper_hoe"),
-						createDescription("copper_hoe"),
-						null, AdvancementType.GOAL, true, true, false)
-				.addCriterion("hold",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.COPPER_HOE.get()))
-				.save(consumer, prefixString("copper_hoe"));
-
-		Builder.advancement().parent(copperIngot)
-				.display(Items.COPPER_BLOCK,
-						createTitle("copper_tools"),
-						createDescription("copper_tools"),
-						null, AdvancementType.CHALLENGE, true, true, false)
-				.addCriterion("have_advancements",
-						PlayerTrigger.TriggerInstance.located(
-								EntityPredicate.Builder.entity().subPredicate(
-										PlayerPredicate.Builder.player().checkAdvancementDone(
-												prefixRL("copper_sword"), true
-										).checkAdvancementDone(
-												prefixRL("copper_pickaxe"), true
-										).checkAdvancementDone(
-												prefixRL("copper_axe"), true
-										).checkAdvancementDone(
-												prefixRL("copper_shovel"), true
-										).checkAdvancementDone(
-												prefixRL("copper_hoe"), true
-										).build()
-								)
-						)
-				)
-				.rewards(AdvancementRewards.Builder.experience(25))
-				.save(consumer, prefixString("copper_tools"));
-
 		// Cobalt advancements
 		AdvancementHolder cobaltIngot = Builder.advancement().parent(ingots)
 				.display(ItemRegistry.COBALT_INGOT.get(),
@@ -1201,6 +1121,8 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 				.addCriterion("discover_storm_creeper", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.STORM_CREEPER_ENTITY.get()))
 				.addCriterion("discover_evil_eye", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.EVIL_EYE_ENTITY.get()))
 				.addCriterion("discover_star_wolf", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.STAR_WOLF_ENTITY.get()))
+				.addCriterion("discover_mooglow", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.MOOGLOW_ENTITY.get()))
+				.addCriterion("discover_wisp", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.WISP_ENTITY.get()))
 				.addCriterion("discover_skygazer", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.SKYGAZER_ENTITY.get()))
 				.addCriterion("discover_skeleton_merchant", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.SKELETON_MERCHANT_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(150))
@@ -1322,6 +1244,24 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.STAR_WOLF_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
 				.save(consumer, prefixString("discover_star_wolf"));
+
+		Builder.advancement().parent(entityDiscovery)
+				.display(BlockItemRegistry.MOONGLOW_ITEM.get(),
+						createTitle("discover_mooglow"),
+						createDescription("discover_mooglow"),
+						null, AdvancementType.TASK, true, true, false)
+				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.MOOGLOW_ENTITY.get()))
+				.rewards(AdvancementRewards.Builder.experience(20))
+				.save(consumer, prefixString("discover_mooglow"));
+
+		Builder.advancement().parent(entityDiscovery)
+				.display(ItemRegistry.WISP_IN_A_BOTTLE_BLUE.get(),
+						createTitle("discover_wisp"),
+						createDescription("discover_wisp"),
+						null, AdvancementType.TASK, true, true, false)
+				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.WISP_ENTITY.get()))
+				.rewards(AdvancementRewards.Builder.experience(20))
+				.save(consumer, prefixString("discover_wisp"));
 
 		Builder.advancement().parent(entityDiscovery)
 				.display(Items.BOOK,

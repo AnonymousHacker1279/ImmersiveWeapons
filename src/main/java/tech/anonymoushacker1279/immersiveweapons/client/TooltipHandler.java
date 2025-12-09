@@ -1,7 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.client;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
@@ -243,7 +243,7 @@ public class TooltipHandler {
 	 * @param shiftTooltips    The list of tooltips to add if the player is holding SHIFT.
 	 */
 	public static void addShiftTooltip(List<Component> existingTooltips, List<Component> shiftTooltips) {
-		if (!Screen.hasShiftDown()) {
+		if (!Minecraft.getInstance().hasShiftDown()) {
 			existingTooltips.add(Component.translatable("tooltip.immersiveweapons.shift_for_info").withStyle(ChatFormatting.GOLD, ChatFormatting.ITALIC));
 		} else {
 			existingTooltips.addAll(shiftTooltips);
@@ -257,7 +257,7 @@ public class TooltipHandler {
 	 * @param altTooltips      The list of tooltips to add if the player is holding ALT.
 	 */
 	private static void addAltTooltip(List<Component> existingTooltips, List<Component> altTooltips) {
-		if (!Screen.hasAltDown()) {
+		if (!Minecraft.getInstance().hasAltDown()) {
 			existingTooltips.add(Component.translatable("tooltip.immersiveweapons.alt_for_info").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.ITALIC));
 		} else {
 			existingTooltips.addAll(altTooltips);

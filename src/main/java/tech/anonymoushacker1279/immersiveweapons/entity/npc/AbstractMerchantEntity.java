@@ -86,7 +86,7 @@ public abstract class AbstractMerchantEntity extends AbstractVillager implements
 		if (entityData.get(TRADE_REFRESH_TIME) > 0) {
 			entityData.set(TRADE_REFRESH_TIME, entityData.get(TRADE_REFRESH_TIME) - 1);
 		} else {
-			if (!level().isClientSide) {
+			if (!level().isClientSide()) {
 				updateTrades();
 				entityData.set(TRADE_REFRESH_TIME, TradeLoader.TRADES.get(getType()).tradeRefreshTime());
 			}
@@ -119,7 +119,7 @@ public abstract class AbstractMerchantEntity extends AbstractVillager implements
 				player.awardStat(Stats.TALKED_TO_VILLAGER);
 			}
 
-			if (!level().isClientSide) {
+			if (!level().isClientSide()) {
 				if (!getOffers().isEmpty()) {
 					setTradingPlayer(player);
 					openTradingScreen(player, getDisplayName(), 1);

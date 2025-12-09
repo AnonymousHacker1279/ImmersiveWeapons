@@ -14,38 +14,27 @@ import tech.anonymoushacker1279.immersiveweapons.data.groups.common.CommonItemTa
 import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.item.*;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.*;
-import tech.anonymoushacker1279.immersiveweapons.item.bow.AuroraBow;
-import tech.anonymoushacker1279.immersiveweapons.item.bow.DragonBreathBow;
-import tech.anonymoushacker1279.immersiveweapons.item.bow.IceBowItem;
+import tech.anonymoushacker1279.immersiveweapons.item.bow.*;
 import tech.anonymoushacker1279.immersiveweapons.item.fortitude.*;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.*;
 import tech.anonymoushacker1279.immersiveweapons.item.materials.IWArmorMaterials;
 import tech.anonymoushacker1279.immersiveweapons.item.materials.IWToolMaterials;
 import tech.anonymoushacker1279.immersiveweapons.item.potion.AlcoholItem;
 import tech.anonymoushacker1279.immersiveweapons.item.potion.WineItem;
-import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem;
+import tech.anonymoushacker1279.immersiveweapons.item.projectile.*;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem.BulletBuilder;
-import tech.anonymoushacker1279.immersiveweapons.item.projectile.CustomArrowItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.CustomArrowItem.ArrowBuilder;
-import tech.anonymoushacker1279.immersiveweapons.item.projectile.DragonFireballItem;
-import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem.ThrowableType;
-import tech.anonymoushacker1279.immersiveweapons.item.tool.GauntletItem;
+import tech.anonymoushacker1279.immersiveweapons.item.tool.*;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils.HitEffect;
-import tech.anonymoushacker1279.immersiveweapons.item.tool.PikeItem;
-import tech.anonymoushacker1279.immersiveweapons.item.tool.PliersItem;
-import tech.anonymoushacker1279.immersiveweapons.item.tool.TheSword;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.molten.*;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.tesla.*;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.ventus.*;
 import tech.anonymoushacker1279.immersiveweapons.item.utility.CraftingToolItem;
 import tech.anonymoushacker1279.immersiveweapons.item.utility.FuelItem;
-import tech.anonymoushacker1279.immersiveweapons.util.markers.DatagenExclusionMarker;
+import tech.anonymoushacker1279.immersiveweapons.util.markers.*;
 import tech.anonymoushacker1279.immersiveweapons.util.markers.DatagenExclusionMarker.Type;
-import tech.anonymoushacker1279.immersiveweapons.util.markers.LanguageEntryOverride;
-import tech.anonymoushacker1279.immersiveweapons.util.markers.TextureMetadataMarker;
 import tech.anonymoushacker1279.immersiveweapons.util.markers.TextureMetadataMarker.PredefinedGroups;
-import tech.anonymoushacker1279.immersiveweapons.util.markers.TooltipMarker;
 import tech.anonymoushacker1279.immersiveweapons.world.food.FoodItemProperties;
 
 import java.util.function.Supplier;
@@ -72,11 +61,6 @@ public class ItemRegistry {
 	@TextureMetadataMarker(frameTime = 5)
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "molten_tool")
 	public static final Supplier<MoltenHoe> MOLTEN_HOE = ITEMS.registerItem("molten_hoe", MoltenHoe::new);
-	public static final Supplier<Item> COPPER_SWORD = ITEMS.registerItem("copper_sword", (properties) -> new Item(properties.sword(IWToolMaterials.COPPER, 3, -2.4f)));
-	public static final Supplier<Item> COPPER_PICKAXE = ITEMS.registerItem("copper_pickaxe", (properties) -> new Item(properties.pickaxe(IWToolMaterials.COPPER, 1, -2.8f)));
-	public static final Supplier<AxeItem> COPPER_AXE = ITEMS.registerItem("copper_axe", (properties) -> new AxeItem(IWToolMaterials.COPPER, 7, -3.1f, properties));
-	public static final Supplier<ShovelItem> COPPER_SHOVEL = ITEMS.registerItem("copper_shovel", (properties) -> new ShovelItem(IWToolMaterials.COPPER, 1.5f, -3.0f, properties));
-	public static final Supplier<HoeItem> COPPER_HOE = ITEMS.registerItem("copper_hoe", (properties) -> new HoeItem(IWToolMaterials.COPPER, -1, -1.0f, properties));
 	@TextureMetadataMarker(frameTime = 2)
 	@TooltipMarker(style = {ChatFormatting.AQUA, ChatFormatting.ITALIC})
 	public static final Supplier<TeslaSword> TESLA_SWORD = ITEMS.registerItem("tesla_sword", TeslaSword::new);
@@ -140,33 +124,33 @@ public class ItemRegistry {
 
 	// Weapons
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> WOODEN_PIKE = ITEMS.registerItem("wooden_pike", (properties) -> new PikeItem(ToolMaterial.WOOD, -2.6f, properties.repairable(ItemTags.PLANKS)));
+	public static final Supplier<PikeItem> WOODEN_PIKE = ITEMS.registerItem("wooden_pike", (properties) -> new PikeItem(ToolMaterial.WOOD, -3.0f, properties.repairable(ItemTags.PLANKS)));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> STONE_PIKE = ITEMS.registerItem("stone_pike", (properties) -> new PikeItem(ToolMaterial.STONE, -2.6f, properties.repairable(ItemTags.STONE_TOOL_MATERIALS)));
+	public static final Supplier<PikeItem> STONE_PIKE = ITEMS.registerItem("stone_pike", (properties) -> new PikeItem(ToolMaterial.STONE, -3.0f, properties.repairable(ItemTags.STONE_TOOL_MATERIALS)));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> GOLDEN_PIKE = ITEMS.registerItem("golden_pike", (properties) -> new PikeItem(ToolMaterial.GOLD, -2.6f, properties.repairable(Tags.Items.INGOTS_GOLD)));
+	public static final Supplier<PikeItem> GOLDEN_PIKE = ITEMS.registerItem("golden_pike", (properties) -> new PikeItem(ToolMaterial.GOLD, -3.0f, properties.repairable(Tags.Items.INGOTS_GOLD)));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> COPPER_PIKE = ITEMS.registerItem("copper_pike", (properties) -> new PikeItem(IWToolMaterials.COPPER, -2.6f, properties.repairable(Tags.Items.INGOTS_COPPER)));
+	public static final Supplier<PikeItem> COPPER_PIKE = ITEMS.registerItem("copper_pike", (properties) -> new PikeItem(IWToolMaterials.COPPER, -3.0f, properties.repairable(Tags.Items.INGOTS_COPPER)));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> IRON_PIKE = ITEMS.registerItem("iron_pike", (properties) -> new PikeItem(ToolMaterial.IRON, -2.6f, properties.repairable(Tags.Items.INGOTS_IRON)));
+	public static final Supplier<PikeItem> IRON_PIKE = ITEMS.registerItem("iron_pike", (properties) -> new PikeItem(ToolMaterial.IRON, -3.0f, properties.repairable(Tags.Items.INGOTS_IRON)));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> COBALT_PIKE = ITEMS.registerItem("cobalt_pike", (properties) -> new PikeItem(IWToolMaterials.COBALT, -2.6f, properties.repairable(CommonItemTagGroups.COBALT_INGOTS)));
+	public static final Supplier<PikeItem> COBALT_PIKE = ITEMS.registerItem("cobalt_pike", (properties) -> new PikeItem(IWToolMaterials.COBALT, -3.0f, properties.repairable(CommonItemTagGroups.COBALT_INGOTS)));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> DIAMOND_PIKE = ITEMS.registerItem("diamond_pike", (properties) -> new PikeItem(ToolMaterial.DIAMOND, -2.6f, properties.repairable(Tags.Items.GEMS_DIAMOND)));
+	public static final Supplier<PikeItem> DIAMOND_PIKE = ITEMS.registerItem("diamond_pike", (properties) -> new PikeItem(ToolMaterial.DIAMOND, -3.0f, properties.repairable(Tags.Items.GEMS_DIAMOND)));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> NETHERITE_PIKE = ITEMS.registerItem("netherite_pike", (properties) -> new PikeItem(ToolMaterial.NETHERITE, -2.6f, properties.fireResistant().repairable(Tags.Items.INGOTS_NETHERITE)));
+	public static final Supplier<PikeItem> NETHERITE_PIKE = ITEMS.registerItem("netherite_pike", (properties) -> new PikeItem(ToolMaterial.NETHERITE, -3.0f, properties.fireResistant().repairable(Tags.Items.INGOTS_NETHERITE)));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> MOLTEN_PIKE = ITEMS.registerItem("molten_pike", (properties) -> new PikeItem(IWToolMaterials.MOLTEN, -2.6f, properties.fireResistant().repairable(IWItemTagGroups.MOLTEN_INGOTS)));
+	public static final Supplier<PikeItem> MOLTEN_PIKE = ITEMS.registerItem("molten_pike", (properties) -> new PikeItem(IWToolMaterials.MOLTEN, -3.0f, properties.fireResistant().repairable(IWItemTagGroups.MOLTEN_INGOTS)));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> TESLA_PIKE = ITEMS.registerItem("tesla_pike", (properties) -> new PikeItem(IWToolMaterials.TESLA, -2.6f, properties.repairable(IWItemTagGroups.TESLA_INGOTS)));
+	public static final Supplier<PikeItem> TESLA_PIKE = ITEMS.registerItem("tesla_pike", (properties) -> new PikeItem(IWToolMaterials.TESLA, -3.0f, properties.repairable(IWItemTagGroups.TESLA_INGOTS)));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> VENTUS_PIKE = ITEMS.registerItem("ventus_pike", (properties) -> new PikeItem(IWToolMaterials.VENTUS, -2.2f, properties.repairable(IWItemTagGroups.VENTUS_SHARDS)));
+	public static final Supplier<PikeItem> VENTUS_PIKE = ITEMS.registerItem("ventus_pike", (properties) -> new PikeItem(IWToolMaterials.VENTUS, -2.6f, properties.repairable(IWItemTagGroups.VENTUS_SHARDS)));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> ASTRAL_PIKE = ITEMS.registerItem("astral_pike", (properties) -> new PikeItem(IWToolMaterials.ASTRAL, -1.7f, properties.repairable(IWItemTagGroups.ASTRAL_INGOTS)));
+	public static final Supplier<PikeItem> ASTRAL_PIKE = ITEMS.registerItem("astral_pike", (properties) -> new PikeItem(IWToolMaterials.ASTRAL, -2.3f, properties.repairable(IWItemTagGroups.ASTRAL_INGOTS)));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> STARSTORM_PIKE = ITEMS.registerItem("starstorm_pike", (properties) -> new PikeItem(IWToolMaterials.STARSTORM, -2.6f, properties.repairable(IWItemTagGroups.STARSTORM_INGOTS)));
+	public static final Supplier<PikeItem> STARSTORM_PIKE = ITEMS.registerItem("starstorm_pike", (properties) -> new PikeItem(IWToolMaterials.STARSTORM, -3.0f, properties.repairable(IWItemTagGroups.STARSTORM_INGOTS)));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> VOID_PIKE = ITEMS.registerItem("void_pike", (properties) -> new PikeItem(IWToolMaterials.VOID, -1.5f, properties.repairable(IWItemTagGroups.VOID_INGOTS)));
+	public static final Supplier<PikeItem> VOID_PIKE = ITEMS.registerItem("void_pike", (properties) -> new PikeItem(IWToolMaterials.VOID, -1.9f, properties.repairable(IWItemTagGroups.VOID_INGOTS)));
 	@DatagenExclusionMarker(Type.MODEL_GENERATOR_ITEM)
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, dynamicTooltip = DynamicTooltips.FirearmTooltip.class)
 	public static final Supplier<SimplePistolItem> FLINTLOCK_PISTOL = ITEMS.registerItem("flintlock_pistol", (properties) -> new SimplePistolItem(properties.durability(499).enchantable(1)));
@@ -242,7 +226,6 @@ public class ItemRegistry {
 	public static final Supplier<Item> OBSIDIAN_ROD = ITEMS.registerItem("obsidian_rod", Item::new);
 	public static final Supplier<Item> WOODEN_TOOL_ROD = ITEMS.registerItem("wooden_tool_rod", Item::new);
 	public static final Supplier<Item> COBALT_NUGGET = ITEMS.registerItem("cobalt_nugget", Item::new);
-	public static final Supplier<Item> COPPER_NUGGET = ITEMS.registerItem("copper_nugget", Item::new);
 	public static final Supplier<Item> COBALT_INGOT = ITEMS.registerItem("cobalt_ingot", Item::new);
 	public static final Supplier<Item> RAW_COBALT = ITEMS.registerItem("raw_cobalt", Item::new);
 	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.STARSTORM_ITEMS)
@@ -287,9 +270,9 @@ public class ItemRegistry {
 	public static final Supplier<Item> TESLA_PIKE_HEAD = ITEMS.registerItem("tesla_pike_head", Item::new);
 	public static final Supplier<Item> VENTUS_PIKE_HEAD = ITEMS.registerItem("ventus_pike_head", Item::new);
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC})
-	public static final Supplier<CustomArrowItem<?>> WOODEN_ARROW = ITEMS.registerItem("wooden_arrow", (properties) -> new ArrowBuilder<>(properties, 1.65d, EntityRegistry.WOODEN_ARROW_ENTITY).shootingVector(0.0185d, 5.8d, 7.2d).build());
+	public static final Supplier<CustomArrowItem<?>> WOODEN_ARROW = ITEMS.registerItem("wooden_arrow", (properties) -> new ArrowBuilder<>(properties, 1.65d, EntityRegistry.WOODEN_ARROW_ENTITY).gravityModifier(0.075d).inaccuracySettings(12d, 7d, 12d).build());
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC})
-	public static final Supplier<CustomArrowItem<?>> STONE_ARROW = ITEMS.registerItem("stone_arrow", (properties) -> new ArrowBuilder<>(properties, 1.85d, EntityRegistry.STONE_ARROW_ENTITY).shootingVector(0.0175d, 2.6d, 4.3d).build());
+	public static final Supplier<CustomArrowItem<?>> STONE_ARROW = ITEMS.registerItem("stone_arrow", (properties) -> new ArrowBuilder<>(properties, 1.85d, EntityRegistry.STONE_ARROW_ENTITY).gravityModifier(0.125d).inaccuracySettings(10d, 5d, 10d).build());
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC})
 	public static final Supplier<CustomArrowItem<?>> GOLDEN_ARROW = ITEMS.registerItem("golden_arrow", (properties) -> new ArrowBuilder<>(properties, 2.10d, EntityRegistry.GOLDEN_ARROW_ENTITY).build());
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC})
@@ -301,19 +284,19 @@ public class ItemRegistry {
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC})
 	public static final Supplier<CustomArrowItem<?>> DIAMOND_ARROW = ITEMS.registerItem("diamond_arrow", (properties) -> new ArrowBuilder<>(properties, 3.0d, EntityRegistry.DIAMOND_ARROW_ENTITY).canBeInfinite(false).pierceLevel(1).build());
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC})
-	public static final Supplier<CustomArrowItem<?>> NETHERITE_ARROW = ITEMS.registerItem("netherite_arrow", (properties) -> new ArrowBuilder<>(properties.fireResistant(), 5.75d, EntityRegistry.NETHERITE_ARROW_ENTITY).canBeInfinite(false).pierceLevel(2).gravityModifier(0.0455d).shootingVector(0.0025d, 0.2d, 1.1d).build());
+	public static final Supplier<CustomArrowItem<?>> NETHERITE_ARROW = ITEMS.registerItem("netherite_arrow", (properties) -> new ArrowBuilder<>(properties.fireResistant(), 5.75d, EntityRegistry.NETHERITE_ARROW_ENTITY).canBeInfinite(false).pierceLevel(2).gravityModifier(0.0455d).inaccuracySettings(0.9d).build());
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC})
-	public static final Supplier<CustomArrowItem<?>> MOLTEN_ARROW = ITEMS.registerItem("molten_arrow", (properties) -> new ArrowBuilder<>(properties.fireResistant(), 6.50d, EntityRegistry.MOLTEN_ARROW_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.0455d).shootingVector(0.0025d, 0.2d, 1.0d).knockbackStrength(1).hitEffect(HitEffect.MOLTEN).build());
+	public static final Supplier<CustomArrowItem<?>> MOLTEN_ARROW = ITEMS.registerItem("molten_arrow", (properties) -> new ArrowBuilder<>(properties.fireResistant(), 6.50d, EntityRegistry.MOLTEN_ARROW_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.0455d).inaccuracySettings(0.8d).knockbackStrength(1).hitEffect(HitEffect.MOLTEN).build());
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC})
-	public static final Supplier<CustomArrowItem<?>> TESLA_ARROW = ITEMS.registerItem("tesla_arrow", (properties) -> new ArrowBuilder<>(properties, 7.0d, EntityRegistry.TESLA_ARROW_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.0355d).shootingVector(0.0025d, 0.2d, 0.9d).hitEffect(HitEffect.TESLA).build());
+	public static final Supplier<CustomArrowItem<?>> TESLA_ARROW = ITEMS.registerItem("tesla_arrow", (properties) -> new ArrowBuilder<>(properties, 7.0d, EntityRegistry.TESLA_ARROW_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.0355d).inaccuracySettings(0.7d).hitEffect(HitEffect.TESLA).build());
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC})
-	public static final Supplier<CustomArrowItem<?>> VENTUS_ARROW = ITEMS.registerItem("ventus_arrow", (properties) -> new ArrowBuilder<>(properties, 6.5d, EntityRegistry.VENTUS_ARROW_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.0355d).shootingVector(0.0025d, 0.2d, 0.9d).hitEffect(HitEffect.VENTUS).build());
+	public static final Supplier<CustomArrowItem<?>> VENTUS_ARROW = ITEMS.registerItem("ventus_arrow", (properties) -> new ArrowBuilder<>(properties, 6.5d, EntityRegistry.VENTUS_ARROW_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.0355d).inaccuracySettings(0.5d).hitEffect(HitEffect.VENTUS).build());
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC})
-	public static final Supplier<CustomArrowItem<?>> ASTRAL_ARROW = ITEMS.registerItem("astral_arrow", (properties) -> new ArrowBuilder<>(properties, 5.50d, EntityRegistry.ASTRAL_ARROW_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.01d).shootingVector(0.002d, 0.1d, 0.6d).build());
+	public static final Supplier<CustomArrowItem<?>> ASTRAL_ARROW = ITEMS.registerItem("astral_arrow", (properties) -> new ArrowBuilder<>(properties, 5.50d, EntityRegistry.ASTRAL_ARROW_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.01d).inaccuracySettings(0.3d).build());
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC})
-	public static final Supplier<CustomArrowItem<?>> STARSTORM_ARROW = ITEMS.registerItem("starstorm_arrow", (properties) -> new ArrowBuilder<>(properties, 7.65d, EntityRegistry.STARSTORM_ARROW_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.0355d).shootingVector(0.0025d, 0.2d, 0.9d).build());
+	public static final Supplier<CustomArrowItem<?>> STARSTORM_ARROW = ITEMS.registerItem("starstorm_arrow", (properties) -> new ArrowBuilder<>(properties, 7.65d, EntityRegistry.STARSTORM_ARROW_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.0355d).inaccuracySettings(0.7d).build());
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC})
-	public static final Supplier<CustomArrowItem<?>> VOID_ARROW = ITEMS.registerItem("void_arrow", (properties) -> new ArrowBuilder<>(properties, 8.0d, EntityRegistry.VOID_ARROW_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.01d).shootingVector(0.002d, 0.1d, 0.6d).build());
+	public static final Supplier<CustomArrowItem<?>> VOID_ARROW = ITEMS.registerItem("void_arrow", (properties) -> new ArrowBuilder<>(properties, 8.0d, EntityRegistry.VOID_ARROW_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.01d).inaccuracySettings(0.2d).build());
 	@LanguageEntryOverride("Smoke Grenade Arrow")
 	@TooltipMarker(dynamicTooltip = DynamicTooltips.SmokeGrenadeArrowTooltip.class)
 	public static final Supplier<CustomArrowItem<?>> SMOKE_GRENADE_ARROW = ITEMS.registerItem("smoke_grenade_arrow", (properties) -> new ArrowBuilder<>(properties, 2.0d, EntityRegistry.SMOKE_GRENADE_ARROW_ENTITY).color(0).build());
@@ -333,9 +316,9 @@ public class ItemRegistry {
 	@TooltipMarker(dynamicTooltip = DynamicTooltips.SmokeGrenadeArrowTooltip.class)
 	public static final Supplier<CustomArrowItem<?>> SMOKE_GRENADE_ARROW_YELLOW = ITEMS.registerItem("smoke_grenade_arrow_yellow", (properties) -> new ArrowBuilder<>(properties, 2.0d, EntityRegistry.SMOKE_GRENADE_ARROW_ENTITY).color(5).build());
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, dynamicTooltip = DynamicTooltips.BulletTooltip.class)
-	public static final Supplier<BulletItem<?>> WOODEN_MUSKET_BALL = ITEMS.registerItem("wooden_musket_ball", (properties) -> new BulletBuilder<>(properties.stacksTo(99), 2.0d, EntityRegistry.WOODEN_MUSKET_BALL_ENTITY).misfireChance(0.3f).gravityModifier(0.55d).shootingVector(0.0175d, 3.2d, 5.1d).build());
+	public static final Supplier<BulletItem<?>> WOODEN_MUSKET_BALL = ITEMS.registerItem("wooden_musket_ball", (properties) -> new BulletBuilder<>(properties.stacksTo(99), 2.0d, EntityRegistry.WOODEN_MUSKET_BALL_ENTITY).misfireChance(0.3f).gravityModifier(0.055d).inaccuracySettings(12d, 7d, 12d).build());
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, dynamicTooltip = DynamicTooltips.BulletTooltip.class)
-	public static final Supplier<BulletItem<?>> STONE_MUSKET_BALL = ITEMS.registerItem("stone_musket_ball", (properties) -> new BulletBuilder<>(properties.stacksTo(99), 2.20d, EntityRegistry.STONE_MUSKET_BALL_ENTITY).misfireChance(0.15f).gravityModifier(0.075d).shootingVector(0.0175d, 2.4d, 4.1d).build());
+	public static final Supplier<BulletItem<?>> STONE_MUSKET_BALL = ITEMS.registerItem("stone_musket_ball", (properties) -> new BulletBuilder<>(properties.stacksTo(99), 2.20d, EntityRegistry.STONE_MUSKET_BALL_ENTITY).misfireChance(0.15f).gravityModifier(0.075d).inaccuracySettings(10d, 5d, 10d).build());
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, dynamicTooltip = DynamicTooltips.BulletTooltip.class)
 	public static final Supplier<BulletItem<?>> GOLDEN_MUSKET_BALL = ITEMS.registerItem("golden_musket_ball", (properties) -> new BulletBuilder<>(properties.stacksTo(99), 2.30d, EntityRegistry.GOLDEN_MUSKET_BALL_ENTITY).gravityModifier(0.03d).build());
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, dynamicTooltip = DynamicTooltips.BulletTooltip.class)
@@ -345,21 +328,21 @@ public class ItemRegistry {
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, dynamicTooltip = DynamicTooltips.BulletTooltip.class)
 	public static final Supplier<BulletItem<?>> COBALT_MUSKET_BALL = ITEMS.registerItem("cobalt_musket_ball", (properties) -> new BulletBuilder<>(properties.stacksTo(99), 2.90d, EntityRegistry.COBALT_MUSKET_BALL_ENTITY).build());
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, dynamicTooltip = DynamicTooltips.BulletTooltip.class)
-	public static final Supplier<BulletItem<?>> DIAMOND_MUSKET_BALL = ITEMS.registerItem("diamond_musket_ball", (properties) -> new BulletBuilder<>(properties.stacksTo(99), 3.35d, EntityRegistry.DIAMOND_MUSKET_BALL_ENTITY).canBeInfinite(false).pierceLevel(1).gravityModifier(0.01d).shootingVector(0.0025d, 0.2d, 0.9).build());
+	public static final Supplier<BulletItem<?>> DIAMOND_MUSKET_BALL = ITEMS.registerItem("diamond_musket_ball", (properties) -> new BulletBuilder<>(properties.stacksTo(99), 3.35d, EntityRegistry.DIAMOND_MUSKET_BALL_ENTITY).canBeInfinite(false).pierceLevel(1).gravityModifier(0.01d).build());
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, dynamicTooltip = DynamicTooltips.BulletTooltip.class)
-	public static final Supplier<BulletItem<?>> NETHERITE_MUSKET_BALL = ITEMS.registerItem("netherite_musket_ball", (properties) -> new BulletBuilder<>(properties.stacksTo(99).fireResistant(), 6.50d, EntityRegistry.NETHERITE_MUSKET_BALL_ENTITY).canBeInfinite(false).pierceLevel(2).gravityModifier(0.005d).shootingVector(0.002d, 0.2d, 0.7d).build());
+	public static final Supplier<BulletItem<?>> NETHERITE_MUSKET_BALL = ITEMS.registerItem("netherite_musket_ball", (properties) -> new BulletBuilder<>(properties.stacksTo(99).fireResistant(), 6.50d, EntityRegistry.NETHERITE_MUSKET_BALL_ENTITY).canBeInfinite(false).pierceLevel(2).gravityModifier(0.005d).inaccuracySettings(0.9d).build());
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, dynamicTooltip = DynamicTooltips.BulletTooltip.class)
-	public static final Supplier<BulletItem<?>> MOLTEN_MUSKET_BALL = ITEMS.registerItem("molten_musket_ball", (properties) -> new BulletBuilder<>(properties.stacksTo(99).fireResistant(), 7.50d, EntityRegistry.MOLTEN_MUSKET_BALL_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.005d).knockbackStrength(1).hitEffect(HitEffect.MOLTEN).shootingVector(0.002d, 0.2d, 0.6d).build());
+	public static final Supplier<BulletItem<?>> MOLTEN_MUSKET_BALL = ITEMS.registerItem("molten_musket_ball", (properties) -> new BulletBuilder<>(properties.stacksTo(99).fireResistant(), 7.50d, EntityRegistry.MOLTEN_MUSKET_BALL_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.005d).knockbackStrength(1).hitEffect(HitEffect.MOLTEN).inaccuracySettings(0.8d).build());
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, dynamicTooltip = DynamicTooltips.BulletTooltip.class)
-	public static final Supplier<BulletItem<?>> TESLA_MUSKET_BALL = ITEMS.registerItem("tesla_musket_ball", (properties) -> new BulletBuilder<>(properties.stacksTo(99), 8.0d, EntityRegistry.TESLA_MUSKET_BALL_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.004d).hitEffect(HitEffect.TESLA).shootingVector(0.002d, 0.2d, 0.5d).build());
+	public static final Supplier<BulletItem<?>> TESLA_MUSKET_BALL = ITEMS.registerItem("tesla_musket_ball", (properties) -> new BulletBuilder<>(properties.stacksTo(99), 8.0d, EntityRegistry.TESLA_MUSKET_BALL_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.004d).hitEffect(HitEffect.TESLA).inaccuracySettings(0.7d).build());
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, dynamicTooltip = DynamicTooltips.BulletTooltip.class)
-	public static final Supplier<BulletItem<?>> VENTUS_MUSKET_BALL = ITEMS.registerItem("ventus_musket_ball", (properties) -> new BulletBuilder<>(properties.stacksTo(99), 7.50d, EntityRegistry.VENTUS_MUSKET_BALL_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.002d).hitEffect(HitEffect.VENTUS).shootingVector(0.002d, 0.2d, 0.5d).build());
+	public static final Supplier<BulletItem<?>> VENTUS_MUSKET_BALL = ITEMS.registerItem("ventus_musket_ball", (properties) -> new BulletBuilder<>(properties.stacksTo(99), 7.50d, EntityRegistry.VENTUS_MUSKET_BALL_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.002d).hitEffect(HitEffect.VENTUS).inaccuracySettings(0.5d).build());
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, dynamicTooltip = DynamicTooltips.BulletTooltip.class)
-	public static final Supplier<BulletItem<?>> ASTRAL_MUSKET_BALL = ITEMS.registerItem("astral_musket_ball", (properties) -> new BulletBuilder<>(properties.stacksTo(99), 6.25d, EntityRegistry.ASTRAL_MUSKET_BALL_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.001d).shootingVector(0.001d, 0.1d, 0.2d).build());
+	public static final Supplier<BulletItem<?>> ASTRAL_MUSKET_BALL = ITEMS.registerItem("astral_musket_ball", (properties) -> new BulletBuilder<>(properties.stacksTo(99), 6.25d, EntityRegistry.ASTRAL_MUSKET_BALL_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.001d).inaccuracySettings(0.3d).build());
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, dynamicTooltip = DynamicTooltips.BulletTooltip.class)
-	public static final Supplier<BulletItem<?>> STARSTORM_MUSKET_BALL = ITEMS.registerItem("starstorm_musket_ball", (properties) -> new BulletBuilder<>(properties.stacksTo(99), 8.65d, EntityRegistry.STARSTORM_MUSKET_BALL_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.002d).shootingVector(0.002d, 0.2d, 0.5d).build());
+	public static final Supplier<BulletItem<?>> STARSTORM_MUSKET_BALL = ITEMS.registerItem("starstorm_musket_ball", (properties) -> new BulletBuilder<>(properties.stacksTo(99), 8.65d, EntityRegistry.STARSTORM_MUSKET_BALL_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.002d).inaccuracySettings(0.7d).build());
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, dynamicTooltip = DynamicTooltips.BulletTooltip.class)
-	public static final Supplier<BulletItem<?>> VOID_MUSKET_BALL = ITEMS.registerItem("void_musket_ball", (properties) -> new BulletBuilder<>(properties.stacksTo(99), 9.0d, EntityRegistry.VOID_MUSKET_BALL_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.001d).shootingVector(0.001d, 0.1d, 0.2d).build());
+	public static final Supplier<BulletItem<?>> VOID_MUSKET_BALL = ITEMS.registerItem("void_musket_ball", (properties) -> new BulletBuilder<>(properties.stacksTo(99), 9.0d, EntityRegistry.VOID_MUSKET_BALL_ENTITY).canBeInfinite(false).pierceLevel(3).gravityModifier(0.001d).inaccuracySettings(0.2d).build());
 	@DatagenExclusionMarker(Type.MODEL_GENERATOR_ITEM)
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, dynamicTooltip = DynamicTooltips.BulletTooltip.class)
 	public static final Supplier<BulletItem<?>> FLARE = ITEMS.registerItem("flare", (properties) -> new BulletBuilder<>(properties, 0.1d, EntityRegistry.FLARE_ENTITY).gravityModifier(0.06d).build());
@@ -523,10 +506,6 @@ public class ItemRegistry {
 	public static final Supplier<MoltenArmorItem> MOLTEN_LEGGINGS = ITEMS.registerItem("molten_leggings", (properties) -> new MoltenArmorItem(IWArmorMaterials.MOLTEN, ArmorType.LEGGINGS, properties.fireResistant()));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "molten_armor")
 	public static final Supplier<MoltenArmorItem> MOLTEN_BOOTS = ITEMS.registerItem("molten_boots", (properties) -> new MoltenArmorItem(IWArmorMaterials.MOLTEN, ArmorType.BOOTS, properties.fireResistant()));
-	public static final Supplier<Item> COPPER_HELMET = ITEMS.registerItem("copper_helmet", (properties) -> new Item(properties.humanoidArmor(IWArmorMaterials.COPPER, ArmorType.HELMET)));
-	public static final Supplier<Item> COPPER_CHESTPLATE = ITEMS.registerItem("copper_chestplate", (properties) -> new Item(properties.humanoidArmor(IWArmorMaterials.COPPER, ArmorType.CHESTPLATE)));
-	public static final Supplier<Item> COPPER_LEGGINGS = ITEMS.registerItem("copper_leggings", (properties) -> new Item(properties.humanoidArmor(IWArmorMaterials.COPPER, ArmorType.LEGGINGS)));
-	public static final Supplier<Item> COPPER_BOOTS = ITEMS.registerItem("copper_boots", (properties) -> new Item(properties.humanoidArmor(IWArmorMaterials.COPPER, ArmorType.BOOTS)));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "tesla_armor")
 	public static final Supplier<TeslaArmorItem> TESLA_HELMET = ITEMS.registerItem("tesla_helmet", (properties) -> new TeslaArmorItem(IWArmorMaterials.TESLA, ArmorType.HELMET, properties));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "tesla_armor")
@@ -592,25 +571,42 @@ public class ItemRegistry {
 	public static final Supplier<VoidArmorItem> VOID_BOOTS = ITEMS.registerItem("void_boots", (properties) -> new VoidArmorItem(IWArmorMaterials.VOID, ArmorType.BOOTS, properties));
 
 	// Spawn eggs
-	public static final Supplier<SpawnEggItem> DYING_SOLDIER_SPAWN_EGG = ITEMS.registerItem("dying_soldier_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.DYING_SOLDIER_ENTITY.get(), properties.stacksTo(16)));
-	public static final Supplier<SpawnEggItem> THE_COMMANDER_SPAWN_EGG = ITEMS.registerItem("the_commander_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.THE_COMMANDER_ENTITY.get(), properties.stacksTo(16)));
-	public static final Supplier<SpawnEggItem> MINUTEMAN_SPAWN_EGG = ITEMS.registerItem("minuteman_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.MINUTEMAN_ENTITY.get(), properties.stacksTo(16)));
-	public static final Supplier<SpawnEggItem> FIELD_MEDIC_SPAWN_EGG = ITEMS.registerItem("field_medic_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.FIELD_MEDIC_ENTITY.get(), properties.stacksTo(16)));
-	public static final Supplier<SpawnEggItem> WANDERING_WARRIOR_SPAWN_EGG = ITEMS.registerItem("wandering_warrior_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.WANDERING_WARRIOR_ENTITY.get(), properties.stacksTo(16)));
+	public static final Supplier<SpawnEggItem> DYING_SOLDIER_SPAWN_EGG = ITEMS.registerItem("dying_soldier_spawn_egg", (properties) -> new SpawnEggItem(properties.spawnEgg(EntityRegistry.DYING_SOLDIER_ENTITY.get()).stacksTo(16)));
+	public static final Supplier<SpawnEggItem> THE_COMMANDER_SPAWN_EGG = ITEMS.registerItem("the_commander_spawn_egg", (properties) -> new SpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.THE_COMMANDER_ENTITY.get())));
+	public static final Supplier<SpawnEggItem> MINUTEMAN_SPAWN_EGG = ITEMS.registerItem("minuteman_spawn_egg", (properties) -> new SpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.MINUTEMAN_ENTITY.get())));
+	public static final Supplier<SpawnEggItem> FIELD_MEDIC_SPAWN_EGG = ITEMS.registerItem("field_medic_spawn_egg", (properties) -> new SpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.FIELD_MEDIC_ENTITY.get())));
+	public static final Supplier<SpawnEggItem> WANDERING_WARRIOR_SPAWN_EGG = ITEMS.registerItem("wandering_warrior_spawn_egg", (properties) -> new SpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.WANDERING_WARRIOR_ENTITY.get())));
 	@LanguageEntryOverride("Hans the Almighty Spawn Egg")
 	@TooltipMarker(style = {ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC})
-	public static final Supplier<SpawnEggItem> HANS_SPAWN_EGG = ITEMS.registerItem("hans_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.HANS_ENTITY.get(), properties.stacksTo(16)));
+	public static final Supplier<SpawnEggItem> HANS_SPAWN_EGG = ITEMS.registerItem("hans_spawn_egg", (properties) -> new SpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.HANS_ENTITY.get())));
 	@LanguageEntryOverride("Super Hans the Almighty Spawn Egg")
 	@TooltipMarker(style = {ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC})
-	public static final Supplier<SpawnEggItem> SUPER_HANS_SPAWN_EGG = ITEMS.registerItem("super_hans_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.SUPER_HANS_ENTITY.get(), properties.stacksTo(16)));
-	public static final Supplier<SpawnEggItem> LAVA_REVENANT_SPAWN_EGG = ITEMS.registerItem("lava_revenant_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.LAVA_REVENANT_ENTITY.get(), properties.stacksTo(16)));
-	public static final Supplier<SpawnEggItem> ROCK_SPIDER_SPAWN_EGG = ITEMS.registerItem("rock_spider_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.ROCK_SPIDER_ENTITY.get(), properties.stacksTo(16)));
-	public static final Supplier<SpawnEggItem> CELESTIAL_TOWER_SPAWN_EGG = ITEMS.registerItem("celestial_tower_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.CELESTIAL_TOWER_ENTITY.get(), properties.stacksTo(16)));
-	public static final Supplier<SpawnEggItem> STARMITE_SPAWN_EGG = ITEMS.registerItem("starmite_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.STARMITE_ENTITY.get(), properties.stacksTo(16)));
-	public static final Supplier<SpawnEggItem> FIREFLY_SPAWN_EGG = ITEMS.registerItem("firefly_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.FIREFLY_ENTITY.get(), properties.stacksTo(16)));
-	public static final Supplier<SpawnEggItem> STORM_CREEPER_SPAWN_EGG = ITEMS.registerItem("storm_creeper_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.STORM_CREEPER_ENTITY.get(), properties.stacksTo(16)));
-	public static final Supplier<SpawnEggItem> EVIL_EYE_SPAWN_EGG = ITEMS.registerItem("evil_eye_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.EVIL_EYE_ENTITY.get(), properties.stacksTo(16)));
-	public static final Supplier<SpawnEggItem> STAR_WOLF_SPAWN_EGG = ITEMS.registerItem("star_wolf_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.STAR_WOLF_ENTITY.get(), properties.stacksTo(16)));
-	public static final Supplier<SpawnEggItem> SKYGAZER_SPAWN_EGG = ITEMS.registerItem("skygazer_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.SKYGAZER_ENTITY.get(), properties.stacksTo(16)));
-	public static final Supplier<SpawnEggItem> SKELETON_MERCHANT_SPAWN_EGG = ITEMS.registerItem("skeleton_merchant_spawn_egg", (properties) -> new SpawnEggItem(EntityRegistry.SKELETON_MERCHANT_ENTITY.get(), properties.stacksTo(16)));
+	public static final Supplier<SpawnEggItem> SUPER_HANS_SPAWN_EGG = ITEMS.registerItem("super_hans_spawn_egg", (properties) -> new SpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.SUPER_HANS_ENTITY.get())));
+	public static final Supplier<SpawnEggItem> LAVA_REVENANT_SPAWN_EGG = ITEMS.registerItem("lava_revenant_spawn_egg", (properties) -> new SpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.LAVA_REVENANT_ENTITY.get())));
+	public static final Supplier<SpawnEggItem> ROCK_SPIDER_SPAWN_EGG = ITEMS.registerItem("rock_spider_spawn_egg", (properties) -> new SpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.ROCK_SPIDER_ENTITY.get())));
+	public static final Supplier<SpawnEggItem> CELESTIAL_TOWER_SPAWN_EGG = ITEMS.registerItem("celestial_tower_spawn_egg", (properties) -> new SpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.CELESTIAL_TOWER_ENTITY.get())));
+	public static final Supplier<SpawnEggItem> STARMITE_SPAWN_EGG = ITEMS.registerItem("starmite_spawn_egg", (properties) -> new SpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.STARMITE_ENTITY.get())));
+	@LanguageEntryOverride("Firefly in a Bottle")
+	public static final Supplier<SpawnEggItem> FIREFLY_IN_A_BOTTLE = ITEMS.registerItem("firefly_in_a_bottle", (properties) -> new SpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.FIREFLY_ENTITY.get())));
+	public static final Supplier<SpawnEggItem> STORM_CREEPER_SPAWN_EGG = ITEMS.registerItem("storm_creeper_spawn_egg", (properties) -> new SpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.STORM_CREEPER_ENTITY.get())));
+	public static final Supplier<SpawnEggItem> EVIL_EYE_SPAWN_EGG = ITEMS.registerItem("evil_eye_spawn_egg", (properties) -> new SpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.EVIL_EYE_ENTITY.get())));
+	public static final Supplier<SpawnEggItem> STAR_WOLF_SPAWN_EGG = ITEMS.registerItem("star_wolf_spawn_egg", (properties) -> new SpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.STAR_WOLF_ENTITY.get())));
+	public static final Supplier<SpawnEggItem> MOOGLOW_SPAWN_EGG = ITEMS.registerItem("mooglow_spawn_egg", (properties) -> new SpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.MOOGLOW_ENTITY.get())));
+	@TextureMetadataMarker(frameTime = 20, interpolate = true)
+	@LanguageEntryOverride("Purple Wisp in a Bottle")
+	public static final Supplier<WispSpawnEggItem> WISP_IN_A_BOTTLE_PURPLE = ITEMS.registerItem("wisp_in_a_bottle_purple", (properties) -> new WispSpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.WISP_ENTITY.get()), 0));
+	@TextureMetadataMarker(frameTime = 20, interpolate = true)
+	@LanguageEntryOverride("Red Wisp in a Bottle")
+	public static final Supplier<WispSpawnEggItem> WISP_IN_A_BOTTLE_RED = ITEMS.registerItem("wisp_in_a_bottle_red", (properties) -> new WispSpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.WISP_ENTITY.get()), 1));
+	@TextureMetadataMarker(frameTime = 20, interpolate = true)
+	@LanguageEntryOverride("Green Wisp in a Bottle")
+	public static final Supplier<WispSpawnEggItem> WISP_IN_A_BOTTLE_GREEN = ITEMS.registerItem("wisp_in_a_bottle_green", (properties) -> new WispSpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.WISP_ENTITY.get()), 2));
+	@TextureMetadataMarker(frameTime = 20, interpolate = true)
+	@LanguageEntryOverride("Blue Wisp in a Bottle")
+	public static final Supplier<WispSpawnEggItem> WISP_IN_A_BOTTLE_BLUE = ITEMS.registerItem("wisp_in_a_bottle_blue", (properties) -> new WispSpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.WISP_ENTITY.get()), 3));
+	@TextureMetadataMarker(frameTime = 20, interpolate = true)
+	@LanguageEntryOverride("Orange Wisp in a Bottle")
+	public static final Supplier<WispSpawnEggItem> WISP_IN_A_BOTTLE_ORANGE = ITEMS.registerItem("wisp_in_a_bottle_orange", (properties) -> new WispSpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.WISP_ENTITY.get()), 4));
+	public static final Supplier<SpawnEggItem> SKYGAZER_SPAWN_EGG = ITEMS.registerItem("skygazer_spawn_egg", (properties) -> new SpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.SKYGAZER_ENTITY.get())));
+	public static final Supplier<SpawnEggItem> SKELETON_MERCHANT_SPAWN_EGG = ITEMS.registerItem("skeleton_merchant_spawn_egg", (properties) -> new SpawnEggItem(properties.stacksTo(16).spawnEgg(EntityRegistry.SKELETON_MERCHANT_ENTITY.get())));
 }

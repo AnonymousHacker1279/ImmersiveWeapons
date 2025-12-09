@@ -51,7 +51,7 @@ public abstract class SpawnerStatueBlock<T extends AbstractStatueBlockEntity<?>>
 	public <B extends BlockEntity> BlockEntityTicker<B> getTicker(Level level, BlockState blockState,
 	                                                              BlockEntityType<B> blockEntityType) {
 
-		return level.isClientSide ? null : (world, pos, state, entity) -> ((AbstractStatueBlockEntity<?>) entity).tick(world, pos);
+		return level.isClientSide() ? null : (world, pos, state, entity) -> ((AbstractStatueBlockEntity<?>) entity).tick(world, pos);
 	}
 
 	@Override

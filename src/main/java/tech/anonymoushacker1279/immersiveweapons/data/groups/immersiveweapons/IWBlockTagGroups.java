@@ -10,7 +10,6 @@ public class IWBlockTagGroups {
 
 	public static final TagKey<Block> BURNED_OAK_LOGS = createBlockTag("burned_oak_logs");
 	public static final TagKey<Block> STARDUST_LOGS = createBlockTag("stardust_logs");
-	public static final TagKey<Block> INCORRECT_FOR_COPPER_TOOL = createBlockTag("incorrect_for_copper_tool");
 	public static final TagKey<Block> INCORRECT_FOR_COBALT_TOOL = createBlockTag("incorrect_for_cobalt_tool");
 	public static final TagKey<Block> INCORRECT_FOR_MOLTEN_TOOL = createBlockTag("incorrect_for_molten_tool");
 	public static final TagKey<Block> INCORRECT_FOR_TESLA_TOOL = createBlockTag("incorrect_for_tesla_tool");

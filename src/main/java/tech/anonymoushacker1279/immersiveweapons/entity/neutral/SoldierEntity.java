@@ -120,7 +120,7 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 		super.aiStep();
 
 		checkForDiscovery(this);
-		if (!level().isClientSide) {
+		if (!level().isClientSide()) {
 			updatePersistentAnger((ServerLevel) level(), true);
 		}
 	}

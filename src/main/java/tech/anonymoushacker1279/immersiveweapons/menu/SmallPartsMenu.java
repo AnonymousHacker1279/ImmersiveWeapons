@@ -49,14 +49,6 @@ public class SmallPartsMenu extends AbstractContainerMenu {
 		}
 	};
 
-	private final Container outputContainer = new SimpleContainer(1) {
-		@Override
-		public void setChanged() {
-			super.setChanged();
-			slotUpdateListener.run();
-		}
-	};
-
 	public SmallPartsMenu(int containerID, Inventory inventory) {
 		this(containerID, inventory, ContainerLevelAccess.NULL);
 	}
@@ -65,6 +57,15 @@ public class SmallPartsMenu extends AbstractContainerMenu {
 		super(MenuTypeRegistry.SMALL_PARTS_TABLE_MENU.get(), containerID);
 		access = levelAccess;
 		materialSlot = addSlot(new Slot(inputContainer, 0, 23, 36));
+
+		Container outputContainer = new SimpleContainer(1) {
+			@Override
+			public void setChanged() {
+				super.setChanged();
+				slotUpdateListener.run();
+			}
+		};
+
 		resultSlot = addSlot(new Slot(outputContainer, 0, 143, 58) {
 			@Override
 			public boolean mayPlace(ItemStack stack) {

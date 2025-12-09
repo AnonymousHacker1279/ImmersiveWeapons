@@ -8,16 +8,10 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
-import net.minecraft.world.item.BowItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.FlashbangEntity;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MolotovEntity;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MudBallEntity;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeGrenadeEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.*;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class ThrowableItem extends Item {
 
@@ -60,11 +54,11 @@ public class ThrowableItem extends Item {
 		level.playLocalSound(player.getX(), player.getY(), player.getZ(),
 				SoundEventRegistry.GENERIC_ITEM_THROW.get(),
 				SoundSource.NEUTRAL,
-				0.5F,
-				0.4F / (GeneralUtilities.getRandomNumber(0.2f, 0.6f) + 0.8F),
+				0.5f,
+				1.0f + (0.4f + level.random.nextFloat() * 0.2f),
 				false);
 
-		if (!level.isClientSide) {
+		if (!level.isClientSide()) {
 			ThrowableItemProjectile throwable = null;
 
 			switch (type) {
@@ -83,7 +77,7 @@ public class ThrowableItem extends Item {
 	}
 
 	@Override
-	public boolean releaseUsing(ItemStack pStack, Level pLevel, LivingEntity pLivingEntity, int pTimeCharged) {
+	public boolean releaseUsing(ItemStack pStack, Level level, LivingEntity pLivingEntity, int pTimeCharged) {
 		// Allow smoke grenade throws to be charged
 		if (type.canCharge && pLivingEntity instanceof Player player) {
 			int i = this.getUseDuration(pStack, pLivingEntity) - pTimeCharged;
@@ -92,22 +86,22 @@ public class ThrowableItem extends Item {
 			}
 
 			float charge = BowItem.getPowerForTime(i);
-			if (charge > 0.1f && !pLevel.isClientSide) {
+			if (charge > 0.1f && !level.isClientSide()) {
 				ThrowableItemProjectile throwable = null;
 
 				switch (type) {
-					case SMOKE_GRENADE -> throwable = createSmokeGrenade(pStack, pLevel, player, charge);
-					case FLASHBANG -> throwable = createFlashbang(pStack, pLevel, player, charge);
+					case SMOKE_GRENADE -> throwable = createSmokeGrenade(pStack, level, player, charge);
+					case FLASHBANG -> throwable = createFlashbang(pStack, level, player, charge);
 				}
 
 				if (throwable != null) {
-					pLevel.addFreshEntity(throwable);
+					level.addFreshEntity(throwable);
 
-					pLevel.playLocalSound(pLivingEntity.getX(), pLivingEntity.getY(), pLivingEntity.getZ(),
+					level.playLocalSound(pLivingEntity.getX(), pLivingEntity.getY(), pLivingEntity.getZ(),
 							SoundEventRegistry.GENERIC_ITEM_THROW.get(),
 							SoundSource.NEUTRAL,
 							0.5F,
-							0.4F / (GeneralUtilities.getRandomNumber(0.2f, 0.6f) + 0.8F),
+							1.0f + (0.4f + level.random.nextFloat() * 0.2f),
 							false);
 
 					handleCooldown(player, pStack);
@@ -116,7 +110,7 @@ public class ThrowableItem extends Item {
 			}
 		}
 
-		return super.releaseUsing(pStack, pLevel, pLivingEntity, pTimeCharged);
+		return super.releaseUsing(pStack, level, pLivingEntity, pTimeCharged);
 	}
 
 	@Override

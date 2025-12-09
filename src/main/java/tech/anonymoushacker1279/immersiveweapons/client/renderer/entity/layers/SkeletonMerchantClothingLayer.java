@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
@@ -23,7 +23,7 @@ public class SkeletonMerchantClothingLayer<S extends HumanoidRenderState, M exte
 	}
 
 	@Override
-	public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, S renderState, float yRot, float xRot) {
-		coloredCutoutModelCopyLayerRender(layerModel, CLOTHES_LOCATION, poseStack, bufferSource, packedLight, renderState, -1);
+	public void submit(PoseStack poseStack, SubmitNodeCollector collector, int packedLight, S renderState, float yRot, float xRot) {
+		coloredCutoutModelCopyLayerRender(layerModel, CLOTHES_LOCATION, poseStack, collector, packedLight, renderState, -1, 1);
 	}
 }

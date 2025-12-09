@@ -53,7 +53,7 @@ public class CampChairBlock extends BasicOrientableBlock implements SimpleWaterl
 
 	@Override
 	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
-		if (level.isClientSide) {
+		if (level.isClientSide()) {
 			return InteractionResult.SUCCESS;
 		} else {
 			return ChairEntity.create(level, pos, 0.2D, player);

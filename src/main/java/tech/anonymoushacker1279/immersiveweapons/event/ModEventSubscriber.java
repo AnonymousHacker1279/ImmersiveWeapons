@@ -1,20 +1,13 @@
 package tech.anonymoushacker1279.immersiveweapons.event;
 
-import net.minecraft.core.component.DataComponents;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.SpawnPlacementTypes;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent.Operation;
@@ -26,6 +19,8 @@ import net.neoforged.neoforgespi.language.IModInfo;
 import org.apache.maven.artifact.versioning.ArtifactVersion;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.entity.ambient.FireflyEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.ambient.WispEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.animal.MooGlowEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.animal.StarWolfEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.*;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.lava_revenant.LavaRevenantEntity;
@@ -35,7 +30,6 @@ import tech.anonymoushacker1279.immersiveweapons.entity.npc.SkeletonMerchantEnti
 import tech.anonymoushacker1279.immersiveweapons.entity.npc.SkygazerEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.AccessoryEffectTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
-import tech.anonymoushacker1279.immersiveweapons.item.armor.VentusArmorItem;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
 import tech.anonymoushacker1279.immersiveweapons.network.handler.*;
 import tech.anonymoushacker1279.immersiveweapons.network.handler.star_forge.StarForgeMenuPayloadHandler;
@@ -43,8 +37,6 @@ import tech.anonymoushacker1279.immersiveweapons.network.handler.star_forge.Star
 import tech.anonymoushacker1279.immersiveweapons.network.payload.*;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.star_forge.StarForgeMenuPayload;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.star_forge.StarForgeUpdateRecipesPayload;
-
-import java.util.concurrent.atomic.AtomicReference;
 
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID)
 public class ModEventSubscriber {
@@ -68,6 +60,8 @@ public class ModEventSubscriber {
 		event.put(EntityRegistry.STORM_CREEPER_ENTITY.get(), StormCreeperEntity.createAttributes().build());
 		event.put(EntityRegistry.EVIL_EYE_ENTITY.get(), EvilEyeEntity.registerAttributes().build());
 		event.put(EntityRegistry.STAR_WOLF_ENTITY.get(), StarWolfEntity.createAttributes().build());
+		event.put(EntityRegistry.MOOGLOW_ENTITY.get(), MooGlowEntity.createAttributes().build());
+		event.put(EntityRegistry.WISP_ENTITY.get(), WispEntity.createAttributes().build());
 		event.put(EntityRegistry.SKYGAZER_ENTITY.get(), SkygazerEntity.createMobAttributes().build());
 		event.put(EntityRegistry.SKELETON_MERCHANT_ENTITY.get(), SkeletonMerchantEntity.createMobAttributes().build());
 	}
@@ -117,7 +111,9 @@ public class ModEventSubscriber {
 		event.register(EntityRegistry.CELESTIAL_TOWER_ENTITY.get(), SpawnPlacementTypes.ON_GROUND, Types.MOTION_BLOCKING_NO_LEAVES, CelestialTowerEntity::checkMonsterSpawnRules, Operation.REPLACE);
 		event.register(EntityRegistry.EVIL_EYE_ENTITY.get(), SpawnPlacementTypes.NO_RESTRICTIONS, Types.MOTION_BLOCKING_NO_LEAVES, EvilEyeEntity::checkSpawnRules, Operation.REPLACE);
 		event.register(EntityRegistry.STAR_WOLF_ENTITY.get(), SpawnPlacementTypes.ON_GROUND, Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules, Operation.REPLACE);
+		event.register(EntityRegistry.MOOGLOW_ENTITY.get(), SpawnPlacementTypes.ON_GROUND, Types.MOTION_BLOCKING_NO_LEAVES, MooGlowEntity::checkSpawnRules, Operation.REPLACE);
 		event.register(EntityRegistry.FIREFLY_ENTITY.get(), SpawnPlacementTypes.ON_GROUND, Types.MOTION_BLOCKING_NO_LEAVES, Mob::checkMobSpawnRules, Operation.REPLACE);
+		event.register(EntityRegistry.WISP_ENTITY.get(), SpawnPlacementTypes.NO_RESTRICTIONS, Types.MOTION_BLOCKING_NO_LEAVES, WispEntity::checkSpawnRules, Operation.REPLACE);
 	}
 
 	@SubscribeEvent
@@ -130,27 +126,5 @@ public class ModEventSubscriber {
 	public static void registerRegistryEvent(NewRegistryEvent event) {
 		ImmersiveWeapons.LOGGER.info("Registering custom registries");
 		event.register(AccessoryEffectTypeRegistry.ACCESSORY_EFFECT_TYPE_REGISTRY);
-	}
-
-	@SubscribeEvent
-	public static void modifyDefaultComponentsEvent(ModifyDefaultComponentsEvent event) {
-		ImmersiveWeapons.LOGGER.info("Modifying default components");
-
-		AtomicReference<ItemAttributeModifiers> modifiers = new AtomicReference<>(ItemAttributeModifiers.EMPTY);
-		event.modifyMatching(item -> {
-			if (item instanceof VentusArmorItem) {
-				modifiers.set(item.components().get(DataComponents.ATTRIBUTE_MODIFIERS));
-				return true;
-			}
-
-			return false;
-		}, patch -> patch.set(DataComponents.ATTRIBUTE_MODIFIERS, modifiers.get().withModifierAdded(
-				Attributes.SAFE_FALL_DISTANCE,
-				new AttributeModifier(
-						ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "ventus_safe_fall_distance"),
-						10d,
-						AttributeModifier.Operation.ADD_VALUE),
-				EquipmentSlotGroup.ARMOR
-		)));
 	}
 }

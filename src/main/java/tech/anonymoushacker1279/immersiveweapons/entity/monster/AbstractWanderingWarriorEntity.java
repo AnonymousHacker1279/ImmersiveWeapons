@@ -64,7 +64,7 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 		goalSelector.addGoal(100, new RandomLookAroundGoal(this));
 		goalSelector.addGoal(4, new OpenDoorGoal(this, false));
 		goalSelector.addGoal(1, new FloatGoal(this));
-		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Monster.class, 1,
+		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Mob.class, 1,
 				true, true, (entity, level) -> !(entity instanceof Creeper)));
 		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, MinutemanEntity.class, true));
 		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, FieldMedicEntity.class, true));
@@ -117,7 +117,7 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 			} else if (random <= 0.5f) {
 				setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.IRON_SWORD));
 			} else {
-				setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ItemRegistry.COPPER_SWORD.get()));
+				setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.COPPER_SWORD));
 			}
 		}
 	}
@@ -149,7 +149,7 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 	 * Set the entity's combat AI.
 	 */
 	void setCombatTask() {
-		if (!level().isClientSide) {
+		if (!level().isClientSide()) {
 			goalSelector.removeGoal(meleeAttackGoal);
 			if (getItemInHand(InteractionHand.MAIN_HAND).getItem() == Items.AIR) {
 				populateDefaultEquipmentSlots(random, level().getCurrentDifficultyAt(blockPosition()));

@@ -12,16 +12,12 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.data.IWEnchantments;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.CannonballEntity;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.DragonFireballBulletEntity;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.FlareEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.*;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
+import tech.anonymoushacker1279.immersiveweapons.item.projectile.CustomArrowItem.InaccuracySettings;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils.HitEffect;
 import tech.anonymoushacker1279.immersiveweapons.util.ArrowAttributeAccessor;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
 
@@ -32,14 +28,14 @@ public class BulletItem<T extends BulletEntity> extends ArrowItem {
 	public final boolean canBeInfinite;
 	public final float misfireChance;
 	public final double gravityModifier;
-	public final List<Double> shootingVectorInputs;
+	public final InaccuracySettings inaccuracySettings;
 	public final int knockbackStrength;
 	public final double damage;
 	public final HitEffect hitEffect;
 	public final boolean isExplosive;
 
 	public BulletItem(Properties properties, double damage, Supplier<EntityType<T>> bulletEntity, int pierceLevel,
-	                  boolean canBeInfinite, float misfireChance, double gravityModifier, List<Double> shootingVectorInputs,
+	                  boolean canBeInfinite, float misfireChance, double gravityModifier, InaccuracySettings inaccuracySettings,
 	                  int knockbackStrength, HitEffect hitEffect, boolean isExplosive) {
 
 		super(properties);
@@ -49,7 +45,7 @@ public class BulletItem<T extends BulletEntity> extends ArrowItem {
 		this.canBeInfinite = canBeInfinite;
 		this.misfireChance = misfireChance;
 		this.gravityModifier = gravityModifier;
-		this.shootingVectorInputs = shootingVectorInputs;
+		this.inaccuracySettings = inaccuracySettings;
 		this.knockbackStrength = knockbackStrength;
 		this.hitEffect = hitEffect;
 		this.isExplosive = isExplosive;
@@ -91,7 +87,7 @@ public class BulletItem<T extends BulletEntity> extends ArrowItem {
 		bulletEntity.setBaseDamage(damage);
 		((ArrowAttributeAccessor) bulletEntity).immersiveWeapons$setBaseKnockback(knockbackStrength);
 		((ArrowAttributeAccessor) bulletEntity).immersiveWeapons$setGravity(gravityModifier);
-		bulletEntity.shootingVectorInputs = shootingVectorInputs;
+		bulletEntity.inaccuracySettings = inaccuracySettings;
 		bulletEntity.hitEffect = hitEffect;
 	}
 
@@ -125,7 +121,7 @@ public class BulletItem<T extends BulletEntity> extends ArrowItem {
 		boolean canBeInfinite = true;
 		float misfireChance = 0.0f;
 		double gravityModifier = 0.035d;
-		List<Double> shootingVectorInputs = List.of(0.0025d, 0.2d, 1.1d);
+		InaccuracySettings inaccuracySettings = new InaccuracySettings(1.0d);
 		int knockbackStrength = 0;
 		HitEffect hitEffect = HitEffect.NONE;
 		boolean isExplosive = false;
@@ -156,11 +152,13 @@ public class BulletItem<T extends BulletEntity> extends ArrowItem {
 			return this;
 		}
 
-		public BulletBuilder<T> shootingVector(double inaccuracyBaseMultiplier, double inaccuracyRandomModifierLow, double inaccuracyRandomModifierHigh) {
-			shootingVectorInputs = new ArrayList<>(5);
-			shootingVectorInputs.add(inaccuracyBaseMultiplier);
-			shootingVectorInputs.add(inaccuracyRandomModifierLow);
-			shootingVectorInputs.add(inaccuracyRandomModifierHigh);
+		public BulletBuilder<T> inaccuracySettings(double modifier) {
+			this.inaccuracySettings = new InaccuracySettings(modifier);
+			return this;
+		}
+
+		public BulletBuilder<T> inaccuracySettings(double xModifier, double yModifier, double zModifier) {
+			this.inaccuracySettings = new InaccuracySettings(xModifier, yModifier, zModifier);
 			return this;
 		}
 
@@ -180,7 +178,7 @@ public class BulletItem<T extends BulletEntity> extends ArrowItem {
 		}
 
 		public BulletItem<T> build() {
-			return new BulletItem<>(properties, damage, bulletEntity, pierceLevel, canBeInfinite, misfireChance, gravityModifier, shootingVectorInputs, knockbackStrength, hitEffect, isExplosive);
+			return new BulletItem<>(properties, damage, bulletEntity, pierceLevel, canBeInfinite, misfireChance, gravityModifier, inaccuracySettings, knockbackStrength, hitEffect, isExplosive);
 		}
 	}
 }

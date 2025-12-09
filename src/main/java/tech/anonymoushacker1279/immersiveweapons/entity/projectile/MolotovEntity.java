@@ -53,7 +53,7 @@ public class MolotovEntity extends AdvancedThrowableItemProjectile {
 	@Override
 	protected void onHit(HitResult rayTraceResult) {
 		super.onHit(rayTraceResult);
-		if (!level().isClientSide) {
+		if (!level().isClientSide()) {
 			level().broadcastEntityEvent(this, VANILLA_IMPACT_STATUS_ID);
 
 			BlockPos currentPosition = blockPosition();

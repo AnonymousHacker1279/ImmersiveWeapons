@@ -4,6 +4,7 @@
     "minecraft:cave_extra_underground",
     "minecraft:canyon"
   ],
+  "creature_spawn_probability": 0.45,
   "downfall": 0.0,
   "effects": {
     "fog_color": 2830199,
@@ -86,16 +87,7 @@
     ]
   ],
   "has_precipitation": false,
-  "spawn_costs": {
-    "immersiveweapons:firefly": {
-      "charge": 0.01,
-      "energy_budget": 15.0
-    },
-    "immersiveweapons:star_wolf": {
-      "charge": 0.1,
-      "energy_budget": 7.0
-    }
-  },
+  "spawn_costs": {},
   "spawners": {
     "ambient": [],
     "axolotls": [],
@@ -111,6 +103,12 @@
         "maxCount": 2,
         "minCount": 1,
         "weight": 2
+      },
+      {
+        "type": "immersiveweapons:mooglow",
+        "maxCount": 4,
+        "minCount": 1,
+        "weight": 6
       }
     ],
     "misc": [],

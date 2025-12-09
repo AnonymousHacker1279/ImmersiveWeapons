@@ -33,23 +33,6 @@ public record ToolFamilies(TagKey<Item> material,
 			Items.NETHERITE_PICKAXE, Items.NETHERITE_AXE, Items.NETHERITE_SHOVEL, Items.NETHERITE_HOE,
 			ItemRegistry.NETHERITE_GAUNTLET.get(), ItemRegistry.NETHERITE_PIKE.get());
 
-	public static final ToolFamilies COPPER = new ToolFamilies(
-			Tags.Items.INGOTS_COPPER,
-			CommonItemTagGroups.COPPER_NUGGETS,
-			Tags.Items.RODS_WOODEN,
-			ItemRegistry.COPPER_SWORD,
-			ItemRegistry.COPPER_PICKAXE,
-			ItemRegistry.COPPER_AXE,
-			ItemRegistry.COPPER_SHOVEL,
-			ItemRegistry.COPPER_HOE,
-			ItemRegistry.COPPER_GAUNTLET,
-			ItemRegistry.COPPER_PIKE,
-			ItemRegistry.COPPER_PIKE_HEAD,
-			ItemRegistry.COPPER_ARROW,
-			null,
-			null
-	);
-
 	public static final ToolFamilies COBALT = new ToolFamilies(
 			CommonItemTagGroups.COBALT_INGOTS,
 			CommonItemTagGroups.COBALT_NUGGETS,
@@ -118,6 +101,6 @@ public record ToolFamilies(TagKey<Item> material,
 			null
 	);
 
-	public static final Collection<ToolFamilies> FAMILIES = ImmutableList.of(COPPER, COBALT, MOLTEN, VENTUS, TESLA);
+	public static final Collection<ToolFamilies> FAMILIES = ImmutableList.of(COBALT, MOLTEN, VENTUS, TESLA);
 	public static final ImmutableList<ToolFamilies> FAMILIES_USE_NUGGETS_FOR_PROJECTILES = ImmutableList.of(MOLTEN, VENTUS);
 }

@@ -2,11 +2,12 @@ package tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.project
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
+import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
@@ -30,17 +31,17 @@ public class CannonballRenderer extends EntityRenderer<CannonballEntity, LivingE
 	}
 
 	@Override
-	public void render(LivingEntityRenderState state, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
-		poseStack.pushPose();
+	public void submit(LivingEntityRenderState state, PoseStack stack, SubmitNodeCollector collector, CameraRenderState cameraState) {
+		stack.pushPose();
 
-		poseStack.mulPose(Axis.YP.rotationDegrees(state.yRot));
-		poseStack.mulPose(Axis.XP.rotationDegrees(state.xRot));
+		stack.mulPose(Axis.YP.rotationDegrees(state.yRot));
+		stack.mulPose(Axis.XP.rotationDegrees(state.xRot));
 
-		poseStack.scale(1.25f, 1.25f, 1.25f);
-		poseStack.translate(-0.125f, 0.0125f, -0.125f);
+		stack.scale(1.25f, 1.25f, 1.25f);
+		stack.translate(-0.125f, 0.0125f, -0.125f);
 
-		model.renderToBuffer(poseStack, bufferSource.getBuffer(RENDER_TYPE), packedLight, OverlayTexture.NO_OVERLAY, 16777215);
+		collector.submitModelPart(model.root(), stack, RENDER_TYPE, state.lightCoords, OverlayTexture.NO_OVERLAY, null);
 
-		poseStack.popPose();
+		stack.popPose();
 	}
 }

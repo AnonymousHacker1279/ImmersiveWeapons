@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableList;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.neoforged.neoforge.common.Tags;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.common.CommonItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWItemTagGroups;
@@ -22,16 +21,6 @@ public record ArmorFamilies(TagKey<Item> material,
 
 	private static final ImmutableList<Item> NETHERITE_ARMOR = ImmutableList.of(Items.NETHERITE_HELMET,
 			Items.NETHERITE_CHESTPLATE, Items.NETHERITE_LEGGINGS, Items.NETHERITE_BOOTS);
-
-	public static final ArmorFamilies COPPER = new ArmorFamilies(
-			Tags.Items.INGOTS_COPPER,
-			ItemRegistry.COPPER_HELMET,
-			ItemRegistry.COPPER_CHESTPLATE,
-			ItemRegistry.COPPER_LEGGINGS,
-			ItemRegistry.COPPER_BOOTS,
-			null,
-			null
-	);
 
 	public static final ArmorFamilies COBALT = new ArmorFamilies(
 			CommonItemTagGroups.COBALT_INGOTS,
@@ -73,5 +62,5 @@ public record ArmorFamilies(TagKey<Item> material,
 			null
 	);
 
-	public static final ImmutableList<ArmorFamilies> FAMILIES = ImmutableList.of(COPPER, COBALT, MOLTEN, VENTUS, TESLA);
+	public static final ImmutableList<ArmorFamilies> FAMILIES = ImmutableList.of(COBALT, MOLTEN, VENTUS, TESLA);
 }

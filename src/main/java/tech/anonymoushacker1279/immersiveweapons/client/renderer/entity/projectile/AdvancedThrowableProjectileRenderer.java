@@ -2,10 +2,11 @@ package tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.project
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.item.ItemModelResolver;
+import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.item.ItemDisplayContext;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.state.ThrowableProjectileRenderState;
@@ -26,34 +27,26 @@ public class AdvancedThrowableProjectileRenderer extends EntityRenderer<Advanced
 	}
 
 	@Override
-	public void render(ThrowableProjectileRenderState state, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
-		poseStack.pushPose();
+	public void submit(ThrowableProjectileRenderState state, PoseStack stack, SubmitNodeCollector collector, CameraRenderState cameraState) {
+		stack.pushPose();
 
 		if (state.movementLengthSqr < 0.01f) {
-			poseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
-			poseStack.mulPose(Axis.ZP.rotationDegrees(state.randomRotation));
-			poseStack.translate(0, 0, -0.1f);
+			stack.mulPose(Axis.XP.rotationDegrees(90.0F));
+			stack.translate(0.0D, 0.4D, 0.0D);
 		} else {
-			// Entity is moving, display it upright
-			poseStack.mulPose(Axis.YP.rotationDegrees(180.0F - state.yRot));
-			poseStack.mulPose(Axis.XP.rotationDegrees(state.xRot));
-			poseStack.mulPose(Axis.ZP.rotationDegrees(state.yRot + state.randomRotation));
+			stack.translate(0.0D, 0.6D, 0.0D);
 		}
 
-		poseStack.scale(1.25f, 1.25f, 1.25f);
+		stack.scale(1.25f, 1.25f, 1.25f);
 
-		state.stackRenderState.render(poseStack, bufferSource, packedLight, OverlayTexture.NO_OVERLAY);
+		state.stackRenderState.submit(stack, collector, state.lightCoords, OverlayTexture.NO_OVERLAY, state.outlineColor);
 
-		poseStack.popPose();
+		stack.popPose();
 	}
 
 	@Override
 	public void extractRenderState(AdvancedThrowableItemProjectile entity, ThrowableProjectileRenderState reusedState, float partialTick) {
 		super.extractRenderState(entity, reusedState, partialTick);
-
-		if (reusedState.randomRotation == 0.0f) {
-			reusedState.randomRotation = entity.getRandom().nextFloat() * 360.0F;
-		}
 
 		reusedState.movementLengthSqr = (float) entity.getDeltaMovement().lengthSqr();
 		itemModelResolver.updateForNonLiving(reusedState.stackRenderState, entity.getItem(), ItemDisplayContext.NONE, entity);

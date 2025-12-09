@@ -20,7 +20,6 @@ public class IWEquipmentAssetsGenerator extends EquipmentAssetProvider {
 	@Override
 	protected void registerModels(BiConsumer<ResourceKey<EquipmentAsset>, EquipmentClientInfo> output) {
 		output.accept(IWEquipmentAssets.MOLTEN, onlyHumanoid("immersiveweapons:molten"));
-		output.accept(IWEquipmentAssets.COPPER, onlyHumanoid("immersiveweapons:copper"));
 		output.accept(IWEquipmentAssets.TESLA, onlyHumanoid("immersiveweapons:tesla"));
 		output.accept(IWEquipmentAssets.COBALT, onlyHumanoid("immersiveweapons:cobalt"));
 		output.accept(IWEquipmentAssets.VENTUS, onlyHumanoid("immersiveweapons:ventus"));

@@ -76,7 +76,6 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 
 		// Nugget tags
 		tag(CommonItemTagGroups.COBALT_NUGGETS).add(ItemRegistry.COBALT_NUGGET.get());
-		tag(CommonItemTagGroups.COPPER_NUGGETS).add(ItemRegistry.COPPER_NUGGET.get());
 		tag(CommonItemTagGroups.METAL_NUGGETS).addTags(
 				CommonItemTagGroups.COBALT_NUGGETS,
 				CommonItemTagGroups.COPPER_NUGGETS,
@@ -445,12 +444,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		}
 	}
 
-	static class BlockToItemConverter implements TagAppender<Block, Block> {
-		private final TagAppender<Item, Item> itemAppender;
-
-		public BlockToItemConverter(TagAppender<Item, Item> appender) {
-			this.itemAppender = appender;
-		}
+	record BlockToItemConverter(TagAppender<Item, Item> itemAppender) implements TagAppender<Block, Block> {
 
 		public TagAppender<Block, Block> add(Block block) {
 			this.itemAppender.add(Objects.requireNonNull(block.asItem()));

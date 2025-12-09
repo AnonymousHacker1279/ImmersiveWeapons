@@ -7,7 +7,6 @@ import net.minecraft.util.Mth;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.state.LavaRevenantRenderState;
 
 public class LavaRevenantModel extends EntityModel<LavaRevenantRenderState> {
-	private final ModelPart root;
 	private final ModelPart leftWingBase;
 	private final ModelPart leftWingTip;
 	private final ModelPart rightWingBase;
@@ -17,13 +16,12 @@ public class LavaRevenantModel extends EntityModel<LavaRevenantRenderState> {
 
 	public LavaRevenantModel(ModelPart modelPart) {
 		super(modelPart, RenderType::entityCutout);
-		root = modelPart;
-		ModelPart modelpart = modelPart.getChild("body");
-		tailBase = modelpart.getChild("tail_base");
+		ModelPart body = modelPart.getChild("body");
+		tailBase = body.getChild("tail_base");
 		tailTip = tailBase.getChild("tail_tip");
-		leftWingBase = modelpart.getChild("left_wing_base");
+		leftWingBase = body.getChild("left_wing_base");
 		leftWingTip = leftWingBase.getChild("left_wing_tip");
-		rightWingBase = modelpart.getChild("right_wing_base");
+		rightWingBase = body.getChild("right_wing_base");
 		rightWingTip = rightWingBase.getChild("right_wing_tip");
 	}
 

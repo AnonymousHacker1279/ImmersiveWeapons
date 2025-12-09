@@ -2,11 +2,11 @@ import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 import org.gradle.api.tasks.*
 
+import javax.inject.Inject
 import java.nio.file.Files
 import java.nio.file.StandardCopyOption
 import java.security.MessageDigest
 
-// Helper methods used by tasks
 class OptimizationUtils {
 	static String calculateMD5Hash(File file) {
 		MessageDigest md = MessageDigest.getInstance("MD5")
@@ -67,7 +67,6 @@ class OptimizationUtils {
 	}
 }
 
-// Task for minifying JSON files
 abstract class JsonMinifyTask extends DefaultTask {
 	@InputDirectory
 	abstract DirectoryProperty getResourcesDir()
@@ -108,7 +107,6 @@ abstract class JsonMinifyTask extends DefaultTask {
 	}
 }
 
-// Base task for optimizing files
 abstract class FileOptimizationTask extends DefaultTask {
 	@Input
 	abstract Property<String> getFileType()
@@ -130,14 +128,13 @@ abstract class FileOptimizationTask extends DefaultTask {
 	@PathSensitive(PathSensitivity.RELATIVE)
 	abstract ConfigurableFileCollection getFilesToOptimize()
 
-	FileOptimizationTask() {
-		notCompatibleWithConfigurationCache("This task uses project.exec which isn't supported with configuration cache")
-	}
+	@Inject
+	abstract ExecOperations getExecOperations()
 
 	@TaskAction
 	void optimize() {
 		try {
-			project.exec {
+			execOperations.exec {
 				commandLine getCommand().get(), "--version"
 			}
 
@@ -213,11 +210,11 @@ abstract class FileOptimizationTask extends DefaultTask {
 		File tempFile = tempDir ? new File(tempDir, file.name) : file
 
 		if (command == "optipng") {
-			project.exec {
+			execOperations.exec {
 				commandLine command, "-q", "-o7", "-zm1-9", "-strip", "all", file
 			}
 		} else if (command == "optivorbis") {
-			project.exec {
+			execOperations.exec {
 				commandLine command, "-q", file, tempFile
 			}
 		}
@@ -228,7 +225,6 @@ abstract class FileOptimizationTask extends DefaultTask {
 	}
 }
 
-// Register the tasks
 tasks.register("minifyJson", JsonMinifyTask) {
 	resourcesDir = tasks.named("processResources").get().destinationDir
 
@@ -238,16 +234,13 @@ tasks.register("minifyJson", JsonMinifyTask) {
 	})
 }
 
-// Use a shared cache file for both optimization tasks
-def sharedCacheFile = project.file(".optimizationCache")
-// Initialize the cache file during configuration time
-OptimizationUtils.initializeCacheFile(sharedCacheFile)
+def optimizationCacheFile = project.file(".optimizationCache")
+OptimizationUtils.initializeCacheFile(optimizationCacheFile)
 
-// PNG optimization task
 tasks.register("optimizePng", FileOptimizationTask) {
 	fileType = "PNG"
 	command = "optipng"
-	cacheFile = sharedCacheFile
+	cacheFile = optimizationCacheFile
 	resourcesDir = project.file("src/main/resources")
 	includePattern = '**/*.png'
 
@@ -256,11 +249,10 @@ tasks.register("optimizePng", FileOptimizationTask) {
 	})
 }
 
-// OGG optimization task
 tasks.register("optimizeOgg", FileOptimizationTask) {
 	fileType = "OGG"
 	command = "optivorbis"
-	cacheFile = sharedCacheFile
+	cacheFile = optimizationCacheFile
 	resourcesDir = project.file("src/main/resources")
 	includePattern = '**/*.ogg'
 
@@ -269,7 +261,6 @@ tasks.register("optimizeOgg", FileOptimizationTask) {
 	})
 }
 
-// Hook up the JSON minification to processResources
 tasks.named("processResources").configure {
 	finalizedBy tasks.named("minifyJson")
 }

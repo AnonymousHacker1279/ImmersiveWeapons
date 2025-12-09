@@ -64,7 +64,7 @@ public class RecoveryStaffItem extends Item implements SummoningStaff {
 			player.heal(healAmount);
 		}
 
-		if (!level.isClientSide) {
+		if (!level.isClientSide()) {
 			healAmount = 4;
 		}
 

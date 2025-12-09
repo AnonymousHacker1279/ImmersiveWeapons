@@ -38,6 +38,15 @@ public record VanillaTieredItemFamilies(TagKey<Item> material,
 			ItemRegistry.STONE_ARROW
 	);
 
+	public static final VanillaTieredItemFamilies COPPER = new VanillaTieredItemFamilies(
+			Items.INGOTS_COPPER,
+			Items.NUGGETS_COPPER,
+			ItemRegistry.COPPER_GAUNTLET,
+			ItemRegistry.COPPER_PIKE,
+			ItemRegistry.COPPER_PIKE_HEAD,
+			ItemRegistry.COPPER_ARROW
+	);
+
 	public static final VanillaTieredItemFamilies IRON = new VanillaTieredItemFamilies(
 			Items.INGOTS_IRON,
 			Items.NUGGETS_IRON,
@@ -65,6 +74,6 @@ public record VanillaTieredItemFamilies(TagKey<Item> material,
 			ItemRegistry.DIAMOND_ARROW
 	);
 
-	public static final ImmutableList<VanillaTieredItemFamilies> FAMILIES = ImmutableList.of(WOODEN, STONE, IRON, GOLDEN, DIAMOND);
+	public static final ImmutableList<VanillaTieredItemFamilies> FAMILIES = ImmutableList.of(WOODEN, STONE, COPPER, IRON, GOLDEN, DIAMOND);
 	public static final ImmutableList<VanillaTieredItemFamilies> FAMILIES_USE_NUGGETS_FOR_PROJECTILES = ImmutableList.of(WOODEN, STONE, DIAMOND);
 }

@@ -20,7 +20,6 @@ import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.CelestialTowerEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.RockSpiderEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 import java.util.Objects;
 
@@ -102,9 +101,10 @@ public class CelestialTowerSummonGoal extends WaveSummonGoal<CelestialTowerEntit
 					mob.position().y,
 					mob.position().z,
 					1,
-					GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
-					GeneralUtilities.getRandomNumber(-0.1d, -0.08d),
-					GeneralUtilities.getRandomNumber(-0.03d, 0.03d), 1.0f);
+					(0.03D * mob.getRandom().nextGaussian()),
+					(-0.1D * mob.getRandom().nextGaussian()),
+					(0.03D * mob.getRandom().nextGaussian()),
+					1.0f);
 		}
 	}
 }

@@ -1,10 +1,10 @@
 package tech.anonymoushacker1279.immersiveweapons.network.handler;
 
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.GunShotBloodParticlePayload;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class GunShotBloodParticlePayloadHandler {
 
@@ -17,12 +17,13 @@ public class GunShotBloodParticlePayloadHandler {
 	public void handleData(final GunShotBloodParticlePayload data, final IPayloadContext context) {
 		context.enqueueWork(() -> {
 					for (int i = 0; i <= IWConfigs.CLIENT.gunShotBloodParticles.getAsInt(); i++) {
-						context.player().level().addParticle(
+						Level level = context.player().level();
+						level.addParticle(
 								data.particleOptions(),
 								data.x(), data.y(), data.z(),
-								GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
-								GeneralUtilities.getRandomNumber(-0.03d, 0.03d),
-								GeneralUtilities.getRandomNumber(-0.03d, 0.03d)
+								(0.03d * level.random.nextGaussian()),
+								(0.015d * level.random.nextGaussian()),
+								(0.03d * level.random.nextGaussian())
 						);
 					}
 				})

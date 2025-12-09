@@ -61,7 +61,7 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 		double z = getZ();
 		Vec3 deltaMovement = getDeltaMovement();
 
-		if (level().isClientSide && explodeDelay != 0 && (tickCount % 4) >= 2) {
+		if (level().isClientSide() && explodeDelay != 0 && (tickCount % 4) >= 2) {
 			level().addParticle(ParticleTypes.FIREWORK, x, y - 0.3D, z, random.nextGaussian() * 0.05D, -deltaMovement.y * 0.5D, random.nextGaussian() * 0.05D);
 		}
 
@@ -71,7 +71,7 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 		} else {
 			if (deathDelay >= 0) {
 				shouldStopMoving = true;
-				if (level().isClientSide && (tickCount % 4) == 0) {
+				if (level().isClientSide() && (tickCount % 4) == 0) {
 					for (int i = 0; i < 8; i++) {
 						level().addAlwaysVisibleParticle(ParticleTypes.FLAME, true, x, y, z, random.nextGaussian() * 0.1D, -deltaMovement.y * 0.25D, random.nextGaussian() * 0.1D);
 					}
@@ -97,7 +97,7 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 		if (entityData.get(USE_LEGACY_LIGHTING)) {
 			if (tickCount % 2 == 0) {
 				BlockPos currentPosition = blockPosition();
-				if (!level().isClientSide && currentPosition != previousLightPosition) {
+				if (!level().isClientSide() && currentPosition != previousLightPosition) {
 					if (!lightPositions.isEmpty()) {
 						for (BlockPos pos : lightPositions) {
 							if (level().getBlockState(pos) == lightState) {
@@ -214,8 +214,8 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 		Monster monster = serverLevel.getNearestEntity(Monster.class, TargetingConditions.forCombat(), null, getX(), getY(), getZ(), getBoundingBox().inflate(7));
 		MinutemanEntity minuteman = serverLevel.getNearestEntity(MinutemanEntity.class, TargetingConditions.forNonCombat(), null, getX(), getY(), getZ(), getBoundingBox().inflate(16));
 
-		if (monster != null && minuteman != null && getOwner() instanceof LivingEntity owner) {
-			if (!minuteman.isAngryAt(owner, serverLevel)) {
+		if (monster != null && minuteman != null && getOwner() instanceof LivingEntity ownerEntity) {
+			if (!minuteman.isAngryAt(ownerEntity, serverLevel)) {
 				minuteman.aggroNearbyMinutemen(getBoundingBox(), monster);
 			}
 		}

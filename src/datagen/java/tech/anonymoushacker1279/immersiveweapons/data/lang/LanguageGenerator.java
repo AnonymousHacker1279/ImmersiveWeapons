@@ -313,7 +313,6 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addSubtitle("armor.tesla.power_up", "Tesla armor powers up");
 		addSubtitle("armor.molten.equip", "Molten armor cracks");
 		addSubtitle("armor.ventus.equip", "Ventus armor creaks");
-		addSubtitle("armor.copper.equip", "Copper armor bends");
 		addSubtitle("armor.cobalt.equip", "Cobalt armor clinks");
 		addSubtitle("armor.astral.equip", "Astral armor resonates");
 		addSubtitle("armor.starstorm.equip", "Starstorm armor shimmers");
@@ -884,22 +883,6 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("moldy_bread.title", "I Have Done Nothing But Teleport Bread for Three Days");
 		addAdvancement("moldy_bread.description", "You told me to, Engineer");
 
-		// Copper advancements
-		addAdvancement("copper_ingot.title", "Simple Metals: Copper");
-		addAdvancement("copper_ingot.description", "Obtain a copper ingot");
-		addAdvancement("copper_sword.title", "Copper Tools: Sword");
-		addAdvancement("copper_sword.description", "Obtain a copper sword");
-		addAdvancement("copper_pickaxe.title", "Copper Tools: Pickaxe");
-		addAdvancement("copper_pickaxe.description", "Obtain a copper pickaxe");
-		addAdvancement("copper_axe.title", "Copper Tools: Axe");
-		addAdvancement("copper_axe.description", "Obtain a copper Axe");
-		addAdvancement("copper_shovel.title", "Copper Tools: Shovel");
-		addAdvancement("copper_shovel.description", "Obtain a copper shovel");
-		addAdvancement("copper_hoe.title", "Copper Tools: Hoe");
-		addAdvancement("copper_hoe.description", "Obtain a copper Hoe");
-		addAdvancement("copper_tools.title", "Close Enough to Iron Tools");
-		addAdvancement("copper_tools.description", "Obtain a full set of copper tools");
-
 		// Cobalt advancements
 		addAdvancement("cobalt_ingot.title", "Simple Metals: Cobalt");
 		addAdvancement("cobalt_ingot.description", "Obtain a cobalt ingot");
@@ -1093,6 +1076,10 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("discover_evil_eye.description", "Discover an Evil Eye, a detached eye which wanders the Deadman's Desert");
 		addAdvancement("discover_star_wolf.title", "Bigger Dogs");
 		addAdvancement("discover_star_wolf.description", "Discover a Star Wolf, a stronger and larger wolf");
+		addAdvancement("discover_mooglow.title", "Bovine Botanist");
+		addAdvancement("discover_mooglow.description", "Discover a Mooglow, a bovine creature sporting Moonglow plants");
+		addAdvancement("discover_wisp.title", "Spirit of the Wastes");
+		addAdvancement("discover_wisp.description", "Discover a Wisp, a mystical creature floating throughout the Tiltros Wastes");
 		addAdvancement("discover_skygazer.title", "Finally, Some Decent Trades");
 		addAdvancement("discover_skygazer.description", "Discover a Skygazer, a trader which resides in the Starlight Plains");
 		addAdvancement("discover_skeleton_merchant.title", "Cavern Trader");

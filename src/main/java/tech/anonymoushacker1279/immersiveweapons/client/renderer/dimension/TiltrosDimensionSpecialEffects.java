@@ -6,11 +6,11 @@ import com.mojang.blaze3d.systems.RenderPass;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.textures.GpuTextureView;
 import com.mojang.blaze3d.vertex.*;
-import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.client.renderer.state.LevelRenderState;
+import net.minecraft.client.renderer.state.SkyRenderState;
 import net.minecraft.client.renderer.texture.AbstractTexture;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.resources.ResourceLocation;
@@ -30,7 +30,7 @@ public class TiltrosDimensionSpecialEffects extends DimensionSpecialEffects {
 	private final GpuBuffer skyBuffer;
 
 	public TiltrosDimensionSpecialEffects() {
-		super(SkyType.END, true, false);
+		super(SkyType.END, false, false);
 		skyBuffer = buildBuffer();
 	}
 
@@ -50,7 +50,7 @@ public class TiltrosDimensionSpecialEffects extends DimensionSpecialEffects {
 	}
 
 	@Override
-	public boolean renderSky(ClientLevel level, int ticks, float partialTick, Matrix4f modelViewMatrix, Camera camera, Runnable setupFog) {
+	public boolean renderSky(LevelRenderState levelRenderState, SkyRenderState skyRenderState, Matrix4f modelViewMatrix, Runnable setupFog) {
 		TextureManager textureManager = Minecraft.getInstance().getTextureManager();
 		AbstractTexture texture = textureManager.getTexture(SKY_LOCATION);
 		texture.setUseMipmaps(false);

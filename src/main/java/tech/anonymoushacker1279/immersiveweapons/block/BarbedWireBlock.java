@@ -39,7 +39,7 @@ public class BarbedWireBlock extends DamageableBlock {
 	}
 
 	@Override
-	protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier) {
+	protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier, boolean inside) {
 		if (entity instanceof LivingEntity livingEntity) {
 			entity.makeStuckInBlock(state, new Vec3(0.45F, 0.40D, 0.45F));
 			if (level instanceof ServerLevel serverLevel) {

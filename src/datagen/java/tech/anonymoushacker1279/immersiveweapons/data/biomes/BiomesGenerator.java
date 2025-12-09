@@ -120,8 +120,10 @@ public class BiomesGenerator {
 		MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder()
 				.addSpawn(MobCategory.MONSTER, 85, new SpawnerData(
 						EntityRegistry.ROCK_SPIDER_ENTITY.get(), 2, 4))
-				.addSpawn(MobCategory.MONSTER, 15, new SpawnerData(
+				.addSpawn(MobCategory.MONSTER, 10, new SpawnerData(
 						EntityRegistry.LAVA_REVENANT_ENTITY.get(), 1, 1))
+				.addSpawn(MobCategory.AMBIENT, 50, new SpawnerData(
+						EntityRegistry.WISP_ENTITY.get(), 1, 2))
 				.addMobCharge(EntityRegistry.LAVA_REVENANT_ENTITY.get(), 1d, 2d);
 
 		return spawnBuilder.build();
@@ -129,12 +131,13 @@ public class BiomesGenerator {
 
 	private static MobSpawnSettings getStarlightPlainsSpawns() {
 		MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder()
+				.creatureGenerationProbability(0.45f)
 				.addSpawn(MobCategory.CREATURE, 10, new SpawnerData(
 						EntityRegistry.FIREFLY_ENTITY.get(), 4, 20))
 				.addSpawn(MobCategory.CREATURE, 2, new SpawnerData(
 						EntityRegistry.STAR_WOLF_ENTITY.get(), 1, 2))
-				.addMobCharge(EntityRegistry.FIREFLY_ENTITY.get(), 0.01d, 15d)
-				.addMobCharge(EntityRegistry.STAR_WOLF_ENTITY.get(), 0.1d, 7d);
+				.addSpawn(MobCategory.CREATURE, 6, new SpawnerData(
+						EntityRegistry.MOOGLOW_ENTITY.get(), 1, 4));
 
 		return spawnBuilder.build();
 	}

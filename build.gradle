@@ -1,8 +1,8 @@
 plugins {
 	id 'java-library'
 	id 'maven-publish'
-	id 'net.neoforged.moddev' version '2.0.107'
-	id "com.hypherionmc.modutils.modpublisher" version "2.1.7"
+	id 'net.neoforged.moddev' version '2.0.122'
+	id "com.hypherionmc.modutils.modpublisher" version "2.1.8"
 	id 'idea'
 }
 
@@ -154,6 +154,7 @@ configurations {
 
 dependencies {
 	implementation 'org.jetbrains:annotations:26.0.2'
+	implementation 'javax.inject:javax.inject:1'
 
 	implementation(jarJar("com.github.glitchfiend:TerraBlender-neoforge:[${terrablender_version}]")) {
 		version {
@@ -167,7 +168,7 @@ dependencies {
 		}
 	}
 
-	runtimeOnly "org.sinytra:wiki-exporter-neoforge:${wiki_exporter_version}"
+	// runtimeOnly "org.sinytra:wiki-exporter-neoforge:${wiki_exporter_version}"
 
 	// Include Immersive Weapons Compatibility Bridge (IWCB)
 	implementation "tech.anonymoushacker1279.iwcompatbridge:IWCompatBridge:${iwcb_version}"

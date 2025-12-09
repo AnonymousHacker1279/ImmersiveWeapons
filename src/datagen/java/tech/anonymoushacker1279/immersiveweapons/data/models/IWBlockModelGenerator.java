@@ -224,7 +224,7 @@ public class IWBlockModelGenerator {
 		MultiVariant paneNoSide = BlockModelGenerators.plainVariant(ModelTemplates.STAINED_GLASS_PANE_NOSIDE.extend().renderType("translucent").build().create(paneBlock, paneMapping, models.modelOutput));
 		MultiVariant paneNoSideAlt = BlockModelGenerators.plainVariant(ModelTemplates.STAINED_GLASS_PANE_NOSIDE_ALT.extend().renderType("translucent").build().create(paneBlock, paneMapping, models.modelOutput));
 		Item paneItem = paneBlock.asItem();
-		models.registerSimpleItemModel(paneItem, models.createFlatItemModelWithBlockTexture(paneItem, glassBlock));
+		models.registerSimpleItemModel(paneItem, ModelTemplates.FLAT_ITEM.extend().renderType("translucent").build().create(ModelLocationUtils.getModelLocation(paneItem), TextureMapping.layer0(glassBlock), models.modelOutput));
 		models.blockStateOutput.accept(
 				MultiPartGenerator.multiPart(paneBlock)
 						.with(panePost)

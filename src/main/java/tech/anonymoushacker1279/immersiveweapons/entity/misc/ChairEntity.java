@@ -32,12 +32,12 @@ public class ChairEntity extends Entity {
 	}
 
 	public static InteractionResult create(Level level, BlockPos pos, double yOffset, Player player) {
-		if (!level.isClientSide) {
+		if (!level.isClientSide()) {
 			List<ChairEntity> seats = level.getEntitiesOfClass(ChairEntity.class, new AABB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1.0D, pos.getY() + 1.0D, pos.getZ() + 1.0D));
 			if (seats.isEmpty()) {
 				ChairEntity seat = new ChairEntity(level, pos, yOffset);
 				level.addFreshEntity(seat);
-				player.startRiding(seat, false);
+				player.startRiding(seat);
 				return InteractionResult.SUCCESS;
 			}
 		}

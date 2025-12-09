@@ -8,12 +8,15 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.layers.SpiderEyesLayer;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.context.ContextKey;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.RockSpiderEntity;
 
 public class RockSpiderRenderer extends MobRenderer<RockSpiderEntity, LivingEntityRenderState, SpiderModel> {
 
 	private static final ResourceLocation TEXTURE_LOCATION = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/entity/rock_spider/rock_spider.png");
+	private static final ResourceLocation DEEPSLATE_TEXTURE_LOCATION = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/entity/rock_spider/rock_spider_alt.png");
+	public static final ContextKey<Boolean> DEEPSLATE_VARIANT = new ContextKey<>(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "deepslate_variant"));
 
 	public RockSpiderRenderer(EntityRendererProvider.Context context) {
 		super(context, new SpiderModel(context.bakeLayer(ModelLayers.SPIDER)), 0.25F);
@@ -27,7 +30,7 @@ public class RockSpiderRenderer extends MobRenderer<RockSpiderEntity, LivingEnti
 
 	@Override
 	public ResourceLocation getTextureLocation(LivingEntityRenderState state) {
-		return TEXTURE_LOCATION;
+		return state.getRenderDataOrDefault(DEEPSLATE_VARIANT, false) ? DEEPSLATE_TEXTURE_LOCATION : TEXTURE_LOCATION;
 	}
 
 	@Override

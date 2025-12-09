@@ -3,6 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.client.gui.screen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
@@ -98,7 +99,7 @@ public class SmallPartsTableScreen extends AbstractContainerScreen<SmallPartsMen
 	}
 
 	@Override
-	public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
+	public boolean mouseClicked(MouseButtonEvent event, boolean flag) {
 		scrolling = false;
 		if (displayPatterns) {
 			int leftPosOffset = leftPos + PATTERNS_X;
@@ -110,8 +111,8 @@ public class SmallPartsTableScreen extends AbstractContainerScreen<SmallPartsMen
 
 			for (int i = startIndex; i < startIndexOffset; ++i) {
 				int indexOffset = i - startIndex;
-				double x = pMouseX - (double) (leftPosOffset + indexOffset % 3 * PATTERN_IMAGE_SIZE);
-				double y = pMouseY - (double) (rightPosOffset + indexOffset / 3 * PATTERN_IMAGE_SIZE);
+				double x = event.x() - (double) (leftPosOffset + indexOffset % 3 * PATTERN_IMAGE_SIZE);
+				double y = event.y() - (double) (rightPosOffset + indexOffset / 3 * PATTERN_IMAGE_SIZE);
 				if (minecraft != null && minecraft.player != null
 						&& x >= 0.0D && y >= 0.0D && x < 16.0D && y < 16.0D
 						&& menu.clickMenuButton(minecraft.player, i)) {
@@ -126,23 +127,23 @@ public class SmallPartsTableScreen extends AbstractContainerScreen<SmallPartsMen
 
 			leftPosOffset = leftPos + 119;
 			rightPosOffset = topPos + 9;
-			if (pMouseX >= (double) leftPosOffset
-					&& pMouseX < (double) (leftPosOffset + SCROLLER_WIDTH)
-					&& pMouseY >= (double) rightPosOffset
-					&& pMouseY < (double) (rightPosOffset + SCROLLER_FULL_HEIGHT)) {
+			if (event.x() >= (double) leftPosOffset
+					&& event.x() < (double) (leftPosOffset + SCROLLER_WIDTH)
+					&& event.y() >= (double) rightPosOffset
+					&& event.y() < (double) (rightPosOffset + SCROLLER_FULL_HEIGHT)) {
 				scrolling = true;
 			}
 		}
 
-		return super.mouseClicked(pMouseX, pMouseY, pButton);
+		return super.mouseClicked(event, flag);
 	}
 
 	@Override
-	public boolean mouseDragged(double pMouseX, double pMouseY, int pButton, double pDragX, double pDragY) {
+	public boolean mouseDragged(MouseButtonEvent event, double dragX, double dragY) {
 		if (scrolling && displayPatterns) {
 			int topPosOffset = topPos + PATTERNS_Y;
 			int maxHeight = topPosOffset + SCROLLER_FULL_HEIGHT;
-			scrollOffs = ((float) pMouseY - topPosOffset - 7.5F) / ((maxHeight - topPosOffset) - 15.0F);
+			scrollOffs = ((float) event.y() - topPosOffset - 7.5F) / ((maxHeight - topPosOffset) - 15.0F);
 			scrollOffs = Mth.clamp(scrollOffs, 0.0F, 1.0F);
 			int i = (int) ((scrollOffs * TOTAL_PATTERN_ROWS) + 0.5D);
 			if (i < 0) {
@@ -152,7 +153,7 @@ public class SmallPartsTableScreen extends AbstractContainerScreen<SmallPartsMen
 			startIndex = 1 + i * 3;
 			return true;
 		} else {
-			return super.mouseDragged(pMouseX, pMouseY, pButton, pDragX, pDragY);
+			return super.mouseDragged(event, dragX, dragY);
 		}
 	}
 
@@ -165,14 +166,6 @@ public class SmallPartsTableScreen extends AbstractContainerScreen<SmallPartsMen
 		}
 
 		return true;
-	}
-
-	@Override
-	protected boolean hasClickedOutside(double pMouseX, double pMouseY, int pGuiLeft, int pGuiTop, int pMouseButton) {
-		return pMouseX < (double) pGuiLeft
-				|| pMouseY < (double) pGuiTop
-				|| pMouseX >= (double) (pGuiLeft + imageWidth)
-				|| pMouseY >= (double) (pGuiTop + imageHeight);
 	}
 
 	private void containerChanged() {

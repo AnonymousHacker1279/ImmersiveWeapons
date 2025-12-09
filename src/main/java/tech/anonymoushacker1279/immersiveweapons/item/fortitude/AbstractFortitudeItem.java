@@ -52,7 +52,7 @@ public abstract class AbstractFortitudeItem extends Item {
 
 		if (requireHalfHealth) {
 			if (player.getMaxHealth() - player.getHealth() <= player.getMaxHealth() / 2) {
-				if (level.isClientSide) {
+				if (level.isClientSide()) {
 					player.displayClientMessage(Component.translatable("immersiveweapons.item.first_aid_kit.player")
 							.withStyle(ChatFormatting.RED), true);
 				}
@@ -82,7 +82,7 @@ public abstract class AbstractFortitudeItem extends Item {
 
 		if (requireHalfHealth) {
 			if (entity.getMaxHealth() - entity.getHealth() <= entity.getMaxHealth() / 2) {
-				if (player.level().isClientSide) {
+				if (player.level().isClientSide()) {
 					player.displayClientMessage(Component.translatable("immersiveweapons.item.first_aid_kit.entity")
 							.withStyle(ChatFormatting.RED), true);
 				}
@@ -91,7 +91,7 @@ public abstract class AbstractFortitudeItem extends Item {
 			}
 		}
 
-		if (entity.level().isClientSide) {
+		if (entity.level().isClientSide()) {
 			return InteractionResult.PASS;
 		}
 

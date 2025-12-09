@@ -8,7 +8,6 @@ import net.minecraft.data.metadata.PackMetadataGenerator;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.MultiPackResourceManager;
-import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
@@ -31,7 +30,7 @@ import tech.anonymoushacker1279.immersiveweapons.data.trades.TradeDataGenerator;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-@EventBusSubscriber(value = Dist.CLIENT)
+@EventBusSubscriber
 public class CustomDataGenerator {
 
 	@SubscribeEvent

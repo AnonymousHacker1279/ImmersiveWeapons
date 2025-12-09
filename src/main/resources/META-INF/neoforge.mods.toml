@@ -34,14 +34,14 @@ side = "BOTH"
 [[dependencies.immersiveweapons]]
 modId = "terrablender"
 type = "required"
-versionRange = "[5.0.0.0,)"
+versionRange = "[1.21.9-21.9.0.1,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.immersiveweapons]]
 modId = "cpapireforged"
 type = "required"
-versionRange = "[1.4.0,)"   # TODO: bump version range
+versionRange = "[1.6.0,)"
 ordering = "NONE"
 side = "BOTH"
 

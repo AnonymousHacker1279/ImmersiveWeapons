@@ -12,9 +12,15 @@ import tech.anonymoushacker1279.immersiveweapons.data.damage_types.DamageTypesGe
 import tech.anonymoushacker1279.immersiveweapons.data.dimensions.DimensionGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.dimensions.DimensionTypeGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.enchantments.EnchantmentsGenerator;
-import tech.anonymoushacker1279.immersiveweapons.data.features.*;
+import tech.anonymoushacker1279.immersiveweapons.data.features.IWConfiguredCarvers;
+import tech.anonymoushacker1279.immersiveweapons.data.features.IWConfiguredFeatures;
+import tech.anonymoushacker1279.immersiveweapons.data.features.IWPlacedFeatures;
 import tech.anonymoushacker1279.immersiveweapons.data.modifiers.IWBiomeModifiers;
-import tech.anonymoushacker1279.immersiveweapons.data.structures.*;
+import tech.anonymoushacker1279.immersiveweapons.data.noise.NoiseGenerator;
+import tech.anonymoushacker1279.immersiveweapons.data.structures.StructureGenerator;
+import tech.anonymoushacker1279.immersiveweapons.data.structures.StructureProcessorListGenerator;
+import tech.anonymoushacker1279.immersiveweapons.data.structures.StructureSetGenerator;
+import tech.anonymoushacker1279.immersiveweapons.data.structures.StructureTemplatePoolGenerator;
 
 import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
@@ -27,6 +33,7 @@ public class DatapackRegistriesGenerator extends DatapackBuiltinEntriesProvider 
 			.add(Registries.BIOME, IWBiomes::bootstrap)
 			.add(Registries.DIMENSION_TYPE, DimensionTypeGenerator::bootstrap)
 			.add(Registries.LEVEL_STEM, DimensionGenerator::bootstrap)
+			.add(Registries.NOISE_SETTINGS, NoiseGenerator::bootstrap)
 			.add(Registries.CONFIGURED_CARVER, IWConfiguredCarvers::bootstrap)
 			.add(Keys.BIOME_MODIFIERS, IWBiomeModifiers::bootstrap)
 			.add(Registries.DAMAGE_TYPE, DamageTypesGenerator::bootstrap)

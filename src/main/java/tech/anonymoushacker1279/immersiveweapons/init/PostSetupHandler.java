@@ -18,7 +18,6 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.TooltipHandler;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.mixin.RangedAttributeAccessor;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class PostSetupHandler {
 
@@ -76,22 +75,16 @@ public class PostSetupHandler {
 			return;
 		}
 
+		// Build the biodome
 		for (int x = -radius; x <= radius; x++) {
 			for (int y = -radius; y <= radius; y++) {
 				for (int z = -radius; z <= radius; z++) {
 					BlockPos pos = center.offset(x, y, z);
 					double distance = Math.sqrt(x * x + y * y + z * z);
-					if (distance <= radius) {
-						if (level.getBlockState(pos).is(BlockRegistry.BLOOD_SAND.get())) {
-							if (level.getBlockState(pos.above()).is(BlockTags.REPLACEABLE)) {
-								level.setBlock(pos, Blocks.GRASS_BLOCK.defaultBlockState(), 3);
-							} else {
-								level.setBlock(pos, Blocks.DIRT.defaultBlockState(), 3);
-							}
-						} else if (level.getBlockState(pos).is(BlockRegistry.BLOOD_SANDSTONE.get())) {
-							level.setBlock(pos, Blocks.STONE.defaultBlockState(), 3);
-						}
+					if (distance <= radius && pos.getY() < center.getY() && level.getBlockState(pos).is(BlockTags.REPLACEABLE)) {
+						level.setBlock(pos, Blocks.GRASS_BLOCK.defaultBlockState(), 3);
 					}
+
 					if (distance >= radius - 1 && distance <= radius) {
 						if (level.getBlockState(pos).is(BlockTags.REPLACEABLE)) {
 							level.setBlock(pos, Blocks.GLASS.defaultBlockState(), 3);
@@ -102,41 +95,26 @@ public class PostSetupHandler {
 		}
 
 		// Determine the positions for the Biodome Life Support Units
-		BlockPos pos1 = center.offset(-radius + 4, -radius, -radius + 4);
-		BlockPos pos2 = center.offset(radius - 4, -radius, radius - 4);
-
-		// Move upwards until we find a grass block or reach past the radius
-		while (!(level.getBlockState(pos1).is(Blocks.GRASS_BLOCK) || level.getBlockState(pos1).is(BlockTags.REPLACEABLE)) && pos1.getY() < center.getY() + radius) {
-			pos1 = pos1.above();
-		}
-		while (!(level.getBlockState(pos2).is(Blocks.GRASS_BLOCK) || level.getBlockState(pos2).is(BlockTags.REPLACEABLE)) && pos2.getY() < center.getY() + radius) {
-			pos2 = pos2.above();
-		}
-
-		// Place the redstone blocks
-		level.setBlock(pos1, Blocks.REDSTONE_BLOCK.defaultBlockState(), 3);
-		level.setBlock(pos2, Blocks.REDSTONE_BLOCK.defaultBlockState(), 3);
+		BlockPos pos1 = center.offset(-radius + 4, 0, -radius + 4);
+		BlockPos pos2 = center.offset(radius - 4, 0, radius - 4);
 
 		// Place the Biodome Life Support Units
-		level.setBlock(pos1.above(), BlockRegistry.BIODOME_LIFE_SUPPORT_UNIT.get().defaultBlockState(), 3);
-		level.setBlock(pos2.above(), BlockRegistry.BIODOME_LIFE_SUPPORT_UNIT.get().defaultBlockState(), 3);
+		level.setBlock(pos1.below(), Blocks.REDSTONE_BLOCK.defaultBlockState(), 3);
+		level.setBlock(pos2.below(), Blocks.REDSTONE_BLOCK.defaultBlockState(), 3);
+		level.setBlock(pos1, BlockRegistry.BIODOME_LIFE_SUPPORT_UNIT.get().defaultBlockState(), 3);
+		level.setBlock(pos2, BlockRegistry.BIODOME_LIFE_SUPPORT_UNIT.get().defaultBlockState(), 3);
 
-		int numPlants = GeneralUtilities.getRandomNumber(4, 7);
 
 		// Plant Moonglow plants
+		int numPlants = level.getRandom().nextIntBetweenInclusive(5, 7);
 		int retries = 0;
 		for (int i = 0; i < numPlants; i++) {
-			int x = GeneralUtilities.getRandomNumber(-radius + 1, radius);
-			int z = GeneralUtilities.getRandomNumber(-radius + 1, radius);
+			int x = level.getRandom().nextIntBetweenInclusive(-radius, radius);
+			int z = level.getRandom().nextIntBetweenInclusive(-radius, radius);
 			BlockPos pos = center.offset(x, 0, z);
 
-			// Move upwards until we find a grass block or reach past the radius
-			while (!level.getBlockState(pos).is(Blocks.GRASS_BLOCK) && pos.getY() < center.getY() + radius) {
-				pos = pos.above();
-			}
-
-			if (level.getBlockState(pos).is(Blocks.GRASS_BLOCK) && level.getBlockState(pos.above()).is(BlockTags.REPLACEABLE)) {
-				level.setBlock(pos.above(), BlockRegistry.MOONGLOW.get().defaultBlockState(), 3);
+			if (level.getBlockState(pos.below()).is(Blocks.GRASS_BLOCK) && level.getBlockState(pos).is(BlockTags.REPLACEABLE)) {
+				level.setBlock(pos, BlockRegistry.MOONGLOW.get().defaultBlockState(), 3);
 				retries = 0;
 			} else {
 				i--;

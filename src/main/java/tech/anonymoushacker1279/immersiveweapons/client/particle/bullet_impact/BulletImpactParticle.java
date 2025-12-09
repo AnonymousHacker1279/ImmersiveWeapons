@@ -8,38 +8,21 @@ import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.block.model.BlockStateModel;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
-public class BulletImpactParticle extends TextureSheetParticle {
+public class BulletImpactParticle extends SingleQuadParticle {
 
 	@Nullable
 	static SpriteSet sprites;
-
-	public static class Provider implements ParticleProvider<BulletImpactParticleOptions> {
-
-		public Provider(SpriteSet pSprites) {
-			sprites = pSprites;
-		}
-
-		@Override
-		public Particle createParticle(BulletImpactParticleOptions pType, ClientLevel pLevel, double pX, double pY, double pZ,
-		                               double pXSpeed, double pYSpeed, double pZSpeed) {
-
-			if (sprites != null) {
-				return new BulletImpactParticle(pLevel, pX, pY, pZ, pXSpeed, pYSpeed, pZSpeed, sprites, pType.getBlockID());
-			}
-			return null;
-		}
-	}
 
 	protected BulletImpactParticle(ClientLevel level, double x, double y, double z,
 	                               double xSpeed, double ySpeed,
 	                               double zSpeed, SpriteSet spriteSet, int blockID) {
 
-		super(level, x, y, z, 0.0D, 0.0D, 0.0D);
+		super(level, x, y, z, spriteSet.first());
 
 		Vector3f color = getColorFromBlock(blockID);
 
@@ -47,19 +30,19 @@ public class BulletImpactParticle extends TextureSheetParticle {
 		gravity = (float) 0.175;
 		speedUpWhenYMotionIsBlocked = true;
 		sprites = spriteSet;
-		xd *= (float) 0.0;
-		yd *= (float) 0.0;
-		zd *= (float) 0.0;
+		xd *= 0.0F;
+		yd *= 0.0F;
+		zd *= 0.0F;
 		xd += xSpeed;
 		yd += ySpeed;
 		zd += zSpeed;
-		float vibrancyModifier = GeneralUtilities.getRandomNumber(0.6f, 1.0f);
+		float vibrancyModifier = 0.6F + level.random.nextFloat() * 0.4F;
 		rCol = randomizeColor(color.x(), vibrancyModifier);
 		gCol = randomizeColor(color.y(), vibrancyModifier);
 		bCol = randomizeColor(color.z(), vibrancyModifier);
 		quadSize *= 2.5f;
 		lifetime = (int) ((double) 20 / ((double) level.random.nextFloat() * 0.8D + 0.2D));
-		lifetime = (int) ((float) lifetime * (float) 1.5);
+		lifetime = (int) ((float) lifetime * 1.5F);
 		lifetime = Math.max(lifetime, 1);
 		setSpriteFromAge(spriteSet);
 		hasPhysics = true;
@@ -76,16 +59,11 @@ public class BulletImpactParticle extends TextureSheetParticle {
 		BlockStateModel model = blockModelShapes.getBlockModel(Block.stateById(blockID));
 		TextureAtlasSprite textureAtlasSprite = model.particleIcon();
 
-		int pixelABGR = textureAtlasSprite.getPixelRGBA(0, 0, 0);
-		int r = pixelABGR & 0xff;
-		int g = pixelABGR >> 8 & 0xff;
-		int b = pixelABGR >> 16 & 0xff;
-		return new Vector3f(r / 255f, g / 255f, b / 255f);
-	}
-
-	@Override
-	public ParticleRenderType getRenderType() {
-		return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
+		int pixelRGBA = textureAtlasSprite.getPixelRGBA(0, 0, 0);
+		float red = (float) (pixelRGBA >> 16 & 255) / 255.0F;
+		float green = (float) (pixelRGBA >> 8 & 255) / 255.0F;
+		float blue = (float) (pixelRGBA & 255) / 255.0F;
+		return new Vector3f(red, green, blue);
 	}
 
 	@Override
@@ -94,10 +72,28 @@ public class BulletImpactParticle extends TextureSheetParticle {
 	}
 
 	@Override
+	protected Layer getLayer() {
+		return Layer.OPAQUE;
+	}
+
+	@Override
 	public void tick() {
 		super.tick();
 		if (sprites != null) {
 			setSpriteFromAge(sprites);
+		}
+	}
+
+	public static class Provider implements ParticleProvider<BulletImpactParticleOptions> {
+
+		public Provider(SpriteSet pSprites) {
+			sprites = pSprites;
+		}
+
+		@Nullable
+		@Override
+		public Particle createParticle(BulletImpactParticleOptions type, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, RandomSource random) {
+			return sprites != null ? new BulletImpactParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, sprites, type.blockID()) : null;
 		}
 	}
 }

@@ -5,41 +5,31 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.server.level.ServerEntity;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.Mth;
 import net.minecraft.util.Unit;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Arrow;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.Level.ExplosionInteraction;
-import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.*;
 import net.neoforged.neoforge.common.Tags.EntityTypes;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
+import tech.anonymoushacker1279.immersiveweapons.item.projectile.CustomArrowItem.InaccuracySettings;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.SmokeGrenadePayload;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
-
-import java.util.List;
 
 public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 
 	protected static final byte VANILLA_IMPACT_STATUS_ID = 3;
 	public Item referenceItem = Items.AIR;
 	protected boolean shouldStopMoving = false;
-	public List<Double> shootingVectorInputs = List.of(0.0075d, -0.0095d, 0.0075d);
+	public InaccuracySettings inaccuracySettings = new InaccuracySettings(1.0d);
 	public HitEffect hitEffect = HitEffect.NONE;
 	public int color = -1;
 	public boolean isExplosive = false;
@@ -77,15 +67,8 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 		}
 	}
 
-	public static class ArrowEntityBuilder implements HitEffectUtils {
-
-		private final EntityType<? extends Arrow> entityType;
-		private final Item referenceItem;
-
-		public ArrowEntityBuilder(EntityType<? extends Arrow> entityType, Item referenceItem) {
-			this.entityType = entityType;
-			this.referenceItem = referenceItem;
-		}
+	public record ArrowEntityBuilder(EntityType<? extends Arrow> entityType,
+	                                 Item referenceItem) implements HitEffectUtils {
 
 		public CustomArrowEntity build(Level level) {
 			CustomArrowEntity arrowEntity = new CustomArrowEntity(entityType, level);
@@ -152,8 +135,8 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 			// Apply any hit effects from the arrow
 			switch (hitEffect) {
 				case MOLTEN -> {
-					if (getOwner() instanceof LivingEntity owner) {
-						addMoltenEffects(livingEntity, owner);
+					if (getOwner() instanceof LivingEntity ownerEntity) {
+						addMoltenEffects(livingEntity, ownerEntity);
 					}
 				}
 				case TESLA -> addTeslaEffects(livingEntity);
@@ -162,27 +145,15 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 		}
 	}
 
-	@Override
-	public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
-		Vec3 shootingVector = new Vec3(x, y, z)
+	public Vec3 getMovementToShoot(double x, double y, double z, float velocity, float inaccuracy) {
+		return new Vec3(x, y, z)
 				.normalize()
-				.add(random.triangle(0d,
-								shootingVectorInputs.get(0) * inaccuracy
-										* GeneralUtilities.getRandomNumber(shootingVectorInputs.get(1), shootingVectorInputs.get(2))),
-						random.triangle(0d,
-								shootingVectorInputs.get(0) * inaccuracy
-										* GeneralUtilities.getRandomNumber(shootingVectorInputs.get(1), shootingVectorInputs.get(2))),
-						random.triangle(0d,
-								shootingVectorInputs.get(0) * inaccuracy
-										* GeneralUtilities.getRandomNumber(shootingVectorInputs.get(1), shootingVectorInputs.get(2))))
+				.add(
+						random.triangle(0.0, (0.0172275d * inaccuracySettings.xMultiplier()) * inaccuracy),
+						random.triangle(0.0, (0.0172275d * inaccuracySettings.yModifier()) * inaccuracy),
+						random.triangle(0.0, (0.0172275d * inaccuracySettings.zModifier()) * inaccuracy)
+				)
 				.scale(velocity);
-
-		setDeltaMovement(shootingVector);
-		double horizontalDistanceSqr = shootingVector.horizontalDistanceSqr();
-		setYRot((float) (Mth.atan2(shootingVector.x, shootingVector.z) * (180F / (float) Math.PI)));
-		setXRot((float) (Mth.atan2(shootingVector.y, horizontalDistanceSqr) * (180F / (float) Math.PI)));
-		yRotO = getYRot();
-		xRotO = getXRot();
 	}
 
 	/**
@@ -201,7 +172,7 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 	}
 
 	protected void explode(float radius) {
-		if (!level().isClientSide && getOwner() != null) {
+		if (!level().isClientSide() && getOwner() != null) {
 			level().explode(this,
 					getDamageSource(getOwner()),
 					null,

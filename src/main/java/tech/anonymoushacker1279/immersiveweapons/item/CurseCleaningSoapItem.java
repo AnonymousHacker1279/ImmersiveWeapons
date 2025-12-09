@@ -20,7 +20,7 @@ public class CurseCleaningSoapItem extends Item {
 	@Override
 	public InteractionResult use(Level level, Player player, InteractionHand usedHand) {
 		// Get all curses in the player's persistent data
-		if (level.isClientSide) {
+		if (level.isClientSide()) {
 			if (player.getPersistentData().isEmpty()) {
 				player.displayClientMessage(Component.translatable("immersiveweapons.item.curse_cleaning_soap.not_cursed")
 						.withStyle(ChatFormatting.YELLOW), true);
@@ -29,7 +29,7 @@ public class CurseCleaningSoapItem extends Item {
 			handleData(player);
 		}
 
-		if (!level.isClientSide) {
+		if (!level.isClientSide()) {
 			// Regex search for "used_curse_accessory_" in persistent data
 			boolean wasCursed = handleData(player);
 

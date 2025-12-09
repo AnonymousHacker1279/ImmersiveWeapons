@@ -1,40 +1,26 @@
 package tech.anonymoushacker1279.immersiveweapons.client.particle.smoke_grenade;
 
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.particle.*;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.SingleQuadParticle;
+import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3f;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 
-public class SmokeGrenadeParticle extends TextureSheetParticle {
+public class SmokeGrenadeParticle extends SingleQuadParticle {
 
 	@Nullable
 	protected static SpriteSet sprites;
-
-	public static class Provider implements ParticleProvider<SmokeGrenadeParticleOptions> {
-
-		public Provider(SpriteSet pSprites) {
-			sprites = pSprites;
-		}
-
-		@Override
-		public Particle createParticle(SmokeGrenadeParticleOptions pType, ClientLevel pLevel, double pX, double pY, double pZ,
-		                               double pXSpeed, double pYSpeed, double pZSpeed) {
-
-			if (sprites != null) {
-				return new SmokeGrenadeParticle(pLevel, pX, pY, pZ,
-						pXSpeed, pYSpeed, pZSpeed, sprites, pType.getColor());
-			}
-			return null;
-		}
-	}
 
 	protected SmokeGrenadeParticle(ClientLevel level, double x, double y, double z,
 	                               double xSpeed, double ySpeed,
 	                               double zSpeed, SpriteSet spriteSet, Vector3f color) {
 
-		super(level, x, y, z, 0.0D, 0.0D, 0.0D);
+		super(level, x, y, z, spriteSet.first());
 		friction = 0.96F;
 		boolean fancyParticles = IWConfigs.CLIENT.fancySmokeGrenadeParticles.getAsBoolean();
 		gravity = fancyParticles ? 0.02F : 0.05F;
@@ -64,8 +50,8 @@ public class SmokeGrenadeParticle extends TextureSheetParticle {
 	}
 
 	@Override
-	public ParticleRenderType getRenderType() {
-		return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
+	protected Layer getLayer() {
+		return IWConfigs.CLIENT.fancySmokeGrenadeParticles.getAsBoolean() ? Layer.TRANSLUCENT : Layer.OPAQUE;
 	}
 
 	@Override
@@ -84,6 +70,19 @@ public class SmokeGrenadeParticle extends TextureSheetParticle {
 		super.tick();
 		if (sprites != null) {
 			setSpriteFromAge(sprites);
+		}
+	}
+
+	public static class Provider implements ParticleProvider<SmokeGrenadeParticleOptions> {
+
+		public Provider(SpriteSet pSprites) {
+			sprites = pSprites;
+		}
+
+		@Nullable
+		@Override
+		public Particle createParticle(SmokeGrenadeParticleOptions type, ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, RandomSource random) {
+			return sprites != null ? new SmokeGrenadeParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, sprites, type.color()) : null;
 		}
 	}
 }

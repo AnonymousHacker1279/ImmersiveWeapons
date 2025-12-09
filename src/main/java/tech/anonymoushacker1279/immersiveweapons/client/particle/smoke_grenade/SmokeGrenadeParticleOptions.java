@@ -7,18 +7,11 @@ import net.minecraft.world.phys.Vec3;
 import org.joml.Vector3f;
 import tech.anonymoushacker1279.immersiveweapons.init.ParticleTypesRegistry;
 
-public class SmokeGrenadeParticleOptions implements ParticleOptions {
+public record SmokeGrenadeParticleOptions(Vector3f color, float scale) implements ParticleOptions {
 
-	protected final Vector3f color;
-	protected final float scale;
-
-	public SmokeGrenadeParticleOptions(Vector3f vector3f, float vibrancy) {
-		color = vector3f;
-		scale = Mth.clamp(vibrancy, 0.001F, 100.0F);
-	}
-
-	public Vector3f getColor() {
-		return color;
+	public SmokeGrenadeParticleOptions(Vector3f color, float scale) {
+		this.color = color;
+		this.scale = Mth.clamp(scale, 0.001F, 100.0F);
 	}
 
 	@Override

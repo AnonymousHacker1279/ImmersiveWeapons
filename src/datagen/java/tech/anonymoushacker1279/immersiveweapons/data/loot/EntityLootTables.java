@@ -372,7 +372,27 @@ public class EntityLootTables extends EntityLootSubProvider {
 						.when(LootItemKilledByPlayerCondition.killedByPlayer())
 						.when(LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(this.registries, 0.07F, 0.02F))));
 
-		add(EntityRegistry.FIREFLY_ENTITY.get(), LootTable.lootTable());
+		add(EntityRegistry.MOOGLOW_ENTITY.get(), LootTable.lootTable()
+				.withPool(
+						LootPool.lootPool()
+								.setRolls(ConstantValue.exactly(1.0F))
+								.add(
+										LootItem.lootTableItem(Items.LEATHER)
+												.apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 2.0F)))
+												.apply(EnchantedCountIncreaseFunction.lootingMultiplier(this.registries, UniformGenerator.between(0.0F, 1.0F)))
+								)
+				)
+				.withPool(
+						LootPool.lootPool()
+								.setRolls(ConstantValue.exactly(1.0F))
+								.add(
+										LootItem.lootTableItem(Items.BEEF)
+												.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F)))
+												.apply(SmeltItemFunction.smelted().when(this.shouldSmeltLoot()))
+												.apply(EnchantedCountIncreaseFunction.lootingMultiplier(this.registries, UniformGenerator.between(0.0F, 1.0F)))
+								)
+				));
+
 		add(EntityRegistry.STAR_WOLF_ENTITY.get(), LootTable.lootTable());
 		add(EntityRegistry.SKYGAZER_ENTITY.get(), LootTable.lootTable());
 		add(EntityRegistry.SKELETON_MERCHANT_ENTITY.get(), LootTable.lootTable());

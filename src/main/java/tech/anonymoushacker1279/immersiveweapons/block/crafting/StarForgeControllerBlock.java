@@ -64,12 +64,12 @@ public class StarForgeControllerBlock extends BasicOrientableBlock implements En
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
 
-		return level.isClientSide ? null : (world, pos, state, entity) -> ((StarForgeBlockEntity) entity).tick((ServerLevel) world, pos, state);
+		return level.isClientSide() ? null : (world, pos, state, entity) -> ((StarForgeBlockEntity) entity).tick((ServerLevel) world, pos, state);
 	}
 
 	@Override
 	protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
-		if (level.isClientSide) {
+		if (level.isClientSide()) {
 			return InteractionResult.SUCCESS;
 		} else {
 			if (level.getBlockEntity(pos) instanceof StarForgeBlockEntity blockEntity && player instanceof ServerPlayer serverPlayer) {

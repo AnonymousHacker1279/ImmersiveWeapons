@@ -10,7 +10,10 @@ import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.LootTable.Builder;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
-import net.minecraft.world.level.storage.loot.functions.*;
+import net.minecraft.world.level.storage.loot.functions.EnchantRandomlyFunction;
+import net.minecraft.world.level.storage.loot.functions.EnchantWithLevelsFunction;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.functions.SetNameFunction;
 import net.minecraft.world.level.storage.loot.functions.SetNameFunction.Target;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
@@ -29,13 +32,13 @@ public record ChestLootTables(HolderLookup.Provider registries) implements LootT
 								.setRolls(UniformGenerator.between(3.0F, 6.0F))
 								.add(LootItem.lootTableItem(Items.COPPER_INGOT).setWeight(12)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
-								.add(LootItem.lootTableItem(ItemRegistry.COPPER_NUGGET.get()).setWeight(10)
+								.add(LootItem.lootTableItem(Items.COPPER_NUGGET).setWeight(10)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 4.0F))))
 								.add(LootItem.lootTableItem(Items.STONE).setWeight(10)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 12.0F))))
 								.add(LootItem.lootTableItem(Items.GOLD_NUGGET).setWeight(8)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
-								.add(LootItem.lootTableItem(ItemRegistry.COPPER_PICKAXE.get()).setWeight(5)
+								.add(LootItem.lootTableItem(Items.COPPER_PICKAXE).setWeight(5)
 										.apply(EnchantWithLevelsFunction.enchantWithLevels(
 												this.registries, UniformGenerator.between(5.0F, 15.0F)
 										)))
@@ -57,7 +60,7 @@ public record ChestLootTables(HolderLookup.Provider registries) implements LootT
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
 								.add(LootItem.lootTableItem(Items.ROTTEN_FLESH).setWeight(10)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 6.0F))))
-								.add(LootItem.lootTableItem(ItemRegistry.COPPER_SHOVEL.get()).setWeight(6)
+								.add(LootItem.lootTableItem(Items.COPPER_SHOVEL).setWeight(6)
 										.apply(EnchantWithLevelsFunction.enchantWithLevels(
 												this.registries, UniformGenerator.between(3.0F, 10.0F)
 										)))
@@ -79,7 +82,7 @@ public record ChestLootTables(HolderLookup.Provider registries) implements LootT
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
 								.add(LootItem.lootTableItem(ItemRegistry.CLOTH_SCRAP.get()).setWeight(10)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 6.0F))))
-								.add(LootItem.lootTableItem(ItemRegistry.COPPER_AXE.get()).setWeight(6)
+								.add(LootItem.lootTableItem(Items.COPPER_AXE).setWeight(6)
 										.apply(EnchantWithLevelsFunction.enchantWithLevels(
 												this.registries, UniformGenerator.between(3.0F, 10.0F)
 										)))

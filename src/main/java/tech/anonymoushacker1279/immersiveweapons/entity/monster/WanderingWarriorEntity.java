@@ -1,6 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.monster;
 
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.particles.PowerParticleOption;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
@@ -87,7 +88,7 @@ public class WanderingWarriorEntity extends AbstractWanderingWarriorEntity {
 
 		if (isBerserk && level() instanceof ServerLevel serverLevel) {
 			serverLevel.sendParticles(
-					ParticleTypes.DRAGON_BREATH,
+					PowerParticleOption.create(ParticleTypes.DRAGON_BREATH, 1.0f),
 					getX() + (random.nextDouble() - 0.5) * getBbWidth(),
 					getY() + random.nextDouble() * getBbHeight(),
 					getZ() + (random.nextDouble() - 0.5) * getBbWidth(),

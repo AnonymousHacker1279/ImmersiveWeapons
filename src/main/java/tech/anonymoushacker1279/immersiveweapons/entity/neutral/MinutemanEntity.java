@@ -3,6 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.entity.neutral;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
@@ -13,7 +14,7 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
 import net.minecraft.world.entity.animal.IronGolem;
 import net.minecraft.world.entity.monster.Creeper;
-import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
@@ -55,7 +56,7 @@ public class MinutemanEntity extends RangedSoldierEntity {
 
 		targetSelector.addGoal(1, new HurtByTargetWithPredicateGoal(this, this::canTargetEntityWhenHurt, MinutemanEntity.class, IronGolem.class).setAlertOthers());
 		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true, (entity, level) -> canTargetPlayer(entity)));
-		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Monster.class, true, (entity, level) -> !(entity instanceof Creeper)));
+		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Mob.class, true, (entity, level) -> entity instanceof Enemy && !(entity instanceof Creeper)));
 		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, DyingSoldierEntity.class, true));
 		targetSelector.addGoal(4, new DefendVillageTargetGoal(this));
 		targetSelector.addGoal(6, new ResetUniversalAngerTargetGoal<>(this, false));

@@ -5,7 +5,10 @@ import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.world.level.loot.*;
+import tech.anonymoushacker1279.immersiveweapons.world.level.loot.LogShardsLootModifierHandler;
+import tech.anonymoushacker1279.immersiveweapons.world.level.loot.SimpleChestModifierHandler;
+import tech.anonymoushacker1279.immersiveweapons.world.level.loot.SimpleDropModifierHandler;
+import tech.anonymoushacker1279.immersiveweapons.world.level.loot.ToolSmeltingModifierHandler;
 
 import java.util.function.Supplier;
 

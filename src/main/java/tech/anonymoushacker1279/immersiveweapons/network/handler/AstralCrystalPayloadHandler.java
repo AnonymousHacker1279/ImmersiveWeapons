@@ -8,7 +8,6 @@ import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.AstralCrystalBlockEntity;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.AstralCrystalPayload;
-import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 
 public class AstralCrystalPayloadHandler {
 
@@ -27,12 +26,12 @@ public class AstralCrystalPayloadHandler {
 					int z = data.pos().getZ();
 
 					level.addParticle(ParticleTypes.EXPLOSION_EMITTER,
-							x + 0.5D + (GeneralUtilities.getRandomNumber(-0.2D, 0.2D)),
-							y + 0.4D + (GeneralUtilities.getRandomNumber(0.2D, 0.5D)),
-							z + 0.5D + (GeneralUtilities.getRandomNumber(-0.2D, 0.2D)),
-							(GeneralUtilities.getRandomNumber(-0.16D, 0.16D)),
-							(GeneralUtilities.getRandomNumber(0.13D, 0.16D)),
-							(GeneralUtilities.getRandomNumber(-0.16D, 0.16D)));
+							x + 0.5D + (0.2D * level.random.nextGaussian()),
+							y + 0.4D + (0.35D * level.random.nextGaussian()),
+							z + 0.5D + (0.2D * level.random.nextGaussian()),
+							(0.15D * level.random.nextGaussian()),
+							(0.15D * level.random.nextGaussian()),
+							(0.15D * level.random.nextGaussian()));
 
 					level.playLocalSound(x, y, z, SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.BLOCKS, 1.0f, 1.3f, false);
 

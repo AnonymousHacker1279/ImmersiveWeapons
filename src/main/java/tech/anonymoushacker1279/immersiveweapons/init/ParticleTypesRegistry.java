@@ -11,6 +11,8 @@ import tech.anonymoushacker1279.immersiveweapons.client.particle.damage_indicato
 import tech.anonymoushacker1279.immersiveweapons.client.particle.damage_indicator.DamageIndicatorParticleType;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.smoke_grenade.SmokeGrenadeParticleOptions;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.smoke_grenade.SmokeGrenadeParticleType;
+import tech.anonymoushacker1279.immersiveweapons.client.particle.wisp.WispParticleOptions;
+import tech.anonymoushacker1279.immersiveweapons.client.particle.wisp.WispParticleType;
 
 import java.util.function.Supplier;
 
@@ -28,5 +30,6 @@ public class ParticleTypesRegistry {
 	public static final Supplier<SimpleParticleType> STARDUST_LEAVES_PARTICLE = PARTICLE_TYPES.register("stardust_leaves", () -> new SimpleParticleType(false));
 	public static final Supplier<SimpleParticleType> DEADMANS_DESERT_AMBIENT_PARTICLE = PARTICLE_TYPES.register("deadmans_desert_ambient", () -> new SimpleParticleType(false));
 	public static final Supplier<SimpleParticleType> TILTROS_PORTAL_PARTICLE = PARTICLE_TYPES.register("tiltros_portal", () -> new SimpleParticleType(false));
+	public static final Supplier<ParticleType<WispParticleOptions>> WISP_PARTICLE = PARTICLE_TYPES.register("wisp", () -> new WispParticleType(false));
 	public static final Supplier<ParticleType<DamageIndicatorParticleOptions>> DAMAGE_INDICATOR_PARTICLE = PARTICLE_TYPES.register("damage_indicator", () -> new DamageIndicatorParticleType(true));
 }

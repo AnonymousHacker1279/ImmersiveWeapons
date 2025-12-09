@@ -82,14 +82,6 @@
     ],
     "subtitle": "subtitles.immersiveweapons.armor.cobalt.equip"
   },
-  "copper_armor_equip": {
-    "sounds": [
-      "immersiveweapons:armor/equip/copper/equip_0",
-      "immersiveweapons:armor/equip/copper/equip_1",
-      "immersiveweapons:armor/equip/copper/equip_2"
-    ],
-    "subtitle": "subtitles.immersiveweapons.armor.copper.equip"
-  },
   "deadmans_desert_background_music": {
     "sounds": [
       {

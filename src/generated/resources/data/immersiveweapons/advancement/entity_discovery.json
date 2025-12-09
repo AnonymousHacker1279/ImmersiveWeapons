@@ -99,6 +99,20 @@
       },
       "trigger": "immersiveweapons:entity_discovered"
     },
+    "discover_mooglow": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "immersiveweapons:mooglow"
+            }
+          }
+        ]
+      },
+      "trigger": "immersiveweapons:entity_discovered"
+    },
     "discover_rock_spider": {
       "conditions": {
         "entity": [
@@ -224,6 +238,20 @@
         ]
       },
       "trigger": "immersiveweapons:entity_discovered"
+    },
+    "discover_wisp": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "immersiveweapons:wisp"
+            }
+          }
+        ]
+      },
+      "trigger": "immersiveweapons:entity_discovered"
     }
   },
   "display": {
@@ -281,6 +309,12 @@
     ],
     [
       "discover_star_wolf"
+    ],
+    [
+      "discover_mooglow"
+    ],
+    [
+      "discover_wisp"
     ],
     [
       "discover_skygazer"

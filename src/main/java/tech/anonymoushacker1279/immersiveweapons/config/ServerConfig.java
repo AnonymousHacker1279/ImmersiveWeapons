@@ -353,9 +353,7 @@ public class ServerConfig {
 	private static List<?> enchantCapMapToList() {
 		List<Object> enchantCaps = new ArrayList<>(50);
 		Map<String, Integer> enchantCapsMap = getEnchantCapsMap();
-		enchantCapsMap.forEach((enchant, cap) -> {
-			enchantCaps.add(enchant + ";" + cap);
-		});
+		enchantCapsMap.forEach((enchant, cap) -> enchantCaps.add(enchant + ";" + cap));
 
 		return enchantCaps;
 	}

@@ -49,7 +49,7 @@ public class BiodomeLifeSupportUnitBlockEntity extends BlockEntity implements En
 			for (int i = 0; i < 360; i += 10) {
 				double x = pos.getX() + 0.5d + Math.cos(i);
 				double z = pos.getZ() + 0.5d + Math.sin(i);
-				serverLevel.sendParticles(ParticleTypes.INSTANT_EFFECT, x, pos.getY() + 0.5, z, 1, 0, 0, 0, 0);
+				serverLevel.sendParticles(ParticleTypes.ELECTRIC_SPARK, x, pos.getY() + 0.5, z, 1, 0, 0, 0, 0);
 			}
 
 			level.gameEvent(GameEvent.BLOCK_ACTIVATE, pos, GameEvent.Context.of(state));

@@ -38,7 +38,7 @@ public class MortarShellEntity extends Projectile implements ItemSupplier {
 	}
 
 	public static void create(Level level, BlockPos pos, double yOffset, BlockState state, @Nullable Player player) {
-		if (!level.isClientSide) {
+		if (!level.isClientSide()) {
 			MortarShellEntity mortarShellEntity = new MortarShellEntity(level, pos, yOffset);
 
 			float rotationModifier = 0.0f;
@@ -127,7 +127,7 @@ public class MortarShellEntity extends Projectile implements ItemSupplier {
 	protected void onHit(HitResult result) {
 		super.onHit(result);
 
-		if (!level().isClientSide) {
+		if (!level().isClientSide()) {
 			level().explode(this,
 					IWDamageSources.mortar(level().registryAccess()),
 					null,

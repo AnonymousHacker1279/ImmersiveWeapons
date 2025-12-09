@@ -27,7 +27,7 @@ import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 public abstract class BaseFireBlockMixin {
 
 	@Inject(method = "entityInside", at = @At("RETURN"))
-	private void checkForSuperHansSpawn(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier, CallbackInfo ci) {
+	private void checkForSuperHansSpawn(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier, boolean inside, CallbackInfo ci) {
 		if (entity instanceof ItemEntity itemEntity && itemEntity.getItem().is(ItemRegistry.HANS_BLESSING.get())) {
 			// Check if inside a Champion Tower structure
 			if (level instanceof ServerLevel serverLevel) {

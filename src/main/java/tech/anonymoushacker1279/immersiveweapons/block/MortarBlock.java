@@ -56,7 +56,7 @@ public class MortarBlock extends BasicOrientableBlock {
 
 	@Override
 	protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
-		if (!level.isClientSide && hand.equals(InteractionHand.MAIN_HAND)) {
+		if (!level.isClientSide() && hand.equals(InteractionHand.MAIN_HAND)) {
 			ItemStack itemStack = player.getMainHandItem();
 			// If the mortar is loaded and the player is holding flint and steel, fire the shell
 			if (state.getValue(LOADED) && itemStack.getItem() == Items.FLINT_AND_STEEL) {
@@ -105,7 +105,7 @@ public class MortarBlock extends BasicOrientableBlock {
 
 	@Override
 	protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, @javax.annotation.Nullable Orientation orientation, boolean movedByPiston) {
-		if (!level.isClientSide) {
+		if (!level.isClientSide()) {
 			if (state.getValue(LOADED) && level.hasNeighborSignal(pos)) {
 				fire(level, pos, state, null);
 			}

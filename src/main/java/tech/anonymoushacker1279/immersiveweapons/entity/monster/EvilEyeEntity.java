@@ -4,9 +4,12 @@ import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.UUIDUtil;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -25,15 +28,20 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
+import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
-import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.FlyAroundEntityGoal;
-import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.FlyRandomlyGoal;
+import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.EvilEyeMoveTowardsTargetGoal;
+import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.SplineFloatGoal;
+import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.SplineFloatGoalConfig;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 
@@ -49,10 +57,21 @@ public class EvilEyeEntity extends Mob implements Enemy, GrantAdvancementOnDisco
 	private static final EntityDataAccessor<Boolean> SUMMONED_BY_STAFF = SynchedEntityData.defineId(EvilEyeEntity.class,
 			EntityDataSerializers.BOOLEAN);
 
+	private static final ResourceKey<Biome> DEADMANS_DESERT = ResourceKey.create(
+			Registries.BIOME,
+			ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "deadmans_desert")
+	);
+	private static final ResourceKey<Level> TILTROS = ResourceKey.create(
+			Registries.DIMENSION,
+			ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "tiltros")
+	);
+
 	private final List<Holder<MobEffect>> lowTierDebuffs = new ArrayList<>(5);
 	private final List<Holder<MobEffect>> highTierDebuffs = new ArrayList<>(5);
 
-	private final FlyRandomlyGoal flyRandomlyGoal = new FlyRandomlyGoal(this);
+	private final SplineFloatGoal splineFloatGoal = new SplineFloatGoal(this,
+			SplineFloatGoalConfig.evilEye(DEADMANS_DESERT, TILTROS),
+			mob -> true);
 
 	@Nullable
 	private LivingEntity targetedEntity;
@@ -91,7 +110,7 @@ public class EvilEyeEntity extends Mob implements Enemy, GrantAdvancementOnDisco
 	public static EvilEyeEntity create(Level level, Vec3 position, boolean staff) {
 		EvilEyeEntity entity = new EvilEyeEntity(level, position, staff);
 
-		if (!level.isClientSide) {
+		if (!level.isClientSide()) {
 			entity.finalizeSpawn((ServerLevelAccessor) level, level.getCurrentDifficultyAt(entity.blockPosition()),
 					EntitySpawnReason.EVENT, null);
 		}
@@ -115,7 +134,7 @@ public class EvilEyeEntity extends Mob implements Enemy, GrantAdvancementOnDisco
 
 	public static AttributeSupplier.Builder registerAttributes() {
 		return Monster.createMonsterAttributes()
-				.add(Attributes.FLYING_SPEED, 0.85D)
+				.add(Attributes.FLYING_SPEED, 0.05D)
 				.add(Attributes.ARMOR, 2.0D);
 	}
 
@@ -155,8 +174,8 @@ public class EvilEyeEntity extends Mob implements Enemy, GrantAdvancementOnDisco
 					if (validTarget) {
 						targetedEntity = player;
 
-						// Remove the random flying goal
-						goalSelector.removeGoal(flyRandomlyGoal);
+						// Remove the spline flying goal
+						goalSelector.removeGoal(splineFloatGoal);
 					} else {
 						targetedEntity = null;
 					}
@@ -164,7 +183,7 @@ public class EvilEyeEntity extends Mob implements Enemy, GrantAdvancementOnDisco
 			}
 
 			if (targetedEntity == null) {
-				goalSelector.addGoal(2, flyRandomlyGoal);
+				goalSelector.addGoal(2, splineFloatGoal);
 			} else {
 				// Ensure the target is still valid
 				boolean validTarget = !summonedByStaff
@@ -231,7 +250,7 @@ public class EvilEyeEntity extends Mob implements Enemy, GrantAdvancementOnDisco
 
 	@Override
 	protected void registerGoals() {
-		goalSelector.addGoal(1, new FlyAroundEntityGoal(this));
+		goalSelector.addGoal(1, new EvilEyeMoveTowardsTargetGoal(this));
 	}
 
 	@Override
@@ -251,6 +270,15 @@ public class EvilEyeEntity extends Mob implements Enemy, GrantAdvancementOnDisco
 				effectDuration += 40;
 			}
 		}
+
+		setNoGravity(true);
+
+		BlockPos spawnPos = blockPosition();
+		if (!summonedByStaff()) {
+			int groundY = level.getHeightmapPos(Heightmap.Types.WORLD_SURFACE, spawnPos).getY();
+			spawnPos = spawnPos.atY(groundY + 10 + getRandom().nextInt(21));
+		}
+		setPos(spawnPos.getX() + 0.5, spawnPos.getY(), spawnPos.getZ() + 0.5);
 
 		return super.finalizeSpawn(level, difficulty, reason, spawnData);
 	}
@@ -272,13 +300,15 @@ public class EvilEyeEntity extends Mob implements Enemy, GrantAdvancementOnDisco
 		setSize(valueInput.getIntOr("Size", 0));
 		entityData.set(SUMMONED_BY_STAFF, valueInput.getBooleanOr("SummonedByStaff", false));
 
-		valueInput.read("Target", UUIDUtil.CODEC).ifPresent(uuid -> {
-			targetedEntityUUID = uuid;
-		});
+		valueInput.read("Target", UUIDUtil.CODEC).ifPresent(uuid -> targetedEntityUUID = uuid);
 	}
 
 	@Override
-	protected boolean shouldDropLoot() {
+	protected void checkFallDamage(double y, boolean onGround, BlockState state, BlockPos pos) {
+	}
+
+	@Override
+	protected boolean shouldDropLoot(ServerLevel level) {
 		return !entityData.get(SUMMONED_BY_STAFF);
 	}
 
@@ -305,11 +335,6 @@ public class EvilEyeEntity extends Mob implements Enemy, GrantAdvancementOnDisco
 	}
 
 	@Override
-	protected boolean shouldDespawnInPeaceful() {
-		return true;
-	}
-
-	@Override
 	protected EntityDimensions getDefaultDimensions(Pose pose) {
 		int size = getSize();
 		EntityDimensions dimensions = super.getDefaultDimensions(pose);
@@ -326,8 +351,8 @@ public class EvilEyeEntity extends Mob implements Enemy, GrantAdvancementOnDisco
 
 			targetedEntity = entity;
 
-			// Remove the random flying goal if it exists
-			goalSelector.removeGoal(flyRandomlyGoal);
+			// Remove the spline flying goal if it exists
+			goalSelector.removeGoal(splineFloatGoal);
 		}
 
 		return super.hurtServer(serverLevel, source, amount);

@@ -28,7 +28,7 @@ public class MeteorStaffItem extends Item implements SummoningStaff {
 		BlockPos lookingAt = getBlockLookingAt(player, level, getMaxRange());
 		ItemStack itemInHand = player.getItemInHand(hand);
 
-		if (!level.isClientSide) {
+		if (!level.isClientSide()) {
 			if (lookingAt != null) {
 				HolderGetter<Enchantment> enchantmentGetter = player.registryAccess().lookup(Registries.ENCHANTMENT).orElseThrow();
 
