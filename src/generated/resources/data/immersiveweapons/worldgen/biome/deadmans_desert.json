@@ -1,4 +1,16 @@
 {
+  "attributes": {
+    "minecraft:audio/background_music": {
+      "default": {
+        "max_delay": 24000,
+        "min_delay": 12000,
+        "sound": "immersiveweapons:deadmans_desert_background_music"
+      }
+    },
+    "minecraft:visual/fog_color": "#4d4343",
+    "minecraft:visual/sky_color": "#a61919",
+    "minecraft:visual/water_fog_color": "#cbccbd"
+  },
   "carvers": [
     "minecraft:cave",
     "minecraft:cave_extra_underground",
@@ -6,30 +18,9 @@
   ],
   "downfall": 0.0,
   "effects": {
-    "fog_color": 11422796,
-    "foliage_color": 6242850,
-    "grass_color": 6176026,
-    "music": [
-      {
-        "data": {
-          "max_delay": 24000,
-          "min_delay": 6000,
-          "replace_current_music": true,
-          "sound": "immersiveweapons:deadmans_desert_background_music"
-        },
-        "weight": 1
-      }
-    ],
-    "music_volume": 1.0,
-    "particle": {
-      "options": {
-        "type": "immersiveweapons:deadmans_desert_ambient"
-      },
-      "probability": 0.002
-    },
-    "sky_color": 10885401,
-    "water_color": 4140076,
-    "water_fog_color": 5063491
+    "foliage_color": "#5f4222",
+    "grass_color": "#5e3d1a",
+    "water_color": "#3f2c2c"
   },
   "features": [
     [],

@@ -7,7 +7,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -29,7 +29,7 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -54,7 +54,7 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 	public final ServerBossEvent bossEvent = new ServerBossEvent(getDisplayName(), BossBarColor.PURPLE,
 			BossBarOverlay.PROGRESS);
 
-	public static final ResourceLocation CHAMPION_TOWER_KEY = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "champion_tower");
+	public static final Identifier CHAMPION_TOWER_KEY = Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "champion_tower");
 	private boolean spawnedInChampionTower = false;
 	@Nullable
 	private BoundingBox championTowerBounds;
@@ -161,7 +161,7 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 
 			if ((source.getWeaponItem() != null && source.getWeaponItem().is(Items.MACE)) && (source.getEntity() instanceof ServerPlayer serverPlayer)) {
 				if ((serverPlayer.fallDistance > 1.5f) && shadowDodgeAchievementTimer > 0) {
-					AdvancementHolder advancement = serverLevel.getServer().getAdvancements().get(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "rapid_reflexes"));
+					AdvancementHolder advancement = serverLevel.getServer().getAdvancements().get(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "rapid_reflexes"));
 
 					if (advancement != null) {
 						serverPlayer.getAdvancements().award(advancement, "");

@@ -8,7 +8,6 @@ import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import org.jetbrains.annotations.Nullable;
-import org.joml.Vector3f;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 
 public class SmokeGrenadeParticle extends SingleQuadParticle {
@@ -18,7 +17,7 @@ public class SmokeGrenadeParticle extends SingleQuadParticle {
 
 	protected SmokeGrenadeParticle(ClientLevel level, double x, double y, double z,
 	                               double xSpeed, double ySpeed,
-	                               double zSpeed, SpriteSet spriteSet, Vector3f color) {
+	                               double zSpeed, SpriteSet spriteSet, int color) {
 
 		super(level, x, y, z, spriteSet.first());
 		friction = 0.96F;
@@ -33,9 +32,9 @@ public class SmokeGrenadeParticle extends SingleQuadParticle {
 		yd += fancyParticles ? ySpeed * 0.4f : ySpeed;
 		zd += fancyParticles ? zSpeed * 0.4f : zSpeed;
 		float vibrancyModifier = level.random.nextFloat() * 0.4F + 0.6F;
-		rCol = randomizeColor(color.x(), vibrancyModifier);
-		gCol = randomizeColor(color.y(), vibrancyModifier);
-		bCol = randomizeColor(color.z(), vibrancyModifier);
+		rCol = randomizeColor((float) ((color >> 16) & 0xFF) / 255.0F, vibrancyModifier);
+		gCol = randomizeColor((float) ((color >> 8) & 0xFF) / 255.0F, vibrancyModifier);
+		bCol = randomizeColor((float) (color & 0xFF) / 255.0F, vibrancyModifier);
 		alpha = fancyParticles ? 0.97F : 1.0F;
 		quadSize *= 0.75F * 35.0F;
 		lifetime = (int) ((double) 90 / ((double) level.random.nextFloat() * 0.8D + 0.2D));

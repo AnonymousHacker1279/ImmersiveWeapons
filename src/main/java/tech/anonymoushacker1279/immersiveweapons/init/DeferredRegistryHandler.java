@@ -2,7 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.init;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.CreativeModeTab;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -18,7 +18,7 @@ public class DeferredRegistryHandler {
 			.icon(() -> ItemRegistry.TESLA_SWORD.get().getDefaultInstance())
 			.title(Component.translatable("itemGroup.immersiveweapons.creative_tab"))
 			.withSearchBar(65)
-			.backgroundTexture(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/gui/container/creative_inventory_tab.png"))
+			.backgroundTexture(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/gui/container/creative_inventory_tab.png"))
 			.displayItems(ItemRegistry.ITEMS.getEntries())
 			.build());
 

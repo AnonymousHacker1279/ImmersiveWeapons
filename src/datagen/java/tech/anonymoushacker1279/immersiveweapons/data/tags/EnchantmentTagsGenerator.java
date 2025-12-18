@@ -24,8 +24,6 @@ public class EnchantmentTagsGenerator extends EnchantmentTagsProvider {
 				IWEnchantments.SCORCH_SHOT,
 				IWEnchantments.RAPID_FIRE,
 				IWEnchantments.VELOCITY,
-				IWEnchantments.EXTENDED_REACH,
-				IWEnchantments.SHARPENED_HEAD,
 				IWEnchantments.CRIMSON_CLAW,
 				IWEnchantments.EXCESSIVE_FORCE,
 				IWEnchantments.REGENERATIVE_ASSAULT,

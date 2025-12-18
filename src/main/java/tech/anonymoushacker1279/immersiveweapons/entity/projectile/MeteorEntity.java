@@ -136,7 +136,7 @@ public class MeteorEntity extends Projectile {
 
 			if (rayTraceResult != null && rayTraceResult.getType() != HitResult.Type.MISS && !EventHooks.onProjectileImpact(this, rayTraceResult)) {
 				onHit(rayTraceResult);
-				hasImpulse = true;
+				needsSync = true;
 			}
 
 			if (entityRayTraceResult == null) {

@@ -1,7 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.data.groups.common;
 
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 
@@ -18,6 +18,6 @@ public class CommonItemTagGroups {
 	public static final TagKey<Item> SULFUR_DUSTS = createItemTag("dusts/sulfur");
 
 	private static TagKey<Item> createItemTag(String tag) {
-		return TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath("c", tag));
+		return TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath("c", tag));
 	}
 }

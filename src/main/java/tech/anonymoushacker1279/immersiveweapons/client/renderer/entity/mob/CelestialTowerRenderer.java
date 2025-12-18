@@ -4,14 +4,14 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.model.CelestialTowerModel;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.CelestialTowerEntity;
 
 public class CelestialTowerRenderer extends MobRenderer<CelestialTowerEntity, LivingEntityRenderState, CelestialTowerModel> {
 
-	private static final ResourceLocation TEXTURE_LOCATION = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/entity/celestial_tower/celestial_tower.png");
+	private static final Identifier TEXTURE_LOCATION = Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/entity/celestial_tower/celestial_tower.png");
 
 	public CelestialTowerRenderer(EntityRendererProvider.Context context) {
 		super(context, new CelestialTowerModel(context.bakeLayer(CelestialTowerModel.LAYER_LOCATION)), 1.0F);
@@ -23,7 +23,7 @@ public class CelestialTowerRenderer extends MobRenderer<CelestialTowerEntity, Li
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(LivingEntityRenderState renderState) {
+	public Identifier getTextureLocation(LivingEntityRenderState renderState) {
 		return TEXTURE_LOCATION;
 	}
 

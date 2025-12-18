@@ -11,7 +11,7 @@ import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.model.*;
 import net.minecraft.client.renderer.block.model.VariantMutator;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -25,7 +25,7 @@ import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
 
 public class IWBlockModelGenerator {
 
-	private static final ResourceLocation TEMPLATE_SKULL = ModelLocationUtils.decorateItemModelLocation("template_skull");
+	private static final Identifier TEMPLATE_SKULL = ModelLocationUtils.decorateItemModelLocation("template_skull");
 
 	public static void registerModels(BlockModelGenerators blockModels) {
 		blockModels.createTrivialCube(BlockRegistry.ASTRAL_ORE.get());
@@ -50,8 +50,8 @@ public class IWBlockModelGenerator {
 		generateHorizontalStateOnly(blockModels, BlockRegistry.AMMUNITION_TABLE.get(), false);
 		generateHorizontalStateOnly(blockModels, BlockRegistry.BARREL_TAP.get(), true);
 		blockModels.createFurnace(BlockRegistry.STAR_FORGE_CONTROLLER.get(), TexturedModel.ORIENTABLE_ONLY_TOP.updateTexture(mapping -> {
-			mapping.put(TextureSlot.SIDE, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/star_forge_bricks"));
-			mapping.put(TextureSlot.TOP, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/star_forge_bricks"));
+			mapping.put(TextureSlot.SIDE, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/star_forge_bricks"));
+			mapping.put(TextureSlot.TOP, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/star_forge_bricks"));
 		}));
 		blockModels.createTrivialCube(BlockRegistry.STAR_FORGE_BRICKS.get());
 		generateHorizontalStateOnly(blockModels, BlockRegistry.CELESTIAL_ALTAR.get(), false);
@@ -297,11 +297,11 @@ public class IWBlockModelGenerator {
 	 * @param block  the block to generate the state for
 	 */
 	private static void generateBearTrap(BlockModelGenerators models, Block block) {
-		ResourceLocation openPath = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/bear_trap_open");
+		Identifier openPath = Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/bear_trap_open");
 		MultiVariant open = BlockModelGenerators.plainVariant(openPath);
-		MultiVariant closed = BlockModelGenerators.plainVariant(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/bear_trap_closed"));
-		MultiVariant openVines = BlockModelGenerators.plainVariant(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/bear_trap_open_vines"));
-		MultiVariant closedVines = BlockModelGenerators.plainVariant(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/bear_trap_closed_vines"));
+		MultiVariant closed = BlockModelGenerators.plainVariant(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/bear_trap_closed"));
+		MultiVariant openVines = BlockModelGenerators.plainVariant(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/bear_trap_open_vines"));
+		MultiVariant closedVines = BlockModelGenerators.plainVariant(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/bear_trap_closed_vines"));
 
 		models.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
 				.with(PropertyDispatch.initial(BearTrapBlock.TRIGGERED, BearTrapBlock.VINES)
@@ -321,10 +321,10 @@ public class IWBlockModelGenerator {
 	 * @param block  the block to generate the state for
 	 */
 	private static void generateBarbedWire(BlockModelGenerators models, Block block) {
-		ResourceLocation damageStagePath0 = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/barbed_wire_0");
+		Identifier damageStagePath0 = Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/barbed_wire_0");
 		MultiVariant damageStage0 = BlockModelGenerators.plainVariant(damageStagePath0);
-		MultiVariant damageStage1 = BlockModelGenerators.plainVariant(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/barbed_wire_1"));
-		MultiVariant damageStage2 = BlockModelGenerators.plainVariant(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/barbed_wire_2"));
+		MultiVariant damageStage1 = BlockModelGenerators.plainVariant(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/barbed_wire_1"));
+		MultiVariant damageStage2 = BlockModelGenerators.plainVariant(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/barbed_wire_2"));
 
 		models.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
 				.with(PropertyDispatch.initial(BarbedWireBlock.DAMAGE_STAGE)
@@ -344,13 +344,13 @@ public class IWBlockModelGenerator {
 	 * @param block  the block to generate the state for
 	 */
 	private static void generateLandmine(BlockModelGenerators models, Block block) {
-		ResourceLocation disarmedPath = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/landmine_disarmed");
+		Identifier disarmedPath = Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/landmine_disarmed");
 		MultiVariant disarmed = BlockModelGenerators.plainVariant(disarmedPath);
-		MultiVariant armed = BlockModelGenerators.plainVariant(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/landmine_armed"));
-		MultiVariant armedVines = BlockModelGenerators.plainVariant(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/landmine_armed_vines"));
-		MultiVariant disarmedVines = BlockModelGenerators.plainVariant(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/landmine_disarmed_vines"));
-		MultiVariant armedSand = BlockModelGenerators.plainVariant(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/landmine_armed_sand"));
-		MultiVariant disarmedSand = BlockModelGenerators.plainVariant(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/landmine_disarmed_sand"));
+		MultiVariant armed = BlockModelGenerators.plainVariant(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/landmine_armed"));
+		MultiVariant armedVines = BlockModelGenerators.plainVariant(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/landmine_armed_vines"));
+		MultiVariant disarmedVines = BlockModelGenerators.plainVariant(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/landmine_disarmed_vines"));
+		MultiVariant armedSand = BlockModelGenerators.plainVariant(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/landmine_armed_sand"));
+		MultiVariant disarmedSand = BlockModelGenerators.plainVariant(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/landmine_disarmed_sand"));
 
 		models.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
 				.with(PropertyDispatch.initial(LandmineBlock.ARMED, LandmineBlock.SAND, LandmineBlock.VINES)
@@ -374,9 +374,9 @@ public class IWBlockModelGenerator {
 	 * @param block  the block to generate the state for
 	 */
 	private static void generateSpikeTrap(BlockModelGenerators models, Block block) {
-		ResourceLocation poweredPath = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/spike_trap_powered");
+		Identifier poweredPath = Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/spike_trap_powered");
 		MultiVariant powered = BlockModelGenerators.plainVariant(poweredPath);
-		MultiVariant unpowered = BlockModelGenerators.plainVariant(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/spike_trap_unpowered"));
+		MultiVariant unpowered = BlockModelGenerators.plainVariant(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/spike_trap_unpowered"));
 
 		models.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
 				.with(PropertyDispatch.initial(SpikeTrapBlock.POWERED)
@@ -394,11 +394,11 @@ public class IWBlockModelGenerator {
 	 * @param block  the block to generate the state for
 	 */
 	private static void generateSandbag(BlockModelGenerators models, Block block) {
-		ResourceLocation shape0Path = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/sandbag_0");
+		Identifier shape0Path = Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/sandbag_0");
 		MultiVariant shape0 = BlockModelGenerators.plainVariant(shape0Path);
-		MultiVariant shape1 = BlockModelGenerators.plainVariant(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/sandbag_1"));
-		MultiVariant shape2 = BlockModelGenerators.plainVariant(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/sandbag_2"));
-		MultiVariant shape3 = BlockModelGenerators.plainVariant(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/sandbag_3"));
+		MultiVariant shape1 = BlockModelGenerators.plainVariant(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/sandbag_1"));
+		MultiVariant shape2 = BlockModelGenerators.plainVariant(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/sandbag_2"));
+		MultiVariant shape3 = BlockModelGenerators.plainVariant(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/sandbag_3"));
 
 		models.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
 				.with(PropertyDispatch.initial(SandbagBlock.BAGS)
@@ -419,9 +419,9 @@ public class IWBlockModelGenerator {
 	 * @param block  the block to generate the state for
 	 */
 	private static void generateSpotlight(BlockModelGenerators models, Block block) {
-		ResourceLocation unlitPath = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/spotlight_unlit");
+		Identifier unlitPath = Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/spotlight_unlit");
 		MultiVariant unlit = BlockModelGenerators.plainVariant(unlitPath);
-		MultiVariant lit = BlockModelGenerators.plainVariant(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/spotlight_lit"));
+		MultiVariant lit = BlockModelGenerators.plainVariant(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/spotlight_lit"));
 
 		models.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
 				.with(PropertyDispatch.initial(SpotlightBlock.LIT)
@@ -440,13 +440,13 @@ public class IWBlockModelGenerator {
 	 * @param block  the block to generate the state for
 	 */
 	private static void generateMortar(BlockModelGenerators models, Block block) {
-		ResourceLocation unloadedPath0 = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/mortar_0_unloaded");
+		Identifier unloadedPath0 = Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/mortar_0_unloaded");
 		MultiVariant unloaded0 = BlockModelGenerators.plainVariant(unloadedPath0);
-		MultiVariant unloaded1 = BlockModelGenerators.plainVariant(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/mortar_1_unloaded"));
-		MultiVariant unloaded2 = BlockModelGenerators.plainVariant(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/mortar_2_unloaded"));
-		MultiVariant loaded0 = BlockModelGenerators.plainVariant(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/mortar_0_loaded"));
-		MultiVariant loaded1 = BlockModelGenerators.plainVariant(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/mortar_1_loaded"));
-		MultiVariant loaded2 = BlockModelGenerators.plainVariant(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/mortar_2_loaded"));
+		MultiVariant unloaded1 = BlockModelGenerators.plainVariant(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/mortar_1_unloaded"));
+		MultiVariant unloaded2 = BlockModelGenerators.plainVariant(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/mortar_2_unloaded"));
+		MultiVariant loaded0 = BlockModelGenerators.plainVariant(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/mortar_0_loaded"));
+		MultiVariant loaded1 = BlockModelGenerators.plainVariant(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/mortar_1_loaded"));
+		MultiVariant loaded2 = BlockModelGenerators.plainVariant(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/mortar_2_loaded"));
 
 		models.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
 				.with(PropertyDispatch.initial(MortarBlock.LOADED, MortarBlock.ROTATION)
@@ -497,7 +497,7 @@ public class IWBlockModelGenerator {
 		MultiVariant post = BlockModelGenerators.plainVariant(ModelTemplates.FENCE_POST.create(block, mapping, models.modelOutput));
 		MultiVariant side = BlockModelGenerators.plainVariant(ModelTemplates.FENCE_SIDE.create(block, mapping, models.modelOutput));
 		models.blockStateOutput.accept(BlockModelGenerators.createFence(block, post, side));
-		ResourceLocation inventoryLocation = ModelTemplates.FENCE_INVENTORY.create(block, mapping, models.modelOutput);
+		Identifier inventoryLocation = ModelTemplates.FENCE_INVENTORY.create(block, mapping, models.modelOutput);
 		models.registerSimpleItemModel(block, inventoryLocation);
 	}
 
@@ -568,7 +568,7 @@ public class IWBlockModelGenerator {
 	 * @param block       the block to generate the state and model for
 	 * @param baseTexture the base texture to use for the stairs
 	 */
-	private static void generateStairs(BlockModelGenerators models, Block block, ResourceLocation baseTexture) {
+	private static void generateStairs(BlockModelGenerators models, Block block, Identifier baseTexture) {
 		TextureMapping mapping = new TextureMapping()
 				.put(TextureSlot.TOP, baseTexture)
 				.put(TextureSlot.BOTTOM, baseTexture)
@@ -576,7 +576,7 @@ public class IWBlockModelGenerator {
 
 		MultiVariant inner = BlockModelGenerators.plainVariant(ModelTemplates.STAIRS_INNER.create(block, mapping, models.modelOutput));
 		MultiVariant outer = BlockModelGenerators.plainVariant(ModelTemplates.STAIRS_OUTER.create(block, mapping, models.modelOutput));
-		ResourceLocation straightLocation = ModelTemplates.STAIRS_STRAIGHT.create(block, mapping, models.modelOutput);
+		Identifier straightLocation = ModelTemplates.STAIRS_STRAIGHT.create(block, mapping, models.modelOutput);
 		models.blockStateOutput.accept(BlockModelGenerators.createStairs(block, inner, BlockModelGenerators.plainVariant(straightLocation), outer));
 		models.registerSimpleItemModel(block, straightLocation);
 	}
@@ -589,7 +589,7 @@ public class IWBlockModelGenerator {
 	 * @param base   the base block to use for the slab
 	 */
 	private static void generateSlab(BlockModelGenerators models, Block block, Block base, boolean isColumn) {
-		ResourceLocation baseLocation = ModelLocationUtils.getModelLocation(base);
+		Identifier baseLocation = ModelLocationUtils.getModelLocation(base);
 		if (isColumn) {
 			generateSlab(models, block, base,
 					baseLocation,
@@ -609,7 +609,7 @@ public class IWBlockModelGenerator {
 	 * @param topTexture    the texture to use for the top
 	 * @param bottomTexture the texture to use for the bottom
 	 */
-	private static void generateSlab(BlockModelGenerators models, Block block, Block base, ResourceLocation sideTexture, ResourceLocation topTexture, ResourceLocation bottomTexture) {
+	private static void generateSlab(BlockModelGenerators models, Block block, Block base, Identifier sideTexture, Identifier topTexture, Identifier bottomTexture) {
 		TextureMapping mapping = new TextureMapping()
 				.put(TextureSlot.TOP, topTexture)
 				.put(TextureSlot.BOTTOM, bottomTexture)
@@ -617,7 +617,7 @@ public class IWBlockModelGenerator {
 
 		MultiVariant top = BlockModelGenerators.plainVariant(ModelTemplates.SLAB_TOP.create(block, mapping, models.modelOutput));
 		MultiVariant doubleSlab = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(base));
-		ResourceLocation bottomLocation = ModelTemplates.SLAB_BOTTOM.create(block, mapping, models.modelOutput);
+		Identifier bottomLocation = ModelTemplates.SLAB_BOTTOM.create(block, mapping, models.modelOutput);
 		models.blockStateOutput.accept(BlockModelGenerators.createSlab(block, BlockModelGenerators.plainVariant(bottomLocation), top, doubleSlab));
 		models.registerSimpleItemModel(block, bottomLocation);
 	}
@@ -635,7 +635,7 @@ public class IWBlockModelGenerator {
 		MultiVariant lowSide = BlockModelGenerators.plainVariant(ModelTemplates.WALL_LOW_SIDE.create(block, mapping, models.modelOutput));
 		MultiVariant tallSide = BlockModelGenerators.plainVariant(ModelTemplates.WALL_TALL_SIDE.create(block, mapping, models.modelOutput));
 		models.blockStateOutput.accept(BlockModelGenerators.createWall(block, post, lowSide, tallSide));
-		ResourceLocation inventoryLocation = ModelTemplates.WALL_INVENTORY.create(block, mapping, models.modelOutput);
+		Identifier inventoryLocation = ModelTemplates.WALL_INVENTORY.create(block, mapping, models.modelOutput);
 		models.registerSimpleItemModel(block, inventoryLocation);
 	}
 
@@ -668,7 +668,7 @@ public class IWBlockModelGenerator {
 	private static void generateTrapdoor(BlockModelGenerators models, Block block) {
 		TextureMapping mapping = TextureMapping.defaultTexture(block);
 		MultiVariant top = BlockModelGenerators.plainVariant(ModelTemplates.ORIENTABLE_TRAPDOOR_TOP.extend().renderType("cutout").build().create(block, mapping, models.modelOutput));
-		ResourceLocation bottomLocation = ModelTemplates.ORIENTABLE_TRAPDOOR_BOTTOM.extend().renderType("cutout").build().create(block, mapping, models.modelOutput);
+		Identifier bottomLocation = ModelTemplates.ORIENTABLE_TRAPDOOR_BOTTOM.extend().renderType("cutout").build().create(block, mapping, models.modelOutput);
 		MultiVariant open = BlockModelGenerators.plainVariant(ModelTemplates.ORIENTABLE_TRAPDOOR_OPEN.extend().renderType("cutout").build().create(block, mapping, models.modelOutput));
 		models.blockStateOutput.accept(BlockModelGenerators.createOrientableTrapdoor(block, top, BlockModelGenerators.plainVariant(bottomLocation), open));
 		models.registerSimpleItemModel(block, bottomLocation);
@@ -731,7 +731,7 @@ public class IWBlockModelGenerator {
 		MultiVariant normal = BlockModelGenerators.plainVariant(ModelTemplates.BUTTON.create(block, mapping, models.modelOutput));
 		MultiVariant pressed = BlockModelGenerators.plainVariant(ModelTemplates.BUTTON_PRESSED.create(block, mapping, models.modelOutput));
 		models.blockStateOutput.accept(BlockModelGenerators.createButton(block, normal, pressed));
-		ResourceLocation inventoryLocation = ModelTemplates.BUTTON_INVENTORY.create(block, mapping, models.modelOutput);
+		Identifier inventoryLocation = ModelTemplates.BUTTON_INVENTORY.create(block, mapping, models.modelOutput);
 		models.registerSimpleItemModel(block, inventoryLocation);
 	}
 
@@ -743,11 +743,11 @@ public class IWBlockModelGenerator {
 	 * @param block  the block to generate the state for
 	 */
 	private static void generateWoodenSpikes(BlockModelGenerators models, Block block) {
-		ResourceLocation damageStagePath0 = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/wooden_spikes_0");
+		Identifier damageStagePath0 = Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/wooden_spikes_0");
 		MultiVariant damageStage0 = BlockModelGenerators.plainVariant(damageStagePath0);
-		MultiVariant damageStage1 = BlockModelGenerators.plainVariant(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/wooden_spikes_1"));
-		MultiVariant damageStage2 = BlockModelGenerators.plainVariant(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/wooden_spikes_2"));
-		MultiVariant damageStage3 = BlockModelGenerators.plainVariant(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/wooden_spikes_3"));
+		MultiVariant damageStage1 = BlockModelGenerators.plainVariant(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/wooden_spikes_1"));
+		MultiVariant damageStage2 = BlockModelGenerators.plainVariant(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/wooden_spikes_2"));
+		MultiVariant damageStage3 = BlockModelGenerators.plainVariant(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/wooden_spikes_3"));
 
 		models.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
 				.with(PropertyDispatch.initial(WoodenSpikesBlock.DAMAGE_STAGE)
@@ -768,7 +768,7 @@ public class IWBlockModelGenerator {
 	 * @param block  the block to generate the state for
 	 */
 	private static void generateFlagPole(BlockModelGenerators models, Block block) {
-		ResourceLocation path = ModelLocationUtils.getModelLocation(block);
+		Identifier path = ModelLocationUtils.getModelLocation(block);
 		MultiVariant base = BlockModelGenerators.plainVariant(path.withSuffix("_base"));
 
 		models.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
@@ -838,7 +838,7 @@ public class IWBlockModelGenerator {
 	 */
 	private static void generateStardustLeaves(BlockModelGenerators models, Block block) {
 		TextureMapping mapping = TextureMapping.cube(block)
-				.put(TextureSlot.LAYER1, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/stardust_granule_overlay"));
+				.put(TextureSlot.LAYER1, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/stardust_granule_overlay"));
 		ModelTemplate template = ModelTemplates.LEAVES.extend()
 				.renderType("cutout_mipped")
 				.requiredTextureSlot(TextureSlot.LAYER1)
@@ -848,7 +848,7 @@ public class IWBlockModelGenerator {
 				.element(builder -> builder
 						.allFaces(((direction, faceBuilder) -> faceBuilder
 								.texture(TextureSlot.LAYER1)
-								.emissivity(15, 3))))
+								.lightEmission(15))))
 				.build();
 		models.createTrivialBlock(block, TexturedModel.createDefault(b -> mapping, template));
 	}
@@ -863,7 +863,7 @@ public class IWBlockModelGenerator {
 		TextureMapping mapping = TextureMapping.column(block)
 				.put(TextureSlot.END, ModelLocationUtils.getModelLocation(block).withSuffix("_top"))
 				.put(TextureSlot.SIDE, ModelLocationUtils.getModelLocation(block))
-				.put(TextureSlot.LAYER1, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/stardust_granule_overlay"));
+				.put(TextureSlot.LAYER1, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/stardust_granule_overlay"));
 		ModelTemplate template = ModelTemplates.CUBE_COLUMN.extend()
 				.renderType("cutout")
 				.requiredTextureSlot(TextureSlot.LAYER1)
@@ -880,7 +880,7 @@ public class IWBlockModelGenerator {
 							switch (direction) {
 								case NORTH, SOUTH, EAST, WEST -> faceBuilder
 										.texture(TextureSlot.LAYER1)
-										.emissivity(15, 3);
+										.lightEmission(15);
 								case UP, DOWN -> faceBuilder.texture(TextureSlot.END);
 							}
 						})))
@@ -899,7 +899,7 @@ public class IWBlockModelGenerator {
 		TextureMapping mapping = TextureMapping.column(block)
 				.put(TextureSlot.END, ModelLocationUtils.getModelLocation(BlockRegistry.STARDUST_LOG.get()))
 				.put(TextureSlot.SIDE, ModelLocationUtils.getModelLocation(BlockRegistry.STARDUST_LOG.get()))
-				.put(TextureSlot.LAYER1, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/stardust_granule_overlay"));
+				.put(TextureSlot.LAYER1, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/stardust_granule_overlay"));
 		ModelTemplate normalTemplate = ModelTemplates.CUBE_COLUMN.extend()
 				.renderType("cutout")
 				.requiredTextureSlot(TextureSlot.LAYER1)
@@ -914,7 +914,7 @@ public class IWBlockModelGenerator {
 				.element(builder -> builder
 						.allFaces(((direction, faceBuilder) -> faceBuilder
 								.texture(TextureSlot.LAYER1)
-								.emissivity(15, 3))))
+								.lightEmission(15))))
 				.build();
 		ModelTemplate horizontalTemplate = ModelTemplates.CUBE_COLUMN_HORIZONTAL.extend()
 				.renderType("cutout")
@@ -930,7 +930,7 @@ public class IWBlockModelGenerator {
 				.element(builder -> builder
 						.allFaces(((direction, faceBuilder) -> faceBuilder
 								.texture(TextureSlot.LAYER1)
-								.emissivity(15, 3))))
+								.lightEmission(15))))
 				.build();
 
 		models.createRotatedPillarWithHorizontalVariant(block,
@@ -944,7 +944,7 @@ public class IWBlockModelGenerator {
 	 * @param models the block model generator
 	 * @param block  the block to generate the state and model for
 	 */
-	private static void generateTiltrosPortal(BlockModelGenerators models, CustomPortalBlock block) {
+	private static void generateTiltrosPortal(BlockModelGenerators models, Block block) {
 		TextureMapping mapping = TextureMapping.defaultTexture(block)
 				.put(TextureSlot.PARTICLE, ModelLocationUtils.getModelLocation(block));
 

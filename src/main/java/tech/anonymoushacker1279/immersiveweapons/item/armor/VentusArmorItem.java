@@ -4,7 +4,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -33,13 +33,13 @@ public class VentusArmorItem extends Item implements TickableArmor {
 				.attributes(material.createAttributes(armorType)
 						.withModifierAdded(Attributes.FALL_DAMAGE_MULTIPLIER,
 								new AttributeModifier(
-										ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "ventus_fall_damage_reduction_" + armorType.getName()),
+										Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "ventus_fall_damage_reduction_" + armorType.getName()),
 										-0.15d,
 										AttributeModifier.Operation.ADD_MULTIPLIED_BASE),
 								EquipmentSlotGroup.ARMOR)
 						.withModifierAdded(Attributes.SAFE_FALL_DISTANCE,
 								new AttributeModifier(
-										ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "ventus_safe_fall_distance_" + armorType.getName()),
+										Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "ventus_safe_fall_distance_" + armorType.getName()),
 										10d,
 										AttributeModifier.Operation.ADD_VALUE),
 								EquipmentSlotGroup.ARMOR)));

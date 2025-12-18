@@ -1,13 +1,14 @@
 package tech.anonymoushacker1279.immersiveweapons.item.projectile;
 
-import net.minecraft.core.*;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Holder.Reference;
+import net.minecraft.core.HolderGetter;
+import net.minecraft.core.Position;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.entity.projectile.AbstractArrow.Pickup;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -63,7 +64,7 @@ public class CustomArrowItem<T extends CustomArrowEntity> extends ArrowItem {
 	@Override
 	public Projectile asProjectile(Level level, Position pos, ItemStack stack, Direction direction) {
 		CustomArrowEntity arrowEntity = new CustomArrowEntity(entitySupplier.get(), level);
-		arrowEntity.pickup = Pickup.ALLOWED;
+		arrowEntity.pickup = AbstractArrow.Pickup.ALLOWED;
 		setCommonArrowCharacteristics(arrowEntity);
 		arrowEntity.setPos(pos.x(), pos.y(), pos.z());
 
@@ -81,7 +82,7 @@ public class CustomArrowItem<T extends CustomArrowEntity> extends ArrowItem {
 		arrowEntity.referenceItem = this;
 
 		if (color != -1) {
-			arrowEntity.pickup = Pickup.DISALLOWED;
+			arrowEntity.pickup = AbstractArrow.Pickup.DISALLOWED;
 		}
 	}
 

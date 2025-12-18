@@ -77,7 +77,7 @@ public record TextureMetadataGenerator(PackOutput packOutput) implements DataPro
 
 				try {
 					if (field.get(null) instanceof DeferredHolder<?, ?> holder) {
-						String name = holder.getKey().location().getPath();
+						String name = holder.getKey().identifier().getPath();
 
 						switch (marker.predefinedGroup()) {
 							case STARSTORM_ITEMS -> ItemMetadataBuilder(name, 4)
@@ -103,7 +103,7 @@ public record TextureMetadataGenerator(PackOutput packOutput) implements DataPro
 
 				try {
 					if (field.get(null) instanceof DeferredHolder<?, ?> deferredHolder) {
-						String name = deferredHolder.getKey().location().getPath();
+						String name = deferredHolder.getKey().identifier().getPath();
 
 						BlockMetadataBuilder(name, marker.frameTime())
 								.setInterpolate(marker.interpolate())

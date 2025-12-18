@@ -1,7 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.item.materials;
 
-import net.minecraft.Util;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Util;
 import net.minecraft.world.item.equipment.ArmorMaterial;
 import net.minecraft.world.item.equipment.ArmorType;
 import net.neoforged.neoforge.common.Tags;

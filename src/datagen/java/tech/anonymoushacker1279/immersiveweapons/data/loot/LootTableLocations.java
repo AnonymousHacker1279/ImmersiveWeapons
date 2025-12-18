@@ -1,8 +1,8 @@
 package tech.anonymoushacker1279.immersiveweapons.data.loot;
 
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.storage.loot.LootTable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
@@ -23,6 +23,6 @@ public class LootTableLocations {
 	public static final ResourceKey<LootTable> CHAMPION_TOWER_TIER_2 = register("chests/champion_tower/tier_2");
 
 	private static ResourceKey<LootTable> register(String pId) {
-		return ResourceKey.create(Registries.LOOT_TABLE, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, pId));
+		return ResourceKey.create(Registries.LOOT_TABLE, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, pId));
 	}
 }

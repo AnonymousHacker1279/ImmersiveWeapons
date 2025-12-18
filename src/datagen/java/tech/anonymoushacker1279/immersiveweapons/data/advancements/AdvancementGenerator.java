@@ -7,14 +7,14 @@ import net.minecraft.advancements.AdvancementRequirements.Strategy;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.advancements.critereon.*;
+import net.minecraft.advancements.criterion.*;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.advancements.AdvancementSubProvider;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
@@ -49,7 +49,7 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 				.display(ItemRegistry.TESLA_SWORD.get(),
 						createTitle("root").withStyle(ChatFormatting.DARK_RED),
 						createDescription("root"),
-						ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/red_stained_bulletproof_glass"),
+						Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/red_stained_bulletproof_glass"),
 						AdvancementType.TASK, false, false, false)
 				.addCriterion("exist",
 						PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.inDimension(Level.OVERWORLD)))
@@ -759,16 +759,6 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.WOODEN_TOOL_ROD.get()))
 				.save(consumer, prefixString("tool_rod"));
-
-		Builder.advancement().parent(craftToolRod)
-				.display(ItemRegistry.IRON_PIKE.get(),
-						createTitle("pike"),
-						createDescription("pike"),
-						null, AdvancementType.TASK, true, true, false)
-				.addCriterion("hold",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(itemLookup, IWItemTagGroups.PIKES).build()))
-				.requirements(Strategy.OR)
-				.save(consumer, prefixString("pike"));
 
 		AdvancementHolder shards = Builder.advancement().parent(root)
 				.display(ItemRegistry.STONE_SHARD.get(),
@@ -1630,8 +1620,8 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 				.save(consumer, prefixString("tiltros"));
 	}
 
-	private static ResourceLocation prefixRL(String string) {
-		return ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, string);
+	private static Identifier prefixRL(String string) {
+		return Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, string);
 	}
 
 	private static String prefixString(String string) {

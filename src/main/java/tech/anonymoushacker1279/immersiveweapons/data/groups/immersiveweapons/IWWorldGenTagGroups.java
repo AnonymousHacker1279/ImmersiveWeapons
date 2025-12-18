@@ -1,7 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons;
 
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
@@ -41,7 +41,7 @@ public class IWWorldGenTagGroups {
 	 * @param tag a string to be used for the tag
 	 */
 	private static TagKey<Biome> createStructureTag(String tag) {
-		return TagKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "has_structure/" + tag));
+		return TagKey.create(Registries.BIOME, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "has_structure/" + tag));
 	}
 
 	/**
@@ -50,6 +50,6 @@ public class IWWorldGenTagGroups {
 	 * @param tag a string to be used for the tag
 	 */
 	private static TagKey<Biome> createBiomeTag(String tag) {
-		return TagKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, tag));
+		return TagKey.create(Registries.BIOME, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, tag));
 	}
 }

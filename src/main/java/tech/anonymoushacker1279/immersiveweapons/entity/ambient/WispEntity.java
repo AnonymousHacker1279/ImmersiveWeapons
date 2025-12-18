@@ -63,8 +63,8 @@ public class WispEntity extends AmbientCreature implements GrantAdvancementOnDis
 	public static WispEntity create(Level level, BlockPos pos, int wispType) {
 		WispEntity wisp = new WispEntity(level, pos, wispType);
 
-		if (!level.isClientSide()) {
-			wisp.finalizeSpawn((ServerLevelAccessor) level, level.getCurrentDifficultyAt(pos), EntitySpawnReason.SPAWN_ITEM_USE, null);
+		if (!level.isClientSide() && level instanceof ServerLevelAccessor accessor) {
+			wisp.finalizeSpawn(accessor, accessor.getCurrentDifficultyAt(pos), EntitySpawnReason.SPAWN_ITEM_USE, null);
 		}
 
 		level.addFreshEntity(wisp);

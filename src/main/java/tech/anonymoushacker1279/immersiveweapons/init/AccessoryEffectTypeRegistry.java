@@ -1,8 +1,8 @@
 package tech.anonymoushacker1279.immersiveweapons.init;
 
 import net.minecraft.core.Registry;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffects;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -15,7 +15,7 @@ import java.util.function.Supplier;
 
 public class AccessoryEffectTypeRegistry {
 
-	public static final ResourceKey<Registry<AccessoryEffectType>> ACCESSORY_EFFECT_TYPE_KEY = ResourceKey.createRegistryKey(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "accessory_effect_type"));
+	public static final ResourceKey<Registry<AccessoryEffectType>> ACCESSORY_EFFECT_TYPE_KEY = ResourceKey.createRegistryKey(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "accessory_effect_type"));
 	public static final Registry<AccessoryEffectType> ACCESSORY_EFFECT_TYPE_REGISTRY = new RegistryBuilder<>(ACCESSORY_EFFECT_TYPE_KEY)
 			.sync(true)
 			.create();

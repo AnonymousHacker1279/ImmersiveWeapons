@@ -11,8 +11,8 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.*;
-import net.minecraft.world.entity.npc.AbstractVillager;
-import net.minecraft.world.entity.npc.VillagerTrades.ItemListing;
+import net.minecraft.world.entity.npc.villager.AbstractVillager;
+import net.minecraft.world.entity.npc.villager.VillagerTrades;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -46,7 +46,7 @@ public abstract class AbstractMerchantEntity extends AbstractVillager implements
 		return entityData.get(TRADE_REFRESH_TIME);
 	}
 
-	public Int2ObjectMap<ItemListing[]> getTrades() {
+	public Int2ObjectMap<VillagerTrades.ItemListing[]> getTrades() {
 		return TradeLoader.getTrades(getType());
 	}
 
@@ -86,8 +86,8 @@ public abstract class AbstractMerchantEntity extends AbstractVillager implements
 		if (entityData.get(TRADE_REFRESH_TIME) > 0) {
 			entityData.set(TRADE_REFRESH_TIME, entityData.get(TRADE_REFRESH_TIME) - 1);
 		} else {
-			if (!level().isClientSide()) {
-				updateTrades();
+			if (level() instanceof ServerLevel serverLevel) {
+				updateTrades(serverLevel);
 				entityData.set(TRADE_REFRESH_TIME, TradeLoader.TRADES.get(getType()).tradeRefreshTime());
 			}
 		}
@@ -144,15 +144,15 @@ public abstract class AbstractMerchantEntity extends AbstractVillager implements
 	}
 
 	@Override
-	protected void updateTrades() {
+	protected void updateTrades(ServerLevel serverLevel) {
 		// Clear existing trades
 		getOffers().clear();
 
 		List<TradeGroup> tradeGroups = TradeLoader.TRADES.get(getType()).tradeGroups();
 		for (TradeGroup group : tradeGroups) {
 			int entries = group.entries();
-			ItemListing[] trades = group.trades().stream()
-					.map(trade -> (ItemListing) new SimpleItemListing(
+			VillagerTrades.ItemListing[] trades = group.trades().stream()
+					.map(trade -> (VillagerTrades.ItemListing) new SimpleItemListing(
 							trade.item1(),
 							trade.item2(),
 							trade.result(),
@@ -160,9 +160,9 @@ public abstract class AbstractMerchantEntity extends AbstractVillager implements
 							trade.xpReward(),
 							trade.priceMultiplier()
 					))
-					.toArray(ItemListing[]::new);
+					.toArray(VillagerTrades.ItemListing[]::new);
 
-			addOffersFromItemListings(getOffers(), trades, entries);
+			addOffersFromItemListings(serverLevel, getOffers(), trades, entries);
 		}
 	}
 

@@ -14,27 +14,37 @@ import tech.anonymoushacker1279.immersiveweapons.data.groups.common.CommonItemTa
 import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.item.*;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.*;
-import tech.anonymoushacker1279.immersiveweapons.item.bow.*;
+import tech.anonymoushacker1279.immersiveweapons.item.bow.AuroraBow;
+import tech.anonymoushacker1279.immersiveweapons.item.bow.DragonBreathBow;
+import tech.anonymoushacker1279.immersiveweapons.item.bow.IceBowItem;
 import tech.anonymoushacker1279.immersiveweapons.item.fortitude.*;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.*;
 import tech.anonymoushacker1279.immersiveweapons.item.materials.IWArmorMaterials;
 import tech.anonymoushacker1279.immersiveweapons.item.materials.IWToolMaterials;
 import tech.anonymoushacker1279.immersiveweapons.item.potion.AlcoholItem;
 import tech.anonymoushacker1279.immersiveweapons.item.potion.WineItem;
-import tech.anonymoushacker1279.immersiveweapons.item.projectile.*;
+import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem.BulletBuilder;
+import tech.anonymoushacker1279.immersiveweapons.item.projectile.CustomArrowItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.CustomArrowItem.ArrowBuilder;
+import tech.anonymoushacker1279.immersiveweapons.item.projectile.DragonFireballItem;
+import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem.ThrowableType;
-import tech.anonymoushacker1279.immersiveweapons.item.tool.*;
+import tech.anonymoushacker1279.immersiveweapons.item.tool.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils.HitEffect;
+import tech.anonymoushacker1279.immersiveweapons.item.tool.PliersItem;
+import tech.anonymoushacker1279.immersiveweapons.item.tool.TheSword;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.molten.*;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.tesla.*;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.ventus.*;
 import tech.anonymoushacker1279.immersiveweapons.item.utility.CraftingToolItem;
 import tech.anonymoushacker1279.immersiveweapons.item.utility.FuelItem;
-import tech.anonymoushacker1279.immersiveweapons.util.markers.*;
+import tech.anonymoushacker1279.immersiveweapons.util.markers.DatagenExclusionMarker;
 import tech.anonymoushacker1279.immersiveweapons.util.markers.DatagenExclusionMarker.Type;
+import tech.anonymoushacker1279.immersiveweapons.util.markers.LanguageEntryOverride;
+import tech.anonymoushacker1279.immersiveweapons.util.markers.TextureMetadataMarker;
 import tech.anonymoushacker1279.immersiveweapons.util.markers.TextureMetadataMarker.PredefinedGroups;
+import tech.anonymoushacker1279.immersiveweapons.util.markers.TooltipMarker;
 import tech.anonymoushacker1279.immersiveweapons.world.food.FoodItemProperties;
 
 import java.util.function.Supplier;
@@ -123,34 +133,6 @@ public class ItemRegistry {
 	public static final Supplier<TheSword> THE_SWORD = ITEMS.registerItem("the_sword", TheSword::new);
 
 	// Weapons
-	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> WOODEN_PIKE = ITEMS.registerItem("wooden_pike", (properties) -> new PikeItem(ToolMaterial.WOOD, -3.0f, properties.repairable(ItemTags.PLANKS)));
-	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> STONE_PIKE = ITEMS.registerItem("stone_pike", (properties) -> new PikeItem(ToolMaterial.STONE, -3.0f, properties.repairable(ItemTags.STONE_TOOL_MATERIALS)));
-	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> GOLDEN_PIKE = ITEMS.registerItem("golden_pike", (properties) -> new PikeItem(ToolMaterial.GOLD, -3.0f, properties.repairable(Tags.Items.INGOTS_GOLD)));
-	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> COPPER_PIKE = ITEMS.registerItem("copper_pike", (properties) -> new PikeItem(IWToolMaterials.COPPER, -3.0f, properties.repairable(Tags.Items.INGOTS_COPPER)));
-	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> IRON_PIKE = ITEMS.registerItem("iron_pike", (properties) -> new PikeItem(ToolMaterial.IRON, -3.0f, properties.repairable(Tags.Items.INGOTS_IRON)));
-	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> COBALT_PIKE = ITEMS.registerItem("cobalt_pike", (properties) -> new PikeItem(IWToolMaterials.COBALT, -3.0f, properties.repairable(CommonItemTagGroups.COBALT_INGOTS)));
-	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> DIAMOND_PIKE = ITEMS.registerItem("diamond_pike", (properties) -> new PikeItem(ToolMaterial.DIAMOND, -3.0f, properties.repairable(Tags.Items.GEMS_DIAMOND)));
-	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> NETHERITE_PIKE = ITEMS.registerItem("netherite_pike", (properties) -> new PikeItem(ToolMaterial.NETHERITE, -3.0f, properties.fireResistant().repairable(Tags.Items.INGOTS_NETHERITE)));
-	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> MOLTEN_PIKE = ITEMS.registerItem("molten_pike", (properties) -> new PikeItem(IWToolMaterials.MOLTEN, -3.0f, properties.fireResistant().repairable(IWItemTagGroups.MOLTEN_INGOTS)));
-	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> TESLA_PIKE = ITEMS.registerItem("tesla_pike", (properties) -> new PikeItem(IWToolMaterials.TESLA, -3.0f, properties.repairable(IWItemTagGroups.TESLA_INGOTS)));
-	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> VENTUS_PIKE = ITEMS.registerItem("ventus_pike", (properties) -> new PikeItem(IWToolMaterials.VENTUS, -2.6f, properties.repairable(IWItemTagGroups.VENTUS_SHARDS)));
-	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> ASTRAL_PIKE = ITEMS.registerItem("astral_pike", (properties) -> new PikeItem(IWToolMaterials.ASTRAL, -2.3f, properties.repairable(IWItemTagGroups.ASTRAL_INGOTS)));
-	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> STARSTORM_PIKE = ITEMS.registerItem("starstorm_pike", (properties) -> new PikeItem(IWToolMaterials.STARSTORM, -3.0f, properties.repairable(IWItemTagGroups.STARSTORM_INGOTS)));
-	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "pike")
-	public static final Supplier<PikeItem> VOID_PIKE = ITEMS.registerItem("void_pike", (properties) -> new PikeItem(IWToolMaterials.VOID, -1.9f, properties.repairable(IWItemTagGroups.VOID_INGOTS)));
 	@DatagenExclusionMarker(Type.MODEL_GENERATOR_ITEM)
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, dynamicTooltip = DynamicTooltips.FirearmTooltip.class)
 	public static final Supplier<SimplePistolItem> FLINTLOCK_PISTOL = ITEMS.registerItem("flintlock_pistol", (properties) -> new SimplePistolItem(properties.durability(499).enchantable(1)));
@@ -260,15 +242,6 @@ public class ItemRegistry {
 	@TooltipMarker(style = {ChatFormatting.YELLOW, ChatFormatting.ITALIC})
 	public static final Supplier<Item> CELESTIAL_FRAGMENT = ITEMS.registerItem("celestial_fragment", (properties) -> new Item(properties.fireResistant()));
 	public static final Supplier<Item> BROKEN_LENS = ITEMS.registerItem("broken_lens", Item::new);
-	public static final Supplier<Item> WOODEN_PIKE_HEAD = ITEMS.registerItem("wooden_pike_head", Item::new);
-	public static final Supplier<Item> STONE_PIKE_HEAD = ITEMS.registerItem("stone_pike_head", Item::new);
-	public static final Supplier<Item> GOLDEN_PIKE_HEAD = ITEMS.registerItem("golden_pike_head", Item::new);
-	public static final Supplier<Item> COPPER_PIKE_HEAD = ITEMS.registerItem("copper_pike_head", Item::new);
-	public static final Supplier<Item> IRON_PIKE_HEAD = ITEMS.registerItem("iron_pike_head", Item::new);
-	public static final Supplier<Item> COBALT_PIKE_HEAD = ITEMS.registerItem("cobalt_pike_head", Item::new);
-	public static final Supplier<Item> DIAMOND_PIKE_HEAD = ITEMS.registerItem("diamond_pike_head", Item::new);
-	public static final Supplier<Item> TESLA_PIKE_HEAD = ITEMS.registerItem("tesla_pike_head", Item::new);
-	public static final Supplier<Item> VENTUS_PIKE_HEAD = ITEMS.registerItem("ventus_pike_head", Item::new);
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC})
 	public static final Supplier<CustomArrowItem<?>> WOODEN_ARROW = ITEMS.registerItem("wooden_arrow", (properties) -> new ArrowBuilder<>(properties, 1.65d, EntityRegistry.WOODEN_ARROW_ENTITY).gravityModifier(0.075d).inaccuracySettings(12d, 7d, 12d).build());
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC})

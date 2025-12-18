@@ -2,7 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.client.model;
 
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.util.Mth;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.state.LavaRevenantRenderState;
 
@@ -15,7 +15,7 @@ public class LavaRevenantModel extends EntityModel<LavaRevenantRenderState> {
 	private final ModelPart tailTip;
 
 	public LavaRevenantModel(ModelPart modelPart) {
-		super(modelPart, RenderType::entityCutout);
+		super(modelPart, RenderTypes::entityCutout);
 		ModelPart body = modelPart.getChild("body");
 		tailBase = body.getChild("tail_base");
 		tailTip = tailBase.getChild("tail_tip");

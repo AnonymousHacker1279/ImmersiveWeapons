@@ -3,7 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.mob;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.model.EvilEyeModel;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.state.EvilEyeRenderState;
@@ -11,8 +11,8 @@ import tech.anonymoushacker1279.immersiveweapons.entity.monster.EvilEyeEntity;
 
 public class EvilEyeRenderer extends MobRenderer<EvilEyeEntity, EvilEyeRenderState, EvilEyeModel> {
 
-	private static final ResourceLocation TEXTURE_LOCATION = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/entity/evil_eye/evil_eye.png");
-	private static final ResourceLocation ALT_TEXTURE_LOCATION = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/entity/evil_eye/evil_eye_alt.png");
+	private static final Identifier TEXTURE_LOCATION = Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/entity/evil_eye/evil_eye.png");
+	private static final Identifier ALT_TEXTURE_LOCATION = Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/entity/evil_eye/evil_eye_alt.png");
 
 	public EvilEyeRenderer(EntityRendererProvider.Context context) {
 		super(context, new EvilEyeModel(context.bakeLayer(EvilEyeModel.LAYER_LOCATION)), 0.15F);
@@ -24,7 +24,7 @@ public class EvilEyeRenderer extends MobRenderer<EvilEyeEntity, EvilEyeRenderSta
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(EvilEyeRenderState state) {
+	public Identifier getTextureLocation(EvilEyeRenderState state) {
 		return state.summonedByStaff ? ALT_TEXTURE_LOCATION : TEXTURE_LOCATION;
 	}
 

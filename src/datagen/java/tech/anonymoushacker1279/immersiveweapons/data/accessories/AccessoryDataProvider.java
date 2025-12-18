@@ -6,7 +6,7 @@ import com.mojang.serialization.JsonOps;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
 
 import java.nio.file.Path;
@@ -31,7 +31,7 @@ public abstract class AccessoryDataProvider implements DataProvider {
 		List<CompletableFuture<?>> futures = new ArrayList<>(5);
 
 		accessories.forEach((type) -> {
-			ResourceLocation id = Objects.requireNonNull(type.item().getKey()).location();
+			Identifier id = Objects.requireNonNull(type.item().getKey()).identifier();
 			Path filePath = path.resolve("data/" + id.getNamespace() + "/accessories/" + id.getPath() + ".json");
 
 			DataResult<JsonElement> accessoryResult = Accessory.CODEC.encodeStart(JsonOps.INSTANCE, type);

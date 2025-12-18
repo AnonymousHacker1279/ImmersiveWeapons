@@ -6,8 +6,8 @@ import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.Pools;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElement;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool.Projection;
@@ -39,7 +39,7 @@ public class StructureTemplatePoolGenerator {
 	public static final ResourceKey<StructureTemplatePool> WATER_TOWER = createKey("water_tower");
 
 	private static ResourceKey<StructureTemplatePool> createKey(String name) {
-		return ResourceKey.create(Registries.TEMPLATE_POOL, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, name));
+		return ResourceKey.create(Registries.TEMPLATE_POOL, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, name));
 	}
 
 	public static void bootstrap(BootstrapContext<StructureTemplatePool> context) {

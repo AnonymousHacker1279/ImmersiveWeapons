@@ -9,7 +9,6 @@ import tech.anonymoushacker1279.immersiveweapons.data.groups.common.CommonItemTa
 import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.GauntletItem;
-import tech.anonymoushacker1279.immersiveweapons.item.tool.PikeItem;
 
 import java.util.Collection;
 import java.util.function.Supplier;
@@ -23,15 +22,13 @@ public record ToolFamilies(TagKey<Item> material,
                            Supplier<? extends ShovelItem> shovel,
                            Supplier<? extends HoeItem> hoe,
                            Supplier<? extends GauntletItem> gauntlet,
-                           Supplier<? extends PikeItem> pike,
-                           @Nullable Supplier<? extends Item> pikeHead,
                            Supplier<? extends ArrowItem> arrow,
                            @Nullable Supplier<? extends Item> smithingTemplateItem,
                            @Nullable ImmutableList<Item> smithingBaseUpgrades) {
 
 	private static final ImmutableList<Item> NETHERITE_TOOLS = ImmutableList.of(Items.NETHERITE_SWORD,
 			Items.NETHERITE_PICKAXE, Items.NETHERITE_AXE, Items.NETHERITE_SHOVEL, Items.NETHERITE_HOE,
-			ItemRegistry.NETHERITE_GAUNTLET.get(), ItemRegistry.NETHERITE_PIKE.get());
+			ItemRegistry.NETHERITE_GAUNTLET.get());
 
 	public static final ToolFamilies COBALT = new ToolFamilies(
 			CommonItemTagGroups.COBALT_INGOTS,
@@ -43,8 +40,6 @@ public record ToolFamilies(TagKey<Item> material,
 			ItemRegistry.COBALT_SHOVEL,
 			ItemRegistry.COBALT_HOE,
 			ItemRegistry.COBALT_GAUNTLET,
-			ItemRegistry.COBALT_PIKE,
-			ItemRegistry.COBALT_PIKE_HEAD,
 			ItemRegistry.COBALT_ARROW,
 			null,
 			null
@@ -60,8 +55,6 @@ public record ToolFamilies(TagKey<Item> material,
 			ItemRegistry.MOLTEN_SHOVEL,
 			ItemRegistry.MOLTEN_HOE,
 			ItemRegistry.MOLTEN_GAUNTLET,
-			ItemRegistry.MOLTEN_PIKE,
-			null,
 			ItemRegistry.MOLTEN_ARROW,
 			ItemRegistry.MOLTEN_SMITHING_TEMPLATE,
 			NETHERITE_TOOLS
@@ -77,8 +70,6 @@ public record ToolFamilies(TagKey<Item> material,
 			ItemRegistry.TESLA_SHOVEL,
 			ItemRegistry.TESLA_HOE,
 			ItemRegistry.TESLA_GAUNTLET,
-			ItemRegistry.TESLA_PIKE,
-			ItemRegistry.TESLA_PIKE_HEAD,
 			ItemRegistry.TESLA_ARROW,
 			null,
 			null
@@ -94,8 +85,6 @@ public record ToolFamilies(TagKey<Item> material,
 			ItemRegistry.VENTUS_SHOVEL,
 			ItemRegistry.VENTUS_HOE,
 			ItemRegistry.VENTUS_GAUNTLET,
-			ItemRegistry.VENTUS_PIKE,
-			ItemRegistry.VENTUS_PIKE_HEAD,
 			ItemRegistry.VENTUS_ARROW,
 			null,
 			null

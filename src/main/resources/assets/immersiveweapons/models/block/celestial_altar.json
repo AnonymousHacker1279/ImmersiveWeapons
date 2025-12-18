@@ -1,12 +1,12 @@
 {
 	"format_version": "1.21.6",
 	"credit": "AnonymousHacker1279",
-	"render_type": "minecraft:translucent",
 	"parent": "minecraft:block/block",
+	"render_type": "minecraft:translucent",
 	"textures": {
 		"0": "immersiveweapons:block/celestial_altar",
 		"1": "block/magma",
-		"2": "item/iron_chain",
+		"2": "block/iron_chain",
 		"particle": "immersiveweapons:block/celestial_altar"
 	},
 	"elements": [
@@ -68,12 +68,12 @@
 			"to": [2, 13, 10],
 			"rotation": {"angle": -45, "axis": "y", "origin": [2, 12, 9]},
 			"faces": {
-				"north": {"uv": [6, 1, 9, 9], "texture": "#2"},
-				"east": {"uv": [6, 1, 9, 9], "texture": "#2"},
-				"south": {"uv": [6, 1, 9, 9], "texture": "#2"},
-				"west": {"uv": [6, 1, 9, 9], "texture": "#2"},
-				"up": {"uv": [6, 1, 9, 9], "texture": "#2"},
-				"down": {"uv": [6, 1, 9, 9], "texture": "#2"}
+				"north": {"uv": [3, 0, 6, 8], "texture": "#2"},
+				"east": {"uv": [3, 0, 6, 8], "texture": "#2"},
+				"south": {"uv": [3, 0, 6, 8], "texture": "#2"},
+				"west": {"uv": [3, 0, 6, 8], "texture": "#2"},
+				"up": {"uv": [3, 0, 6, 8], "texture": "#2"},
+				"down": {"uv": [3, 0, 6, 8], "texture": "#2"}
 			}
 		},
 		{
@@ -82,12 +82,12 @@
 			"to": [3, 13, 9],
 			"rotation": {"angle": -45, "axis": "y", "origin": [2, 12, 9]},
 			"faces": {
-				"north": {"uv": [6, 1, 9, 9], "texture": "#2"},
-				"east": {"uv": [6, 1, 9, 9], "texture": "#2"},
-				"south": {"uv": [6, 1, 9, 9], "texture": "#2"},
-				"west": {"uv": [6, 1, 9, 9], "texture": "#2"},
-				"up": {"uv": [6, 1, 9, 9], "rotation": 270, "texture": "#2"},
-				"down": {"uv": [6, 1, 9, 9], "rotation": 90, "texture": "#2"}
+				"north": {"uv": [0, 0, 3, 8], "texture": "#2"},
+				"east": {"uv": [0, 0, 3, 8], "texture": "#2"},
+				"south": {"uv": [0, 0, 3, 8], "texture": "#2"},
+				"west": {"uv": [0, 0, 3, 8], "texture": "#2"},
+				"up": {"uv": [0, 0, 3, 8], "rotation": 270, "texture": "#2"},
+				"down": {"uv": [0, 0, 3, 8], "rotation": 90, "texture": "#2"}
 			}
 		},
 		{
@@ -110,12 +110,12 @@
 			"to": [2, 12, 7],
 			"rotation": {"angle": -45, "axis": "y", "origin": [2, 11, 6]},
 			"faces": {
-				"north": {"uv": [6, 1, 9, 5], "texture": "#2"},
-				"east": {"uv": [6, 1, 9, 5], "texture": "#2"},
-				"south": {"uv": [6, 1, 9, 5], "texture": "#2"},
-				"west": {"uv": [6, 1, 9, 5], "texture": "#2"},
-				"up": {"uv": [6, 1, 9, 5], "texture": "#2"},
-				"down": {"uv": [6, 1, 9, 5], "texture": "#2"}
+				"north": {"uv": [0, 0, 3, 4], "texture": "#2"},
+				"east": {"uv": [0, 0, 3, 4], "texture": "#2"},
+				"south": {"uv": [0, 0, 3, 4], "texture": "#2"},
+				"west": {"uv": [0, 0, 3, 4], "texture": "#2"},
+				"up": {"uv": [0, 0, 3, 4], "texture": "#2"},
+				"down": {"uv": [0, 0, 3, 4], "texture": "#2"}
 			}
 		},
 		{
@@ -124,12 +124,12 @@
 			"to": [3, 12, 6],
 			"rotation": {"angle": -45, "axis": "y", "origin": [2, 11, 6]},
 			"faces": {
-				"north": {"uv": [6, 1, 9, 5], "texture": "#2"},
-				"east": {"uv": [6, 1, 9, 5], "texture": "#2"},
-				"south": {"uv": [6, 1, 9, 5], "texture": "#2"},
-				"west": {"uv": [6, 1, 9, 5], "texture": "#2"},
-				"up": {"uv": [6, 1, 9, 5], "rotation": 270, "texture": "#2"},
-				"down": {"uv": [6, 1, 9, 5], "rotation": 90, "texture": "#2"}
+				"north": {"uv": [3, 0, 6, 4], "texture": "#2"},
+				"east": {"uv": [3, 0, 6, 4], "texture": "#2"},
+				"south": {"uv": [3, 0, 6, 4], "texture": "#2"},
+				"west": {"uv": [3, 0, 6, 4], "texture": "#2"},
+				"up": {"uv": [3, 0, 6, 4], "rotation": 270, "texture": "#2"},
+				"down": {"uv": [3, 0, 6, 4], "rotation": 90, "texture": "#2"}
 			}
 		}
 	],

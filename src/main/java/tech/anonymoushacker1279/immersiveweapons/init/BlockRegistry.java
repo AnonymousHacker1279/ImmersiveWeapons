@@ -2,8 +2,8 @@ package tech.anonymoushacker1279.immersiveweapons.init;
 
 import net.kyrptonaught.customportalapi.CustomPortalBlock;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.ColorRGBA;
 import net.minecraft.util.valueproviders.ConstantInt;
@@ -47,7 +47,7 @@ public class BlockRegistry {
 	// Block Register
 	public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(ImmersiveWeapons.MOD_ID);
 
-	public static final ResourceKey<ConfiguredFeature<?, ?>> STARDUST_TREE_CONFIGURATION = ResourceKey.create(Registries.CONFIGURED_FEATURE, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "stardust_tree"));
+	public static final ResourceKey<ConfiguredFeature<?, ?>> STARDUST_TREE_CONFIGURATION = ResourceKey.create(Registries.CONFIGURED_FEATURE, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "stardust_tree"));
 
 	// Blocks
 	// Breakable via pickaxe

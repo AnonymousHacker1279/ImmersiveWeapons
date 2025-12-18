@@ -4,7 +4,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.entity.npc.trading.MerchantTrades;
@@ -12,7 +12,7 @@ import tech.anonymoushacker1279.immersiveweapons.entity.npc.trading.MerchantTrad
 public record SyncMerchantTradesPayload(EntityType<?> entityType,
                                         MerchantTrades trades) implements CustomPacketPayload {
 
-	public static final Type<SyncMerchantTradesPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "sync_merchant_trades"));
+	public static final Type<SyncMerchantTradesPayload> TYPE = new Type<>(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "sync_merchant_trades"));
 
 	public static final StreamCodec<RegistryFriendlyByteBuf, SyncMerchantTradesPayload> STREAM_CODEC = StreamCodec.composite(
 			EntityTypeCodec(),

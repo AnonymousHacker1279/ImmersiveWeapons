@@ -1,7 +1,7 @@
 plugins {
 	id 'java-library'
 	id 'maven-publish'
-	id 'net.neoforged.moddev' version '2.0.122'
+	id 'net.neoforged.moddev' version '2.0.126'
 	id "com.hypherionmc.modutils.modpublisher" version "2.1.8"
 	id 'idea'
 }
@@ -178,8 +178,9 @@ dependencies {
 	runtimeOnly "lol.bai:badpackets:neo-${badpackets_version}"
 
 	// Include JEI
-	compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
-	runtimeOnly "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
+	// TODO: re-enable when updated
+	// compileOnly "mezz.jei:jei-1.21.10-neoforge-api:${jei_version}"
+	// runtimeOnly "mezz.jei:jei-1.21.10-neoforge:${jei_version}"
 }
 
 tasks.named("processResources", ProcessResources).configure {

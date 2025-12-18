@@ -1,6 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.neutral;
 
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -12,7 +13,7 @@ import net.minecraft.world.entity.ai.goal.MoveThroughVillageGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.ResetUniversalAngerTargetGoal;
-import net.minecraft.world.entity.animal.IronGolem;
+import net.minecraft.world.entity.animal.golem.IronGolem;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
@@ -73,7 +74,7 @@ public class MinutemanEntity extends RangedSoldierEntity {
 
 		for (MinutemanEntity minutemanEntity : list) {
 			minutemanEntity.setTarget(target);
-			minutemanEntity.setPersistentAngerTarget(target.getUUID());
+			minutemanEntity.setPersistentAngerTarget(EntityReference.of(target));
 		}
 	}
 

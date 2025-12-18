@@ -3,7 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.network.handler;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.ArrowGravityPayload;
 import tech.anonymoushacker1279.immersiveweapons.util.ArrowAttributeAccessor;

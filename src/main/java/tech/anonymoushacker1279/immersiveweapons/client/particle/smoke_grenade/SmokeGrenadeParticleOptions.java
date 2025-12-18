@@ -3,13 +3,11 @@ package tech.anonymoushacker1279.immersiveweapons.client.particle.smoke_grenade;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.util.Mth;
-import net.minecraft.world.phys.Vec3;
-import org.joml.Vector3f;
 import tech.anonymoushacker1279.immersiveweapons.init.ParticleTypesRegistry;
 
-public record SmokeGrenadeParticleOptions(Vector3f color, float scale) implements ParticleOptions {
+public record SmokeGrenadeParticleOptions(int color, float scale) implements ParticleOptions {
 
-	public SmokeGrenadeParticleOptions(Vector3f color, float scale) {
+	public SmokeGrenadeParticleOptions(int color, float scale) {
 		this.color = color;
 		this.scale = Mth.clamp(scale, 0.001F, 100.0F);
 	}
@@ -20,12 +18,12 @@ public record SmokeGrenadeParticleOptions(Vector3f color, float scale) implement
 	}
 
 	public static class SmokeGrenadeColors {
-		public static final Vector3f GRAY = Vec3.fromRGB24(16777215).toVector3f();
-		public static final Vector3f RED = Vec3.fromRGB24(16711680).toVector3f();
-		public static final Vector3f GREEN = Vec3.fromRGB24(5294200).toVector3f();
-		public static final Vector3f BLUE = Vec3.fromRGB24(1644912).toVector3f();
-		public static final Vector3f PURPLE = Vec3.fromRGB24(5046349).toVector3f();
-		public static final Vector3f YELLOW = Vec3.fromRGB24(16318253).toVector3f();
+		public static final int GRAY = 16777215;
+		public static final int RED = 16711680;
+		public static final int GREEN = 5294200;
+		public static final int BLUE = 1644912;
+		public static final int PURPLE = 5046349;
+		public static final int YELLOW = 16318253;
 	}
 
 	/**

@@ -1,13 +1,13 @@
 package tech.anonymoushacker1279.immersiveweapons.data;
 
-import net.minecraft.Util;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.Util;
 import net.minecraft.world.item.JukeboxSong;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
@@ -21,7 +21,7 @@ public class IWJukeboxSongs {
 	public static final ResourceKey<JukeboxSong> DEADMANS_DESERT_THEME_2 = createKey("deadmans_desert_theme_2");
 
 	private static ResourceKey<JukeboxSong> createKey(String name) {
-		return ResourceKey.create(Registries.JUKEBOX_SONG, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, name));
+		return ResourceKey.create(Registries.JUKEBOX_SONG, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, name));
 	}
 
 	public static void bootstrap(BootstrapContext<JukeboxSong> context) {
@@ -35,7 +35,7 @@ public class IWJukeboxSongs {
 	private static void register(BootstrapContext<JukeboxSong> context, ResourceKey<JukeboxSong> key, Holder<SoundEvent> soundEvent, float duration, int comparatorOutput) {
 		context.register(
 				key,
-				new JukeboxSong(soundEvent, Component.translatable(Util.makeDescriptionId("jukebox_song", key.location())), duration, comparatorOutput)
+				new JukeboxSong(soundEvent, Component.translatable(Util.makeDescriptionId("jukebox_song", key.identifier())), duration, comparatorOutput)
 		);
 	}
 }

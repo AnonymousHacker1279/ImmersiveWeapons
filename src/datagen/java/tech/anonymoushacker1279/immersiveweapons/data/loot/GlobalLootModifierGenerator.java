@@ -1,8 +1,8 @@
 package tech.anonymoushacker1279.immersiveweapons.data.loot;
 
-import net.minecraft.advancements.critereon.EntityPredicate;
-import net.minecraft.advancements.critereon.ItemPredicate;
-import net.minecraft.advancements.critereon.LocationPredicate;
+import net.minecraft.advancements.criterion.EntityPredicate;
+import net.minecraft.advancements.criterion.ItemPredicate;
+import net.minecraft.advancements.criterion.LocationPredicate;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.registries.Registries;
@@ -230,7 +230,7 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 	 * @return the loot item condition
 	 */
 	private LootItemCondition[] singleLootTableCondition(ResourceKey<LootTable> lootTable) {
-		return new LootItemCondition[]{LootTableIdCondition.builder(lootTable.location()).build()};
+		return new LootItemCondition[]{LootTableIdCondition.builder(lootTable.identifier()).build()};
 	}
 
 	/**
@@ -244,7 +244,7 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 		LootItemCondition.Builder[] builders = new LootItemCondition.Builder[lootTables.length];
 
 		for (int i = 0; i < lootTables.length; i++) {
-			builders[i] = LootTableIdCondition.builder(lootTables[i].location());
+			builders[i] = LootTableIdCondition.builder(lootTables[i].identifier());
 		}
 
 		return new LootItemCondition[]{AnyOfCondition.anyOf(builders).build()};
@@ -327,7 +327,7 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 	private LootItemCondition[] inBiomeDungeonCondition(ResourceKey<Biome> biome) {
 		HolderGetter<Biome> holderGetter = registries.lookupOrThrow(Registries.BIOME);
 
-		return new LootItemCondition[]{LootTableIdCondition.builder(BuiltInLootTables.SIMPLE_DUNGEON.location())
+		return new LootItemCondition[]{LootTableIdCondition.builder(BuiltInLootTables.SIMPLE_DUNGEON.identifier())
 				.and(LocationCheck.checkLocation(LocationPredicate.Builder.inBiome(holderGetter.getOrThrow(biome))))
 				.build()};
 	}

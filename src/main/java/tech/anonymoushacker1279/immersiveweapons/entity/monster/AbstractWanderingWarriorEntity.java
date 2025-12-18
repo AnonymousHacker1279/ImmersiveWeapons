@@ -1,6 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.monster;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
@@ -149,10 +150,10 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 	 * Set the entity's combat AI.
 	 */
 	void setCombatTask() {
-		if (!level().isClientSide()) {
+		if (level() instanceof ServerLevel serverLevel) {
 			goalSelector.removeGoal(meleeAttackGoal);
 			if (getItemInHand(InteractionHand.MAIN_HAND).getItem() == Items.AIR) {
-				populateDefaultEquipmentSlots(random, level().getCurrentDifficultyAt(blockPosition()));
+				populateDefaultEquipmentSlots(random, serverLevel.getCurrentDifficultyAt(blockPosition()));
 			}
 			goalSelector.addGoal(1, meleeAttackGoal);
 		}

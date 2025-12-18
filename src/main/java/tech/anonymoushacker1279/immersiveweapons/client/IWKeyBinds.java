@@ -3,13 +3,13 @@ package tech.anonymoushacker1279.immersiveweapons.client;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.platform.InputConstants.Type;
 import net.minecraft.client.KeyMapping;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.client.settings.KeyConflictContext;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
 public class IWKeyBinds {
 
-	private static final KeyMapping.Category CATEGORY = new KeyMapping.Category(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "main"));
+	private static final KeyMapping.Category CATEGORY = new KeyMapping.Category(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "main"));
 
 	public static final KeyMapping TOGGLE_ARMOR_EFFECT = new KeyMapping("key." + ImmersiveWeapons.MOD_ID + ".toggleArmorEffect",
 			KeyConflictContext.IN_GAME,

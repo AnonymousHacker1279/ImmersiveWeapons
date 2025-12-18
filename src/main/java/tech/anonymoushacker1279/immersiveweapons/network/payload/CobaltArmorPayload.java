@@ -4,12 +4,12 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
 public record CobaltArmorPayload(boolean state) implements CustomPacketPayload {
 
-	public static final Type<CobaltArmorPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "cobalt_armor"));
+	public static final Type<CobaltArmorPayload> TYPE = new Type<>(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "cobalt_armor"));
 
 	public static final StreamCodec<FriendlyByteBuf, CobaltArmorPayload> STREAM_CODEC = StreamCodec.composite(
 			ByteBufCodecs.BOOL,

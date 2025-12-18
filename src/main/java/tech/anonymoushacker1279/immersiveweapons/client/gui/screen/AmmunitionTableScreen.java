@@ -5,7 +5,7 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
@@ -13,7 +13,7 @@ import tech.anonymoushacker1279.immersiveweapons.menu.AmmunitionTableMenu;
 
 public class AmmunitionTableScreen extends AbstractContainerScreen<AmmunitionTableMenu> {
 
-	private static final ResourceLocation GUI_TEXTURE = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/gui/container/ammunition_table.png");
+	private static final Identifier GUI_TEXTURE = Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/gui/container/ammunition_table.png");
 
 	public AmmunitionTableScreen(AmmunitionTableMenu pMenu, Inventory pPlayerInventory, Component pTitle) {
 		super(pMenu, pPlayerInventory, pTitle);

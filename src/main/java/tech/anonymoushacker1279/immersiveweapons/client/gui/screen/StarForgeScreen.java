@@ -7,7 +7,7 @@ import net.minecraft.client.gui.screens.inventory.tooltip.DefaultTooltipPosition
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
@@ -19,7 +19,7 @@ import java.util.List;
 
 public class StarForgeScreen extends AbstractContainerScreen<StarForgeMenu> {
 
-	private static final ResourceLocation GUI_TEXTURE = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/gui/container/star_forge.png");
+	private static final Identifier GUI_TEXTURE = Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/gui/container/star_forge.png");
 	private static final Component SI_TOOLTIP_INACTIVE = Component.translatable("container.immersiveweapons.star_forge.si_inactive");
 	private static final Component SI_TOOLTIP_ACTIVE = Component.translatable("container.immersiveweapons.star_forge.si_active");
 

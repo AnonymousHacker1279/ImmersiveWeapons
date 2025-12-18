@@ -7,7 +7,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
 import tech.anonymoushacker1279.immersiveweapons.entity.npc.trading.MerchantTrades;
 import tech.anonymoushacker1279.immersiveweapons.entity.npc.trading.TradeGroup;
@@ -35,7 +35,7 @@ public abstract class TradeDataProvider implements DataProvider {
 		List<CompletableFuture<?>> futures = new ArrayList<>(5);
 
 		trades.forEach((type, tradeGroups) -> {
-			ResourceLocation id = BuiltInRegistries.ENTITY_TYPE.getKey(type);
+			Identifier id = BuiltInRegistries.ENTITY_TYPE.getKey(type);
 			Path filePath = path.resolve("data/" + id.getNamespace() + "/merchant_trades/" + id.getPath() + ".json");
 
 			DataResult<JsonElement> tradesResult = MerchantTrades.CODEC.encodeStart(JsonOps.INSTANCE, new MerchantTrades(tradeRefreshTimeMap.getOrDefault(type, 24000), tradeGroups));

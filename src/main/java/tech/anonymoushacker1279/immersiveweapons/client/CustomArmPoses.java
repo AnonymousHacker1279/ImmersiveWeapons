@@ -18,7 +18,7 @@ public class CustomArmPoses {
 	public static void bootstrap() {
 	}
 
-	public static final EnumProxy<ArmPose> AIM_PISTOL_POSE_PARAMS = new EnumProxy<>(ArmPose.class, false, (IArmPoseTransformer) (model, state, arm) -> {
+	public static final EnumProxy<ArmPose> AIM_PISTOL_POSE_PARAMS = new EnumProxy<>(ArmPose.class, false, true, (IArmPoseTransformer) (model, state, arm) -> {
 		// Hold the gun up as if it's being aimed
 		if (arm == HumanoidArm.RIGHT) {
 			model.rightArm.xRot = -1.5f;
@@ -37,7 +37,7 @@ public class CustomArmPoses {
 		}
 	});
 
-	public static final EnumProxy<ArmPose> AIM_MUSKET_POSE_PARAMS = new EnumProxy<>(ArmPose.class, true, (IArmPoseTransformer) (model, state, arm) -> {
+	public static final EnumProxy<ArmPose> AIM_MUSKET_POSE_PARAMS = new EnumProxy<>(ArmPose.class, true, true, (IArmPoseTransformer) (model, state, arm) -> {
 		// Hold the gun up as if it's being aimed. This one uses two hands, one needs to be supporting the gun at the end and the other midway
 		if (arm == HumanoidArm.RIGHT) {
 			model.rightArm.xRot = -1.5f;
@@ -66,7 +66,7 @@ public class CustomArmPoses {
 		}
 	});
 
-	public static final EnumProxy<ArmPose> HOLD_PIKE_POSE_PARAMS = new EnumProxy<>(ArmPose.class, true, (IArmPoseTransformer) (model, state, arm) -> {
+	public static final EnumProxy<ArmPose> HOLD_PIKE_POSE_PARAMS = new EnumProxy<>(ArmPose.class, true, false, (IArmPoseTransformer) (model, state, arm) -> {
 		// Hold the pike with both hands, like a spear
 		if (state.attackTime == 0) {
 			if (arm == HumanoidArm.RIGHT) {

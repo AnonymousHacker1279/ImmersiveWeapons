@@ -1,7 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons;
 
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
@@ -65,6 +65,6 @@ public class IWItemTagGroups {
 	public static final TagKey<Item> VOID_ARMOR = createItemTag("armor/void");
 
 	private static TagKey<Item> createItemTag(String tag) {
-		return TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, tag));
+		return TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, tag));
 	}
 }

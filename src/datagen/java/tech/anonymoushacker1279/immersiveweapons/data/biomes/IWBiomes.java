@@ -3,8 +3,8 @@ package tech.anonymoushacker1279.immersiveweapons.data.biomes;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
@@ -18,7 +18,7 @@ public class IWBiomes {
 	public static final ResourceKey<Biome> DEADMANS_DESERT = createKey("deadmans_desert");
 
 	private static ResourceKey<Biome> createKey(String name) {
-		return ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, name));
+		return ResourceKey.create(Registries.BIOME, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, name));
 	}
 
 	public static void bootstrap(BootstrapContext<Biome> context) {

@@ -1,6 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.config;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.common.ModConfigSpec.ConfigValue;
 
@@ -90,7 +90,7 @@ public class ServerConfig {
 						() -> "namespace:path;cap",
 						validator -> {
 							String[] split = validator.toString().split(";");
-							boolean validLocation = ResourceLocation.tryParse(split[0]) != null;
+							boolean validLocation = Identifier.tryParse(split[0]) != null;
 							boolean validCap = split.length == 2 && split[1].matches("\\d+");
 
 							return validLocation && validCap;

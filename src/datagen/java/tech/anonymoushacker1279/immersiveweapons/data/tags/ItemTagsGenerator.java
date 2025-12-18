@@ -20,7 +20,6 @@ import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.GauntletItem;
-import tech.anonymoushacker1279.immersiveweapons.item.tool.PikeItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -244,13 +243,6 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 				ItemRegistry.VOID_SHOVEL.get(),
 				ItemRegistry.VOID_HOE.get());
 
-		// Pike tags
-		for (DeferredHolder<Item, ? extends Item> item : ItemRegistry.ITEMS.getEntries()) {
-			if (item.get() instanceof PikeItem pike) {
-				tag(IWItemTagGroups.PIKES).add(pike);
-			}
-		}
-
 		// Gauntlet tags
 		for (DeferredHolder<Item, ? extends Item> item : ItemRegistry.ITEMS.getEntries()) {
 			if (item.get() instanceof GauntletItem gauntlet) {
@@ -280,7 +272,6 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		// Weapon and tools tags
 		tag(IWItemTagGroups.WEAPONS_AND_TOOLS)
 				.addTag(Tags.Items.TOOLS)
-				.addTags(IWItemTagGroups.PIKES)
 				.addTags(IWItemTagGroups.GAUNTLETS)
 				.addTag(IWItemTagGroups.RANGED_WEAPONS);
 
@@ -398,14 +389,12 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		// Enchantable items tag
 		tag(ItemTags.BOW_ENCHANTABLE).addTag(Tags.Items.TOOLS_BOW);
 		tag(ItemTags.DURABILITY_ENCHANTABLE).addTags(
-				IWItemTagGroups.PIKES,
 				IWItemTagGroups.GAUNTLETS,
 				IWItemTagGroups.FIREARMS,
 				IWItemTagGroups.STAFFS,
 				Tags.Items.TOOLS_BOW
 		);
 		tag(ItemTags.WEAPON_ENCHANTABLE).addTags(
-				IWItemTagGroups.PIKES,
 				IWItemTagGroups.GAUNTLETS,
 				IWItemTagGroups.FIREARMS,
 				IWItemTagGroups.STAFFS

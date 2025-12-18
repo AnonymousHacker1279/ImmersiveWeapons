@@ -4,13 +4,13 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
 public record StarForgeMenuPayload(int containerId, int menuSelectionIndex,
                                    boolean beginCrafting) implements CustomPacketPayload {
 
-	public static final Type<StarForgeMenuPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "star_forge_menu"));
+	public static final Type<StarForgeMenuPayload> TYPE = new Type<>(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "star_forge_menu"));
 
 	public static final StreamCodec<FriendlyByteBuf, StarForgeMenuPayload> STREAM_CODEC = StreamCodec.composite(
 			ByteBufCodecs.INT,

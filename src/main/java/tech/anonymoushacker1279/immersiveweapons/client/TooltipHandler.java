@@ -5,7 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -228,7 +228,7 @@ public class TooltipHandler {
 		}
 
 		// Regex check for "immersiveweapons:pedestal_augment_X" where X is any string
-		ResourceLocation path = BuiltInRegistries.ITEM.getKey(stack.getItem().asItem());
+		Identifier path = BuiltInRegistries.ITEM.getKey(stack.getItem().asItem());
 		if (path.toString().matches("immersiveweapons:pedestal_augment_.+")) {
 			// Get the name of the augment
 			event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.%s".formatted(path.getPath())).withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC));

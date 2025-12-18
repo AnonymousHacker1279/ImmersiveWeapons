@@ -4,7 +4,7 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRequirements.Strategy;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
+import net.minecraft.advancements.criterion.RecipeUnlockedTrigger;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceKey;
@@ -45,7 +45,7 @@ public abstract class IWRecipeBuilder implements RecipeBuilder {
 
 		output.accept(resourceKey,
 				getRecipe(),
-				advancementBuilder.build(resourceKey.location()
+				advancementBuilder.build(resourceKey.identifier()
 						.withPrefix("recipes/" + ImmersiveWeapons.MOD_ID + "/" + Objects.requireNonNullElse(group, getRecipe().group()) + "/")));
 	}
 

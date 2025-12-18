@@ -5,14 +5,17 @@ import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.AbstractArrow.Pickup;
+import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.data.IWEnchantments;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.*;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.CannonballEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.DragonFireballBulletEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.FlareEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.CustomArrowItem.InaccuracySettings;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils.HitEffect;
@@ -81,7 +84,7 @@ public class BulletItem<T extends BulletEntity> extends ArrowItem {
 	}
 
 	private void setCommonBulletCharacteristics(BulletEntity bulletEntity) {
-		bulletEntity.pickup = Pickup.DISALLOWED;
+		bulletEntity.pickup = AbstractArrow.Pickup.DISALLOWED;
 		bulletEntity.setSoundEvent(SoundEventRegistry.BULLET_WHIZZ.get());
 		bulletEntity.setPierceLevel((byte) pierceLevel);
 		bulletEntity.setBaseDamage(damage);

@@ -2,8 +2,8 @@ package tech.anonymoushacker1279.immersiveweapons.data.recipes;
 
 import com.google.common.collect.ImmutableList;
 import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.critereon.InventoryChangeTrigger;
-import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.criterion.InventoryChangeTrigger;
+import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderSet;
@@ -470,7 +470,6 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		createVoidUpgrade(ItemRegistry.STARSTORM_AXE.get(), ItemRegistry.ASTRAL_AXE.get(), ItemRegistry.VOID_AXE.get());
 		createVoidUpgrade(ItemRegistry.STARSTORM_SHOVEL.get(), ItemRegistry.ASTRAL_SHOVEL.get(), ItemRegistry.VOID_SHOVEL.get());
 		createVoidUpgrade(ItemRegistry.STARSTORM_HOE.get(), ItemRegistry.ASTRAL_HOE.get(), ItemRegistry.VOID_HOE.get());
-		createVoidUpgrade(ItemRegistry.STARSTORM_PIKE.get(), ItemRegistry.ASTRAL_PIKE.get(), ItemRegistry.VOID_PIKE.get());
 		createVoidUpgrade(ItemRegistry.STARSTORM_GAUNTLET.get(), ItemRegistry.ASTRAL_GAUNTLET.get(), ItemRegistry.VOID_GAUNTLET.get());
 		createVoidUpgrade(ItemRegistry.STARSTORM_HELMET.get(), ItemRegistry.ASTRAL_HELMET.get(), ItemRegistry.VOID_HELMET.get());
 		createVoidUpgrade(ItemRegistry.STARSTORM_CHESTPLATE.get(), ItemRegistry.ASTRAL_CHESTPLATE.get(), ItemRegistry.VOID_CHESTPLATE.get());
@@ -551,7 +550,6 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.save(output);
 
 		netheriteSmithing(ItemRegistry.DIAMOND_GAUNTLET.get(), ItemRegistry.NETHERITE_GAUNTLET.get());
-		netheriteSmithing(ItemRegistry.DIAMOND_PIKE.get(), ItemRegistry.NETHERITE_PIKE.get());
 	}
 
 	private void createSmallPartsItems() {
@@ -661,7 +659,6 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 7, ItemRegistry.ASTRAL_LEGGINGS.get(), 600);
 		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 4, ItemRegistry.ASTRAL_BOOTS.get(), 600);
 		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 5, ItemRegistry.GAUNTLET_SCAFFOLDING.get(), 1, ItemRegistry.ASTRAL_GAUNTLET.get(), 300);
-		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 3, ItemRegistry.WOODEN_TOOL_ROD.get(), 1, ItemRegistry.ASTRAL_PIKE.get(), 300);
 
 		starForgeSmelting(IWItemTagGroups.STARSTORM_INGOTS, 2, ItemRegistry.OBSIDIAN_ROD.get(), 1, ItemRegistry.STARSTORM_SWORD.get(), 300);
 		starForgeSmelting(IWItemTagGroups.STARSTORM_INGOTS, 3, ItemRegistry.OBSIDIAN_ROD.get(), 2, ItemRegistry.STARSTORM_PICKAXE.get(), 300);
@@ -673,7 +670,6 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		starForgeSmelting(IWItemTagGroups.STARSTORM_INGOTS, 7, ItemRegistry.STARSTORM_LEGGINGS.get(), 600);
 		starForgeSmelting(IWItemTagGroups.STARSTORM_INGOTS, 4, ItemRegistry.STARSTORM_BOOTS.get(), 600);
 		starForgeSmelting(IWItemTagGroups.STARSTORM_INGOTS, 5, ItemRegistry.GAUNTLET_SCAFFOLDING.get(), 1, ItemRegistry.STARSTORM_GAUNTLET.get(), 300);
-		starForgeSmelting(IWItemTagGroups.STARSTORM_INGOTS, 3, ItemRegistry.WOODEN_TOOL_ROD.get(), 1, ItemRegistry.STARSTORM_PIKE.get(), 300);
 
 		starForgeSmelting(BlockItemRegistry.VOID_ORE_ITEM.get(), 1, ItemRegistry.ENDER_ESSENCE.get(), 3, ItemRegistry.VOID_INGOT.get(), 900);
 	}

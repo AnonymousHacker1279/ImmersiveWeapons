@@ -4,12 +4,12 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
 public record VoidArmorPayload(boolean state, boolean summonDragonBreath) implements CustomPacketPayload {
 
-	public static final Type<VoidArmorPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "void_armor"));
+	public static final Type<VoidArmorPayload> TYPE = new Type<>(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "void_armor"));
 
 	public static final StreamCodec<FriendlyByteBuf, VoidArmorPayload> STREAM_CODEC = StreamCodec.composite(
 			ByteBufCodecs.BOOL,

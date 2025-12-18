@@ -1,7 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.init;
 
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -83,6 +83,6 @@ public class SoundEventRegistry {
 	public static final DeferredHolder<SoundEvent, SoundEvent> TILTROS_PORTAL_TRIGGER = register("tiltros_portal_trigger");
 
 	private static DeferredHolder<SoundEvent, SoundEvent> register(String name) {
-		return SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, name)));
+		return SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, name)));
 	}
 }

@@ -6,13 +6,13 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
 public record GunShotBloodParticlePayload(ParticleOptions particleOptions, double x, double y,
                                           double z) implements CustomPacketPayload {
 
-	public static final Type<GunShotBloodParticlePayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "configurable_client_particle"));
+	public static final Type<GunShotBloodParticlePayload> TYPE = new Type<>(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "configurable_client_particle"));
 
 	public static final StreamCodec<RegistryFriendlyByteBuf, GunShotBloodParticlePayload> STREAM_CODEC = StreamCodec.composite(
 			ParticleTypes.STREAM_CODEC,

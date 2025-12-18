@@ -1,11 +1,11 @@
 package tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.mob;
 
-import net.minecraft.client.model.CowModel;
+import net.minecraft.client.model.animal.cow.CowModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.AgeableMobRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.layers.MooGlowMoonglowLayer;
 import tech.anonymoushacker1279.immersiveweapons.entity.animal.MooGlowEntity;
@@ -13,7 +13,7 @@ import tech.anonymoushacker1279.immersiveweapons.entity.animal.MooGlowEntity;
 @SuppressWarnings("deprecation")
 public class MooGlowRenderer extends AgeableMobRenderer<MooGlowEntity, LivingEntityRenderState, CowModel> {
 
-	private static final ResourceLocation TEXTURE_LOCATION = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/entity/mooglow/mooglow.png");
+	private static final Identifier TEXTURE_LOCATION = Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/entity/mooglow/mooglow.png");
 
 	public MooGlowRenderer(EntityRendererProvider.Context context) {
 		super(context, new CowModel(context.bakeLayer(ModelLayers.MOOSHROOM)), new CowModel(context.bakeLayer(ModelLayers.MOOSHROOM_BABY)), 0.7F);
@@ -26,7 +26,7 @@ public class MooGlowRenderer extends AgeableMobRenderer<MooGlowEntity, LivingEnt
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(LivingEntityRenderState renderState) {
+	public Identifier getTextureLocation(LivingEntityRenderState renderState) {
 		return TEXTURE_LOCATION;
 	}
 }

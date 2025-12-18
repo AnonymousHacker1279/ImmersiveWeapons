@@ -2,8 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.layers;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import net.minecraft.client.model.CowModel;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.model.animal.cow.CowModel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.block.BlockRenderDispatcher;
 import net.minecraft.client.renderer.block.model.BlockStateModel;
@@ -11,6 +10,7 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.world.level.block.state.BlockState;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
@@ -67,7 +67,7 @@ public class MooGlowMoonglowLayer extends RenderLayer<LivingEntityRenderState, C
 
 	private void submitBlock(PoseStack poseStack, SubmitNodeCollector nodeCollector, int packedLight, boolean renderOutline, int outlineColor, BlockState blockState, int packedOverlay, BlockStateModel model) {
 		if (renderOutline) {
-			nodeCollector.submitBlockModel(poseStack, RenderType.outline(TextureAtlas.LOCATION_BLOCKS), model, 0.0F, 0.0F, 0.0F, packedLight, packedOverlay, outlineColor);
+			nodeCollector.submitBlockModel(poseStack, RenderTypes.outline(TextureAtlas.LOCATION_BLOCKS), model, 0.0F, 0.0F, 0.0F, packedLight, packedOverlay, outlineColor);
 		} else {
 			nodeCollector.submitBlock(poseStack, blockState, packedLight, packedOverlay, outlineColor);
 		}

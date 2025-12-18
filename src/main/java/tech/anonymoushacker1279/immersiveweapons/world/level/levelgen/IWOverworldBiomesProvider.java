@@ -3,8 +3,8 @@ package tech.anonymoushacker1279.immersiveweapons.world.level.levelgen;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.biome.Climate;
@@ -19,9 +19,9 @@ import java.util.function.Consumer;
 
 public class IWOverworldBiomesProvider extends Region {
 
-	public static final ResourceKey<Biome> BATTLEFIELD = ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "battlefield"));
+	public static final ResourceKey<Biome> BATTLEFIELD = ResourceKey.create(Registries.BIOME, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "battlefield"));
 
-	public IWOverworldBiomesProvider(ResourceLocation name, RegionType type, int weight) {
+	public IWOverworldBiomesProvider(Identifier name, RegionType type, int weight) {
 		super(name, type, weight);
 	}
 

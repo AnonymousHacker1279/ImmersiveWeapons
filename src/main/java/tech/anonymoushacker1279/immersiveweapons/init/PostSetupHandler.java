@@ -4,8 +4,8 @@ import net.kyrptonaught.customportalapi.api.CustomPortalBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
@@ -21,7 +21,7 @@ import tech.anonymoushacker1279.immersiveweapons.mixin.RangedAttributeAccessor;
 
 public class PostSetupHandler {
 
-	private static final ResourceKey<Level> TILTROS = ResourceKey.create(Registries.DIMENSION, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "tiltros"));
+	private static final ResourceKey<Level> TILTROS = ResourceKey.create(Registries.DIMENSION, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "tiltros"));
 
 	/**
 	 * Initialize attributes which must be applied after setup.
@@ -47,7 +47,7 @@ public class PostSetupHandler {
 				.frame(BlockRegistry.TILTROS_PORTAL_FRAME.get())
 				.customPortalBlock(BlockRegistry.TILTROS_PORTAL.get())
 				.lightWithItem(ItemRegistry.AZUL_KEYSTONE.get())
-				.destination(TILTROS.location())
+				.destination(TILTROS.identifier())
 				.flatPortal()
 				.preTeleportEvent(entity -> IWConfigs.SERVER.tiltrosEnabled.getAsBoolean())
 				.postTeleportEvent(entity -> {

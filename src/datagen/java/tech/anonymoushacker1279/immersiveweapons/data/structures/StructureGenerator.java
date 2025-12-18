@@ -3,8 +3,8 @@ package tech.anonymoushacker1279.immersiveweapons.data.structures;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -47,7 +47,7 @@ public class StructureGenerator {
 	public static final ResourceKey<Structure> WATER_TOWER = createKey("water_tower");
 
 	private static ResourceKey<Structure> createKey(String name) {
-		return ResourceKey.create(Registries.STRUCTURE, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, name));
+		return ResourceKey.create(Registries.STRUCTURE, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, name));
 	}
 
 	public static void bootstrap(BootstrapContext<Structure> context) {

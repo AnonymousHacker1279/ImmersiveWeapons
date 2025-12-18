@@ -8,18 +8,17 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.util.ExtraCodecs;
 
 public class SmokeGrenadeParticleType extends ParticleType<SmokeGrenadeParticleOptions> {
 
 	public static final MapCodec<SmokeGrenadeParticleOptions> CODEC = RecordCodecBuilder.mapCodec(instance ->
 			instance.group(
-							ExtraCodecs.VECTOR3F.fieldOf("color").forGetter(SmokeGrenadeParticleOptions::color),
+							Codec.INT.fieldOf("color").forGetter(SmokeGrenadeParticleOptions::color),
 							Codec.FLOAT.fieldOf("scale").forGetter(SmokeGrenadeParticleOptions::scale))
 					.apply(instance, SmokeGrenadeParticleOptions::new));
 
 	public static final StreamCodec<FriendlyByteBuf, SmokeGrenadeParticleOptions> STREAM_CODEC = StreamCodec.composite(
-			ByteBufCodecs.VECTOR3F,
+			ByteBufCodecs.INT,
 			SmokeGrenadeParticleOptions::color,
 			ByteBufCodecs.FLOAT,
 			SmokeGrenadeParticleOptions::scale,

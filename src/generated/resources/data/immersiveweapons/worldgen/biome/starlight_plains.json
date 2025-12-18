@@ -1,4 +1,16 @@
 {
+  "attributes": {
+    "minecraft:audio/background_music": {
+      "default": {
+        "max_delay": 24000,
+        "min_delay": 12000,
+        "sound": "immersiveweapons:starlight_plains_background_music"
+      }
+    },
+    "minecraft:visual/fog_color": "#2b2f77",
+    "minecraft:visual/sky_color": "#070b34",
+    "minecraft:visual/water_fog_color": "#cbccbd"
+  },
   "carvers": [
     "minecraft:cave",
     "minecraft:cave_extra_underground",
@@ -7,24 +19,9 @@
   "creature_spawn_probability": 0.45,
   "downfall": 0.0,
   "effects": {
-    "fog_color": 2830199,
-    "foliage_color": 13885404,
-    "grass_color": 12312020,
-    "music": [
-      {
-        "data": {
-          "max_delay": 24000,
-          "min_delay": 6000,
-          "replace_current_music": true,
-          "sound": "immersiveweapons:starlight_plains_background_music"
-        },
-        "weight": 1
-      }
-    ],
-    "music_volume": 1.0,
-    "sky_color": 461620,
-    "water_color": 16316908,
-    "water_fog_color": 13356221
+    "foliage_color": "#d3dfdc",
+    "grass_color": "#bbddd4",
+    "water_color": "#f8f9ec"
   },
   "features": [
     [],

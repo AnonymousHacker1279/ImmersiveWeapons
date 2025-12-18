@@ -8,7 +8,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtAccounter;
 import net.minecraft.nbt.NbtIo;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.MultiPackResourceManager;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.util.datafix.DataFixTypes;
@@ -37,9 +37,9 @@ public record StructureUpdater(PackOutput output, MultiPackResourceManager resou
 	@Override
 	public CompletableFuture<?> run(CachedOutput cache) {
 		try {
-			for (Entry<ResourceLocation, Resource> entry : resources.listResources("structure", location -> true).entrySet()) {
+			for (Entry<Identifier, Resource> entry : resources.listResources("structure", location -> true).entrySet()) {
 				if (entry.getKey().getNamespace().equals(ImmersiveWeapons.MOD_ID)) {
-					ResourceLocation location = entry.getKey();
+					Identifier location = entry.getKey();
 					Resource resource = entry.getValue();
 
 					CompoundTag inputNBT = NbtIo.readCompressed(resource.open(), NbtAccounter.unlimitedHeap());
@@ -61,12 +61,12 @@ public record StructureUpdater(PackOutput output, MultiPackResourceManager resou
 	/**
 	 * Write an NBT file to the output folder.
 	 *
-	 * @param location the <code>ResourceLocation</code> of the resource
+	 * @param location the <code>Identifier</code> of the resource
 	 * @param data     the <code>CompoundTag</code> data
 	 * @param cache    a <code>CachedOutput</code> instance
 	 * @throws IOException if an error occurs while writing the file
 	 */
-	private void writeNBT(ResourceLocation location, CompoundTag data, CachedOutput cache) throws IOException {
+	private void writeNBT(Identifier location, CompoundTag data, CachedOutput cache) throws IOException {
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		NbtIo.writeCompressed(data, outputStream);
 		byte[] bytes = outputStream.toByteArray();

@@ -22,7 +22,7 @@ public abstract class EnchantmentMixin {
 		ResourceKey<Enchantment> enchantmentLocation = holder.getKey();
 
 		if (enchantmentLocation != null) {
-			int maxLevel = ServerConfig.getEnchantCap(enchantmentLocation.location().toString());
+			int maxLevel = ServerConfig.getEnchantCap(enchantmentLocation.identifier().toString());
 
 			if ((level >= maxLevel && maxLevel != -1) || (level >= 255)) {
 				return component.copy().withStyle(ChatFormatting.GOLD);
