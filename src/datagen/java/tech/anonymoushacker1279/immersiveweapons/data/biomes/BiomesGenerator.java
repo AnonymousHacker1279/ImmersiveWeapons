@@ -2,9 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.data.biomes;
 
 import net.minecraft.core.HolderGetter;
 import net.minecraft.data.worldgen.BiomeDefaultFeatures;
-import net.minecraft.world.attribute.AmbientSounds;
-import net.minecraft.world.attribute.BackgroundMusic;
-import net.minecraft.world.attribute.EnvironmentAttributes;
+import net.minecraft.world.attribute.*;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biome.TemperatureModifier;
@@ -70,6 +68,15 @@ public class BiomesGenerator {
 				.setAttribute(EnvironmentAttributes.FOG_COLOR, 2830199)
 				.setAttribute(EnvironmentAttributes.WATER_FOG_COLOR, 4732021)
 				.setAttribute(EnvironmentAttributes.BACKGROUND_MUSIC, new BackgroundMusic(SoundEventRegistry.TILTROS_WASTES_MUSIC))
+				.setAttribute(EnvironmentAttributes.AMBIENT_SOUNDS, new AmbientSounds(
+						Optional.of(SoundEventRegistry.TILTROS_WASTES_AMBIENT),
+						Optional.of(new AmbientMoodSettings(
+								SoundEventRegistry.TILTROS_WASTES_MOOD,
+								6000,
+								8,
+								2.0D)),
+						List.of(new AmbientAdditionsSettings(SoundEventRegistry.TILTROS_WASTES_AMBIENT_ADDITIONS, 0.0111d))
+				))
 				.build();
 	}
 
@@ -91,6 +98,15 @@ public class BiomesGenerator {
 				.setAttribute(EnvironmentAttributes.FOG_COLOR, 2830199)
 				.setAttribute(EnvironmentAttributes.WATER_FOG_COLOR, 13356221)
 				.setAttribute(EnvironmentAttributes.BACKGROUND_MUSIC, new BackgroundMusic(SoundEventRegistry.STARLIGHT_PLAINS_BACKGROUND_MUSIC))
+				.setAttribute(EnvironmentAttributes.AMBIENT_SOUNDS, new AmbientSounds(
+						Optional.of(SoundEventRegistry.STARLIGHT_PLAINS_AMBIENT),
+						Optional.of(new AmbientMoodSettings(
+								SoundEventRegistry.STARLIGHT_PLAINS_MOOD,
+								6000,
+								8,
+								2.0D)),
+						List.of(new AmbientAdditionsSettings(SoundEventRegistry.STARLIGHT_PLAINS_AMBIENT_ADDITIONS, 0.0111d))
+				))
 				.build();
 	}
 
@@ -112,6 +128,15 @@ public class BiomesGenerator {
 				.setAttribute(EnvironmentAttributes.FOG_COLOR, 5063491)
 				.setAttribute(EnvironmentAttributes.WATER_FOG_COLOR, 13356221)
 				.setAttribute(EnvironmentAttributes.BACKGROUND_MUSIC, new BackgroundMusic(SoundEventRegistry.DEADMANS_DESERT_BACKGROUND_MUSIC))
+				.setAttribute(EnvironmentAttributes.AMBIENT_SOUNDS, new AmbientSounds(
+						Optional.of(SoundEventRegistry.DEADMANS_DESERT_AMBIENT),
+						Optional.of(new AmbientMoodSettings(
+								SoundEventRegistry.DEADMANS_DESERT_MOOD,
+								6000,
+								8,
+								2.0D)),
+						List.of(new AmbientAdditionsSettings(SoundEventRegistry.DEADMANS_DESERT_AMBIENT_ADDITIONS, 0.0111d))
+				))
 				.build();
 	}
 

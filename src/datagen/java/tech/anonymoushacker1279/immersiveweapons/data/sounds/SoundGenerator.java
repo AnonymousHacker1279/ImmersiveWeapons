@@ -552,11 +552,67 @@ public class SoundGenerator extends SoundDefinitionsProvider {
 								SoundType.SOUND)
 						.stream()));
 
+		add(SoundEventRegistry.STARLIGHT_PLAINS_AMBIENT, definition()
+				.with(Sound.sound(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+										"biome/starlight_plains/ambient/ambient"),
+								SoundType.SOUND)
+						.stream()));
+
+		add(SoundEventRegistry.STARLIGHT_PLAINS_MOOD, definition()
+				.with(Sound.sound(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+										"biome/starlight_plains/mood/mood_0"),
+								SoundType.SOUND),
+						Sound.sound(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+										"biome/starlight_plains/mood/mood_1"),
+								SoundType.SOUND)));
+
+		add(SoundEventRegistry.STARLIGHT_PLAINS_AMBIENT_ADDITIONS, definition()
+				.with(Sound.sound(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+										"biome/starlight_plains/ambient/addition_0"),
+								SoundType.SOUND),
+						Sound.sound(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+										"biome/starlight_plains/ambient/addition_1"),
+								SoundType.SOUND),
+						Sound.sound(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+										"biome/starlight_plains/ambient/addition_2"),
+								SoundType.SOUND),
+						Sound.sound(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+										"biome/starlight_plains/ambient/addition_3"),
+								SoundType.SOUND)));
+
 		add(SoundEventRegistry.TILTROS_WASTES_MUSIC, definition()
 				.with(Sound.sound(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 										"biome/tiltros_wastes/music/music"),
 								SoundType.SOUND)
 						.stream()));
+
+		add(SoundEventRegistry.TILTROS_WASTES_AMBIENT, definition()
+				.with(Sound.sound(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+										"biome/tiltros_wastes/ambient/ambient"),
+								SoundType.SOUND)
+						.stream()));
+
+		add(SoundEventRegistry.TILTROS_WASTES_MOOD, definition()
+				.with(Sound.sound(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+										"biome/tiltros_wastes/mood/mood_0"),
+								SoundType.SOUND),
+						Sound.sound(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+										"biome/tiltros_wastes/mood/mood_1"),
+								SoundType.SOUND)));
+
+		add(SoundEventRegistry.TILTROS_WASTES_AMBIENT_ADDITIONS, definition()
+				.with(Sound.sound(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+										"biome/tiltros_wastes/ambient/addition_0"),
+								SoundType.SOUND),
+						Sound.sound(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+										"biome/tiltros_wastes/ambient/addition_1"),
+								SoundType.SOUND),
+						Sound.sound(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+										"biome/tiltros_wastes/ambient/addition_2"),
+								SoundType.SOUND),
+						Sound.sound(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+										"biome/tiltros_wastes/ambient/addition_3"),
+								SoundType.SOUND)));
 
 		add(SoundEventRegistry.DEADMANS_DESERT_THEME_1, definition()
 				.with(Sound.sound(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
@@ -579,6 +635,35 @@ public class SoundGenerator extends SoundDefinitionsProvider {
 										"biome/deadmans_desert/music/music_1"),
 								SoundType.SOUND)
 						.stream()));
+
+		add(SoundEventRegistry.DEADMANS_DESERT_MOOD, definition()
+				.with(Sound.sound(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+										"biome/deadmans_desert/mood/mood_0"),
+								SoundType.SOUND),
+						Sound.sound(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+										"biome/deadmans_desert/mood/mood_1"),
+								SoundType.SOUND)));
+
+		add(SoundEventRegistry.DEADMANS_DESERT_AMBIENT, definition()
+				.with(Sound.sound(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+										"biome/deadmans_desert/ambient/ambient"),
+								SoundType.SOUND)
+						.stream()));
+
+		add(SoundEventRegistry.DEADMANS_DESERT_AMBIENT_ADDITIONS, definition()
+				.with(Sound.sound(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+										"biome/deadmans_desert/ambient/addition_0"),
+								SoundType.SOUND),
+						Sound.sound(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+										"biome/deadmans_desert/ambient/addition_1"),
+								SoundType.SOUND),
+						Sound.sound(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+										"biome/deadmans_desert/ambient/addition_2"),
+								SoundType.SOUND),
+						Sound.sound(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+										"biome/deadmans_desert/ambient/addition_3"),
+								SoundType.SOUND)));
+
 
 		add(SoundEventRegistry.TILTROS_PORTAL_WHOOSH, definition()
 				.subtitle("subtitles.immersiveweapons.block.tiltros_portal.whoosh")

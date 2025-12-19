@@ -376,6 +376,13 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addSubtitle("entity.starmite.death", "Starmite dies");
 		addSubtitle("entity.starmite.hurt", "Starmite hurts");
 		addSubtitle("entity.starmite.step", "Starmite scuttles");
+
+		// Biome tracks
+		add("immersiveweapons.biome.deadmans_desert.music.music_0", "Deadman's Desert Theme 1");
+		add("immersiveweapons.biome.deadmans_desert.music.music_1", "Deadman's Desert Theme 2");
+		add("immersiveweapons.biome.tiltros_wastes.music.music", "Tiltros Wastes Theme");
+		add("immersiveweapons.biome.starlight_plains.music.music_0", "Starlight Plains Theme 1");
+		add("immersiveweapons.biome.starlight_plains.music.music_1", "Starlight Plains Theme 2");
 	}
 
 	private void addTooltips() {

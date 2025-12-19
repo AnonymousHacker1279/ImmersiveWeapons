@@ -1,5 +1,18 @@
 {
   "attributes": {
+    "minecraft:audio/ambient_sounds": {
+      "additions": {
+        "sound": "immersiveweapons:starlight_plains_ambient_additions",
+        "tick_chance": 0.0111
+      },
+      "loop": "immersiveweapons:starlight_plains_ambient",
+      "mood": {
+        "block_search_extent": 8,
+        "offset": 2.0,
+        "sound": "immersiveweapons:starlight_plains_mood",
+        "tick_delay": 6000
+      }
+    },
     "minecraft:audio/background_music": {
       "default": {
         "max_delay": 24000,

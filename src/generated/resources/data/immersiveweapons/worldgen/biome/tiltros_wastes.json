@@ -1,5 +1,18 @@
 {
   "attributes": {
+    "minecraft:audio/ambient_sounds": {
+      "additions": {
+        "sound": "immersiveweapons:tiltros_wastes_additions",
+        "tick_chance": 0.0111
+      },
+      "loop": "immersiveweapons:tiltros_wastes_ambient",
+      "mood": {
+        "block_search_extent": 8,
+        "offset": 2.0,
+        "sound": "immersiveweapons:tiltros_wastes_mood",
+        "tick_delay": 6000
+      }
+    },
     "minecraft:audio/background_music": {
       "default": {
         "max_delay": 24000,
