@@ -122,8 +122,7 @@
         "name": "immersiveweapons:biome/deadmans_desert/music/music_0",
         "stream": true
       }
-    ],
-    "subtitle": "subtitles.immersiveweapons.biome.deadmans_desert.music.music_0"
+    ]
   },
   "deadmans_desert_theme_2": {
     "sounds": [
@@ -131,8 +130,7 @@
         "name": "immersiveweapons:biome/deadmans_desert/music/music_1",
         "stream": true
       }
-    ],
-    "subtitle": "subtitles.immersiveweapons.biome.deadmans_desert.music.music_1"
+    ]
   },
   "dragons_breath_cannon_fire": {
     "sounds": [
@@ -397,8 +395,7 @@
         "name": "immersiveweapons:biome/starlight_plains/music/music_0",
         "stream": true
       }
-    ],
-    "subtitle": "subtitles.immersiveweapons.biome.starlight_plains.music.music_0"
+    ]
   },
   "starlight_plains_theme_2": {
     "sounds": [
@@ -406,8 +403,7 @@
         "name": "immersiveweapons:biome/starlight_plains/music/music_1",
         "stream": true
       }
-    ],
-    "subtitle": "subtitles.immersiveweapons.biome.starlight_plains.music.music_1"
+    ]
   },
   "starmite_ambient": {
     "sounds": [
@@ -525,8 +521,7 @@
         "name": "immersiveweapons:biome/tiltros_wastes/music/music",
         "stream": true
       }
-    ],
-    "subtitle": "subtitles.immersiveweapons.biome.tiltros_wastes.music.music"
+    ]
   },
   "ventus_armor_equip": {
     "sounds": [
