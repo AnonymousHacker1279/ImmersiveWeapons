@@ -214,9 +214,9 @@ abstract class FileOptimizationTask extends DefaultTask {
 		long size = file.length()
 		File tempFile = tempDir ? new File(tempDir, file.name) : file
 
-		if (command == "optipng") {
+		if (command == "oxipng") {
 			execOperations.exec {
-				commandLine command, "-q", "-o7", "-zm1-9", "-strip", "all", file
+				commandLine command, "-q", "-o", "max", "--strip", "all", "--alpha", "-Z", file
 			}
 		} else if (command == "ffmpeg") {
 			boolean isMusic = file.path.contains(File.separator + "music" + File.separator) ||
@@ -291,7 +291,7 @@ OptimizationUtils.initializeCacheFile(optimizationCacheFile)
 
 tasks.register("optimizePng", FileOptimizationTask) {
 	fileType = "PNG"
-	command = "optipng"
+	command = "oxipng"
 	cacheFile = optimizationCacheFile
 	resourcesDir = project.file("src/main/resources")
 	includePattern = '**/*.png'

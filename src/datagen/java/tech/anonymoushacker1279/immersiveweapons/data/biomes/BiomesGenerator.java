@@ -22,7 +22,6 @@ import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import java.util.List;
 import java.util.Optional;
 
-// TODO: add loop/mood/additions sounds
 public class BiomesGenerator {
 
 	public static Biome battlefieldBiome(HolderGetter<PlacedFeature> placedFeatures, HolderGetter<ConfiguredWorldCarver<?>> worldCarvers) {
