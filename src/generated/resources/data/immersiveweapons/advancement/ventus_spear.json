@@ -1,0 +1,36 @@
+{
+  "parent": "immersiveweapons:ventus_shard",
+  "criteria": {
+    "hold": {
+      "conditions": {
+        "items": [
+          {
+            "items": "immersiveweapons:ventus_spear"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersiveweapons.ventus_spear.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "immersiveweapons:ventus_spear"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.ventus_spear.title"
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ],
+  "rewards": {
+    "experience": 35
+  },
+  "sends_telemetry_event": true
+}

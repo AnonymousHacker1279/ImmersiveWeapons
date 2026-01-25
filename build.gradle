@@ -1,7 +1,7 @@
 plugins {
 	id 'java-library'
 	id 'maven-publish'
-	id 'net.neoforged.moddev' version '2.0.126'
+	id 'net.neoforged.moddev' version '2.0.137'
 	id "com.hypherionmc.modutils.modpublisher" version "2.1.8"
 	id 'idea'
 }
@@ -28,10 +28,6 @@ repositories {
 	maven {
 		name "Bai Maven"
 		url "https://maven2.bai.lol"
-	}
-	maven {
-		name "AzureDoom's Maven"
-		url 'https://maven.azuredoom.com/mods'
 	}
 	maven {
 		name "Jared's maven"
@@ -156,31 +152,23 @@ dependencies {
 	implementation 'org.jetbrains:annotations:26.0.2'
 	implementation 'javax.inject:javax.inject:1'
 
-	implementation(jarJar("com.github.glitchfiend:TerraBlender-neoforge:[${terrablender_version}]")) {
-		version {
-			prefer terrablender_version
-		}
-	}
+	// Include OpenPortals
+	implementation "tech.anonymoushacker1279.openportals:OpenPortals:${openportals_version}"
+	// Include Immersive Weapons Compatibility Bridge (IWCB)
+	implementation "tech.anonymoushacker1279.iwcompatbridge:IWCompatibilityBridge:${iwcb_version}"
 
-	implementation(jarJar("net.kyrptonaught.customportalapi:cpapireforged-neo-${minecraft_version}:[${custom_portals_api_version},)")) {
-		version {
-			prefer custom_portals_api_version
-		}
-	}
+	// Include TerraBlender
+	implementation "com.github.glitchfiend:TerraBlender-neoforge:${terrablender_version}"
 
 	// runtimeOnly "org.sinytra:wiki-exporter-neoforge:${wiki_exporter_version}"
-
-	// Include Immersive Weapons Compatibility Bridge (IWCB)
-	implementation "tech.anonymoushacker1279.iwcompatbridge:IWCompatBridge:${iwcb_version}"
 
 	// Include WTHIT and badpackets
 	runtimeOnly "mcp.mobius.waila:wthit:neo-${wthit_version}"
 	runtimeOnly "lol.bai:badpackets:neo-${badpackets_version}"
 
 	// Include JEI
-	// TODO: re-enable when updated
-	// compileOnly "mezz.jei:jei-1.21.10-neoforge-api:${jei_version}"
-	// runtimeOnly "mezz.jei:jei-1.21.10-neoforge:${jei_version}"
+	compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
+	runtimeOnly "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
 }
 
 tasks.named("processResources", ProcessResources).configure {
@@ -272,12 +260,12 @@ if (file("RELEASE_NOTES.md").exists()) {
 
 		curseDepends {
 			optional "immersive-weapons-compatibility-bridge"
-			embedded 'terrablender-neoforge', 'custom-portal-api-reforged'
+			required "terrablender-neoforge", "openportals"
 		}
 
 		modrinthDepends {
 			optional "immersive-weapons-compatibility-bridge"
-			embedded 'terrablender', 'custom-portal-api-reforged'
+			required "terrablender", "openportals"
 		}
 	}
 } else {

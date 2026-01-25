@@ -1,6 +1,5 @@
 package tech.anonymoushacker1279.immersiveweapons.init;
 
-import net.kyrptonaught.customportalapi.api.CustomPortalBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -18,6 +17,7 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.TooltipHandler;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.mixin.RangedAttributeAccessor;
+import tech.anonymoushacker1279.openportals.api.CustomPortalBuilder;
 
 public class PostSetupHandler {
 
@@ -45,7 +45,7 @@ public class PostSetupHandler {
 		// Initialize custom portals
 		new CustomPortalBuilder()
 				.frame(BlockRegistry.TILTROS_PORTAL_FRAME.get())
-				.customPortalBlock(BlockRegistry.TILTROS_PORTAL.get())
+				.tintColor(0, 31, 131)
 				.lightWithItem(ItemRegistry.AZUL_KEYSTONE.get())
 				.destination(TILTROS.identifier())
 				.flatPortal()

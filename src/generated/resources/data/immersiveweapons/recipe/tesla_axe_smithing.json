@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "#immersiveweapons:ingots/tesla",
+  "base": "minecraft:netherite_axe",
+  "result": {
+    "id": "immersiveweapons:tesla_axe"
+  },
+  "template": "immersiveweapons:tesla_smithing_template"
+}

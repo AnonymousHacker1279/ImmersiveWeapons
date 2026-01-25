@@ -50,6 +50,26 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		itemGetter = registries.lookupOrThrow(Registries.ITEM);
 	}
 
+	protected static String getConversionRecipeName(ItemLike pResult, ItemLike pIngredient) {
+		return getItemName(pResult) + "_from_" + getItemName(pIngredient);
+	}
+
+	protected static String getItemName(ItemLike itemLike) {
+		return Objects.requireNonNull(BuiltInRegistries.ITEM.getKey(itemLike.asItem())).getPath();
+	}
+
+	protected static String getItemName(ItemStack itemStack) {
+		return Objects.requireNonNull(BuiltInRegistries.ITEM.getKey(itemStack.getItem())).getPath();
+	}
+
+	protected static String getTagName(TagKey<Item> tagKey) {
+		return tagKey.location().getPath().replace('/', '_');
+	}
+
+	protected static String getHasName(ItemLike pItemLike) {
+		return "has_" + getItemName(pItemLike);
+	}
+
 	@Override
 	protected void buildRecipes() {
 		createFlagItems();
@@ -366,6 +386,17 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.group("ventus")
 				.unlockedBy("ventus_staff_core", has(VENTUS_STAFF_CORE))
 				.save(output);
+
+		// Ventus smithing template
+		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.MISC, ItemRegistry.VENTUS_SMITHING_TEMPLATE.get())
+				.define('a', IWItemTagGroups.VENTUS_SHARDS)
+				.define('b', Tags.Items.OBSIDIANS)
+				.pattern(" a ")
+				.pattern("aba")
+				.pattern(" a ")
+				.group("ventus")
+				.unlockedBy("ventus_shard", has(IWItemTagGroups.VENTUS_SHARDS))
+				.save(output);
 	}
 
 	private void createTeslaItems() {
@@ -399,6 +430,17 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.group("tesla")
 				.unlockedBy("tesla_ingot", has(IWItemTagGroups.TESLA_INGOTS));
 		create3x3Object(builder, IWItemTagGroups.TESLA_INGOTS);
+
+		// Tesla smithing template
+		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.MISC, ItemRegistry.TESLA_SMITHING_TEMPLATE.get())
+				.define('a', IWItemTagGroups.TESLA_INGOTS)
+				.define('b', Tags.Items.OBSIDIANS)
+				.pattern(" a ")
+				.pattern("aba")
+				.pattern(" a ")
+				.group("tesla")
+				.unlockedBy("tesla_ingot", has(IWItemTagGroups.TESLA_INGOTS))
+				.save(output);
 	}
 
 	private void createAstralItems() {
@@ -470,6 +512,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		createVoidUpgrade(ItemRegistry.STARSTORM_AXE.get(), ItemRegistry.ASTRAL_AXE.get(), ItemRegistry.VOID_AXE.get());
 		createVoidUpgrade(ItemRegistry.STARSTORM_SHOVEL.get(), ItemRegistry.ASTRAL_SHOVEL.get(), ItemRegistry.VOID_SHOVEL.get());
 		createVoidUpgrade(ItemRegistry.STARSTORM_HOE.get(), ItemRegistry.ASTRAL_HOE.get(), ItemRegistry.VOID_HOE.get());
+		createVoidUpgrade(ItemRegistry.STARSTORM_SPEAR.get(), ItemRegistry.ASTRAL_SPEAR.get(), ItemRegistry.VOID_SPEAR.get());
 		createVoidUpgrade(ItemRegistry.STARSTORM_GAUNTLET.get(), ItemRegistry.ASTRAL_GAUNTLET.get(), ItemRegistry.VOID_GAUNTLET.get());
 		createVoidUpgrade(ItemRegistry.STARSTORM_HELMET.get(), ItemRegistry.ASTRAL_HELMET.get(), ItemRegistry.VOID_HELMET.get());
 		createVoidUpgrade(ItemRegistry.STARSTORM_CHESTPLATE.get(), ItemRegistry.ASTRAL_CHESTPLATE.get(), ItemRegistry.VOID_CHESTPLATE.get());
@@ -654,6 +697,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 3, ItemRegistry.OBSIDIAN_ROD.get(), 2, ItemRegistry.ASTRAL_AXE.get(), 300);
 		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 1, ItemRegistry.OBSIDIAN_ROD.get(), 2, ItemRegistry.ASTRAL_SHOVEL.get(), 300);
 		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 2, ItemRegistry.OBSIDIAN_ROD.get(), 2, ItemRegistry.ASTRAL_HOE.get(), 300);
+		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 1, ItemRegistry.OBSIDIAN_ROD.get(), 2, ItemRegistry.ASTRAL_SPEAR.get(), 300);
 		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 5, ItemRegistry.ASTRAL_HELMET.get(), 600);
 		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 8, ItemRegistry.ASTRAL_CHESTPLATE.get(), 600);
 		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 7, ItemRegistry.ASTRAL_LEGGINGS.get(), 600);
@@ -665,6 +709,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		starForgeSmelting(IWItemTagGroups.STARSTORM_INGOTS, 3, ItemRegistry.OBSIDIAN_ROD.get(), 2, ItemRegistry.STARSTORM_AXE.get(), 300);
 		starForgeSmelting(IWItemTagGroups.STARSTORM_INGOTS, 1, ItemRegistry.OBSIDIAN_ROD.get(), 2, ItemRegistry.STARSTORM_SHOVEL.get(), 300);
 		starForgeSmelting(IWItemTagGroups.STARSTORM_INGOTS, 2, ItemRegistry.OBSIDIAN_ROD.get(), 2, ItemRegistry.STARSTORM_HOE.get(), 300);
+		starForgeSmelting(IWItemTagGroups.STARSTORM_INGOTS, 1, ItemRegistry.OBSIDIAN_ROD.get(), 2, ItemRegistry.STARSTORM_SPEAR.get(), 300);
 		starForgeSmelting(IWItemTagGroups.STARSTORM_INGOTS, 5, ItemRegistry.STARSTORM_HELMET.get(), 600);
 		starForgeSmelting(IWItemTagGroups.STARSTORM_INGOTS, 8, ItemRegistry.STARSTORM_CHESTPLATE.get(), 600);
 		starForgeSmelting(IWItemTagGroups.STARSTORM_INGOTS, 7, ItemRegistry.STARSTORM_LEGGINGS.get(), 600);
@@ -1466,14 +1511,6 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.group("pliers")
 				.unlockedBy("small_parts_metal_tool", has(ItemRegistry.TOOL_JOINT.get()))
 				.save(output);
-		// Wooden tool rod
-		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.MISC, ItemRegistry.WOODEN_TOOL_ROD.get())
-				.define('a', ItemTags.PLANKS)
-				.pattern(" a ")
-				.pattern("a  ")
-				.group("rods")
-				.unlockedBy("planks", has(ItemTags.PLANKS))
-				.save(output);
 
 		// Sulfur stuff
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.RAW_SULFUR_BLOCK_ITEM.get())
@@ -1681,24 +1718,13 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.save(output);
 	}
 
-	public void createPikeHead(Item pikeHead, TagKey<Item> material, TagKey<Item> nugget) {
-		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.COMBAT, pikeHead)
-				.pattern("a")
-				.pattern("b")
-				.define('a', nugget)
-				.define('b', material)
-				.unlockedBy("has_material", has(material))
-				.save(output);
-	}
-
-	public void createPike(Item pike, TagKey<Item> material, Item pikeHead) {
-		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.COMBAT, pike)
-				.pattern("a")
-				.pattern("b")
-				.pattern("c")
-				.define('a', pikeHead)
-				.define('b', material)
-				.define('c', ItemRegistry.WOODEN_TOOL_ROD.get())
+	public void createSpear(Item spear, TagKey<Item> handle, TagKey<Item> material) {
+		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.COMBAT, spear)
+				.pattern("  a")
+				.pattern(" b ")
+				.pattern("b  ")
+				.define('a', material)
+				.define('b', handle)
 				.unlockedBy("has_material", has(material))
 				.save(output);
 	}
@@ -2001,27 +2027,6 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.unlockedBy("ammunition_table", has(BlockRegistry.AMMUNITION_TABLE.get()))
 				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_ammunition_table_crafting");
 	}
-
-	protected static String getConversionRecipeName(ItemLike pResult, ItemLike pIngredient) {
-		return getItemName(pResult) + "_from_" + getItemName(pIngredient);
-	}
-
-	protected static String getItemName(ItemLike itemLike) {
-		return Objects.requireNonNull(BuiltInRegistries.ITEM.getKey(itemLike.asItem())).getPath();
-	}
-
-	protected static String getItemName(ItemStack itemStack) {
-		return Objects.requireNonNull(BuiltInRegistries.ITEM.getKey(itemStack.getItem())).getPath();
-	}
-
-	protected static String getTagName(TagKey<Item> tagKey) {
-		return tagKey.location().getPath().replace('/', '_');
-	}
-
-	protected static String getHasName(ItemLike pItemLike) {
-		return "has_" + getItemName(pItemLike);
-	}
-
 
 	public void bricks(Block bricks, ItemLike material) {
 		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.BUILDING_BLOCKS, bricks, 4)

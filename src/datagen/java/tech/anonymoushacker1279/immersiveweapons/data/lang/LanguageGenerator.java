@@ -51,29 +51,6 @@ public class LanguageGenerator extends IWLanguageProvider {
 		}
 	}
 
-	@Override
-	protected void addTranslations() {
-		init();
-
-		addBlocks();
-		addItems();
-		addEntityTypes();
-		addPotions();
-		addEffects();
-		addContainers();
-		addSubtitles();
-		addTooltips();
-		addKeys();
-		addMessages();
-		addDeathMessages();
-		addBiomes();
-		addAdvancements();
-		addConfigDescriptions();
-		addEnchantments();
-		addNetworkingFailures();
-		addMisc();
-	}
-
 	/**
 	 * Gather all language exclusions and overrides from the registry classes.
 	 */
@@ -118,22 +95,27 @@ public class LanguageGenerator extends IWLanguageProvider {
 		throw new IllegalArgumentException("No category found for class " + clazz);
 	}
 
-	private enum LanguageCategory {
-		BLOCKS(BlockRegistry.class),
-		ITEMS(ItemRegistry.class),
-		EFFECTS(EffectRegistry.class),
-		ENTITIES(EntityRegistry.class),
-		POTIONS(PotionRegistry.class);
+	@Override
+	protected void addTranslations() {
+		init();
 
-		private final Class<?> registryClass;
-
-		LanguageCategory(Class<?> registryClass) {
-			this.registryClass = registryClass;
-		}
-
-		public Class<?> getRegistryClass() {
-			return registryClass;
-		}
+		addBlocks();
+		addItems();
+		addEntityTypes();
+		addPotions();
+		addEffects();
+		addContainers();
+		addSubtitles();
+		addTooltips();
+		addKeys();
+		addMessages();
+		addDeathMessages();
+		addBiomes();
+		addAdvancements();
+		addConfigDescriptions();
+		addEnchantments();
+		addNetworkingFailures();
+		addMisc();
 	}
 
 	private void addBlocks() {
@@ -773,6 +755,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("molten_shovel.description", "Craft a Molten shovel");
 		addAdvancement("molten_hoe.title", "Molten Tools: Hoe");
 		addAdvancement("molten_hoe.description", "Craft a Molten hoe");
+		addAdvancement("molten_spear.title", "Molten Tools: Spear");
+		addAdvancement("molten_spear.description", "Craft a Molten spear");
 		addAdvancement("molten_tools.title", "Play With Fire");
 		addAdvancement("molten_tools.description", "Obtain every Molten tool");
 		addAdvancement("molten_armor.title", "Warm And Toasty");
@@ -797,6 +781,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("tesla_shovel.description", "Obtain a Tesla shovel");
 		addAdvancement("tesla_hoe.title", "Tesla Tools: Hoe");
 		addAdvancement("tesla_hoe.description", "Destroy your wealth by obtaining a Tesla hoe");
+		addAdvancement("tesla_spear.title", "Tesla Tools: Spear");
+		addAdvancement("tesla_spear.description", "Obtain a Tesla spear");
 		addAdvancement("tesla_tools.title", "Energized");
 		addAdvancement("tesla_tools.description", "Obtain a full set of Tesla tools");
 		addAdvancement("tesla_armor.title", "Maybe I Am A Tesla Coil");
@@ -817,6 +803,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("ventus_shovel.description", "Obtain a Ventus shovel");
 		addAdvancement("ventus_hoe.title", "Ventus Tools: Hoe");
 		addAdvancement("ventus_hoe.description", "Obtain a Ventus hoe");
+		addAdvancement("ventus_spear.title", "Ventus Tools: Spear");
+		addAdvancement("ventus_spear.description", "Craft a Ventus spear");
 		addAdvancement("ventus_tools.title", "Pretty Windy");
 		addAdvancement("ventus_tools.description", "Obtain a full set of Ventus tools");
 		addAdvancement("ventus_armor.title", "Almost Flying");
@@ -841,6 +829,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("astral_shovel.description", "Craft an Astral shovel");
 		addAdvancement("astral_hoe.title", "Astral Tools: Hoe");
 		addAdvancement("astral_hoe.description", "Craft an Astral hoe");
+		addAdvancement("astral_spear.title", "Astral Tools: Spear");
+		addAdvancement("astral_spear.description", "Craft an Astral spear");
 		addAdvancement("astral_tools.title", "Maximum Efficiency");
 		addAdvancement("astral_tools.description", "Obtain every Astral tool");
 		addAdvancement("astral_armor.title", "Celestial Protection");
@@ -861,6 +851,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("starstorm_shovel.description", "Craft a Starstorm shovel");
 		addAdvancement("starstorm_hoe.title", "Starstorm Tools: Hoe");
 		addAdvancement("starstorm_hoe.description", "Craft a Starstorm hoe");
+		addAdvancement("starstorm_spear.title", "Starstorm Tools: Spear");
+		addAdvancement("starstorm_spear.description", "Craft a Starstorm spear");
 		addAdvancement("starstorm_tools.title", "Raw Power");
 		addAdvancement("starstorm_tools.description", "Obtain every Starstorm tool");
 		addAdvancement("starstorm_armor.title", "Celestial Wrath");
@@ -881,6 +873,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("void_shovel.description", "Craft a Void shovel");
 		addAdvancement("void_hoe.title", "Void Tools: Hoe");
 		addAdvancement("void_hoe.description", "Craft a Void hoe");
+		addAdvancement("void_spear.title", "Void Tools: Spear");
+		addAdvancement("void_spear.description", "Craft a Void spear");
 		addAdvancement("void_tools.title", "The End of All Things");
 		addAdvancement("void_tools.description", "Obtain every Void tool");
 		addAdvancement("void_armor.title", "The End of All Protection");
@@ -1209,7 +1203,6 @@ public class LanguageGenerator extends IWLanguageProvider {
 		add("immersiveweapons.player_stats.health", "Health: %s/%s");
 		add("immersiveweapons.player_stats.armor", "Armor: %s (%s toughness)");
 		add("immersiveweapons.player_stats.armor.additional_resistance", "Additional Armor Resistance: %s%%");
-		add("immersiveweapons.player_stats.celestial_protection", "General Resistance: 5% (%s%% chance to negate damage next hit)");
 		add("immersiveweapons.player_stats.knockback_resistance", "Knockback Resistance: %s%%");
 		add("immersiveweapons.player_stats.accessory_resistance", "Accessory Resistance");
 		add("immersiveweapons.player_stats.accessory_resistance.general", "General Resistance: %s%%");
@@ -1277,5 +1270,23 @@ public class LanguageGenerator extends IWLanguageProvider {
 			capitalizedString.append(firstLetter.toUpperCase()).append(restOfWord).append(" ");
 		}
 		return capitalizedString.toString().trim();
+	}
+
+	private enum LanguageCategory {
+		BLOCKS(BlockRegistry.class),
+		ITEMS(ItemRegistry.class),
+		EFFECTS(EffectRegistry.class),
+		ENTITIES(EntityRegistry.class),
+		POTIONS(PotionRegistry.class);
+
+		private final Class<?> registryClass;
+
+		LanguageCategory(Class<?> registryClass) {
+			this.registryClass = registryClass;
+		}
+
+		public Class<?> getRegistryClass() {
+			return registryClass;
+		}
 	}
 }

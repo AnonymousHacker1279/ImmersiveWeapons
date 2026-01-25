@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "a": "#c:ingots/cobalt",
+    "b": "#c:rods/wooden"
+  },
+  "pattern": [
+    "  a",
+    " b ",
+    "b  "
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:cobalt_spear"
+  }
+}

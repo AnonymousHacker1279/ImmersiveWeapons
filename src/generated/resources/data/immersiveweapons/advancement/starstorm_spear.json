@@ -1,0 +1,36 @@
+{
+  "parent": "immersiveweapons:starstorm_ingot",
+  "criteria": {
+    "hold": {
+      "conditions": {
+        "items": [
+          {
+            "items": "immersiveweapons:starstorm_spear"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersiveweapons.starstorm_spear.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "immersiveweapons:starstorm_spear"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.starstorm_spear.title"
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ],
+  "rewards": {
+    "experience": 35
+  },
+  "sends_telemetry_event": true
+}

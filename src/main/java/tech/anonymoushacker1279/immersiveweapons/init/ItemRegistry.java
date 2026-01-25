@@ -43,7 +43,6 @@ import tech.anonymoushacker1279.immersiveweapons.util.markers.DatagenExclusionMa
 import tech.anonymoushacker1279.immersiveweapons.util.markers.DatagenExclusionMarker.Type;
 import tech.anonymoushacker1279.immersiveweapons.util.markers.LanguageEntryOverride;
 import tech.anonymoushacker1279.immersiveweapons.util.markers.TextureMetadataMarker;
-import tech.anonymoushacker1279.immersiveweapons.util.markers.TextureMetadataMarker.PredefinedGroups;
 import tech.anonymoushacker1279.immersiveweapons.util.markers.TooltipMarker;
 import tech.anonymoushacker1279.immersiveweapons.world.food.FoodItemProperties;
 
@@ -71,6 +70,9 @@ public class ItemRegistry {
 	@TextureMetadataMarker(frameTime = 5)
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "molten_tool")
 	public static final Supplier<MoltenHoe> MOLTEN_HOE = ITEMS.registerItem("molten_hoe", MoltenHoe::new);
+	@TextureMetadataMarker(frameTime = 5)
+	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "molten_tool")
+	public static final Supplier<MoltenSpear> MOLTEN_SPEAR = ITEMS.registerItem("molten_spear", MoltenSpear::new);
 	@TextureMetadataMarker(frameTime = 2)
 	@TooltipMarker(style = {ChatFormatting.AQUA, ChatFormatting.ITALIC})
 	public static final Supplier<TeslaSword> TESLA_SWORD = ITEMS.registerItem("tesla_sword", TeslaSword::new);
@@ -83,22 +85,27 @@ public class ItemRegistry {
 	@TextureMetadataMarker(frameTime = 3)
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC})
 	public static final Supplier<TeslaHoe> TESLA_HOE = ITEMS.registerItem("tesla_hoe", TeslaHoe::new);
+	@TextureMetadataMarker(frameTime = 3)
+	public static final Supplier<TeslaSpear> TESLA_SPEAR = ITEMS.registerItem("tesla_spear", TeslaSpear::new);
 	public static final Supplier<Item> COBALT_SWORD = ITEMS.registerItem("cobalt_sword", (properties) -> new Item(properties.sword(IWToolMaterials.COBALT, 3, -2.4f)));
 	public static final Supplier<Item> COBALT_PICKAXE = ITEMS.registerItem("cobalt_pickaxe", (properties) -> new Item(properties.pickaxe(IWToolMaterials.COBALT, 1, -2.8f)));
 	public static final Supplier<AxeItem> COBALT_AXE = ITEMS.registerItem("cobalt_axe", (properties) -> new AxeItem(IWToolMaterials.COBALT, 6, -3.1f, properties));
 	public static final Supplier<ShovelItem> COBALT_SHOVEL = ITEMS.registerItem("cobalt_shovel", (properties) -> new ShovelItem(IWToolMaterials.COBALT, 1.5f, -3.0f, properties));
 	public static final Supplier<HoeItem> COBALT_HOE = ITEMS.registerItem("cobalt_hoe", (properties) -> new HoeItem(IWToolMaterials.COBALT, -2, -1.0f, properties));
-	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.VENTUS_TOOLS)
+	public static final Supplier<Item> COBALT_SPEAR = ITEMS.registerItem("cobalt_spear", (properties -> new Item(properties.spear(IWToolMaterials.COBALT, 0.975F, 0.975F, 0.575F, 2.25F, 7.75F, 6.5F, 4.85F, 11F, 4.35F))));
+	@TextureMetadataMarker(frameTime = 5)
 	@TooltipMarker(style = {ChatFormatting.GRAY, ChatFormatting.ITALIC})
 	public static final Supplier<VentusSword> VENTUS_SWORD = ITEMS.registerItem("ventus_sword", VentusSword::new);
-	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.VENTUS_TOOLS)
+	@TextureMetadataMarker(frameTime = 5)
 	public static final Supplier<VentusPickaxe> VENTUS_PICKAXE = ITEMS.registerItem("ventus_pickaxe", VentusPickaxe::new);
-	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.VENTUS_TOOLS)
+	@TextureMetadataMarker(frameTime = 5)
 	public static final Supplier<VentusAxe> VENTUS_AXE = ITEMS.registerItem("ventus_axe", VentusAxe::new);
-	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.VENTUS_TOOLS)
+	@TextureMetadataMarker(frameTime = 5)
 	public static final Supplier<VentusShovel> VENTUS_SHOVEL = ITEMS.registerItem("ventus_shovel", VentusShovel::new);
-	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.VENTUS_TOOLS)
+	@TextureMetadataMarker(frameTime = 5)
 	public static final Supplier<VentusHoe> VENTUS_HOE = ITEMS.registerItem("ventus_hoe", VentusHoe::new);
+	@TextureMetadataMarker(frameTime = 5)
+	public static final Supplier<VentusSpear> VENTUS_SPEAR = ITEMS.registerItem("ventus_spear", VentusSpear::new);
 	@TextureMetadataMarker(frameTime = 5, frames = {0, 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1})
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC})
 	public static final Supplier<VentusStaff> VENTUS_STAFF = ITEMS.registerItem("ventus_staff", (properties) -> new VentusStaff(properties.durability(300)));
@@ -108,17 +115,20 @@ public class ItemRegistry {
 	public static final Supplier<AxeItem> ASTRAL_AXE = ITEMS.registerItem("astral_axe", (properties) -> new AxeItem(IWToolMaterials.ASTRAL, 5, -2.1f, properties));
 	public static final Supplier<ShovelItem> ASTRAL_SHOVEL = ITEMS.registerItem("astral_shovel", (properties) -> new ShovelItem(IWToolMaterials.ASTRAL, 1.5f, -2.1f, properties));
 	public static final Supplier<HoeItem> ASTRAL_HOE = ITEMS.registerItem("astral_hoe", (properties) -> new HoeItem(IWToolMaterials.ASTRAL, -4, 0.8f, properties));
-	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.STARSTORM_ITEMS)
+	public static final Supplier<Item> ASTRAL_SPEAR = ITEMS.registerItem("astral_spear", (properties -> new Item(properties.spear(IWToolMaterials.ASTRAL, 0.8f, 1.1f, 0.2f, 2.35f, 6.85f, 5.15f, 4.95f, 7f, 4.3f))));
+	@TextureMetadataMarker(frameTime = 4, frames = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0}, interpolate = true)
 	@TooltipMarker(style = {ChatFormatting.RED, ChatFormatting.ITALIC})
 	public static final Supplier<Item> STARSTORM_SWORD = ITEMS.registerItem("starstorm_sword", (properties) -> new Item(properties.sword(IWToolMaterials.STARSTORM, 3, -2.4f)));
-	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.STARSTORM_ITEMS)
+	@TextureMetadataMarker(frameTime = 4, frames = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0}, interpolate = true)
 	public static final Supplier<Item> STARSTORM_PICKAXE = ITEMS.registerItem("starstorm_pickaxe", (properties) -> new Item(properties.sword(IWToolMaterials.STARSTORM, 1, -2.8f)));
-	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.STARSTORM_ITEMS)
+	@TextureMetadataMarker(frameTime = 4, frames = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0}, interpolate = true)
 	public static final Supplier<AxeItem> STARSTORM_AXE = ITEMS.registerItem("starstorm_axe", (properties) -> new AxeItem(IWToolMaterials.STARSTORM, 5, -3.0f, properties));
-	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.STARSTORM_ITEMS)
+	@TextureMetadataMarker(frameTime = 4, frames = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0}, interpolate = true)
 	public static final Supplier<ShovelItem> STARSTORM_SHOVEL = ITEMS.registerItem("starstorm_shovel", (properties) -> new ShovelItem(IWToolMaterials.STARSTORM, 1.5f, -3.0f, properties));
-	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.STARSTORM_ITEMS)
+	@TextureMetadataMarker(frameTime = 4, frames = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0}, interpolate = true)
 	public static final Supplier<HoeItem> STARSTORM_HOE = ITEMS.registerItem("starstorm_hoe", (properties) -> new HoeItem(IWToolMaterials.STARSTORM, -7, 0.0f, properties));
+	@TextureMetadataMarker(frameTime = 4, frames = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0}, interpolate = true)
+	public static final Supplier<Item> STARSTORM_SPEAR = ITEMS.registerItem("starstorm_spear", (properties -> new Item(properties.spear(IWToolMaterials.STARSTORM, 1.4f, 1.4f, 0.3f, 2.35f, 6.85f, 5.15f, 4.95f, 7f, 4.45f))));
 	@TextureMetadataMarker(frameTime = 25, interpolate = true)
 	@TooltipMarker(style = {ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC})
 	public static final Supplier<Item> VOID_SWORD = ITEMS.registerItem("void_sword", (properties) -> new Item(properties.sword(IWToolMaterials.VOID, 3, -1.3f)));
@@ -130,6 +140,8 @@ public class ItemRegistry {
 	public static final Supplier<ShovelItem> VOID_SHOVEL = ITEMS.registerItem("void_shovel", (properties) -> new ShovelItem(IWToolMaterials.VOID, 1.5f, -1.9f, properties));
 	@TextureMetadataMarker(frameTime = 25, interpolate = true)
 	public static final Supplier<HoeItem> VOID_HOE = ITEMS.registerItem("void_hoe", (properties) -> new HoeItem(IWToolMaterials.VOID, -9, 1.1f, properties));
+	@TextureMetadataMarker(frameTime = 25, interpolate = true)
+	public static final Supplier<Item> VOID_SPEAR = ITEMS.registerItem("void_spear", (properties -> new Item(properties.spear(IWToolMaterials.VOID, 1.5f, 1.45f, 0.2f, 2.2f, 6.7f, 5f, 4.8f, 6.5f, 4.3f))));
 	public static final Supplier<TheSword> THE_SWORD = ITEMS.registerItem("the_sword", TheSword::new);
 
 	// Weapons
@@ -206,11 +218,10 @@ public class ItemRegistry {
 	public static final Supplier<Item> OBSIDIAN_SHARD = ITEMS.registerItem("obsidian_shard", Item::new);
 	public static final Supplier<Item> DIAMOND_SHARD = ITEMS.registerItem("diamond_shard", Item::new);
 	public static final Supplier<Item> OBSIDIAN_ROD = ITEMS.registerItem("obsidian_rod", Item::new);
-	public static final Supplier<Item> WOODEN_TOOL_ROD = ITEMS.registerItem("wooden_tool_rod", Item::new);
 	public static final Supplier<Item> COBALT_NUGGET = ITEMS.registerItem("cobalt_nugget", Item::new);
 	public static final Supplier<Item> COBALT_INGOT = ITEMS.registerItem("cobalt_ingot", Item::new);
 	public static final Supplier<Item> RAW_COBALT = ITEMS.registerItem("raw_cobalt", Item::new);
-	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.STARSTORM_ITEMS)
+	@TextureMetadataMarker(frameTime = 4, frames = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0}, interpolate = true)
 	public static final Supplier<Item> STARSTORM_INGOT = ITEMS.registerItem("starstorm_ingot", Item::new);
 	public static final Supplier<Item> ASTRAL_INGOT = ITEMS.registerItem("astral_ingot", Item::new);
 	public static final Supplier<Item> ASTRAL_NUGGET = ITEMS.registerItem("astral_nugget", Item::new);
@@ -222,6 +233,9 @@ public class ItemRegistry {
 	public static final Supplier<Item> CONDUCTIVE_ALLOY = ITEMS.registerItem("conductive_alloy", Item::new);
 	public static final Supplier<Item> MOLTEN_INGOT = ITEMS.registerItem("molten_ingot", (properties) -> new FuelItem(properties.fireResistant(), 24000));
 	public static final Supplier<Item> MOLTEN_SMITHING_TEMPLATE = ITEMS.registerItem("molten_smithing_template", (properties) -> new Item(properties.fireResistant()));
+	public static final Supplier<Item> VENTUS_SMITHING_TEMPLATE = ITEMS.registerItem("ventus_smithing_template", Item::new);
+	@TextureMetadataMarker(frameTime = 2)
+	public static final Supplier<Item> TESLA_SMITHING_TEMPLATE = ITEMS.registerItem("tesla_smithing_template", Item::new);
 	public static final Supplier<Item> ENDER_ESSENCE = ITEMS.registerItem("ender_essence", Item::new);
 	@TextureMetadataMarker(frameTime = 25, interpolate = true)
 	public static final Supplier<Item> VOID_INGOT = ITEMS.registerItem("void_ingot", Item::new);
@@ -507,16 +521,16 @@ public class ItemRegistry {
 	public static final Supplier<AstralArmorItem> ASTRAL_LEGGINGS = ITEMS.registerItem("astral_leggings", (properties) -> new AstralArmorItem(IWArmorMaterials.ASTRAL, ArmorType.LEGGINGS, properties));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "astral_armor")
 	public static final Supplier<AstralArmorItem> ASTRAL_BOOTS = ITEMS.registerItem("astral_boots", (properties) -> new AstralArmorItem(IWArmorMaterials.ASTRAL, ArmorType.BOOTS, properties));
-	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.STARSTORM_ITEMS)
+	@TextureMetadataMarker(frameTime = 4, frames = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0}, interpolate = true)
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "starstorm_armor")
 	public static final Supplier<Item> STARSTORM_HELMET = ITEMS.registerItem("starstorm_helmet", (properties) -> new Item(properties.humanoidArmor(IWArmorMaterials.STARSTORM, ArmorType.HELMET)));
-	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.STARSTORM_ITEMS)
+	@TextureMetadataMarker(frameTime = 4, frames = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0}, interpolate = true)
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "starstorm_armor")
 	public static final Supplier<Item> STARSTORM_CHESTPLATE = ITEMS.registerItem("starstorm_chestplate", (properties) -> new Item(properties.humanoidArmor(IWArmorMaterials.STARSTORM, ArmorType.CHESTPLATE)));
-	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.STARSTORM_ITEMS)
+	@TextureMetadataMarker(frameTime = 4, frames = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0}, interpolate = true)
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "starstorm_armor")
 	public static final Supplier<Item> STARSTORM_LEGGINGS = ITEMS.registerItem("starstorm_leggings", (properties) -> new Item(properties.humanoidArmor(IWArmorMaterials.STARSTORM, ArmorType.LEGGINGS)));
-	@TextureMetadataMarker(predefinedGroup = PredefinedGroups.STARSTORM_ITEMS)
+	@TextureMetadataMarker(frameTime = 4, frames = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0}, interpolate = true)
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, key = "starstorm_armor")
 	public static final Supplier<Item> STARSTORM_BOOTS = ITEMS.registerItem("starstorm_boots", (properties) -> new Item(properties.humanoidArmor(IWArmorMaterials.STARSTORM, ArmorType.BOOTS)));
 	@LanguageEntryOverride("Padded Leather Cap")

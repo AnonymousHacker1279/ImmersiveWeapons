@@ -21,14 +21,11 @@ public record ToolFamilies(TagKey<Item> material,
                            Supplier<? extends AxeItem> axe,
                            Supplier<? extends ShovelItem> shovel,
                            Supplier<? extends HoeItem> hoe,
+                           Supplier<? extends Item> spear,
                            Supplier<? extends GauntletItem> gauntlet,
                            Supplier<? extends ArrowItem> arrow,
                            @Nullable Supplier<? extends Item> smithingTemplateItem,
                            @Nullable ImmutableList<Item> smithingBaseUpgrades) {
-
-	private static final ImmutableList<Item> NETHERITE_TOOLS = ImmutableList.of(Items.NETHERITE_SWORD,
-			Items.NETHERITE_PICKAXE, Items.NETHERITE_AXE, Items.NETHERITE_SHOVEL, Items.NETHERITE_HOE,
-			ItemRegistry.NETHERITE_GAUNTLET.get());
 
 	public static final ToolFamilies COBALT = new ToolFamilies(
 			CommonItemTagGroups.COBALT_INGOTS,
@@ -39,27 +36,15 @@ public record ToolFamilies(TagKey<Item> material,
 			ItemRegistry.COBALT_AXE,
 			ItemRegistry.COBALT_SHOVEL,
 			ItemRegistry.COBALT_HOE,
+			ItemRegistry.COBALT_SPEAR,
 			ItemRegistry.COBALT_GAUNTLET,
 			ItemRegistry.COBALT_ARROW,
 			null,
 			null
 	);
-
-	public static final ToolFamilies MOLTEN = new ToolFamilies(
-			IWItemTagGroups.MOLTEN_INGOTS,
-			IWItemTagGroups.MOLTEN_SHARDS,
-			IWItemTagGroups.OBSIDIAN_RODS,
-			ItemRegistry.MOLTEN_SWORD,
-			ItemRegistry.MOLTEN_PICKAXE,
-			ItemRegistry.MOLTEN_AXE,
-			ItemRegistry.MOLTEN_SHOVEL,
-			ItemRegistry.MOLTEN_HOE,
-			ItemRegistry.MOLTEN_GAUNTLET,
-			ItemRegistry.MOLTEN_ARROW,
-			ItemRegistry.MOLTEN_SMITHING_TEMPLATE,
-			NETHERITE_TOOLS
-	);
-
+	private static final ImmutableList<Item> NETHERITE_TOOLS = ImmutableList.of(Items.NETHERITE_SWORD,
+			Items.NETHERITE_PICKAXE, Items.NETHERITE_AXE, Items.NETHERITE_SHOVEL, Items.NETHERITE_HOE,
+			Items.NETHERITE_SPEAR, ItemRegistry.NETHERITE_GAUNTLET.get());
 	public static final ToolFamilies TESLA = new ToolFamilies(
 			IWItemTagGroups.TESLA_INGOTS,
 			IWItemTagGroups.TESLA_NUGGETS,
@@ -69,12 +54,12 @@ public record ToolFamilies(TagKey<Item> material,
 			ItemRegistry.TESLA_AXE,
 			ItemRegistry.TESLA_SHOVEL,
 			ItemRegistry.TESLA_HOE,
+			ItemRegistry.TESLA_SPEAR,
 			ItemRegistry.TESLA_GAUNTLET,
 			ItemRegistry.TESLA_ARROW,
-			null,
-			null
+			ItemRegistry.TESLA_SMITHING_TEMPLATE,
+			NETHERITE_TOOLS
 	);
-
 	public static final ToolFamilies VENTUS = new ToolFamilies(
 			IWItemTagGroups.VENTUS_SHARDS,
 			IWItemTagGroups.VENTUS_SHARDS,
@@ -84,12 +69,27 @@ public record ToolFamilies(TagKey<Item> material,
 			ItemRegistry.VENTUS_AXE,
 			ItemRegistry.VENTUS_SHOVEL,
 			ItemRegistry.VENTUS_HOE,
+			ItemRegistry.VENTUS_SPEAR,
 			ItemRegistry.VENTUS_GAUNTLET,
 			ItemRegistry.VENTUS_ARROW,
-			null,
-			null
+			ItemRegistry.VENTUS_SMITHING_TEMPLATE,
+			NETHERITE_TOOLS
 	);
-
+	public static final ToolFamilies MOLTEN = new ToolFamilies(
+			IWItemTagGroups.MOLTEN_INGOTS,
+			IWItemTagGroups.MOLTEN_SHARDS,
+			IWItemTagGroups.OBSIDIAN_RODS,
+			ItemRegistry.MOLTEN_SWORD,
+			ItemRegistry.MOLTEN_PICKAXE,
+			ItemRegistry.MOLTEN_AXE,
+			ItemRegistry.MOLTEN_SHOVEL,
+			ItemRegistry.MOLTEN_HOE,
+			ItemRegistry.MOLTEN_SPEAR,
+			ItemRegistry.MOLTEN_GAUNTLET,
+			ItemRegistry.MOLTEN_ARROW,
+			ItemRegistry.MOLTEN_SMITHING_TEMPLATE,
+			NETHERITE_TOOLS
+	);
 	public static final Collection<ToolFamilies> FAMILIES = ImmutableList.of(COBALT, MOLTEN, VENTUS, TESLA);
 	public static final ImmutableList<ToolFamilies> FAMILIES_USE_NUGGETS_FOR_PROJECTILES = ImmutableList.of(MOLTEN, VENTUS);
 }

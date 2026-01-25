@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "#immersiveweapons:shards/ventus",
+  "base": "minecraft:netherite_helmet",
+  "result": {
+    "id": "immersiveweapons:ventus_helmet"
+  },
+  "template": "immersiveweapons:ventus_smithing_template"
+}

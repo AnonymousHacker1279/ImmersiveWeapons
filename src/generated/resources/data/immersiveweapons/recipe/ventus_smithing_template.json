@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "ventus",
+  "key": {
+    "a": "#immersiveweapons:shards/ventus",
+    "b": "#c:obsidians"
+  },
+  "pattern": [
+    " a ",
+    "aba",
+    " a "
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:ventus_smithing_template"
+  }
+}

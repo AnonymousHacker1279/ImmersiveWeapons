@@ -373,6 +373,12 @@ public class ClientModEventSubscriber {
 		event.register((blockState, tintGetter, pos, color) ->
 						tintGetter != null && pos != null ? BiomeColors.getAverageGrassColor(tintGetter, pos) : GrassColor.getDefaultColor(),
 				BlockRegistry.PITFALL.get());
+		event.register((blockState, tintGetter, pos, color) ->
+						tintGetter != null && pos != null ? BiomeColors.getAverageGrassColor(tintGetter, pos) : GrassColor.getDefaultColor(),
+				BlockRegistry.BEAR_TRAP.get());
+		event.register((blockState, tintGetter, pos, color) ->
+						tintGetter != null && pos != null ? BiomeColors.getAverageGrassColor(tintGetter, pos) : GrassColor.getDefaultColor(),
+				BlockRegistry.LANDMINE.get());
 	}
 
 	@SubscribeEvent

@@ -38,6 +38,22 @@ import java.util.function.Consumer;
 
 public record AdvancementGenerator() implements AdvancementSubProvider {
 
+	private static Identifier prefixRL(String string) {
+		return Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, string);
+	}
+
+	private static String prefixString(String string) {
+		return ImmersiveWeapons.MOD_ID + ":" + string;
+	}
+
+	private static MutableComponent createTitle(String key) {
+		return Component.translatable("advancements.immersiveweapons." + key + ".title");
+	}
+
+	private static MutableComponent createDescription(String key) {
+		return Component.translatable("advancements.immersiveweapons." + key + ".description");
+	}
+
 	@Override
 	public void generate(Provider provider, Consumer<AdvancementHolder> consumer) {
 		HolderGetter<Item> itemLookup = provider.lookupOrThrow(Registries.ITEM);
@@ -125,6 +141,16 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 				.save(consumer, prefixString("molten_hoe"));
 
 		Builder.advancement().parent(smeltMoltenIngot)
+				.display(ItemRegistry.MOLTEN_SPEAR.get(),
+						createTitle("molten_spear"),
+						createDescription("molten_spear"),
+						null, AdvancementType.TASK, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLTEN_SPEAR.get()))
+				.rewards(AdvancementRewards.Builder.experience(35))
+				.save(consumer, prefixString("molten_spear"));
+
+		Builder.advancement().parent(smeltMoltenIngot)
 				.display(BlockItemRegistry.MOLTEN_BLOCK_ITEM.get(),
 						createTitle("molten_tools"),
 						createDescription("molten_tools"),
@@ -132,17 +158,14 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 				.addCriterion("have_advancements",
 						PlayerTrigger.TriggerInstance.located(
 								EntityPredicate.Builder.entity().subPredicate(
-										PlayerPredicate.Builder.player().checkAdvancementDone(
-												prefixRL("molten_sword"), true
-										).checkAdvancementDone(
-												prefixRL("molten_pickaxe"), true
-										).checkAdvancementDone(
-												prefixRL("molten_axe"), true
-										).checkAdvancementDone(
-												prefixRL("molten_shovel"), true
-										).checkAdvancementDone(
-												prefixRL("molten_hoe"), true
-										).build()
+										PlayerPredicate.Builder.player()
+												.checkAdvancementDone(prefixRL("molten_sword"), true)
+												.checkAdvancementDone(prefixRL("molten_pickaxe"), true)
+												.checkAdvancementDone(prefixRL("molten_axe"), true)
+												.checkAdvancementDone(prefixRL("molten_shovel"), true)
+												.checkAdvancementDone(prefixRL("molten_hoe"), true)
+												.checkAdvancementDone(prefixRL("molten_spear"), true)
+												.build()
 								)
 						)
 				)
@@ -253,6 +276,16 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 				.save(consumer, prefixString("tesla_hoe"));
 
 		Builder.advancement().parent(craftTeslaIngot)
+				.display(ItemRegistry.TESLA_SPEAR.get(),
+						createTitle("tesla_spear"),
+						createDescription("tesla_spear"),
+						null, AdvancementType.TASK, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.TESLA_SPEAR.get()))
+				.rewards(AdvancementRewards.Builder.experience(35))
+				.save(consumer, prefixString("tesla_spear"));
+
+		Builder.advancement().parent(craftTeslaIngot)
 				.display(BlockItemRegistry.TESLA_BLOCK_ITEM.get(),
 						createTitle("tesla_tools"),
 						createDescription("tesla_tools"),
@@ -260,17 +293,14 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 				.addCriterion("have_advancements",
 						PlayerTrigger.TriggerInstance.located(
 								EntityPredicate.Builder.entity().subPredicate(
-										PlayerPredicate.Builder.player().checkAdvancementDone(
-												prefixRL("tesla_sword"), true
-										).checkAdvancementDone(
-												prefixRL("tesla_pickaxe"), true
-										).checkAdvancementDone(
-												prefixRL("tesla_axe"), true
-										).checkAdvancementDone(
-												prefixRL("tesla_shovel"), true
-										).checkAdvancementDone(
-												prefixRL("tesla_hoe"), true
-										).build()
+										PlayerPredicate.Builder.player()
+												.checkAdvancementDone(prefixRL("tesla_sword"), true)
+												.checkAdvancementDone(prefixRL("tesla_pickaxe"), true)
+												.checkAdvancementDone(prefixRL("tesla_axe"), true)
+												.checkAdvancementDone(prefixRL("tesla_shovel"), true)
+												.checkAdvancementDone(prefixRL("tesla_hoe"), true)
+												.checkAdvancementDone(prefixRL("tesla_spear"), true)
+												.build()
 								)
 						)
 				)
@@ -360,6 +390,16 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 				.save(consumer, prefixString("ventus_hoe"));
 
 		Builder.advancement().parent(obtainVentusShard)
+				.display(ItemRegistry.VENTUS_SPEAR.get(),
+						createTitle("ventus_spear"),
+						createDescription("ventus_spear"),
+						null, AdvancementType.TASK, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VENTUS_SPEAR.get()))
+				.rewards(AdvancementRewards.Builder.experience(35))
+				.save(consumer, prefixString("ventus_spear"));
+
+		Builder.advancement().parent(obtainVentusShard)
 				.display(BlockItemRegistry.VENTUS_ORE_ITEM.get(),
 						createTitle("ventus_tools"),
 						createDescription("ventus_tools"),
@@ -367,17 +407,14 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 				.addCriterion("have_advancements",
 						PlayerTrigger.TriggerInstance.located(
 								EntityPredicate.Builder.entity().subPredicate(
-										PlayerPredicate.Builder.player().checkAdvancementDone(
-												prefixRL("ventus_sword"), true
-										).checkAdvancementDone(
-												prefixRL("ventus_pickaxe"), true
-										).checkAdvancementDone(
-												prefixRL("ventus_axe"), true
-										).checkAdvancementDone(
-												prefixRL("ventus_shovel"), true
-										).checkAdvancementDone(
-												prefixRL("ventus_hoe"), true
-										).build()
+										PlayerPredicate.Builder.player()
+												.checkAdvancementDone(prefixRL("ventus_sword"), true)
+												.checkAdvancementDone(prefixRL("ventus_pickaxe"), true)
+												.checkAdvancementDone(prefixRL("ventus_axe"), true)
+												.checkAdvancementDone(prefixRL("ventus_shovel"), true)
+												.checkAdvancementDone(prefixRL("ventus_hoe"), true)
+												.checkAdvancementDone(prefixRL("ventus_spear"), true)
+												.build()
 								)
 						)
 				)
@@ -485,6 +522,16 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 				.save(consumer, prefixString("astral_hoe"));
 
 		Builder.advancement().parent(obtainAstralIngot)
+				.display(ItemRegistry.ASTRAL_SPEAR.get(),
+						createTitle("astral_spear"),
+						createDescription("astral_spear"),
+						null, AdvancementType.TASK, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.ASTRAL_SPEAR.get()))
+				.rewards(AdvancementRewards.Builder.experience(35))
+				.save(consumer, prefixString("astral_spear"));
+
+		Builder.advancement().parent(obtainAstralIngot)
 				.display(BlockItemRegistry.ASTRAL_BLOCK_ITEM.get(),
 						createTitle("astral_tools"),
 						createDescription("astral_tools"),
@@ -492,17 +539,14 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 				.addCriterion("have_advancements",
 						PlayerTrigger.TriggerInstance.located(
 								EntityPredicate.Builder.entity().subPredicate(
-										PlayerPredicate.Builder.player().checkAdvancementDone(
-												prefixRL("astral_sword"), true
-										).checkAdvancementDone(
-												prefixRL("astral_pickaxe"), true
-										).checkAdvancementDone(
-												prefixRL("astral_axe"), true
-										).checkAdvancementDone(
-												prefixRL("astral_shovel"), true
-										).checkAdvancementDone(
-												prefixRL("astral_hoe"), true
-										).build()
+										PlayerPredicate.Builder.player()
+												.checkAdvancementDone(prefixRL("astral_sword"), true)
+												.checkAdvancementDone(prefixRL("astral_pickaxe"), true)
+												.checkAdvancementDone(prefixRL("astral_axe"), true)
+												.checkAdvancementDone(prefixRL("astral_shovel"), true)
+												.checkAdvancementDone(prefixRL("astral_hoe"), true)
+												.checkAdvancementDone(prefixRL("astral_spear"), true)
+												.build()
 								)
 						)
 				)
@@ -591,6 +635,16 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 				.save(consumer, prefixString("starstorm_hoe"));
 
 		Builder.advancement().parent(obtainStarstormIngot)
+				.display(ItemRegistry.STARSTORM_SPEAR.get(),
+						createTitle("starstorm_spear"),
+						createDescription("starstorm_spear"),
+						null, AdvancementType.TASK, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.STARSTORM_SPEAR.get()))
+				.rewards(AdvancementRewards.Builder.experience(35))
+				.save(consumer, prefixString("starstorm_spear"));
+
+		Builder.advancement().parent(obtainStarstormIngot)
 				.display(BlockItemRegistry.STARSTORM_BLOCK_ITEM.get(),
 						createTitle("starstorm_tools"),
 						createDescription("starstorm_tools"),
@@ -598,17 +652,14 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 				.addCriterion("have_advancements",
 						PlayerTrigger.TriggerInstance.located(
 								EntityPredicate.Builder.entity().subPredicate(
-										PlayerPredicate.Builder.player().checkAdvancementDone(
-												prefixRL("starstorm_sword"), true
-										).checkAdvancementDone(
-												prefixRL("starstorm_pickaxe"), true
-										).checkAdvancementDone(
-												prefixRL("starstorm_axe"), true
-										).checkAdvancementDone(
-												prefixRL("starstorm_shovel"), true
-										).checkAdvancementDone(
-												prefixRL("starstorm_hoe"), true
-										).build()
+										PlayerPredicate.Builder.player()
+												.checkAdvancementDone(prefixRL("starstorm_sword"), true)
+												.checkAdvancementDone(prefixRL("starstorm_pickaxe"), true)
+												.checkAdvancementDone(prefixRL("starstorm_axe"), true)
+												.checkAdvancementDone(prefixRL("starstorm_shovel"), true)
+												.checkAdvancementDone(prefixRL("starstorm_hoe"), true)
+												.checkAdvancementDone(prefixRL("starstorm_spear"), true)
+												.build()
 								)
 						)
 				)
@@ -696,6 +747,38 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 				.save(consumer, prefixString("void_hoe"));
 
 		Builder.advancement().parent(obtainVoidIngot)
+				.display(ItemRegistry.VOID_SPEAR.get(),
+						createTitle("void_spear"),
+						createDescription("void_spear"),
+						null, AdvancementType.TASK, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VOID_SPEAR.get()))
+				.rewards(AdvancementRewards.Builder.experience(50))
+				.save(consumer, prefixString("void_spear"));
+
+		Builder.advancement().parent(obtainVoidIngot)
+				.display(BlockItemRegistry.VOID_ORE_ITEM.get(),
+						createTitle("void_tools"),
+						createDescription("void_tools"),
+						null, AdvancementType.CHALLENGE, true, true, false)
+				.addCriterion("have_advancements",
+						PlayerTrigger.TriggerInstance.located(
+								EntityPredicate.Builder.entity().subPredicate(
+										PlayerPredicate.Builder.player()
+												.checkAdvancementDone(prefixRL("void_sword"), true)
+												.checkAdvancementDone(prefixRL("void_pickaxe"), true)
+												.checkAdvancementDone(prefixRL("void_axe"), true)
+												.checkAdvancementDone(prefixRL("void_shovel"), true)
+												.checkAdvancementDone(prefixRL("void_hoe"), true)
+												.checkAdvancementDone(prefixRL("void_spear"), true)
+												.build()
+								)
+						)
+				)
+				.rewards(AdvancementRewards.Builder.experience(200))
+				.save(consumer, prefixString("void_tools"));
+
+		Builder.advancement().parent(obtainVoidIngot)
 				.display(ItemRegistry.VOID_HELMET.get(),
 						createTitle("void_armor"),
 						createDescription("void_armor"),
@@ -751,15 +834,6 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 				.save(consumer, prefixString("padded_leather_armor"));
 
 		// Tool advancements
-		AdvancementHolder craftToolRod = Builder.advancement().parent(root)
-				.display(ItemRegistry.WOODEN_TOOL_ROD.get(),
-						createTitle("tool_rod"),
-						createDescription("tool_rod"),
-						null, AdvancementType.TASK, true, true, false)
-				.addCriterion("hold",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.WOODEN_TOOL_ROD.get()))
-				.save(consumer, prefixString("tool_rod"));
-
 		AdvancementHolder shards = Builder.advancement().parent(root)
 				.display(ItemRegistry.STONE_SHARD.get(),
 						createTitle("shards"),
@@ -1618,21 +1692,5 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 								LocationPredicate.Builder.inDimension(DimensionGenerator.TILTROS_LEVEL)))
 				.rewards(AdvancementRewards.Builder.experience(150))
 				.save(consumer, prefixString("tiltros"));
-	}
-
-	private static Identifier prefixRL(String string) {
-		return Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, string);
-	}
-
-	private static String prefixString(String string) {
-		return ImmersiveWeapons.MOD_ID + ":" + string;
-	}
-
-	private static MutableComponent createTitle(String key) {
-		return Component.translatable("advancements.immersiveweapons." + key + ".title");
-	}
-
-	private static MutableComponent createDescription(String key) {
-		return Component.translatable("advancements.immersiveweapons." + key + ".description");
 	}
 }

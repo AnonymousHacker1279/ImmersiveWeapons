@@ -19,9 +19,6 @@ public record ArmorFamilies(TagKey<Item> material,
                             @Nullable Supplier<? extends Item> smithingTemplateItem,
                             @Nullable ImmutableList<Item> smithingBaseUpgrades) {
 
-	private static final ImmutableList<Item> NETHERITE_ARMOR = ImmutableList.of(Items.NETHERITE_HELMET,
-			Items.NETHERITE_CHESTPLATE, Items.NETHERITE_LEGGINGS, Items.NETHERITE_BOOTS);
-
 	public static final ArmorFamilies COBALT = new ArmorFamilies(
 			CommonItemTagGroups.COBALT_INGOTS,
 			ItemRegistry.COBALT_HELMET,
@@ -31,7 +28,8 @@ public record ArmorFamilies(TagKey<Item> material,
 			null,
 			null
 	);
-
+	private static final ImmutableList<Item> NETHERITE_ARMOR = ImmutableList.of(Items.NETHERITE_HELMET,
+			Items.NETHERITE_CHESTPLATE, Items.NETHERITE_LEGGINGS, Items.NETHERITE_BOOTS);
 	public static final ArmorFamilies MOLTEN = new ArmorFamilies(
 			IWItemTagGroups.MOLTEN_INGOTS,
 			ItemRegistry.MOLTEN_HELMET,
@@ -48,8 +46,8 @@ public record ArmorFamilies(TagKey<Item> material,
 			ItemRegistry.VENTUS_CHESTPLATE,
 			ItemRegistry.VENTUS_LEGGINGS,
 			ItemRegistry.VENTUS_BOOTS,
-			null,
-			null
+			ItemRegistry.VENTUS_SMITHING_TEMPLATE,
+			NETHERITE_ARMOR
 	);
 
 	public static final ArmorFamilies TESLA = new ArmorFamilies(
@@ -58,8 +56,8 @@ public record ArmorFamilies(TagKey<Item> material,
 			ItemRegistry.TESLA_CHESTPLATE,
 			ItemRegistry.TESLA_LEGGINGS,
 			ItemRegistry.TESLA_BOOTS,
-			null,
-			null
+			ItemRegistry.TESLA_SMITHING_TEMPLATE,
+			NETHERITE_ARMOR
 	);
 
 	public static final ImmutableList<ArmorFamilies> FAMILIES = ImmutableList.of(COBALT, MOLTEN, VENTUS, TESLA);

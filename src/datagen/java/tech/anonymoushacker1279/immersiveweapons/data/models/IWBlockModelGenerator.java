@@ -1,6 +1,5 @@
 package tech.anonymoushacker1279.immersiveweapons.data.models;
 
-import net.kyrptonaught.customportalapi.CustomPortalBlock;
 import net.minecraft.client.color.item.GrassColorSource;
 import net.minecraft.client.color.item.ItemTintSource;
 import net.minecraft.client.data.models.BlockModelGenerators;
@@ -10,14 +9,11 @@ import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.model.*;
 import net.minecraft.client.renderer.block.model.VariantMutator;
-import net.minecraft.core.Direction;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.neoforged.neoforge.client.model.generators.template.ExtendedModelTemplate;
-import net.neoforged.neoforge.client.model.generators.template.ExtendedModelTemplateBuilder;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.*;
 import tech.anonymoushacker1279.immersiveweapons.block.skull.CustomSkullTypes;
@@ -204,7 +200,6 @@ public class IWBlockModelGenerator {
 		blockModels.createTrivialCube(BlockRegistry.CHAMPION_BASE.get());
 		blockModels.createTrivialCube(BlockRegistry.CHAMPION_KEYCARD_BRICKS.get());
 		blockModels.createTrivialCube(BlockRegistry.VOID_ORE.get());
-		generateTiltrosPortal(blockModels, BlockRegistry.TILTROS_PORTAL.get());
 	}
 
 	/**
@@ -936,63 +931,5 @@ public class IWBlockModelGenerator {
 		models.createRotatedPillarWithHorizontalVariant(block,
 				TexturedModel.createDefault(b -> mapping, normalTemplate),
 				TexturedModel.createDefault(b -> mapping, horizontalTemplate));
-	}
-
-	/**
-	 * Generate a tiltros portal type blockstate and model.
-	 *
-	 * @param models the block model generator
-	 * @param block  the block to generate the state and model for
-	 */
-	private static void generateTiltrosPortal(BlockModelGenerators models, Block block) {
-		TextureMapping mapping = TextureMapping.defaultTexture(block)
-				.put(TextureSlot.PARTICLE, ModelLocationUtils.getModelLocation(block));
-
-		ExtendedModelTemplate templateEW = ExtendedModelTemplateBuilder.builder()
-				.suffix("_ew")
-				.renderType("translucent")
-				.requiredTextureSlot(TextureSlot.TEXTURE)
-				.requiredTextureSlot(TextureSlot.PARTICLE)
-				.element(builder -> builder
-						.from(6, 0, 0)
-						.to(10, 16, 16)
-						.texture(TextureSlot.TEXTURE)
-						.face(Direction.EAST, faceBuilder -> faceBuilder.texture(TextureSlot.TEXTURE))
-						.face(Direction.WEST, faceBuilder -> faceBuilder.texture(TextureSlot.TEXTURE)))
-				.build();
-
-		ExtendedModelTemplate templateNS = ExtendedModelTemplateBuilder.builder()
-				.suffix("_ns")
-				.renderType("translucent")
-				.requiredTextureSlot(TextureSlot.TEXTURE)
-				.requiredTextureSlot(TextureSlot.PARTICLE)
-				.element(builder -> builder
-						.from(0, 0, 6)
-						.to(16, 16, 10)
-						.texture(TextureSlot.TEXTURE)
-						.face(Direction.NORTH, faceBuilder -> faceBuilder.texture(TextureSlot.TEXTURE))
-						.face(Direction.SOUTH, faceBuilder -> faceBuilder.texture(TextureSlot.TEXTURE)))
-				.build();
-
-		ExtendedModelTemplate templateUD = ExtendedModelTemplateBuilder.builder()
-				.suffix("_ud")
-				.renderType("translucent")
-				.requiredTextureSlot(TextureSlot.TEXTURE)
-				.requiredTextureSlot(TextureSlot.PARTICLE)
-				.element(builder -> builder
-						.from(0, 6, 0)
-						.to(16, 10, 16)
-						.texture(TextureSlot.TEXTURE)
-						.face(Direction.UP, faceBuilder -> faceBuilder.texture(TextureSlot.TEXTURE))
-						.face(Direction.DOWN, faceBuilder -> faceBuilder.texture(TextureSlot.TEXTURE)))
-				.build();
-
-		models.blockStateOutput.accept(MultiVariantGenerator.dispatch(block)
-				.with(PropertyDispatch.initial(CustomPortalBlock.AXIS)
-						.select(Direction.Axis.X, BlockModelGenerators.plainVariant(templateNS.create(block, mapping, models.modelOutput)))
-						.select(Direction.Axis.Z, BlockModelGenerators.plainVariant(templateEW.create(block, mapping, models.modelOutput)))
-						.select(Direction.Axis.Y, BlockModelGenerators.plainVariant(templateUD.create(block, mapping, models.modelOutput)))
-				)
-		);
 	}
 }

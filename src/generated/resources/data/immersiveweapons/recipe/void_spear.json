@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "void",
+  "key": {
+    "a": "immersiveweapons:starstorm_spear",
+    "b": "immersiveweapons:astral_spear",
+    "c": "#immersiveweapons:ingots/starstorm",
+    "d": "#immersiveweapons:ingots/astral",
+    "e": "#immersiveweapons:ingots/void"
+  },
+  "pattern": [
+    "ced",
+    "aeb",
+    "ced"
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:void_spear"
+  }
+}

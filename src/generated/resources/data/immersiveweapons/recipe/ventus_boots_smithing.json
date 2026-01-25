@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "#immersiveweapons:shards/ventus",
+  "base": "minecraft:netherite_boots",
+  "result": {
+    "id": "immersiveweapons:ventus_boots"
+  },
+  "template": "immersiveweapons:ventus_smithing_template"
+}

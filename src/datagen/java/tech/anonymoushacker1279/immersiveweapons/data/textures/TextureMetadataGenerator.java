@@ -79,13 +79,14 @@ public record TextureMetadataGenerator(PackOutput packOutput) implements DataPro
 					if (field.get(null) instanceof DeferredHolder<?, ?> holder) {
 						String name = holder.getKey().identifier().getPath();
 
-						switch (marker.predefinedGroup()) {
-							case STARSTORM_ITEMS -> ItemMetadataBuilder(name, 4)
-									.setInterpolate(true)
-									.setFrameOrder(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0)
-									.build();
-							case VENTUS_TOOLS -> ItemMetadataBuilder(name, 5).build();
-							default -> ItemMetadataBuilder(name, marker.frameTime())
+						ItemMetadataBuilder(name, marker.frameTime())
+								.setInterpolate(marker.interpolate())
+								.setFrameOrder(marker.frames())
+								.build();
+
+						// Automatically create in-hand variant for animated spears
+						if (name.contains("_spear")) {
+							ItemMetadataBuilder(name + "_in_hand", marker.frameTime())
 									.setInterpolate(marker.interpolate())
 									.setFrameOrder(marker.frames())
 									.build();
@@ -122,6 +123,14 @@ public record TextureMetadataGenerator(PackOutput packOutput) implements DataPro
 		return "Texture Metadata";
 	}
 
+	private TextureMetadataBuilder ItemMetadataBuilder(String name, int frameTime) {
+		return new TextureMetadataBuilder("item/" + name, frameTime);
+	}
+
+	private TextureMetadataBuilder BlockMetadataBuilder(String name, int frameTime) {
+		return new TextureMetadataBuilder("block/" + name, frameTime);
+	}
+
 	public record TextureMetadata(String name, int frameTime, boolean interpolate, List<Integer> frames) {
 
 		public static final Codec<TextureMetadata> CODEC = RecordCodecBuilder.create(inst -> inst.group(
@@ -132,20 +141,12 @@ public record TextureMetadataGenerator(PackOutput packOutput) implements DataPro
 		).apply(inst, TextureMetadata::new));
 	}
 
-	protected TextureMetadataBuilder ItemMetadataBuilder(String name, int frameTime) {
-		return new TextureMetadataBuilder("item/" + name, frameTime);
-	}
-
-	protected TextureMetadataBuilder BlockMetadataBuilder(String name, int frameTime) {
-		return new TextureMetadataBuilder("block/" + name, frameTime);
-	}
-
 	public static class TextureMetadataBuilder {
 
 		private final String name;
 		private final int frameTime;
-		private boolean interpolate;
 		private final List<Integer> frames = new ArrayList<>(5);
+		private boolean interpolate;
 
 		private TextureMetadataBuilder(String name, int frameTime) {
 			this.name = name;
@@ -162,11 +163,6 @@ public record TextureMetadataGenerator(PackOutput packOutput) implements DataPro
 				this.frames.add(frame);
 			}
 
-			return this;
-		}
-
-		public TextureMetadataBuilder setFrameOrder(List<Integer> frames) {
-			this.frames.addAll(frames);
 			return this;
 		}
 

@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "#immersiveweapons:ingots/tesla",
+  "base": "minecraft:netherite_chestplate",
+  "result": {
+    "id": "immersiveweapons:tesla_chestplate"
+  },
+  "template": "immersiveweapons:tesla_smithing_template"
+}

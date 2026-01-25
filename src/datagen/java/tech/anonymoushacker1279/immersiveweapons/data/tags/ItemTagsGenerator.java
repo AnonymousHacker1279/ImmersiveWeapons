@@ -206,42 +206,48 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 				ItemRegistry.MOLTEN_PICKAXE.get(),
 				ItemRegistry.MOLTEN_AXE.get(),
 				ItemRegistry.MOLTEN_SHOVEL.get(),
-				ItemRegistry.MOLTEN_HOE.get());
+				ItemRegistry.MOLTEN_HOE.get(),
+				ItemRegistry.MOLTEN_SPEAR.get());
 
 		tag(IWItemTagGroups.TESLA_TOOLS).add(
 				ItemRegistry.TESLA_SWORD.get(),
 				ItemRegistry.TESLA_PICKAXE.get(),
 				ItemRegistry.TESLA_AXE.get(),
 				ItemRegistry.TESLA_SHOVEL.get(),
-				ItemRegistry.TESLA_HOE.get());
+				ItemRegistry.TESLA_HOE.get(),
+				ItemRegistry.TESLA_SPEAR.get());
 
 		tag(IWItemTagGroups.VENTUS_TOOLS).add(
 				ItemRegistry.VENTUS_SWORD.get(),
 				ItemRegistry.VENTUS_PICKAXE.get(),
 				ItemRegistry.VENTUS_AXE.get(),
 				ItemRegistry.VENTUS_SHOVEL.get(),
-				ItemRegistry.VENTUS_HOE.get());
+				ItemRegistry.VENTUS_HOE.get(),
+				ItemRegistry.VENTUS_SPEAR.get());
 
 		tag(IWItemTagGroups.ASTRAL_TOOLS).add(
 				ItemRegistry.ASTRAL_SWORD.get(),
 				ItemRegistry.ASTRAL_PICKAXE.get(),
 				ItemRegistry.ASTRAL_AXE.get(),
 				ItemRegistry.ASTRAL_SHOVEL.get(),
-				ItemRegistry.ASTRAL_HOE.get());
+				ItemRegistry.ASTRAL_HOE.get(),
+				ItemRegistry.ASTRAL_SPEAR.get());
 
 		tag(IWItemTagGroups.STARSTORM_TOOLS).add(
 				ItemRegistry.STARSTORM_SWORD.get(),
 				ItemRegistry.STARSTORM_PICKAXE.get(),
 				ItemRegistry.STARSTORM_AXE.get(),
 				ItemRegistry.STARSTORM_SHOVEL.get(),
-				ItemRegistry.STARSTORM_HOE.get());
+				ItemRegistry.STARSTORM_HOE.get(),
+				ItemRegistry.STARSTORM_SPEAR.get());
 
 		tag(IWItemTagGroups.VOID_TOOLS).add(
 				ItemRegistry.VOID_SWORD.get(),
 				ItemRegistry.VOID_PICKAXE.get(),
 				ItemRegistry.VOID_AXE.get(),
 				ItemRegistry.VOID_SHOVEL.get(),
-				ItemRegistry.VOID_HOE.get());
+				ItemRegistry.VOID_HOE.get(),
+				ItemRegistry.VOID_SPEAR.get());
 
 		// Gauntlet tags
 		for (DeferredHolder<Item, ? extends Item> item : ItemRegistry.ITEMS.getEntries()) {
@@ -409,6 +415,16 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 				BlockItemRegistry.HANS_HEAD_ITEM.get(),
 				BlockItemRegistry.STORM_CREEPER_HEAD_ITEM.get());
 
+		// Spear tags
+		tag(ItemTags.SPEARS).add(
+				ItemRegistry.COBALT_SPEAR.get(),
+				ItemRegistry.MOLTEN_SPEAR.get(),
+				ItemRegistry.TESLA_SPEAR.get(),
+				ItemRegistry.VENTUS_SPEAR.get(),
+				ItemRegistry.ASTRAL_SPEAR.get(),
+				ItemRegistry.STARSTORM_SPEAR.get(),
+				ItemRegistry.VOID_SPEAR.get());
+
 		// Loop through the registry and add groups of items to a tag
 		for (Item item : ALL_ITEMS) {
 			if (item.getDescriptionId().contains("sword")) {
@@ -435,6 +451,10 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 
 	record BlockToItemConverter(TagAppender<Item, Item> itemAppender) implements TagAppender<Block, Block> {
 
+		private static TagKey<Item> blockTagToItemTag(TagKey<Block> key) {
+			return TagKey.create(Registries.ITEM, key.location());
+		}
+
 		public TagAppender<Block, Block> add(Block block) {
 			this.itemAppender.add(Objects.requireNonNull(block.asItem()));
 			return this;
@@ -443,10 +463,6 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		public TagAppender<Block, Block> addOptional(Block block) {
 			this.itemAppender.addOptional(Objects.requireNonNull(block.asItem()));
 			return this;
-		}
-
-		private static TagKey<Item> blockTagToItemTag(TagKey<Block> key) {
-			return TagKey.create(Registries.ITEM, key.location());
 		}
 
 		public TagAppender<Block, Block> addTag(TagKey<Block> key) {

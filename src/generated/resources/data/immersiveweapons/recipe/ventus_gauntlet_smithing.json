@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "#immersiveweapons:shards/ventus",
+  "base": "immersiveweapons:netherite_gauntlet",
+  "result": {
+    "id": "immersiveweapons:ventus_gauntlet"
+  },
+  "template": "immersiveweapons:ventus_smithing_template"
+}

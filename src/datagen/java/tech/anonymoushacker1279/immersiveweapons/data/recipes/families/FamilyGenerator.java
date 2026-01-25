@@ -238,7 +238,8 @@ public class FamilyGenerator extends RecipeGenerator {
 				upgradeMap[2] = family.axe().get();
 				upgradeMap[3] = family.shovel().get();
 				upgradeMap[4] = family.hoe().get();
-				upgradeMap[5] = family.gauntlet().get();
+				upgradeMap[5] = family.spear().get();
+				upgradeMap[6] = family.gauntlet().get();
 
 				int i = 0;
 				for (Item baseItem : family.smithingBaseUpgrades()) {
@@ -305,6 +306,9 @@ public class FamilyGenerator extends RecipeGenerator {
 						.define('b', family.handle())
 						.unlockedBy(materialTriggerName, has(material))
 						.save(output);
+
+				// Spear
+				createSpear(family.spear().get(), family.handle(), material);
 
 				// Gauntlet
 				createGauntlet(family.gauntlet().get(), material);
