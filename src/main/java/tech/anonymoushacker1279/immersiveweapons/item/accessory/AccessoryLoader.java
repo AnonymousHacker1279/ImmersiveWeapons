@@ -1,7 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.item.accessory;
 
 import net.minecraft.resources.FileToIdConverter;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
@@ -18,14 +18,14 @@ import java.util.Map;
 public class AccessoryLoader extends SimpleJsonResourceReloadListener<Accessory> {
 
 	public static final HashMap<Item, Accessory> ACCESSORIES = new HashMap<>(50);
-	public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "accessories");
+	public static final Identifier ID = Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "accessories");
 
 	public AccessoryLoader() {
 		super(Accessory.CODEC, FileToIdConverter.json("accessories"));
 	}
 
 	@Override
-	protected void apply(Map<ResourceLocation, Accessory> map, ResourceManager resourceManager, ProfilerFiller profiler) {
+	protected void apply(Map<Identifier, Accessory> map, ResourceManager resourceManager, ProfilerFiller profiler) {
 		ACCESSORIES.clear();
 
 		map.forEach((id, element) -> {

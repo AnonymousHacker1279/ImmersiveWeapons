@@ -3,7 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.item.tool;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -16,7 +16,7 @@ public class PliersItem extends Item {
 	@Nullable
 	private BlockPos linkedTeleporterPos;
 	@Nullable
-	private ResourceLocation linkedTeleporterDimension;
+	private Identifier linkedTeleporterDimension;
 
 	public PliersItem(Properties properties) {
 		super(properties);
@@ -44,7 +44,7 @@ public class PliersItem extends Item {
 				linkedTeleporterDimension = null;
 			} else {
 				linkedTeleporterPos = context.getClickedPos();
-				linkedTeleporterDimension = context.getLevel().dimension().location();
+				linkedTeleporterDimension = context.getLevel().dimension().identifier();
 				player.displayClientMessage(Component.translatable("immersiveweapons.item.pliers.store_linked_teleporter", linkedTeleporterPos.getX(), linkedTeleporterPos.getY(), linkedTeleporterPos.getZ())
 						.withStyle(ChatFormatting.GREEN), true);
 			}

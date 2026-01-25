@@ -87,7 +87,7 @@ public class MortarShellEntity extends Projectile implements ItemSupplier {
 
 			if (rayTraceResult != null && rayTraceResult.getType() != HitResult.Type.MISS && !EventHooks.onProjectileImpact(this, rayTraceResult)) {
 				onHit(rayTraceResult);
-				hasImpulse = true;
+				needsSync = true;
 			}
 
 			if (hitResult == null) {

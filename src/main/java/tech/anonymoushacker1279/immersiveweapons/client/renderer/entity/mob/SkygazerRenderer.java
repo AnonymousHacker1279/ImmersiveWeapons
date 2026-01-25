@@ -1,21 +1,21 @@
 package tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.mob;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.model.VillagerModel;
 import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.model.npc.VillagerModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.VillagerRenderer;
 import net.minecraft.client.renderer.entity.layers.CrossedArmsItemLayer;
 import net.minecraft.client.renderer.entity.layers.CustomHeadLayer;
 import net.minecraft.client.renderer.entity.state.VillagerRenderState;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.entity.npc.SkygazerEntity;
 
 public class SkygazerRenderer extends MobRenderer<SkygazerEntity, VillagerRenderState, VillagerModel> {
 
-	private static final ResourceLocation TEXTURE_LOCATION = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/entity/skygazer/skygazer.png");
+	private static final Identifier TEXTURE_LOCATION = Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/entity/skygazer/skygazer.png");
 
 	public SkygazerRenderer(EntityRendererProvider.Context context) {
 		super(context, new VillagerModel(context.bakeLayer(ModelLayers.WANDERING_TRADER)), 0.5F);
@@ -29,7 +29,7 @@ public class SkygazerRenderer extends MobRenderer<SkygazerEntity, VillagerRender
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(VillagerRenderState pEntity) {
+	public Identifier getTextureLocation(VillagerRenderState pEntity) {
 		return TEXTURE_LOCATION;
 	}
 

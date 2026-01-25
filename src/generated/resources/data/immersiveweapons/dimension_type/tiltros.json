@@ -1,10 +1,11 @@
 {
   "ambient_light": 0.05,
-  "bed_works": true,
+  "attributes": {
+    "neoforge:custom_skybox": "immersiveweapons:tiltros"
+  },
   "coordinate_scale": 16.0,
-  "effects": "immersiveweapons:tiltros",
   "has_ceiling": false,
-  "has_raids": false,
+  "has_fixed_time": true,
   "has_skylight": false,
   "height": 256,
   "infiniburn": "#minecraft:infiniburn_overworld",
@@ -16,8 +17,5 @@
     "max_inclusive": 7,
     "min_inclusive": 0
   },
-  "natural": true,
-  "piglin_safe": false,
-  "respawn_anchor_works": false,
-  "ultrawarm": false
+  "timelines": "#minecraft:universal"
 }

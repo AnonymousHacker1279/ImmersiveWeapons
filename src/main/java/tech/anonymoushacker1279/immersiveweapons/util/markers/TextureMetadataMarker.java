@@ -22,16 +22,4 @@ public @interface TextureMetadataMarker {
 	 * A list of frames, to be animated in the given order.
 	 */
 	int[] frames() default {};
-
-	/**
-	 * For specific groups that all share the same properties, a {@link PredefinedGroups} enum can be provided instead
-	 * of manually defining all the properties multiple times.
-	 */
-	PredefinedGroups predefinedGroup() default PredefinedGroups.NONE;
-
-	enum PredefinedGroups {
-		NONE,
-		VENTUS_TOOLS,
-		STARSTORM_ITEMS
-	}
 }

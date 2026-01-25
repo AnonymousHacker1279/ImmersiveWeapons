@@ -2,12 +2,13 @@ package tech.anonymoushacker1279.immersiveweapons.entity.monster;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.AdvancementHolder;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -17,6 +18,7 @@ import net.minecraft.world.BossEvent.BossBarColor;
 import net.minecraft.world.BossEvent.BossBarOverlay;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -29,9 +31,10 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.KineticWeapon;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
@@ -40,6 +43,7 @@ import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.entity.AttackerTracker;
@@ -51,17 +55,15 @@ import java.util.Optional;
 
 public class SuperHansEntity extends HansEntity implements AttackerTracker {
 
+	public static final Identifier CHAMPION_TOWER_KEY = Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "champion_tower");
 	public final ServerBossEvent bossEvent = new ServerBossEvent(getDisplayName(), BossBarColor.PURPLE,
 			BossBarOverlay.PROGRESS);
-
-	public static final ResourceLocation CHAMPION_TOWER_KEY = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "champion_tower");
+	final List<Entity> attackingEntities = new ArrayList<>(5);
 	private boolean spawnedInChampionTower = false;
 	@Nullable
 	private BoundingBox championTowerBounds;
 	private boolean towerMinibossesAlive = false;
 	private int shadowDodgeAchievementTimer = 0;
-
-	final List<Entity> attackingEntities = new ArrayList<>(5);
 
 	public SuperHansEntity(EntityType<? extends HansEntity> entityType, Level level) {
 		super(entityType, level);
@@ -161,7 +163,7 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 
 			if ((source.getWeaponItem() != null && source.getWeaponItem().is(Items.MACE)) && (source.getEntity() instanceof ServerPlayer serverPlayer)) {
 				if ((serverPlayer.fallDistance > 1.5f) && shadowDodgeAchievementTimer > 0) {
-					AdvancementHolder advancement = serverLevel.getServer().getAdvancements().get(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "rapid_reflexes"));
+					AdvancementHolder advancement = serverLevel.getServer().getAdvancements().get(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "rapid_reflexes"));
 
 					if (advancement != null) {
 						serverPlayer.getAdvancements().award(advancement, "");
@@ -237,24 +239,58 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 		}
 
 		if (getTarget() instanceof Player player) {
-			boolean shouldDodgeFallingPlayers = (player.getDeltaMovement().y < -0.5D) && (player.fallDistance > 1.5f);
-			int dodgeChance = switch (level().getDifficulty()) {
-				case NORMAL -> 12;
-				case HARD -> 5;
-				default -> 30;
-			};
-
-			if (shouldDodgeFallingPlayers && random.nextInt(dodgeChance) == 0) {
-				// Dodge into a random X/Z direction
-				double dodgeX = random.nextBoolean() ? 1.0D : -1.0D;
-				double dodgeZ = random.nextBoolean() ? 1.0D : -1.0D;
-				setDeltaMovement(dodgeX, 0.0D, dodgeZ);
-				shadowDodgeAchievementTimer = 40;
-			}
+			tryShadowDodge(player);
+			tryBlockSpear(player);
 		}
 
 		if (shadowDodgeAchievementTimer > 0) {
 			shadowDodgeAchievementTimer--;
+		}
+	}
+
+	/**
+	 * Attempt to dodge falling players. Particularly those using a mace.
+	 *
+	 * @param player The player to check.
+	 */
+	private void tryShadowDodge(Player player) {
+		boolean shouldDodgeFallingPlayers = (player.getDeltaMovement().y < -0.5D) && (player.fallDistance > 1.5f);
+		int dodgeChance = switch (level().getDifficulty()) {
+			case NORMAL -> 12;
+			case HARD -> 5;
+			default -> 30;
+		};
+
+		if (shouldDodgeFallingPlayers && random.nextInt(dodgeChance) == 0) {
+			// Dodge into a random X/Z direction
+			double dodgeX = random.nextBoolean() ? 1.0D : -1.0D;
+			double dodgeZ = random.nextBoolean() ? 1.0D : -1.0D;
+			setDeltaMovement(dodgeX, 0.0D, dodgeZ);
+			shadowDodgeAchievementTimer = 40;
+		}
+	}
+
+	/**
+	 * Attempt to block a spear attack with a shield if the player is moving fast enough.
+	 *
+	 * @param player The player to check.
+	 */
+	private void tryBlockSpear(Player player) {
+		Vec3 lookAngle = player.getLookAngle();
+		double dotMotion = lookAngle.dot(KineticWeapon.getMotion(player));
+
+		if (player.getMainHandItem().has(DataComponents.KINETIC_WEAPON)) {
+			if (dotMotion > 10D) {
+				// Block the attack
+				lookAt(player, 90f, 90f);
+				setItemInHand(InteractionHand.OFF_HAND, new ItemStack(Items.SHIELD));
+				startUsingItem(InteractionHand.OFF_HAND);
+			}
+		}
+
+		if (getItemInHand(InteractionHand.OFF_HAND).getItem() == Items.SHIELD && dotMotion <= 10D) {
+			stopUsingItem();
+			setItemInHand(InteractionHand.OFF_HAND, ItemStack.EMPTY);
 		}
 	}
 

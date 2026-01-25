@@ -40,12 +40,6 @@ public class PlayerStatTooltips {
 			tooltips.add(createClientTooltip("immersiveweapons.player_stats.armor.additional_resistance", 22));
 		}
 
-		float celestialProtectionChance = player.getPersistentData().getFloatOr("celestialProtectionChanceForNoDamage", 0.0f);
-		if (celestialProtectionChance > 0) {
-			celestialProtectionChance = Math.round(celestialProtectionChance * 100f) / 100f;
-			tooltips.add(createClientTooltip("immersiveweapons.player_stats.celestial_protection", celestialProtectionChance));
-		}
-
 		float knockbackResist = Math.round(player.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE) * 100f) / 100f;
 		if (knockbackResist != 0) {
 			tooltips.add(createClientTooltip("immersiveweapons.player_stats.knockback_resistance", Math.round(knockbackResist * 100)));

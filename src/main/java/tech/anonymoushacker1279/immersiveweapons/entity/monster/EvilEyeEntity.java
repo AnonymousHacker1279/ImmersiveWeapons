@@ -8,8 +8,8 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -59,11 +59,11 @@ public class EvilEyeEntity extends Mob implements Enemy, GrantAdvancementOnDisco
 
 	private static final ResourceKey<Biome> DEADMANS_DESERT = ResourceKey.create(
 			Registries.BIOME,
-			ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "deadmans_desert")
+			Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "deadmans_desert")
 	);
 	private static final ResourceKey<Level> TILTROS = ResourceKey.create(
 			Registries.DIMENSION,
-			ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "tiltros")
+			Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "tiltros")
 	);
 
 	private final List<Holder<MobEffect>> lowTierDebuffs = new ArrayList<>(5);
@@ -110,8 +110,8 @@ public class EvilEyeEntity extends Mob implements Enemy, GrantAdvancementOnDisco
 	public static EvilEyeEntity create(Level level, Vec3 position, boolean staff) {
 		EvilEyeEntity entity = new EvilEyeEntity(level, position, staff);
 
-		if (!level.isClientSide()) {
-			entity.finalizeSpawn((ServerLevelAccessor) level, level.getCurrentDifficultyAt(entity.blockPosition()),
+		if (level instanceof ServerLevelAccessor accessor) {
+			entity.finalizeSpawn(accessor, accessor.getCurrentDifficultyAt(entity.blockPosition()),
 					EntitySpawnReason.EVENT, null);
 		}
 

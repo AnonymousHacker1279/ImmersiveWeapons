@@ -82,6 +82,22 @@
     ],
     "subtitle": "subtitles.immersiveweapons.armor.cobalt.equip"
   },
+  "deadmans_desert_ambient": {
+    "sounds": [
+      {
+        "name": "immersiveweapons:biome/deadmans_desert/ambient/ambient",
+        "stream": true
+      }
+    ]
+  },
+  "deadmans_desert_ambient_additions": {
+    "sounds": [
+      "immersiveweapons:biome/deadmans_desert/ambient/addition_0",
+      "immersiveweapons:biome/deadmans_desert/ambient/addition_1",
+      "immersiveweapons:biome/deadmans_desert/ambient/addition_2",
+      "immersiveweapons:biome/deadmans_desert/ambient/addition_3"
+    ]
+  },
   "deadmans_desert_background_music": {
     "sounds": [
       {
@@ -92,6 +108,12 @@
         "name": "immersiveweapons:biome/deadmans_desert/music/music_1",
         "stream": true
       }
+    ]
+  },
+  "deadmans_desert_mood": {
+    "sounds": [
+      "immersiveweapons:biome/deadmans_desert/mood/mood_0",
+      "immersiveweapons:biome/deadmans_desert/mood/mood_1"
     ]
   },
   "deadmans_desert_theme_1": {
@@ -333,6 +355,22 @@
     ],
     "subtitle": "subtitles.immersiveweapons.block.spike_trap.retract"
   },
+  "starlight_plains_ambient": {
+    "sounds": [
+      {
+        "name": "immersiveweapons:biome/starlight_plains/ambient/ambient",
+        "stream": true
+      }
+    ]
+  },
+  "starlight_plains_ambient_additions": {
+    "sounds": [
+      "immersiveweapons:biome/starlight_plains/ambient/addition_0",
+      "immersiveweapons:biome/starlight_plains/ambient/addition_1",
+      "immersiveweapons:biome/starlight_plains/ambient/addition_2",
+      "immersiveweapons:biome/starlight_plains/ambient/addition_3"
+    ]
+  },
   "starlight_plains_background_music": {
     "sounds": [
       {
@@ -343,6 +381,12 @@
         "name": "immersiveweapons:biome/starlight_plains/music/music_1",
         "stream": true
       }
+    ]
+  },
+  "starlight_plains_mood": {
+    "sounds": [
+      "immersiveweapons:biome/starlight_plains/mood/mood_0",
+      "immersiveweapons:biome/starlight_plains/mood/mood_1"
     ]
   },
   "starlight_plains_theme_1": {
@@ -448,6 +492,28 @@
       "immersiveweapons:block/tiltros_portal/whoosh/whoosh"
     ],
     "subtitle": "subtitles.immersiveweapons.block.tiltros_portal.whoosh"
+  },
+  "tiltros_wastes_additions": {
+    "sounds": [
+      "immersiveweapons:biome/tiltros_wastes/ambient/addition_0",
+      "immersiveweapons:biome/tiltros_wastes/ambient/addition_1",
+      "immersiveweapons:biome/tiltros_wastes/ambient/addition_2",
+      "immersiveweapons:biome/tiltros_wastes/ambient/addition_3"
+    ]
+  },
+  "tiltros_wastes_ambient": {
+    "sounds": [
+      {
+        "name": "immersiveweapons:biome/tiltros_wastes/ambient/ambient",
+        "stream": true
+      }
+    ]
+  },
+  "tiltros_wastes_mood": {
+    "sounds": [
+      "immersiveweapons:biome/tiltros_wastes/mood/mood_0",
+      "immersiveweapons:biome/tiltros_wastes/mood/mood_1"
+    ]
   },
   "tiltros_wastes_music": {
     "sounds": [

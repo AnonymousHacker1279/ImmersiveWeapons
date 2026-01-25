@@ -5,15 +5,15 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
 public class FireflyModel extends EntityModel<LivingEntityRenderState> {
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(
-			ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "firefly"),
+			Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "firefly"),
 			"main");
 
 	private final ModelPart body;
@@ -21,7 +21,7 @@ public class FireflyModel extends EntityModel<LivingEntityRenderState> {
 	private final ModelPart leftWing;
 
 	public FireflyModel(ModelPart root) {
-		super(root, RenderType::entityCutout);
+		super(root, RenderTypes::entityCutout);
 		ModelPart main = root.getChild("main");
 		ModelPart wings = main.getChild("wings");
 		body = main.getChild("body");

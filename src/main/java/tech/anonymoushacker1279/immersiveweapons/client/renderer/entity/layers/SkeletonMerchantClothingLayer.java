@@ -8,13 +8,13 @@ import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.model.SkeletonMerchantModel;
 
 public class SkeletonMerchantClothingLayer<S extends HumanoidRenderState, M extends EntityModel<S>> extends RenderLayer<S, M> {
 
-	private static final ResourceLocation CLOTHES_LOCATION = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/entity/skeleton_merchant/skeleton_merchant_overlay.png");
+	private static final Identifier CLOTHES_LOCATION = Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/entity/skeleton_merchant/skeleton_merchant_overlay.png");
 	private final SkeletonMerchantModel layerModel;
 
 	public SkeletonMerchantClothingLayer(RenderLayerParent<S, M> renderer, EntityModelSet models) {

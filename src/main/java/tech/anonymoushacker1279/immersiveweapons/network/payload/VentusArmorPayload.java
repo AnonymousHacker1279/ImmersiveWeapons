@@ -4,14 +4,14 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.neoforge.network.codec.NeoForgeStreamCodecs;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.VentusArmorItem;
 
 public record VentusArmorPayload(VentusArmorItem.PacketTypes packetType, boolean state) implements CustomPacketPayload {
 
-	public static final Type<VentusArmorPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "ventus_armor"));
+	public static final Type<VentusArmorPayload> TYPE = new Type<>(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "ventus_armor"));
 
 	public static final StreamCodec<FriendlyByteBuf, VentusArmorPayload> STREAM_CODEC = StreamCodec.composite(
 			NeoForgeStreamCodecs.enumCodec(VentusArmorItem.PacketTypes.class),

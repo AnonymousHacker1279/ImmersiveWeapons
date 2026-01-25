@@ -1,0 +1,36 @@
+{
+  "parent": "immersiveweapons:tesla_ingot",
+  "criteria": {
+    "hold": {
+      "conditions": {
+        "items": [
+          {
+            "items": "immersiveweapons:tesla_spear"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersiveweapons.tesla_spear.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "immersiveweapons:tesla_spear"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.tesla_spear.title"
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ],
+  "rewards": {
+    "experience": 35
+  },
+  "sends_telemetry_event": true
+}

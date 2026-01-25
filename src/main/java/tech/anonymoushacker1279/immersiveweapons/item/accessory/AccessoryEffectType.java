@@ -5,7 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public record AccessoryEffectType(String name, boolean clamp) {
 
@@ -22,11 +22,11 @@ public record AccessoryEffectType(String name, boolean clamp) {
 			AccessoryEffectType::new
 	);
 
-	public AccessoryEffectType(ResourceLocation name) {
+	public AccessoryEffectType(Identifier name) {
 		this(name.getPath(), false);
 	}
 
-	public AccessoryEffectType(ResourceLocation name, boolean clamp) {
+	public AccessoryEffectType(Identifier name, boolean clamp) {
 		this(name.getPath(), clamp);
 	}
 

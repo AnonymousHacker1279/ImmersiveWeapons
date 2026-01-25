@@ -2,7 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.entity.projectile;
 
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -10,14 +10,18 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.Arrow;
+import net.minecraft.world.entity.projectile.arrow.Arrow;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.phys.*;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.Tags.Blocks;
 import net.neoforged.neoforge.network.PacketDistributor;
@@ -25,7 +29,9 @@ import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact.BulletImpactParticleOptions;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
-import tech.anonymoushacker1279.immersiveweapons.init.*;
+import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.ParticleTypesRegistry;
+import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.GunShotBloodParticlePayload;
@@ -38,8 +44,8 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 	private Vec3 initialPos = Vec3.ZERO;
 	public HitEffect hitEffect = HitEffect.NONE;
 	public boolean flameTrail = false;
-	private static final TagKey<Block> BULLETPROOF_GLASS = BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "bulletproof_glass"));
-	private static final TagKey<Block> BULLETPROOF_GLASS_PANES = BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "bulletproof_glass_panes"));
+	private static final TagKey<Block> BULLETPROOF_GLASS = BlockTags.create(Identifier.fromNamespaceAndPath("c", "bulletproof_glass"));
+	private static final TagKey<Block> BULLETPROOF_GLASS_PANES = BlockTags.create(Identifier.fromNamespaceAndPath("c", "bulletproof_glass_panes"));
 
 	public BulletEntity(EntityType<? extends Arrow> entityType, Level level) {
 		super(entityType, level);
@@ -144,7 +150,7 @@ public class BulletEntity extends CustomArrowEntity implements HitEffectUtils {
 			double distance = Math.sqrt(Math.pow(location.x - initialPos.x, 2) + Math.pow(location.y - initialPos.y, 2) + Math.pow(location.z - initialPos.z, 2));
 
 			if (distance > 200) {
-				AdvancementHolder advancement = player.level().getServer().getAdvancements().get(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "firearm_long_range"));
+				AdvancementHolder advancement = player.level().getServer().getAdvancements().get(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "firearm_long_range"));
 
 				if (advancement != null) {
 					player.getAdvancements().award(advancement, "");

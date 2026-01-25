@@ -1,0 +1,36 @@
+{
+  "parent": "immersiveweapons:astral_ingot",
+  "criteria": {
+    "hold": {
+      "conditions": {
+        "items": [
+          {
+            "items": "immersiveweapons:astral_spear"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersiveweapons.astral_spear.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "immersiveweapons:astral_spear"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.astral_spear.title"
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ],
+  "rewards": {
+    "experience": 35
+  },
+  "sends_telemetry_event": true
+}

@@ -7,10 +7,15 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
-import net.minecraft.world.item.*;
+import net.minecraft.world.entity.projectile.throwableitemprojectile.ThrowableItemProjectile;
+import net.minecraft.world.item.BowItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import tech.anonymoushacker1279.immersiveweapons.entity.projectile.*;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.FlashbangEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MolotovEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MudBallEntity;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeGrenadeEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 
 public class ThrowableItem extends Item {

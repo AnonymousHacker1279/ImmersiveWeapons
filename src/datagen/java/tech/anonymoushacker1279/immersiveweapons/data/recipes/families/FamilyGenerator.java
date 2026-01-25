@@ -1,7 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.data.recipes.families;
 
 import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.critereon.InventoryChangeTrigger.TriggerInstance;
+import net.minecraft.advancements.criterion.InventoryChangeTrigger;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.HolderSet;
@@ -42,7 +42,7 @@ public class FamilyGenerator extends RecipeGenerator {
 		for (WoodFamilies family : WoodFamilies.FAMILIES) {
 			Block planks = family.planks().get();
 			final String planksTriggerName = "has_planks";
-			Criterion<TriggerInstance> planksTrigger = has(planks);
+			Criterion<InventoryChangeTrigger.TriggerInstance> planksTrigger = has(planks);
 
 			// Button
 			ShapelessRecipeBuilder.shapeless(itemGetter, RecipeCategory.BUILDING_BLOCKS, family.button().get())
@@ -166,7 +166,7 @@ public class FamilyGenerator extends RecipeGenerator {
 			Block stone = family.stone().get();
 			Block bricks = family.bricks().get();
 			final String stoneTriggerName = "has_stone";
-			Criterion<TriggerInstance> bricksTrigger = has(bricks);
+			Criterion<InventoryChangeTrigger.TriggerInstance> bricksTrigger = has(bricks);
 
 			bricks(bricks, stone);
 			if (family.bricksHaveStonecutterRecipe()) {
@@ -238,8 +238,8 @@ public class FamilyGenerator extends RecipeGenerator {
 				upgradeMap[2] = family.axe().get();
 				upgradeMap[3] = family.shovel().get();
 				upgradeMap[4] = family.hoe().get();
-				upgradeMap[5] = family.gauntlet().get();
-				upgradeMap[6] = family.pike().get();
+				upgradeMap[5] = family.spear().get();
+				upgradeMap[6] = family.gauntlet().get();
 
 				int i = 0;
 				for (Item baseItem : family.smithingBaseUpgrades()) {
@@ -307,16 +307,11 @@ public class FamilyGenerator extends RecipeGenerator {
 						.unlockedBy(materialTriggerName, has(material))
 						.save(output);
 
+				// Spear
+				createSpear(family.spear().get(), family.handle(), material);
+
 				// Gauntlet
 				createGauntlet(family.gauntlet().get(), material);
-
-				if (family.pikeHead() != null) {
-					// Pike
-					createPike(family.pike().get(), material, family.pikeHead().get());
-
-					// Pike head
-					createPikeHead(family.pikeHead().get(), material, family.nugget());
-				}
 			}
 
 			if (ToolFamilies.FAMILIES_USE_NUGGETS_FOR_PROJECTILES.contains(family)) {
@@ -401,12 +396,6 @@ public class FamilyGenerator extends RecipeGenerator {
 
 			// Gauntlet
 			createGauntlet(family.gauntlet().get(), material);
-
-			// Pike
-			createPike(family.pike().get(), material, family.pikeHead().get());
-
-			// Pike head
-			createPikeHead(family.pikeHead().get(), material, family.nugget());
 
 			if (VanillaTieredItemFamilies.FAMILIES_USE_NUGGETS_FOR_PROJECTILES.contains(family)) {
 				// Arrow

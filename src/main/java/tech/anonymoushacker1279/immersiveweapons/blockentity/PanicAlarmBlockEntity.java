@@ -3,7 +3,6 @@ package tech.anonymoushacker1279.immersiveweapons.blockentity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -38,7 +37,7 @@ public class PanicAlarmBlockEntity extends BlockEntity implements EntityBlock {
 			for (ServerPlayer serverPlayer : ((ServerLevel) level).getPlayers(player -> player.blockPosition()
 					.distSqr(blockPos) <= Math.pow(IWConfigs.SERVER.panicAlarmRange.getAsInt(), 2))) {
 
-				serverPlayer.playNotifySound(SoundEventRegistry.PANIC_ALARM_SOUND.get(), SoundSource.BLOCKS, 1.0F, 1.0F);
+				serverPlayer.playSound(SoundEventRegistry.PANIC_ALARM_SOUND.get(), 1.0F, 1.0F);
 
 				level.gameEvent(GameEventRegistry.PANIC_ALARM_TRIGGER, blockPos, GameEvent.Context.of(getBlockState()));
 			}

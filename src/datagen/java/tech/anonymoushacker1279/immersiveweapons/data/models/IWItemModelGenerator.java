@@ -4,7 +4,7 @@ import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.model.*;
 import net.minecraft.client.renderer.item.ItemModel;
 import net.minecraft.client.renderer.item.properties.conditional.HasComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.IWEquipmentAssets;
@@ -23,72 +23,65 @@ public class IWItemModelGenerator {
 		itemModels.generateFlatItem(ItemRegistry.MOLTEN_AXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.MOLTEN_SHOVEL.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.MOLTEN_HOE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+		itemModels.generateSpear(ItemRegistry.MOLTEN_SPEAR.get());
 		itemModels.generateFlatItem(ItemRegistry.TESLA_SWORD.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.TESLA_PICKAXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.TESLA_AXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.TESLA_SHOVEL.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.TESLA_HOE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+		itemModels.generateSpear(ItemRegistry.TESLA_SPEAR.get());
 		itemModels.generateFlatItem(ItemRegistry.COBALT_SWORD.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.COBALT_PICKAXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.COBALT_AXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.COBALT_SHOVEL.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.COBALT_HOE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+		itemModels.generateSpear(ItemRegistry.COBALT_SPEAR.get());
 		itemModels.generateFlatItem(ItemRegistry.VENTUS_SWORD.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.VENTUS_PICKAXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.VENTUS_AXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.VENTUS_SHOVEL.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.VENTUS_HOE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+		itemModels.generateSpear(ItemRegistry.VENTUS_SPEAR.get());
 		itemModels.generateFlatItem(ItemRegistry.VENTUS_STAFF.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.ASTRAL_SWORD.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.ASTRAL_PICKAXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.ASTRAL_AXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.ASTRAL_SHOVEL.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.ASTRAL_HOE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+		itemModels.generateSpear(ItemRegistry.ASTRAL_SPEAR.get());
 		itemModels.generateFlatItem(ItemRegistry.STARSTORM_SWORD.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.STARSTORM_PICKAXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.STARSTORM_AXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.STARSTORM_SHOVEL.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.STARSTORM_HOE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+		itemModels.generateSpear(ItemRegistry.STARSTORM_SPEAR.get());
 		itemModels.generateFlatItem(ItemRegistry.VOID_SWORD.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.VOID_PICKAXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.VOID_AXE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.VOID_SHOVEL.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.VOID_HOE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
+		itemModels.generateSpear(ItemRegistry.VOID_SPEAR.get());
 		itemModels.generateFlatItem(ItemRegistry.THE_SWORD.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
-		generatePikeItem(itemModels, ItemRegistry.WOODEN_PIKE.get(), ResourceLocation.withDefaultNamespace("block/stripped_oak_log"));
-		generatePikeItem(itemModels, ItemRegistry.STONE_PIKE.get(), ResourceLocation.withDefaultNamespace("block/stone"));
-		generatePikeItem(itemModels, ItemRegistry.GOLDEN_PIKE.get(), ResourceLocation.withDefaultNamespace("block/gold_block"));
-		generatePikeItem(itemModels, ItemRegistry.COPPER_PIKE.get(), ResourceLocation.withDefaultNamespace("block/copper_block"));
-		generatePikeItem(itemModels, ItemRegistry.IRON_PIKE.get(), ResourceLocation.withDefaultNamespace("block/iron_block"));
-		generatePikeItem(itemModels, ItemRegistry.COBALT_PIKE.get(), ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/cobalt_block"));
-		generatePikeItem(itemModels, ItemRegistry.DIAMOND_PIKE.get(), ResourceLocation.withDefaultNamespace("block/diamond_block"));
-		generatePikeItem(itemModels, ItemRegistry.NETHERITE_PIKE.get(), ResourceLocation.withDefaultNamespace("block/netherite_block"));
-		generatePikeItem(itemModels, ItemRegistry.MOLTEN_PIKE.get(), ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/custom/molten"));
-		generatePikeItem(itemModels, ItemRegistry.TESLA_PIKE.get(), ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/custom/tesla"));
-		generatePikeItem(itemModels, ItemRegistry.VENTUS_PIKE.get(), ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/custom/ventus"));
-		generatePikeItem(itemModels, ItemRegistry.ASTRAL_PIKE.get(), ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/custom/astral"));
-		generatePikeItem(itemModels, ItemRegistry.STARSTORM_PIKE.get(), ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/custom/starstorm"));
-		generatePikeItem(itemModels, ItemRegistry.VOID_PIKE.get(), ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/custom/void"));
 		generateStateOnly(itemModels, ItemRegistry.FLINTLOCK_PISTOL.get());
 		generateStateOnly(itemModels, ItemRegistry.BLUNDERBUSS.get());
 		generateMusket(itemModels, ItemRegistry.MUSKET.get());
 		generateStateOnly(itemModels, ItemRegistry.FLARE_GUN.get());
 		generateStateOnly(itemModels, ItemRegistry.HAND_CANNON.get());
 		generateStateOnly(itemModels, ItemRegistry.DRAGONS_BREATH_CANNON.get());
-		generateGauntletItem(itemModels, ItemRegistry.WOODEN_GAUNTLET.get(), ResourceLocation.withDefaultNamespace("block/stripped_oak_log"));
-		generateGauntletItem(itemModels, ItemRegistry.STONE_GAUNTLET.get(), ResourceLocation.withDefaultNamespace("block/stone"));
-		generateGauntletItem(itemModels, ItemRegistry.GOLDEN_GAUNTLET.get(), ResourceLocation.withDefaultNamespace("block/gold_block"));
-		generateGauntletItem(itemModels, ItemRegistry.COPPER_GAUNTLET.get(), ResourceLocation.withDefaultNamespace("block/copper_block"));
-		generateIronGauntletItem(itemModels, ItemRegistry.IRON_GAUNTLET.get(), ResourceLocation.withDefaultNamespace("block/iron_block"));
-		generateGauntletItem(itemModels, ItemRegistry.COBALT_GAUNTLET.get(), ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/cobalt_block"));
-		generateGauntletItem(itemModels, ItemRegistry.DIAMOND_GAUNTLET.get(), ResourceLocation.withDefaultNamespace("block/diamond_block"));
-		generateGauntletItem(itemModels, ItemRegistry.NETHERITE_GAUNTLET.get(), ResourceLocation.withDefaultNamespace("block/netherite_block"));
-		generateGauntletItem(itemModels, ItemRegistry.MOLTEN_GAUNTLET.get(), ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/custom/molten"));
-		generateGauntletItem(itemModels, ItemRegistry.TESLA_GAUNTLET.get(), ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/custom/tesla"));
-		generateGauntletItem(itemModels, ItemRegistry.VENTUS_GAUNTLET.get(), ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/custom/ventus"));
-		generateGauntletItem(itemModels, ItemRegistry.ASTRAL_GAUNTLET.get(), ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/custom/astral"));
-		generateGauntletItem(itemModels, ItemRegistry.STARSTORM_GAUNTLET.get(), ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/custom/starstorm"));
-		generateGauntletItem(itemModels, ItemRegistry.VOID_GAUNTLET.get(), ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/custom/void"));
+		generateGauntletItem(itemModels, ItemRegistry.WOODEN_GAUNTLET.get(), Identifier.withDefaultNamespace("block/stripped_oak_log"));
+		generateGauntletItem(itemModels, ItemRegistry.STONE_GAUNTLET.get(), Identifier.withDefaultNamespace("block/stone"));
+		generateGauntletItem(itemModels, ItemRegistry.GOLDEN_GAUNTLET.get(), Identifier.withDefaultNamespace("block/gold_block"));
+		generateGauntletItem(itemModels, ItemRegistry.COPPER_GAUNTLET.get(), Identifier.withDefaultNamespace("block/copper_block"));
+		generateIronGauntletItem(itemModels, ItemRegistry.IRON_GAUNTLET.get(), Identifier.withDefaultNamespace("block/iron_block"));
+		generateGauntletItem(itemModels, ItemRegistry.COBALT_GAUNTLET.get(), Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/cobalt_block"));
+		generateGauntletItem(itemModels, ItemRegistry.DIAMOND_GAUNTLET.get(), Identifier.withDefaultNamespace("block/diamond_block"));
+		generateGauntletItem(itemModels, ItemRegistry.NETHERITE_GAUNTLET.get(), Identifier.withDefaultNamespace("block/netherite_block"));
+		generateGauntletItem(itemModels, ItemRegistry.MOLTEN_GAUNTLET.get(), Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/custom/molten"));
+		generateGauntletItem(itemModels, ItemRegistry.TESLA_GAUNTLET.get(), Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/custom/tesla"));
+		generateGauntletItem(itemModels, ItemRegistry.VENTUS_GAUNTLET.get(), Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/custom/ventus"));
+		generateGauntletItem(itemModels, ItemRegistry.ASTRAL_GAUNTLET.get(), Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/custom/astral"));
+		generateGauntletItem(itemModels, ItemRegistry.STARSTORM_GAUNTLET.get(), Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/custom/starstorm"));
+		generateGauntletItem(itemModels, ItemRegistry.VOID_GAUNTLET.get(), Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/custom/void"));
 		itemModels.generateFlatItem(ItemRegistry.METEOR_STAFF.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.CURSED_SIGHT_STAFF.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.SCULK_STAFF.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
@@ -104,7 +97,6 @@ public class IWItemModelGenerator {
 		itemModels.generateFlatItem(ItemRegistry.OBSIDIAN_SHARD.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.DIAMOND_SHARD.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.OBSIDIAN_ROD.get(), ModelTemplates.FLAT_ITEM);
-		itemModels.generateFlatItem(ItemRegistry.WOODEN_TOOL_ROD.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.COBALT_NUGGET.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.COBALT_INGOT.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.RAW_COBALT.get(), ModelTemplates.FLAT_ITEM);
@@ -118,6 +110,8 @@ public class IWItemModelGenerator {
 		itemModels.generateFlatItem(ItemRegistry.CONDUCTIVE_ALLOY.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.MOLTEN_INGOT.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.MOLTEN_SMITHING_TEMPLATE.get(), ModelTemplates.FLAT_ITEM);
+		itemModels.generateFlatItem(ItemRegistry.VENTUS_SMITHING_TEMPLATE.get(), ModelTemplates.FLAT_ITEM);
+		itemModels.generateFlatItem(ItemRegistry.TESLA_SMITHING_TEMPLATE.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.ENDER_ESSENCE.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.VOID_INGOT.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.HANSIUM_INGOT.get(), ModelTemplates.FLAT_ITEM);
@@ -133,15 +127,6 @@ public class IWItemModelGenerator {
 		itemModels.generateFlatItem(ItemRegistry.AZUL_LOCATOR.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.CELESTIAL_FRAGMENT.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.BROKEN_LENS.get(), ModelTemplates.FLAT_ITEM);
-		itemModels.generateFlatItem(ItemRegistry.WOODEN_PIKE_HEAD.get(), ModelTemplates.FLAT_ITEM);
-		itemModels.generateFlatItem(ItemRegistry.STONE_PIKE_HEAD.get(), ModelTemplates.FLAT_ITEM);
-		itemModels.generateFlatItem(ItemRegistry.GOLDEN_PIKE_HEAD.get(), ModelTemplates.FLAT_ITEM);
-		itemModels.generateFlatItem(ItemRegistry.COPPER_PIKE_HEAD.get(), ModelTemplates.FLAT_ITEM);
-		itemModels.generateFlatItem(ItemRegistry.IRON_PIKE_HEAD.get(), ModelTemplates.FLAT_ITEM);
-		itemModels.generateFlatItem(ItemRegistry.COBALT_PIKE_HEAD.get(), ModelTemplates.FLAT_ITEM);
-		itemModels.generateFlatItem(ItemRegistry.DIAMOND_PIKE_HEAD.get(), ModelTemplates.FLAT_ITEM);
-		itemModels.generateFlatItem(ItemRegistry.TESLA_PIKE_HEAD.get(), ModelTemplates.FLAT_ITEM);
-		itemModels.generateFlatItem(ItemRegistry.VENTUS_PIKE_HEAD.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.WOODEN_ARROW.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.STONE_ARROW.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.GOLDEN_ARROW.get(), ModelTemplates.FLAT_ITEM);
@@ -331,23 +316,7 @@ public class IWItemModelGenerator {
 		itemModels.generateFlatItem(ItemRegistry.SKELETON_MERCHANT_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
 	}
 
-	private static void generatePikeItem(ItemModelGenerators models, Item item, ResourceLocation materialLocation) {
-		models.itemModelOutput.accept(
-				item,
-				ItemModelUtils.plainModel(
-						IWModelTemplates.PIKE.create(
-								item,
-								new TextureMapping()
-										.put(IWModelTemplates.Slots.HANDLE, ResourceLocation.withDefaultNamespace("block/spruce_planks"))
-										.put(IWModelTemplates.Slots.MATERIAL, materialLocation)
-										.put(TextureSlot.PARTICLE, materialLocation),
-								models.modelOutput
-						)
-				)
-		);
-	}
-
-	private static void generateGauntletItem(ItemModelGenerators models, Item item, ResourceLocation materialLocation) {
+	private static void generateGauntletItem(ItemModelGenerators models, Item item, Identifier materialLocation) {
 		models.itemModelOutput.accept(
 				item,
 				ItemModelUtils.plainModel(
@@ -362,7 +331,7 @@ public class IWItemModelGenerator {
 		);
 	}
 
-	private static void generateIronGauntletItem(ItemModelGenerators models, Item item, ResourceLocation materialLocation) {
+	private static void generateIronGauntletItem(ItemModelGenerators models, Item item, Identifier materialLocation) {
 		ItemModel.Unbaked model = ItemModelUtils.plainModel(
 				IWModelTemplates.GAUNTLET.create(
 						item,
@@ -373,7 +342,7 @@ public class IWItemModelGenerator {
 				)
 		);
 
-		ItemModel.Unbaked altModel = ItemModelUtils.plainModel(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/iron_gauntlet_alt"));
+		ItemModel.Unbaked altModel = ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/iron_gauntlet_alt"));
 
 		models.itemModelOutput.accept(
 				item,
@@ -386,8 +355,8 @@ public class IWItemModelGenerator {
 	}
 
 	private static void generateMusket(ItemModelGenerators models, Item item) {
-		ItemModel.Unbaked model = ItemModelUtils.plainModel(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/musket"));
-		ItemModel.Unbaked scopeModel = ItemModelUtils.plainModel(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/musket_scope"));
+		ItemModel.Unbaked model = ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/musket"));
+		ItemModel.Unbaked scopeModel = ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/musket_scope"));
 
 		models.itemModelOutput.accept(
 				item,

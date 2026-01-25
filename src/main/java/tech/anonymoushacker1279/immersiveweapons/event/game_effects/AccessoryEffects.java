@@ -56,7 +56,7 @@ public class AccessoryEffects {
 		// Get the total melee damage from all items
 		double meleeDamage = AccessoryManager.collectEffects(AccessoryEffectTypeRegistry.MELEE_DAMAGE.get(), player);
 
-		if (event.getSource().is(DamageTypes.PLAYER_ATTACK)) {
+		if (event.getSource().is(DamageTypes.PLAYER_ATTACK) || event.getSource().is(DamageTypes.MACE_SMASH) || event.getSource().is(DamageTypes.SPEAR)) {
 			// Apply the melee damage
 			event.setAmount((float) (event.getAmount() * (1 + meleeDamage)));
 		}

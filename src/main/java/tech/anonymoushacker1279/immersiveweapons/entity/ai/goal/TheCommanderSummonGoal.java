@@ -48,7 +48,7 @@ public class TheCommanderSummonGoal extends WaveSummonGoal<TheCommanderEntity> {
 
 			// 25% chance to roll for enchanted weapons
 			if (mob.getRandom().nextFloat() <= 0.25f) {
-				GeneralUtilities.enchantGear(soldier, true, false);
+				GeneralUtilities.enchantGear(getServerLevel(soldier), soldier, true, false);
 			}
 
 			addToSpawnQueue(soldier, false);
@@ -65,7 +65,7 @@ public class TheCommanderSummonGoal extends WaveSummonGoal<TheCommanderEntity> {
 
 			// 50% chance to roll for enchanted armor
 			if (mob.getRandom().nextBoolean()) {
-				GeneralUtilities.enchantGear(soldier, false, true);
+				GeneralUtilities.enchantGear(getServerLevel(soldier), soldier, false, true);
 			}
 
 			addToSpawnQueue(soldier, false);
@@ -82,7 +82,7 @@ public class TheCommanderSummonGoal extends WaveSummonGoal<TheCommanderEntity> {
 
 			// 50% chance to roll for enchanted armor
 			if (mob.getRandom().nextBoolean()) {
-				GeneralUtilities.enchantGear(soldier, true, true);
+				GeneralUtilities.enchantGear(getServerLevel(soldier), soldier, true, true);
 			}
 
 			addToSpawnQueue(soldier, false);
@@ -94,7 +94,7 @@ public class TheCommanderSummonGoal extends WaveSummonGoal<TheCommanderEntity> {
 
 			// 25% chance to roll for enchanted weapons
 			if (mob.getRandom().nextFloat() <= 0.25f) {
-				GeneralUtilities.enchantGear(soldier, true, false);
+				GeneralUtilities.enchantGear(getServerLevel(soldier), soldier, true, false);
 			}
 
 			addToSpawnQueue(soldier, false);

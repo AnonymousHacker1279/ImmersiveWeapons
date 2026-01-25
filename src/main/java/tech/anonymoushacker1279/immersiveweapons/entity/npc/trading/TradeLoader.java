@@ -4,13 +4,13 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.FileToIdConverter;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.npc.VillagerTrades.ItemListing;
+import net.minecraft.world.entity.npc.villager.VillagerTrades;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
@@ -23,14 +23,14 @@ import java.util.Map;
 public class TradeLoader extends SimpleJsonResourceReloadListener<MerchantTrades> {
 
 	public static final Map<EntityType<?>, MerchantTrades> TRADES = new HashMap<>(5);
-	public static final ResourceLocation ID = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "merchant_trades");
+	public static final Identifier ID = Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "merchant_trades");
 
 	public TradeLoader() {
 		super(MerchantTrades.CODEC, FileToIdConverter.json("merchant_trades"));
 	}
 
 	@Override
-	protected void apply(Map<ResourceLocation, MerchantTrades> map, ResourceManager resourceManager, ProfilerFiller profiler) {
+	protected void apply(Map<Identifier, MerchantTrades> map, ResourceManager resourceManager, ProfilerFiller profiler) {
 		TRADES.clear();
 
 		map.forEach((id, element) -> {
@@ -52,14 +52,14 @@ public class TradeLoader extends SimpleJsonResourceReloadListener<MerchantTrades
 	}
 
 
-	public static Int2ObjectMap<ItemListing[]> getTrades(EntityType<?> type) {
-		Int2ObjectMap<ItemListing[]> tradesMap = new Int2ObjectOpenHashMap<>();
+	public static Int2ObjectMap<VillagerTrades.ItemListing[]> getTrades(EntityType<?> type) {
+		Int2ObjectMap<VillagerTrades.ItemListing[]> tradesMap = new Int2ObjectOpenHashMap<>();
 		List<TradeGroup> tradeGroups = TRADES.get(type).tradeGroups();
 
 		for (TradeGroup tradeGroup : tradeGroups) {
 			List<SimpleItemListing> trades = tradeGroup.trades();
-			ItemListing[] itemListingArray = trades.stream()
-					.map(trade -> (ItemListing) new SimpleItemListing(
+			VillagerTrades.ItemListing[] itemListingArray = trades.stream()
+					.map(trade -> (VillagerTrades.ItemListing) new SimpleItemListing(
 							trade.item1(),
 							trade.item2(),
 							trade.result(),
@@ -67,7 +67,7 @@ public class TradeLoader extends SimpleJsonResourceReloadListener<MerchantTrades
 							trade.xpReward(),
 							trade.priceMultiplier()
 					))
-					.toArray(ItemListing[]::new);
+					.toArray(VillagerTrades.ItemListing[]::new);
 			tradesMap.put(tradeGroup.entries(), itemListingArray);
 		}
 

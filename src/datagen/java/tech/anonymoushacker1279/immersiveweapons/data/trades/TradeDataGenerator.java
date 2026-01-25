@@ -71,7 +71,6 @@ public class TradeDataGenerator extends TradeDataProvider {
 						new TradeGroup(1, List.of(
 								new SimpleItemListing(6, new ItemStack(ItemRegistry.BLOATED_HEART.get()), 3),
 								new SimpleItemListing(5, new ItemStack(ItemRegistry.COBALT_RING.get()), 3),
-								new SimpleItemListing(7, new ItemStack(ItemRegistry.COBALT_PIKE.get()), 3),
 								new SimpleItemListing(6, new ItemStack(ItemRegistry.MOLOTOV_COCKTAIL.get(), 2), 4),
 								new SimpleItemListing(3, new ItemStack(ItemRegistry.SMOKE_GRENADE.get(), 2), 6),
 								new SimpleItemListing(3, new ItemStack(ItemRegistry.SMOKE_GRENADE_ARROW.get(), 2), 6),

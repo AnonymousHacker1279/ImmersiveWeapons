@@ -7,6 +7,7 @@ import net.minecraft.core.HolderLookup.RegistryLookup;
 import net.minecraft.core.HolderSet.Named;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
@@ -17,9 +18,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.shapes.*;
+import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * A collection of random utility methods for general use.
@@ -111,9 +116,9 @@ public class GeneralUtilities {
 	 * @param doWeapons whether to enchant weapons
 	 * @param doArmor   whether to enchant armor
 	 */
-	public static void enchantGear(Mob mob, boolean doWeapons, boolean doArmor) {
+	public static void enchantGear(ServerLevel serverLevel, Mob mob, boolean doWeapons, boolean doArmor) {
 		RandomSource random = mob.getRandom();
-		DifficultyInstance difficulty = mob.level().getCurrentDifficultyAt(mob.blockPosition());
+		DifficultyInstance difficulty = serverLevel.getCurrentDifficultyAt(mob.blockPosition());
 
 		float specialMultiplier = difficulty.getSpecialMultiplier();
 

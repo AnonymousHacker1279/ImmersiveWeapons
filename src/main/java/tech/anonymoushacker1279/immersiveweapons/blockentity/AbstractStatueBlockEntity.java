@@ -3,13 +3,16 @@ package tech.anonymoushacker1279.immersiveweapons.blockentity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.EntitySpawnReason;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EquipmentSlot.Type;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -38,7 +41,7 @@ public abstract class AbstractStatueBlockEntity<T extends SoldierEntity> extends
 	protected float armorSpawnChance = 0.0f;
 	protected float gearEnchantChance = 0.0f;
 
-	protected static final ResourceKey<Biome> BATTLEFIELD = ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "battlefield"));
+	protected static final ResourceKey<Biome> BATTLEFIELD = ResourceKey.create(Registries.BIOME, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "battlefield"));
 
 	public AbstractStatueBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState, int maxNearbyEntities) {
 		super(type, pos, blockState);
@@ -80,8 +83,8 @@ public abstract class AbstractStatueBlockEntity<T extends SoldierEntity> extends
 		List<? extends LivingEntity> entitiesInArea = getEntitiesInArea(entity);
 
 		if (entitiesInArea != null && entitiesInArea.size() <= (maxNearbyEntities + additionalEntities)) {
-			if (entity != null) {
-				entity.finalizeSpawn((ServerLevel) level, level.getCurrentDifficultyAt(getBlockPos()), EntitySpawnReason.SPAWNER, null);
+			if (entity != null && level instanceof ServerLevel serverLevel) {
+				entity.finalizeSpawn(serverLevel, serverLevel.getCurrentDifficultyAt(getBlockPos()), EntitySpawnReason.SPAWNER, null);
 				if (entity.getRandom().nextFloat() <= armorSpawnChance) {
 					for (EquipmentSlot equipmentslot : EquipmentSlot.values()) {
 						if (equipmentslot.getType() == Type.HUMANOID_ARMOR) {
@@ -105,7 +108,7 @@ public abstract class AbstractStatueBlockEntity<T extends SoldierEntity> extends
 				}
 
 				if (entity.getRandom().nextFloat() <= gearEnchantChance) {
-					GeneralUtilities.enchantGear(entity, true, true);
+					GeneralUtilities.enchantGear(serverLevel, entity, true, true);
 				}
 
 				attemptSpawnEntity(entity);

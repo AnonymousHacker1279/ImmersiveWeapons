@@ -2,6 +2,6 @@
 @MethodsReturnNonnullByDefault
 package tech.anonymoushacker1279.immersiveweapons.client.particle.wisp;
 
-import net.minecraft.MethodsReturnNonnullByDefault;
+import com.mojang.logging.annotations.MethodsReturnNonnullByDefault;
 
 import javax.annotation.ParametersAreNonnullByDefault;

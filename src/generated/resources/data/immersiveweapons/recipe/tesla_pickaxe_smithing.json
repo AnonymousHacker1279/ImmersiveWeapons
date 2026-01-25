@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "#immersiveweapons:ingots/tesla",
+  "base": "minecraft:netherite_pickaxe",
+  "result": {
+    "id": "immersiveweapons:tesla_pickaxe"
+  },
+  "template": "immersiveweapons:tesla_smithing_template"
+}

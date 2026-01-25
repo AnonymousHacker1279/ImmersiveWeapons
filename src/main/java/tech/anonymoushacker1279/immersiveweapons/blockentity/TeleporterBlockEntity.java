@@ -2,8 +2,8 @@ package tech.anonymoushacker1279.immersiveweapons.blockentity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -17,13 +17,13 @@ public class TeleporterBlockEntity extends BlockEntity {
 	@Nullable
 	private BlockPos linkedTeleporterPos;
 	@Nullable
-	private ResourceLocation linkedTeleporterDimension;
+	private Identifier linkedTeleporterDimension;
 
 	public TeleporterBlockEntity(BlockPos blockPos, BlockState blockState) {
 		super(BlockEntityRegistry.TELEPORTER_BLOCK_ENTITY.get(), blockPos, blockState);
 	}
 
-	public void setLinkedTeleporter(@Nullable BlockPos pos, @Nullable ResourceLocation dimension) {
+	public void setLinkedTeleporter(@Nullable BlockPos pos, @Nullable Identifier dimension) {
 		linkedTeleporterPos = pos;
 		linkedTeleporterDimension = dimension;
 	}
@@ -56,7 +56,7 @@ public class TeleporterBlockEntity extends BlockEntity {
 		String teleporterDimensionString = valueInput.getString("linkedTeleporterDimension").orElse(null);
 		if (teleporterPosLong != null && teleporterDimensionString != null) {
 			linkedTeleporterPos = BlockPos.of(teleporterPosLong);
-			linkedTeleporterDimension = ResourceLocation.parse(teleporterDimensionString);
+			linkedTeleporterDimension = Identifier.parse(teleporterDimensionString);
 		}
 	}
 }

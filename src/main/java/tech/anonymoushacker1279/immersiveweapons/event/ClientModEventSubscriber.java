@@ -1,7 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.event;
 
-import net.minecraft.client.model.BoatModel;
-import net.minecraft.client.model.SkullModel;
+import net.minecraft.client.model.object.boat.BoatModel;
+import net.minecraft.client.model.object.skull.SkullModel;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.HangingSignRenderer;
@@ -10,7 +10,7 @@ import net.minecraft.client.renderer.blockentity.SkullBlockRenderer;
 import net.minecraft.client.renderer.entity.BoatRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.item.properties.conditional.ConditionalItemModelProperties;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Unit;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
@@ -46,7 +46,7 @@ import tech.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.Amm
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.AstralCrystalRenderer;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.CommanderPedestalRenderer;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.ShelfRenderer;
-import tech.anonymoushacker1279.immersiveweapons.client.renderer.dimension.TiltrosDimensionSpecialEffects;
+import tech.anonymoushacker1279.immersiveweapons.client.renderer.dimension.TiltrosSkyRenderer;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.misc.ChairRenderer;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.mob.*;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.projectile.*;
@@ -66,21 +66,21 @@ public class ClientModEventSubscriber {
 		ImmersiveWeapons.LOGGER.debug("Initializing client setup");
 
 		event.enqueueWork(() -> {
-			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.MINUTEMAN, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.MINUTEMAN, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 					"textures/entity/heads/minuteman.png"));
-			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.FIELD_MEDIC, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.FIELD_MEDIC, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 					"textures/entity/heads/field_medic.png"));
-			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.DYING_SOLDIER, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.DYING_SOLDIER, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 					"textures/entity/heads/dying_soldier.png"));
-			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.THE_COMMANDER, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.THE_COMMANDER, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 					"textures/entity/heads/the_commander.png"));
-			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.WANDERING_WARRIOR, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.WANDERING_WARRIOR, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 					"textures/entity/heads/wandering_warrior.png"));
-			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.HANS, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.HANS, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 					"textures/entity/heads/hans.png"));
-			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.STORM_CREEPER, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.STORM_CREEPER, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 					"textures/entity/heads/storm_creeper.png"));
-			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.SKELETON_MERCHANT, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.SKELETON_MERCHANT, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 					"textures/entity/heads/skeleton_merchant.png"));
 
 			Sheets.addWoodType(WoodTypes.BURNED_OAK);
@@ -161,49 +161,49 @@ public class ClientModEventSubscriber {
 		ImmersiveWeapons.LOGGER.info("Registering entity renderers");
 
 		event.registerEntityRenderer(EntityRegistry.WOODEN_ARROW_ENTITY.get(), context ->
-				new CustomArrowRenderer(context, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+				new CustomArrowRenderer(context, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 						"textures/entity/projectiles/wood_arrow.png")));
 		event.registerEntityRenderer(EntityRegistry.STONE_ARROW_ENTITY.get(), context ->
-				new CustomArrowRenderer(context, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+				new CustomArrowRenderer(context, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 						"textures/entity/projectiles/stone_arrow.png")));
 		event.registerEntityRenderer(EntityRegistry.GOLDEN_ARROW_ENTITY.get(), context ->
-				new CustomArrowRenderer(context, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+				new CustomArrowRenderer(context, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 						"textures/entity/projectiles/gold_arrow.png")));
 		event.registerEntityRenderer(EntityRegistry.COPPER_ARROW_ENTITY.get(), context ->
-				new CustomArrowRenderer(context, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+				new CustomArrowRenderer(context, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 						"textures/entity/projectiles/copper_arrow.png")));
 		event.registerEntityRenderer(EntityRegistry.IRON_ARROW_ENTITY.get(), context ->
-				new CustomArrowRenderer(context, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+				new CustomArrowRenderer(context, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 						"textures/entity/projectiles/iron_arrow.png")));
 		event.registerEntityRenderer(EntityRegistry.COBALT_ARROW_ENTITY.get(), context ->
-				new CustomArrowRenderer(context, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+				new CustomArrowRenderer(context, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 						"textures/entity/projectiles/cobalt_arrow.png")));
 		event.registerEntityRenderer(EntityRegistry.DIAMOND_ARROW_ENTITY.get(), context ->
-				new CustomArrowRenderer(context, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+				new CustomArrowRenderer(context, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 						"textures/entity/projectiles/diamond_arrow.png")));
 		event.registerEntityRenderer(EntityRegistry.NETHERITE_ARROW_ENTITY.get(), context ->
-				new CustomArrowRenderer(context, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+				new CustomArrowRenderer(context, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 						"textures/entity/projectiles/netherite_arrow.png")));
 		event.registerEntityRenderer(EntityRegistry.MOLTEN_ARROW_ENTITY.get(), context ->
-				new CustomArrowRenderer(context, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+				new CustomArrowRenderer(context, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 						"textures/entity/projectiles/molten_arrow.png")));
 		event.registerEntityRenderer(EntityRegistry.TESLA_ARROW_ENTITY.get(), context ->
-				new CustomArrowRenderer(context, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+				new CustomArrowRenderer(context, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 						"textures/entity/projectiles/tesla_arrow.png")));
 		event.registerEntityRenderer(EntityRegistry.VENTUS_ARROW_ENTITY.get(), context ->
-				new CustomArrowRenderer(context, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+				new CustomArrowRenderer(context, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 						"textures/entity/projectiles/ventus_arrow.png")));
 		event.registerEntityRenderer(EntityRegistry.ASTRAL_ARROW_ENTITY.get(), context ->
-				new CustomArrowRenderer(context, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+				new CustomArrowRenderer(context, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 						"textures/entity/projectiles/astral_arrow.png")));
 		event.registerEntityRenderer(EntityRegistry.STARSTORM_ARROW_ENTITY.get(), context ->
-				new CustomArrowRenderer(context, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+				new CustomArrowRenderer(context, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 						"textures/entity/projectiles/starstorm_arrow.png")));
 		event.registerEntityRenderer(EntityRegistry.VOID_ARROW_ENTITY.get(), context ->
-				new CustomArrowRenderer(context, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+				new CustomArrowRenderer(context, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 						"textures/entity/projectiles/void_arrow.png")));
 		event.registerEntityRenderer(EntityRegistry.SMOKE_GRENADE_ARROW_ENTITY.get(), context ->
-				new CustomArrowRenderer(context, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+				new CustomArrowRenderer(context, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 						"textures/entity/projectiles/smoke_bomb_arrow.png")));
 
 		event.registerEntityRenderer(EntityRegistry.WOODEN_MUSKET_BALL_ENTITY.get(), context -> new MusketBallRenderer(context, "wooden"));
@@ -221,7 +221,7 @@ public class ClientModEventSubscriber {
 		event.registerEntityRenderer(EntityRegistry.STARSTORM_MUSKET_BALL_ENTITY.get(), context -> new MusketBallRenderer(context, "starstorm"));
 		event.registerEntityRenderer(EntityRegistry.VOID_MUSKET_BALL_ENTITY.get(), context -> new MusketBallRenderer(context, "void"));
 
-		event.registerEntityRenderer(EntityRegistry.FLARE_ENTITY.get(), context -> new MusketBallRenderer(context, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+		event.registerEntityRenderer(EntityRegistry.FLARE_ENTITY.get(), context -> new MusketBallRenderer(context, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 				"textures/item/flare.png")));
 		event.registerEntityRenderer(EntityRegistry.CANNONBALL_ENTITY.get(), CannonballRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.DRAGON_FIREBALL_ENTITY.get(), DragonFireballBulletRenderer::new);
@@ -230,25 +230,25 @@ public class ClientModEventSubscriber {
 		event.registerEntityRenderer(EntityRegistry.FLASHBANG_ENTITY.get(), AdvancedThrowableProjectileRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.MOLOTOV_COCKTAIL_ENTITY.get(), ThrownItemRenderer::new);
 		event.registerEntityRenderer(EntityRegistry.DYING_SOLDIER_ENTITY.get(), context -> new SoldierRenderer(context,
-				ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+				Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 						"textures/entity/dying_soldier/dying_soldier.png")));
 		event.registerEntityRenderer(EntityRegistry.THE_COMMANDER_ENTITY.get(), context -> new SoldierRenderer(context,
-				ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+				Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 						"textures/entity/the_commander/the_commander.png")));
 		event.registerEntityRenderer(EntityRegistry.MINUTEMAN_ENTITY.get(), context -> new SoldierRenderer(context,
-				ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+				Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 						"textures/entity/minuteman/minuteman.png")));
 		event.registerEntityRenderer(EntityRegistry.FIELD_MEDIC_ENTITY.get(), context -> new SoldierRenderer(context,
-				ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+				Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 						"textures/entity/field_medic/field_medic.png")));
 		event.registerEntityRenderer(EntityRegistry.WANDERING_WARRIOR_ENTITY.get(), context -> new SimpleHumanoidRenderer<>(context,
-				ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+				Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 						"textures/entity/wandering_warrior/wandering_warrior.png")));
 		event.registerEntityRenderer(EntityRegistry.HANS_ENTITY.get(), context -> new SimpleHumanoidRenderer<>(context,
-				ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+				Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 						"textures/entity/hans/hans.png")));
 		event.registerEntityRenderer(EntityRegistry.SUPER_HANS_ENTITY.get(), context -> new SuperHansRenderer(context,
-				ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
+				Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 						"textures/entity/hans/hans.png")));
 		event.registerEntityRenderer(EntityRegistry.CHAIR_ENTITY.get(), ChairRenderer::new);
 
@@ -367,26 +367,24 @@ public class ClientModEventSubscriber {
 	}
 
 	@SubscribeEvent
-	public static void registerDimensionSpecialEffects(RegisterDimensionSpecialEffectsEvent event) {
-		ImmersiveWeapons.LOGGER.info("Registering dimension special effects");
-
-		event.register(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "tiltros"),
-				new TiltrosDimensionSpecialEffects());
-	}
-
-	@SubscribeEvent
 	public static void registerBlockColorHandlers(RegisterColorHandlersEvent.Block event) {
 		ImmersiveWeapons.LOGGER.info("Registering block color handlers");
 
 		event.register((blockState, tintGetter, pos, color) ->
 						tintGetter != null && pos != null ? BiomeColors.getAverageGrassColor(tintGetter, pos) : GrassColor.getDefaultColor(),
 				BlockRegistry.PITFALL.get());
+		event.register((blockState, tintGetter, pos, color) ->
+						tintGetter != null && pos != null ? BiomeColors.getAverageGrassColor(tintGetter, pos) : GrassColor.getDefaultColor(),
+				BlockRegistry.BEAR_TRAP.get());
+		event.register((blockState, tintGetter, pos, color) ->
+						tintGetter != null && pos != null ? BiomeColors.getAverageGrassColor(tintGetter, pos) : GrassColor.getDefaultColor(),
+				BlockRegistry.LANDMINE.get());
 	}
 
 	@SubscribeEvent
 	public static void registerGuiOverlaysEvent(RegisterGuiLayersEvent event) {
 		event.registerAbove(VanillaGuiLayers.CROSSHAIR,
-				ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "scope"),
+				Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "scope"),
 				IWOverlays.SCOPE_ELEMENT);
 	}
 
@@ -400,26 +398,17 @@ public class ClientModEventSubscriber {
 				ItemRegistry.HAND_CANNON.get(),
 				ItemRegistry.DRAGONS_BREATH_CANNON.get()
 		);
-		event.registerItem(ClientExtensions.PIKE,
-				ItemRegistry.WOODEN_PIKE.get(),
-				ItemRegistry.STONE_PIKE.get(),
-				ItemRegistry.GOLDEN_PIKE.get(),
-				ItemRegistry.COPPER_PIKE.get(),
-				ItemRegistry.IRON_PIKE.get(),
-				ItemRegistry.COBALT_PIKE.get(),
-				ItemRegistry.DIAMOND_PIKE.get(),
-				ItemRegistry.NETHERITE_PIKE.get(),
-				ItemRegistry.MOLTEN_PIKE.get(),
-				ItemRegistry.TESLA_PIKE.get(),
-				ItemRegistry.VENTUS_PIKE.get(),
-				ItemRegistry.ASTRAL_PIKE.get(),
-				ItemRegistry.STARSTORM_PIKE.get(),
-				ItemRegistry.VOID_PIKE.get());
+	}
+
+	@SubscribeEvent
+	public static void registerCustomEnvironmentRenderers(RegisterCustomEnvironmentEffectRendererEvent event) {
+		ImmersiveWeapons.LOGGER.info("Registering custom environment renderers");
+		event.registerSkyboxRenderer(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "tiltros"), new TiltrosSkyRenderer());
 	}
 
 	public static void initializeCustomItemProperties() {
 		ConditionalItemModelProperties.ID_MAPPER.put(
-				ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "has_specific_name"),
+				Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "has_specific_name"),
 				HasSpecificName.TYPE
 		);
 	}

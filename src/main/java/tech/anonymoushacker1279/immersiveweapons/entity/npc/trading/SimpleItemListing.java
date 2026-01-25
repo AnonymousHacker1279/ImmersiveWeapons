@@ -6,9 +6,10 @@ import net.minecraft.core.component.DataComponentExactPredicate;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.npc.VillagerTrades.ItemListing;
+import net.minecraft.world.entity.npc.villager.VillagerTrades;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.trading.ItemCost;
@@ -17,7 +18,7 @@ import net.minecraft.world.item.trading.MerchantOffer;
 import java.util.Optional;
 
 public record SimpleItemListing(ItemStack item1, ItemStack item2, ItemStack result, int maxUses, int xpReward,
-                                float priceMultiplier) implements ItemListing {
+                                float priceMultiplier) implements VillagerTrades.ItemListing {
 
 	public SimpleItemListing(ItemStack item1, ItemStack result, int maxUses, int xpReward, float priceMultiplier) {
 		this(item1, ItemStack.EMPTY, result, maxUses, xpReward, priceMultiplier);
@@ -57,7 +58,7 @@ public record SimpleItemListing(ItemStack item1, ItemStack item2, ItemStack resu
 	);
 
 	@Override
-	public MerchantOffer getOffer(Entity p_219693_, RandomSource p_219694_) {
+	public MerchantOffer getOffer(ServerLevel serverLevel, Entity entity, RandomSource randomSource) {
 		ItemCost cost = new ItemCost(item1.getItemHolder(), item1.getCount(), DataComponentExactPredicate.EMPTY, item1);
 		Optional<ItemCost> optionalSecondCost = item2.isEmpty() ? Optional.empty() : Optional.of(new ItemCost(item2.getItemHolder(), item2.getCount(), DataComponentExactPredicate.EMPTY, item2));
 		return new MerchantOffer(cost, optionalSecondCost, result, maxUses, xpReward, priceMultiplier);

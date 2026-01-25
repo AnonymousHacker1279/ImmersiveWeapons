@@ -135,7 +135,12 @@ abstract class FileOptimizationTask extends DefaultTask {
 	void optimize() {
 		try {
 			execOperations.exec {
-				commandLine getCommand().get(), "--version"
+				if (getCommand().get() == "ffmpeg") {
+					// Suppress ffmpeg output
+					commandLine getCommand().get(), "-hide_banner", "-loglevel", "error", "-version"
+				} else {
+					commandLine getCommand().get(), "--version"
+				}
 			}
 
 			String fileType = getFileType().get()
@@ -165,7 +170,7 @@ abstract class FileOptimizationTask extends DefaultTask {
 				println("Purged ${purgedEntries} entries for non-existent ${fileType} files from cache.")
 			}
 
-			File tempDir = fileType == "OGG" ? Files.createTempDirectory("optimize${fileType}").toFile() : null
+			File tempDir = (fileType == "OGG" || command == "ffmpeg") ? Files.createTempDirectory("optimize${fileType}").toFile() : null
 			int processedFiles = 0
 
 			filesToOptimize.each { File file ->
@@ -209,13 +214,60 @@ abstract class FileOptimizationTask extends DefaultTask {
 		long size = file.length()
 		File tempFile = tempDir ? new File(tempDir, file.name) : file
 
-		if (command == "optipng") {
+		if (command == "oxipng") {
 			execOperations.exec {
-				commandLine command, "-q", "-o7", "-zm1-9", "-strip", "all", file
+				commandLine command, "-q", "-o", "max", "--strip", "all", "--alpha", "-Z", file
 			}
-		} else if (command == "optivorbis") {
+		} else if (command == "ffmpeg") {
+			boolean isMusic = file.path.contains(File.separator + "music" + File.separator) ||
+					file.path.contains(File.separator + "music")
+
+			// Use 44.1kHz for music, 24kHz for sound effects
+			String sampleRate = isMusic ? "44100" : "24000"
+
+			List<String> ffmpegArgs = [
+					command,
+					"-hide_banner", "-loglevel", "error",
+					"-y", "-i", file.absolutePath,
+					"-c:a", "libvorbis",
+					"-q:a", "2",
+					"-ar", sampleRate,
+					"-compression_level", "10"
+			]
+
+			// Downmix to mono for non-music files
+			if (!isMusic) {
+				ffmpegArgs.addAll(["-ac", "1"])
+			}
+
+			ffmpegArgs.add(tempFile.absolutePath)
+
 			execOperations.exec {
-				commandLine command, "-q", file, tempFile
+				commandLine ffmpegArgs
+			}
+
+			// Optivorbis
+			if (tempFile.exists() && tempFile.length() < size) {
+				Files.move(tempFile.toPath(), file.toPath(), StandardCopyOption.REPLACE_EXISTING)
+
+				File optiVorbisTemp = new File(tempDir, "optivorbis_" + file.name)
+				try {
+					execOperations.exec {
+						commandLine "optivorbis", "-q", file, optiVorbisTemp
+					}
+
+					if (optiVorbisTemp.exists() && optiVorbisTemp.length() < file.length()) {
+						Files.move(optiVorbisTemp.toPath(), file.toPath(), StandardCopyOption.REPLACE_EXISTING)
+					} else if (optiVorbisTemp.exists()) {
+						optiVorbisTemp.delete()
+					}
+				} catch (Exception e) {
+					// If optivorbis fails, we still have the ffmpeg-optimized version
+					if (optiVorbisTemp.exists()) {
+						optiVorbisTemp.delete()
+					}
+				}
+				return
 			}
 		}
 
@@ -239,7 +291,7 @@ OptimizationUtils.initializeCacheFile(optimizationCacheFile)
 
 tasks.register("optimizePng", FileOptimizationTask) {
 	fileType = "PNG"
-	command = "optipng"
+	command = "oxipng"
 	cacheFile = optimizationCacheFile
 	resourcesDir = project.file("src/main/resources")
 	includePattern = '**/*.png'
@@ -251,7 +303,7 @@ tasks.register("optimizePng", FileOptimizationTask) {
 
 tasks.register("optimizeOgg", FileOptimizationTask) {
 	fileType = "OGG"
-	command = "optivorbis"
+	command = "ffmpeg"
 	cacheFile = optimizationCacheFile
 	resourcesDir = project.file("src/main/resources")
 	includePattern = '**/*.ogg'

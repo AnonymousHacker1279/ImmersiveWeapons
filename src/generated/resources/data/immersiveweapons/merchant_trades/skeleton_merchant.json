@@ -142,17 +142,6 @@
         },
         {
           "item_1": {
-            "count": 7,
-            "id": "minecraft:emerald"
-          },
-          "max_uses": 3,
-          "result": {
-            "count": 1,
-            "id": "immersiveweapons:cobalt_pike"
-          }
-        },
-        {
-          "item_1": {
             "count": 6,
             "id": "minecraft:emerald"
           },

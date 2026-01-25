@@ -32,14 +32,13 @@ import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
 
 public abstract class SoldierEntity extends PathfinderMob implements NeutralMob, GrantAdvancementOnDiscovery {
 
 	private static final UniformInt ANGER_TICK_RANGE = TimeUtil.rangeOfSeconds(20, 39);
-	protected int angerTime;
+	protected long angerTime;
 	@Nullable
-	protected UUID targetUUID;
+	protected EntityReference<LivingEntity> targetReference;
 	protected final List<Class<? extends Entity>> ignoresDamageFrom;
 
 	protected SoldierEntity(EntityType<? extends PathfinderMob> entityType, Level level, List<Class<? extends Entity>> ignoresDamageFrom) {
@@ -152,7 +151,7 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 			if (source.getEntity() instanceof LivingEntity livingEntity) {
 				prepareForCombat();
 				setTarget(livingEntity);
-				setPersistentAngerTarget(source.getEntity().getUUID());
+				setPersistentAngerTarget(EntityReference.of(livingEntity));
 
 				return super.hurtServer(serverLevel, source, amount);
 			}
@@ -169,27 +168,27 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 
 	@Override
 	public void startPersistentAngerTimer() {
-		setRemainingPersistentAngerTime(ANGER_TICK_RANGE.sample(random));
+		setPersistentAngerEndTime(ANGER_TICK_RANGE.sample(random));
 	}
 
 	@Override
-	public int getRemainingPersistentAngerTime() {
+	public long getPersistentAngerEndTime() {
 		return angerTime;
 	}
 
 	@Override
-	public void setRemainingPersistentAngerTime(int time) {
+	public void setPersistentAngerEndTime(long time) {
 		angerTime = time;
 	}
 
 	@Override
-	public UUID getPersistentAngerTarget() {
-		return targetUUID;
+	public @Nullable EntityReference<LivingEntity> getPersistentAngerTarget() {
+		return targetReference;
 	}
 
 	@Override
-	public void setPersistentAngerTarget(@Nullable UUID target) {
-		targetUUID = target;
+	public void setPersistentAngerTarget(@Nullable EntityReference<LivingEntity> entityReference) {
+		targetReference = entityReference;
 	}
 
 	@Override

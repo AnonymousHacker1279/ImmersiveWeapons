@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "#immersiveweapons:ingots/molten",
+  "base": "minecraft:netherite_spear",
+  "result": {
+    "id": "immersiveweapons:molten_spear"
+  },
+  "template": "immersiveweapons:molten_smithing_template"
+}

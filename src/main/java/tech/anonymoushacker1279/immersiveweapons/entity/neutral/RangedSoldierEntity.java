@@ -1,5 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.neutral;
 
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
@@ -8,7 +9,6 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.level.Level;
 import tech.anonymoushacker1279.immersiveweapons.entity.ai.goal.RangedGunAttackGoal;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
@@ -36,12 +36,12 @@ public abstract class RangedSoldierEntity extends SoldierEntity implements Range
 	}
 
 	public void prepareForCombat() {
-		if (!level().isClientSide()) {
+		if (level() instanceof ServerLevel serverLevel) {
 			goalSelector.removeGoal(getRangedGunAttackGoal());
 			goalSelector.removeGoal(meleeAttackGoal);
 
 			if (getItemBySlot(EquipmentSlot.MAINHAND).isEmpty()) {
-				populateDefaultEquipmentSlots(random, level().getCurrentDifficultyAt(blockPosition()));
+				populateDefaultEquipmentSlots(random, serverLevel.getCurrentDifficultyAt(blockPosition()));
 			}
 
 			ItemStack itemInHand = getItemInHand(InteractionHand.MAIN_HAND);
@@ -79,8 +79,8 @@ public abstract class RangedSoldierEntity extends SoldierEntity implements Range
 	}
 
 	@Override
-	public boolean canFireProjectileWeapon(ProjectileWeaponItem projectileWeaponItem) {
-		return projectileWeaponItem == getGunItem().asItem();
+	public boolean canUseNonMeleeWeapon(ItemStack stack) {
+		return stack.is(getGunItem());
 	}
 
 	@Override

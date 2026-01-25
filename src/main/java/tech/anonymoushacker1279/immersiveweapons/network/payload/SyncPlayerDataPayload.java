@@ -6,7 +6,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Player;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
@@ -20,7 +20,7 @@ import java.util.UUID;
  */
 public record SyncPlayerDataPayload(CompoundTag tag, UUID playerUUID) implements CustomPacketPayload {
 
-	public static final Type<SyncPlayerDataPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "sync_player_data"));
+	public static final Type<SyncPlayerDataPayload> TYPE = new Type<>(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "sync_player_data"));
 
 	public static final StreamCodec<FriendlyByteBuf, SyncPlayerDataPayload> STREAM_CODEC = StreamCodec.composite(
 			ByteBufCodecs.COMPOUND_TAG,

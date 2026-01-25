@@ -9,23 +9,18 @@ import net.neoforged.neoforge.common.Tags.Items;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.GauntletItem;
-import tech.anonymoushacker1279.immersiveweapons.item.tool.PikeItem;
 
 import java.util.function.Supplier;
 
 public record VanillaTieredItemFamilies(TagKey<Item> material,
                                         TagKey<Item> nugget,
                                         Supplier<? extends GauntletItem> gauntlet,
-                                        Supplier<? extends PikeItem> pike,
-                                        Supplier<? extends Item> pikeHead,
                                         Supplier<? extends ArrowItem> arrow) {
 
 	public static final VanillaTieredItemFamilies WOODEN = new VanillaTieredItemFamilies(
 			ItemTags.PLANKS,
 			IWItemTagGroups.WOODEN_SHARDS,
 			ItemRegistry.WOODEN_GAUNTLET,
-			ItemRegistry.WOODEN_PIKE,
-			ItemRegistry.WOODEN_PIKE_HEAD,
 			ItemRegistry.WOODEN_ARROW
 	);
 
@@ -33,8 +28,6 @@ public record VanillaTieredItemFamilies(TagKey<Item> material,
 			ItemTags.STONE_TOOL_MATERIALS,
 			IWItemTagGroups.STONE_SHARDS,
 			ItemRegistry.STONE_GAUNTLET,
-			ItemRegistry.STONE_PIKE,
-			ItemRegistry.STONE_PIKE_HEAD,
 			ItemRegistry.STONE_ARROW
 	);
 
@@ -42,8 +35,6 @@ public record VanillaTieredItemFamilies(TagKey<Item> material,
 			Items.INGOTS_COPPER,
 			Items.NUGGETS_COPPER,
 			ItemRegistry.COPPER_GAUNTLET,
-			ItemRegistry.COPPER_PIKE,
-			ItemRegistry.COPPER_PIKE_HEAD,
 			ItemRegistry.COPPER_ARROW
 	);
 
@@ -51,8 +42,6 @@ public record VanillaTieredItemFamilies(TagKey<Item> material,
 			Items.INGOTS_IRON,
 			Items.NUGGETS_IRON,
 			ItemRegistry.IRON_GAUNTLET,
-			ItemRegistry.IRON_PIKE,
-			ItemRegistry.IRON_PIKE_HEAD,
 			ItemRegistry.IRON_ARROW
 	);
 
@@ -60,8 +49,6 @@ public record VanillaTieredItemFamilies(TagKey<Item> material,
 			Items.INGOTS_GOLD,
 			Items.NUGGETS_GOLD,
 			ItemRegistry.GOLDEN_GAUNTLET,
-			ItemRegistry.GOLDEN_PIKE,
-			ItemRegistry.GOLDEN_PIKE_HEAD,
 			ItemRegistry.GOLDEN_ARROW
 	);
 
@@ -69,8 +56,6 @@ public record VanillaTieredItemFamilies(TagKey<Item> material,
 			Items.GEMS_DIAMOND,
 			IWItemTagGroups.DIAMOND_SHARDS,
 			ItemRegistry.DIAMOND_GAUNTLET,
-			ItemRegistry.DIAMOND_PIKE,
-			ItemRegistry.DIAMOND_PIKE_HEAD,
 			ItemRegistry.DIAMOND_ARROW
 	);
 

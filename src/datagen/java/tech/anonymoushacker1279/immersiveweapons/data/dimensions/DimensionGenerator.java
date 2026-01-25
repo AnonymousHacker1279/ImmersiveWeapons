@@ -22,8 +22,8 @@ import java.util.List;
 
 public class DimensionGenerator {
 
-	public static final ResourceKey<LevelStem> TILTROS_STEM = ResourceKey.create(Registries.LEVEL_STEM, DimensionTypeGenerator.TILTROS_LEVEL_ID);
-	public static final ResourceKey<Level> TILTROS_LEVEL = ResourceKey.create(Registries.DIMENSION, DimensionTypeGenerator.TILTROS_LEVEL_ID);
+	public static final ResourceKey<LevelStem> TILTROS_STEM = ResourceKey.create(Registries.LEVEL_STEM, DimensionTypeGenerator.TILTROS);
+	public static final ResourceKey<Level> TILTROS_LEVEL = ResourceKey.create(Registries.DIMENSION, DimensionTypeGenerator.TILTROS);
 
 	public static void bootstrap(BootstrapContext<LevelStem> context) {
 		HolderGetter<DimensionType> dimensionTypeHolderGetter = context.lookup(Registries.DIMENSION_TYPE);

@@ -2,14 +2,14 @@ package tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.mob;
 
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.HumanoidArm;
 import tech.anonymoushacker1279.immersiveweapons.client.CustomArmPoses;
 import tech.anonymoushacker1279.immersiveweapons.entity.neutral.SoldierEntity;
 
 public class SoldierRenderer extends SimpleHumanoidRenderer<SoldierEntity> {
 
-	public SoldierRenderer(Context context, ResourceLocation textureLocation) {
+	public SoldierRenderer(Context context, Identifier textureLocation) {
 		super(context, textureLocation);
 	}
 

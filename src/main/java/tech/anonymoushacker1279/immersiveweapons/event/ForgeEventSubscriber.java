@@ -8,8 +8,8 @@ import net.minecraft.core.UUIDUtil;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -28,11 +28,11 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.monster.CaveSpider;
 import net.minecraft.world.entity.monster.Slime;
+import net.minecraft.world.entity.monster.spider.CaveSpider;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.entity.projectile.ThrownTrident;
+import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
+import net.minecraft.world.entity.projectile.arrow.ThrownTrident;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.alchemy.PotionBrewing;
 import net.minecraft.world.item.alchemy.Potions;
@@ -99,9 +99,9 @@ import java.util.Set;
 public class ForgeEventSubscriber {
 
 	public static final AttributeModifier JONNYS_CURSE_SPEED_MODIFIER = new AttributeModifier(
-			ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "jonnys_curse_speed_modifier"), -0.25d, Operation.ADD_MULTIPLIED_BASE);
+			Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "jonnys_curse_speed_modifier"), -0.25d, Operation.ADD_MULTIPLIED_BASE);
 
-	private static final ResourceKey<Biome> DEADMANS_DESERT = ResourceKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "deadmans_desert"));
+	private static final ResourceKey<Biome> DEADMANS_DESERT = ResourceKey.create(Registries.BIOME, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "deadmans_desert"));
 
 	@SubscribeEvent
 	public static void playerTickEvent(PlayerTickEvent.Post event) {
@@ -277,7 +277,7 @@ public class ForgeEventSubscriber {
 		if (sourceEntity instanceof ServerPlayer serverPlayer) {
 			// If a Mud Ball was thrown, add an advancement
 			if (event.getSource().getDirectEntity() instanceof MudBallEntity) {
-				AdvancementHolder advancement = serverPlayer.level().getServer().getAdvancements().get(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "mud_ball"));
+				AdvancementHolder advancement = serverPlayer.level().getServer().getAdvancements().get(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "mud_ball"));
 
 				if (advancement != null) {
 					serverPlayer.getAdvancements().award(advancement, "");
@@ -316,7 +316,7 @@ public class ForgeEventSubscriber {
 			if (player instanceof ServerPlayer serverPlayer) {
 				// If over 175 damage was dealt, add an advancement
 				if (event.getNewDamage() >= 175.0f) {
-					AdvancementHolder advancement = serverPlayer.level().getServer().getAdvancements().get(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "overkill"));
+					AdvancementHolder advancement = serverPlayer.level().getServer().getAdvancements().get(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "overkill"));
 
 					if (advancement != null) {
 						serverPlayer.getAdvancements().award(advancement, "");

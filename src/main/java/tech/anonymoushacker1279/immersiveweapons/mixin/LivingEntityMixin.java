@@ -13,7 +13,7 @@ import tech.anonymoushacker1279.immersiveweapons.item.armor.ArmorUtils;
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
 
-	@ModifyArg(method = "travelInFluid(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/level/material/FluidState;)V",
+	@ModifyArg(method = "travelInLava",
 			at = @At(value = "INVOKE", target = "Lnet/minecraft/world/phys/Vec3;scale(D)Lnet/minecraft/world/phys/Vec3;"))
 	private double modifySwimmingSpeed(double speed) {
 		LivingEntity self = (LivingEntity) (Object) this;

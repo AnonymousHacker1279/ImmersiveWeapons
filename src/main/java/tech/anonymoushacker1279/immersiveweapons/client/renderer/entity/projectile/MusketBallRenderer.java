@@ -2,14 +2,15 @@ package tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.project
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.model.MusketBallModel;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
@@ -20,13 +21,13 @@ public class MusketBallRenderer extends EntityRenderer<BulletEntity, LivingEntit
 	private final RenderType renderType;
 
 	public MusketBallRenderer(Context context, String name) {
-		this(context, ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/item/%s_musket_ball.png".formatted(name)));
+		this(context, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/item/%s_musket_ball.png".formatted(name)));
 	}
 
-	public MusketBallRenderer(Context context, ResourceLocation location) {
+	public MusketBallRenderer(Context context, Identifier location) {
 		super(context);
 		model = new MusketBallModel(context.bakeLayer(MusketBallModel.LAYER_LOCATION));
-		renderType = RenderType.entityCutout(location);
+		renderType = RenderTypes.entityCutout(location);
 	}
 
 	@Override

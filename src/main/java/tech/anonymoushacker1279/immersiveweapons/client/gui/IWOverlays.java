@@ -1,7 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.client.gui;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.neoforged.neoforge.client.gui.GuiLayer;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
@@ -10,7 +10,7 @@ import tech.anonymoushacker1279.immersiveweapons.init.DataComponentTypeRegistry;
 
 public class IWOverlays {
 
-	public static final ResourceLocation SCOPE_LOCATION = ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/gui/overlay/musket_scope.png");
+	public static final Identifier SCOPE_LOCATION = Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/gui/overlay/musket_scope.png");
 
 	private static final Minecraft MINECRAFT = Minecraft.getInstance();
 	private static float scopeScale = 0f;

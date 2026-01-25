@@ -37,7 +37,7 @@ public abstract class BaseFireBlockMixin {
 					if (structureStart.isValid()) {
 						SuperHansEntity superHans = new SuperHansEntity(EntityRegistry.SUPER_HANS_ENTITY.get(), level);
 						superHans.setPos(entity.position());
-						superHans.finalizeSpawn(serverLevel, level.getCurrentDifficultyAt(pos), EntitySpawnReason.TRIGGERED, null);
+						superHans.finalizeSpawn(serverLevel, serverLevel.getCurrentDifficultyAt(pos), EntitySpawnReason.TRIGGERED, null);
 						level.addFreshEntity(superHans);
 
 						// Destroy the item

@@ -1,7 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.data.groups.common;
 
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
 
@@ -16,6 +16,6 @@ public class CommonWorldGenTagGroups {
 	 * @param tag a string to be used for the tag
 	 */
 	private static TagKey<Biome> createBiomeTag(String tag) {
-		return TagKey.create(Registries.BIOME, ResourceLocation.fromNamespaceAndPath("c", tag));
+		return TagKey.create(Registries.BIOME, Identifier.fromNamespaceAndPath("c", tag));
 	}
 }

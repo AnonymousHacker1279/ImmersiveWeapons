@@ -3,8 +3,8 @@ package tech.anonymoushacker1279.immersiveweapons.data.noise;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.*;
 import net.minecraft.world.level.levelgen.synth.NormalNoise;
@@ -17,7 +17,7 @@ import java.util.List;
 
 public class NoiseGenerator {
 
-	public static final ResourceKey<NoiseGeneratorSettings> TILTROS = ResourceKey.create(Registries.NOISE_SETTINGS, DimensionTypeGenerator.TILTROS_LEVEL_ID);
+	public static final ResourceKey<NoiseGeneratorSettings> TILTROS = ResourceKey.create(Registries.NOISE_SETTINGS, DimensionTypeGenerator.TILTROS);
 
 	public static void bootstrap(BootstrapContext<NoiseGeneratorSettings> context) {
 		register(context, TILTROS, new NoiseGeneratorSettings(
@@ -128,7 +128,7 @@ public class NoiseGenerator {
 	}
 
 	private static ResourceKey<DensityFunction> createKey(String location) {
-		return ResourceKey.create(Registries.DENSITY_FUNCTION, ResourceLocation.withDefaultNamespace(location));
+		return ResourceKey.create(Registries.DENSITY_FUNCTION, Identifier.withDefaultNamespace(location));
 	}
 
 	private static void register(BootstrapContext<NoiseGeneratorSettings> context, ResourceKey<NoiseGeneratorSettings> key, NoiseGeneratorSettings noiseGeneratorSettings) {

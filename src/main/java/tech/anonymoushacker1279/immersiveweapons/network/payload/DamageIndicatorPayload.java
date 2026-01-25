@@ -4,13 +4,13 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.resources.ResourceLocation;
-import org.joml.Vector3f;
+import net.minecraft.resources.Identifier;
+import org.joml.Vector3fc;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
-public record DamageIndicatorPayload(float damage, Vector3f pos) implements CustomPacketPayload {
+public record DamageIndicatorPayload(float damage, Vector3fc pos) implements CustomPacketPayload {
 
-	public static final Type<DamageIndicatorPayload> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "damage_indicator"));
+	public static final Type<DamageIndicatorPayload> TYPE = new Type<>(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "damage_indicator"));
 
 	public static final StreamCodec<FriendlyByteBuf, DamageIndicatorPayload> STREAM_CODEC = StreamCodec.composite(
 			ByteBufCodecs.FLOAT,

@@ -5,19 +5,19 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
+import net.minecraft.resources.Identifier;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
 public class EvilEyeModel extends EntityModel<LivingEntityRenderState> {
 
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(
-			ResourceLocation.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "evil_eye"),
+			Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "evil_eye"),
 			"main");
 
 	public EvilEyeModel(ModelPart root) {
-		super(root, RenderType::entityCutout);
+		super(root, RenderTypes::entityCutout);
 	}
 
 	public static LayerDefinition createBodyLayer() {

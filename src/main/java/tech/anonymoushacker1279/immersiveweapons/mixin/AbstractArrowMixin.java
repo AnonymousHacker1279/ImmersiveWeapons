@@ -5,7 +5,7 @@ import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -98,7 +98,7 @@ public abstract class AbstractArrowMixin implements ArrowAttributeAccessor {
 	 * @param original the original value
 	 * @return the modified value
 	 */
-	@ModifyExpressionValue(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/projectile/AbstractArrow;isNoPhysics()Z"))
+	@ModifyExpressionValue(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/projectile/arrow/AbstractArrow;isNoPhysics()Z"))
 	private boolean modifyIsNoPhysics(boolean original) {
 		AbstractArrow self = (AbstractArrow) (Object) this;
 		if (self instanceof BulletEntity bulletEntity) {
