@@ -22,6 +22,10 @@ public class LootTableLocations {
 	public static final ResourceKey<LootTable> CHAMPION_TOWER_TIER_1 = register("chests/champion_tower/tier_1");
 	public static final ResourceKey<LootTable> CHAMPION_TOWER_TIER_2 = register("chests/champion_tower/tier_2");
 
+	public static final ResourceKey<LootTable> CLOUD_VAULT = register("chests/cloud_vault");
+	public static final ResourceKey<LootTable> CLOUD_VAULT_TIER_1 = register("chests/cloud_vault/tier_1");
+	public static final ResourceKey<LootTable> CLOUD_VAULT_TIER_2 = register("chests/cloud_vault/tier_2");
+
 	private static ResourceKey<LootTable> register(String pId) {
 		return ResourceKey.create(Registries.LOOT_TABLE, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, pId));
 	}

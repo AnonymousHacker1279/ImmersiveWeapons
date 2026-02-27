@@ -106,7 +106,7 @@ public class ItemRegistry {
 	public static final Supplier<VentusHoe> VENTUS_HOE = ITEMS.registerItem("ventus_hoe", VentusHoe::new);
 	@TextureMetadataMarker(frameTime = 5)
 	public static final Supplier<VentusSpear> VENTUS_SPEAR = ITEMS.registerItem("ventus_spear", VentusSpear::new);
-	@TextureMetadataMarker(frameTime = 5, frames = {0, 1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1})
+	@TextureMetadataMarker(frameTime = 25, interpolate = true)
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC})
 	public static final Supplier<VentusStaff> VENTUS_STAFF = ITEMS.registerItem("ventus_staff", (properties) -> new VentusStaff(properties.durability(300)));
 	@TooltipMarker(style = {ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC})
@@ -236,6 +236,7 @@ public class ItemRegistry {
 	public static final Supplier<Item> VENTUS_SMITHING_TEMPLATE = ITEMS.registerItem("ventus_smithing_template", Item::new);
 	@TextureMetadataMarker(frameTime = 2)
 	public static final Supplier<Item> TESLA_SMITHING_TEMPLATE = ITEMS.registerItem("tesla_smithing_template", Item::new);
+	public static final Supplier<Item> CLOUD_KEY = ITEMS.registerItem("cloud_key", Item::new);
 	public static final Supplier<Item> ENDER_ESSENCE = ITEMS.registerItem("ender_essence", Item::new);
 	@TextureMetadataMarker(frameTime = 25, interpolate = true)
 	public static final Supplier<Item> VOID_INGOT = ITEMS.registerItem("void_ingot", Item::new);
@@ -244,6 +245,7 @@ public class ItemRegistry {
 	public static final Supplier<Item> SULFUR = ITEMS.registerItem("sulfur", Item::new);
 	public static final Supplier<Item> SULFUR_DUST = ITEMS.registerItem("sulfur_dust", Item::new);
 	public static final Supplier<Item> POTASSIUM_NITRATE = ITEMS.registerItem("potassium_nitrate", Item::new);
+	@TextureMetadataMarker(frameTime = 25, interpolate = true)
 	public static final Supplier<Item> VENTUS_STAFF_CORE = ITEMS.registerItem("ventus_staff_core", Item::new);
 	public static final Supplier<Item> CURSED_SIGHT_STAFF_CORE = ITEMS.registerItem("cursed_sight_staff_core", Item::new);
 	public static final Supplier<Item> WARDEN_HEART = ITEMS.registerItem("warden_heart", Item::new);

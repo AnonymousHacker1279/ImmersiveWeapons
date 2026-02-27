@@ -4,15 +4,17 @@
   "group": "ventus",
   "key": {
     "a": "#immersiveweapons:shards/ventus",
-    "b": "#c:obsidians"
+    "b": "immersiveweapons:ventus_smithing_template",
+    "c": "#c:obsidians",
+    "d": "minecraft:wind_charge"
   },
   "pattern": [
-    " a ",
-    "aba",
-    " a "
+    "dbd",
+    "aca",
+    "dad"
   ],
   "result": {
-    "count": 1,
+    "count": 2,
     "id": "immersiveweapons:ventus_smithing_template"
   }
 }

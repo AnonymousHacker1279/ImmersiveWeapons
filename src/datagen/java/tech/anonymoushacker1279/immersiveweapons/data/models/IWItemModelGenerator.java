@@ -112,6 +112,7 @@ public class IWItemModelGenerator {
 		itemModels.generateFlatItem(ItemRegistry.MOLTEN_SMITHING_TEMPLATE.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.VENTUS_SMITHING_TEMPLATE.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.TESLA_SMITHING_TEMPLATE.get(), ModelTemplates.FLAT_ITEM);
+		itemModels.generateFlatItem(ItemRegistry.CLOUD_KEY.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.ENDER_ESSENCE.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.VOID_INGOT.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.HANSIUM_INGOT.get(), ModelTemplates.FLAT_ITEM);

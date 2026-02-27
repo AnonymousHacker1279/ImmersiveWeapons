@@ -365,21 +365,10 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 	private void createVentusItems() {
 		Item VENTUS_STAFF_CORE = ItemRegistry.VENTUS_STAFF_CORE.get();
 
-		// Ventus staff core
-		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.MISC, VENTUS_STAFF_CORE)
-				.define('a', IWItemTagGroups.VENTUS_SHARDS)
-				.define('b', Tags.Items.GEMS_DIAMOND)
-				.pattern("aaa")
-				.pattern("aba")
-				.pattern("aaa")
-				.group("ventus")
-				.unlockedBy("ventus_shard", has(IWItemTagGroups.VENTUS_SHARDS))
-				.save(output);
-
 		// Ventus staff
 		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.MISC, ItemRegistry.VENTUS_STAFF.get())
 				.define('a', VENTUS_STAFF_CORE)
-				.define('b', ItemRegistry.OBSIDIAN_ROD.get())
+				.define('b', Items.BREEZE_ROD)
 				.pattern(" a ")
 				.pattern(" b ")
 				.pattern(" b ")
@@ -388,12 +377,14 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.save(output);
 
 		// Ventus smithing template
-		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.MISC, ItemRegistry.VENTUS_SMITHING_TEMPLATE.get())
+		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.MISC, ItemRegistry.VENTUS_SMITHING_TEMPLATE.get(), 2)
 				.define('a', IWItemTagGroups.VENTUS_SHARDS)
-				.define('b', Tags.Items.OBSIDIANS)
-				.pattern(" a ")
-				.pattern("aba")
-				.pattern(" a ")
+				.define('b', ItemRegistry.VENTUS_SMITHING_TEMPLATE.get())
+				.define('c', Tags.Items.OBSIDIANS)
+				.define('d', Items.WIND_CHARGE)
+				.pattern("dbd")
+				.pattern("aca")
+				.pattern("dad")
 				.group("ventus")
 				.unlockedBy("ventus_shard", has(IWItemTagGroups.VENTUS_SHARDS))
 				.save(output);
