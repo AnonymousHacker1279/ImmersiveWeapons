@@ -32,6 +32,7 @@ import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem.ThrowableType;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.GauntletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.HitEffectUtils.HitEffect;
+import tech.anonymoushacker1279.immersiveweapons.item.tool.MaulItem;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.PliersItem;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.TheSword;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.molten.*;
@@ -192,6 +193,20 @@ public class ItemRegistry {
 	public static final Supplier<GauntletItem> STARSTORM_GAUNTLET = ITEMS.registerItem("starstorm_gauntlet", (properties) -> new GauntletItem(IWToolMaterials.STARSTORM, -2.3f, 0.95f, 2, properties.repairable(IWItemTagGroups.STARSTORM_INGOTS)));
 	@TooltipMarker(dynamicTooltip = DynamicTooltips.GauntletTooltip.class)
 	public static final Supplier<GauntletItem> VOID_GAUNTLET = ITEMS.registerItem("void_gauntlet", (properties) -> new GauntletItem(IWToolMaterials.VOID, -1.2f, 0.95f, 3, properties.repairable(IWItemTagGroups.VOID_INGOTS)));
+	public static final Supplier<MaulItem> WOODEN_MAUL = ITEMS.registerItem("wooden_maul", (properties) -> new MaulItem(ToolMaterial.WOOD, -3.6f, 0.02f, properties.repairable(ItemTags.PLANKS)));
+	public static final Supplier<MaulItem> STONE_MAUL = ITEMS.registerItem("stone_maul", (properties) -> new MaulItem(ToolMaterial.STONE, -3.6f, 0.05f, properties.repairable(ItemTags.STONE_TOOL_MATERIALS)));
+	public static final Supplier<MaulItem> GOLDEN_MAUL = ITEMS.registerItem("golden_maul", (properties) -> new MaulItem(ToolMaterial.GOLD, -3.4f, 0.02f, properties.repairable(Tags.Items.INGOTS_GOLD)));
+	public static final Supplier<MaulItem> COPPER_MAUL = ITEMS.registerItem("copper_maul", (properties) -> new MaulItem(IWToolMaterials.COPPER, -3.6f, 0.08f, properties.repairable(Tags.Items.INGOTS_COPPER)));
+	public static final Supplier<MaulItem> IRON_MAUL = ITEMS.registerItem("iron_maul", (properties) -> new MaulItem(ToolMaterial.IRON, -3.5f, 0.1f, properties.repairable(Tags.Items.INGOTS_IRON)));
+	public static final Supplier<MaulItem> COBALT_MAUL = ITEMS.registerItem("cobalt_maul", (properties) -> new MaulItem(IWToolMaterials.COBALT, -3.5f, 0.12f, properties.repairable(CommonItemTagGroups.COBALT_INGOTS)));
+	public static final Supplier<MaulItem> DIAMOND_MAUL = ITEMS.registerItem("diamond_maul", (properties) -> new MaulItem(ToolMaterial.DIAMOND, -3.4f, 0.15f, properties.repairable(Tags.Items.GEMS_DIAMOND)));
+	public static final Supplier<MaulItem> NETHERITE_MAUL = ITEMS.registerItem("netherite_maul", (properties) -> new MaulItem(ToolMaterial.NETHERITE, -3.4f, 0.2f, properties.repairable(Tags.Items.INGOTS_NETHERITE)));
+	public static final Supplier<MaulItem> MOLTEN_MAUL = ITEMS.registerItem("molten_maul", (properties) -> new MaulItem(IWToolMaterials.MOLTEN, -3.4f, 0.25f, properties.repairable(IWItemTagGroups.MOLTEN_INGOTS)));
+	public static final Supplier<MaulItem> VENTUS_MAUL = ITEMS.registerItem("ventus_maul", (properties) -> new MaulItem(IWToolMaterials.VENTUS, -3f, 0.25f, properties.repairable(IWItemTagGroups.VENTUS_SHARDS)));
+	public static final Supplier<MaulItem> TESLA_MAUL = ITEMS.registerItem("tesla_maul", (properties) -> new MaulItem(IWToolMaterials.TESLA, -3.4f, 0.3f, properties.repairable(IWItemTagGroups.TESLA_INGOTS)));
+	public static final Supplier<MaulItem> ASTRAL_MAUL = ITEMS.registerItem("astral_maul", (properties) -> new MaulItem(IWToolMaterials.ASTRAL, -2.5f, 0.2f, properties.repairable(IWItemTagGroups.ASTRAL_INGOTS)));
+	public static final Supplier<MaulItem> STARSTORM_MAUL = ITEMS.registerItem("starstorm_maul", (properties) -> new MaulItem(IWToolMaterials.STARSTORM, -3.4f, 0.35f, properties.repairable(IWItemTagGroups.STARSTORM_INGOTS)));
+	public static final Supplier<MaulItem> VOID_MAUL = ITEMS.registerItem("void_maul", (properties) -> new MaulItem(IWToolMaterials.VOID, -2.3f, 0.4f, properties.repairable(IWItemTagGroups.VOID_INGOTS)));
 	@TooltipMarker(style = {ChatFormatting.GOLD, ChatFormatting.ITALIC})
 	public static final Supplier<MeteorStaffItem> METEOR_STAFF = ITEMS.registerItem("meteor_staff", (properties) -> new MeteorStaffItem(properties.durability(199).enchantable(1)));
 	@TooltipMarker(style = {ChatFormatting.DARK_RED, ChatFormatting.ITALIC})

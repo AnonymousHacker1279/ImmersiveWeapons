@@ -1,0 +1,7 @@
+{
+  "parent": "immersiveweapons:item/maul",
+  "textures": {
+    "material": "immersiveweapons:item/golden_maul",
+    "material2": "immersiveweapons:item/wooden_maul_base"
+  }
+}

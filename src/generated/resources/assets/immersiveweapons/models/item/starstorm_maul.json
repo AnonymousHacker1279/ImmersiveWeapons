@@ -1,0 +1,7 @@
+{
+  "parent": "immersiveweapons:item/maul",
+  "textures": {
+    "material": "immersiveweapons:item/starstorm_maul",
+    "material2": "immersiveweapons:item/starstorm_maul_base"
+  }
+}

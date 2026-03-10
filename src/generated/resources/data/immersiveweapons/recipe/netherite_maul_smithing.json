@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "minecraft:netherite_ingot",
+  "base": "immersiveweapons:diamond_maul",
+  "result": {
+    "id": "immersiveweapons:netherite_maul"
+  },
+  "template": "minecraft:netherite_upgrade_smithing_template"
+}

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "void",
+  "key": {
+    "a": "immersiveweapons:starstorm_maul",
+    "b": "immersiveweapons:astral_maul",
+    "c": "#immersiveweapons:ingots/starstorm",
+    "d": "#immersiveweapons:ingots/astral",
+    "e": "#immersiveweapons:ingots/void"
+  },
+  "pattern": [
+    "ced",
+    "aeb",
+    "ced"
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:void_maul"
+  }
+}

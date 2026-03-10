@@ -20,6 +20,7 @@ import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
 import tech.anonymoushacker1279.immersiveweapons.item.tool.GauntletItem;
+import tech.anonymoushacker1279.immersiveweapons.item.tool.MaulItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -256,6 +257,13 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 			}
 		}
 
+		// Maul tags
+		for (DeferredHolder<Item, ? extends Item> item : ItemRegistry.ITEMS.getEntries()) {
+			if (item.get() instanceof MaulItem maul) {
+				tag(IWItemTagGroups.MAULS).add(maul);
+			}
+		}
+
 		// Commander Pedestal Augment tags
 		tag(IWItemTagGroups.COMMANDER_PEDESTAL_AUGMENTS).add(
 				ItemRegistry.PEDESTAL_AUGMENT_SPEED.get(),
@@ -279,6 +287,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		tag(IWItemTagGroups.WEAPONS_AND_TOOLS)
 				.addTag(Tags.Items.TOOLS)
 				.addTags(IWItemTagGroups.GAUNTLETS)
+				.addTags(IWItemTagGroups.MAULS)
 				.addTag(IWItemTagGroups.RANGED_WEAPONS);
 
 		// Staff tags
@@ -396,12 +405,14 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		tag(ItemTags.BOW_ENCHANTABLE).addTag(Tags.Items.TOOLS_BOW);
 		tag(ItemTags.DURABILITY_ENCHANTABLE).addTags(
 				IWItemTagGroups.GAUNTLETS,
+				IWItemTagGroups.MAULS,
 				IWItemTagGroups.FIREARMS,
 				IWItemTagGroups.STAFFS,
 				Tags.Items.TOOLS_BOW
 		);
 		tag(ItemTags.WEAPON_ENCHANTABLE).addTags(
 				IWItemTagGroups.GAUNTLETS,
+				IWItemTagGroups.MAULS,
 				IWItemTagGroups.FIREARMS,
 				IWItemTagGroups.STAFFS
 		);
