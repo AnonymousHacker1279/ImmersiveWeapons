@@ -19,6 +19,7 @@ import net.minecraft.world.level.storage.loot.functions.SetNameFunction.Target;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
 import java.util.function.BiConsumer;
@@ -434,5 +435,59 @@ public record ChestLootTables(HolderLookup.Provider registries) implements LootT
 								.name("ventus_staff_core")
 								.setRolls(ConstantValue.exactly(1.0F))
 								.add(LootItem.lootTableItem(ItemRegistry.VENTUS_STAFF_CORE.get()).setWeight(1))));
+
+		output.accept(LootTableLocations.CLOUD_SPAWNER,
+				LootTable.lootTable()
+						.withPool(LootPool.lootPool()
+								.name("main")
+								.setRolls(UniformGenerator.between(2.0F, 4.0F))
+								.add(LootItem.lootTableItem(BlockItemRegistry.CLOUD_MARBLE_ITEM.get()).setWeight(5)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(8.0F, 16.0F))))
+								.add(LootItem.lootTableItem(Items.DIAMOND).setWeight(4)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
+								.add(LootItem.lootTableItem(Items.EMERALD).setWeight(4)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
+								.add(LootItem.lootTableItem(Items.AMETHYST_SHARD).setWeight(4)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
+								.add(LootItem.lootTableItem(ItemRegistry.GOLDEN_RING.get()).setWeight(3)
+										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F))))
+								.add(LootItem.lootTableItem(Items.BREEZE_ROD).setWeight(2)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 3.0F))))
+								.add(LootItem.lootTableItem(Items.WIND_CHARGE).setWeight(2)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(5.0F, 7.0F))))
+								.add(LootItem.lootTableItem(ItemRegistry.VENTUS_SHARD.get()).setWeight(1)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)))))
+						.withPool(LootPool.lootPool()
+								.name("key")
+								.setRolls(ConstantValue.exactly(1.0F))
+								.add(LootItem.lootTableItem(ItemRegistry.CLOUD_KEY.get()).setWeight(1))));
+
+		output.accept(LootTableLocations.CLOUD_SPAWNER_OMINOUS,
+				LootTable.lootTable()
+						.withPool(LootPool.lootPool()
+								.name("main")
+								.setRolls(UniformGenerator.between(3.0F, 5.0F))
+								.add(LootItem.lootTableItem(Items.DIAMOND).setWeight(4)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(5.0F, 10.0F))))
+								.add(LootItem.lootTableItem(Items.EMERALD).setWeight(4)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(5.0F, 10.0F))))
+								.add(LootItem.lootTableItem(Items.AMETHYST_SHARD).setWeight(4)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(5.0F, 10.0F))))
+								.add(LootItem.lootTableItem(ItemRegistry.DIAMOND_RING.get()).setWeight(3)
+										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F))))
+								.add(LootItem.lootTableItem(ItemRegistry.EMERALD_RING.get()).setWeight(3)
+										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F))))
+								.add(LootItem.lootTableItem(ItemRegistry.AMETHYST_RING.get()).setWeight(3)
+										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F))))
+								.add(LootItem.lootTableItem(Items.BREEZE_ROD).setWeight(2)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(4.0F, 7.0F))))
+								.add(LootItem.lootTableItem(Items.WIND_CHARGE).setWeight(2)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(9.0F, 12.0F))))
+								.add(LootItem.lootTableItem(ItemRegistry.VENTUS_SHARD.get()).setWeight(1)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 4.0F)))))
+						.withPool(LootPool.lootPool()
+								.name("key")
+								.setRolls(ConstantValue.exactly(1.0F))
+								.add(LootItem.lootTableItem(ItemRegistry.CLOUD_KEY.get()).setWeight(1))));
 	}
 }

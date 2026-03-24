@@ -184,7 +184,7 @@ public class BlockLootTables extends BlockLootSubProvider {
 		add(BlockRegistry.POTASSIUM_NITRATE_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.POTASSIUM_NITRATE.get(), 4, 6));
 		add(BlockRegistry.ASTRAL_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.RAW_ASTRAL.get(), 1, 3));
 		add(BlockRegistry.PITFALL.get(), this::createSilkTouchOnlyTable);
-		add(BlockRegistry.VENTUS_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.VENTUS_SHARD.get(), 2, 5));
+		add(BlockRegistry.VENTUS_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.VENTUS_SHARD.get(), 1, 2));
 		add(BlockRegistry.WOODEN_SPIKES.get(), (block) -> LootTable.lootTable()
 				.withPool(LootPool.lootPool()
 						.name("main")

@@ -10,6 +10,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
+import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.heightproviders.ConstantHeight;
@@ -190,6 +191,7 @@ public class StructureGenerator {
 		register(context, CLOUD_ISLAND, new JigsawStructure(
 				new Structure.StructureSettings.Builder(biomeHolderGetter.getOrThrow(IWWorldGenTagGroups.HAS_CLOUD_ISLAND))
 						.terrainAdapation(TerrainAdjustment.NONE)
+						.generationStep(GenerationStep.Decoration.TOP_LAYER_MODIFICATION)
 						.build(),
 				templatePoolHolderGetter.getOrThrow(StructureTemplatePoolGenerator.CLOUD_ISLAND),
 				1,
