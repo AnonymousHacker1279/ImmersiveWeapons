@@ -365,21 +365,10 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 	private void createVentusItems() {
 		Item VENTUS_STAFF_CORE = ItemRegistry.VENTUS_STAFF_CORE.get();
 
-		// Ventus staff core
-		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.MISC, VENTUS_STAFF_CORE)
-				.define('a', IWItemTagGroups.VENTUS_SHARDS)
-				.define('b', Tags.Items.GEMS_DIAMOND)
-				.pattern("aaa")
-				.pattern("aba")
-				.pattern("aaa")
-				.group("ventus")
-				.unlockedBy("ventus_shard", has(IWItemTagGroups.VENTUS_SHARDS))
-				.save(output);
-
 		// Ventus staff
 		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.MISC, ItemRegistry.VENTUS_STAFF.get())
 				.define('a', VENTUS_STAFF_CORE)
-				.define('b', ItemRegistry.OBSIDIAN_ROD.get())
+				.define('b', Items.BREEZE_ROD)
 				.pattern(" a ")
 				.pattern(" b ")
 				.pattern(" b ")
@@ -388,12 +377,14 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.save(output);
 
 		// Ventus smithing template
-		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.MISC, ItemRegistry.VENTUS_SMITHING_TEMPLATE.get())
+		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.MISC, ItemRegistry.VENTUS_SMITHING_TEMPLATE.get(), 2)
 				.define('a', IWItemTagGroups.VENTUS_SHARDS)
-				.define('b', Tags.Items.OBSIDIANS)
-				.pattern(" a ")
-				.pattern("aba")
-				.pattern(" a ")
+				.define('b', ItemRegistry.VENTUS_SMITHING_TEMPLATE.get())
+				.define('c', Tags.Items.OBSIDIANS)
+				.define('d', Items.WIND_CHARGE)
+				.pattern("dbd")
+				.pattern("aca")
+				.pattern("dad")
 				.group("ventus")
 				.unlockedBy("ventus_shard", has(IWItemTagGroups.VENTUS_SHARDS))
 				.save(output);
@@ -514,6 +505,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		createVoidUpgrade(ItemRegistry.STARSTORM_HOE.get(), ItemRegistry.ASTRAL_HOE.get(), ItemRegistry.VOID_HOE.get());
 		createVoidUpgrade(ItemRegistry.STARSTORM_SPEAR.get(), ItemRegistry.ASTRAL_SPEAR.get(), ItemRegistry.VOID_SPEAR.get());
 		createVoidUpgrade(ItemRegistry.STARSTORM_GAUNTLET.get(), ItemRegistry.ASTRAL_GAUNTLET.get(), ItemRegistry.VOID_GAUNTLET.get());
+		createVoidUpgrade(ItemRegistry.STARSTORM_MAUL.get(), ItemRegistry.ASTRAL_MAUL.get(), ItemRegistry.VOID_MAUL.get());
 		createVoidUpgrade(ItemRegistry.STARSTORM_HELMET.get(), ItemRegistry.ASTRAL_HELMET.get(), ItemRegistry.VOID_HELMET.get());
 		createVoidUpgrade(ItemRegistry.STARSTORM_CHESTPLATE.get(), ItemRegistry.ASTRAL_CHESTPLATE.get(), ItemRegistry.VOID_CHESTPLATE.get());
 		createVoidUpgrade(ItemRegistry.STARSTORM_LEGGINGS.get(), ItemRegistry.ASTRAL_LEGGINGS.get(), ItemRegistry.VOID_LEGGINGS.get());
@@ -593,6 +585,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.save(output);
 
 		netheriteSmithing(ItemRegistry.DIAMOND_GAUNTLET.get(), ItemRegistry.NETHERITE_GAUNTLET.get());
+		netheriteSmithing(ItemRegistry.DIAMOND_MAUL.get(), ItemRegistry.NETHERITE_MAUL.get());
 	}
 
 	private void createSmallPartsItems() {
@@ -698,11 +691,12 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 1, ItemRegistry.OBSIDIAN_ROD.get(), 2, ItemRegistry.ASTRAL_SHOVEL.get(), 300);
 		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 2, ItemRegistry.OBSIDIAN_ROD.get(), 2, ItemRegistry.ASTRAL_HOE.get(), 300);
 		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 1, ItemRegistry.OBSIDIAN_ROD.get(), 2, ItemRegistry.ASTRAL_SPEAR.get(), 300);
+		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 5, ItemRegistry.GAUNTLET_SCAFFOLDING.get(), 1, ItemRegistry.ASTRAL_GAUNTLET.get(), 300);
+		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 3, ItemRegistry.OBSIDIAN_ROD.get(), 2, ItemRegistry.ASTRAL_MAUL.get(), 300);
 		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 5, ItemRegistry.ASTRAL_HELMET.get(), 600);
 		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 8, ItemRegistry.ASTRAL_CHESTPLATE.get(), 600);
 		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 7, ItemRegistry.ASTRAL_LEGGINGS.get(), 600);
 		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 4, ItemRegistry.ASTRAL_BOOTS.get(), 600);
-		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 5, ItemRegistry.GAUNTLET_SCAFFOLDING.get(), 1, ItemRegistry.ASTRAL_GAUNTLET.get(), 300);
 
 		starForgeSmelting(IWItemTagGroups.STARSTORM_INGOTS, 2, ItemRegistry.OBSIDIAN_ROD.get(), 1, ItemRegistry.STARSTORM_SWORD.get(), 300);
 		starForgeSmelting(IWItemTagGroups.STARSTORM_INGOTS, 3, ItemRegistry.OBSIDIAN_ROD.get(), 2, ItemRegistry.STARSTORM_PICKAXE.get(), 300);
@@ -710,11 +704,12 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		starForgeSmelting(IWItemTagGroups.STARSTORM_INGOTS, 1, ItemRegistry.OBSIDIAN_ROD.get(), 2, ItemRegistry.STARSTORM_SHOVEL.get(), 300);
 		starForgeSmelting(IWItemTagGroups.STARSTORM_INGOTS, 2, ItemRegistry.OBSIDIAN_ROD.get(), 2, ItemRegistry.STARSTORM_HOE.get(), 300);
 		starForgeSmelting(IWItemTagGroups.STARSTORM_INGOTS, 1, ItemRegistry.OBSIDIAN_ROD.get(), 2, ItemRegistry.STARSTORM_SPEAR.get(), 300);
+		starForgeSmelting(IWItemTagGroups.STARSTORM_INGOTS, 5, ItemRegistry.GAUNTLET_SCAFFOLDING.get(), 1, ItemRegistry.STARSTORM_GAUNTLET.get(), 300);
+		starForgeSmelting(IWItemTagGroups.STARSTORM_INGOTS, 3, ItemRegistry.OBSIDIAN_ROD.get(), 2, ItemRegistry.STARSTORM_MAUL.get(), 300);
 		starForgeSmelting(IWItemTagGroups.STARSTORM_INGOTS, 5, ItemRegistry.STARSTORM_HELMET.get(), 600);
 		starForgeSmelting(IWItemTagGroups.STARSTORM_INGOTS, 8, ItemRegistry.STARSTORM_CHESTPLATE.get(), 600);
 		starForgeSmelting(IWItemTagGroups.STARSTORM_INGOTS, 7, ItemRegistry.STARSTORM_LEGGINGS.get(), 600);
 		starForgeSmelting(IWItemTagGroups.STARSTORM_INGOTS, 4, ItemRegistry.STARSTORM_BOOTS.get(), 600);
-		starForgeSmelting(IWItemTagGroups.STARSTORM_INGOTS, 5, ItemRegistry.GAUNTLET_SCAFFOLDING.get(), 1, ItemRegistry.STARSTORM_GAUNTLET.get(), 300);
 
 		starForgeSmelting(BlockItemRegistry.VOID_ORE_ITEM.get(), 1, ItemRegistry.ENDER_ESSENCE.get(), 3, ItemRegistry.VOID_INGOT.get(), 900);
 	}
@@ -1735,6 +1730,17 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.pattern("aba")
 				.define('a', material)
 				.define('b', ItemRegistry.GAUNTLET_SCAFFOLDING.get())
+				.unlockedBy("has_material", has(material))
+				.save(output);
+	}
+
+	public void createMaul(Item maul, TagKey<Item> handle, TagKey<Item> material) {
+		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.COMBAT, maul)
+				.pattern(" aa")
+				.pattern(" ba")
+				.pattern("b  ")
+				.define('a', material)
+				.define('b', handle)
 				.unlockedBy("has_material", has(material))
 				.save(output);
 	}

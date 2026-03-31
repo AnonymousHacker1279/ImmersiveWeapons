@@ -44,8 +44,8 @@ public class IWItemTagGroups {
 	public static final TagKey<Item> ASTRAL_TOOLS = createItemTag("tools/astral");
 	public static final TagKey<Item> STARSTORM_TOOLS = createItemTag("tools/starstorm");
 	public static final TagKey<Item> VOID_TOOLS = createItemTag("tools/void");
-	public static final TagKey<Item> PIKES = createItemTag("weapons/pikes");
 	public static final TagKey<Item> GAUNTLETS = createItemTag("weapons/gauntlets");
+	public static final TagKey<Item> MAULS = createItemTag("weapons/mauls");
 	public static final TagKey<Item> COMMANDER_PEDESTAL_AUGMENTS = createItemTag("commander_pedestal_augments");
 	public static final TagKey<Item> FIREARMS = createItemTag("weapons/firearms");
 	public static final TagKey<Item> RANGED_WEAPONS = createItemTag("weapons/ranged_weapons");

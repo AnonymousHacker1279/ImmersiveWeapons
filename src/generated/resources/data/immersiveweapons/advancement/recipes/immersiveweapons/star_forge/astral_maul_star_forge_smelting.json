@@ -3,15 +3,15 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:ventus_staff_core"
+        "recipe": "immersiveweapons:astral_maul_star_forge_smelting"
       },
       "trigger": "minecraft:recipe_unlocked"
     },
-    "ventus_shard": {
+    "star_forge_controller": {
       "conditions": {
         "items": [
           {
-            "items": "#immersiveweapons:shards/ventus"
+            "items": "immersiveweapons:star_forge_controller"
           }
         ]
       },
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "ventus_shard"
+      "star_forge_controller"
     ]
   ],
   "rewards": {
     "recipes": [
-      "immersiveweapons:ventus_staff_core"
+      "immersiveweapons:astral_maul_star_forge_smelting"
     ]
   }
 }

@@ -919,10 +919,10 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("dragons_breath_cannon.description", "Craft a dragon's breath cannon");
 
 		// Other weapons
-		addAdvancement("pike.title", "Long Distance Stabbing");
-		addAdvancement("pike.description", "Craft any pike");
 		addAdvancement("gauntlet.title", "Rule With An Iron Fist");
 		addAdvancement("gauntlet.description", "Craft any gauntlet");
+		addAdvancement("maul.title", "Crusher");
+		addAdvancement("maul.description", "Craft any maul");
 		addAdvancement("meteor_staff.title", "Meteor Shower");
 		addAdvancement("meteor_staff.description", "Craft a meteor staff");
 		addAdvancement("cursed_sight_staff.title", "Cursed Sight");

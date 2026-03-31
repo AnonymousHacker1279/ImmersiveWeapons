@@ -4,7 +4,7 @@
   "group": "ventus",
   "key": {
     "a": "immersiveweapons:ventus_staff_core",
-    "b": "immersiveweapons:obsidian_rod"
+    "b": "minecraft:breeze_rod"
   },
   "pattern": [
     " a ",

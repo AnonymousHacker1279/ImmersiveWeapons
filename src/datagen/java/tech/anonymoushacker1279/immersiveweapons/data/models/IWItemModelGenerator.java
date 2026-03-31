@@ -82,6 +82,20 @@ public class IWItemModelGenerator {
 		generateGauntletItem(itemModels, ItemRegistry.ASTRAL_GAUNTLET.get(), Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/custom/astral"));
 		generateGauntletItem(itemModels, ItemRegistry.STARSTORM_GAUNTLET.get(), Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/custom/starstorm"));
 		generateGauntletItem(itemModels, ItemRegistry.VOID_GAUNTLET.get(), Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/custom/void"));
+		generateMaulItem(itemModels, ItemRegistry.WOODEN_MAUL.get(), Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/wooden_maul_base"));
+		generateMaulItem(itemModels, ItemRegistry.STONE_MAUL.get(), Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/wooden_maul_base"));
+		generateMaulItem(itemModels, ItemRegistry.GOLDEN_MAUL.get(), Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/wooden_maul_base"));
+		generateMaulItem(itemModels, ItemRegistry.COPPER_MAUL.get(), Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/wooden_maul_base"));
+		generateMaulItem(itemModels, ItemRegistry.IRON_MAUL.get(), Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/wooden_maul_base"));
+		generateMaulItem(itemModels, ItemRegistry.COBALT_MAUL.get(), Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/wooden_maul_base"));
+		generateMaulItem(itemModels, ItemRegistry.DIAMOND_MAUL.get(), Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/wooden_maul_base"));
+		generateMaulItem(itemModels, ItemRegistry.NETHERITE_MAUL.get(), Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/wooden_maul_base"));
+		generateMaulItem(itemModels, ItemRegistry.MOLTEN_MAUL.get(), Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/obsidian_maul_base"));
+		generateMaulItem(itemModels, ItemRegistry.VENTUS_MAUL.get(), Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/ventus_maul_base"));
+		generateMaulItem(itemModels, ItemRegistry.TESLA_MAUL.get(), Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/tesla_maul_base"));
+		generateMaulItem(itemModels, ItemRegistry.ASTRAL_MAUL.get(), Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/obsidian_maul_base"));
+		generateMaulItem(itemModels, ItemRegistry.STARSTORM_MAUL.get(), Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/starstorm_maul_base"));
+		generateMaulItem(itemModels, ItemRegistry.VOID_MAUL.get(), Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/void_maul_base"));
 		itemModels.generateFlatItem(ItemRegistry.METEOR_STAFF.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.CURSED_SIGHT_STAFF.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.SCULK_STAFF.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
@@ -112,6 +126,7 @@ public class IWItemModelGenerator {
 		itemModels.generateFlatItem(ItemRegistry.MOLTEN_SMITHING_TEMPLATE.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.VENTUS_SMITHING_TEMPLATE.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.TESLA_SMITHING_TEMPLATE.get(), ModelTemplates.FLAT_ITEM);
+		itemModels.generateFlatItem(ItemRegistry.CLOUD_KEY.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.ENDER_ESSENCE.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.VOID_INGOT.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.HANSIUM_INGOT.get(), ModelTemplates.FLAT_ITEM);
@@ -382,6 +397,21 @@ public class IWItemModelGenerator {
 								new TextureMapping()
 										.put(TextureSlot.ALL, ModelLocationUtils.getModelLocation(item))
 										.put(TextureSlot.PARTICLE, ModelLocationUtils.getModelLocation(item)),
+								models.modelOutput
+						)
+				)
+		);
+	}
+
+	private static void generateMaulItem(ItemModelGenerators models, Item item, Identifier baseTexture) {
+		models.itemModelOutput.accept(
+				item,
+				ItemModelUtils.plainModel(
+						IWModelTemplates.MAUL.create(
+								item,
+								new TextureMapping()
+										.put(IWModelTemplates.Slots.MATERIAL, ModelLocationUtils.getModelLocation(item))
+										.put(IWModelTemplates.Slots.MATERIAL_2, baseTexture),
 								models.modelOutput
 						)
 				)

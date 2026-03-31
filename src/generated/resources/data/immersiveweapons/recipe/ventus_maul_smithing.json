@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "#immersiveweapons:shards/ventus",
+  "base": "immersiveweapons:netherite_maul",
+  "result": {
+    "id": "immersiveweapons:ventus_maul"
+  },
+  "template": "immersiveweapons:ventus_smithing_template"
+}

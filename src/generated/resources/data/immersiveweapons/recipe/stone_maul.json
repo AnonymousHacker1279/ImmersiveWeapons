@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "a": "#minecraft:stone_tool_materials",
+    "b": "#c:rods/wooden"
+  },
+  "pattern": [
+    " aa",
+    " ba",
+    "b  "
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:stone_maul"
+  }
+}

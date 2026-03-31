@@ -160,8 +160,6 @@ dependencies {
 	// Include TerraBlender
 	implementation "com.github.glitchfiend:TerraBlender-neoforge:${terrablender_version}"
 
-	// runtimeOnly "org.sinytra:wiki-exporter-neoforge:${wiki_exporter_version}"
-
 	// Include WTHIT and badpackets
 	runtimeOnly "mcp.mobius.waila:wthit:neo-${wthit_version}"
 	runtimeOnly "lol.bai:badpackets:neo-${badpackets_version}"

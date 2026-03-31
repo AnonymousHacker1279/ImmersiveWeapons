@@ -10,13 +10,16 @@ import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.LootTable.Builder;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.entries.NestedLootTable;
 import net.minecraft.world.level.storage.loot.functions.EnchantRandomlyFunction;
 import net.minecraft.world.level.storage.loot.functions.EnchantWithLevelsFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.functions.SetNameFunction;
 import net.minecraft.world.level.storage.loot.functions.SetNameFunction.Target;
+import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
 import java.util.function.BiConsumer;
@@ -386,5 +389,105 @@ public record ChestLootTables(HolderLookup.Provider registries) implements LootT
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F))))
 								.add(LootItem.lootTableItem(Items.ENCHANTED_GOLDEN_APPLE).setWeight(10))
 						));
+
+		output.accept(LootTableLocations.CLOUD_VAULT,
+				LootTable.lootTable()
+						.withPool(LootPool.lootPool()
+								.name("tier_1")
+								.add(NestedLootTable.lootTableReference(LootTableLocations.CLOUD_VAULT_TIER_1)))
+						.withPool(LootPool.lootPool()
+								.name("tier_2")
+								.when(LootItemRandomChanceCondition.randomChance(0.25F))
+								.add(NestedLootTable.lootTableReference(LootTableLocations.CLOUD_VAULT_TIER_2))));
+
+		output.accept(LootTableLocations.CLOUD_VAULT_TIER_1,
+				LootTable.lootTable()
+						.withPool(LootPool.lootPool()
+								.name("main")
+								.setRolls(UniformGenerator.between(1.0F, 3.0F))
+								.add(LootItem.lootTableItem(Items.EMERALD).setWeight(5)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(4.0F, 8.0F))))
+								.add(LootItem.lootTableItem(Items.WIND_CHARGE).setWeight(4)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(5.0F, 7.0F))))
+								.add(LootItem.lootTableItem(ItemRegistry.VENTUS_SHARD.get()).setWeight(1)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)))))
+						.withPool(LootPool.lootPool()
+								.name("smithing_template")
+								.setRolls(ConstantValue.exactly(1.0F))
+								.add(LootItem.lootTableItem(ItemRegistry.VENTUS_SMITHING_TEMPLATE.get()).setWeight(1))));
+
+		output.accept(LootTableLocations.CLOUD_VAULT_TIER_2,
+				LootTable.lootTable()
+						.withPool(LootPool.lootPool()
+								.name("main")
+								.setRolls(ConstantValue.exactly(3.0F))
+								.add(LootItem.lootTableItem(Items.EMERALD).setWeight(5)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(5.0F, 9.0F))))
+								.add(LootItem.lootTableItem(Items.WIND_CHARGE).setWeight(4)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(6.0F, 8.0F))))
+								.add(LootItem.lootTableItem(ItemRegistry.VENTUS_ARROW.get()).setWeight(3)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(5.0F, 8.0F))))
+								.add(LootItem.lootTableItem(ItemRegistry.VENTUS_MUSKET_BALL.get()).setWeight(3)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(5.0F, 8.0F))))
+								.add(LootItem.lootTableItem(ItemRegistry.VENTUS_SHARD.get()).setWeight(1)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)))))
+						.withPool(LootPool.lootPool()
+								.name("ventus_staff_core")
+								.setRolls(ConstantValue.exactly(1.0F))
+								.add(LootItem.lootTableItem(ItemRegistry.VENTUS_STAFF_CORE.get()).setWeight(1))));
+
+		output.accept(LootTableLocations.CLOUD_SPAWNER,
+				LootTable.lootTable()
+						.withPool(LootPool.lootPool()
+								.name("main")
+								.setRolls(UniformGenerator.between(2.0F, 4.0F))
+								.add(LootItem.lootTableItem(BlockItemRegistry.CLOUD_MARBLE_ITEM.get()).setWeight(5)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(8.0F, 16.0F))))
+								.add(LootItem.lootTableItem(Items.DIAMOND).setWeight(4)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
+								.add(LootItem.lootTableItem(Items.EMERALD).setWeight(4)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
+								.add(LootItem.lootTableItem(Items.AMETHYST_SHARD).setWeight(4)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
+								.add(LootItem.lootTableItem(ItemRegistry.GOLDEN_RING.get()).setWeight(3)
+										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F))))
+								.add(LootItem.lootTableItem(Items.BREEZE_ROD).setWeight(2)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 3.0F))))
+								.add(LootItem.lootTableItem(Items.WIND_CHARGE).setWeight(2)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(5.0F, 7.0F))))
+								.add(LootItem.lootTableItem(ItemRegistry.VENTUS_SHARD.get()).setWeight(1)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 2.0F)))))
+						.withPool(LootPool.lootPool()
+								.name("key")
+								.setRolls(ConstantValue.exactly(1.0F))
+								.add(LootItem.lootTableItem(ItemRegistry.CLOUD_KEY.get()).setWeight(1))));
+
+		output.accept(LootTableLocations.CLOUD_SPAWNER_OMINOUS,
+				LootTable.lootTable()
+						.withPool(LootPool.lootPool()
+								.name("main")
+								.setRolls(UniformGenerator.between(3.0F, 5.0F))
+								.add(LootItem.lootTableItem(Items.DIAMOND).setWeight(4)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(5.0F, 10.0F))))
+								.add(LootItem.lootTableItem(Items.EMERALD).setWeight(4)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(5.0F, 10.0F))))
+								.add(LootItem.lootTableItem(Items.AMETHYST_SHARD).setWeight(4)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(5.0F, 10.0F))))
+								.add(LootItem.lootTableItem(ItemRegistry.DIAMOND_RING.get()).setWeight(3)
+										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F))))
+								.add(LootItem.lootTableItem(ItemRegistry.EMERALD_RING.get()).setWeight(3)
+										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F))))
+								.add(LootItem.lootTableItem(ItemRegistry.AMETHYST_RING.get()).setWeight(3)
+										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F))))
+								.add(LootItem.lootTableItem(Items.BREEZE_ROD).setWeight(2)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(4.0F, 7.0F))))
+								.add(LootItem.lootTableItem(Items.WIND_CHARGE).setWeight(2)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(9.0F, 12.0F))))
+								.add(LootItem.lootTableItem(ItemRegistry.VENTUS_SHARD.get()).setWeight(1)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 4.0F)))))
+						.withPool(LootPool.lootPool()
+								.name("key")
+								.setRolls(ConstantValue.exactly(1.0F))
+								.add(LootItem.lootTableItem(ItemRegistry.CLOUD_KEY.get()).setWeight(1))));
 	}
 }

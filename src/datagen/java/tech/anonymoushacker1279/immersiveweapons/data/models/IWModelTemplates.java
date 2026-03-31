@@ -13,9 +13,11 @@ public class IWModelTemplates {
 			.renderType("cutout_mipped")
 			.build();
 	public static final ModelTemplate FLAG = ModelTemplates.create("immersiveweapons:flag", Slots.FLAG);
+	public static final ModelTemplate MAUL = ModelTemplates.createItem("immersiveweapons:maul", Slots.MATERIAL, Slots.MATERIAL_2);
 
 	static class Slots {
 		public static final TextureSlot MATERIAL = TextureSlot.create("material");
+		public static final TextureSlot MATERIAL_2 = TextureSlot.create("material2");
 		public static final TextureSlot FLAG = TextureSlot.create("flag");
 	}
 }

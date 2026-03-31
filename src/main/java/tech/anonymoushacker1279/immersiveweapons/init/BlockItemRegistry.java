@@ -13,10 +13,6 @@ import java.util.function.Supplier;
 @SuppressWarnings("unused")
 public class BlockItemRegistry {
 
-	@SuppressWarnings("EmptyMethod")
-	public static void bootstrap() {
-	}
-
 	// Block Items
 	public static final Supplier<BlockItem> MOLTEN_ORE_ITEM = ItemRegistry.ITEMS.registerItem("molten_ore", (properties) -> new BlockItem(BlockRegistry.MOLTEN_ORE.get(), properties.useBlockDescriptionPrefix().fireResistant()));
 	public static final Supplier<BlockItem> ELECTRIC_ORE_ITEM = ItemRegistry.ITEMS.registerItem("electric_ore", (properties) -> new BlockItem(BlockRegistry.ELECTRIC_ORE.get(), properties.useBlockDescriptionPrefix()));
@@ -209,4 +205,8 @@ public class BlockItemRegistry {
 	public static final Supplier<BlockItem> CHAMPION_BASE_ITEM = ItemRegistry.ITEMS.registerItem("champion_base", (properties) -> new BlockItem(BlockRegistry.CHAMPION_BASE.get(), properties.useBlockDescriptionPrefix()));
 	public static final Supplier<BlockItem> CHAMPION_KEYCARD_BRICKS_ITEM = ItemRegistry.ITEMS.registerItem("champion_keycard_bricks", (properties) -> new BlockItem(BlockRegistry.CHAMPION_KEYCARD_BRICKS.get(), properties.useBlockDescriptionPrefix()));
 	public static final Supplier<BlockItem> VOID_ORE_ITEM = ItemRegistry.ITEMS.registerItem("void_ore", (properties) -> new BlockItem(BlockRegistry.VOID_ORE.get(), properties.useBlockDescriptionPrefix()));
+
+	@SuppressWarnings("EmptyMethod")
+	public static void bootstrap() {
+	}
 }

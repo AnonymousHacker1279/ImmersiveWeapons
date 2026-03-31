@@ -9,6 +9,6 @@
     "absolute": 64
   },
   "start_pool": "immersiveweapons:cloud_island",
-  "step": "surface_structures",
+  "step": "top_layer_modification",
   "use_expansion_hack": false
 }

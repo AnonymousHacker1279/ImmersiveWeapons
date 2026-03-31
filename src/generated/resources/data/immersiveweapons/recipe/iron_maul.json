@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "a": "#c:ingots/iron",
+    "b": "#c:rods/wooden"
+  },
+  "pattern": [
+    " aa",
+    " ba",
+    "b  "
+  ],
+  "result": {
+    "count": 1,
+    "id": "immersiveweapons:iron_maul"
+  }
+}

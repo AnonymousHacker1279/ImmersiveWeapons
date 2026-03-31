@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "#immersiveweapons:ingots/tesla",
+  "base": "immersiveweapons:netherite_maul",
+  "result": {
+    "id": "immersiveweapons:tesla_maul"
+  },
+  "template": "immersiveweapons:tesla_smithing_template"
+}

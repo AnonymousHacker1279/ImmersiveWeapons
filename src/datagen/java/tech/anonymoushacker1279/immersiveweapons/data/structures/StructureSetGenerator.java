@@ -101,7 +101,7 @@ public class StructureSetGenerator {
 				List.of(
 						StructureSet.entry(structureHolderGetter.getOrThrow(StructureGenerator.CLOUD_ISLAND), 1)
 				),
-				new RandomSpreadStructurePlacement(25, 12, RandomSpreadType.LINEAR, 349821657)
+				new RandomSpreadStructurePlacement(30, 18, RandomSpreadType.LINEAR, 349821657)
 		));
 
 		register(context, COMMANDER_OUTPOST, new StructureSet(

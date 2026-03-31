@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": "#immersiveweapons:ingots/molten",
+  "base": "immersiveweapons:netherite_maul",
+  "result": {
+    "id": "immersiveweapons:molten_maul"
+  },
+  "template": "immersiveweapons:molten_smithing_template"
+}

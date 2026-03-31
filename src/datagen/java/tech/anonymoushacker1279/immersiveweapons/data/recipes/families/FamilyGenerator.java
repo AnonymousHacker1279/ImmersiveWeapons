@@ -232,7 +232,7 @@ public class FamilyGenerator extends RecipeGenerator {
 
 			boolean smithTools = family.smithingTemplateItem() != null && family.smithingBaseUpgrades() != null;
 			if (smithTools) {
-				Item[] upgradeMap = new Item[7];
+				Item[] upgradeMap = new Item[8];
 				upgradeMap[0] = family.sword().get();
 				upgradeMap[1] = family.pickaxe().get();
 				upgradeMap[2] = family.axe().get();
@@ -240,6 +240,7 @@ public class FamilyGenerator extends RecipeGenerator {
 				upgradeMap[4] = family.hoe().get();
 				upgradeMap[5] = family.spear().get();
 				upgradeMap[6] = family.gauntlet().get();
+				upgradeMap[7] = family.maul().get();
 
 				int i = 0;
 				for (Item baseItem : family.smithingBaseUpgrades()) {
@@ -312,6 +313,9 @@ public class FamilyGenerator extends RecipeGenerator {
 
 				// Gauntlet
 				createGauntlet(family.gauntlet().get(), material);
+
+				// Maul
+				createMaul(family.maul().get(), family.handle(), material);
 			}
 
 			if (ToolFamilies.FAMILIES_USE_NUGGETS_FOR_PROJECTILES.contains(family)) {
@@ -396,6 +400,9 @@ public class FamilyGenerator extends RecipeGenerator {
 
 			// Gauntlet
 			createGauntlet(family.gauntlet().get(), material);
+
+			// Maul
+			createMaul(family.maul().get(), Tags.Items.RODS_WOODEN, material);
 
 			if (VanillaTieredItemFamilies.FAMILIES_USE_NUGGETS_FOR_PROJECTILES.contains(family)) {
 				// Arrow

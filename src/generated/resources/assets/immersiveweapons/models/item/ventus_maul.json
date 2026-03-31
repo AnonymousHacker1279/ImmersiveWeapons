@@ -1,0 +1,7 @@
+{
+  "parent": "immersiveweapons:item/maul",
+  "textures": {
+    "material": "immersiveweapons:item/ventus_maul",
+    "material2": "immersiveweapons:item/ventus_maul_base"
+  }
+}
