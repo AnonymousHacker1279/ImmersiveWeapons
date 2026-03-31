@@ -1043,6 +1043,16 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 				.requirements(Strategy.OR)
 				.save(consumer, prefixString("gauntlet"));
 
+		Builder.advancement().parent(root)
+				.display(ItemRegistry.IRON_MAUL.get(),
+						createTitle("maul"),
+						createDescription("maul"),
+						null, AdvancementType.TASK, true, true, false)
+				.addCriterion("hold",
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(itemLookup, IWItemTagGroups.MAULS).build()))
+				.requirements(Strategy.OR)
+				.save(consumer, prefixString("maul"));
+
 		// General ingot advancements
 		AdvancementHolder ingots = Builder.advancement().parent(root)
 				.display(Items.IRON_INGOT,

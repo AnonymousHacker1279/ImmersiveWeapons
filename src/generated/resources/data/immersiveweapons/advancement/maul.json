@@ -1,0 +1,33 @@
+{
+  "parent": "immersiveweapons:root",
+  "criteria": {
+    "hold": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#immersiveweapons:weapons/mauls"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersiveweapons.maul.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "immersiveweapons:iron_maul"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.maul.title"
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

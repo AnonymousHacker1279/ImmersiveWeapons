@@ -53,7 +53,8 @@ community describe an interest in it (This excludes versions listed as **N/A - B
 
 | MC Version | Immersive Weapons Latest Version                                                                     |
 |------------|------------------------------------------------------------------------------------------------------|
-| 1.21.10    | [Latest](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases)                           |
+| 1.21.11    | [Latest](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases)                           |
+| 1.21.10    | [1.34.0](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.34.0)               |
 | 1.21.8     | [1.33.0](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.33.0)               |
 | 1.21.7     | [N/A - Build From Source](https://github.com/AnonymousHacker1279/ImmersiveWeapons/tree/1.21.7-dev)   |
 | 1.21.6     | [N/A - Build From Source](https://github.com/AnonymousHacker1279/ImmersiveWeapons/tree/1.21.6-dev)   |
@@ -73,18 +74,6 @@ community describe an interest in it (This excludes versions listed as **N/A - B
 | 1.16.5     | [1.4.3](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.4.3)                 |
 | 1.16.4     | [1.1.1](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.1.1)                 |
 | 1.15.2     | [N/A - Build From Source](https://github.com/AnonymousHacker1279/ImmersiveWeapons/tree/1.15.2-dev)   |
-
-### NeoForge vs Forge
-
-Immersive Weapons versions including and prior to v1.24.x were designed for the classic Forge modloader. However, as of
-v1.25.0, Immersive Weapons is now designed for the NeoForge modloader. The reason for this can be found on the Neoforged
-[project blog](https://neoforged.net/news/theproject/). It is expected that a majority of the existing Forge community
-will migrate to NeoForge.
-
-On MC 1.20.1, NeoForge should be compatible with Forge mods, so IW v1.25.x-v1.27.x should also work on both. However, if
-you experience issues on Forge, try NeoForge. Starting at MC 1.20.2 there is a hard break on compatibility between the
-two modloaders. I will not (and cannot feasibly) maintain two separate versions of Immersive Weapons for Forge and
-NeoForge.
 
 ## Contributing
 

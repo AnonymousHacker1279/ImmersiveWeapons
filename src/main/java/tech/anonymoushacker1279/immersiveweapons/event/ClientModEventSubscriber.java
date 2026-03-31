@@ -65,6 +65,8 @@ public class ClientModEventSubscriber {
 	public static void clientSetup(FMLClientSetupEvent event) {
 		ImmersiveWeapons.LOGGER.debug("Initializing client setup");
 
+		initializeCustomItemProperties();
+
 		event.enqueueWork(() -> {
 			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.MINUTEMAN, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 					"textures/entity/heads/minuteman.png"));
@@ -88,8 +90,6 @@ public class ClientModEventSubscriber {
 
 			CustomArmPoses.bootstrap();
 		});
-
-		initializeCustomItemProperties();
 	}
 
 	@SubscribeEvent
