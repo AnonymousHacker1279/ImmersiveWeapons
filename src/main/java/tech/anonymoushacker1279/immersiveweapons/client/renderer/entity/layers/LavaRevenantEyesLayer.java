@@ -10,7 +10,7 @@ import tech.anonymoushacker1279.immersiveweapons.client.model.LavaRevenantModel;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.state.LavaRevenantRenderState;
 
 public class LavaRevenantEyesLayer extends EyesLayer<LavaRevenantRenderState, LavaRevenantModel> {
-	private static final RenderType EYES = RenderTypes.eyes(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/entity/lava_revenant/lava_revenant.png"));
+	private static final RenderType EYES = RenderTypes.eyes(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/entity/lava_revenant/lava_revenant_eyes.png"));
 
 	public LavaRevenantEyesLayer(RenderLayerParent<LavaRevenantRenderState, LavaRevenantModel> layerParent) {
 		super(layerParent);
