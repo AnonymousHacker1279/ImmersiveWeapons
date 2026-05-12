@@ -95,7 +95,7 @@ public class IWPlacedFeatures {
 						RarityFilter.onAverageOnceEvery(4)
 				));
 
-		register(context, PATCH_FIREFLY_BUSH, configuredFeatures.getOrThrow(VegetationFeatures.PATCH_FIREFLY_BUSH),
+		register(context, PATCH_FIREFLY_BUSH, configuredFeatures.getOrThrow(VegetationFeatures.FIREFLY_BUSH),
 				List.of(
 						PlacementUtils.HEIGHTMAP_NO_LEAVES,
 						CountPlacement.of(2),

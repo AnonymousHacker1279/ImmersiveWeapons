@@ -6,7 +6,6 @@ import net.minecraft.world.item.ItemStack;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.AccessoryEffectType;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.scaling.AttributeOperation;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.scaling.DynamicAttributeOperationInstance;
-import tech.anonymoushacker1279.iwcompatbridge.plugin.curios.AccessoryBridge;
 
 import java.util.List;
 
@@ -16,23 +15,29 @@ import java.util.List;
  */
 public class IWCBBridge {
 
+	// TODO: reimplement after IWCB updates
 	public static double collectEffects(AccessoryEffectType type, Player player) {
-		return AccessoryBridge.collectEffects(type, player);
+		return 0.0d;
+		// return AccessoryBridge.collectEffects(type, player);
 	}
 
 	public static List<AttributeOperation> collectStandardAttributes(Player player) {
-		return AccessoryBridge.collectStandardAttributes(player);
+		return List.of();
+		// return AccessoryBridge.collectStandardAttributes(player);
 	}
 
 	public static List<DynamicAttributeOperationInstance> collectDynamicAttributes(Player player) {
-		return AccessoryBridge.collectDynamicAttributes(player);
+		return List.of();
+		// return AccessoryBridge.collectDynamicAttributes(player);
 	}
 
 	public static List<MobEffectInstance> collectMobEffects(Player player) {
-		return AccessoryBridge.collectMobEffects(player);
+		return List.of();
+		// return AccessoryBridge.collectMobEffects(player);
 	}
 
 	public static boolean isAccessoryActive(Player player, ItemStack stack) {
-		return AccessoryBridge.isAccessoryActive(player, stack);
+		return false;
+		// return AccessoryBridge.isAccessoryActive(player, stack);
 	}
 }

@@ -12,12 +12,12 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import net.neoforged.neoforge.common.loot.LootModifier;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -30,37 +30,36 @@ public class SimpleDropModifierHandler extends LootModifier {
 							inst.group(
 									Codec.INT.fieldOf("min_quantity").forGetter(m -> m.minQuantity),
 									Codec.INT.fieldOf("max_quantity").forGetter(m -> m.maxQuantity),
-									ItemStack.CODEC.fieldOf("item").forGetter(m -> m.itemStack),
+									ItemStackTemplate.CODEC.fieldOf("item").forGetter(m -> m.item),
 									TagKey.codec(Registries.ENTITY_TYPE).optionalFieldOf("mob_type").forGetter(m -> Optional.ofNullable(m.mobType))
 							))
-					.apply(inst, (lootItemConditions, minQuantity, maxQuantity, itemStack, entityTypeTagKey) ->
-							new SimpleDropModifierHandler(lootItemConditions, minQuantity, maxQuantity, itemStack, entityTypeTagKey.orElse(null)))
+					.apply(inst, SimpleDropModifierHandler::new)
 			));
 
 	private final int minQuantity;
 	private final int maxQuantity;
-	private final ItemStack itemStack;
+	private final ItemStackTemplate item;
 	@Nullable
 	private final TagKey<EntityType<?>> mobType;
 
-	public SimpleDropModifierHandler(LootItemCondition[] itemConditions, ItemStack itemStack) {
-		this(itemConditions, 1, 1, itemStack, null);
+	public SimpleDropModifierHandler(LootItemCondition[] itemConditions, ItemStackTemplate item) {
+		this(itemConditions, 1000, 1, 1, item, Optional.empty());
 	}
 
-	public SimpleDropModifierHandler(LootItemCondition[] itemConditions, int minQuantity, int maxQuantity, ItemStack itemStack) {
-		this(itemConditions, minQuantity, maxQuantity, itemStack, null);
+	public SimpleDropModifierHandler(LootItemCondition[] itemConditions, int minQuantity, int maxQuantity, ItemStackTemplate item) {
+		this(itemConditions, 1000, minQuantity, maxQuantity, item, Optional.empty());
 	}
 
-	public SimpleDropModifierHandler(LootItemCondition[] itemConditions, ItemStack itemStack, TagKey<EntityType<?>> type) {
-		this(itemConditions, 1, 1, itemStack, type);
+	public SimpleDropModifierHandler(LootItemCondition[] itemConditions, ItemStackTemplate item, Optional<TagKey<EntityType<?>>> type) {
+		this(itemConditions, 1000, 1, 1, item, type);
 	}
 
-	public SimpleDropModifierHandler(LootItemCondition[] itemConditions, int minQuantity, int maxQuantity, ItemStack itemStack, @Nullable TagKey<EntityType<?>> type) {
-		super(itemConditions);
+	public SimpleDropModifierHandler(LootItemCondition[] itemConditions, int priority, int minQuantity, int maxQuantity, ItemStackTemplate item, Optional<TagKey<EntityType<?>>> type) {
+		super(itemConditions, priority);
 		this.minQuantity = minQuantity;
 		this.maxQuantity = maxQuantity;
-		this.itemStack = itemStack;
-		this.mobType = type;
+		this.item = item;
+		this.mobType = type.orElse(null);
 
 		if (minQuantity < 0) {
 			throw new JsonParseException("min_quantity must be >= 0");
@@ -72,18 +71,18 @@ public class SimpleDropModifierHandler extends LootModifier {
 			throw new JsonParseException("max_quantity must be >= min_quantity");
 		}
 
-		if (!BuiltInRegistries.ITEM.containsValue(itemStack.getItem())) {
+		if (!BuiltInRegistries.ITEM.containsValue(item.item().value())) {
 			throw new JsonParseException("item must exist in the registry");
 		}
 	}
 
 	@Override
-	protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
+	protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
 		int lootQuantity = context.getRandom().nextIntBetweenInclusive(minQuantity, maxQuantity);
-		ItemStack stack = itemStack.copyWithCount(lootQuantity);
+		ItemStack stack = item.create().copyWithCount(lootQuantity);
 
 		if (mobType != null) {
-			if (context.getOptionalParameter(LootContextParams.THIS_ENTITY) instanceof Mob mob && mob.getType().is(mobType)) {
+			if (context.getOptionalParameter(LootContextParams.THIS_ENTITY) instanceof Mob mob && mob.is(mobType)) {
 				generatedLoot.add(stack);
 			}
 		} else {

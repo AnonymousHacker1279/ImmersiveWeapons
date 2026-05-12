@@ -42,13 +42,11 @@ import java.util.Optional;
 public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity implements EntityBlock {
 
 	protected final NonNullList<ItemStack> inventory = NonNullList.withSize(7, ItemStack.EMPTY);
-	protected float densityModifier = 0.0f;
+	protected final NonNullList<Integer> slotCosts = NonNullList.withSize(7, 0);
+	final DataComponentType<Float> DENSITY_MODIFIER = DataComponentTypeRegistry.DENSITY_MODIFIER.get();
 	public int excessStackSize = 0;
 	public ItemStack excessStack = ItemStack.EMPTY;
-	protected final NonNullList<Integer> slotCosts = NonNullList.withSize(7, 0);
-
-	final DataComponentType<Float> DENSITY_MODIFIER = DataComponentTypeRegistry.DENSITY_MODIFIER.get();
-
+	protected float densityModifier = 0.0f;
 	public final ContainerData containerData = new ContainerData() {
 		@Override
 		public int get(int index) {
@@ -127,7 +125,7 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 		ContainerHelper.saveAllItems(valueOutput, inventory);
 		valueOutput.putFloat("densityModifier", densityModifier);
 		valueOutput.putInt("excessStackSize", excessStackSize);
-		valueOutput.putString("excessStack", excessStack.getItemHolder().getRegisteredName());
+		valueOutput.putString("excessStack", excessStack.typeHolder().getRegisteredName());
 	}
 
 	/**
@@ -312,7 +310,7 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 			}
 
 			List<MaterialGroup> recipeMaterials = recipe.value().materials();
-			ItemStack result = recipe.value().result().copy();
+			ItemStack result = recipe.value().result().create();
 
 			slotCosts.clear();
 			int outputSize = calculateOutputSize(recipeMaterials);

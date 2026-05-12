@@ -29,12 +29,12 @@ public class MuzzleFlashParticle extends SingleQuadParticle {
 		xd += xSpeed;
 		yd += ySpeed;
 		zd += zSpeed;
-		float vibrancyModifier = 0.6F + level.random.nextFloat() * 0.4F;
+		float vibrancyModifier = 0.6F + level.getRandom().nextFloat() * 0.4F;
 		rCol = vibrancyModifier;
 		gCol = vibrancyModifier;
 		bCol = vibrancyModifier;
 		quadSize *= 1.125F;
-		lifetime = (int) ((double) 20 / ((double) level.random.nextFloat() * 0.1D + 0.9D));
+		lifetime = (int) ((double) 20 / ((double) level.getRandom().nextFloat() * 0.1D + 0.9D));
 		lifetime = (int) ((float) lifetime * 0.075F);
 		lifetime = Math.max(lifetime, 1);
 		setSpriteFromAge(spriteSet);
@@ -59,7 +59,7 @@ public class MuzzleFlashParticle extends SingleQuadParticle {
 	}
 
 	@Override
-	protected int getLightColor(float pPartialTick) {
+	protected int getLightCoords(float a) {
 		return 255;
 	}
 

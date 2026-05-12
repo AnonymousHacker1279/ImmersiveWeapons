@@ -18,7 +18,6 @@
       "translate": "advancements.immersiveweapons.ingots.description"
     },
     "icon": {
-      "count": 1,
       "id": "minecraft:iron_ingot"
     },
     "show_toast": false,

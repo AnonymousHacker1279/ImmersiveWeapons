@@ -3,11 +3,11 @@ package tech.anonymoushacker1279.immersiveweapons.item.crafting;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
@@ -19,19 +19,50 @@ import java.util.Optional;
 
 public class StarForgeRecipe implements Recipe<StarForgeRecipeInput> {
 
+	public static final MapCodec<StarForgeRecipe> MAP_CODEC = RecordCodecBuilder.mapCodec(
+			instance -> instance.group(
+							Codec.STRING.optionalFieldOf("group", "").forGetter(StarForgeRecipe::group),
+							Ingredient.CODEC.fieldOf("primary_material").forGetter(StarForgeRecipe::primaryMaterial),
+							Codec.INT.fieldOf("primary_material_count").forGetter(StarForgeRecipe::primaryMaterialCount),
+							Ingredient.CODEC.optionalFieldOf("secondary_material").forGetter(StarForgeRecipe::secondaryMaterial),
+							Codec.INT.fieldOf("secondary_material_count").forGetter(StarForgeRecipe::secondaryMaterialCount),
+							Codec.INT.fieldOf("smelt_time").forGetter(StarForgeRecipe::smeltTime),
+							ItemStackTemplate.CODEC.fieldOf("result").forGetter(StarForgeRecipe::result)
+					)
+					.apply(instance, StarForgeRecipe::new)
+	);
+	public static final StreamCodec<RegistryFriendlyByteBuf, StarForgeRecipe> STREAM_CODEC = StreamCodec.composite(
+			ByteBufCodecs.STRING_UTF8,
+			StarForgeRecipe::group,
+			Ingredient.CONTENTS_STREAM_CODEC,
+			StarForgeRecipe::primaryMaterial,
+			ByteBufCodecs.INT,
+			StarForgeRecipe::primaryMaterialCount,
+			Ingredient.OPTIONAL_CONTENTS_STREAM_CODEC,
+			StarForgeRecipe::secondaryMaterial,
+			ByteBufCodecs.INT,
+			StarForgeRecipe::secondaryMaterialCount,
+			ByteBufCodecs.INT,
+			StarForgeRecipe::smeltTime,
+			ItemStackTemplate.STREAM_CODEC,
+			StarForgeRecipe::result,
+			StarForgeRecipe::new
+	);
+	public static final RecipeSerializer<StarForgeRecipe> SERIALIZER = new RecipeSerializer<>(MAP_CODEC, STREAM_CODEC);
+
 	private final String group;
 	private final Ingredient primaryMaterial;
 	private final int primaryMaterialCount;
 	private final Optional<Ingredient> secondaryMaterial;
 	private final int secondaryMaterialCount;
-	private final ItemStack result;
+	private final ItemStackTemplate result;
 	private final int smeltTime;
 
 	@Nullable
 	private PlacementInfo placementInfo;
 
 	public StarForgeRecipe(String group, Ingredient primaryMaterial, int primaryMaterialCount, Optional<Ingredient> secondaryMaterial,
-	                       int secondaryMaterialCount, int smeltTime, ItemStack result) {
+	                       int secondaryMaterialCount, int smeltTime, ItemStackTemplate result) {
 
 		this.group = group;
 		this.primaryMaterial = primaryMaterial;
@@ -46,7 +77,7 @@ public class StarForgeRecipe implements Recipe<StarForgeRecipeInput> {
 		return group;
 	}
 
-	public ItemStack result() {
+	public ItemStackTemplate result() {
 		return result;
 	}
 
@@ -88,8 +119,8 @@ public class StarForgeRecipe implements Recipe<StarForgeRecipeInput> {
 	}
 
 	@Override
-	public ItemStack assemble(StarForgeRecipeInput input, HolderLookup.Provider registries) {
-		return result;
+	public ItemStack assemble(StarForgeRecipeInput input) {
+		return result.create();
 	}
 
 	@Override
@@ -113,65 +144,16 @@ public class StarForgeRecipe implements Recipe<StarForgeRecipeInput> {
 	}
 
 	@Override
+	public boolean showNotification() {
+		return false;
+	}
+
+	@Override
 	public PlacementInfo placementInfo() {
 		if (placementInfo == null) {
 			placementInfo = PlacementInfo.create(primaryMaterial);
 		}
 
 		return placementInfo;
-	}
-
-	public interface Factory<T extends StarForgeRecipe> {
-		T create(String group, Ingredient ingot, int ingotCount, Optional<Ingredient> secondaryMaterial, int secondaryMaterialCount,
-		         int smeltTime, ItemStack result);
-	}
-
-	public static class Serializer<T extends StarForgeRecipe> implements RecipeSerializer<T> {
-
-		private final MapCodec<T> codec;
-		private final StreamCodec<RegistryFriendlyByteBuf, T> streamCodec;
-
-		public Serializer(StarForgeRecipe.Factory<T> factory) {
-			codec = RecordCodecBuilder.mapCodec(
-					instance -> instance.group(
-									Codec.STRING.optionalFieldOf("group", "").forGetter(StarForgeRecipe::group),
-									Ingredient.CODEC.fieldOf("primary_material").forGetter(StarForgeRecipe::primaryMaterial),
-									Codec.INT.fieldOf("primary_material_count").forGetter(StarForgeRecipe::primaryMaterialCount),
-									Ingredient.CODEC.optionalFieldOf("secondary_material").forGetter(StarForgeRecipe::secondaryMaterial),
-									Codec.INT.fieldOf("secondary_material_count").forGetter(StarForgeRecipe::secondaryMaterialCount),
-									Codec.INT.fieldOf("smelt_time").forGetter(StarForgeRecipe::smeltTime),
-									ItemStack.SINGLE_ITEM_CODEC.fieldOf("result").forGetter(StarForgeRecipe::result)
-							)
-							.apply(instance, factory::create)
-			);
-
-			streamCodec = StreamCodec.composite(
-					ByteBufCodecs.STRING_UTF8,
-					StarForgeRecipe::group,
-					Ingredient.CONTENTS_STREAM_CODEC,
-					StarForgeRecipe::primaryMaterial,
-					ByteBufCodecs.INT,
-					StarForgeRecipe::primaryMaterialCount,
-					Ingredient.OPTIONAL_CONTENTS_STREAM_CODEC,
-					StarForgeRecipe::secondaryMaterial,
-					ByteBufCodecs.INT,
-					StarForgeRecipe::secondaryMaterialCount,
-					ByteBufCodecs.INT,
-					StarForgeRecipe::smeltTime,
-					ItemStack.STREAM_CODEC,
-					StarForgeRecipe::result,
-					factory::create
-			);
-		}
-
-		@Override
-		public MapCodec<T> codec() {
-			return this.codec;
-		}
-
-		@Override
-		public StreamCodec<RegistryFriendlyByteBuf, T> streamCodec() {
-			return this.streamCodec;
-		}
 	}
 }

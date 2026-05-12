@@ -6,7 +6,6 @@
   "group": "cobalt",
   "ingredient": "immersiveweapons:cobalt_ore",
   "result": {
-    "count": 1,
     "id": "immersiveweapons:cobalt_ingot"
   }
 }

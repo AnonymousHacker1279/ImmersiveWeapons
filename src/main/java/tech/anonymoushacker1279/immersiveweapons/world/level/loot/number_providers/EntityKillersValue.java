@@ -4,10 +4,8 @@ import com.mojang.serialization.*;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.world.level.storage.loot.providers.number.LootNumberProviderType;
 import net.minecraft.world.level.storage.loot.providers.number.NumberProvider;
 import tech.anonymoushacker1279.immersiveweapons.entity.AttackerTracker;
-import tech.anonymoushacker1279.immersiveweapons.init.NumberProviderRegistry;
 
 import java.util.stream.Stream;
 
@@ -18,7 +16,7 @@ import java.util.stream.Stream;
  */
 public record EntityKillersValue() implements NumberProvider {
 
-	public static final MapCodec<EntityKillersValue> CODEC = new MapCodec<>() {
+	public static final MapCodec<EntityKillersValue> MAP_CODEC = new MapCodec<>() {
 		@Override
 		public <T> Stream<T> keys(DynamicOps<T> ops) {
 			return Stream.empty();
@@ -40,8 +38,8 @@ public record EntityKillersValue() implements NumberProvider {
 		}
 	};
 
-	public LootNumberProviderType getType() {
-		return NumberProviderRegistry.ENTITY_KILLERS.get();
+	public static EntityKillersValue create() {
+		return new EntityKillersValue();
 	}
 
 	public float getFloat(LootContext lootContext) {
@@ -54,16 +52,17 @@ public record EntityKillersValue() implements NumberProvider {
 		return 0;
 	}
 
-	public static EntityKillersValue create() {
-		return new EntityKillersValue();
+	@Override
+	public MapCodec<? extends NumberProvider> codec() {
+		return MAP_CODEC;
 	}
 
 	@Override
-	public boolean equals(Object pOther) {
-		if (this == pOther) {
+	public boolean equals(Object other) {
+		if (this == other) {
 			return true;
 		} else {
-			return pOther != null && this.getClass() == pOther.getClass();
+			return this.getClass() == other.getClass();
 		}
 	}
 

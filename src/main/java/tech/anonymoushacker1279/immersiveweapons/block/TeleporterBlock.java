@@ -88,8 +88,8 @@ public class TeleporterBlock extends Block implements EntityBlock, SimpleWaterlo
 								itemEntity.setItem(new ItemStack(ItemRegistry.MOLDY_BREAD.get(), itemEntity.getItem().getCount()));
 							}
 						} else if (entity instanceof Player player) {
-							player.displayClientMessage(Component.translatable("immersiveweapons.block.teleporter.linked_teleporter_does_not_exist")
-									.withStyle(ChatFormatting.RED), true);
+							player.sendOverlayMessage(Component.translatable("immersiveweapons.block.teleporter.linked_teleporter_does_not_exist")
+									.withStyle(ChatFormatting.RED));
 						}
 					});
 
@@ -120,8 +120,8 @@ public class TeleporterBlock extends Block implements EntityBlock, SimpleWaterlo
 				} else {
 					getEntitiesOnPlatform(level, pos.above()).forEach(entity -> {
 						if (entity instanceof Player player) {
-							player.displayClientMessage(Component.translatable("immersiveweapons.block.teleporter.no_linked_teleporter")
-									.withStyle(ChatFormatting.RED), true);
+							player.sendOverlayMessage(Component.translatable("immersiveweapons.block.teleporter.no_linked_teleporter")
+									.withStyle(ChatFormatting.RED));
 						}
 					});
 				}

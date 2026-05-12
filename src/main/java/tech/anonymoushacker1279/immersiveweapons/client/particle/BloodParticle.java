@@ -29,12 +29,12 @@ public class BloodParticle extends SingleQuadParticle {
 		xd += xSpeed;
 		yd += ySpeed;
 		zd += zSpeed;
-		float vibrancyModifier = level.random.nextFloat();
+		float vibrancyModifier = level.getRandom().nextFloat();
 		rCol = vibrancyModifier;
 		gCol = vibrancyModifier;
 		bCol = vibrancyModifier;
 		quadSize *= 0.75F * (float) 0.5;
-		lifetime = (int) ((double) 40 / ((double) level.random.nextFloat() * 0.8D + 0.2D));
+		lifetime = (int) ((double) 40 / ((double) level.getRandom().nextFloat() * 0.8D + 0.2D));
 		lifetime = (int) ((float) lifetime * (float) 0.5);
 		lifetime = Math.max(lifetime, 1);
 		setSpriteFromAge(spriteSet);

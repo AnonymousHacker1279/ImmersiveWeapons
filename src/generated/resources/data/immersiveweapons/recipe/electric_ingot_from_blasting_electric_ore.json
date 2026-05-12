@@ -6,7 +6,6 @@
   "group": "tesla",
   "ingredient": "immersiveweapons:electric_ore",
   "result": {
-    "count": 1,
     "id": "immersiveweapons:electric_ingot"
   }
 }

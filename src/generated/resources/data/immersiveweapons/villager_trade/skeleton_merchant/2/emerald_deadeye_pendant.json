@@ -1,0 +1,12 @@
+{
+  "gives": {
+    "id": "immersiveweapons:deadeye_pendant"
+  },
+  "max_uses": 1.0,
+  "reputation_discount": 0.05,
+  "wants": {
+    "count": 32.0,
+    "id": "minecraft:emerald"
+  },
+  "xp": 10.0
+}

@@ -2,11 +2,9 @@
   "type": "immersiveweapons:small_parts",
   "craftables": [
     {
-      "count": 1,
       "id": "immersiveweapons:grenade_assembly"
     },
     {
-      "count": 1,
       "id": "immersiveweapons:tool_joint"
     }
   ],

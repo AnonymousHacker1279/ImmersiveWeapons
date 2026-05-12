@@ -6,7 +6,6 @@
   "group": "molten",
   "ingredient": "immersiveweapons:molten_ore",
   "result": {
-    "count": 1,
     "id": "immersiveweapons:molten_ingot"
   }
 }

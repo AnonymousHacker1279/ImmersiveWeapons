@@ -1,7 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.mixin;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.client.gui.screens.inventory.InventoryScreen;
@@ -22,10 +22,10 @@ import java.util.List;
 public abstract class AbstractContainerScreenMixin {
 
 	@Shadow
-	protected abstract boolean isHovering(int x, int y, int width, int height, double mouseX, double mouseY);
+	protected abstract boolean isHovering(int left, int top, int w, int h, double xm, double ym);
 
-	@Inject(method = "renderTooltip", at = @At("TAIL"))
-	private void renderTooltip(GuiGraphics guiGraphics, int x, int y, CallbackInfo ci) {
+	@Inject(method = "extractTooltip", at = @At("TAIL"))
+	private void renderTooltip(GuiGraphicsExtractor graphics, int mouseX, int mouseY, CallbackInfo ci) {
 		AbstractContainerScreen<?> screen = (AbstractContainerScreen<?>) (Object) this;
 		Player player = screen.getMinecraft().player;
 
@@ -34,21 +34,21 @@ public abstract class AbstractContainerScreenMixin {
 		}
 
 		if (screen instanceof InventoryScreen) {
-			if (isHovering(26, 8, 49, 70, x, y) && Minecraft.getInstance().hasShiftDown()) {
-				immersiveWeapons$renderPlayerStats(guiGraphics, screen, x, y, PlayerStatTooltips.getStatTooltips(player));
+			if (isHovering(26, 8, 49, 70, mouseX, mouseY) && Minecraft.getInstance().hasShiftDown()) {
+				immersiveWeapons$renderPlayerStats(graphics, screen, mouseX, mouseY, PlayerStatTooltips.getStatTooltips(player));
 			}
 		}
 
 		if (screen instanceof CreativeModeInventoryScreen creativeScreen && creativeScreen.isInventoryOpen() && Minecraft.getInstance().hasShiftDown()) {
-			if (isHovering(73, 6, 32, 42, x, y)) {
-				immersiveWeapons$renderPlayerStats(guiGraphics, screen, x, y, PlayerStatTooltips.getStatTooltips(player));
+			if (isHovering(73, 6, 32, 42, mouseX, mouseY)) {
+				immersiveWeapons$renderPlayerStats(graphics, screen, mouseX, mouseY, PlayerStatTooltips.getStatTooltips(player));
 			}
 		}
 	}
 
 	@Unique
-	private void immersiveWeapons$renderPlayerStats(GuiGraphics guiGraphics, AbstractContainerScreen<?> screen, int x, int y, List<ClientTooltipComponent> tooltips) {
-		guiGraphics.renderTooltip(
+	private void immersiveWeapons$renderPlayerStats(GuiGraphicsExtractor graphics, AbstractContainerScreen<?> screen, int x, int y, List<ClientTooltipComponent> tooltips) {
+		graphics.tooltip(
 				screen.getFont(),
 				tooltips,
 				x,

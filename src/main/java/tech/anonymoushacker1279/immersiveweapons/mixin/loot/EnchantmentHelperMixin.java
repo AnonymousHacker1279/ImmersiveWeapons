@@ -24,13 +24,13 @@ import tech.anonymoushacker1279.immersiveweapons.api.events.ComputeEnchantedLoot
 @Mixin(EnchantmentHelper.class)
 public abstract class EnchantmentHelperMixin {
 
-	@ModifyVariable(method = "lambda$processEquipmentDropChance$26", at = @At("HEAD"), argsOnly = true)
-	private static int processEquipmentDropChance$0(int enchantmentLevel, ServerLevel level, LivingEntity entity, DamageSource damageSource, MutableFloat mutableFloat, RandomSource randomSource, Holder<Enchantment> enchantment, int enchantmentLevelX, EnchantedItemInUse enchantedItemInUse) {
-		return ComputeEnchantedLootBonusEvent.onComputeEnchantedLootBonus(enchantment, enchantmentLevel, entity, damageSource);
+	@ModifyVariable(method = "lambda$processEquipmentDropChance$0", at = @At("HEAD"), argsOnly = true, name = "level")
+	private static int processEquipmentDropChance$0(int level, ServerLevel serverLevel, LivingEntity entity, DamageSource killingBlow, MutableFloat modifiedChance, RandomSource random, Holder<Enchantment> enchantment, int level1, EnchantedItemInUse item) {
+		return ComputeEnchantedLootBonusEvent.onComputeEnchantedLootBonus(enchantment, level, entity, killingBlow);
 	}
 
-	@ModifyVariable(method = "lambda$processEquipmentDropChance$28", at = @At("HEAD"), argsOnly = true)
-	private static int processEquipmentDropChance$1(int enchantmentLevel, ServerLevel level, LivingEntity entity, DamageSource damageSource, MutableFloat mutableFloat, RandomSource randomSource, Holder<Enchantment> enchantment, int enchantmentLevelX, EnchantedItemInUse enchantedItemInUse) {
-		return ComputeEnchantedLootBonusEvent.onComputeEnchantedLootBonus(enchantment, enchantmentLevel, entity, damageSource);
+	@ModifyVariable(method = "lambda$processEquipmentDropChance$2", at = @At("HEAD"), argsOnly = true, name = "level")
+	private static int processEquipmentDropChance$1(int level, ServerLevel serverLevel, LivingEntity entity, DamageSource killingBlow, MutableFloat modifiedChance, RandomSource random, Holder<Enchantment> enchantment, int level1, EnchantedItemInUse item) {
+		return ComputeEnchantedLootBonusEvent.onComputeEnchantedLootBonus(enchantment, level, entity, killingBlow);
 	}
 }

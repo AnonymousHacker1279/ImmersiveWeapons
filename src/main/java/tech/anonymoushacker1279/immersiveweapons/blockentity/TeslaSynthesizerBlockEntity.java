@@ -52,13 +52,17 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	// Burn time for different fuel types
 	private static final Map<Item, Integer> FUEL_BURN_TIMES = new HashMap<>(5);
 
+	static {
+		// Initialize burn times
+		FUEL_BURN_TIMES.put(ItemRegistry.MOLTEN_INGOT.get(), 24000); // 20 minutes
+	}
+
 	// Inventory and process tracking
 	private final NonNullList<ItemStack> items = NonNullList.withSize(SLOT_COUNT, ItemStack.EMPTY);
 	private int burnTime;
 	private int burnTimeTotal;
 	private int cookTime;
 	private int cookTimeTotal = 200; // Default cook time
-
 	// Container data for the GUI
 	public final ContainerData containerData = new ContainerData() {
 		@Override
@@ -87,11 +91,6 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 			return 4;
 		}
 	};
-
-	static {
-		// Initialize burn times
-		FUEL_BURN_TIMES.put(ItemRegistry.MOLTEN_INGOT.get(), 24000); // 20 minutes
-	}
 
 	public TeslaSynthesizerBlockEntity(BlockPos blockPos, BlockState blockState) {
 		super(BlockEntityRegistry.TESLA_SYNTHESIZER_BLOCK_ENTITY.get(), blockPos, blockState);
@@ -161,7 +160,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 							fuel.shrink(1);
 
 							if (fuel.isEmpty()) {
-								items.set(SLOT_FUEL, fuelItem.getCraftingRemainder());
+								items.set(SLOT_FUEL, fuelItem.getCraftingRemainder().create());
 							}
 						}
 					}
@@ -216,7 +215,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 			return;
 		}
 
-		ItemStack resultStack = recipe.result();
+		ItemStack resultStack = recipe.result().create();
 		ItemStack outputSlot = items.get(SLOT_RESULT);
 
 		// Add to existing output stack or create new one
@@ -251,7 +250,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 		}
 
 		// Get the recipe result
-		ItemStack resultStack = recipe.result();
+		ItemStack resultStack = recipe.result().create();
 		if (resultStack.isEmpty()) {
 			return false;
 		}

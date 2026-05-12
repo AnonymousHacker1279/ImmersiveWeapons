@@ -34,14 +34,14 @@ side = "BOTH"
 [[dependencies.immersiveweapons]]
 modId = "terrablender"
 type = "required"
-versionRange = "[1.21.11-21.11.0.0,)"
+versionRange = "[26.1.2-26.1.2.0.1,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.immersiveweapons]]
 modId = "openportals"
 type = "required"
-versionRange = "[1.1.0,)"
+versionRange = "[1.2.0,)"
 ordering = "NONE"
 side = "BOTH"
 

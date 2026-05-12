@@ -40,14 +40,12 @@ import java.util.Objects;
 
 public class CelestialTowerEntity extends Monster implements AttackerTracker, GrantAdvancementOnDiscovery, WaveSummoningBoss {
 
-	public final ServerBossEvent bossEvent = (ServerBossEvent) (new ServerBossEvent(getDisplayName(), BossBarColor.RED,
-			BossBarOverlay.PROGRESS)).setDarkenScreen(true);
+	public final ServerBossEvent bossEvent = (ServerBossEvent) (new ServerBossEvent(getUUID(), getDisplayName(), BossBarColor.RED, BossBarOverlay.PROGRESS)).setDarkenScreen(true);
+	final List<Entity> attackingEntities = new ArrayList<>(5);
 	private int totalWavesToSpawn;
 	private int waveSizeModifier;
 	private int wavesSpawned = 0;
 	private boolean doneSpawningWaves = false;
-
-	final List<Entity> attackingEntities = new ArrayList<>(5);
 
 	public CelestialTowerEntity(EntityType<? extends Monster> type, Level level) {
 		super(type, level);

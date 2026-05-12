@@ -84,7 +84,6 @@
       ]
     }
   ],
-  "render_type": "minecraft:cutout",
   "textures": {
     "end": "immersiveweapons:block/stardust_log",
     "layer1": "immersiveweapons:block/stardust_granule_overlay",

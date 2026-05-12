@@ -1,5 +1,8 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.npc;
 
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -10,7 +13,9 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.npc.villager.AbstractVillager;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.trading.TradeSet;
 import net.minecraft.world.level.Level;
+import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.StarmiteEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
@@ -18,6 +23,10 @@ import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import java.util.Objects;
 
 public class SkygazerEntity extends AbstractMerchantEntity {
+
+	public static final ResourceKey<TradeSet> TRADE_SET_1 = ResourceKey.create(Registries.TRADE_SET, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "skygazer/level_1"));
+	public static final ResourceKey<TradeSet> TRADE_SET_2 = ResourceKey.create(Registries.TRADE_SET, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "skygazer/level_2"));
+	public static final ResourceKey<TradeSet> TRADE_SET_3 = ResourceKey.create(Registries.TRADE_SET, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "skygazer/level_3"));
 
 	public SkygazerEntity(EntityType<? extends AbstractVillager> entityType, Level level) {
 		super(entityType, level);
@@ -48,5 +57,12 @@ public class SkygazerEntity extends AbstractMerchantEntity {
 		}
 
 		return super.hurtServer(serverLevel, source, amount);
+	}
+
+	@Override
+	protected void updateTrades(ServerLevel level) {
+		addOffersFromTradeSet(level, getOffers(), TRADE_SET_1);
+		addOffersFromTradeSet(level, getOffers(), TRADE_SET_2);
+		addOffersFromTradeSet(level, getOffers(), TRADE_SET_3);
 	}
 }

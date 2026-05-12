@@ -8,10 +8,7 @@ public class IWModelTemplates {
 
 	public static final ModelTemplate GAUNTLET = ModelTemplates.createItem("immersiveweapons:gauntlet", Slots.MATERIAL);
 	public static final ModelTemplate MUSKET_BALL = ModelTemplates.createItem("immersiveweapons:musket_ball", TextureSlot.ALL);
-	public static final ModelTemplate TABLE = ModelTemplates.create("immersiveweapons:table", TextureSlot.ALL)
-			.extend()
-			.renderType("cutout_mipped")
-			.build();
+	public static final ModelTemplate TABLE = ModelTemplates.create("immersiveweapons:table", TextureSlot.ALL);
 	public static final ModelTemplate FLAG = ModelTemplates.create("immersiveweapons:flag", Slots.FLAG);
 	public static final ModelTemplate MAUL = ModelTemplates.createItem("immersiveweapons:maul", Slots.MATERIAL, Slots.MATERIAL_2);
 

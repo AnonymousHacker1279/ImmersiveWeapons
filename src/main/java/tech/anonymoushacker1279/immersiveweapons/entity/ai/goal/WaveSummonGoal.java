@@ -138,7 +138,7 @@ public abstract class WaveSummonGoal<T extends Mob & WaveSummoningBoss> extends 
 				mob.getZ() + 32);
 
 		// Check mobs in area which have the tag
-		List<Mob> mobs = mob.level().getEntitiesOfClass(Mob.class, searchBox, mob -> mob.getTags().contains(summonedEntityTag));
+		List<Mob> mobs = mob.level().getEntitiesOfClass(Mob.class, searchBox, mob -> mob.entityTags().contains(summonedEntityTag));
 
 		return mobs.size();
 	}

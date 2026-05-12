@@ -1,11 +1,10 @@
 {
   "type": "minecraft:smelting",
-  "category": "blocks",
+  "category": "misc",
   "cookingtime": 200,
   "experience": 0.1,
   "ingredient": "immersiveweapons:blood_sandstone",
   "result": {
-    "count": 1,
     "id": "immersiveweapons:smooth_blood_sandstone"
   }
 }

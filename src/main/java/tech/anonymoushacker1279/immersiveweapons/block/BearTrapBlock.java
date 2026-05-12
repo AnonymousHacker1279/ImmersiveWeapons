@@ -44,10 +44,10 @@ import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, EntityBlock {
 
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-	private static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
-	private static final VoxelShape COLLISION_SHAPE = Shapes.empty();
 	public static final BooleanProperty TRIGGERED = BooleanProperty.create("triggered");
 	public static final BooleanProperty VINES = BooleanProperty.create("vines");
+	private static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
+	private static final VoxelShape COLLISION_SHAPE = Shapes.empty();
 
 	public BearTrapBlock(Properties properties) {
 		super(properties);
@@ -119,7 +119,7 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 
 	@Override
 	protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier, boolean inside) {
-		if (entity instanceof Player player && player.isCreative() || entity.getType().is(EntityTypes.BOSSES)) {
+		if (entity instanceof Player player && player.isCreative() || entity.is(EntityTypes.BOSSES)) {
 			return;
 		}
 

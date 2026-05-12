@@ -2,15 +2,12 @@
   "type": "immersiveweapons:small_parts",
   "craftables": [
     {
-      "count": 1,
       "id": "immersiveweapons:flintlock_assembly"
     },
     {
-      "count": 1,
       "id": "immersiveweapons:iron_barrel"
     },
     {
-      "count": 1,
       "id": "immersiveweapons:short_iron_barrel"
     }
   ],

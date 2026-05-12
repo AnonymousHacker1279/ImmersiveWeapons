@@ -2,7 +2,6 @@
   "type": "minecraft:stonecutting",
   "ingredient": "immersiveweapons:cloud_marble_bricks",
   "result": {
-    "count": 1,
     "id": "immersiveweapons:cloud_marble_brick_stairs"
   }
 }

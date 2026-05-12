@@ -15,7 +15,6 @@ public class WineItem extends CustomPotionItem {
 	 */
 	public WineItem(Properties properties) {
 		super(properties);
-		properties.craftRemainder(asItem());
 	}
 
 	@Override

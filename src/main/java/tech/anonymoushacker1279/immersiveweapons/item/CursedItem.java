@@ -22,9 +22,9 @@ import java.util.List;
 
 public class CursedItem extends Item {
 
-	private final String name;
 	public static float CURSE_EFFECT_FADE = 1.0f;
 	final DataComponentType<Boolean> AT_MAX_CHARGE = DataComponentTypeRegistry.AT_MAX_CHARGE.get();
+	private final String name;
 
 	/**
 	 * Cursed items cannot be removed once used. Their effects are permanent in survival mode, even persisting through
@@ -42,11 +42,6 @@ public class CursedItem extends Item {
 		this.name = name;
 	}
 
-	@Override
-	public int getMaxDamage(ItemStack stack) {
-		return 100;
-	}
-
 	/**
 	 * Get a list of cursed accessories in the player's inventory.
 	 */
@@ -59,6 +54,11 @@ public class CursedItem extends Item {
 		}
 
 		return curses;
+	}
+
+	@Override
+	public int getMaxDamage(ItemStack stack) {
+		return 100;
 	}
 
 	@Override
@@ -78,8 +78,8 @@ public class CursedItem extends Item {
 		if (livingEntity instanceof Player player) {
 			if (level.isClientSide()) {
 				if (player.tickCount % 8 == 0) {
-					player.displayClientMessage(Component.translatable("immersiveweapons.item.%s.using".formatted(name))
-							.withStyle(ChatFormatting.RED), true);
+					player.sendOverlayMessage(Component.translatable("immersiveweapons.item.%s.using".formatted(name))
+							.withStyle(ChatFormatting.RED));
 				}
 
 				// Handle the fade effect
@@ -114,8 +114,8 @@ public class CursedItem extends Item {
 		if (getDamage(stack) == 0) {
 			if (player.getPersistentData().getBoolean("used_curse_accessory_" + name).orElse(false)) {
 				if (player.level().isClientSide()) {
-					player.displayClientMessage(Component.translatable("immersiveweapons.item.%s.used".formatted(name))
-							.withStyle(ChatFormatting.RED), true);
+					player.sendOverlayMessage(Component.translatable("immersiveweapons.item.%s.used".formatted(name))
+							.withStyle(ChatFormatting.RED));
 				}
 
 				CURSE_EFFECT_FADE = 1.0f;
@@ -127,8 +127,8 @@ public class CursedItem extends Item {
 			}
 		} else {
 			if (player.level().isClientSide()) {
-				player.displayClientMessage(Component.translatable("immersiveweapons.item.%s.not_enough_charge".formatted(name))
-						.withStyle(ChatFormatting.RED), true);
+				player.sendOverlayMessage(Component.translatable("immersiveweapons.item.%s.not_enough_charge".formatted(name))
+						.withStyle(ChatFormatting.RED));
 			}
 		}
 
@@ -140,8 +140,8 @@ public class CursedItem extends Item {
 		if (livingEntity instanceof Player player && getDamage(stack) == 0) {
 			if (timeCharged > 0) {
 				if (level.isClientSide()) {
-					player.displayClientMessage(Component.translatable("immersiveweapons.item.%s.canceled".formatted(name))
-							.withStyle(ChatFormatting.YELLOW), true);
+					player.sendOverlayMessage(Component.translatable("immersiveweapons.item.%s.canceled".formatted(name))
+							.withStyle(ChatFormatting.YELLOW));
 				}
 				return false;
 			}
@@ -151,8 +151,8 @@ public class CursedItem extends Item {
 			player.getPersistentData().putBoolean("used_curse_accessory_" + name, true);
 
 			if (level.isClientSide()) {
-				player.displayClientMessage(Component.translatable("immersiveweapons.item.%s.used".formatted(name))
-						.withStyle(ChatFormatting.RED), true);
+				player.sendOverlayMessage(Component.translatable("immersiveweapons.item.%s.used".formatted(name))
+						.withStyle(ChatFormatting.RED));
 
 				player.playSound(
 						SoundEvents.LIGHTNING_BOLT_THUNDER,

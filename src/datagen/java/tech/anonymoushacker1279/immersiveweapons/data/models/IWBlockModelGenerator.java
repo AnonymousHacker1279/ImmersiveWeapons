@@ -8,7 +8,8 @@ import net.minecraft.client.data.models.blockstates.MultiPartGenerator;
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
 import net.minecraft.client.data.models.model.*;
-import net.minecraft.client.renderer.block.model.VariantMutator;
+import net.minecraft.client.renderer.block.dispatch.VariantMutator;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -46,8 +47,8 @@ public class IWBlockModelGenerator {
 		generateHorizontalStateOnly(blockModels, BlockRegistry.AMMUNITION_TABLE.get(), false);
 		generateHorizontalStateOnly(blockModels, BlockRegistry.BARREL_TAP.get(), true);
 		blockModels.createFurnace(BlockRegistry.STAR_FORGE_CONTROLLER.get(), TexturedModel.ORIENTABLE_ONLY_TOP.updateTexture(mapping -> {
-			mapping.put(TextureSlot.SIDE, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/star_forge_bricks"));
-			mapping.put(TextureSlot.TOP, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/star_forge_bricks"));
+			mapping.put(TextureSlot.SIDE, new Material(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/star_forge_bricks")));
+			mapping.put(TextureSlot.TOP, new Material(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/star_forge_bricks")));
 		}));
 		blockModels.createTrivialCube(BlockRegistry.STAR_FORGE_BRICKS.get());
 		generateHorizontalStateOnly(blockModels, BlockRegistry.CELESTIAL_ALTAR.get(), false);
@@ -103,25 +104,27 @@ public class IWBlockModelGenerator {
 		generateHorizontalStateOnly(blockModels, BlockRegistry.MEDIC_STATUE.get(), false);
 		generateStateOnly(blockModels, BlockRegistry.TESLA_SYNTHESIZER.get());
 		generateStateOnly(blockModels, BlockRegistry.TELEPORTER.get());
-		blockModels.createTrivialBlock(BlockRegistry.CLOUD.get(), TexturedModel.CUBE.updateTemplate(modifier -> modifier.extend().renderType("translucent").build()));
+		blockModels.createTrivialCube(BlockRegistry.CLOUD.get());
 		blockModels.createTrivialCube(BlockRegistry.CLOUD_MARBLE.get());
 		blockModels.createTrivialCube(BlockRegistry.CLOUD_MARBLE_BRICKS.get());
 		blockModels.createAxisAlignedPillarBlock(BlockRegistry.CLOUD_MARBLE_PILLAR.get(), TexturedModel.COLUMN);
 		generateStairs(blockModels, BlockRegistry.CLOUD_MARBLE_BRICK_STAIRS.get(), BlockRegistry.CLOUD_MARBLE_BRICKS.get());
 		generateSlab(blockModels, BlockRegistry.CLOUD_MARBLE_BRICK_SLAB.get(), BlockRegistry.CLOUD_MARBLE_BRICKS.get(), false);
 		generateWall(blockModels, BlockRegistry.CLOUD_MARBLE_BRICK_WALL.get(), BlockRegistry.CLOUD_MARBLE_BRICKS.get());
-		generateWood(blockModels, BlockRegistry.BURNED_OAK_WOOD.get(), BlockRegistry.BURNED_OAK_LOG.get());
-		generateWoodLog(blockModels, BlockRegistry.BURNED_OAK_LOG.get());
-		generateWood(blockModels, BlockRegistry.STRIPPED_BURNED_OAK_WOOD.get(), BlockRegistry.STRIPPED_BURNED_OAK_LOG.get());
-		generateWoodLog(blockModels, BlockRegistry.STRIPPED_BURNED_OAK_LOG.get());
+		blockModels.woodProvider(BlockRegistry.BURNED_OAK_LOG.get())
+				.logWithHorizontal(BlockRegistry.BURNED_OAK_LOG.get())
+				.wood(BlockRegistry.BURNED_OAK_WOOD.get());
+		blockModels.woodProvider(BlockRegistry.STRIPPED_BURNED_OAK_LOG.get())
+				.logWithHorizontal(BlockRegistry.STRIPPED_BURNED_OAK_LOG.get())
+				.wood(BlockRegistry.STRIPPED_BURNED_OAK_WOOD.get());
 		blockModels.createTrivialCube(BlockRegistry.BURNED_OAK_PLANKS.get());
 		generateStairs(blockModels, BlockRegistry.BURNED_OAK_STAIRS.get(), BlockRegistry.BURNED_OAK_PLANKS.get());
 		generateSlab(blockModels, BlockRegistry.BURNED_OAK_SLAB.get(), BlockRegistry.BURNED_OAK_PLANKS.get(), false);
 		generateFence(blockModels, BlockRegistry.BURNED_OAK_FENCE.get(), BlockRegistry.BURNED_OAK_PLANKS.get());
 		generateFenceGate(blockModels, BlockRegistry.BURNED_OAK_FENCE_GATE.get(), BlockRegistry.BURNED_OAK_PLANKS.get());
 		generateHorizontalStateOnly(blockModels, BlockRegistry.BURNED_OAK_BRANCH.get(), false);
-		generateDoor(blockModels, BlockRegistry.BURNED_OAK_DOOR.get());
-		generateTrapdoor(blockModels, BlockRegistry.BURNED_OAK_TRAPDOOR.get());
+		blockModels.createDoor(BlockRegistry.BURNED_OAK_DOOR.get());
+		blockModels.createTrapdoor(BlockRegistry.BURNED_OAK_TRAPDOOR.get());
 		generatePressurePlate(blockModels, BlockRegistry.BURNED_OAK_PRESSURE_PLATE.get(), BlockRegistry.BURNED_OAK_PLANKS.get());
 		generateSign(blockModels, BlockRegistry.BURNED_OAK_SIGN.get(), BlockRegistry.BURNED_OAK_WALL_SIGN.get(), BlockRegistry.BURNED_OAK_PLANKS.get());
 		generateHangingSign(blockModels, BlockRegistry.BURNED_OAK_HANGING_SIGN.get(), BlockRegistry.BURNED_OAK_WALL_HANGING_SIGN.get(), BlockRegistry.BURNED_OAK_PLANKS.get());
@@ -151,24 +154,25 @@ public class IWBlockModelGenerator {
 		blockModels.createHead(BlockRegistry.HANS_HEAD.get(), BlockRegistry.HANS_WALL_HEAD.get(), CustomSkullTypes.HANS, TEMPLATE_SKULL);
 		blockModels.createHead(BlockRegistry.STORM_CREEPER_HEAD.get(), BlockRegistry.STORM_CREEPER_WALL_HEAD.get(), CustomSkullTypes.STORM_CREEPER, TEMPLATE_SKULL);
 		blockModels.createHead(BlockRegistry.SKELETON_MERCHANT_HEAD.get(), BlockRegistry.SKELETON_MERCHANT_WALL_HEAD.get(), CustomSkullTypes.SKELETON_MERCHANT, TEMPLATE_SKULL);
-		generatePlant(blockModels, BlockRegistry.MOONGLOW.get(), BlockRegistry.POTTED_MOONGLOW.get());
+		blockModels.createPlantWithDefaultItem(BlockRegistry.MOONGLOW.get(), BlockRegistry.POTTED_MOONGLOW.get(), BlockModelGenerators.PlantType.NOT_TINTED);
 		generateStardustWood(blockModels, BlockRegistry.STARDUST_WOOD.get());
 		generateStardustLog(blockModels, BlockRegistry.STARDUST_LOG.get());
-		generateWood(blockModels, BlockRegistry.STRIPPED_STARDUST_WOOD.get(), BlockRegistry.STRIPPED_STARDUST_LOG.get());
-		generateWoodLog(blockModels, BlockRegistry.STRIPPED_STARDUST_LOG.get());
+		blockModels.woodProvider(BlockRegistry.STRIPPED_STARDUST_LOG.get())
+				.logWithHorizontal(BlockRegistry.STRIPPED_STARDUST_LOG.get())
+				.wood(BlockRegistry.STRIPPED_STARDUST_WOOD.get());
 		blockModels.createTrivialCube(BlockRegistry.STARDUST_PLANKS.get());
 		generateStairs(blockModels, BlockRegistry.STARDUST_STAIRS.get(), BlockRegistry.STARDUST_PLANKS.get());
 		generateSlab(blockModels, BlockRegistry.STARDUST_SLAB.get(), BlockRegistry.STARDUST_PLANKS.get(), false);
 		generateFence(blockModels, BlockRegistry.STARDUST_FENCE.get(), BlockRegistry.STARDUST_PLANKS.get());
 		generateFenceGate(blockModels, BlockRegistry.STARDUST_FENCE_GATE.get(), BlockRegistry.STARDUST_PLANKS.get());
-		generateDoor(blockModels, BlockRegistry.STARDUST_DOOR.get());
-		generateTrapdoor(blockModels, BlockRegistry.STARDUST_TRAPDOOR.get());
+		blockModels.createDoor(BlockRegistry.STARDUST_DOOR.get());
+		blockModels.createTrapdoor(BlockRegistry.STARDUST_TRAPDOOR.get());
 		generatePressurePlate(blockModels, BlockRegistry.STARDUST_PRESSURE_PLATE.get(), BlockRegistry.STARDUST_PLANKS.get());
 		generateSign(blockModels, BlockRegistry.STARDUST_SIGN.get(), BlockRegistry.STARDUST_WALL_SIGN.get(), BlockRegistry.STARDUST_PLANKS.get());
 		generateHangingSign(blockModels, BlockRegistry.STARDUST_HANGING_SIGN.get(), BlockRegistry.STARDUST_WALL_HANGING_SIGN.get(), BlockRegistry.STARDUST_PLANKS.get());
 		generateButton(blockModels, BlockRegistry.STARDUST_BUTTON.get(), BlockRegistry.STARDUST_PLANKS.get());
 		generateStardustLeaves(blockModels, BlockRegistry.STARDUST_LEAVES.get());
-		generatePlant(blockModels, BlockRegistry.STARDUST_SAPLING.get());
+		blockModels.createPlantWithDefaultItem(BlockRegistry.STARDUST_SAPLING.get(), BlockRegistry.POTTED_STARDUST_SAPLING.get(), BlockModelGenerators.PlantType.NOT_TINTED);
 		blockModels.createTrivialCube(BlockRegistry.BLOOD_SAND.get());
 		blockModels.createTrivialBlock(BlockRegistry.BLOOD_SANDSTONE.get(), TexturedModel.TOP_BOTTOM_WITH_WALL);
 		generateSlab(blockModels, BlockRegistry.BLOOD_SANDSTONE_SLAB.get(), BlockRegistry.BLOOD_SANDSTONE.get(), true);
@@ -192,7 +196,7 @@ public class IWBlockModelGenerator {
 				TextureMapping.getBlockTexture(BlockRegistry.BLOOD_SANDSTONE.get(), "_top"));
 		generateStairs(blockModels, BlockRegistry.SMOOTH_BLOOD_SANDSTONE_STAIRS.get(),
 				TextureMapping.getBlockTexture(BlockRegistry.BLOOD_SANDSTONE.get(), "_top"));
-		generatePlant(blockModels, BlockRegistry.DEATHWEED.get(), BlockRegistry.POTTED_DEATHWEED.get());
+		blockModels.createPlantWithDefaultItem(BlockRegistry.DEATHWEED.get(), BlockRegistry.POTTED_DEATHWEED.get(), BlockModelGenerators.PlantType.NOT_TINTED);
 		generateCrystal(blockModels, BlockRegistry.ASTRAL_CRYSTAL.get());
 		generateCrystal(blockModels, BlockRegistry.STARSTORM_CRYSTAL.get());
 		generateStateOnly(blockModels, BlockRegistry.BIODOME_LIFE_SUPPORT_UNIT.get());
@@ -211,15 +215,15 @@ public class IWBlockModelGenerator {
 	 * @param paneBlock  the glass pane block
 	 */
 	private static void createGlassBlocks(BlockModelGenerators models, Block glassBlock, Block paneBlock) {
-		models.createTrivialBlock(glassBlock, TexturedModel.CUBE.updateTemplate(modifier -> modifier.extend().renderType("translucent").build()));
+		models.createTrivialCube(glassBlock);
 		TextureMapping paneMapping = TextureMapping.pane(glassBlock, paneBlock);
-		MultiVariant panePost = BlockModelGenerators.plainVariant(ModelTemplates.STAINED_GLASS_PANE_POST.extend().renderType("translucent").build().create(paneBlock, paneMapping, models.modelOutput));
-		MultiVariant paneSide = BlockModelGenerators.plainVariant(ModelTemplates.STAINED_GLASS_PANE_SIDE.extend().renderType("translucent").build().create(paneBlock, paneMapping, models.modelOutput));
-		MultiVariant paneSideAlt = BlockModelGenerators.plainVariant(ModelTemplates.STAINED_GLASS_PANE_SIDE_ALT.extend().renderType("translucent").build().create(paneBlock, paneMapping, models.modelOutput));
-		MultiVariant paneNoSide = BlockModelGenerators.plainVariant(ModelTemplates.STAINED_GLASS_PANE_NOSIDE.extend().renderType("translucent").build().create(paneBlock, paneMapping, models.modelOutput));
-		MultiVariant paneNoSideAlt = BlockModelGenerators.plainVariant(ModelTemplates.STAINED_GLASS_PANE_NOSIDE_ALT.extend().renderType("translucent").build().create(paneBlock, paneMapping, models.modelOutput));
+		MultiVariant panePost = BlockModelGenerators.plainVariant(ModelTemplates.STAINED_GLASS_PANE_POST.create(paneBlock, paneMapping, models.modelOutput));
+		MultiVariant paneSide = BlockModelGenerators.plainVariant(ModelTemplates.STAINED_GLASS_PANE_SIDE.create(paneBlock, paneMapping, models.modelOutput));
+		MultiVariant paneSideAlt = BlockModelGenerators.plainVariant(ModelTemplates.STAINED_GLASS_PANE_SIDE_ALT.create(paneBlock, paneMapping, models.modelOutput));
+		MultiVariant paneNoSide = BlockModelGenerators.plainVariant(ModelTemplates.STAINED_GLASS_PANE_NOSIDE.create(paneBlock, paneMapping, models.modelOutput));
+		MultiVariant paneNoSideAlt = BlockModelGenerators.plainVariant(ModelTemplates.STAINED_GLASS_PANE_NOSIDE_ALT.create(paneBlock, paneMapping, models.modelOutput));
 		Item paneItem = paneBlock.asItem();
-		models.registerSimpleItemModel(paneItem, ModelTemplates.FLAT_ITEM.extend().renderType("translucent").build().create(ModelLocationUtils.getModelLocation(paneItem), TextureMapping.layer0(glassBlock), models.modelOutput));
+		models.registerSimpleItemModel(paneItem, ModelTemplates.FLAT_ITEM.create(ModelLocationUtils.getModelLocation(paneItem), TextureMapping.layer0(glassBlock), models.modelOutput));
 		models.blockStateOutput.accept(
 				MultiPartGenerator.multiPart(paneBlock)
 						.with(panePost)
@@ -464,7 +468,7 @@ public class IWBlockModelGenerator {
 	 */
 	private static void generateTable(BlockModelGenerators models, Block block, Block base) {
 		models.createTrivialBlock(block, TexturedModel.createDefault(b -> new TextureMapping()
-						.put(TextureSlot.ALL, ModelLocationUtils.getModelLocation(base)),
+						.put(TextureSlot.ALL, new Material(ModelLocationUtils.getModelLocation(base))),
 				IWModelTemplates.TABLE));
 	}
 
@@ -488,7 +492,7 @@ public class IWBlockModelGenerator {
 	 * @param base   the base block to use for the fence
 	 */
 	private static void generateFence(BlockModelGenerators models, Block block, Block base) {
-		TextureMapping mapping = new TextureMapping().put(TextureSlot.TEXTURE, ModelLocationUtils.getModelLocation(base));
+		TextureMapping mapping = new TextureMapping().put(TextureSlot.TEXTURE, new Material(ModelLocationUtils.getModelLocation(base)));
 		MultiVariant post = BlockModelGenerators.plainVariant(ModelTemplates.FENCE_POST.create(block, mapping, models.modelOutput));
 		MultiVariant side = BlockModelGenerators.plainVariant(ModelTemplates.FENCE_SIDE.create(block, mapping, models.modelOutput));
 		models.blockStateOutput.accept(BlockModelGenerators.createFence(block, post, side));
@@ -505,44 +509,12 @@ public class IWBlockModelGenerator {
 	 * @param base   the base block to use for the fence gate
 	 */
 	private static void generateFenceGate(BlockModelGenerators models, Block block, Block base) {
-		TextureMapping mapping = new TextureMapping().put(TextureSlot.TEXTURE, ModelLocationUtils.getModelLocation(base));
+		TextureMapping mapping = new TextureMapping().put(TextureSlot.TEXTURE, new Material(ModelLocationUtils.getModelLocation(base)));
 		MultiVariant open = BlockModelGenerators.plainVariant(ModelTemplates.FENCE_GATE_OPEN.create(block, mapping, models.modelOutput));
 		MultiVariant closed = BlockModelGenerators.plainVariant(ModelTemplates.FENCE_GATE_CLOSED.create(block, mapping, models.modelOutput));
 		MultiVariant wallOpen = BlockModelGenerators.plainVariant(ModelTemplates.FENCE_GATE_WALL_OPEN.create(block, mapping, models.modelOutput));
 		MultiVariant wallClosed = BlockModelGenerators.plainVariant(ModelTemplates.FENCE_GATE_WALL_CLOSED.create(block, mapping, models.modelOutput));
 		models.blockStateOutput.accept(BlockModelGenerators.createFenceGate(block, open, closed, wallOpen, wallClosed, true));
-	}
-
-	/**
-	 * Generate a wood log type blockstate and model.
-	 *
-	 * @param models the block model generator
-	 * @param block  the block to generate the state and model for
-	 */
-	private static void generateWoodLog(BlockModelGenerators models, Block block) {
-		models.createAxisAlignedPillarBlock(block, TexturedModel.COLUMN.updateTexture(mapping -> {
-			mapping.put(TextureSlot.END, ModelLocationUtils.getModelLocation(block).withSuffix("_top"));
-			mapping.put(TextureSlot.SIDE, ModelLocationUtils.getModelLocation(block));
-		}));
-	}
-
-	/**
-	 * Generate a wood type blockstate and model.
-	 *
-	 * @param models the block model generator
-	 * @param block  the block to generate the state and model for
-	 * @param log    the log block to use for the wood
-	 */
-	private static void generateWood(BlockModelGenerators models, Block block, Block log) {
-		models.createRotatedPillarWithHorizontalVariant(block,
-				TexturedModel.COLUMN.updateTexture(mapping -> {
-					mapping.put(TextureSlot.END, ModelLocationUtils.getModelLocation(log));
-					mapping.put(TextureSlot.SIDE, ModelLocationUtils.getModelLocation(log));
-				}),
-				TexturedModel.COLUMN_HORIZONTAL.updateTexture(mapping -> {
-					mapping.put(TextureSlot.END, ModelLocationUtils.getModelLocation(log));
-					mapping.put(TextureSlot.SIDE, ModelLocationUtils.getModelLocation(log));
-				}));
 	}
 
 	/**
@@ -553,7 +525,7 @@ public class IWBlockModelGenerator {
 	 * @param base   the base block to use for the stairs
 	 */
 	private static void generateStairs(BlockModelGenerators models, Block block, Block base) {
-		generateStairs(models, block, ModelLocationUtils.getModelLocation(base));
+		generateStairs(models, block, new Material(ModelLocationUtils.getModelLocation(base)));
 	}
 
 	/**
@@ -563,7 +535,7 @@ public class IWBlockModelGenerator {
 	 * @param block       the block to generate the state and model for
 	 * @param baseTexture the base texture to use for the stairs
 	 */
-	private static void generateStairs(BlockModelGenerators models, Block block, Identifier baseTexture) {
+	private static void generateStairs(BlockModelGenerators models, Block block, Material baseTexture) {
 		TextureMapping mapping = new TextureMapping()
 				.put(TextureSlot.TOP, baseTexture)
 				.put(TextureSlot.BOTTOM, baseTexture)
@@ -587,11 +559,14 @@ public class IWBlockModelGenerator {
 		Identifier baseLocation = ModelLocationUtils.getModelLocation(base);
 		if (isColumn) {
 			generateSlab(models, block, base,
-					baseLocation,
-					baseLocation.withSuffix("_top"),
-					baseLocation.withSuffix("_bottom"));
+					new Material(baseLocation),
+					new Material(baseLocation.withSuffix("_top")),
+					new Material(baseLocation.withSuffix("_bottom")));
 		} else {
-			generateSlab(models, block, base, baseLocation, baseLocation, baseLocation);
+			generateSlab(models, block, base,
+					new Material(baseLocation),
+					new Material(baseLocation),
+					new Material(baseLocation));
 		}
 	}
 
@@ -604,7 +579,7 @@ public class IWBlockModelGenerator {
 	 * @param topTexture    the texture to use for the top
 	 * @param bottomTexture the texture to use for the bottom
 	 */
-	private static void generateSlab(BlockModelGenerators models, Block block, Block base, Identifier sideTexture, Identifier topTexture, Identifier bottomTexture) {
+	private static void generateSlab(BlockModelGenerators models, Block block, Block base, Material sideTexture, Material topTexture, Material bottomTexture) {
 		TextureMapping mapping = new TextureMapping()
 				.put(TextureSlot.TOP, topTexture)
 				.put(TextureSlot.BOTTOM, bottomTexture)
@@ -625,48 +600,13 @@ public class IWBlockModelGenerator {
 	 * @param base   the base block to use for the wall
 	 */
 	private static void generateWall(BlockModelGenerators models, Block block, Block base) {
-		TextureMapping mapping = new TextureMapping().put(TextureSlot.WALL, ModelLocationUtils.getModelLocation(base));
+		TextureMapping mapping = new TextureMapping().put(TextureSlot.WALL, new Material(ModelLocationUtils.getModelLocation(base)));
 		MultiVariant post = BlockModelGenerators.plainVariant(ModelTemplates.WALL_POST.create(block, mapping, models.modelOutput));
 		MultiVariant lowSide = BlockModelGenerators.plainVariant(ModelTemplates.WALL_LOW_SIDE.create(block, mapping, models.modelOutput));
 		MultiVariant tallSide = BlockModelGenerators.plainVariant(ModelTemplates.WALL_TALL_SIDE.create(block, mapping, models.modelOutput));
 		models.blockStateOutput.accept(BlockModelGenerators.createWall(block, post, lowSide, tallSide));
 		Identifier inventoryLocation = ModelTemplates.WALL_INVENTORY.create(block, mapping, models.modelOutput);
 		models.registerSimpleItemModel(block, inventoryLocation);
-	}
-
-	/**
-	 * Generate a door type blockstate and model.
-	 *
-	 * @param models the block model generator
-	 * @param block  the block to generate the state and model for
-	 */
-	private static void generateDoor(BlockModelGenerators models, Block block) {
-		TextureMapping mapping = TextureMapping.door(block);
-		MultiVariant bottomLeft = BlockModelGenerators.plainVariant(ModelTemplates.DOOR_BOTTOM_LEFT.extend().renderType("cutout").build().create(block, mapping, models.modelOutput));
-		MultiVariant bottomLeftOpen = BlockModelGenerators.plainVariant(ModelTemplates.DOOR_BOTTOM_LEFT_OPEN.extend().renderType("cutout").build().create(block, mapping, models.modelOutput));
-		MultiVariant bottomRight = BlockModelGenerators.plainVariant(ModelTemplates.DOOR_BOTTOM_RIGHT.extend().renderType("cutout").build().create(block, mapping, models.modelOutput));
-		MultiVariant bottomRightOpen = BlockModelGenerators.plainVariant(ModelTemplates.DOOR_BOTTOM_RIGHT_OPEN.extend().renderType("cutout").build().create(block, mapping, models.modelOutput));
-		MultiVariant topLeft = BlockModelGenerators.plainVariant(ModelTemplates.DOOR_TOP_LEFT.extend().renderType("cutout").build().create(block, mapping, models.modelOutput));
-		MultiVariant topLeftOpen = BlockModelGenerators.plainVariant(ModelTemplates.DOOR_TOP_LEFT_OPEN.extend().renderType("cutout").build().create(block, mapping, models.modelOutput));
-		MultiVariant topRight = BlockModelGenerators.plainVariant(ModelTemplates.DOOR_TOP_RIGHT.extend().renderType("cutout").build().create(block, mapping, models.modelOutput));
-		MultiVariant topRightOpen = BlockModelGenerators.plainVariant(ModelTemplates.DOOR_TOP_RIGHT_OPEN.extend().renderType("cutout").build().create(block, mapping, models.modelOutput));
-		models.blockStateOutput.accept(BlockModelGenerators.createDoor(block, bottomLeft, bottomLeftOpen, bottomRight, bottomRightOpen, topLeft, topLeftOpen, topRight, topRightOpen));
-		models.registerSimpleFlatItemModel(block.asItem());
-	}
-
-	/**
-	 * Generate a trapdoor type blockstate and model.
-	 *
-	 * @param models the block model generator
-	 * @param block  the block to generate the state and model for
-	 */
-	private static void generateTrapdoor(BlockModelGenerators models, Block block) {
-		TextureMapping mapping = TextureMapping.defaultTexture(block);
-		MultiVariant top = BlockModelGenerators.plainVariant(ModelTemplates.ORIENTABLE_TRAPDOOR_TOP.extend().renderType("cutout").build().create(block, mapping, models.modelOutput));
-		Identifier bottomLocation = ModelTemplates.ORIENTABLE_TRAPDOOR_BOTTOM.extend().renderType("cutout").build().create(block, mapping, models.modelOutput);
-		MultiVariant open = BlockModelGenerators.plainVariant(ModelTemplates.ORIENTABLE_TRAPDOOR_OPEN.extend().renderType("cutout").build().create(block, mapping, models.modelOutput));
-		models.blockStateOutput.accept(BlockModelGenerators.createOrientableTrapdoor(block, top, BlockModelGenerators.plainVariant(bottomLocation), open));
-		models.registerSimpleItemModel(block, bottomLocation);
 	}
 
 	/**
@@ -782,35 +722,8 @@ public class IWBlockModelGenerator {
 	 */
 	private static void generateFlag(BlockModelGenerators models, Block block) {
 		models.createHorizontallyRotatedBlock(block, TexturedModel.createDefault(b -> new TextureMapping()
-						.put(IWModelTemplates.Slots.FLAG, ModelLocationUtils.getModelLocation(block)),
+						.put(IWModelTemplates.Slots.FLAG, new Material(ModelLocationUtils.getModelLocation(block))),
 				IWModelTemplates.FLAG));
-	}
-
-	/**
-	 * Generate a plant type blockstate and model.
-	 *
-	 * @param models      the block model generator
-	 * @param plant       the block to generate the state and model for
-	 * @param pottedPlant the potted plant block to generate the state and model for
-	 */
-	private static void generatePlant(BlockModelGenerators models, Block plant, Block pottedPlant) {
-		TextureMapping mapping = TextureMapping.plant(plant);
-		MultiVariant crossPot = BlockModelGenerators.plainVariant(ModelTemplates.FLOWER_POT_CROSS.extend().renderType("cutout").build().create(pottedPlant, mapping, models.modelOutput));
-		models.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(pottedPlant, crossPot));
-		generatePlant(models, plant);
-	}
-
-	/**
-	 * Generate a plant type blockstate and model.
-	 *
-	 * @param models the block model generator
-	 * @param plant  the block to generate the state and model for
-	 */
-	private static void generatePlant(BlockModelGenerators models, Block plant) {
-		TextureMapping mapping = TextureMapping.cross(plant);
-		MultiVariant cross = BlockModelGenerators.plainVariant(ModelTemplates.CROSS.extend().renderType("cutout").build().create(plant, mapping, models.modelOutput));
-		models.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(plant, cross));
-		models.registerSimpleItemModel(plant.asItem(), models.createFlatItemModelWithBlockTexture(plant.asItem(), plant));
 	}
 
 	/**
@@ -820,7 +733,7 @@ public class IWBlockModelGenerator {
 	 * @param block  the block to generate the state and model for
 	 */
 	private static void generateCrystal(BlockModelGenerators models, Block block) {
-		MultiVariant cross = BlockModelGenerators.plainVariant(ModelTemplates.CROSS.extend().renderType("cutout").build().create(block, TextureMapping.cross(block), models.modelOutput));
+		MultiVariant cross = BlockModelGenerators.plainVariant(ModelTemplates.CROSS.create(block, TextureMapping.cross(block), models.modelOutput));
 		models.blockStateOutput.accept(MultiVariantGenerator.dispatch(block, cross).with(BlockModelGenerators.ROTATIONS_COLUMN_WITH_FACING));
 		models.registerSimpleItemModel(block.asItem(), models.createFlatItemModelWithBlockTexture(block.asItem(), block));
 	}
@@ -833,9 +746,8 @@ public class IWBlockModelGenerator {
 	 */
 	private static void generateStardustLeaves(BlockModelGenerators models, Block block) {
 		TextureMapping mapping = TextureMapping.cube(block)
-				.put(TextureSlot.LAYER1, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/stardust_granule_overlay"));
+				.put(TextureSlot.LAYER1, new Material(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/stardust_granule_overlay")));
 		ModelTemplate template = ModelTemplates.LEAVES.extend()
-				.renderType("cutout_mipped")
 				.requiredTextureSlot(TextureSlot.LAYER1)
 				.element(builder -> builder
 						.allFaces(((direction, faceBuilder) -> faceBuilder
@@ -856,11 +768,10 @@ public class IWBlockModelGenerator {
 	 */
 	private static void generateStardustLog(BlockModelGenerators models, Block block) {
 		TextureMapping mapping = TextureMapping.column(block)
-				.put(TextureSlot.END, ModelLocationUtils.getModelLocation(block).withSuffix("_top"))
-				.put(TextureSlot.SIDE, ModelLocationUtils.getModelLocation(block))
-				.put(TextureSlot.LAYER1, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/stardust_granule_overlay"));
+				.put(TextureSlot.END, new Material(ModelLocationUtils.getModelLocation(block).withSuffix("_top")))
+				.put(TextureSlot.SIDE, new Material(ModelLocationUtils.getModelLocation(block)))
+				.put(TextureSlot.LAYER1, new Material(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/stardust_granule_overlay")));
 		ModelTemplate template = ModelTemplates.CUBE_COLUMN.extend()
-				.renderType("cutout")
 				.requiredTextureSlot(TextureSlot.LAYER1)
 				.element(builder -> builder
 						.allFaces(((direction, faceBuilder) -> {
@@ -892,11 +803,10 @@ public class IWBlockModelGenerator {
 	 */
 	private static void generateStardustWood(BlockModelGenerators models, Block block) {
 		TextureMapping mapping = TextureMapping.column(block)
-				.put(TextureSlot.END, ModelLocationUtils.getModelLocation(BlockRegistry.STARDUST_LOG.get()))
-				.put(TextureSlot.SIDE, ModelLocationUtils.getModelLocation(BlockRegistry.STARDUST_LOG.get()))
-				.put(TextureSlot.LAYER1, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/stardust_granule_overlay"));
+				.put(TextureSlot.END, new Material(ModelLocationUtils.getModelLocation(BlockRegistry.STARDUST_LOG.get())))
+				.put(TextureSlot.SIDE, new Material(ModelLocationUtils.getModelLocation(BlockRegistry.STARDUST_LOG.get())))
+				.put(TextureSlot.LAYER1, new Material(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/stardust_granule_overlay")));
 		ModelTemplate normalTemplate = ModelTemplates.CUBE_COLUMN.extend()
-				.renderType("cutout")
 				.requiredTextureSlot(TextureSlot.LAYER1)
 				.element(builder -> builder
 						.allFaces(((direction, faceBuilder) -> {
@@ -912,7 +822,6 @@ public class IWBlockModelGenerator {
 								.lightEmission(15))))
 				.build();
 		ModelTemplate horizontalTemplate = ModelTemplates.CUBE_COLUMN_HORIZONTAL.extend()
-				.renderType("cutout")
 				.requiredTextureSlot(TextureSlot.LAYER1)
 				.element(builder -> builder
 						.allFaces(((direction, faceBuilder) -> {

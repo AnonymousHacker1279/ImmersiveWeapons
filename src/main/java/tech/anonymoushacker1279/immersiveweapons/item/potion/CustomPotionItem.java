@@ -40,18 +40,18 @@ public abstract class CustomPotionItem extends Item {
 	}
 
 	@Override
-	public ItemStack finishUsingItem(ItemStack pStack, Level pLevel, LivingEntity pEntityLiving) {
-		Player player = pEntityLiving instanceof Player ? (Player) pEntityLiving : null;
+	public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity livingEntity) {
+		Player player = livingEntity instanceof Player ? (Player) livingEntity : null;
 		if (player instanceof ServerPlayer) {
-			CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) player, pStack);
+			CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) player, stack);
 		}
 
-		if (pLevel instanceof ServerLevel serverLevel) {
+		if (level instanceof ServerLevel serverLevel) {
 			for (MobEffectInstance effectInstance : getEffects()) {
 				if (effectInstance.getEffect().value().isInstantenous()) {
-					effectInstance.getEffect().value().applyInstantenousEffect(serverLevel, player, player, pEntityLiving, effectInstance.getAmplifier(), 1.0D);
+					effectInstance.getEffect().value().applyInstantenousEffect(serverLevel, player, player, livingEntity, effectInstance.getAmplifier(), 1.0D);
 				} else {
-					pEntityLiving.addEffect(new MobEffectInstance(effectInstance));
+					livingEntity.addEffect(new MobEffectInstance(effectInstance));
 				}
 			}
 		}
@@ -59,32 +59,27 @@ public abstract class CustomPotionItem extends Item {
 		if (player != null) {
 			player.awardStat(Stats.ITEM_USED.get(this));
 			if (!player.getAbilities().instabuild) {
-				pStack.shrink(1);
+				stack.shrink(1);
 			}
 		}
 
 		if (player == null || !player.getAbilities().instabuild) {
-			if (pStack.isEmpty()) {
-				return getCraftingRemainder(pStack);
+			if (stack.isEmpty()) {
+				return new ItemStack(Items.GLASS_BOTTLE);
 			}
 
 			if (player != null) {
-				player.getInventory().add(getCraftingRemainder(pStack));
+				player.getInventory().add(new ItemStack(Items.GLASS_BOTTLE));
 			}
 		}
 
-		pEntityLiving.gameEvent(GameEvent.DRINK);
-		return pStack;
+		livingEntity.gameEvent(GameEvent.DRINK);
+		return stack;
 	}
 
 	@Override
 	public int getUseDuration(ItemStack stack, LivingEntity entity) {
 		return 32;
-	}
-
-	@Override
-	public ItemStack getCraftingRemainder(ItemStack itemStack) {
-		return new ItemStack(Items.GLASS_BOTTLE);
 	}
 
 	/**

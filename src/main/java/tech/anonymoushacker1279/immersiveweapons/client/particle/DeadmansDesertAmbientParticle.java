@@ -25,15 +25,15 @@ public class DeadmansDesertAmbientParticle extends SingleQuadParticle {
 		xd *= 0.0F;
 		yd *= 0.0F;
 		zd *= 0.0F;
-		xd += xSpeed + (level.random.nextFloat() * 0.63F);
+		xd += xSpeed + (level.getRandom().nextFloat() * 0.63F);
 		yd += ySpeed;
-		zd += zSpeed + (level.random.nextFloat() * 0.63F);
+		zd += zSpeed + (level.getRandom().nextFloat() * 0.63F);
 		rCol = 1.0F;
 		gCol = 1.0F;
 		bCol = 1.0F;
 		quadSize *= 0.8F;
-		lifetime = (int) (200.0D / (level.random.nextFloat() * 0.4D + 0.6D));
-		setSprite(spriteSet.get(level.random));
+		lifetime = (int) (200.0D / (level.getRandom().nextFloat() * 0.4D + 0.6D));
+		setSprite(spriteSet.get(level.getRandom()));
 		hasPhysics = true;
 	}
 

@@ -25,8 +25,8 @@ public class LootItemRandomChanceWithEnchantedBonusConditionMixin {
 	@Final
 	private Holder<Enchantment> enchantment;
 
-	@ModifyVariable(method = "test(Lnet/minecraft/world/level/storage/loot/LootContext;)Z", at = @At("STORE"), ordinal = 0)
-	public int test(int enchantmentLevel, LootContext lootContext) {
-		return ComputeEnchantedLootBonusEvent.onComputeEnchantedLootBonus(this.enchantment, enchantmentLevel, lootContext);
+	@ModifyVariable(method = "test(Lnet/minecraft/world/level/storage/loot/LootContext;)Z", at = @At("STORE"), name = "enchantmentLevel")
+	public int test(int enchantmentLevel, LootContext context) {
+		return ComputeEnchantedLootBonusEvent.onComputeEnchantedLootBonus(this.enchantment, enchantmentLevel, context);
 	}
 }

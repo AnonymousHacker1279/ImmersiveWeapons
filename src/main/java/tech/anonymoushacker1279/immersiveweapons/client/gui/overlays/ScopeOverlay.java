@@ -1,13 +1,13 @@
 package tech.anonymoushacker1279.immersiveweapons.client.gui.overlays;
 
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.util.Mth;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
 
 public class ScopeOverlay {
 
-	public static void renderOverlay(GuiGraphics gui, int guiWidth, int guiHeight, float scopeScale) {
+	public static void renderOverlay(GuiGraphicsExtractor gui, int guiWidth, int guiHeight, float scopeScale) {
 		float min = Math.min(guiWidth, guiHeight);
 		float scale = Math.min(guiWidth / min, guiHeight / min) * scopeScale;
 		int uWidth = Mth.floor(min * scale);

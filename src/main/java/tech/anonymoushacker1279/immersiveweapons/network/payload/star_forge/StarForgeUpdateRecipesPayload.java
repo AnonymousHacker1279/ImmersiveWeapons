@@ -6,7 +6,6 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.item.crafting.Recipe;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.StarForgeRecipe;
 
@@ -14,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 public record StarForgeUpdateRecipesPayload(UUID playerUUID, int containerId,
-                                            List<Recipe<?>> recipes) implements CustomPacketPayload {
+                                            List<StarForgeRecipe> recipes) implements CustomPacketPayload {
 
 	public static final Type<StarForgeUpdateRecipesPayload> TYPE = new Type<>(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "star_forge_update_recipes"));
 

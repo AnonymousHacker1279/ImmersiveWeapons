@@ -393,8 +393,16 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 				ItemRegistry.ASTRAL_INGOT.get(),
 				ItemRegistry.STARSTORM_INGOT.get());
 
-		// Dyeable items tag
-		tag(ItemTags.DYEABLE).add(
+		// Cauldron remove dye tag
+		tag(ItemTags.CAULDRON_CAN_REMOVE_DYE).add(
+				ItemRegistry.PADDED_LEATHER_HELMET.get(),
+				ItemRegistry.PADDED_LEATHER_CHESTPLATE.get(),
+				ItemRegistry.PADDED_LEATHER_LEGGINGS.get(),
+				ItemRegistry.PADDED_LEATHER_BOOTS.get()
+		);
+
+		// Freeze immune tag
+		tag(ItemTags.FREEZE_IMMUNE_WEARABLES).add(
 				ItemRegistry.PADDED_LEATHER_HELMET.get(),
 				ItemRegistry.PADDED_LEATHER_CHESTPLATE.get(),
 				ItemRegistry.PADDED_LEATHER_LEGGINGS.get(),

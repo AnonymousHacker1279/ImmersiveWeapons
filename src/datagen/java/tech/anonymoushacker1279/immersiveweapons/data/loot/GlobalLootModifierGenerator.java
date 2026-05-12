@@ -13,6 +13,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootContext.EntityTarget;
@@ -29,6 +30,7 @@ import tech.anonymoushacker1279.immersiveweapons.world.level.loot.SimpleChestMod
 import tech.anonymoushacker1279.immersiveweapons.world.level.loot.SimpleDropModifierHandler;
 import tech.anonymoushacker1279.immersiveweapons.world.level.loot.ToolSmeltingModifierHandler;
 
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -58,12 +60,13 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 		add("ancient_scroll", new SimpleChestModifierHandler(
 				singleLootTableCondition(BuiltInLootTables.STRONGHOLD_LIBRARY),
 				1, 1, 0.3f,
-				ItemRegistry.ANCIENT_SCROLL.get().getDefaultInstance()));
+				new ItemStackTemplate(ItemRegistry.ANCIENT_SCROLL.get())));
 
 		add("aurora_bow", new SimpleChestModifierHandler(
 				singleLootTableCondition(BuiltInLootTables.END_CITY_TREASURE),
+				1000,
 				1, 1, 0.3f,
-				ItemRegistry.AURORA_BOW.get().getDefaultInstance(), 30, true));
+				new ItemStackTemplate(ItemRegistry.AURORA_BOW.get()), 30, true));
 
 		add("azul_keystone_fragment", new SimpleChestModifierHandler(
 				multipleLootTablesCondition(
@@ -85,142 +88,146 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 						BuiltInLootTables.DESERT_WELL_ARCHAEOLOGY
 				),
 				1, 2, 0.25f,
-				ItemRegistry.AZUL_KEYSTONE_FRAGMENT.get().getDefaultInstance()));
+				new ItemStackTemplate(ItemRegistry.AZUL_KEYSTONE_FRAGMENT.get())));
 
 		add("depth_charm", new SimpleChestModifierHandler(
 				singleLootTableCondition(BuiltInLootTables.ANCIENT_CITY),
 				1, 1, 0.2f,
-				ItemRegistry.DEPTH_CHARM.get().getDefaultInstance()));
+				new ItemStackTemplate(ItemRegistry.DEPTH_CHARM.get())));
 
 		add("dragons_breath_bow", new SimpleChestModifierHandler(
 				singleLootTableCondition(BuiltInLootTables.NETHER_BRIDGE),
+				1000,
 				1, 1, 0.2f,
-				ItemRegistry.AURORA_BOW.get().getDefaultInstance(), 25, true));
+				new ItemStackTemplate(ItemRegistry.AURORA_BOW.get()), 25, true));
 
 		add("ice_bow", new SimpleChestModifierHandler(
 				singleLootTableCondition(BuiltInLootTables.IGLOO_CHEST),
+				1000,
 				1, 1, 0.25f,
-				ItemRegistry.ICE_BOW.get().getDefaultInstance(), 20, true));
+				new ItemStackTemplate(ItemRegistry.ICE_BOW.get()), 20, true));
 
 		add("insomnia_amulet", new SimpleDropModifierHandler(
 				simpleEntityDropCondition(EntityType.PHANTOM, 0.05f, 0.02f),
-				ItemRegistry.INSOMNIA_AMULET.get().getDefaultInstance()));
+				new ItemStackTemplate(ItemRegistry.INSOMNIA_AMULET.get())));
 
 		add("medal_of_adequacy", new SimpleDropModifierHandler(
 				simpleEntityDropCondition(EntityType.ENDER_DRAGON),
-				ItemRegistry.MEDAL_OF_ADEQUACY.get().getDefaultInstance()));
+				new ItemStackTemplate(ItemRegistry.MEDAL_OF_ADEQUACY.get())));
 
 		add("night_vision_goggles", new SimpleDropModifierHandler(
 				simpleEntityDropCondition(EntityType.ENDERMAN, 0.01f, 0.02f),
-				ItemRegistry.NIGHT_VISION_GOGGLES.get().getDefaultInstance()));
+				new ItemStackTemplate(ItemRegistry.NIGHT_VISION_GOGGLES.get())));
 
 		add("warden_heart", new SimpleDropModifierHandler(
 				simpleEntityDropCondition(EntityType.WARDEN),
-				ItemRegistry.WARDEN_HEART.get().getDefaultInstance()));
+				new ItemStackTemplate(ItemRegistry.WARDEN_HEART.get())));
 
 		add("copper_ring", new SimpleDropModifierHandler(
 				simpleDropCondition(0.05f, 0.02f),
-				ItemRegistry.COPPER_RING.get().getDefaultInstance(),
-				EntityTypeTags.UNDEAD));
+				new ItemStackTemplate(ItemRegistry.COPPER_RING.get()),
+				Optional.of(EntityTypeTags.UNDEAD)));
 
 		add("log_shards", new LogShardsLootModifierHandler(
 				matchToolCondition(ItemTags.PICKAXES),
+				1000,
 				ItemTags.LOGS, 2, 5,
-				ItemRegistry.WOODEN_SHARD.get().getDefaultInstance()));
+				new ItemStackTemplate(ItemRegistry.WOODEN_SHARD.get())));
 
 		add("molten_tool_smelting", new ToolSmeltingModifierHandler(
 				simpleEntityCondition(EntityType.PLAYER),
+				1000,
 				IWItemTagGroups.MOLTEN_TOOLS
 		));
 
 		add("music_disc_starlight_plains_theme_1", new SimpleChestModifierHandler(
 				inBiomeDungeonCondition(IWBiomes.STARLIGHT_PLAINS),
 				1, 1, 0.2f,
-				ItemRegistry.MUSIC_DISC_STARLIGHT_PLAINS_THEME_1.get().getDefaultInstance()));
+				new ItemStackTemplate(ItemRegistry.MUSIC_DISC_STARLIGHT_PLAINS_THEME_1.get())));
 
 		add("music_disc_starlight_plains_theme_2", new SimpleChestModifierHandler(
 				inBiomeDungeonCondition(IWBiomes.STARLIGHT_PLAINS),
 				1, 1, 0.2f,
-				ItemRegistry.MUSIC_DISC_STARLIGHT_PLAINS_THEME_2.get().getDefaultInstance()));
+				new ItemStackTemplate(ItemRegistry.MUSIC_DISC_STARLIGHT_PLAINS_THEME_2.get())));
 
 		add("music_disc_tiltros_wastes", new SimpleChestModifierHandler(
 				inBiomeDungeonCondition(IWBiomes.TILTROS_WASTES),
 				1, 1, 0.4f,
-				ItemRegistry.MUSIC_DISC_TILTROS_WASTES_THEME.get().getDefaultInstance()));
+				new ItemStackTemplate(ItemRegistry.MUSIC_DISC_TILTROS_WASTES_THEME.get())));
 
 		add("music_disc_deadmans_desert_theme_1", new SimpleChestModifierHandler(
 				inBiomeDungeonCondition(IWBiomes.DEADMANS_DESERT),
 				1, 1, 0.2f,
-				ItemRegistry.MUSIC_DISC_DEADMANS_DESERT_THEME_1.get().getDefaultInstance()));
+				new ItemStackTemplate(ItemRegistry.MUSIC_DISC_DEADMANS_DESERT_THEME_1.get())));
 
 		add("music_disc_deadmans_desert_theme_2", new SimpleChestModifierHandler(
 				inBiomeDungeonCondition(IWBiomes.DEADMANS_DESERT),
 				1, 1, 0.2f,
-				ItemRegistry.MUSIC_DISC_DEADMANS_DESERT_THEME_2.get().getDefaultInstance()));
+				new ItemStackTemplate(ItemRegistry.MUSIC_DISC_DEADMANS_DESERT_THEME_2.get())));
 
 		add("golden_ring", new SimpleChestModifierHandler(
 				singleLootTableCondition(BuiltInLootTables.TRIAL_CHAMBERS_REWARD),
 				1, 1, 0.05f,
-				ItemRegistry.GOLDEN_RING.get().getDefaultInstance()));
+				new ItemStackTemplate(ItemRegistry.GOLDEN_RING.get())));
 
 		add("cobalt_ring", new SimpleChestModifierHandler(
 				singleLootTableCondition(BuiltInLootTables.TRIAL_CHAMBERS_REWARD),
 				1, 1, 0.06f,
-				ItemRegistry.COBALT_RING.get().getDefaultInstance()));
+				new ItemStackTemplate(ItemRegistry.COBALT_RING.get())));
 
 		add("iron_ring", new SimpleChestModifierHandler(
 				singleLootTableCondition(BuiltInLootTables.TRIAL_CHAMBERS_REWARD),
 				1, 1, 0.07f,
-				ItemRegistry.IRON_RING.get().getDefaultInstance()));
+				new ItemStackTemplate(ItemRegistry.IRON_RING.get())));
 
 		add("iron_arrow", new SimpleChestModifierHandler(
 				singleLootTableCondition(BuiltInLootTables.TRIAL_CHAMBERS_REWARD),
 				2, 6, 0.25f,
-				ItemRegistry.IRON_ARROW.get().getDefaultInstance()));
+				new ItemStackTemplate(ItemRegistry.IRON_ARROW.get())));
 
 		add("cobalt_arrow", new SimpleChestModifierHandler(
 				singleLootTableCondition(BuiltInLootTables.TRIAL_CHAMBERS_REWARD),
 				2, 4, 0.2f,
-				ItemRegistry.COBALT_ARROW.get().getDefaultInstance()));
+				new ItemStackTemplate(ItemRegistry.COBALT_ARROW.get())));
 
 		add("agility_bracelet", new SimpleChestModifierHandler(
 				singleLootTableCondition(BuiltInLootTables.TRIAL_CHAMBERS_REWARD),
 				1, 1, 0.1f,
-				ItemRegistry.AGILITY_BRACELET.get().getDefaultInstance()));
+				new ItemStackTemplate(ItemRegistry.AGILITY_BRACELET.get())));
 
 		add("azul_keystone", new SimpleChestModifierHandler(
 				singleLootTableCondition(BuiltInLootTables.TRIAL_CHAMBERS_REWARD_OMINOUS),
 				1, 1, 0.2f,
-				ItemRegistry.AZUL_KEYSTONE.get().getDefaultInstance()));
+				new ItemStackTemplate(ItemRegistry.AZUL_KEYSTONE.get())));
 
 		add("diamond_arrow", new SimpleChestModifierHandler(
 				singleLootTableCondition(BuiltInLootTables.TRIAL_CHAMBERS_REWARD_OMINOUS),
 				4, 10, 0.25f,
-				ItemRegistry.DIAMOND_ARROW.get().getDefaultInstance()));
+				new ItemStackTemplate(ItemRegistry.DIAMOND_ARROW.get())));
 
 		add("kill_counter", new SimpleChestModifierHandler(
 				singleLootTableCondition(BuiltInLootTables.TRIAL_CHAMBERS_REWARD_OMINOUS),
 				1, 1, 0.1f,
-				ItemRegistry.KILL_COUNTER.get().getDefaultInstance()));
+				new ItemStackTemplate(ItemRegistry.KILL_COUNTER.get())));
 
 		add("ender_essence_enderman", new SimpleDropModifierHandler(
 				simpleEntityDropCondition(EntityType.ENDERMAN, 0.005f, 0.001f),
-				ItemRegistry.ENDER_ESSENCE.get().getDefaultInstance()));
+				new ItemStackTemplate(ItemRegistry.ENDER_ESSENCE.get())));
 
 		add("ender_essence_shulker", new SimpleDropModifierHandler(
 				simpleEntityDropCondition(EntityType.SHULKER, 0.03f, 0.005f),
 				1, 2,
-				ItemRegistry.ENDER_ESSENCE.get().getDefaultInstance()));
+				new ItemStackTemplate(ItemRegistry.ENDER_ESSENCE.get())));
 
 		add("ender_essence_ender_dragon", new SimpleDropModifierHandler(
 				simpleEntityDropCondition(EntityType.ENDER_DRAGON),
 				8, 12,
-				ItemRegistry.ENDER_ESSENCE.get().getDefaultInstance()));
+				new ItemStackTemplate(ItemRegistry.ENDER_ESSENCE.get())));
 
 		add("ventus_shard", new SimpleDropModifierHandler(
 				simpleEntityDropCondition(EntityType.BREEZE, 0.05f, 0.01f),
 				1, 3,
-				ItemRegistry.VENTUS_SHARD.get().getDefaultInstance()));
+				new ItemStackTemplate(ItemRegistry.VENTUS_SHARD.get())));
 	}
 
 	/**

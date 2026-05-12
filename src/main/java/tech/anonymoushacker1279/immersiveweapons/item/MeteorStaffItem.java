@@ -37,16 +37,16 @@ public class MeteorStaffItem extends Item implements SummoningStaff {
 				if (enchantmentLevel > 0 && player.isCrouching()) {
 					for (int i = 0; i < 3; i++) {
 						if (!MeteorEntity.create(level, player, itemInHand, lookingAt, null)) {
-							player.displayClientMessage(Component.translatable("immersiveweapons.item.meteor_staff.not_enough_clearance")
-									.withStyle(ChatFormatting.RED), true);
+							player.sendOverlayMessage(Component.translatable("immersiveweapons.item.meteor_staff.not_enough_clearance")
+									.withStyle(ChatFormatting.RED));
 							return InteractionResult.FAIL;
 						}
 					}
 					handleCooldown(lookingAt, player, hand, getStaffCooldown() * 3);
 				} else {
 					if (!MeteorEntity.create(level, player, itemInHand, lookingAt, null)) {
-						player.displayClientMessage(Component.translatable("immersiveweapons.item.meteor_staff.not_enough_clearance")
-								.withStyle(ChatFormatting.RED), true);
+						player.sendOverlayMessage(Component.translatable("immersiveweapons.item.meteor_staff.not_enough_clearance")
+								.withStyle(ChatFormatting.RED));
 						return InteractionResult.FAIL;
 					}
 					handleCooldown(lookingAt, player, hand);

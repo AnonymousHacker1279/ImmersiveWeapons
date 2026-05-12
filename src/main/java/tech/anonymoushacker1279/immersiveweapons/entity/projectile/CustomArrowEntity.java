@@ -35,11 +35,11 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 
 	protected static final byte VANILLA_IMPACT_STATUS_ID = 3;
 	public Item referenceItem = Items.AIR;
-	protected boolean shouldStopMoving = false;
 	public InaccuracySettings inaccuracySettings = new InaccuracySettings(1.0d);
 	public HitEffect hitEffect = HitEffect.NONE;
 	public int color = -1;
 	public boolean isExplosive = false;
+	protected boolean shouldStopMoving = false;
 	private boolean hasExploded = false;
 
 	public CustomArrowEntity(EntityType<? extends Arrow> type, Level level) {
@@ -74,17 +74,6 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 		}
 	}
 
-	public record ArrowEntityBuilder(EntityType<? extends Arrow> entityType,
-	                                 Item referenceItem) implements HitEffectUtils {
-
-		public CustomArrowEntity build(Level level) {
-			CustomArrowEntity arrowEntity = new CustomArrowEntity(entityType, level);
-			arrowEntity.referenceItem = referenceItem;
-
-			return arrowEntity;
-		}
-	}
-
 	@Override
 	public ItemStack getPickupItem() {
 		return new ItemStack(referenceItem);
@@ -105,7 +94,7 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 						.stream()
 						.filter(entity -> !entity.isSpectator())
 						.forEach(entity -> {
-							if (entity instanceof Mob mob && !mob.getType().is(EntityTypes.BOSSES)) {
+							if (entity instanceof Mob mob && !mob.is(EntityTypes.BOSSES)) {
 								if (AdvancedThrowableItemProjectile.canSee(mob, this, false)) {
 									mob.setTarget(null);
 								}
@@ -219,5 +208,16 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 		}
 
 		return isExplosive ? IWDamageSources.explosiveArrow(this, owner) : damageSources().arrow(this, owner);
+	}
+
+	public record ArrowEntityBuilder(EntityType<? extends Arrow> entityType,
+	                                 Item referenceItem) implements HitEffectUtils {
+
+		public CustomArrowEntity build(Level level) {
+			CustomArrowEntity arrowEntity = new CustomArrowEntity(entityType, level);
+			arrowEntity.referenceItem = referenceItem;
+
+			return arrowEntity;
+		}
 	}
 }

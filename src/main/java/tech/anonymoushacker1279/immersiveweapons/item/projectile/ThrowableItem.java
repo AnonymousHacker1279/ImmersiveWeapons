@@ -60,7 +60,7 @@ public class ThrowableItem extends Item {
 				SoundEventRegistry.GENERIC_ITEM_THROW.get(),
 				SoundSource.NEUTRAL,
 				0.5f,
-				1.0f + (0.4f + level.random.nextFloat() * 0.2f),
+				1.0f + (0.4f + level.getRandom().nextFloat() * 0.2f),
 				false);
 
 		if (!level.isClientSide()) {
@@ -106,7 +106,7 @@ public class ThrowableItem extends Item {
 							SoundEventRegistry.GENERIC_ITEM_THROW.get(),
 							SoundSource.NEUTRAL,
 							0.5F,
-							1.0f + (0.4f + level.random.nextFloat() * 0.2f),
+							1.0f + (0.4f + level.getRandom().nextFloat() * 0.2f),
 							false);
 
 					handleCooldown(player, pStack);

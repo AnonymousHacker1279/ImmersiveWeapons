@@ -1,7 +1,8 @@
 package tech.anonymoushacker1279.immersiveweapons.data.recipes;
 
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.data.recipes.RecipeBuilder;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.AstralCrystalRecipe;
@@ -12,27 +13,25 @@ public class AstralCrystalRecipeBuilder extends IWRecipeBuilder {
 
 	private final Ingredient material;
 	private final Ingredient catalyst;
-	private final ItemStack result;
-	private final AstralCrystalRecipe.Factory<?> factory;
+	private final ItemStackTemplate result;
 
-	public AstralCrystalRecipeBuilder(AstralCrystalRecipe.Factory<?> factory, Ingredient material, Ingredient catalyst, ItemStack result) {
+	public AstralCrystalRecipeBuilder(Ingredient material, Ingredient catalyst, ItemStackTemplate result) {
 		this.material = material;
 		this.catalyst = catalyst;
 		this.result = result;
-		this.factory = factory;
 	}
 
-	public static AstralCrystalRecipeBuilder sorcery(Ingredient material, Ingredient catalyst, ItemStack result) {
-		return new AstralCrystalRecipeBuilder(AstralCrystalRecipe::new, material, catalyst, result);
+	public static AstralCrystalRecipeBuilder sorcery(Ingredient material, Ingredient catalyst, ItemStackTemplate result) {
+		return new AstralCrystalRecipeBuilder(material, catalyst, result);
 	}
 
 	@Override
-	public Item getResult() {
-		return result.getItem();
+	public ResourceKey<Recipe<?>> defaultId() {
+		return RecipeBuilder.getDefaultRecipeId(this.result);
 	}
 
 	@Override
 	protected Recipe<?> getRecipe() {
-		return factory.create(Objects.requireNonNullElse(group, "astral_crystal"), material, catalyst, result);
+		return new AstralCrystalRecipe(Objects.requireNonNullElse(group, "astral_crystal"), material, catalyst, result);
 	}
 }

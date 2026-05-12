@@ -34,7 +34,7 @@ public class MudBallEntity extends AdvancedThrowableItemProjectile {
 	}
 
 	private ParticleOptions getParticle() {
-		return new ItemParticleOption(ParticleTypes.ITEM, getItem());
+		return new ItemParticleOption(ParticleTypes.ITEM, getItem().getItem());
 	}
 
 	@Override

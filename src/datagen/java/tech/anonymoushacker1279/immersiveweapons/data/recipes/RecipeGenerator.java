@@ -7,18 +7,17 @@ import net.minecraft.advancements.criterion.ItemPredicate;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderSet;
+import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.*;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.ArrowItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.crafting.CookingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
@@ -647,8 +646,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 	}
 
 	private void createAstralCrystalSorceryItems() {
-		ItemStack astralIngot = new ItemStack(ItemRegistry.ASTRAL_INGOT.get());
-		astralCrystalSorcery(ItemRegistry.RAW_ASTRAL.get(), Items.AMETHYST_SHARD, astralIngot);
+		astralCrystalSorcery(ItemRegistry.RAW_ASTRAL.get(), Items.AMETHYST_SHARD, ItemRegistry.ASTRAL_INGOT.get());
 	}
 
 	private void createStarForgeItems() {
@@ -902,8 +900,9 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.unlockedBy("grass", has(Items.SHORT_GRASS))
 				.save(output);
 		// Punji sticks
-		ItemStack poison = new ItemStack(Items.POTION);
-		poison.update(DataComponents.POTION_CONTENTS, PotionContents.EMPTY, Potions.POISON, PotionContents::withPotion);
+		ItemStackTemplate poison = new ItemStackTemplate(Items.POTION, DataComponentPatch.builder()
+				.set(DataComponents.POTION_CONTENTS, PotionContents.EMPTY.withPotion(Potions.POISON))
+				.build());
 		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.PUNJI_STICKS_ITEM.get(), 3)
 				.define('a', Items.DIRT)
 				.define('b', Items.BAMBOO)
@@ -999,8 +998,9 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.unlockedBy("cocoa_beans", has(Items.COCOA_BEANS))
 				.save(output);
 		// Explosive chocolate bar
-		ItemStack explosiveChocolateBar = ItemRegistry.CHOCOLATE_BAR.get().getDefaultInstance();
-		explosiveChocolateBar.set(DataComponentTypeRegistry.IS_EXPLOSIVE, true);
+		ItemStackTemplate explosiveChocolateBar = new ItemStackTemplate(ItemRegistry.CHOCOLATE_BAR.get(), DataComponentPatch.builder()
+				.set(DataComponentTypeRegistry.IS_EXPLOSIVE.get(), true)
+				.build());
 		ShapelessRecipeBuilder.shapeless(itemGetter, RecipeCategory.FOOD, explosiveChocolateBar)
 				.requires(ItemRegistry.CHOCOLATE_BAR.get(), 1)
 				.requires(Items.GUNPOWDER)
@@ -1295,8 +1295,9 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.save(output);
 
 		// Blademaster Emblem
-		ItemStack death = new ItemStack(Items.POTION);
-		death.update(DataComponents.POTION_CONTENTS, PotionContents.EMPTY, PotionRegistry.DEATH_POTION, PotionContents::withPotion);
+		ItemStackTemplate death = new ItemStackTemplate(Items.POTION, DataComponentPatch.builder()
+				.set(DataComponents.POTION_CONTENTS, PotionContents.EMPTY.withPotion(PotionRegistry.DEATH_POTION))
+				.build());
 		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.MISC, ItemRegistry.BLADEMASTER_EMBLEM.get())
 				.define('a', IWItemTagGroups.STARSTORM_SHARDS)
 				.define('b', DataComponentIngredient.of(true, death))
@@ -1857,7 +1858,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 
 	private void createIngotFromBlock(ShapelessRecipeBuilder builder, ItemLike ingotBlock) {
 		builder.requires(ingotBlock)
-				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(builder.getResult()) + "_from_" + getItemName(ingotBlock));
+				.save(output, ImmersiveWeapons.MOD_ID + ":" + builder.defaultId().identifier().getPath() + "_from_" + getItemName(ingotBlock));
 	}
 
 	private void createNuggetFromIngot(ShapelessRecipeBuilder builder, TagKey<Item> tagKey) {
@@ -1939,7 +1940,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 
 	public void createSmeltingRecipe(List<ItemLike> ingredients, ItemLike result, float experience, int cookTime, @Nullable String group) {
 		for (ItemLike itemlike : ingredients) {
-			SimpleCookingRecipeBuilder.smelting(Ingredient.of(itemlike), RecipeCategory.MISC, result, experience, cookTime)
+			SimpleCookingRecipeBuilder.smelting(Ingredient.of(itemlike), RecipeCategory.MISC, CookingBookCategory.MISC, result, experience, cookTime)
 					.group(group)
 					.unlockedBy(getHasName(itemlike), has(itemlike))
 					.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_from_smelting_" + getItemName(itemlike));
@@ -1947,14 +1948,14 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 	}
 
 	private void createSmeltingRecipe(ItemLike ingredient, ItemLike result, float experience, int cookTime, String group) {
-		SimpleCookingRecipeBuilder.smelting(Ingredient.of(ingredient), RecipeCategory.MISC, result, experience, cookTime)
+		SimpleCookingRecipeBuilder.smelting(Ingredient.of(ingredient), RecipeCategory.MISC, CookingBookCategory.MISC, result, experience, cookTime)
 				.group(group).unlockedBy(getHasName(ingredient), has(ingredient))
 				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_from_smelting_" + getItemName(ingredient));
 	}
 
 	private void createBlastingRecipe(List<ItemLike> ingredients, ItemLike result, float experience, int cookTime, @Nullable String group) {
 		for (ItemLike itemlike : ingredients) {
-			SimpleCookingRecipeBuilder.blasting(Ingredient.of(itemlike), RecipeCategory.MISC, result, experience, cookTime)
+			SimpleCookingRecipeBuilder.blasting(Ingredient.of(itemlike), RecipeCategory.MISC, CookingBookCategory.MISC, result, experience, cookTime)
 					.group(group)
 					.unlockedBy(getHasName(itemlike), has(itemlike))
 					.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_from_blasting_" + getItemName(itemlike));
@@ -1962,7 +1963,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 	}
 
 	private void createBlastingRecipe(ItemLike ingredient, ItemLike result, float experience, int cookTime, String group) {
-		SimpleCookingRecipeBuilder.blasting(Ingredient.of(ingredient), RecipeCategory.MISC, result, experience, cookTime)
+		SimpleCookingRecipeBuilder.blasting(Ingredient.of(ingredient), RecipeCategory.MISC, CookingBookCategory.MISC, result, experience, cookTime)
 				.group(group).unlockedBy(getHasName(ingredient), has(ingredient))
 				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_from_blasting_" + getItemName(ingredient));
 	}
@@ -1976,60 +1977,60 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 	}
 
 	private void teslaSynthesizing(ItemLike material1, ItemLike material2, ItemLike material3, int cookTime,
-	                               ItemLike result) {
+	                               Item result) {
 		TeslaSynthesizerRecipeBuilder.synthesizing(Ingredient.of(material1), Ingredient.of(material2), Ingredient.of(material3),
-						cookTime, result.asItem())
+						cookTime, new ItemStackTemplate(result))
 				.unlockedBy("tesla_ingot", has(IWItemTagGroups.TESLA_INGOTS))
 				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_tesla_synthesizing");
 	}
 
 	private void smallPartsTinkering(TagKey<Item> material, List<Item> craftables) {
 		HolderSet<Item> materialSet = registries.lookupOrThrow(Registries.ITEM).getOrThrow(material);
-		SmallPartsRecipeBuilder.tinker(Ingredient.of(materialSet), craftables)
+		SmallPartsRecipeBuilder.tinker(Ingredient.of(materialSet), craftables, material.location())
 				.unlockedBy("copper_ingot", has(Tags.Items.INGOTS_COPPER))
 				.save(output, ImmersiveWeapons.MOD_ID + ":" + getTagName(material) + "_tinkering");
 	}
 
 	private void starForgeSmelting(TagKey<Item> ingot, int ingotCount, Item secondaryMaterial, int secondaryMaterialCount, Item result, int smeltTime) {
 		HolderSet<Item> ingotSet = BuiltInRegistries.ITEM.getOrThrow(ingot);
-		StarForgeRecipeBuilder.forge(Ingredient.of(ingotSet), ingotCount, Ingredient.of(secondaryMaterial), secondaryMaterialCount, result, smeltTime)
+		StarForgeRecipeBuilder.forge(Ingredient.of(ingotSet), ingotCount, Ingredient.of(secondaryMaterial), secondaryMaterialCount, new ItemStackTemplate(result), smeltTime)
 				.unlockedBy("star_forge_controller", has(BlockRegistry.STAR_FORGE_CONTROLLER.get()))
 				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_star_forge_smelting");
 	}
 
 	private void starForgeSmelting(ItemLike ingot, int ingotCount, Item secondaryMaterial, int secondaryMaterialCount, Item result, int smeltTime) {
-		StarForgeRecipeBuilder.forge(Ingredient.of(ingot), ingotCount, Ingredient.of(secondaryMaterial), secondaryMaterialCount, result, smeltTime)
+		StarForgeRecipeBuilder.forge(Ingredient.of(ingot), ingotCount, Ingredient.of(secondaryMaterial), secondaryMaterialCount, new ItemStackTemplate(result), smeltTime)
 				.unlockedBy("star_forge_controller", has(BlockRegistry.STAR_FORGE_CONTROLLER.get()))
 				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_star_forge_smelting");
 	}
 
 	private void starForgeSmelting(TagKey<Item> ingot, int ingotCount, Item result, int smeltTime) {
 		HolderSet<Item> ingotSet = BuiltInRegistries.ITEM.getOrThrow(ingot);
-		StarForgeRecipeBuilder.forge(Ingredient.of(ingotSet), ingotCount, result, smeltTime)
+		StarForgeRecipeBuilder.forge(Ingredient.of(ingotSet), ingotCount, new ItemStackTemplate(result), smeltTime)
 				.unlockedBy("star_forge_controller", has(BlockRegistry.STAR_FORGE_CONTROLLER.get()))
 				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_star_forge_smelting");
 	}
 
-	private void barrelTapFermenting(ItemLike material, int materialCount, ItemLike result) {
-		BarrelTapRecipeBuilder.fermenting(Ingredient.of(material), materialCount, result.asItem())
+	private void barrelTapFermenting(ItemLike material, int materialCount, Item result) {
+		BarrelTapRecipeBuilder.fermenting(Ingredient.of(material), materialCount, new ItemStackTemplate(result))
 				.unlockedBy("barrel_tap", has(BlockItemRegistry.BARREL_TAP_ITEM.get()))
 				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_fermenting_from_" + getItemName(material));
 	}
 
-	private void astralCrystalSorcery(ItemLike primaryMaterial, ItemLike secondaryMaterial, ItemStack result) {
-		AstralCrystalRecipeBuilder.sorcery(Ingredient.of(primaryMaterial), Ingredient.of(secondaryMaterial), result)
+	private void astralCrystalSorcery(ItemLike primaryMaterial, ItemLike secondaryMaterial, Item result) {
+		AstralCrystalRecipeBuilder.sorcery(Ingredient.of(primaryMaterial), Ingredient.of(secondaryMaterial), new ItemStackTemplate(result))
 				.unlockedBy("astral_crystal", has(BlockItemRegistry.ASTRAL_CRYSTAL_ITEM.get()))
 				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_astral_crystal_sorcery");
 	}
 
-	private void pistonCrushing(ItemLike block, ItemLike result, int minCount, int maxCount) {
-		PistonCrushingRecipeBuilder.crushing(Ingredient.of(block), result.asItem(), minCount, maxCount)
+	private void pistonCrushing(ItemLike block, Item result, int minCount, int maxCount) {
+		PistonCrushingRecipeBuilder.crushing(Ingredient.of(block), new ItemStackTemplate(result), minCount, maxCount)
 				.unlockedBy("piston", has(Items.PISTON))
 				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_piston_crushing");
 	}
 
-	private void ammunitionTableCrafting(List<MaterialGroup> materials, ItemLike result) {
-		AmmunitionTableRecipeBuilder.crafting(materials, result.asItem())
+	private void ammunitionTableCrafting(List<MaterialGroup> materials, Item result) {
+		AmmunitionTableRecipeBuilder.crafting(materials, new ItemStackTemplate(result))
 				.unlockedBy("ammunition_table", has(BlockRegistry.AMMUNITION_TABLE.get()))
 				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_ammunition_table_crafting");
 	}
@@ -2101,7 +2102,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 	}
 
 	public void stonecutterBricks(Block bricks, ItemLike material) {
-		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), RecipeCategory.BUILDING_BLOCKS, bricks)
+		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), RecipeCategory.BUILDING_BLOCKS, bricks, 1)
 				.unlockedBy("has_" + BuiltInRegistries.BLOCK.getKey(bricks).getPath(), has(material))
 				.save(output, ImmersiveWeapons.MOD_ID + ":"
 						+ getConversionRecipeName(bricks, material) + "_stonecutting");
@@ -2115,35 +2116,35 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 	}
 
 	public void stonecutterStairs(Block stairs, ItemLike material, String triggerName, Criterion<InventoryChangeTrigger.TriggerInstance> trigger) {
-		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), RecipeCategory.BUILDING_BLOCKS, stairs)
+		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), RecipeCategory.BUILDING_BLOCKS, stairs, 1)
 				.unlockedBy(triggerName, trigger)
 				.save(output, ImmersiveWeapons.MOD_ID + ":"
 						+ getConversionRecipeName(stairs, material) + "_stonecutting");
 	}
 
 	public void stonecutterWall(Block wall, ItemLike material, String triggerName, Criterion<InventoryChangeTrigger.TriggerInstance> trigger) {
-		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), RecipeCategory.BUILDING_BLOCKS, wall)
+		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), RecipeCategory.BUILDING_BLOCKS, wall, 1)
 				.unlockedBy(triggerName, trigger)
 				.save(output, ImmersiveWeapons.MOD_ID + ":"
 						+ getConversionRecipeName(wall, material) + "_stonecutting");
 	}
 
 	public void stonecutterPillar(Block pillar, ItemLike material, String triggerName, Criterion<InventoryChangeTrigger.TriggerInstance> trigger) {
-		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), RecipeCategory.BUILDING_BLOCKS, pillar)
+		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), RecipeCategory.BUILDING_BLOCKS, pillar, 1)
 				.unlockedBy(triggerName, trigger)
 				.save(output, ImmersiveWeapons.MOD_ID + ":"
 						+ getConversionRecipeName(pillar, material) + "_stonecutting");
 	}
 
 	public void stonecutterChiseled(Block chiseled, ItemLike material, String triggerName, Criterion<InventoryChangeTrigger.TriggerInstance> trigger) {
-		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), RecipeCategory.BUILDING_BLOCKS, chiseled)
+		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), RecipeCategory.BUILDING_BLOCKS, chiseled, 1)
 				.unlockedBy(triggerName, trigger)
 				.save(output, ImmersiveWeapons.MOD_ID + ":"
 						+ getConversionRecipeName(chiseled, material) + "_stonecutting");
 	}
 
 	public void stonecutterCut(Block cut, ItemLike material, String triggerName, Criterion<InventoryChangeTrigger.TriggerInstance> trigger) {
-		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), RecipeCategory.BUILDING_BLOCKS, cut)
+		SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), RecipeCategory.BUILDING_BLOCKS, cut, 1)
 				.unlockedBy(triggerName, trigger)
 				.save(output, ImmersiveWeapons.MOD_ID + ":"
 						+ getConversionRecipeName(cut, material) + "_stonecutting");

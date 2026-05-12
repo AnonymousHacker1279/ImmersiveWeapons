@@ -1,0 +1,12 @@
+{
+  "gives": {
+    "id": "immersiveweapons:azul_locator"
+  },
+  "max_uses": 1.0,
+  "reputation_discount": 0.05,
+  "wants": {
+    "count": 4.0,
+    "id": "minecraft:emerald"
+  },
+  "xp": 3.0
+}

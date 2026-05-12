@@ -1,6 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.client.gui.screen;
 
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.gui.screens.inventory.tooltip.DefaultTooltipPositioner;
@@ -30,21 +30,17 @@ public class StarForgeScreen extends AbstractContainerScreen<StarForgeMenu> {
 	}
 
 	@Override
-	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
-		super.render(guiGraphics, mouseX, mouseY, partialTick);
-		renderTooltip(guiGraphics, mouseX, mouseY);
-	}
+	public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
+		super.extractBackground(graphics, mouseX, mouseY, a);
 
-	@Override
-	protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
-		guiGraphics.blit(RenderPipelines.GUI_TEXTURED, GUI_TEXTURE, leftPos, topPos, 0, 0, imageWidth, imageHeight, 256, 256);
+		graphics.blit(RenderPipelines.GUI_TEXTURED, GUI_TEXTURE, leftPos, topPos, 0, 0, imageWidth, imageHeight, 256, 256);
 
 		// Render the solar indicator (12x12 px) at (37, 28)
 		// The inactive indicator is at (177, 17) and the active is at (177, 29)
 		if (menu.hasSolarEnergy()) {
-			guiGraphics.blit(RenderPipelines.GUI_TEXTURED, GUI_TEXTURE, leftPos + 36, topPos + 27, 176, 12, 12, 12, 256, 256);
+			graphics.blit(RenderPipelines.GUI_TEXTURED, GUI_TEXTURE, leftPos + 36, topPos + 27, 176, 12, 12, 12, 256, 256);
 		} else {
-			guiGraphics.blit(RenderPipelines.GUI_TEXTURED, GUI_TEXTURE, leftPos + 36, topPos + 27, 176, 0, 12, 12, 256, 256);
+			graphics.blit(RenderPipelines.GUI_TEXTURED, GUI_TEXTURE, leftPos + 36, topPos + 27, 176, 0, 12, 12, 256, 256);
 		}
 
 		// Render the temperature bar (12x38 px) at (11, 10)
@@ -57,7 +53,7 @@ public class StarForgeScreen extends AbstractContainerScreen<StarForgeMenu> {
 		int sourceY = 24 + 38 - pixels;
 		int destY = topPos + 9 + 38 - pixels;
 		// Render the bar
-		guiGraphics.blit(RenderPipelines.GUI_TEXTURED, GUI_TEXTURE, leftPos + 10, destY, 176, sourceY, 12, pixels, 256, 256);
+		graphics.blit(RenderPipelines.GUI_TEXTURED, GUI_TEXTURE, leftPos + 10, destY, 176, sourceY, 12, pixels, 256, 256);
 
 		List<StarForgeRecipe> availableRecipes = menu.availableRecipes;
 
@@ -74,7 +70,7 @@ public class StarForgeScreen extends AbstractContainerScreen<StarForgeMenu> {
 			scrollbarTextureY = 244;
 		}
 
-		guiGraphics.blit(RenderPipelines.GUI_TEXTURED, GUI_TEXTURE, scrollbarX, handleY, scrollbarTextureY, 0, 11, handleHeight, 256, 256);
+		graphics.blit(RenderPipelines.GUI_TEXTURED, GUI_TEXTURE, scrollbarX, handleY, scrollbarTextureY, 0, 11, handleHeight, 256, 256);
 
 		// Render the selection area and the entries
 		int leftPosOffset = leftPos + 60;
@@ -93,7 +89,7 @@ public class StarForgeScreen extends AbstractContainerScreen<StarForgeMenu> {
 					vOffset += 48; // Hovered entry
 				}
 
-				guiGraphics.blit(RenderPipelines.GUI_TEXTURED, GUI_TEXTURE, leftPosOffset, y, 0, vOffset, 56, 24, 256, 256);
+				graphics.blit(RenderPipelines.GUI_TEXTURED, GUI_TEXTURE, leftPosOffset, y, 0, vOffset, 56, 24, 256, 256);
 			}
 		}
 
@@ -107,20 +103,20 @@ public class StarForgeScreen extends AbstractContainerScreen<StarForgeMenu> {
 				StarForgeRecipe recipe = availableRecipes.get(i);
 
 				ItemStack ingot = recipe.primaryMaterial().items().toList().getFirst().value().getDefaultInstance();
-				ItemStack result = recipe.result();
+				ItemStack result = recipe.result().create();
 
 				// Render the items
-				guiGraphics.renderItem(ingot, leftPosOffset + 3, y + 3);
-				guiGraphics.renderItemDecorations(font, ingot, leftPosOffset + 3, y + 3);
+				graphics.item(ingot, leftPosOffset + 3, y + 3);
+				graphics.itemDecorations(font, ingot, leftPosOffset + 3, y + 3);
 
 				if (recipe.secondaryMaterial().isPresent()) {
 					ItemStack secondaryMaterial = recipe.secondaryMaterial().get().items().toList().getFirst().value().getDefaultInstance();
-					guiGraphics.renderItem(secondaryMaterial, leftPosOffset + 21, y + 3);
-					guiGraphics.renderItemDecorations(font, secondaryMaterial, leftPosOffset + 21, y + 3);
+					graphics.item(secondaryMaterial, leftPosOffset + 21, y + 3);
+					graphics.itemDecorations(font, secondaryMaterial, leftPosOffset + 21, y + 3);
 
 				}
 
-				guiGraphics.renderItem(result, leftPosOffset + 39, y + 3);
+				graphics.item(result, leftPosOffset + 39, y + 3);
 			}
 		}
 
@@ -128,9 +124,9 @@ public class StarForgeScreen extends AbstractContainerScreen<StarForgeMenu> {
 		if (isRecipeValid(availableRecipes)) {
 			// If there is a recipe being crafted, the crafting icon should be grayed out
 			if (menu.getSmeltTime() > 0) {
-				guiGraphics.blit(RenderPipelines.GUI_TEXTURED, GUI_TEXTURE, leftPos + 144, topPos + 8, 188, 15, 15, 15, 256, 256);
+				graphics.blit(RenderPipelines.GUI_TEXTURED, GUI_TEXTURE, leftPos + 144, topPos + 8, 188, 15, 15, 15, 256, 256);
 			} else {
-				guiGraphics.blit(RenderPipelines.GUI_TEXTURED, GUI_TEXTURE, leftPos + 144, topPos + 8, 188, 0, 15, 15, 256, 256);
+				graphics.blit(RenderPipelines.GUI_TEXTURED, GUI_TEXTURE, leftPos + 144, topPos + 8, 188, 0, 15, 15, 256, 256);
 			}
 		}
 	}
@@ -189,48 +185,48 @@ public class StarForgeScreen extends AbstractContainerScreen<StarForgeMenu> {
 	}
 
 	@Override
-	protected void renderTooltip(GuiGraphics guiGraphics, int x, int y) {
-		super.renderTooltip(guiGraphics, x, y);
+	protected void extractTooltip(GuiGraphicsExtractor graphics, int mouseX, int mouseY) {
+		super.extractTooltip(graphics, mouseX, mouseY);
 
 		// Render the solar indicator tooltip
 		ClientTooltipComponent activeComponent = ClientTooltipComponent.create(SI_TOOLTIP_ACTIVE.getVisualOrderText());
 		ClientTooltipComponent inactiveComponent = ClientTooltipComponent.create(SI_TOOLTIP_INACTIVE.getVisualOrderText());
-		if (isOverSolarIndicator(x, y)) {
-			guiGraphics.renderTooltip(
+		if (isOverSolarIndicator(mouseX, mouseY)) {
+			graphics.tooltip(
 					font,
 					List.of(menu.hasSolarEnergy() ? activeComponent : inactiveComponent),
-					x,
-					y,
+					mouseX,
+					mouseY,
 					DefaultTooltipPositioner.INSTANCE,
 					null
 			);
 		}
 
 		// Render the temperature bar tooltip
-		if (isOverTemperatureBar(x, y)) {
+		if (isOverTemperatureBar(mouseX, mouseY)) {
 			// Format the temperature with one decimal place
 			String temperature = String.format("%.1f", menu.getTemperature() / 10.0f);
 			ClientTooltipComponent temperatureComponent = ClientTooltipComponent.create(Component.translatable("container.immersiveweapons.star_forge.temperature", temperature + "%").getVisualOrderText());
-			guiGraphics.renderTooltip(
+			graphics.tooltip(
 					font,
 					List.of(temperatureComponent),
-					x,
-					y,
+					mouseX,
+					mouseY,
 					DefaultTooltipPositioner.INSTANCE,
 					null
 			);
 		}
 
 		// Render the crafting progress tooltip
-		if (isOverCraftingIcon(x, y) && menu.getSmeltTime() > 0) {
+		if (isOverCraftingIcon(mouseX, mouseY) && menu.getSmeltTime() > 0) {
 			// Format the time remaining as seconds
 			String timeRemaining = String.format("%.1f", menu.getSmeltTime() / 20.0f);
 			ClientTooltipComponent timeComponent = ClientTooltipComponent.create(Component.translatable("container.immersiveweapons.star_forge.craft_progress", timeRemaining + "s").getVisualOrderText());
-			guiGraphics.renderTooltip(
+			graphics.tooltip(
 					font,
 					List.of(timeComponent),
-					x,
-					y,
+					mouseX,
+					mouseY,
 					DefaultTooltipPositioner.INSTANCE,
 					null
 			);

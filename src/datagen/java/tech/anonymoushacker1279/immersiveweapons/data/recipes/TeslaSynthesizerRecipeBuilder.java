@@ -1,6 +1,8 @@
 package tech.anonymoushacker1279.immersiveweapons.data.recipes;
 
-import net.minecraft.world.item.Item;
+import net.minecraft.data.recipes.RecipeBuilder;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.TeslaSynthesizerRecipe;
@@ -13,29 +15,27 @@ public class TeslaSynthesizerRecipeBuilder extends IWRecipeBuilder {
 	private final Ingredient material2;
 	private final Ingredient material3;
 	private final int cookTime;
-	private final Item result;
-	private final TeslaSynthesizerRecipe.Factory<?> factory;
+	private final ItemStackTemplate result;
 
-	public TeslaSynthesizerRecipeBuilder(TeslaSynthesizerRecipe.Factory<?> factory, Ingredient material1, Ingredient material2, Ingredient material3, int cookTime, Item result) {
+	public TeslaSynthesizerRecipeBuilder(Ingredient material1, Ingredient material2, Ingredient material3, int cookTime, ItemStackTemplate result) {
 		this.material1 = material1;
 		this.material2 = material2;
 		this.material3 = material3;
 		this.cookTime = cookTime;
 		this.result = result;
-		this.factory = factory;
 	}
 
-	public static TeslaSynthesizerRecipeBuilder synthesizing(Ingredient material1, Ingredient material2, Ingredient material3, int cookTime, Item pResult) {
-		return new TeslaSynthesizerRecipeBuilder(TeslaSynthesizerRecipe::new, material1, material2, material3, cookTime, pResult);
+	public static TeslaSynthesizerRecipeBuilder synthesizing(Ingredient material1, Ingredient material2, Ingredient material3, int cookTime, ItemStackTemplate result) {
+		return new TeslaSynthesizerRecipeBuilder(material1, material2, material3, cookTime, result);
 	}
 
 	@Override
-	public Item getResult() {
-		return result;
+	public ResourceKey<Recipe<?>> defaultId() {
+		return RecipeBuilder.getDefaultRecipeId(this.result);
 	}
 
 	@Override
 	protected Recipe<?> getRecipe() {
-		return factory.create(Objects.requireNonNullElse(group, "tesla_synthesizer"), material1, material2, material3, result.getDefaultInstance(), cookTime);
+		return new TeslaSynthesizerRecipe(Objects.requireNonNullElse(group, "tesla_synthesizer"), material1, material2, material3, result, cookTime);
 	}
 }

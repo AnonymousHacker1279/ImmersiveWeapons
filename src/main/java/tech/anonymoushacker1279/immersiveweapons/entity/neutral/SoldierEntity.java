@@ -36,25 +36,25 @@ import java.util.List;
 public abstract class SoldierEntity extends PathfinderMob implements NeutralMob, GrantAdvancementOnDiscovery {
 
 	private static final UniformInt ANGER_TICK_RANGE = TimeUtil.rangeOfSeconds(20, 39);
+	protected final List<Class<? extends Entity>> ignoresDamageFrom;
 	protected long angerTime;
 	@Nullable
 	protected EntityReference<LivingEntity> targetReference;
-	protected final List<Class<? extends Entity>> ignoresDamageFrom;
 
 	protected SoldierEntity(EntityType<? extends PathfinderMob> entityType, Level level, List<Class<? extends Entity>> ignoresDamageFrom) {
 		super(entityType, level);
 		this.ignoresDamageFrom = ignoresDamageFrom;
 	}
 
+	public static AttributeSupplier.Builder createSoldierAttributes() {
+		return Mob.createMobAttributes()
+				.add(Attributes.ATTACK_DAMAGE, 2.0D);
+	}
+
 	protected void registerGoals() {
 		goalSelector.addGoal(1, new FloatGoal(this));
 		goalSelector.addGoal(4, new OpenDoorGoal(this, true));
 		goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.8D, 0.35f));
-	}
-
-	public static AttributeSupplier.Builder createSoldierAttributes() {
-		return Mob.createMobAttributes()
-				.add(Attributes.ATTACK_DAMAGE, 2.0D);
 	}
 
 	@Override
@@ -125,8 +125,8 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 	}
 
 	@Override
-	public boolean canAttackType(EntityType<?> type) {
-		return type != getType() && type != EntityType.CREEPER;
+	public boolean canAttack(LivingEntity target) {
+		return super.canAttack(target) && !target.is(EntityType.CREEPER) && !target.is(getType());
 	}
 
 	@Override

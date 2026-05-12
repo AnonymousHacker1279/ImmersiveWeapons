@@ -56,8 +56,7 @@ import java.util.Optional;
 public class SuperHansEntity extends HansEntity implements AttackerTracker {
 
 	public static final Identifier CHAMPION_TOWER_KEY = Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "champion_tower");
-	public final ServerBossEvent bossEvent = new ServerBossEvent(getDisplayName(), BossBarColor.PURPLE,
-			BossBarOverlay.PROGRESS);
+	public final ServerBossEvent bossEvent = new ServerBossEvent(getUUID(), getDisplayName(), BossBarColor.PURPLE, BossBarOverlay.PROGRESS);
 	final List<Entity> attackingEntities = new ArrayList<>(5);
 	private boolean spawnedInChampionTower = false;
 	@Nullable
@@ -119,8 +118,8 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 	public boolean hurtServer(ServerLevel serverLevel, DamageSource source, float amount) {
 		if (!source.is(DamageTypes.GENERIC_KILL) && towerMinibossesAlive) {
 			if (source.getEntity() instanceof Player player) {
-				player.displayClientMessage(Component.translatable("immersiveweapons.entity.super_hans.tower_minibosses_alive")
-						.withStyle(ChatFormatting.RED), true);
+				player.sendOverlayMessage(Component.translatable("immersiveweapons.entity.super_hans.tower_minibosses_alive")
+						.withStyle(ChatFormatting.RED));
 			}
 
 			return false;
@@ -318,7 +317,7 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 					// Check for any minibosses
 					towerMinibossesAlive = entityList
 							.stream()
-							.anyMatch(entity -> entity.getTags().contains("ChampionTowerMiniboss"));
+							.anyMatch(entity -> entity.entityTags().contains("ChampionTowerMiniboss"));
 				}
 			}
 		}

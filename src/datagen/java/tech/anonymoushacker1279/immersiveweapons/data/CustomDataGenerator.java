@@ -25,7 +25,6 @@ import tech.anonymoushacker1279.immersiveweapons.data.sounds.SoundGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.structures.StructureUpdater;
 import tech.anonymoushacker1279.immersiveweapons.data.tags.*;
 import tech.anonymoushacker1279.immersiveweapons.data.textures.TextureMetadataGenerator;
-import tech.anonymoushacker1279.immersiveweapons.data.trades.TradeDataGenerator;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -57,6 +56,7 @@ public class CustomDataGenerator {
 		BlockTagsGenerator blockTagsGenerator = new BlockTagsGenerator(output, lookupProvider);
 		generator.addProvider(true, blockTagsGenerator);
 		generator.addProvider(true, new ItemTagsGenerator(output, lookupProvider));
+		generator.addProvider(true, new TradeTagsGenerator(output, lookupProvider));
 		generator.addProvider(true, new FamilyGenerator.Runner(output, lookupProvider));
 		generator.addProvider(true, new EntityTypeTagsGenerator(output, lookupProvider));
 		generator.addProvider(true, new GameEventTagsGenerator(output, lookupProvider));
@@ -64,7 +64,6 @@ public class CustomDataGenerator {
 		generator.addProvider(true, new DataMapsGenerator(output, lookupProvider));
 		generator.addProvider(true, new GlobalLootModifierGenerator(output, lookupProvider));
 		generator.addProvider(true, new StructureUpdater(output, (MultiPackResourceManager) event.getResourceManager(PackType.SERVER_DATA)));
-		generator.addProvider(true, new TradeDataGenerator(output));
 		generator.addProvider(true, new AccessoryDataGenerator(output));
 		generator.addProvider(true, PackMetadataGenerator.forFeaturePack(output, Component.translatable("immersiveweapons.datapack.description")));
 		generator.addProvider(true, new BiomeTagsGenerator(output, lookupProvider));

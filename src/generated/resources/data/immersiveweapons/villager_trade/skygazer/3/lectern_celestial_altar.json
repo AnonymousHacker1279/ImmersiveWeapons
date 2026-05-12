@@ -1,0 +1,15 @@
+{
+  "additional_wants": {
+    "count": 16.0,
+    "id": "minecraft:emerald"
+  },
+  "gives": {
+    "id": "immersiveweapons:celestial_altar"
+  },
+  "max_uses": 1.0,
+  "reputation_discount": 0.05,
+  "wants": {
+    "id": "minecraft:lectern"
+  },
+  "xp": 25.0
+}

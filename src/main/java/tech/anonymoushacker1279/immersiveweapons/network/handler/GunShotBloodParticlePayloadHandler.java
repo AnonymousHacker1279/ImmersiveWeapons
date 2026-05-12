@@ -21,9 +21,9 @@ public class GunShotBloodParticlePayloadHandler {
 						level.addParticle(
 								data.particleOptions(),
 								data.x(), data.y(), data.z(),
-								(0.03d * level.random.nextGaussian()),
-								(0.015d * level.random.nextGaussian()),
-								(0.03d * level.random.nextGaussian())
+								(0.03d * level.getRandom().nextGaussian()),
+								(0.015d * level.getRandom().nextGaussian()),
+								(0.03d * level.getRandom().nextGaussian())
 						);
 					}
 				})

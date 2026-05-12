@@ -1,12 +1,12 @@
 package tech.anonymoushacker1279.immersiveweapons.event;
 
+import net.minecraft.client.color.block.BlockTintSources;
 import net.minecraft.client.model.object.boat.BoatModel;
 import net.minecraft.client.model.object.skull.SkullModel;
-import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.HangingSignRenderer;
-import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.blockentity.SkullBlockRenderer;
+import net.minecraft.client.renderer.blockentity.StandingSignRenderer;
 import net.minecraft.client.renderer.entity.BoatRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.item.properties.conditional.ConditionalItemModelProperties;
@@ -16,7 +16,6 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionContents;
-import net.minecraft.world.level.GrassColor;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -52,6 +51,8 @@ import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.mob.*;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.entity.projectile.*;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.properties.HasSpecificName;
+
+import java.util.List;
 
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, value = Dist.CLIENT)
 public class ClientModEventSubscriber {
@@ -277,7 +278,7 @@ public class ClientModEventSubscriber {
 		event.registerEntityRenderer(EntityRegistry.SKELETON_MERCHANT_ENTITY.get(), SkeletonMerchantRenderer::new);
 
 		event.registerBlockEntityRenderer(BlockEntityRegistry.SHELF_BLOCK_ENTITY.get(), (context) -> new ShelfRenderer(context.itemModelResolver()));
-		event.registerBlockEntityRenderer(BlockEntityRegistry.CUSTOM_SIGN_ENTITY.get(), SignRenderer::new);
+		event.registerBlockEntityRenderer(BlockEntityRegistry.CUSTOM_SIGN_ENTITY.get(), StandingSignRenderer::new);
 		event.registerBlockEntityRenderer(BlockEntityRegistry.CUSTOM_HANGING_SIGN_ENTITY.get(), HangingSignRenderer::new);
 		event.registerBlockEntityRenderer(BlockEntityRegistry.CUSTOM_SKULL_BLOCK_ENTITY.get(), SkullBlockRenderer::new);
 		event.registerBlockEntityRenderer(BlockEntityRegistry.ASTRAL_CRYSTAL_BLOCK_ENTITY.get(), (context) -> new AstralCrystalRenderer(context.itemModelResolver()));
@@ -367,17 +368,12 @@ public class ClientModEventSubscriber {
 	}
 
 	@SubscribeEvent
-	public static void registerBlockColorHandlers(RegisterColorHandlersEvent.Block event) {
+	public static void registerBlockColorHandlers(RegisterColorHandlersEvent.BlockTintSources event) {
 		ImmersiveWeapons.LOGGER.info("Registering block color handlers");
 
-		event.register((blockState, tintGetter, pos, color) ->
-						tintGetter != null && pos != null ? BiomeColors.getAverageGrassColor(tintGetter, pos) : GrassColor.getDefaultColor(),
-				BlockRegistry.PITFALL.get());
-		event.register((blockState, tintGetter, pos, color) ->
-						tintGetter != null && pos != null ? BiomeColors.getAverageGrassColor(tintGetter, pos) : GrassColor.getDefaultColor(),
-				BlockRegistry.BEAR_TRAP.get());
-		event.register((blockState, tintGetter, pos, color) ->
-						tintGetter != null && pos != null ? BiomeColors.getAverageGrassColor(tintGetter, pos) : GrassColor.getDefaultColor(),
+		event.register(List.of(BlockTintSources.grassBlock()),
+				BlockRegistry.PITFALL.get(),
+				BlockRegistry.BEAR_TRAP.get(),
 				BlockRegistry.LANDMINE.get());
 	}
 

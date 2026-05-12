@@ -42,9 +42,9 @@ public class VentusStaff extends Item {
 				entity.getX(),
 				entity.getY() + 0.3d,
 				entity.getZ(),
-				(0.03d * level.random.nextGaussian()),
-				(0.015d * level.random.nextGaussian()),
-				(0.03d * level.random.nextGaussian()));
+				(0.03d * level.getRandom().nextGaussian()),
+				(0.015d * level.getRandom().nextGaussian()),
+				(0.03d * level.getRandom().nextGaussian()));
 	}
 
 	/**

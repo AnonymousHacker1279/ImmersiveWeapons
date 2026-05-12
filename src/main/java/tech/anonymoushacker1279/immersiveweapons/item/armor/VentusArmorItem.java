@@ -45,70 +45,6 @@ public class VentusArmorItem extends Item implements TickableArmor {
 								EquipmentSlotGroup.ARMOR)));
 	}
 
-	@Override
-	public void playerTick(Level level, Player player) {
-		if (ArmorUtils.isWearingVentusArmor(player)) {
-			boolean effectEnabled = player.getPersistentData().getBoolean("VentusArmorEffectEnabled").orElse(false);
-
-			if (level.isClientSide()) {
-				if (IWKeyBinds.TOGGLE_ARMOR_EFFECT.consumeClick()) {
-					// Store the toggle variable in the player's NBT
-					player.getPersistentData().putBoolean("VentusArmorEffectEnabled", !effectEnabled);
-
-					// Send packet to server
-					ClientPacketDistributor.sendToServer(new VentusArmorPayload(PacketTypes.CHANGE_STATE, !effectEnabled));
-
-					if (effectEnabled) {
-						player.displayClientMessage(Component.translatable("immersiveweapons.armor_effects.disabled")
-								.withStyle(ChatFormatting.RED), true);
-					} else {
-						player.displayClientMessage(Component.translatable("immersiveweapons.armor_effects.enabled")
-								.withStyle(ChatFormatting.GREEN), true);
-					}
-				}
-				if (effectEnabled) {
-					if (Minecraft.getInstance().options.keyJump.consumeClick()) {
-						level.addParticle(ParticleTypes.CLOUD,
-								player.getX(),
-								player.getY() + 0.1d,
-								player.getZ(),
-								(0.03d * level.random.nextGaussian()),
-								(0.015d * level.random.nextGaussian()),
-								(0.03d * level.random.nextGaussian()));
-					}
-					if (IWKeyBinds.ARMOR_ACTION.consumeClick()) {
-						if (windShieldCooldown == 0) {
-							windShieldCooldown = 120;
-							windShieldDuration = 60;
-						}
-					}
-				}
-
-				if (windShieldCooldown > 0) {
-					if (windShieldDuration > 0) {
-						handleProjectileReflection(level, player);
-						ClientPacketDistributor.sendToServer(new VentusArmorPayload(PacketTypes.HANDLE_PROJECTILE_REFLECTION, effectEnabled));
-
-						windShieldDuration--;
-					}
-
-					windShieldCooldown--;
-
-					if (windShieldCooldown == 0) {
-						player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP);
-					}
-				}
-			}
-
-			if (effectEnabled) {
-				player.addEffect(new MobEffectInstance(MobEffects.JUMP_BOOST,
-						10, 2, false, false));
-				player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING,
-						10, 0, false, false));
-			}
-		}
-	}
-
 	public static void handleProjectileReflection(Level level, Player player) {
 		for (Entity entity : level.getEntitiesOfClass(Entity.class, player.getBoundingBox().inflate(1.5d))) {
 			if (entity instanceof Projectile projectile) {
@@ -141,9 +77,73 @@ public class VentusArmorItem extends Item implements TickableArmor {
 			double z = player.getZ() + 1.5d * Math.sin(Math.toRadians(i));
 			level.addParticle(ParticleTypes.CLOUD,
 					x, player.getY() + 0.5d, z,
-					(0.03d * level.random.nextGaussian()),
-					(0.015d * level.random.nextGaussian()),
-					(0.03d * level.random.nextGaussian()));
+					(0.03d * level.getRandom().nextGaussian()),
+					(0.015d * level.getRandom().nextGaussian()),
+					(0.03d * level.getRandom().nextGaussian()));
+		}
+	}
+
+	@Override
+	public void playerTick(Level level, Player player) {
+		if (ArmorUtils.isWearingVentusArmor(player)) {
+			boolean effectEnabled = player.getPersistentData().getBoolean("VentusArmorEffectEnabled").orElse(false);
+
+			if (level.isClientSide()) {
+				if (IWKeyBinds.TOGGLE_ARMOR_EFFECT.consumeClick()) {
+					// Store the toggle variable in the player's NBT
+					player.getPersistentData().putBoolean("VentusArmorEffectEnabled", !effectEnabled);
+
+					// Send packet to server
+					ClientPacketDistributor.sendToServer(new VentusArmorPayload(PacketTypes.CHANGE_STATE, !effectEnabled));
+
+					if (effectEnabled) {
+						player.sendOverlayMessage(Component.translatable("immersiveweapons.armor_effects.disabled")
+								.withStyle(ChatFormatting.RED));
+					} else {
+						player.sendOverlayMessage(Component.translatable("immersiveweapons.armor_effects.enabled")
+								.withStyle(ChatFormatting.GREEN));
+					}
+				}
+				if (effectEnabled) {
+					if (Minecraft.getInstance().options.keyJump.consumeClick()) {
+						level.addParticle(ParticleTypes.CLOUD,
+								player.getX(),
+								player.getY() + 0.1d,
+								player.getZ(),
+								(0.03d * level.getRandom().nextGaussian()),
+								(0.015d * level.getRandom().nextGaussian()),
+								(0.03d * level.getRandom().nextGaussian()));
+					}
+					if (IWKeyBinds.ARMOR_ACTION.consumeClick()) {
+						if (windShieldCooldown == 0) {
+							windShieldCooldown = 120;
+							windShieldDuration = 60;
+						}
+					}
+				}
+
+				if (windShieldCooldown > 0) {
+					if (windShieldDuration > 0) {
+						handleProjectileReflection(level, player);
+						ClientPacketDistributor.sendToServer(new VentusArmorPayload(PacketTypes.HANDLE_PROJECTILE_REFLECTION, effectEnabled));
+
+						windShieldDuration--;
+					}
+
+					windShieldCooldown--;
+
+					if (windShieldCooldown == 0) {
+						player.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP);
+					}
+				}
+			}
+
+			if (effectEnabled) {
+				player.addEffect(new MobEffectInstance(MobEffects.JUMP_BOOST,
+						10, 2, false, false));
+				player.addEffect(new MobEffectInstance(MobEffects.SLOW_FALLING,
+						10, 0, false, false));
+			}
 		}
 	}
 

@@ -1,0 +1,12 @@
+{
+  "gives": {
+    "count": 8,
+    "id": "immersiveweapons:diamond_arrow"
+  },
+  "reputation_discount": 0.05,
+  "wants": {
+    "count": 2.0,
+    "id": "minecraft:emerald"
+  },
+  "xp": 2.0
+}

@@ -5,6 +5,11 @@
         "texture": "immersiveweapons:molten"
       }
     ],
+    "humanoid_baby": [
+      {
+        "texture": "immersiveweapons:molten"
+      }
+    ],
     "humanoid_leggings": [
       {
         "texture": "immersiveweapons:molten"

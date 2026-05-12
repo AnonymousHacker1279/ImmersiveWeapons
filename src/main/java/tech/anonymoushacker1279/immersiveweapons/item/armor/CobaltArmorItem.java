@@ -36,11 +36,11 @@ public class CobaltArmorItem extends Item implements TickableArmor {
 						ClientPacketDistributor.sendToServer(new CobaltArmorPayload(!effectEnabled));
 
 						if (effectEnabled) {
-							player.displayClientMessage(Component.translatable("immersiveweapons.armor_effects.disabled")
-									.withStyle(ChatFormatting.RED), true);
+							player.sendOverlayMessage(Component.translatable("immersiveweapons.armor_effects.disabled")
+									.withStyle(ChatFormatting.RED));
 						} else {
-							player.displayClientMessage(Component.translatable("immersiveweapons.armor_effects.enabled")
-									.withStyle(ChatFormatting.GREEN), true);
+							player.sendOverlayMessage(Component.translatable("immersiveweapons.armor_effects.enabled")
+									.withStyle(ChatFormatting.GREEN));
 						}
 					}
 				}
@@ -59,18 +59,18 @@ public class CobaltArmorItem extends Item implements TickableArmor {
 								player.getY() + 2.2D,
 								player.getZ(),
 								5,
-								(0.01d * level.random.nextGaussian()),
-								(0.001d * level.random.nextGaussian()),
-								(0.01d * level.random.nextGaussian()),
+								(0.01d * level.getRandom().nextGaussian()),
+								(0.001d * level.getRandom().nextGaussian()),
+								(0.01d * level.getRandom().nextGaussian()),
 								0.0D);
 						serverLevel.sendParticles(ParticleTypes.FLAME,
 								player.getX(),
 								player.getY() + 2.2D,
 								player.getZ(),
 								5,
-								(0.01d * level.random.nextGaussian()),
-								(0.001d * level.random.nextGaussian()),
-								(0.01d * level.random.nextGaussian()),
+								(0.01d * level.getRandom().nextGaussian()),
+								(0.001d * level.getRandom().nextGaussian()),
+								(0.01d * level.getRandom().nextGaussian()),
 								0.0D);
 					}
 				}

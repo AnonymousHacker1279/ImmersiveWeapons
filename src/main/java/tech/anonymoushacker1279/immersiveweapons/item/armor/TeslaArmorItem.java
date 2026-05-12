@@ -64,14 +64,14 @@ public class TeslaArmorItem extends Item implements TickableArmor {
 					}
 
 					if (state == EffectState.DISABLED) {
-						player.displayClientMessage(Component.translatable("immersiveweapons.armor_effects.disabled")
-								.withStyle(ChatFormatting.RED), true);
+						player.sendOverlayMessage(Component.translatable("immersiveweapons.armor_effects.disabled")
+								.withStyle(ChatFormatting.RED));
 					} else if (state == EffectState.EFFECT_MOBS) {
-						player.displayClientMessage(Component.translatable("immersiveweapons.armor_effects.tesla_armor.effect_mobs")
-								.withStyle(ChatFormatting.GREEN), true);
+						player.sendOverlayMessage(Component.translatable("immersiveweapons.armor_effects.tesla_armor.effect_mobs")
+								.withStyle(ChatFormatting.GREEN));
 					} else if (state == EffectState.EFFECT_EVERYTHING) {
-						player.displayClientMessage(Component.translatable("immersiveweapons.armor_effects.tesla_armor.effect_everything")
-								.withStyle(ChatFormatting.GREEN), true);
+						player.sendOverlayMessage(Component.translatable("immersiveweapons.armor_effects.tesla_armor.effect_everything")
+								.withStyle(ChatFormatting.GREEN));
 					}
 				}
 			}
@@ -145,15 +145,6 @@ public class TeslaArmorItem extends Item implements TickableArmor {
 			this.name = name;
 		}
 
-		@Override
-		public String getSerializedName() {
-			return name;
-		}
-
-		public EffectState getNext() {
-			return values()[(ordinal() + 1) % values().length];
-		}
-
 		public static EffectState getFromString(String name) {
 			for (EffectState state : values()) {
 				if (state.getSerializedName().equals(name)) {
@@ -161,6 +152,15 @@ public class TeslaArmorItem extends Item implements TickableArmor {
 				}
 			}
 			return DISABLED;
+		}
+
+		@Override
+		public String getSerializedName() {
+			return name;
+		}
+
+		public EffectState getNext() {
+			return values()[(ordinal() + 1) % values().length];
 		}
 	}
 }

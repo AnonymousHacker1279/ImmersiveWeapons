@@ -49,12 +49,21 @@ public abstract class AbstractGunItem extends Item {
 	protected static final Predicate<ItemStack> FLARES = (stack) -> stack.is(IWItemTagGroups.FLARES);
 	protected static final Predicate<ItemStack> CANNONBALLS = (stack) -> stack.is(IWItemTagGroups.CANNONBALLS);
 	protected static final Predicate<ItemStack> DRAGON_FIREBALLS = (stack) -> stack.is(IWItemTagGroups.DRAGON_FIREBALLS);
-	protected static final Predicate<ItemStack> FLAMMABLE_POWDERS = (stack) -> stack.getItemHolder().getData(POWDER_TYPE) != null;
+	protected static final Predicate<ItemStack> FLAMMABLE_POWDERS = (stack) -> stack.typeHolder().getData(POWDER_TYPE) != null;
 
 	final DataComponentType<Float> DENSITY_MODIFIER = DataComponentTypeRegistry.DENSITY_MODIFIER.get();
 
 	protected AbstractGunItem(Properties properties) {
 		super(properties);
+	}
+
+	protected static ItemStack getHeldPredicate(LivingEntity livingEntity, Predicate<ItemStack> predicate) {
+		if (predicate.test(livingEntity.getItemInHand(InteractionHand.OFF_HAND))) {
+			return livingEntity.getItemInHand(InteractionHand.OFF_HAND);
+		} else {
+			return predicate.test(livingEntity.getItemInHand(InteractionHand.MAIN_HAND)) ?
+					livingEntity.getItemInHand(InteractionHand.MAIN_HAND) : ItemStack.EMPTY;
+		}
 	}
 
 	@Override
@@ -138,8 +147,8 @@ public abstract class AbstractGunItem extends Item {
 					}
 				} else {
 					// Handle recoil
-					player.setYRot(player.getYRot() + (getMaxYRecoil() + level.random.nextFloat() * 10f) * (level.random.nextBoolean() ? 1 : -1));
-					player.setXRot(player.getXRot() + (getMaxXRecoil() + level.random.nextFloat() * 0.5f));
+					player.setYRot(player.getYRot() + (getMaxYRecoil() + level.getRandom().nextFloat() * 10f) * (level.getRandom().nextBoolean() ? 1 : -1));
+					player.setXRot(player.getXRot() + (getMaxXRecoil() + level.getRandom().nextFloat() * 0.5f));
 				}
 
 				level.playSound(null,
@@ -222,15 +231,6 @@ public abstract class AbstractGunItem extends Item {
 		}
 
 		return null;
-	}
-
-	protected static ItemStack getHeldPredicate(LivingEntity livingEntity, Predicate<ItemStack> predicate) {
-		if (predicate.test(livingEntity.getItemInHand(InteractionHand.OFF_HAND))) {
-			return livingEntity.getItemInHand(InteractionHand.OFF_HAND);
-		} else {
-			return predicate.test(livingEntity.getItemInHand(InteractionHand.MAIN_HAND)) ?
-					livingEntity.getItemInHand(InteractionHand.MAIN_HAND) : ItemStack.EMPTY;
-		}
 	}
 
 	@Override
@@ -502,7 +502,7 @@ public abstract class AbstractGunItem extends Item {
 	public record PowderType(ItemStack powder, FlammablePowder data) {
 
 		public PowderType(ItemStack powder) {
-			this(powder, Objects.requireNonNull(powder.getItemHolder().getData(POWDER_TYPE)));
+			this(powder, Objects.requireNonNull(powder.typeHolder().getData(POWDER_TYPE)));
 		}
 	}
 }

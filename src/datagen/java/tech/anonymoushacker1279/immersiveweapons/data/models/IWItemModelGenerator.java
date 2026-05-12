@@ -4,6 +4,7 @@ import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.model.*;
 import net.minecraft.client.renderer.item.ItemModel;
 import net.minecraft.client.renderer.item.properties.conditional.HasComponent;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
@@ -338,8 +339,8 @@ public class IWItemModelGenerator {
 						IWModelTemplates.GAUNTLET.create(
 								item,
 								new TextureMapping()
-										.put(IWModelTemplates.Slots.MATERIAL, materialLocation)
-										.put(TextureSlot.PARTICLE, materialLocation),
+										.put(IWModelTemplates.Slots.MATERIAL, new Material(materialLocation))
+										.put(TextureSlot.PARTICLE, new Material(materialLocation)),
 								models.modelOutput
 						)
 				)
@@ -351,8 +352,8 @@ public class IWItemModelGenerator {
 				IWModelTemplates.GAUNTLET.create(
 						item,
 						new TextureMapping()
-								.put(IWModelTemplates.Slots.MATERIAL, materialLocation)
-								.put(TextureSlot.PARTICLE, materialLocation),
+								.put(IWModelTemplates.Slots.MATERIAL, new Material(materialLocation))
+								.put(TextureSlot.PARTICLE, new Material(materialLocation)),
 						models.modelOutput
 				)
 		);
@@ -395,8 +396,8 @@ public class IWItemModelGenerator {
 						IWModelTemplates.MUSKET_BALL.create(
 								item,
 								new TextureMapping()
-										.put(TextureSlot.ALL, ModelLocationUtils.getModelLocation(item))
-										.put(TextureSlot.PARTICLE, ModelLocationUtils.getModelLocation(item)),
+										.put(TextureSlot.ALL, new Material(ModelLocationUtils.getModelLocation(item)))
+										.put(TextureSlot.PARTICLE, new Material(ModelLocationUtils.getModelLocation(item))),
 								models.modelOutput
 						)
 				)
@@ -410,8 +411,8 @@ public class IWItemModelGenerator {
 						IWModelTemplates.MAUL.create(
 								item,
 								new TextureMapping()
-										.put(IWModelTemplates.Slots.MATERIAL, ModelLocationUtils.getModelLocation(item))
-										.put(IWModelTemplates.Slots.MATERIAL_2, baseTexture),
+										.put(IWModelTemplates.Slots.MATERIAL, new Material(ModelLocationUtils.getModelLocation(item)))
+										.put(IWModelTemplates.Slots.MATERIAL_2, new Material(baseTexture)),
 								models.modelOutput
 						)
 				)

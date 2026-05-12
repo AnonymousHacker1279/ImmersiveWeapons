@@ -2,7 +2,6 @@ package tech.anonymoushacker1279.immersiveweapons.data.features;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
-import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.BlockTags;
@@ -67,12 +66,8 @@ public class IWConfiguredFeatures {
 						.ignoreVines()
 						.build());
 
-		register(context, PATCH_MOONGLOW_CONFIGURATION, Feature.RANDOM_PATCH,
-				new RandomPatchConfiguration(16, 6, 2,
-						PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
-								new SimpleBlockConfiguration(BlockStateProvider.simple(
-										BlockRegistry.MOONGLOW.get()
-								)))));
+		register(context, PATCH_MOONGLOW_CONFIGURATION, Feature.SIMPLE_BLOCK,
+				new SimpleBlockConfiguration(BlockStateProvider.simple(BlockRegistry.MOONGLOW.get())));
 
 		register(context, STARDUST_TREE_CONFIGURATION, Feature.TREE,
 				new TreeConfiguration.TreeConfigurationBuilder(
@@ -85,12 +80,8 @@ public class IWConfiguredFeatures {
 						.ignoreVines()
 						.build());
 
-		register(context, PATCH_DEATHWEED_CONFIGURATION, Feature.RANDOM_PATCH,
-				new RandomPatchConfiguration(8, 6, 2,
-						PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK,
-								new SimpleBlockConfiguration(BlockStateProvider.simple(
-										BlockRegistry.DEATHWEED.get()
-								)))));
+		register(context, PATCH_DEATHWEED_CONFIGURATION, Feature.SIMPLE_BLOCK,
+				new SimpleBlockConfiguration(BlockStateProvider.simple(BlockRegistry.DEATHWEED.get())));
 
 		register(context, ASTRAL_GEODE_CONFIGURATION, Feature.GEODE,
 				new GeodeConfiguration(

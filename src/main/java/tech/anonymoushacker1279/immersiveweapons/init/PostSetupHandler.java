@@ -33,6 +33,7 @@ public class PostSetupHandler {
 		FlowerPotBlock emptyPot = ((FlowerPotBlock) Blocks.FLOWER_POT);
 		emptyPot.addPlant(BuiltInRegistries.BLOCK.getKey(BlockRegistry.MOONGLOW.get()), BlockRegistry.POTTED_MOONGLOW);
 		emptyPot.addPlant(BuiltInRegistries.BLOCK.getKey(BlockRegistry.DEATHWEED.get()), BlockRegistry.POTTED_DEATHWEED);
+		emptyPot.addPlant(BuiltInRegistries.BLOCK.getKey(BlockRegistry.STARDUST_SAPLING.get()), BlockRegistry.POTTED_STARDUST_SAPLING);
 
 		// Compile simple tooltips
 		TooltipHandler.compileTooltips();
@@ -61,7 +62,7 @@ public class PostSetupHandler {
 
 					generateBiodome(entity.level(), entity.blockPosition(), 7);
 				})
-				.ambientSound(SoundEventRegistry.TILTROS_PORTAL_WHOOSH.getId(), (level) -> 0.5F, (level) -> level.random.nextFloat() * 0.4F + 0.8F)
+				.ambientSound(SoundEventRegistry.TILTROS_PORTAL_WHOOSH.getId(), (level) -> 0.5F, (level) -> level.getRandom().nextFloat() * 0.4F + 0.8F)
 				.travelSound(SoundEventRegistry.TILTROS_PORTAL_TRAVEL.getId(), (entity) -> 0.5F, (entity) -> entity.getRandom().nextFloat() * 0.4F + 0.8F)
 				.triggerSound(SoundEventRegistry.TILTROS_PORTAL_TRAVEL.getId(), (entity) -> 0.5F, (entity) -> entity.getRandom().nextFloat() * 0.4F + 0.8F)
 				.portalParticle((level, pos) -> ParticleTypesRegistry.TILTROS_PORTAL_PARTICLE.get())

@@ -87,9 +87,9 @@ public class IWShelfBlock extends BasicOrientableBlock implements EntityBlock, S
 			if (itemInHand.getItem() == Items.DEBUG_STICK) {
 				shelfBlockEntity.setLocked(!shelfBlockEntity.isLocked());
 
-				player.displayClientMessage(Component.translatable("immersiveweapons.block.wall_shelf."
+				player.sendOverlayMessage(Component.translatable("immersiveweapons.block.wall_shelf."
 								+ (shelfBlockEntity.isLocked() ? "locked" : "unlocked"))
-						.withStyle(ChatFormatting.YELLOW), true);
+						.withStyle(ChatFormatting.YELLOW));
 
 				return InteractionResult.SUCCESS;
 			}
@@ -105,8 +105,8 @@ public class IWShelfBlock extends BasicOrientableBlock implements EntityBlock, S
 					}
 				}
 			} else {
-				player.displayClientMessage(Component.translatable("immersiveweapons.block.wall_shelf.locked")
-						.withStyle(ChatFormatting.RED), true);
+				player.sendOverlayMessage(Component.translatable("immersiveweapons.block.wall_shelf.locked")
+						.withStyle(ChatFormatting.RED));
 
 				return InteractionResult.FAIL;
 			}
@@ -119,8 +119,8 @@ public class IWShelfBlock extends BasicOrientableBlock implements EntityBlock, S
 	public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, ItemStack toolStack, boolean willHarvest, FluidState fluid) {
 		if (level.getBlockEntity(pos) instanceof ShelfBlockEntity shelfBlockEntity) {
 			if (shelfBlockEntity.isLocked()) {
-				player.displayClientMessage(Component.translatable("immersiveweapons.block.wall_shelf.locked")
-						.withStyle(ChatFormatting.RED), true);
+				player.sendOverlayMessage(Component.translatable("immersiveweapons.block.wall_shelf.locked")
+						.withStyle(ChatFormatting.RED));
 				return false;
 			}
 		}

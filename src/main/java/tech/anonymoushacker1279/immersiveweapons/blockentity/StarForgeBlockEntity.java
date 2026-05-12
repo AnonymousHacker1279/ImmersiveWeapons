@@ -40,7 +40,9 @@ import java.util.stream.Collectors;
 
 public class StarForgeBlockEntity extends BaseContainerBlockEntity implements EntityBlock {
 
+	public static final List<RecipeHolder<StarForgeRecipe>> ALL_RECIPES = new ArrayList<>(20);
 	protected final NonNullList<ItemStack> inventory = NonNullList.withSize(3, ItemStack.EMPTY);
+	public List<RecipeHolder<StarForgeRecipe>> availableRecipes = new ArrayList<>(20);
 	protected boolean hasSolarEnergy = false;
 	protected int temperature = 0;
 	protected int smeltTime = 0;
@@ -89,9 +91,6 @@ public class StarForgeBlockEntity extends BaseContainerBlockEntity implements En
 			return 5;
 		}
 	};
-
-	public static final List<RecipeHolder<StarForgeRecipe>> ALL_RECIPES = new ArrayList<>(20);
-	public List<RecipeHolder<StarForgeRecipe>> availableRecipes = new ArrayList<>(20);
 
 	public StarForgeBlockEntity(BlockPos blockPos, BlockState blockState) {
 		super(BlockEntityRegistry.STAR_FORGE_BLOCK_ENTITY.get(), blockPos, blockState);
@@ -312,7 +311,7 @@ public class StarForgeBlockEntity extends BaseContainerBlockEntity implements En
 			// Check if the inputs are sufficient
 			if (recipe.primaryMaterialCount() <= inventory.get(0).getCount() && recipe.secondaryMaterialCount() <= inventory.get(1).getCount()) {
 				// Set the result slot
-				setItem(2, recipe.result());
+				setItem(2, recipe.result().create());
 			} else {
 				setItem(2, ItemStack.EMPTY);
 			}

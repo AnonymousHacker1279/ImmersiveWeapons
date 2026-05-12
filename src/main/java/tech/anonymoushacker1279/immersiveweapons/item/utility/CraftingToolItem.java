@@ -1,7 +1,9 @@
 package tech.anonymoushacker1279.immersiveweapons.item.utility;
 
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemInstance;
+import net.minecraft.world.item.ItemStackTemplate;
+import org.jspecify.annotations.Nullable;
 
 public class CraftingToolItem extends Item {
 
@@ -15,7 +17,7 @@ public class CraftingToolItem extends Item {
 	}
 
 	@Override
-	public ItemStack getCraftingRemainder(ItemStack itemStack) {
-		return itemStack.copy();
+	public @Nullable ItemStackTemplate getCraftingRemainder(ItemInstance instance) {
+		return new ItemStackTemplate(this);
 	}
 }

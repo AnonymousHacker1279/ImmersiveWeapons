@@ -39,11 +39,11 @@ public class VoidArmorItem extends Item implements TickableArmor {
 					ClientPacketDistributor.sendToServer(new VoidArmorPayload(!effectEnabled, false));
 
 					if (effectEnabled) {
-						player.displayClientMessage(Component.translatable("immersiveweapons.armor_effects.disabled")
-								.withStyle(ChatFormatting.RED), true);
+						player.sendOverlayMessage(Component.translatable("immersiveweapons.armor_effects.disabled")
+								.withStyle(ChatFormatting.RED));
 					} else {
-						player.displayClientMessage(Component.translatable("immersiveweapons.armor_effects.enabled")
-								.withStyle(ChatFormatting.GREEN), true);
+						player.sendOverlayMessage(Component.translatable("immersiveweapons.armor_effects.enabled")
+								.withStyle(ChatFormatting.GREEN));
 					}
 				}
 				if (effectEnabled) {
@@ -52,9 +52,9 @@ public class VoidArmorItem extends Item implements TickableArmor {
 								player.getX(),
 								player.getY() + 0.1d,
 								player.getZ(),
-								(0.03d * level.random.nextGaussian()),
-								(0.015d * level.random.nextGaussian()),
-								(0.03d * level.random.nextGaussian()));
+								(0.03d * level.getRandom().nextGaussian()),
+								(0.015d * level.getRandom().nextGaussian()),
+								(0.03d * level.getRandom().nextGaussian()));
 					}
 					if (IWKeyBinds.ARMOR_ACTION.consumeClick()) {
 						if (dashCooldown == 0) {
@@ -79,9 +79,9 @@ public class VoidArmorItem extends Item implements TickableArmor {
 
 					level.addParticle(ParticleTypes.ELECTRIC_SPARK,
 							player.getX(), player.getY(), player.getZ(),
-							(0.03d * level.random.nextGaussian()),
-							(0.015d * level.random.nextGaussian()),
-							(0.03d * level.random.nextGaussian()));
+							(0.03d * level.getRandom().nextGaussian()),
+							(0.015d * level.getRandom().nextGaussian()),
+							(0.03d * level.getRandom().nextGaussian()));
 
 					dashCooldown--;
 

@@ -1,0 +1,11 @@
+{
+  "gives": {
+    "id": "immersiveweapons:first_aid_kit"
+  },
+  "max_uses": 8.0,
+  "reputation_discount": 0.05,
+  "wants": {
+    "count": 3.0,
+    "id": "minecraft:emerald"
+  }
+}

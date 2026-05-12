@@ -32,7 +32,7 @@ public abstract class EnchantedCountIncreaseFunctionMixin {
 	private Holder<Enchantment> enchantment;
 	@Shadow
 	@Final
-	private NumberProvider value;
+	private NumberProvider count;
 	@Shadow
 	@Final
 	private int limit;
@@ -52,7 +52,7 @@ public abstract class EnchantedCountIncreaseFunctionMixin {
 		if (!(context.getOptionalParameter(LootContextParams.ATTACKING_ENTITY) instanceof LivingEntity)) {
 			int enchantmentLevel = ComputeEnchantedLootBonusEvent.onComputeEnchantedLootBonus(this.enchantment, 0, context);
 			if (enchantmentLevel != 0) {
-				float modifier = (float) enchantmentLevel * this.value.getFloat(context);
+				float modifier = (float) enchantmentLevel * this.count.getFloat(context);
 				stack.grow(Math.round(modifier));
 				if (this.hasLimit()) {
 					stack.limitSize(this.limit);

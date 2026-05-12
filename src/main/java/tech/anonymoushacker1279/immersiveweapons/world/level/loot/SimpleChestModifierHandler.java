@@ -13,13 +13,13 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import net.neoforged.neoforge.common.loot.LootModifier;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -32,7 +32,7 @@ public class SimpleChestModifierHandler extends LootModifier {
 									Codec.INT.fieldOf("min_quantity").forGetter(m -> m.minQuantity),
 									Codec.INT.fieldOf("max_quantity").forGetter(m -> m.maxQuantity),
 									Codec.FLOAT.fieldOf("roll_chance").forGetter(m -> m.rollChance),
-									ItemStack.CODEC.fieldOf("item").forGetter(m -> m.itemStack),
+									ItemStackTemplate.CODEC.fieldOf("item").forGetter(m -> m.item),
 									Codec.INT.fieldOf("max_enchant_levels").forGetter(m -> m.maxEnchantLevels),
 									Codec.BOOL.fieldOf("allow_treasure").forGetter(m -> m.allowTreasure)))
 					.apply(inst, SimpleChestModifierHandler::new)
@@ -41,7 +41,7 @@ public class SimpleChestModifierHandler extends LootModifier {
 	private final int minQuantity;
 	private final int maxQuantity;
 	private final float rollChance;
-	private final ItemStack itemStack;
+	private final ItemStackTemplate item;
 	private final int maxEnchantLevels;
 	private final boolean allowTreasure;
 
@@ -52,10 +52,10 @@ public class SimpleChestModifierHandler extends LootModifier {
 	 * @param minQuantity    The minimum quantity of the item to add to the loot pool
 	 * @param maxQuantity    The maximum quantity of the item to add to the loot pool
 	 * @param rollChance     The chance that the item will be added to the loot pool
-	 * @param itemStack      The item to add to the loot pool
+	 * @param item           The item to add to the loot pool
 	 */
-	public SimpleChestModifierHandler(LootItemCondition[] itemConditions, int minQuantity, int maxQuantity, float rollChance, ItemStack itemStack) {
-		this(itemConditions, minQuantity, maxQuantity, rollChance, itemStack, 0, false);
+	public SimpleChestModifierHandler(LootItemCondition[] itemConditions, int minQuantity, int maxQuantity, float rollChance, ItemStackTemplate item) {
+		this(itemConditions, 1000, minQuantity, maxQuantity, rollChance, item, 0, false);
 	}
 
 	/**
@@ -66,16 +66,16 @@ public class SimpleChestModifierHandler extends LootModifier {
 	 * @param minQuantity      The minimum quantity of the item to add to the loot pool
 	 * @param maxQuantity      The maximum quantity of the item to add to the loot pool
 	 * @param rollChance       The chance that the item will be added to the loot pool
-	 * @param itemStack        The item to add to the loot pool
+	 * @param item             The item to add to the loot pool
 	 * @param maxEnchantLevels The maximum number of enchantment levels to apply to the item
 	 * @param allowTreasure    Whether to allow treasure enchantments
 	 */
-	public SimpleChestModifierHandler(LootItemCondition[] itemConditions, int minQuantity, int maxQuantity, float rollChance, ItemStack itemStack, int maxEnchantLevels, boolean allowTreasure) {
-		super(itemConditions);
+	public SimpleChestModifierHandler(LootItemCondition[] itemConditions, int priority, int minQuantity, int maxQuantity, float rollChance, ItemStackTemplate item, int maxEnchantLevels, boolean allowTreasure) {
+		super(itemConditions, priority);
 		this.minQuantity = minQuantity;
 		this.maxQuantity = maxQuantity;
 		this.rollChance = rollChance;
-		this.itemStack = itemStack;
+		this.item = item;
 		this.maxEnchantLevels = maxEnchantLevels;
 		this.allowTreasure = allowTreasure;
 
@@ -94,7 +94,7 @@ public class SimpleChestModifierHandler extends LootModifier {
 			throw new JsonParseException("roll_chance must be between 0.0 and 1.0");
 		}
 
-		if (!BuiltInRegistries.ITEM.containsValue(itemStack.getItem())) {
+		if (!BuiltInRegistries.ITEM.containsValue(item.item().value())) {
 			throw new JsonParseException("item must exist in the registry");
 		}
 
@@ -108,10 +108,10 @@ public class SimpleChestModifierHandler extends LootModifier {
 	}
 
 	@Override
-	protected @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
+	protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
 		if (context.getRandom().nextFloat() <= rollChance) {
 			int lootQuantity = context.getRandom().nextIntBetweenInclusive(minQuantity, maxQuantity);
-			ItemStack stack = itemStack.copyWithCount(lootQuantity);
+			ItemStack stack = item.create().copyWithCount(lootQuantity);
 
 			if (maxEnchantLevels > 0) {
 				RegistryAccess access = context.getLevel().registryAccess();
