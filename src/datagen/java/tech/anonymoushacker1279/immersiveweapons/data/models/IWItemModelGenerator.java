@@ -7,8 +7,8 @@ import net.minecraft.client.renderer.item.properties.conditional.HasComponent;
 import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.component.DyedItemColor;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.data.IWEquipmentAssets;
 import tech.anonymoushacker1279.immersiveweapons.event.ClientModEventSubscriber;
 import tech.anonymoushacker1279.immersiveweapons.init.DataComponentTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
@@ -275,38 +275,38 @@ public class IWItemModelGenerator {
 		itemModels.generateFlatItem(ItemRegistry.MUSIC_DISC_TILTROS_WASTES_THEME.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.MUSIC_DISC_DEADMANS_DESERT_THEME_1.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.MUSIC_DISC_DEADMANS_DESERT_THEME_2.get(), ModelTemplates.FLAT_ITEM);
-		itemModels.generateTrimmableItem(ItemRegistry.MOLTEN_HELMET.get(), IWEquipmentAssets.MOLTEN, ItemModelGenerators.TRIM_PREFIX_HELMET, false);
-		itemModels.generateTrimmableItem(ItemRegistry.MOLTEN_CHESTPLATE.get(), IWEquipmentAssets.MOLTEN, ItemModelGenerators.TRIM_PREFIX_CHESTPLATE, false);
-		itemModels.generateTrimmableItem(ItemRegistry.MOLTEN_LEGGINGS.get(), IWEquipmentAssets.MOLTEN, ItemModelGenerators.TRIM_PREFIX_LEGGINGS, false);
-		itemModels.generateTrimmableItem(ItemRegistry.MOLTEN_BOOTS.get(), IWEquipmentAssets.MOLTEN, ItemModelGenerators.TRIM_PREFIX_BOOTS, false);
-		itemModels.generateTrimmableItem(ItemRegistry.TESLA_HELMET.get(), IWEquipmentAssets.TESLA, ItemModelGenerators.TRIM_PREFIX_HELMET, false);
-		itemModels.generateTrimmableItem(ItemRegistry.TESLA_CHESTPLATE.get(), IWEquipmentAssets.TESLA, ItemModelGenerators.TRIM_PREFIX_CHESTPLATE, false);
-		itemModels.generateTrimmableItem(ItemRegistry.TESLA_LEGGINGS.get(), IWEquipmentAssets.TESLA, ItemModelGenerators.TRIM_PREFIX_LEGGINGS, false);
-		itemModels.generateTrimmableItem(ItemRegistry.TESLA_BOOTS.get(), IWEquipmentAssets.TESLA, ItemModelGenerators.TRIM_PREFIX_BOOTS, false);
-		itemModels.generateTrimmableItem(ItemRegistry.COBALT_HELMET.get(), IWEquipmentAssets.COBALT, ItemModelGenerators.TRIM_PREFIX_HELMET, false);
-		itemModels.generateTrimmableItem(ItemRegistry.COBALT_CHESTPLATE.get(), IWEquipmentAssets.COBALT, ItemModelGenerators.TRIM_PREFIX_CHESTPLATE, false);
-		itemModels.generateTrimmableItem(ItemRegistry.COBALT_LEGGINGS.get(), IWEquipmentAssets.COBALT, ItemModelGenerators.TRIM_PREFIX_LEGGINGS, false);
-		itemModels.generateTrimmableItem(ItemRegistry.COBALT_BOOTS.get(), IWEquipmentAssets.COBALT, ItemModelGenerators.TRIM_PREFIX_BOOTS, false);
-		itemModels.generateTrimmableItem(ItemRegistry.VENTUS_HELMET.get(), IWEquipmentAssets.VENTUS, ItemModelGenerators.TRIM_PREFIX_HELMET, false);
-		itemModels.generateTrimmableItem(ItemRegistry.VENTUS_CHESTPLATE.get(), IWEquipmentAssets.VENTUS, ItemModelGenerators.TRIM_PREFIX_CHESTPLATE, false);
-		itemModels.generateTrimmableItem(ItemRegistry.VENTUS_LEGGINGS.get(), IWEquipmentAssets.VENTUS, ItemModelGenerators.TRIM_PREFIX_LEGGINGS, false);
-		itemModels.generateTrimmableItem(ItemRegistry.VENTUS_BOOTS.get(), IWEquipmentAssets.VENTUS, ItemModelGenerators.TRIM_PREFIX_BOOTS, false);
-		itemModels.generateTrimmableItem(ItemRegistry.ASTRAL_HELMET.get(), IWEquipmentAssets.ASTRAL, ItemModelGenerators.TRIM_PREFIX_HELMET, false);
-		itemModels.generateTrimmableItem(ItemRegistry.ASTRAL_CHESTPLATE.get(), IWEquipmentAssets.ASTRAL, ItemModelGenerators.TRIM_PREFIX_CHESTPLATE, false);
-		itemModels.generateTrimmableItem(ItemRegistry.ASTRAL_LEGGINGS.get(), IWEquipmentAssets.ASTRAL, ItemModelGenerators.TRIM_PREFIX_LEGGINGS, false);
-		itemModels.generateTrimmableItem(ItemRegistry.ASTRAL_BOOTS.get(), IWEquipmentAssets.ASTRAL, ItemModelGenerators.TRIM_PREFIX_BOOTS, false);
-		itemModels.generateTrimmableItem(ItemRegistry.STARSTORM_HELMET.get(), IWEquipmentAssets.STARSTORM, ItemModelGenerators.TRIM_PREFIX_HELMET, false);
-		itemModels.generateTrimmableItem(ItemRegistry.STARSTORM_CHESTPLATE.get(), IWEquipmentAssets.STARSTORM, ItemModelGenerators.TRIM_PREFIX_CHESTPLATE, false);
-		itemModels.generateTrimmableItem(ItemRegistry.STARSTORM_LEGGINGS.get(), IWEquipmentAssets.STARSTORM, ItemModelGenerators.TRIM_PREFIX_LEGGINGS, false);
-		itemModels.generateTrimmableItem(ItemRegistry.STARSTORM_BOOTS.get(), IWEquipmentAssets.STARSTORM, ItemModelGenerators.TRIM_PREFIX_BOOTS, false);
-		itemModels.generateTrimmableItem(ItemRegistry.PADDED_LEATHER_HELMET.get(), IWEquipmentAssets.PADDED_LEATHER, ItemModelGenerators.TRIM_PREFIX_HELMET, true);
-		itemModels.generateTrimmableItem(ItemRegistry.PADDED_LEATHER_CHESTPLATE.get(), IWEquipmentAssets.PADDED_LEATHER, ItemModelGenerators.TRIM_PREFIX_CHESTPLATE, true);
-		itemModels.generateTrimmableItem(ItemRegistry.PADDED_LEATHER_LEGGINGS.get(), IWEquipmentAssets.PADDED_LEATHER, ItemModelGenerators.TRIM_PREFIX_LEGGINGS, true);
-		itemModels.generateTrimmableItem(ItemRegistry.PADDED_LEATHER_BOOTS.get(), IWEquipmentAssets.PADDED_LEATHER, ItemModelGenerators.TRIM_PREFIX_BOOTS, true);
-		itemModels.generateTrimmableItem(ItemRegistry.VOID_HELMET.get(), IWEquipmentAssets.VOID, ItemModelGenerators.TRIM_PREFIX_HELMET, false);
-		itemModels.generateTrimmableItem(ItemRegistry.VOID_CHESTPLATE.get(), IWEquipmentAssets.VOID, ItemModelGenerators.TRIM_PREFIX_CHESTPLATE, false);
-		itemModels.generateTrimmableItem(ItemRegistry.VOID_LEGGINGS.get(), IWEquipmentAssets.VOID, ItemModelGenerators.TRIM_PREFIX_LEGGINGS, false);
-		itemModels.generateTrimmableItem(ItemRegistry.VOID_BOOTS.get(), IWEquipmentAssets.VOID, ItemModelGenerators.TRIM_PREFIX_BOOTS, false);
+		generateDynamicTrimmableItem(itemModels, ItemRegistry.MOLTEN_HELMET.get(), ItemModelGenerators.TRIM_PREFIX_HELMET);
+		generateDynamicTrimmableItem(itemModels, ItemRegistry.MOLTEN_CHESTPLATE.get(), ItemModelGenerators.TRIM_PREFIX_CHESTPLATE);
+		generateDynamicTrimmableItem(itemModels, ItemRegistry.MOLTEN_LEGGINGS.get(), ItemModelGenerators.TRIM_PREFIX_LEGGINGS);
+		generateDynamicTrimmableItem(itemModels, ItemRegistry.MOLTEN_BOOTS.get(), ItemModelGenerators.TRIM_PREFIX_BOOTS);
+		generateDynamicTrimmableItem(itemModels, ItemRegistry.TESLA_HELMET.get(), ItemModelGenerators.TRIM_PREFIX_HELMET);
+		generateDynamicTrimmableItem(itemModels, ItemRegistry.TESLA_CHESTPLATE.get(), ItemModelGenerators.TRIM_PREFIX_CHESTPLATE);
+		generateDynamicTrimmableItem(itemModels, ItemRegistry.TESLA_LEGGINGS.get(), ItemModelGenerators.TRIM_PREFIX_LEGGINGS);
+		generateDynamicTrimmableItem(itemModels, ItemRegistry.TESLA_BOOTS.get(), ItemModelGenerators.TRIM_PREFIX_BOOTS);
+		generateDynamicTrimmableItem(itemModels, ItemRegistry.COBALT_HELMET.get(), ItemModelGenerators.TRIM_PREFIX_HELMET);
+		generateDynamicTrimmableItem(itemModels, ItemRegistry.COBALT_CHESTPLATE.get(), ItemModelGenerators.TRIM_PREFIX_CHESTPLATE);
+		generateDynamicTrimmableItem(itemModels, ItemRegistry.COBALT_LEGGINGS.get(), ItemModelGenerators.TRIM_PREFIX_LEGGINGS);
+		generateDynamicTrimmableItem(itemModels, ItemRegistry.COBALT_BOOTS.get(), ItemModelGenerators.TRIM_PREFIX_BOOTS);
+		generateDynamicTrimmableItem(itemModels, ItemRegistry.VENTUS_HELMET.get(), ItemModelGenerators.TRIM_PREFIX_HELMET);
+		generateDynamicTrimmableItem(itemModels, ItemRegistry.VENTUS_CHESTPLATE.get(), ItemModelGenerators.TRIM_PREFIX_CHESTPLATE);
+		generateDynamicTrimmableItem(itemModels, ItemRegistry.VENTUS_LEGGINGS.get(), ItemModelGenerators.TRIM_PREFIX_LEGGINGS);
+		generateDynamicTrimmableItem(itemModels, ItemRegistry.VENTUS_BOOTS.get(), ItemModelGenerators.TRIM_PREFIX_BOOTS);
+		generateDynamicTrimmableItem(itemModels, ItemRegistry.ASTRAL_HELMET.get(), ItemModelGenerators.TRIM_PREFIX_HELMET);
+		generateDynamicTrimmableItem(itemModels, ItemRegistry.ASTRAL_CHESTPLATE.get(), ItemModelGenerators.TRIM_PREFIX_CHESTPLATE);
+		generateDynamicTrimmableItem(itemModels, ItemRegistry.ASTRAL_LEGGINGS.get(), ItemModelGenerators.TRIM_PREFIX_LEGGINGS);
+		generateDynamicTrimmableItem(itemModels, ItemRegistry.ASTRAL_BOOTS.get(), ItemModelGenerators.TRIM_PREFIX_BOOTS);
+		generateDynamicTrimmableItem(itemModels, ItemRegistry.STARSTORM_HELMET.get(), ItemModelGenerators.TRIM_PREFIX_HELMET);
+		generateDynamicTrimmableItem(itemModels, ItemRegistry.STARSTORM_CHESTPLATE.get(), ItemModelGenerators.TRIM_PREFIX_CHESTPLATE);
+		generateDynamicTrimmableItem(itemModels, ItemRegistry.STARSTORM_LEGGINGS.get(), ItemModelGenerators.TRIM_PREFIX_LEGGINGS);
+		generateDynamicTrimmableItem(itemModels, ItemRegistry.STARSTORM_BOOTS.get(), ItemModelGenerators.TRIM_PREFIX_BOOTS);
+		generateDynamicTrimmableLayeredItem(itemModels, ItemRegistry.PADDED_LEATHER_HELMET.get(), ItemModelGenerators.TRIM_PREFIX_HELMET);
+		generateDynamicTrimmableLayeredItem(itemModels, ItemRegistry.PADDED_LEATHER_CHESTPLATE.get(), ItemModelGenerators.TRIM_PREFIX_CHESTPLATE);
+		generateDynamicTrimmableLayeredItem(itemModels, ItemRegistry.PADDED_LEATHER_LEGGINGS.get(), ItemModelGenerators.TRIM_PREFIX_LEGGINGS);
+		generateDynamicTrimmableLayeredItem(itemModels, ItemRegistry.PADDED_LEATHER_BOOTS.get(), ItemModelGenerators.TRIM_PREFIX_BOOTS);
+		generateDynamicTrimmableItem(itemModels, ItemRegistry.VOID_HELMET.get(), ItemModelGenerators.TRIM_PREFIX_HELMET);
+		generateDynamicTrimmableItem(itemModels, ItemRegistry.VOID_CHESTPLATE.get(), ItemModelGenerators.TRIM_PREFIX_CHESTPLATE);
+		generateDynamicTrimmableItem(itemModels, ItemRegistry.VOID_LEGGINGS.get(), ItemModelGenerators.TRIM_PREFIX_LEGGINGS);
+		generateDynamicTrimmableItem(itemModels, ItemRegistry.VOID_BOOTS.get(), ItemModelGenerators.TRIM_PREFIX_BOOTS);
 		itemModels.generateFlatItem(ItemRegistry.DYING_SOLDIER_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.THE_COMMANDER_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.MINUTEMAN_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
@@ -426,5 +426,20 @@ public class IWItemModelGenerator {
 						ModelLocationUtils.getModelLocation(item)
 				)
 		);
+	}
+
+	private static void generateDynamicTrimmableItem(ItemModelGenerators models, Item item, Identifier slotTrimPrefix) {
+		models.generateDynamicTrimmableItem(item,
+				models.createFlatItemModel(item, ModelTemplates.FLAT_ITEM),
+				slotTrimPrefix);
+	}
+
+	private static void generateDynamicTrimmableLayeredItem(ItemModelGenerators models, Item item, Identifier slotTrimPrefix) {
+		Material itemTexture = TextureMapping.getItemTexture(item);
+		Material overlayTexture = TextureMapping.getItemTexture(item, "_overlay");
+		models.generateDynamicTrimmableItem(item,
+				models.generateLayeredItem(item, itemTexture, overlayTexture),
+				slotTrimPrefix,
+				DyedItemColor.LEATHER_COLOR);
 	}
 }
