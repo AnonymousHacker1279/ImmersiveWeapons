@@ -645,7 +645,6 @@ public class ForgeEventSubscriber {
 				PotionRegistry.LONG_BROKEN_ARMOR_POTION);
 	}
 
-
 	@SubscribeEvent
 	public static void onDatapackSyncEvent(OnDatapackSyncEvent event) {
 		ImmersiveWeapons.LOGGER.info("Syncing datapack objects");

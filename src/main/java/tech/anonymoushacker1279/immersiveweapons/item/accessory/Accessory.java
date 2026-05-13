@@ -10,12 +10,11 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
+import net.neoforged.neoforge.common.NeoForge;
+import tech.anonymoushacker1279.immersiveweapons.api.events.AccessoryEvent;
 import tech.anonymoushacker1279.immersiveweapons.client.tooltip.SerializableTooltip;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.scaling.AttributeOperation;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.scaling.DynamicAttributeOperationInstance;
-import tech.anonymoushacker1279.immersiveweapons.util.IWCBBridge;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -31,6 +30,7 @@ public record Accessory(Holder<Item> item,
                         List<MobEffectInstance> mobEffectInstances,
                         List<SerializableTooltip> tooltips) {
 
+	private static final Set<AttributeOperation> GLOBAL_ATTRIBUTE_MODIFIER_MAP = new HashSet<>(10);
 	public static final Codec<Accessory> CODEC = RecordCodecBuilder.create(instance -> instance.group(
 			Item.CODEC.fieldOf("item").forGetter(Accessory::item),
 			AccessorySlot.CODEC.fieldOf("slot").forGetter(Accessory::slot),
@@ -40,7 +40,6 @@ public record Accessory(Holder<Item> item,
 			Codec.list(MobEffectInstance.CODEC).fieldOf("mob_effects").forGetter(Accessory::mobEffectInstances),
 			Codec.list(SerializableTooltip.CODEC).optionalFieldOf("tooltips", List.of()).forGetter(Accessory::tooltips)
 	).apply(instance, Accessory::new));
-
 	public static final StreamCodec<RegistryFriendlyByteBuf, Accessory> STREAM_CODEC = StreamCodec.composite(
 			Item.STREAM_CODEC,
 			Accessory::item,
@@ -58,8 +57,6 @@ public record Accessory(Holder<Item> item,
 			Accessory::tooltips,
 			Accessory::new
 	);
-
-	private static final Set<AttributeOperation> GLOBAL_ATTRIBUTE_MODIFIER_MAP = new HashSet<>(10);
 
 	public Accessory(Holder<Item> item, AccessorySlot slot, AccessoryEffectBuilder builder) {
 		this(item, slot, builder.getEffects(), builder.getAttributeModifiers(), builder.getDynamicAttributeModifiers(), builder.getMobEffects(), builder.getTooltips());
@@ -83,21 +80,37 @@ public record Accessory(Holder<Item> item,
 				.toList());
 	}
 
-	/**
-	 * The global attribute modifier map contains all standard and dynamic modifiers for all registered accessories.
-	 *
-	 * @return the global attribute modifier map
-	 */
+	/// The global attribute modifier map contains all standard and dynamic modifiers for all registered accessories.
+	///
+	/// @return the global attribute modifier map
 	public static Set<AttributeOperation> getGlobalAttributeModifiers() {
 		return GLOBAL_ATTRIBUTE_MODIFIER_MAP;
 	}
 
-	/**
-	 * Check if this accessory is active.
-	 *
-	 * @param player the <code>Player</code> to check
-	 * @return true if the accessory is active, false otherwise
-	 */
+	/// Check if the specified accessory is active for the player.
+	///
+	/// @param player the `Player` to check
+	/// @param stack  the `ItemStack` to check
+	/// @return true if the accessory is active, false otherwise
+	public static boolean isAccessoryActive(Player player, ItemStack stack) {
+		Accessory accessory = AccessoryLoader.ACCESSORIES.get(stack.getItem());
+
+		if (accessory == null) {
+			return false;
+		}
+
+		AccessoryEvent.AccessoryActive event = new AccessoryEvent.AccessoryActive(player, accessory, stack);
+		return NeoForge.EVENT_BUS.post(event).isActive();
+	}
+
+	public static boolean isAccessoryActive(Player player, Item item) {
+		return isAccessoryActive(player, new ItemStack(item));
+	}
+
+	/// Check if this accessory is active.
+	///
+	/// @param player the `Player` to check
+	/// @return true if the accessory is active, false otherwise
 	public boolean isActive(Player player, ItemStack accessoryStack, AccessorySlot slot) {
 		List<ItemStack> accessories = new ArrayList<>(10);
 
@@ -116,31 +129,6 @@ public record Accessory(Holder<Item> item,
 		}
 
 		return accessories.getFirst().getItem() == accessoryStack.getItem();
-	}
-
-	/**
-	 * Check if the specified accessory is active for the player. If IWCB is installed and the Curios plugin is
-	 * registered, it will defer to IWCB.
-	 *
-	 * @param player the <code>Player</code> to check
-	 * @param stack  the <code>ItemStack</code> to check
-	 * @return true if the accessory is active, false otherwise
-	 */
-	public static boolean isAccessoryActive(Player player, ItemStack stack) {
-		if (ImmersiveWeapons.IWCB_LOADED && PluginHandler.isPluginActive("iwcompatbridge:curios_plugin")) {
-			return IWCBBridge.isAccessoryActive(player, stack);
-		} else {
-			Accessory accessory = AccessoryLoader.ACCESSORIES.get(stack.getItem());
-			if (accessory != null) {
-				return accessory.isActive(player, stack, accessory.slot());
-			}
-		}
-
-		return false;
-	}
-
-	public static boolean isAccessoryActive(Player player, Item item) {
-		return isAccessoryActive(player, new ItemStack(item));
 	}
 
 	public double getBaseEffectValue(AccessoryEffectType type) {

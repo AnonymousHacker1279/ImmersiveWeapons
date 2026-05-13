@@ -35,6 +35,7 @@ public class SkeletonMerchantEntity extends AbstractMerchantEntity {
 
 	@Override
 	protected void updateTrades(ServerLevel level) {
+		getOffers().clear();
 		addOffersFromTradeSet(level, getOffers(), TRADE_SET_1);
 		addOffersFromTradeSet(level, getOffers(), TRADE_SET_2);
 	}

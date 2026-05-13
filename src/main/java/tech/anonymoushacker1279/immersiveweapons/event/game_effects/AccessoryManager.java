@@ -7,133 +7,62 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
+import net.neoforged.neoforge.common.NeoForge;
+import tech.anonymoushacker1279.immersiveweapons.api.events.AccessoryEvent;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.AccessoryEffectType;
-import tech.anonymoushacker1279.immersiveweapons.item.accessory.AccessoryLoader;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.scaling.AttributeOperation;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.scaling.DynamicAttributeOperationInstance;
-import tech.anonymoushacker1279.immersiveweapons.util.IWCBBridge;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AccessoryManager {
 
 	/**
 	 * Collect the value of the given effect from all accessories in the player's inventory.
-	 * <p>
-	 * This will check to see if IWCB is loaded, and if so, defer to it for collecting effects as it will utilize
-	 * Curios.
 	 *
 	 * @param type   the <code>EffectType</code> to collect
 	 * @param player the <code>Player</code> to collect from
 	 * @return the value of the effect
 	 */
 	public static double collectEffects(AccessoryEffectType type, Player player) {
-		double effectValue = 0;
-		if (ImmersiveWeapons.IWCB_LOADED && PluginHandler.isPluginActive("iwcompatbridge:curios_plugin")) {
-			effectValue = IWCBBridge.collectEffects(type, player);
-		} else {
-			for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
-				ItemStack stack = player.getInventory().getItem(i);
-				Accessory accessory = AccessoryLoader.ACCESSORIES.get(stack.getItem());
-				if (accessory != null) {
-					if (accessory.isActive(player, stack, accessory.slot())) {
-						effectValue += accessory.getEffectValue(type, player);
-					}
-				}
-			}
-		}
-
+		AccessoryEvent.CollectEffects event = new AccessoryEvent.CollectEffects(player, type);
+		double effectValue = NeoForge.EVENT_BUS.post(event).getEffect();
 		effectValue = Math.round(effectValue * 100.0d) / 100.0d;
 		return type.clamp() ? Mth.clamp(effectValue, 0, 1) : effectValue;
 	}
 
 	/**
 	 * Collect the attribute modifiers from all active accessories in the player's inventory.
-	 * <p>
-	 * This will check to see if IWCB is loaded, and if so, defer to it for collecting attributes as it will utilize
-	 * Curios.
 	 *
 	 * @param player the <code>Player</code> to collect from
 	 * @return a <code>Map</code> of attribute modifiers
 	 */
 	public static List<AttributeOperation> collectStandardAttributes(Player player) {
-		List<AttributeOperation> attributes = new ArrayList<>(5);
-		if (ImmersiveWeapons.IWCB_LOADED && PluginHandler.isPluginActive("iwcompatbridge:curios_plugin")) {
-			attributes = IWCBBridge.collectStandardAttributes(player);
-		} else {
-			for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
-				ItemStack stack = player.getInventory().getItem(i);
-				Accessory accessory = AccessoryLoader.ACCESSORIES.get(stack.getItem());
-				if (accessory != null) {
-					if (accessory.isActive(player, stack, accessory.slot())) {
-						attributes.addAll(accessory.attributeModifiers());
-					}
-				}
-			}
-		}
-
-		return attributes;
+		AccessoryEvent.CollectStandardAttributes event = new AccessoryEvent.CollectStandardAttributes(player);
+		return NeoForge.EVENT_BUS.post(event).getAttributes();
 	}
 
 	/**
 	 * Collect the dynamic attribute modifiers from all active accessories in the player's inventory.
-	 * <p>
-	 * This will check to see if IWCB is loaded, and if so, defer to it for collecting attributes as it will utilize
-	 * Curios.
 	 *
 	 * @param player the <code>Player</code> to collect from
 	 * @return a <code>Map</code> of dynamic attribute modifiers with their target values
 	 */
 	public static List<DynamicAttributeOperationInstance> collectDynamicAttributes(Player player) {
-		List<DynamicAttributeOperationInstance> dynamicAttributes = new ArrayList<>(5);
-		if (ImmersiveWeapons.IWCB_LOADED && PluginHandler.isPluginActive("iwcompatbridge:curios_plugin")) {
-			dynamicAttributes = IWCBBridge.collectDynamicAttributes(player);
-		} else {
-			for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
-				ItemStack stack = player.getInventory().getItem(i);
-				Accessory accessory = AccessoryLoader.ACCESSORIES.get(stack.getItem());
-				if (accessory != null) {
-					if (accessory.isActive(player, stack, accessory.slot())) {
-						dynamicAttributes.addAll(accessory.dynamicAttributeModifiers());
-					}
-				}
-			}
-		}
-
-		return dynamicAttributes;
+		AccessoryEvent.CollectDynamicAttributes event = new AccessoryEvent.CollectDynamicAttributes(player);
+		return NeoForge.EVENT_BUS.post(event).getAttributes();
 	}
 
 	/**
 	 * Collect the mob effect instances from all active accessories in the player's inventory.
-	 * <p>
-	 * This will check to see if IWCB is loaded, and if so, defer to it for collecting mob effects as it will utilize
-	 * Curios.
 	 *
 	 * @param player the <code>Player</code> to collect from
 	 * @return a <code>List</code> of mob effect instances
 	 */
 	public static List<MobEffectInstance> collectMobEffects(Player player) {
-		List<MobEffectInstance> effectList = new ArrayList<>(5);
-		if (ImmersiveWeapons.IWCB_LOADED && PluginHandler.isPluginActive("iwcompatbridge:curios_plugin")) {
-			effectList = IWCBBridge.collectMobEffects(player);
-		} else {
-			for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
-				ItemStack stack = player.getInventory().getItem(i);
-				Accessory accessory = AccessoryLoader.ACCESSORIES.get(stack.getItem());
-				if (accessory != null) {
-					if (accessory.isActive(player, stack, accessory.slot())) {
-						effectList.addAll(accessory.mobEffectInstances());
-					}
-				}
-			}
-		}
-
-		return effectList;
+		AccessoryEvent.CollectMobEffects event = new AccessoryEvent.CollectMobEffects(player);
+		return NeoForge.EVENT_BUS.post(event).getEffects();
 	}
 
 	/**
