@@ -313,7 +313,7 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 				MatchTool.toolMatches(ItemPredicate.Builder.item().of(itemGetter, tagKey)).build()};
 	}
 
-	/// Create a loot condition that applies to [BuiltInLootTables#SIMPLE\_DUNGEON] loot tables in a given biome.
+	/// Create a loot condition that applies to [BuiltInLootTables#SIMPLE_DUNGEON] loot tables in a given biome.
 	///
 	/// @param biome the biome to use
 	/// @return the loot item condition

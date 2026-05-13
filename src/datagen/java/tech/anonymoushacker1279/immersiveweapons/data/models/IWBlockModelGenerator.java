@@ -301,7 +301,7 @@ public class IWBlockModelGenerator {
 	}
 
 	/// Generate a barbed wire type blockstate with a pre-existing model. Barbed wire has multiple states:
-	/// [BarbedWireBlock#DAMAGE\_STAGE], and then an inherited horizontal state.
+	/// [BarbedWireBlock#DAMAGE_STAGE], and then an inherited horizontal state.
 	///
 	/// @param models the block model generator
 	/// @param block  the block to generate the state for
@@ -621,7 +621,7 @@ public class IWBlockModelGenerator {
 	}
 
 	/// Generate a wooden spikes type blockstate with a pre-existing model. Wooden spikes have multiple states:
-	/// [WoodenSpikesBlock#DAMAGE\_STAGE], and then an inherited horizontal state.
+	/// [WoodenSpikesBlock#DAMAGE_STAGE], and then an inherited horizontal state.
 	///
 	/// @param models the block model generator
 	/// @param block  the block to generate the state for
@@ -643,7 +643,7 @@ public class IWBlockModelGenerator {
 		models.registerSimpleItemModel(block, damageStagePath0);
 	}
 
-	/// Generate a flagpole type blockstate with a pre-existing model. Flagpoles have a single [FlagPoleBlock#IS\_BASE]
+	/// Generate a flagpole type blockstate with a pre-existing model. Flagpoles have a single [FlagPoleBlock#IS_BASE]
 	/// state.
 	///
 	/// @param models the block model generator

@@ -88,7 +88,7 @@ public class DamageableBlockEntity extends BlockEntity {
 
 			double healthPerStage = maxHealth / (double) (stages + 1);
 			int stage = stages - (int) Math.ceil((health - healthPerStage) / healthPerStage);
-			currentStage = Math.min(Math.max(stage, 0), stages);
+			currentStage = Math.clamp(stage, 0, stages);
 
 			level.setBlockAndUpdate(pos, state.setValue(damageStage, currentStage));
 		} else {

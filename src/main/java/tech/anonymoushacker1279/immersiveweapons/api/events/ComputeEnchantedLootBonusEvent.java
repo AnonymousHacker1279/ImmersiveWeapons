@@ -21,7 +21,7 @@ import org.jetbrains.annotations.Nullable;
 ///   - loot item condition `minecraft:random\_chance\_with\_enchanted\_bonus`
 ///   - enchantment effect component `minecraft:equipment\_drops`
 ///
-/// This event is fired on the [NeoForge#EVENT\_BUS].
+/// This event is fired on the [NeoForge#EVENT_BUS].
 ///
 /// Based on Puzzles Lib's implementation. Provided as a solution to NeoForge [issue
 /// #1112](https://github.com/neoforged/NeoForge/issues/1112).

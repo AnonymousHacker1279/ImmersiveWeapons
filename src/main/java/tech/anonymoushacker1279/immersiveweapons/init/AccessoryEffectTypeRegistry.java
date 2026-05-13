@@ -51,7 +51,7 @@ public class AccessoryEffectTypeRegistry {
 	public static final Supplier<AccessoryEffectType> GENERAL_WITHER_CHANCE = ACCESSORY_EFFECT_TYPES.register("general_wither_chance", (name) -> new AccessoryEffectType(name, true));
 	/// Modifier for experience drops.
 	public static final Supplier<AccessoryEffectType> EXPERIENCE_MODIFIER = ACCESSORY_EFFECT_TYPES.register("experience_modifier", AccessoryEffectType::new);
-	/// Modifier to [DamageTypes#SONIC\_BOOM] damage.
+	/// Modifier to [DamageTypes#SONIC_BOOM] damage.
 	public static final Supplier<AccessoryEffectType> SONIC_BOOM_RESISTANCE = ACCESSORY_EFFECT_TYPES.register("sonic_boom_resistance", (name) -> new AccessoryEffectType(name, true));
 	/// Modifier to the looting level of the player.
 	public static final Supplier<AccessoryEffectType> LOOTING_LEVEL = ACCESSORY_EFFECT_TYPES.register("looting_level", AccessoryEffectType::new);
