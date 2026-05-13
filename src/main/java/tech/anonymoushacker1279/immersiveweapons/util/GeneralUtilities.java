@@ -26,17 +26,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-/**
- * A collection of random utility methods for general use.
- */
+/// A collection of random utility methods for general use.
 public class GeneralUtilities {
 
-	/**
-	 * Convert an integer to a Roman numeral.
-	 *
-	 * @param number the integer to convert
-	 * @return the Roman numeral
-	 */
+	/// Convert an integer to a Roman numeral.
+	///
+	/// @param number the integer to convert
+	/// @return the Roman numeral
 	public static String convertToRoman(int number) {
 		if (number < 1 || number > 3999) {
 			throw new IllegalArgumentException("Number must be between 1 and 3999.");
@@ -53,24 +49,20 @@ public class GeneralUtilities {
 				ones[number % 10];
 	}
 
-	/**
-	 * Check if the specified UUID is not Jonny's. Used as a dev bonus for the Jonny's Curse item, where all effects are
-	 * inverted for Jonny himself.
-	 *
-	 * @param uuid the UUID to check
-	 * @return true if the UUID is not Jonny's, false otherwise
-	 */
+	/// Check if the specified UUID is not Jonny's. Used as a dev bonus for the Jonny's Curse item, where all effects
+	/// are inverted for Jonny himself.
+	///
+	/// @param uuid the UUID to check
+	/// @return true if the UUID is not Jonny's, false otherwise
 	public static boolean notJonny(UUID uuid) {
 		return !uuid.toString().equals("009c8c55-8a9e-4664-9bd5-f4c15ccaf726");
 	}
 
-	/**
-	 * Get the total levels of all enchantments on an ItemStack.
-	 *
-	 * @param itemStack The ItemStack to check
-	 * @param lookup    The enchantment registry
-	 * @return The total levels of all enchantments
-	 */
+	/// Get the total levels of all enchantments on an ItemStack.
+	///
+	/// @param itemStack The ItemStack to check
+	/// @param lookup    The enchantment registry
+	/// @return The total levels of all enchantments
 	public static int getTotalEnchantmentLevels(RegistryLookup<Enchantment> lookup, ItemStack itemStack) {
 		if (itemStack.isEnchanted()) {
 			return itemStack.getAllEnchantments(lookup).entrySet().stream().mapToInt(Entry::getIntValue).sum();
@@ -79,14 +71,12 @@ public class GeneralUtilities {
 		return 0;
 	}
 
-	/**
-	 * Rotate a VoxelShape to a given horizontal direction.
-	 *
-	 * @param from  the direction the shape is currently facing
-	 * @param to    the direction the shape should be facing
-	 * @param shape the shape to rotate
-	 * @return the rotated shape
-	 */
+	/// Rotate a VoxelShape to a given horizontal direction.
+	///
+	/// @param from  the direction the shape is currently facing
+	/// @param to    the direction the shape should be facing
+	/// @param shape the shape to rotate
+	/// @return the rotated shape
 	public static VoxelShape rotateShape(Direction from, Direction to, VoxelShape shape) {
 		if (from.getAxis() == Axis.Y || to.getAxis() == Axis.Y) {
 			throw new IllegalArgumentException("Cannot rotate around the Y axis.");
@@ -109,13 +99,11 @@ public class GeneralUtilities {
 		return rotatedShape;
 	}
 
-	/**
-	 * Enchant the gear of a given entity.
-	 *
-	 * @param mob       the entity
-	 * @param doWeapons whether to enchant weapons
-	 * @param doArmor   whether to enchant armor
-	 */
+	/// Enchant the gear of a given entity.
+	///
+	/// @param mob       the entity
+	/// @param doWeapons whether to enchant weapons
+	/// @param doArmor   whether to enchant armor
 	public static void enchantGear(ServerLevel serverLevel, Mob mob, boolean doWeapons, boolean doArmor) {
 		RandomSource random = mob.getRandom();
 		DifficultyInstance difficulty = serverLevel.getCurrentDifficultyAt(mob.blockPosition());
@@ -131,13 +119,11 @@ public class GeneralUtilities {
 		}
 	}
 
-	/**
-	 * Enchant the weapon of a spawned entity.
-	 *
-	 * @param mob              the entity
-	 * @param random           the random source
-	 * @param chanceMultiplier the chance multiplier
-	 */
+	/// Enchant the weapon of a spawned entity.
+	///
+	/// @param mob              the entity
+	/// @param random           the random source
+	/// @param chanceMultiplier the chance multiplier
 	public static void enchantSpawnedWeapon(Mob mob, RandomSource random, float chanceMultiplier) {
 		if (!mob.getMainHandItem().isEmpty()) {
 			RegistryAccess access = mob.level().registryAccess();
@@ -156,13 +142,11 @@ public class GeneralUtilities {
 		}
 	}
 
-	/**
-	 * Enchant the armor of a spawned entity.
-	 *
-	 * @param mob              the entity
-	 * @param random           the random source
-	 * @param chanceMultiplier the chance multiplier
-	 */
+	/// Enchant the armor of a spawned entity.
+	///
+	/// @param mob              the entity
+	/// @param random           the random source
+	/// @param chanceMultiplier the chance multiplier
 	public static void enchantSpawnedArmor(Mob mob, RandomSource random, float chanceMultiplier) {
 		for (EquipmentSlot equipmentslot : EquipmentSlot.values()) {
 			if (equipmentslot.getType() == Type.HUMANOID_ARMOR) {

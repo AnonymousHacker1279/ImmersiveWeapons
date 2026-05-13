@@ -16,9 +16,7 @@ import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
 import tech.anonymoushacker1279.immersiveweapons.util.ArrowAttributeAccessor;
 
 
-/**
- * See individual methods for notes.
- */
+/// See individual methods for notes.
 @Mixin(AbstractArrow.class)
 public abstract class AbstractArrowMixin implements ArrowAttributeAccessor {
 
@@ -38,9 +36,7 @@ public abstract class AbstractArrowMixin implements ArrowAttributeAccessor {
 		this.immersiveWeapons$gravity = gravity;
 	}
 
-	/**
-	 * Allows bullet entities to have custom damage sources and calculations.
-	 */
+	/// Allows bullet entities to have custom damage sources and calculations.
 	@Redirect(method = "onHitEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;hurtOrSimulate(Lnet/minecraft/world/damagesource/DamageSource;F)Z"))
 	private boolean hurtOrSimulate(Entity instance, DamageSource pSource, float pAmount) {
 		AbstractArrow self = (AbstractArrow) (Object) this;
@@ -58,9 +54,7 @@ public abstract class AbstractArrowMixin implements ArrowAttributeAccessor {
 		}
 	}
 
-	/**
-	 * Prevent bullets from appearing as arrows on the player.
-	 */
+	/// Prevent bullets from appearing as arrows on the player.
 	@ModifyArg(method = "onHitEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;setArrowCount(I)V"))
 	private int setArrowCount(int arrowCount) {
 		AbstractArrow self = (AbstractArrow) (Object) this;
@@ -72,17 +66,13 @@ public abstract class AbstractArrowMixin implements ArrowAttributeAccessor {
 		}
 	}
 
-	/**
-	 * Modify the knockback of arrows.
-	 */
-	@ModifyVariable(method = "doKnockback", at = @At(value = "STORE", ordinal = 0), ordinal = 0)
-	private double modifyKnockback(double originalKnockback) {
-		return originalKnockback + immersiveWeapons$baseKnockback;
+	/// Modify the knockback of arrows.
+	@ModifyVariable(method = "doKnockback", at = @At(value = "STORE", ordinal = 0), name = "knockback")
+	private double modifyKnockback(double knockback) {
+		return knockback + immersiveWeapons$baseKnockback;
 	}
 
-	/**
-	 * Modify the gravity of arrows.
-	 */
+	/// Modify the gravity of arrows.
 	@ModifyReturnValue(method = "getDefaultGravity", at = @At("RETURN"))
 	private double modifyGravity(double originalGravity) {
 		if (immersiveWeapons$gravity != 0.05d) {
@@ -92,12 +82,10 @@ public abstract class AbstractArrowMixin implements ArrowAttributeAccessor {
 		}
 	}
 
-	/**
-	 * Allow bullets to pass through leaves.
-	 *
-	 * @param original the original value
-	 * @return the modified value
-	 */
+	/// Allow bullets to pass through leaves.
+	///
+	/// @param original the original value
+	/// @return the modified value
 	@ModifyExpressionValue(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/projectile/arrow/AbstractArrow;isNoPhysics()Z"))
 	private boolean modifyIsNoPhysics(boolean original) {
 		AbstractArrow self = (AbstractArrow) (Object) this;

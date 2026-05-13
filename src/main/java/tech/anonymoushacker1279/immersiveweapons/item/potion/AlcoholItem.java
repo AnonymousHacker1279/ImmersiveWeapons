@@ -8,14 +8,11 @@ import java.util.List;
 
 public class AlcoholItem extends CustomPotionItem {
 
-	/**
-	 * Constructor for AlcoholItem.
-	 *
-	 * @param properties the <code>Properties</code> for the item
-	 */
+	/// Constructor for AlcoholItem.
+	///
+	/// @param properties the `Properties` for the item
 	public AlcoholItem(Properties properties) {
 		super(properties);
-		properties.craftRemainder(asItem());
 	}
 
 	@Override

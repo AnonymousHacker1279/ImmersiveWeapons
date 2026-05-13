@@ -1,7 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.client.gui.screen;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -24,13 +24,13 @@ import java.util.List;
 public class SmallPartsTableScreen extends AbstractContainerScreen<SmallPartsMenu> {
 
 	private static final Identifier BG_LOCATION = Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "textures/gui/container/small_parts_table.png");
-	private static int TOTAL_PATTERN_ROWS = 0;
 	private static final int SCROLLER_WIDTH = 12;
 	private static final int SCROLLER_HEIGHT = 15;
 	private static final int PATTERN_IMAGE_SIZE = 16;
 	private static final int SCROLLER_FULL_HEIGHT = 56;
 	private static final int PATTERNS_X = 64;
 	private static final int PATTERNS_Y = 17;
+	private static int TOTAL_PATTERN_ROWS = 0;
 	@Nullable
 	private List<Item> resultPatterns = new ArrayList<>(15);
 	private ItemStack materialStack = ItemStack.EMPTY;
@@ -46,31 +46,27 @@ public class SmallPartsTableScreen extends AbstractContainerScreen<SmallPartsMen
 	}
 
 	@Override
-	public void render(GuiGraphics guiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
-		super.render(guiGraphics, pMouseX, pMouseY, pPartialTick);
-		renderTooltip(guiGraphics, pMouseX, pMouseY);
-	}
+	public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
+		super.extractBackground(graphics, mouseX, mouseY, a);
 
-	@Override
-	protected void renderBg(GuiGraphics guiGraphics, float partialTick, int pX, int pY) {
 		int leftPos = this.leftPos;
 		int topPos = this.topPos;
-		guiGraphics.blit(RenderPipelines.GUI_TEXTURED, BG_LOCATION, leftPos, topPos, 0, 0, imageWidth, imageHeight, 256, 256);
+		graphics.blit(RenderPipelines.GUI_TEXTURED, BG_LOCATION, leftPos, topPos, 0, 0, imageWidth, imageHeight, 256, 256);
 		Slot materialSlot = menu.getMaterialSlot();
 
 		if (!materialSlot.hasItem()) {
-			guiGraphics.blit(RenderPipelines.GUI_TEXTURED, BG_LOCATION, leftPos + materialSlot.x, topPos + materialSlot.y, imageWidth, 0, 16, 16, 256, 256);
+			graphics.blit(RenderPipelines.GUI_TEXTURED, BG_LOCATION, leftPos + materialSlot.x, topPos + materialSlot.y, imageWidth, 0, 16, 16, 256, 256);
 		}
 
 		int scrollOffset = (int) (41.0F * scrollOffs);
-		guiGraphics.blit(RenderPipelines.GUI_TEXTURED, BG_LOCATION, leftPos + 119, topPos + PATTERNS_Y - 4 + scrollOffset,
+		graphics.blit(RenderPipelines.GUI_TEXTURED, BG_LOCATION, leftPos + 119, topPos + PATTERNS_Y - 4 + scrollOffset,
 				232 + (displayPatterns ? 0 : SCROLLER_WIDTH),
 				0, SCROLLER_WIDTH, SCROLLER_HEIGHT, 256, 256);
 
 		if (resultPatterns != null) {
 			if (menu.getSelectedPartsPatternIndex() > 0) {
 				ItemStack material = new ItemStack(resultPatterns.get(menu.getSelectedPartsPatternIndex() - 1));
-				guiGraphics.renderItem(material, leftPos + 143, topPos + 19);
+				graphics.item(material, leftPos + 143, topPos + 19);
 			}
 		}
 
@@ -86,13 +82,13 @@ public class SmallPartsTableScreen extends AbstractContainerScreen<SmallPartsMen
 				int vOffset = imageHeight;
 				if (i == menu.getSelectedPartsPatternIndex()) {
 					vOffset += PATTERN_IMAGE_SIZE;
-				} else if (pX >= x && pY >= y && pX < x + PATTERN_IMAGE_SIZE && pY < y + PATTERN_IMAGE_SIZE) {
+				} else if (mouseX >= x && mouseY >= y && mouseX < x + PATTERN_IMAGE_SIZE && mouseY < y + PATTERN_IMAGE_SIZE) {
 					vOffset += 32;
 				}
 
-				guiGraphics.blit(RenderPipelines.GUI_TEXTURED, BG_LOCATION, x, y, 0, vOffset, PATTERN_IMAGE_SIZE, PATTERN_IMAGE_SIZE, 256, 256);
+				graphics.blit(RenderPipelines.GUI_TEXTURED, BG_LOCATION, x, y, 0, vOffset, PATTERN_IMAGE_SIZE, PATTERN_IMAGE_SIZE, 256, 256);
 				if (startIndex + indexOffset - 1 <= resultPatterns.size() - 1) {
-					guiGraphics.renderItem(new ItemStack(resultPatterns.get(startIndex + indexOffset - 1)), x, y);
+					graphics.item(new ItemStack(resultPatterns.get(startIndex + indexOffset - 1)), x, y);
 				}
 			}
 		}

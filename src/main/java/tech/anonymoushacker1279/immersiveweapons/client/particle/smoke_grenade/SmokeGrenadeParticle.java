@@ -31,13 +31,13 @@ public class SmokeGrenadeParticle extends SingleQuadParticle {
 		xd += fancyParticles ? xSpeed * 0.4f : xSpeed;
 		yd += fancyParticles ? ySpeed * 0.4f : ySpeed;
 		zd += fancyParticles ? zSpeed * 0.4f : zSpeed;
-		float vibrancyModifier = level.random.nextFloat() * 0.4F + 0.6F;
+		float vibrancyModifier = level.getRandom().nextFloat() * 0.4F + 0.6F;
 		rCol = randomizeColor((float) ((color >> 16) & 0xFF) / 255.0F, vibrancyModifier);
 		gCol = randomizeColor((float) ((color >> 8) & 0xFF) / 255.0F, vibrancyModifier);
 		bCol = randomizeColor((float) (color & 0xFF) / 255.0F, vibrancyModifier);
 		alpha = fancyParticles ? 0.97F : 1.0F;
 		quadSize *= 0.75F * 35.0F;
-		lifetime = (int) ((double) 90 / ((double) level.random.nextFloat() * 0.8D + 0.2D));
+		lifetime = (int) ((double) 90 / ((double) level.getRandom().nextFloat() * 0.8D + 0.2D));
 		lifetime = (int) ((float) lifetime * (35.0F * 0.1F));
 		lifetime = Math.max(lifetime, 1);
 		setSpriteFromAge(spriteSet);

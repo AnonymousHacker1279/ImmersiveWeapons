@@ -1,37 +1,35 @@
 package tech.anonymoushacker1279.immersiveweapons.data.recipes;
 
-import net.minecraft.world.item.Item;
+import net.minecraft.data.recipes.RecipeBuilder;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.BarrelTapRecipe;
-
-import java.util.Objects;
 
 public class BarrelTapRecipeBuilder extends IWRecipeBuilder {
 
 	private final Ingredient material;
 	private final int materialCount;
-	private final Item result;
-	private final BarrelTapRecipe.Factory<?> factory;
+	private final ItemStackTemplate result;
 
-	public BarrelTapRecipeBuilder(BarrelTapRecipe.Factory<?> factory, Ingredient material, int materialCount, Item result) {
+	public BarrelTapRecipeBuilder(Ingredient material, int materialCount, ItemStackTemplate result) {
 		this.material = material;
 		this.materialCount = materialCount;
 		this.result = result;
-		this.factory = factory;
 	}
 
-	public static BarrelTapRecipeBuilder fermenting(Ingredient block, int materialCount, Item result) {
-		return new BarrelTapRecipeBuilder(BarrelTapRecipe::new, block, materialCount, result);
+	public static BarrelTapRecipeBuilder fermenting(Ingredient block, int materialCount, ItemStackTemplate result) {
+		return new BarrelTapRecipeBuilder(block, materialCount, result);
 	}
 
 	@Override
-	public Item getResult() {
-		return result;
+	public ResourceKey<Recipe<?>> defaultId() {
+		return RecipeBuilder.getDefaultRecipeId(this.result);
 	}
 
 	@Override
 	protected Recipe<?> getRecipe() {
-		return factory.create(Objects.requireNonNullElse(group, "barrel_tap"), material, materialCount, result.getDefaultInstance());
+		return new BarrelTapRecipe(material, materialCount, result);
 	}
 }

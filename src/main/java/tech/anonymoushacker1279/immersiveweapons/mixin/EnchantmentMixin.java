@@ -11,9 +11,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import tech.anonymoushacker1279.immersiveweapons.config.ServerConfig;
 
-/**
- * Re-color enchantment names at the max Skygazer cap.
- */
+/// Re-color enchantment names at the max Skygazer cap.
 @Mixin(Enchantment.class)
 public abstract class EnchantmentMixin {
 

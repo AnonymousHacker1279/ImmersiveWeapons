@@ -8,11 +8,9 @@ import java.util.List;
 
 public class BandageItem extends AbstractFortitudeItem {
 
-	/**
-	 * Constructor for BandageItem.
-	 *
-	 * @param properties the <code>Properties</code> for the item
-	 */
+	/// Constructor for BandageItem.
+	///
+	/// @param properties the `Properties` for the item
 	public BandageItem(Properties properties) {
 		super(properties, false);
 	}

@@ -35,20 +35,16 @@ public class IWWorldGenTagGroups {
 	public static final TagKey<Biome> HAS_CHAMPION_TOWER = createStructureTag("champion_tower");
 	public static final TagKey<Biome> HAS_COMMANDER_OUTPOST = createStructureTag("commander_outpost");
 
-	/**
-	 * Helper method for creating a biome tag for containing structures.
-	 *
-	 * @param tag a string to be used for the tag
-	 */
+	/// Helper method for creating a biome tag for containing structures.
+	///
+	/// @param tag a string to be used for the tag
 	private static TagKey<Biome> createStructureTag(String tag) {
 		return TagKey.create(Registries.BIOME, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "has_structure/" + tag));
 	}
 
-	/**
-	 * Helper method for creating a biome tag for containing biomes.
-	 *
-	 * @param tag a string to be used for the tag
-	 */
+	/// Helper method for creating a biome tag for containing biomes.
+	///
+	/// @param tag a string to be used for the tag
 	private static TagKey<Biome> createBiomeTag(String tag) {
 		return TagKey.create(Registries.BIOME, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, tag));
 	}

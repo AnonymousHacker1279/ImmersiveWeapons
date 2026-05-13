@@ -52,13 +52,17 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 	// Burn time for different fuel types
 	private static final Map<Item, Integer> FUEL_BURN_TIMES = new HashMap<>(5);
 
+	static {
+		// Initialize burn times
+		FUEL_BURN_TIMES.put(ItemRegistry.MOLTEN_INGOT.get(), 24000); // 20 minutes
+	}
+
 	// Inventory and process tracking
 	private final NonNullList<ItemStack> items = NonNullList.withSize(SLOT_COUNT, ItemStack.EMPTY);
 	private int burnTime;
 	private int burnTimeTotal;
 	private int cookTime;
 	private int cookTimeTotal = 200; // Default cook time
-
 	// Container data for the GUI
 	public final ContainerData containerData = new ContainerData() {
 		@Override
@@ -88,31 +92,22 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 		}
 	};
 
-	static {
-		// Initialize burn times
-		FUEL_BURN_TIMES.put(ItemRegistry.MOLTEN_INGOT.get(), 24000); // 20 minutes
-	}
-
 	public TeslaSynthesizerBlockEntity(BlockPos blockPos, BlockState blockState) {
 		super(BlockEntityRegistry.TESLA_SYNTHESIZER_BLOCK_ENTITY.get(), blockPos, blockState);
 	}
 
-	/**
-	 * Checks if an item is valid fuel for the Tesla Synthesizer
-	 *
-	 * @param stack The ItemStack to check
-	 * @return true if the item is valid fuel
-	 */
+	/// Checks if an item is valid fuel for the Tesla Synthesizer
+	///
+	/// @param stack The ItemStack to check
+	/// @return true if the item is valid fuel
 	public static boolean isFuel(ItemStack stack) {
 		return FUEL_BURN_TIMES.containsKey(stack.getItem());
 	}
 
-	/**
-	 * Gets the burn time for a fuel item
-	 *
-	 * @param fuel The fuel ItemStack
-	 * @return The burn time in ticks, or 0 if not a valid fuel
-	 */
+	/// Gets the burn time for a fuel item
+	///
+	/// @param fuel The fuel ItemStack
+	/// @return The burn time in ticks, or 0 if not a valid fuel
 	private static int getBurnTime(ItemStack fuel) {
 		if (fuel.isEmpty()) {
 			return 0;
@@ -120,9 +115,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 		return FUEL_BURN_TIMES.getOrDefault(fuel.getItem(), 0);
 	}
 
-	/**
-	 * Processes recipes and manages fuel consumption each tick
-	 */
+	/// Processes recipes and manages fuel consumption each tick
 	public void tick(ServerLevel level) {
 		boolean wasBurning = isBurning();
 		boolean inventoryChanged = false;
@@ -161,7 +154,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 							fuel.shrink(1);
 
 							if (fuel.isEmpty()) {
-								items.set(SLOT_FUEL, fuelItem.getCraftingRemainder());
+								items.set(SLOT_FUEL, fuelItem.getCraftingRemainder().create());
 							}
 						}
 					}
@@ -206,17 +199,15 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 		}
 	}
 
-	/**
-	 * Processes a recipe, consuming inputs and producing output
-	 *
-	 * @param recipe The recipe to process
-	 */
+	/// Processes a recipe, consuming inputs and producing output
+	///
+	/// @param recipe The recipe to process
 	private void smeltRecipe(TeslaSynthesizerRecipe recipe) {
 		if (!canSmelt(recipe)) {
 			return;
 		}
 
-		ItemStack resultStack = recipe.result();
+		ItemStack resultStack = recipe.result().create();
 		ItemStack outputSlot = items.get(SLOT_RESULT);
 
 		// Add to existing output stack or create new one
@@ -232,12 +223,10 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 		items.get(SLOT_INPUT_3).shrink(1);
 	}
 
-	/**
-	 * Determines if a recipe can be processed with current inventory
-	 *
-	 * @param recipe The recipe to check
-	 * @return true if the recipe can be processed
-	 */
+	/// Determines if a recipe can be processed with current inventory
+	///
+	/// @param recipe The recipe to check
+	/// @return true if the recipe can be processed
 	private boolean canSmelt(@Nullable TeslaSynthesizerRecipe recipe) {
 		if (recipe == null) {
 			return false;
@@ -251,7 +240,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 		}
 
 		// Get the recipe result
-		ItemStack resultStack = recipe.result();
+		ItemStack resultStack = recipe.result().create();
 		if (resultStack.isEmpty()) {
 			return false;
 		}
@@ -271,11 +260,9 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 		return (combinedCount <= getMaxStackSize() && combinedCount <= outputStack.getMaxStackSize());
 	}
 
-	/**
-	 * Checks if fuel is currently burning
-	 *
-	 * @return true if burning
-	 */
+	/// Checks if fuel is currently burning
+	///
+	/// @return true if burning
 	public boolean isBurning() {
 		return burnTime > 0;
 	}

@@ -18,7 +18,6 @@
       "translate": "advancements.immersiveweapons.nuggets.description"
     },
     "icon": {
-      "count": 1,
       "id": "minecraft:gold_nugget"
     },
     "show_toast": false,

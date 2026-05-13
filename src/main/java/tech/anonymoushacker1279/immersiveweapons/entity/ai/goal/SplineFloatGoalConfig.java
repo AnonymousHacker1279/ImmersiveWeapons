@@ -5,21 +5,19 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import org.jetbrains.annotations.Nullable;
 
-/**
- * Configuration record for SplineFloatGoal parameters.
- *
- * @param waypointCount             Number of waypoints to generate
- * @param splineSegments            Interpolation points between waypoints
- * @param searchRadiusHorizontal    Horizontal search range
- * @param searchRadiusVertical      Vertical search range
- * @param minWaypointDistance       Minimum distance between waypoints
- * @param arrivalThreshold          Distance to consider "arrived" at a point
- * @param pathRecalculationInterval Recalculate path every N ticks
- * @param maxYLevelAboveWorld       Maximum height above world surface for pathfinding
- * @param averageHeightAboveGround  Average height above ground where pathfinding occurs (0 = at ground level)
- * @param requiredBiome             The biome the mob must stay in (if naturally spawned), or null for no constraint
- * @param requiredDimension         The dimension where biome constraint applies, or null for no constraint
- */
+/// Configuration record for SplineFloatGoal parameters.
+///
+/// @param waypointCount             Number of waypoints to generate
+/// @param splineSegments            Interpolation points between waypoints
+/// @param searchRadiusHorizontal    Horizontal search range
+/// @param searchRadiusVertical      Vertical search range
+/// @param minWaypointDistance       Minimum distance between waypoints
+/// @param arrivalThreshold          Distance to consider "arrived" at a point
+/// @param pathRecalculationInterval Recalculate path every N ticks
+/// @param maxYLevelAboveWorld       Maximum height above world surface for pathfinding
+/// @param averageHeightAboveGround  Average height above ground where pathfinding occurs (0 = at ground level)
+/// @param requiredBiome             The biome the mob must stay in (if naturally spawned), or null for no constraint
+/// @param requiredDimension         The dimension where biome constraint applies, or null for no constraint
 public record SplineFloatGoalConfig(
 		int waypointCount,
 		int splineSegments,

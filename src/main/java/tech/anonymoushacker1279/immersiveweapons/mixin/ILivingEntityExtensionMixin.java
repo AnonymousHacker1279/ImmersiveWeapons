@@ -10,9 +10,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.ArmorUtils;
 
-/**
- * Allow swimming in lava when wearing Molten Armor.
- */
+/// Allow swimming in lava when wearing Molten Armor.
 @Mixin(ILivingEntityExtension.class)
 public interface ILivingEntityExtensionMixin {
 

@@ -53,9 +53,15 @@ public class LavaRevenantEntity extends Mob implements Enemy, GrantAdvancementOn
 
 	private static final int TICKS_PER_FLAP = Mth.ceil(24.166098F);
 	private static final EntityDataAccessor<Integer> ID_SIZE = SynchedEntityData.defineId(LavaRevenantEntity.class, EntityDataSerializers.INT);
-	Vec3 moveTargetPoint = Vec3.ZERO;
-	BlockPos anchorPoint = BlockPos.ZERO;
-	LavaRevenantEntity.AttackPhase attackPhase = LavaRevenantEntity.AttackPhase.CIRCLE;
+	// Base dimensions for part offsets
+	private static final float WING_OFFSET_X_Z = 2.25f;
+	private static final float WING_OFFSET_Y = 0.5f;
+	private static final float BODY_OFFSET_SCALE = 0.5f;
+	private static final float HEAD_TAIL_OFFSET_DIST = 2f;
+	private static final float HEAD_TAIL_Y_PARAM = 6.5f;
+	private static final float WING_DAMAGE_MODIFIER = 0.65f;
+	private static final float HEAD_DAMAGE_MODIFIER = 1.5f;
+	private static final float TAIL_DAMAGE_MODIFIER = 0.35f;
 	private final LavaRevenantPart[] subEntities;
 	private final LavaRevenantPart wing1;
 	private final LavaRevenantPart wing2;
@@ -63,20 +69,12 @@ public class LavaRevenantEntity extends Mob implements Enemy, GrantAdvancementOn
 	private final LavaRevenantPart body;
 	private final LavaRevenantPart tail;
 	private final double[][] positions = new double[64][3];
+	Vec3 moveTargetPoint = Vec3.ZERO;
+	BlockPos anchorPoint = BlockPos.ZERO;
+	LavaRevenantEntity.AttackPhase attackPhase = LavaRevenantEntity.AttackPhase.CIRCLE;
 	private int posPointer = -1;
 	private float yRotA;
 	private boolean inWall;
-
-	// Base dimensions for part offsets
-	private static final float WING_OFFSET_X_Z = 2.25f;
-	private static final float WING_OFFSET_Y = 0.5f;
-	private static final float BODY_OFFSET_SCALE = 0.5f;
-	private static final float HEAD_TAIL_OFFSET_DIST = 2f;
-	private static final float HEAD_TAIL_Y_PARAM = 6.5f;
-
-	private static final float WING_DAMAGE_MODIFIER = 0.65f;
-	private static final float HEAD_DAMAGE_MODIFIER = 1.5f;
-	private static final float TAIL_DAMAGE_MODIFIER = 0.35f;
 
 	public LavaRevenantEntity(EntityType<? extends LavaRevenantEntity> entityType, Level level) {
 		super(entityType, level);
@@ -93,18 +91,18 @@ public class LavaRevenantEntity extends Mob implements Enemy, GrantAdvancementOn
 		setId(ENTITY_COUNTER.getAndAdd(subEntities.length + 1) + 1);
 	}
 
+	public static AttributeSupplier.Builder registerAttributes() {
+		return Monster.createMonsterAttributes()
+				.add(Attributes.FLYING_SPEED, 0.70D)
+				.add(Attributes.ARMOR, 20.0D);
+	}
+
 	@Override
 	public void setId(int id) {
 		super.setId(id);
 		for (int i = 0; i < this.subEntities.length; i++) {
 			this.subEntities[i].setId(id + i + 1);
 		}
-	}
-
-	public static AttributeSupplier.Builder registerAttributes() {
-		return Monster.createMonsterAttributes()
-				.add(Attributes.FLYING_SPEED, 0.70D)
-				.add(Attributes.ARMOR, 20.0D);
 	}
 
 	@Override
@@ -374,13 +372,11 @@ public class LavaRevenantEntity extends Mob implements Enemy, GrantAdvancementOn
 		return false;
 	}
 
-	/**
-	 * Destroy blocks in the way of the entity.
-	 *
-	 * @param area        the area to check
-	 * @param serverLevel the server level
-	 * @return true if the entity is stuck in a block
-	 */
+	/// Destroy blocks in the way of the entity.
+	///
+	/// @param area        the area to check
+	/// @param serverLevel the server level
+	/// @return true if the entity is stuck in a block
 	private boolean breakBlocks(AABB area, ServerLevel serverLevel) {
 		int minX = Mth.floor(area.minX);
 		int minY = Mth.floor(area.minY);
@@ -488,11 +484,6 @@ public class LavaRevenantEntity extends Mob implements Enemy, GrantAdvancementOn
 	@Override
 	protected SoundEvent getDeathSound() {
 		return SoundEventRegistry.LAVA_REVENANT_DEATH.get();
-	}
-
-	@Override
-	public boolean canAttackType(EntityType<?> entityType) {
-		return true;
 	}
 
 	@Override

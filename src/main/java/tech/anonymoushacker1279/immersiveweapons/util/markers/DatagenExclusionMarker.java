@@ -11,19 +11,13 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface DatagenExclusionMarker {
 
-	/**
-	 * The type(s) of exclusion this registry entry should have.
-	 */
+	/// The type(s) of exclusion this registry entry should have.
 	Type[] value();
 
 	enum Type {
-		/**
-		 * Marks an {@link ItemRegistry} entry as being excluded from item model generation.
-		 */
+		/// Marks an [ItemRegistry] entry as being excluded from item model generation.
 		MODEL_GENERATOR_ITEM,
-		/**
-		 * Marks a registry entry as being excluded from language file generation.
-		 */
+		/// Marks a registry entry as being excluded from language file generation.
 		LANGUAGE_GENERATOR
 	}
 }

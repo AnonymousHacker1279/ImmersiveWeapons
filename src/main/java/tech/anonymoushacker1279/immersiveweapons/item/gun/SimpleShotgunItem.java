@@ -10,11 +10,9 @@ import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 
 public class SimpleShotgunItem extends AbstractGunItem {
 
-	/**
-	 * Constructor for SimpleShotgunItem.
-	 *
-	 * @param properties the <code>Properties</code> for the item
-	 */
+	/// Constructor for SimpleShotgunItem.
+	///
+	/// @param properties the `Properties` for the item
 	public SimpleShotgunItem(Properties properties) {
 		super(properties);
 	}
@@ -30,11 +28,9 @@ public class SimpleShotgunItem extends AbstractGunItem {
 				getInaccuracy());
 	}
 
-	/**
-	 * Get the fire sound.
-	 *
-	 * @return SoundEvent
-	 */
+	/// Get the fire sound.
+	///
+	/// @return SoundEvent
 	@Override
 	public SoundEvent getFireSound() {
 		return SoundEventRegistry.BLUNDERBUSS_FIRE.get();

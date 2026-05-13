@@ -6,9 +6,6 @@ import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SingleQuadParticle;
 import net.minecraft.client.particle.SpriteSet;
-import net.minecraft.client.renderer.block.BlockModelShaper;
-import net.minecraft.client.renderer.block.BlockRenderDispatcher;
-import net.minecraft.client.renderer.block.model.BlockStateModel;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -39,12 +36,12 @@ public class BulletImpactParticle extends SingleQuadParticle {
 		xd += xSpeed;
 		yd += ySpeed;
 		zd += zSpeed;
-		float vibrancyModifier = 0.6F + level.random.nextFloat() * 0.4F;
+		float vibrancyModifier = 0.6F + level.getRandom().nextFloat() * 0.4F;
 		rCol = randomizeColor(color.x(), vibrancyModifier);
 		gCol = randomizeColor(color.y(), vibrancyModifier);
 		bCol = randomizeColor(color.z(), vibrancyModifier);
 		quadSize *= 2.5f;
-		lifetime = (int) ((double) 20 / ((double) level.random.nextFloat() * 0.8D + 0.2D));
+		lifetime = (int) ((double) 20 / ((double) level.getRandom().nextFloat() * 0.8D + 0.2D));
 		lifetime = (int) ((float) lifetime * 1.5F);
 		lifetime = Math.max(lifetime, 1);
 		setSpriteFromAge(spriteSet);
@@ -57,10 +54,11 @@ public class BulletImpactParticle extends SingleQuadParticle {
 
 	protected Vector3f getColorFromBlock(int blockID) {
 		Minecraft minecraft = Minecraft.getInstance();
-		BlockRenderDispatcher blockRendererDispatcher = minecraft.getBlockRenderer();
-		BlockModelShaper blockModelShapes = blockRendererDispatcher.getBlockModelShaper();
-		BlockStateModel model = blockModelShapes.getBlockModel(Block.stateById(blockID));
-		TextureAtlasSprite textureAtlasSprite = model.particleIcon();
+		TextureAtlasSprite textureAtlasSprite = minecraft.getModelManager()
+				.getBlockStateModelSet()
+				.get(Block.stateById(blockID))
+				.particleMaterial()
+				.sprite();
 
 		int pixelRGBA = textureAtlasSprite.getPixelRGBA(0, 0, 0);
 		float red = (float) (pixelRGBA >> 16 & 255) / 255.0F;

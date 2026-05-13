@@ -18,8 +18,8 @@ import java.util.List;
 
 public abstract class AbstractFortitudeItem extends Item {
 
-	protected boolean usedOnEntity = false;
 	protected final boolean requireHalfHealth;
+	protected boolean usedOnEntity = false;
 
 	public AbstractFortitudeItem(Properties properties, boolean requireHalfHealth) {
 		super(properties);
@@ -53,8 +53,8 @@ public abstract class AbstractFortitudeItem extends Item {
 		if (requireHalfHealth) {
 			if (player.getMaxHealth() - player.getHealth() <= player.getMaxHealth() / 2) {
 				if (level.isClientSide()) {
-					player.displayClientMessage(Component.translatable("immersiveweapons.item.first_aid_kit.player")
-							.withStyle(ChatFormatting.RED), true);
+					player.sendOverlayMessage(Component.translatable("immersiveweapons.item.first_aid_kit.player")
+							.withStyle(ChatFormatting.RED));
 				}
 
 				return InteractionResult.FAIL;
@@ -83,8 +83,8 @@ public abstract class AbstractFortitudeItem extends Item {
 		if (requireHalfHealth) {
 			if (entity.getMaxHealth() - entity.getHealth() <= entity.getMaxHealth() / 2) {
 				if (player.level().isClientSide()) {
-					player.displayClientMessage(Component.translatable("immersiveweapons.item.first_aid_kit.entity")
-							.withStyle(ChatFormatting.RED), true);
+					player.sendOverlayMessage(Component.translatable("immersiveweapons.item.first_aid_kit.entity")
+							.withStyle(ChatFormatting.RED));
 				}
 
 				return InteractionResult.PASS;

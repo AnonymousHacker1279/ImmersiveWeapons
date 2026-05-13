@@ -94,14 +94,12 @@ public class BulletItem<T extends BulletEntity> extends ArrowItem {
 		bulletEntity.hitEffect = hitEffect;
 	}
 
-	/**
-	 * Check if the bullet is infinite. Restricts the ability to lower level bullets for balance.
-	 *
-	 * @param bullet  the bullet being checked
-	 * @param gun     the gun firing the bullet
-	 * @param shooter the entity firing the gun
-	 * @return boolean
-	 */
+	/// Check if the bullet is infinite. Restricts the ability to lower level bullets for balance.
+	///
+	/// @param bullet  the bullet being checked
+	/// @param gun     the gun firing the bullet
+	/// @param shooter the entity firing the gun
+	/// @return boolean
 	@Override
 	public boolean isInfinite(ItemStack bullet, ItemStack gun, LivingEntity shooter) {
 		HolderGetter<Enchantment> enchantmentGetter = shooter.registryAccess().lookup(Registries.ENCHANTMENT).orElseThrow();

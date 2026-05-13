@@ -24,14 +24,24 @@ import java.util.concurrent.CompletableFuture;
 
 public record StructureUpdater(PackOutput output, MultiPackResourceManager resources) implements DataProvider {
 
-	/**
-	 * This data provider is used to update old NBT structures to the latest version. Any updated structure files will
-	 * need to be copied out of the generated data folder and into the appropriate resource pack folder.
-	 *
-	 * @param output    a <code>PackOutput</code> instance
-	 * @param resources a <code>MultiPackResourceManager</code> instance
-	 */
+	/// This data provider is used to update old NBT structures to the latest version. Any updated structure files will
+	/// need to be copied out of the generated data folder and into the appropriate resource pack folder.
+	///
+	/// @param output    a `PackOutput` instance
+	/// @param resources a `MultiPackResourceManager` instance
 	public StructureUpdater {
+	}
+
+	/// Update NBT data to the latest version. This is done by passing the data through a datafixer and then saving it
+	/// back to NBT.
+	///
+	/// @param nbt the `CompoundTag` to update
+	/// @return CompoundTag
+	private static CompoundTag updateNBT(CompoundTag nbt) {
+		final CompoundTag updatedNBT = DataFixTypes.STRUCTURE.updateToCurrentVersion(DataFixers.getDataFixer(), nbt, nbt.getInt("DataVersion").orElseThrow());
+		StructureTemplate template = new StructureTemplate();
+		template.load(BuiltInRegistries.BLOCK.freeze(), updatedNBT);
+		return template.save(new CompoundTag());
 	}
 
 	@Override
@@ -58,34 +68,18 @@ public record StructureUpdater(PackOutput output, MultiPackResourceManager resou
 		}
 	}
 
-	/**
-	 * Write an NBT file to the output folder.
-	 *
-	 * @param location the <code>Identifier</code> of the resource
-	 * @param data     the <code>CompoundTag</code> data
-	 * @param cache    a <code>CachedOutput</code> instance
-	 * @throws IOException if an error occurs while writing the file
-	 */
+	/// Write an NBT file to the output folder.
+	///
+	/// @param location the `Identifier` of the resource
+	/// @param data     the `CompoundTag` data
+	/// @param cache    a `CachedOutput` instance
+	/// @throws IOException if an error occurs while writing the file
 	private void writeNBT(Identifier location, CompoundTag data, CachedOutput cache) throws IOException {
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 		NbtIo.writeCompressed(data, outputStream);
 		byte[] bytes = outputStream.toByteArray();
 		Path outputPath = output.getOutputFolder().resolve("data/" + location.getNamespace() + "/" + location.getPath());
 		cache.writeIfNeeded(outputPath, bytes, Hashing.sha256().hashBytes(bytes));
-	}
-
-	/**
-	 * Update NBT data to the latest version. This is done by passing the data through a datafixer and then saving it
-	 * back to NBT.
-	 *
-	 * @param nbt the <code>CompoundTag</code> to update
-	 * @return CompoundTag
-	 */
-	private static CompoundTag updateNBT(CompoundTag nbt) {
-		final CompoundTag updatedNBT = DataFixTypes.STRUCTURE.updateToCurrentVersion(DataFixers.getDataFixer(), nbt, nbt.getInt("DataVersion").orElseThrow());
-		StructureTemplate template = new StructureTemplate();
-		template.load(BuiltInRegistries.BLOCK.freeze(), updatedNBT);
-		return template.save(new CompoundTag());
 	}
 
 	@Override

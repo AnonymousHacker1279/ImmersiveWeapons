@@ -13,13 +13,11 @@ import java.util.UUID;
 
 public class ClientDataHandler {
 
-	/**
-	 * Sync persistent data from server to client. This is in a separate class to avoid loading client classes on the
-	 * dedicated server.
-	 *
-	 * @param tag        the <code>CompoundTag</code> to sync, should be from {@link Player#getPersistentData()}
-	 * @param playerUUID the <code>UUID</code> of the player to sync to
-	 */
+	/// Sync persistent data from server to client. This is in a separate class to avoid loading client classes on the
+	/// dedicated server.
+	///
+	/// @param tag        the `CompoundTag` to sync, should be from [Player#getPersistentData()]
+	/// @param playerUUID the `UUID` of the player to sync to
 	public static void syncPersistentData(CompoundTag tag, UUID playerUUID) {
 		Player player = Minecraft.getInstance().player;
 		if (player != null && player.getUUID().equals(playerUUID)) {

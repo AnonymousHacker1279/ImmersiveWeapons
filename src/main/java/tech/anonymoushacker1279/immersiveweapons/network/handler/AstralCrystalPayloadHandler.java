@@ -26,12 +26,12 @@ public class AstralCrystalPayloadHandler {
 					int z = data.pos().getZ();
 
 					level.addParticle(ParticleTypes.EXPLOSION_EMITTER,
-							x + 0.5D + (0.2D * level.random.nextGaussian()),
-							y + 0.4D + (0.35D * level.random.nextGaussian()),
-							z + 0.5D + (0.2D * level.random.nextGaussian()),
-							(0.15D * level.random.nextGaussian()),
-							(0.15D * level.random.nextGaussian()),
-							(0.15D * level.random.nextGaussian()));
+							x + 0.5D + (0.2D * level.getRandom().nextGaussian()),
+							y + 0.4D + (0.35D * level.getRandom().nextGaussian()),
+							z + 0.5D + (0.2D * level.getRandom().nextGaussian()),
+							(0.15D * level.getRandom().nextGaussian()),
+							(0.15D * level.getRandom().nextGaussian()),
+							(0.15D * level.getRandom().nextGaussian()));
 
 					level.playLocalSound(x, y, z, SoundEvents.AMETHYST_BLOCK_CHIME, SoundSource.BLOCKS, 1.0f, 1.3f, false);
 

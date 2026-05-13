@@ -21,16 +21,12 @@ public class PanicAlarmBlockEntity extends BlockEntity implements EntityBlock {
 	private boolean isPowered = false;
 	private int cooldown = 0;
 
-	/**
-	 * Constructor for PanicAlarmBlockEntity.
-	 */
+	/// Constructor for PanicAlarmBlockEntity.
 	public PanicAlarmBlockEntity(BlockPos blockPos, BlockState blockState) {
 		super(BlockEntityRegistry.PANIC_ALARM_BLOCK_ENTITY.get(), blockPos, blockState);
 	}
 
-	/**
-	 * Runs once each tick. Handle playing alarm sounds.
-	 */
+	/// Runs once each tick. Handle playing alarm sounds.
 	public void tick(Level level, BlockPos blockPos) {
 
 		if (isPowered && cooldown-- <= 0) {
@@ -46,31 +42,25 @@ public class PanicAlarmBlockEntity extends BlockEntity implements EntityBlock {
 		}
 	}
 
-	/**
-	 * Create a block entity for the block.
-	 *
-	 * @param blockPos   the <code>BlockPos</code> the block is at
-	 * @param blockState the <code>BlockState</code> of the block
-	 * @return BlockEntity
-	 */
+	/// Create a block entity for the block.
+	///
+	/// @param blockPos   the `BlockPos` the block is at
+	/// @param blockState the `BlockState` of the block
+	/// @return BlockEntity
 	@Nullable
 	@Override
 	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
 		return new PanicAlarmBlockEntity(blockPos, blockState);
 	}
 
-	/**
-	 * Get the power status.
-	 *
-	 * @return boolean
-	 */
+	/// Get the power status.
+	///
+	/// @return boolean
 	public boolean isPowered() {
 		return isPowered;
 	}
 
-	/**
-	 * Set the power status.
-	 */
+	/// Set the power status.
 	public void setPowered(boolean state) {
 		isPowered = state;
 		setChanged();

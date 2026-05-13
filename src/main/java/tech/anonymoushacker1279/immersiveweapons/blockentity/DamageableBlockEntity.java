@@ -65,23 +65,19 @@ public class DamageableBlockEntity extends BlockEntity {
 		return tag;
 	}
 
-	/**
-	 * Get the entity update packet.
-	 *
-	 * @return ClientboundBlockEntityDataPacket
-	 */
+	/// Get the entity update packet.
+	///
+	/// @return ClientboundBlockEntityDataPacket
 	@Override
 	public ClientboundBlockEntityDataPacket getUpdatePacket() {
 		return ClientboundBlockEntityDataPacket.create(this);
 	}
 
-	/**
-	 * Damage the block, which takes care of stage changes and destruction.
-	 *
-	 * @param state the <code>BlockState</code> of the block
-	 * @param level the <code>Level</code> the block is in
-	 * @param pos   the <code>BlockPos</code> the block is at
-	 */
+	/// Damage the block, which takes care of stage changes and destruction.
+	///
+	/// @param state the `BlockState` of the block
+	/// @param level the `Level` the block is in
+	/// @param pos   the `BlockPos` the block is at
 	public void takeDamage(BlockState state, Level level, BlockPos pos, IntegerProperty damageStage) {
 		if (level.isClientSide() || !IWConfigs.SERVER.blockDecay.getAsBoolean()) {
 			return;
@@ -92,7 +88,7 @@ public class DamageableBlockEntity extends BlockEntity {
 
 			double healthPerStage = maxHealth / (double) (stages + 1);
 			int stage = stages - (int) Math.ceil((health - healthPerStage) / healthPerStage);
-			currentStage = Math.min(Math.max(stage, 0), stages);
+			currentStage = Math.clamp(stage, 0, stages);
 
 			level.setBlockAndUpdate(pos, state.setValue(damageStage, currentStage));
 		} else {
@@ -100,18 +96,16 @@ public class DamageableBlockEntity extends BlockEntity {
 		}
 	}
 
-	/**
-	 * Repair the block if the given ingredient matches this block's repair item. Each use of the repair item will
-	 * repair the block by one stage.
-	 *
-	 * @param repairStack the <code>ItemStack</code> to attempt to repair the block with
-	 * @param repairItem  the <code>Item</code> which this block is repairable with
-	 * @param state       the <code>BlockState</code> of the block
-	 * @param level       the <code>Level</code> the block is in
-	 * @param pos         the <code>BlockPos</code> the block is at
-	 * @param damageStage the <code>IntegerProperty</code> of the block's damage stage
-	 * @return true if the block was repaired, false otherwise
-	 */
+	/// Repair the block if the given ingredient matches this block's repair item. Each use of the repair item will
+	/// repair the block by one stage.
+	///
+	/// @param repairStack the `ItemStack` to attempt to repair the block with
+	/// @param repairItem  the `Item` which this block is repairable with
+	/// @param state       the `BlockState` of the block
+	/// @param level       the `Level` the block is in
+	/// @param pos         the `BlockPos` the block is at
+	/// @param damageStage the `IntegerProperty` of the block's damage stage
+	/// @return true if the block was repaired, false otherwise
 	public boolean repair(ItemStack repairStack, Item repairItem, BlockState state, Level level, BlockPos pos, Player player, IntegerProperty damageStage) {
 		if (level.isClientSide()) {
 			return false;
@@ -145,13 +139,11 @@ public class DamageableBlockEntity extends BlockEntity {
 		return false;
 	}
 
-	/**
-	 * Calculate the damage dealt by the block based on the starting damage and the reduction per stage.
-	 *
-	 * @param startingDamage              the starting damage a block will deal (like wooden spikes)
-	 * @param reductionPerStageMultiplier the reduction in damage per stage (i.e. 33% less)
-	 * @return the adjusted damage
-	 */
+	/// Calculate the damage dealt by the block based on the starting damage and the reduction per stage.
+	///
+	/// @param startingDamage              the starting damage a block will deal (like wooden spikes)
+	/// @param reductionPerStageMultiplier the reduction in damage per stage (i.e. 33% less)
+	/// @return the adjusted damage
 	public float calculateDamage(float startingDamage, float reductionPerStageMultiplier) {
 		return startingDamage * (float) Math.pow(1 - reductionPerStageMultiplier, currentStage);
 	}

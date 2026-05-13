@@ -35,13 +35,12 @@ import java.util.List;
 
 public abstract class AbstractStatueBlockEntity<T extends SoldierEntity> extends BlockEntity implements EntityBlock {
 
-	protected int cooldown;
+	protected static final ResourceKey<Biome> BATTLEFIELD = ResourceKey.create(Registries.BIOME, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "battlefield"));
 	protected final int maxNearbyEntities;
+	protected int cooldown;
 	protected int additionalEntities;
 	protected float armorSpawnChance = 0.0f;
 	protected float gearEnchantChance = 0.0f;
-
-	protected static final ResourceKey<Biome> BATTLEFIELD = ResourceKey.create(Registries.BIOME, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "battlefield"));
 
 	public AbstractStatueBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState, int maxNearbyEntities) {
 		super(type, pos, blockState);
@@ -143,11 +142,9 @@ public abstract class AbstractStatueBlockEntity<T extends SoldierEntity> extends
 		}
 	}
 
-	/**
-	 * Get a random position in the nearby area.
-	 *
-	 * @return BlockPos
-	 */
+	/// Get a random position in the nearby area.
+	///
+	/// @return BlockPos
 	protected BlockPos getRandomPositionInArea() {
 		if (getLevel() == null) {
 			return getBlockPos();

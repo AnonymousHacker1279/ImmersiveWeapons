@@ -21,11 +21,9 @@ public class PitfallBlock extends Block {
 
 	protected static final VoxelShape SHAPE = Block.box(0.0D, 15.0D, 0.0D, 16.0D, 16D, 16.0D);
 
-	/**
-	 * Constructor for PitfallBlock.
-	 *
-	 * @param properties the <code>Properties</code> of the block
-	 */
+	/// Constructor for PitfallBlock.
+	///
+	/// @param properties the `Properties` of the block
 	public PitfallBlock(Properties properties) {
 		super(properties);
 	}

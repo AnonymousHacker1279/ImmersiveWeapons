@@ -1,7 +1,10 @@
 package tech.anonymoushacker1279.immersiveweapons.data.recipes;
 
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.SmallPartsRecipe;
@@ -12,26 +15,26 @@ import java.util.Objects;
 public class SmallPartsRecipeBuilder extends IWRecipeBuilder {
 
 	private final Ingredient material;
-	private final List<ItemStack> craftables;
-	private final SmallPartsRecipe.Factory<?> factory;
+	private final List<ItemStackTemplate> craftables;
+	private final Identifier tagName;
 
-	public SmallPartsRecipeBuilder(SmallPartsRecipe.Factory<?> factory, Ingredient material, List<ItemStack> craftables) {
+	public SmallPartsRecipeBuilder(Ingredient material, List<ItemStackTemplate> craftables, Identifier tagName) {
 		this.material = material;
 		this.craftables = craftables;
-		this.factory = factory;
+		this.tagName = tagName;
 	}
 
-	public static SmallPartsRecipeBuilder tinker(Ingredient material, List<Item> craftables) {
-		return new SmallPartsRecipeBuilder(SmallPartsRecipe::new, material, craftables.stream().map(ItemStack::new).toList());
+	public static SmallPartsRecipeBuilder tinker(Ingredient material, List<Item> craftables, Identifier tagName) {
+		return new SmallPartsRecipeBuilder(material, craftables.stream().map(ItemStackTemplate::new).toList(), tagName);
 	}
 
 	@Override
-	public Item getResult() {
-		return craftables.getFirst().getItem();
+	public ResourceKey<Recipe<?>> defaultId() {
+		return ResourceKey.create(Registries.RECIPE, tagName);
 	}
 
 	@Override
 	protected Recipe<?> getRecipe() {
-		return factory.create(Objects.requireNonNullElse(group, "small_parts"), material, craftables);
+		return new SmallPartsRecipe(Objects.requireNonNullElse(group, "small_parts"), material, craftables);
 	}
 }

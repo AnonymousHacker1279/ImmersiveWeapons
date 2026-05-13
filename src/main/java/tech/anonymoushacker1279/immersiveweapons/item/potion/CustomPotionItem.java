@@ -18,40 +18,36 @@ import java.util.List;
 
 public abstract class CustomPotionItem extends Item {
 
-	/**
-	 * Constructor for AbstractBottleItem.
-	 *
-	 * @param properties the <code>Properties</code> for the item
-	 */
+	/// Constructor for AbstractBottleItem.
+	///
+	/// @param properties the `Properties` for the item
 	CustomPotionItem(Properties properties) {
 		super(properties);
 	}
 
-	/**
-	 * Runs when the item is used.
-	 *
-	 * @param level  the <code>Level</code> the player is in
-	 * @param player the <code>Player</code> instance
-	 * @param hand   the <code>InteractionHand</code> the player is using
-	 */
+	/// Runs when the item is used.
+	///
+	/// @param level  the `Level` the player is in
+	/// @param player the `Player` instance
+	/// @param hand   the `InteractionHand` the player is using
 	@Override
 	public InteractionResult use(Level level, Player player, InteractionHand hand) {
 		return ItemUtils.startUsingInstantly(level, player, hand);
 	}
 
 	@Override
-	public ItemStack finishUsingItem(ItemStack pStack, Level pLevel, LivingEntity pEntityLiving) {
-		Player player = pEntityLiving instanceof Player ? (Player) pEntityLiving : null;
+	public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity livingEntity) {
+		Player player = livingEntity instanceof Player ? (Player) livingEntity : null;
 		if (player instanceof ServerPlayer) {
-			CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) player, pStack);
+			CriteriaTriggers.CONSUME_ITEM.trigger((ServerPlayer) player, stack);
 		}
 
-		if (pLevel instanceof ServerLevel serverLevel) {
+		if (level instanceof ServerLevel serverLevel) {
 			for (MobEffectInstance effectInstance : getEffects()) {
 				if (effectInstance.getEffect().value().isInstantenous()) {
-					effectInstance.getEffect().value().applyInstantenousEffect(serverLevel, player, player, pEntityLiving, effectInstance.getAmplifier(), 1.0D);
+					effectInstance.getEffect().value().applyInstantenousEffect(serverLevel, player, player, livingEntity, effectInstance.getAmplifier(), 1.0D);
 				} else {
-					pEntityLiving.addEffect(new MobEffectInstance(effectInstance));
+					livingEntity.addEffect(new MobEffectInstance(effectInstance));
 				}
 			}
 		}
@@ -59,22 +55,22 @@ public abstract class CustomPotionItem extends Item {
 		if (player != null) {
 			player.awardStat(Stats.ITEM_USED.get(this));
 			if (!player.getAbilities().instabuild) {
-				pStack.shrink(1);
+				stack.shrink(1);
 			}
 		}
 
 		if (player == null || !player.getAbilities().instabuild) {
-			if (pStack.isEmpty()) {
-				return getCraftingRemainder(pStack);
+			if (stack.isEmpty()) {
+				return new ItemStack(Items.GLASS_BOTTLE);
 			}
 
 			if (player != null) {
-				player.getInventory().add(getCraftingRemainder(pStack));
+				player.getInventory().add(new ItemStack(Items.GLASS_BOTTLE));
 			}
 		}
 
-		pEntityLiving.gameEvent(GameEvent.DRINK);
-		return pStack;
+		livingEntity.gameEvent(GameEvent.DRINK);
+		return stack;
 	}
 
 	@Override
@@ -82,17 +78,10 @@ public abstract class CustomPotionItem extends Item {
 		return 32;
 	}
 
-	@Override
-	public ItemStack getCraftingRemainder(ItemStack itemStack) {
-		return new ItemStack(Items.GLASS_BOTTLE);
-	}
-
-	/**
-	 * Get the use animation.
-	 *
-	 * @param stack the <code>ItemStack</code> instance
-	 * @return UseAction
-	 */
+	/// Get the use animation.
+	///
+	/// @param stack the `ItemStack` instance
+	/// @return UseAction
 	@Override
 	public ItemUseAnimation getUseAnimation(ItemStack stack) {
 		return ItemUseAnimation.DRINK;

@@ -44,17 +44,15 @@ public class MeteorEntity extends Projectile {
 		super(entityType, level);
 	}
 
-	/**
-	 * Create a new meteor at the specified position.
-	 *
-	 * @param level        the <code>Level</code> the meteor is in
-	 * @param owner        the <code>LivingEntity</code> owner
-	 * @param staff        the <code>ItemStack</code> staff. May be null if not summoned by a staff.
-	 * @param targetPos    the <code>BlockPos</code> target position
-	 * @param targetEntity the <code>LivingEntity</code> target entity. May be null. If not, the meteor will only damage
-	 *                     the specified target.
-	 * @return true if the meteor was successfully created, false otherwise
-	 */
+	/// Create a new meteor at the specified position.
+	///
+	/// @param level        the `Level` the meteor is in
+	/// @param owner        the `LivingEntity` owner
+	/// @param staff        the `ItemStack` staff. May be null if not summoned by a staff.
+	/// @param targetPos    the `BlockPos` target position
+	/// @param targetEntity the `LivingEntity` target entity. May be null. If not, the meteor will only damage the the
+	/// specified target.
+	/// @return true if the meteor was successfully created, false otherwise
 	public static boolean create(Level level, LivingEntity owner, @Nullable ItemStack staff, BlockPos targetPos, @Nullable LivingEntity targetEntity) {
 		if (!level.isClientSide()) {
 			MeteorEntity meteorEntity = new MeteorEntity(EntityRegistry.METEOR_ENTITY.get(), level);

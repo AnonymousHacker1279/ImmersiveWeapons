@@ -1,6 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.client.gui.screen;
 
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -21,24 +21,20 @@ public class AmmunitionTableScreen extends AbstractContainerScreen<AmmunitionTab
 	}
 
 	@Override
-	public void render(GuiGraphics guiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
-		super.render(guiGraphics, pMouseX, pMouseY, pPartialTick);
-		renderTooltip(guiGraphics, pMouseX, pMouseY);
-	}
+	public void extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a) {
+		super.extractBackground(graphics, mouseX, mouseY, a);
 
-	@Override
-	protected void renderBg(GuiGraphics guiGraphics, float pPartialTick, int pX, int pY) {
-		guiGraphics.blit(RenderPipelines.GUI_TEXTURED, GUI_TEXTURE, leftPos, topPos, 0, 0, imageWidth, imageHeight, 256, 256);
+		graphics.blit(RenderPipelines.GUI_TEXTURED, GUI_TEXTURE, leftPos, topPos, 0, 0, imageWidth, imageHeight, 256, 256);
 
 		/*Render the density scroller
 		The scroller itself is at (253, 0) in the texture and is 3x8 pixels
 		It should be placed starting at (72, 19) and can be moved to (102, 19)*/
 		int scrollOffset = (int) Mth.clamp((menu.getDensityModifier() * 30), 0, 30);
-		guiGraphics.blit(RenderPipelines.GUI_TEXTURED, GUI_TEXTURE, leftPos + 72 + scrollOffset, topPos + 19, 253, 0, 3, 8, 256, 256);
+		graphics.blit(RenderPipelines.GUI_TEXTURED, GUI_TEXTURE, leftPos + 72 + scrollOffset, topPos + 19, 253, 0, 3, 8, 256, 256);
 
 		// Render the percent modifier next to the scrollbar
 		String densityModifier = "+" + String.format("%.0f", menu.getDensityModifier() * 100) + "%";
-		guiGraphics.drawString(
+		graphics.text(
 				font,
 				densityModifier,
 				leftPos + 110,
@@ -51,7 +47,7 @@ public class AmmunitionTableScreen extends AbstractContainerScreen<AmmunitionTab
 		int excess = menu.getExcessStackSize();
 		if (excess > 0) {
 			String excessStackSize = "+" + excess;
-			guiGraphics.drawString(
+			graphics.text(
 					font,
 					excessStackSize,
 					leftPos + 145,
@@ -80,13 +76,11 @@ public class AmmunitionTableScreen extends AbstractContainerScreen<AmmunitionTab
 		return super.mouseDragged(event, dragX, dragY);
 	}
 
-	/**
-	 * Check if the mouse is over the density scrollbar.
-	 *
-	 * @param mouseX the mouse's X position
-	 * @param mouseY the mouse's Y position
-	 * @return boolean
-	 */
+	/// Check if the mouse is over the density scrollbar.
+	///
+	/// @param mouseX the mouse's X position
+	/// @param mouseY the mouse's Y position
+	/// @return boolean
 	private boolean isOverDensityScrollbar(double mouseX, double mouseY) {
 		return mouseX >= leftPos + 72 && mouseX <= leftPos + 102 && mouseY >= topPos + 19 && mouseY <= topPos + 27;
 	}

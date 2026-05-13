@@ -18,13 +18,11 @@ public class ShelfBlockEntity extends AbstractInventoryBlockEntity {
 		super(BlockEntityRegistry.SHELF_BLOCK_ENTITY.get(), blockPos, blockState);
 	}
 
-	/**
-	 * Create a block entity for the block.
-	 *
-	 * @param blockPos   the <code>BlockPos</code> the block is at
-	 * @param blockState the <code>BlockState</code> of the block
-	 * @return BlockEntity
-	 */
+	/// Create a block entity for the block.
+	///
+	/// @param blockPos   the `BlockPos` the block is at
+	/// @param blockState the `BlockState` of the block
+	/// @return BlockEntity
 	@Nullable
 	@Override
 	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {

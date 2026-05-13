@@ -7,11 +7,9 @@ import tech.anonymoushacker1279.immersiveweapons.entity.misc.ChairEntity;
 
 public class ChairRenderer extends EntityRenderer<ChairEntity, EntityRenderState> implements EntityRendererProvider<ChairEntity> {
 
-	/**
-	 * Constructor for ChairRenderer.
-	 *
-	 * @param context the <code>Context</code> instance
-	 */
+	/// Constructor for ChairRenderer.
+	///
+	/// @param context the `Context` instance
 	public ChairRenderer(Context context) {
 		super(context);
 	}

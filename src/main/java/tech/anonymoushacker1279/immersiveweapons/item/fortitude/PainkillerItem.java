@@ -11,11 +11,9 @@ import net.minecraft.world.level.Level;
 
 public class PainkillerItem extends Item {
 
-	/**
-	 * Constructor for PainkillerItem.
-	 *
-	 * @param properties the <code>Properties</code> for the item
-	 */
+	/// Constructor for PainkillerItem.
+	///
+	/// @param properties the `Properties` for the item
 	public PainkillerItem(Properties properties) {
 		super(properties);
 	}

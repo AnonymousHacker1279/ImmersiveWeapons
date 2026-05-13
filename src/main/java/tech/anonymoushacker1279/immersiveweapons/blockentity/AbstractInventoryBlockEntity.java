@@ -25,9 +25,7 @@ public abstract class AbstractInventoryBlockEntity extends BlockEntity implement
 	private final NonNullList<ItemStack> inventory = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
 	private int filledSlots = 0;
 
-	/**
-	 * Constructor for AbstractInventoryBlockEntity.
-	 */
+	/// Constructor for AbstractInventoryBlockEntity.
 	public AbstractInventoryBlockEntity(BlockEntityType<?> type, BlockPos blockPos, BlockState blockState) {
 		super(type, blockPos, blockState);
 	}
@@ -67,12 +65,10 @@ public abstract class AbstractInventoryBlockEntity extends BlockEntity implement
 		return true;
 	}
 
-	/**
-	 * Add an item to the inventory.
-	 *
-	 * @param itemStack the <code>ItemStack</code> to add
-	 * @return boolean
-	 */
+	/// Add an item to the inventory.
+	///
+	/// @param itemStack the `ItemStack` to add
+	/// @return boolean
 	public boolean addItem(ItemStack itemStack) {
 		for (int i = 0; i < inventory.size(); i++) {
 			ItemStack itemstack = inventory.get(i);
@@ -101,9 +97,7 @@ public abstract class AbstractInventoryBlockEntity extends BlockEntity implement
 		return ContainerHelper.takeItem(inventory, slot);
 	}
 
-	/**
-	 * Remove an item from the inventory.
-	 */
+	/// Remove an item from the inventory.
 	public void removeItem() {
 		for (int i = inventory.size() - 1; i > -1; i--) {
 			if (!inventory.get(i).isEmpty()) {
@@ -118,9 +112,7 @@ public abstract class AbstractInventoryBlockEntity extends BlockEntity implement
 		}
 	}
 
-	/**
-	 * Set the change state.
-	 */
+	/// Set the change state.
 	public void inventoryChanged() {
 		setChanged();
 		if (level != null) {
@@ -128,11 +120,9 @@ public abstract class AbstractInventoryBlockEntity extends BlockEntity implement
 		}
 	}
 
-	/**
-	 * Get the inventory.
-	 *
-	 * @return NonNullList extending ItemStack
-	 */
+	/// Get the inventory.
+	///
+	/// @return NonNullList extending ItemStack
 	public NonNullList<ItemStack> getInventory() {
 		return inventory;
 	}
@@ -156,11 +146,9 @@ public abstract class AbstractInventoryBlockEntity extends BlockEntity implement
 		ContainerHelper.saveAllItems(valueOutput, inventory);
 	}
 
-	/**
-	 * Get the entity update packet.
-	 *
-	 * @return ClientboundBlockEntityDataPacket
-	 */
+	/// Get the entity update packet.
+	///
+	/// @return ClientboundBlockEntityDataPacket
 	@Override
 	public ClientboundBlockEntityDataPacket getUpdatePacket() {
 		return ClientboundBlockEntityDataPacket.create(this);
@@ -178,9 +166,7 @@ public abstract class AbstractInventoryBlockEntity extends BlockEntity implement
 		return tag;
 	}
 
-	/**
-	 * Clear the inventory.
-	 */
+	/// Clear the inventory.
 	@Override
 	public void clearContent() {
 		inventory.clear();

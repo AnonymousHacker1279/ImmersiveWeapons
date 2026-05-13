@@ -2,15 +2,12 @@
   "type": "immersiveweapons:small_parts",
   "craftables": [
     {
-      "count": 1,
       "id": "immersiveweapons:gauntlet_scaffolding"
     },
     {
-      "count": 1,
       "id": "immersiveweapons:heavy_wooden_stock"
     },
     {
-      "count": 1,
       "id": "immersiveweapons:wooden_pistol_handle"
     }
   ],

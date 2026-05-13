@@ -23,7 +23,6 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import net.neoforged.neoforge.common.loot.LootModifier;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
@@ -37,13 +36,13 @@ public class ToolSmeltingModifierHandler extends LootModifier {
 
 	private final TagKey<Item> tools;
 
-	public ToolSmeltingModifierHandler(LootItemCondition[] conditions, TagKey<Item> tools) {
-		super(conditions);
+	public ToolSmeltingModifierHandler(LootItemCondition[] conditions, int priority, TagKey<Item> tools) {
+		super(conditions, priority);
 		this.tools = tools;
 	}
 
 	@Override
-	public @NotNull ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
+	public ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
 		// If a molten tool is used and the player is crouching, the block is smelted
 		if (context.getOptionalParameter(LootContextParams.THIS_ENTITY) instanceof Player player) {
 			if (player.isCrouching() && player.getItemInHand(InteractionHand.MAIN_HAND).is(tools)) {
@@ -59,7 +58,7 @@ public class ToolSmeltingModifierHandler extends LootModifier {
 						if (manager.getRecipeFor(RecipeType.SMELTING, input, player.level()).isPresent()) {
 							// Get the smelted item
 							ItemStack smeltedItem = manager.getRecipeFor(RecipeType.SMELTING, input, player.level())
-									.get().value().assemble(input, player.level().registryAccess());
+									.get().value().assemble(input);
 
 							// Drop the smelted item
 							Vec3 origin = context.getOptionalParameter(LootContextParams.ORIGIN);

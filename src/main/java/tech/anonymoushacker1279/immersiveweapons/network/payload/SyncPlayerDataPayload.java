@@ -12,12 +12,10 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
 import java.util.UUID;
 
-/**
- * A packet payload for syncing player persistent data between the server and client.
- *
- * @param tag        the <code>CompoundTag</code> to sync, should be from {@link Player#getPersistentData()}
- * @param playerUUID the <code>UUID</code> of the player to sync to
- */
+/// A packet payload for syncing player persistent data between the server and client.
+///
+/// @param tag        the `CompoundTag` to sync, should be from [Player#getPersistentData()]
+/// @param playerUUID the `UUID` of the player to sync to
 public record SyncPlayerDataPayload(CompoundTag tag, UUID playerUUID) implements CustomPacketPayload {
 
 	public static final Type<SyncPlayerDataPayload> TYPE = new Type<>(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "sync_player_data"));

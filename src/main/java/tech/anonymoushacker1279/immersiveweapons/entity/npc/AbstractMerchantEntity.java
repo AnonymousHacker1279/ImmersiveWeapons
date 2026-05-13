@@ -1,6 +1,5 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.npc;
 
-import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -12,7 +11,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.npc.villager.AbstractVillager;
-import net.minecraft.world.entity.npc.villager.VillagerTrades;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -23,11 +21,6 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.GrantAdvancementOnDiscovery;
-import tech.anonymoushacker1279.immersiveweapons.entity.npc.trading.SimpleItemListing;
-import tech.anonymoushacker1279.immersiveweapons.entity.npc.trading.TradeGroup;
-import tech.anonymoushacker1279.immersiveweapons.entity.npc.trading.TradeLoader;
-
-import java.util.List;
 
 public abstract class AbstractMerchantEntity extends AbstractVillager implements GrantAdvancementOnDiscovery {
 
@@ -38,16 +31,10 @@ public abstract class AbstractMerchantEntity extends AbstractVillager implements
 		super(entityType, level);
 	}
 
-	/**
-	 * Get the time until trades refresh. Used by IWCB for a plugin, hence the unused warning suppression.
-	 */
+	/// Get the time until trades refresh. Used by IWCB for a plugin, hence the unused warning suppression.
 	@SuppressWarnings("unused")
 	public int getTradeRefreshTime() {
 		return entityData.get(TRADE_REFRESH_TIME);
-	}
-
-	public Int2ObjectMap<VillagerTrades.ItemListing[]> getTrades() {
-		return TradeLoader.getTrades(getType());
 	}
 
 	@Override
@@ -88,14 +75,14 @@ public abstract class AbstractMerchantEntity extends AbstractVillager implements
 		} else {
 			if (level() instanceof ServerLevel serverLevel) {
 				updateTrades(serverLevel);
-				entityData.set(TRADE_REFRESH_TIME, TradeLoader.TRADES.get(getType()).tradeRefreshTime());
+				entityData.set(TRADE_REFRESH_TIME, 24000);
 			}
 		}
 	}
 
 	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, EntitySpawnReason spawnType, @Nullable SpawnGroupData spawnGroupData) {
-		entityData.set(TRADE_REFRESH_TIME, TradeLoader.TRADES.get(getType()).tradeRefreshTime());
+	public @Nullable SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, EntitySpawnReason spawnType, @Nullable SpawnGroupData spawnGroupData) {
+		entityData.set(TRADE_REFRESH_TIME, 24000);
 		return super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData);
 	}
 
@@ -141,29 +128,6 @@ public abstract class AbstractMerchantEntity extends AbstractVillager implements
 	@Override
 	public boolean isPersistenceRequired() {
 		return true;
-	}
-
-	@Override
-	protected void updateTrades(ServerLevel serverLevel) {
-		// Clear existing trades
-		getOffers().clear();
-
-		List<TradeGroup> tradeGroups = TradeLoader.TRADES.get(getType()).tradeGroups();
-		for (TradeGroup group : tradeGroups) {
-			int entries = group.entries();
-			VillagerTrades.ItemListing[] trades = group.trades().stream()
-					.map(trade -> (VillagerTrades.ItemListing) new SimpleItemListing(
-							trade.item1(),
-							trade.item2(),
-							trade.result(),
-							trade.maxUses(),
-							trade.xpReward(),
-							trade.priceMultiplier()
-					))
-					.toArray(VillagerTrades.ItemListing[]::new);
-
-			addOffersFromItemListings(serverLevel, getOffers(), trades, entries);
-		}
 	}
 
 	@Nullable

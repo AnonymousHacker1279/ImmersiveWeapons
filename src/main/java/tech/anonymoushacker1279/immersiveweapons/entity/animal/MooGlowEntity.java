@@ -42,6 +42,11 @@ public class MooGlowEntity extends AbstractCow implements IShearable, GrantAdvan
 		super(type, level);
 	}
 
+	public static boolean checkSpawnRules(EntityType<? extends Animal> entityType, LevelAccessor level, EntitySpawnReason spawnReason, BlockPos pos, RandomSource random) {
+		boolean brightEnough = EntitySpawnReason.ignoresLightRequirements(spawnReason) || level.getRawBrightness(pos, 0) > 4;
+		return level.getBlockState(pos.below()).is(BlockTags.ANIMALS_SPAWNABLE_ON) && brightEnough;
+	}
+
 	@Override
 	public InteractionResult mobInteract(Player player, InteractionHand hand) {
 		ItemStack itemInHand = player.getItemInHand(hand);
@@ -75,9 +80,7 @@ public class MooGlowEntity extends AbstractCow implements IShearable, GrantAdvan
 			return List.of();
 		}
 
-		convertTo(EntityType.COW, ConversionParams.single(this, false, false), cow -> {
-			EventHooks.onLivingConvert(this, cow);
-		});
+		convertTo(EntityType.COW, ConversionParams.single(this, false, false), cow -> EventHooks.onLivingConvert(this, cow));
 
 		for (int i = 0; i < 12; i++) {
 			level.addParticle(ParticleTypesRegistry.MOONGLOW_PARTICLE.get(), getX(), getY() + 0.5D, getZ(),
@@ -124,10 +127,5 @@ public class MooGlowEntity extends AbstractCow implements IShearable, GrantAdvan
 	public void aiStep() {
 		super.aiStep();
 		checkForDiscovery(this);
-	}
-
-	public static boolean checkSpawnRules(EntityType<? extends Animal> entityType, LevelAccessor level, EntitySpawnReason spawnReason, BlockPos pos, RandomSource random) {
-		boolean brightEnough = EntitySpawnReason.ignoresLightRequirements(spawnReason) || level.getRawBrightness(pos, 0) > 4;
-		return level.getBlockState(pos.below()).is(BlockTags.ANIMALS_SPAWNABLE_ON) && brightEnough;
 	}
 }

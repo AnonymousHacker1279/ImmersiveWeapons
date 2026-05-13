@@ -1,7 +1,7 @@
 {
-  "parent": "minecraft:block/cross",
-  "render_type": "minecraft:cutout",
+  "parent": "minecraft:block/cross_emissive",
   "textures": {
-    "cross": "immersiveweapons:block/moonglow"
+    "cross": "immersiveweapons:block/moonglow",
+    "cross_emissive": "immersiveweapons:block/moonglow_emissive"
   }
 }

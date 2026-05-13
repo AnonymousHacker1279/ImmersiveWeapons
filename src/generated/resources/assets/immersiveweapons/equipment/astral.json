@@ -5,6 +5,11 @@
         "texture": "immersiveweapons:astral"
       }
     ],
+    "humanoid_baby": [
+      {
+        "texture": "immersiveweapons:astral"
+      }
+    ],
     "humanoid_leggings": [
       {
         "texture": "immersiveweapons:astral"

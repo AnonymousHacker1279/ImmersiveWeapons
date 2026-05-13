@@ -42,7 +42,7 @@ public class StormCreeperEntity extends Creeper implements GrantAdvancementOnDis
 
 	@Override
 	protected int getBaseExperienceReward(ServerLevel level) {
-		xpReward = 5 + level.random.nextInt(5);
+		xpReward = 5 + level.getRandom().nextInt(5);
 		return super.getBaseExperienceReward(level);
 	}
 }

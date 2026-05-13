@@ -43,11 +43,9 @@ public class BarrelTapBlock extends BasicOrientableBlock implements SimpleWaterl
 	private static final VoxelShape SHAPE_EAST = Block.box(0.0D, 4.0D, 7.0D, 3.0D, 7.0D, 9.0D);
 	private static final VoxelShape SHAPE_WEST = Block.box(13.0D, 4.0D, 7.0D, 16.0D, 7.0D, 9.0D);
 
-	/**
-	 * Constructor for BarrelTapBlock.
-	 *
-	 * @param properties the <code>Properties</code> of the block
-	 */
+	/// Constructor for BarrelTapBlock.
+	///
+	/// @param properties the `Properties` of the block
 	public BarrelTapBlock(Properties properties) {
 		super(properties);
 		registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false));
@@ -62,26 +60,22 @@ public class BarrelTapBlock extends BasicOrientableBlock implements SimpleWaterl
 		return blockState.getBlock() instanceof BarrelBlock && blockState.getValue(BarrelBlock.FACING) == facingDirection;
 	}
 
-	/**
-	 * Set FluidState properties. Allows the block to exhibit waterlogged behavior.
-	 *
-	 * @param state the <code>BlockState</code> of the block
-	 * @return FluidState
-	 */
+	/// Set FluidState properties. Allows the block to exhibit waterlogged behavior.
+	///
+	/// @param state the `BlockState` of the block
+	/// @return FluidState
 	@Override
 	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 
-	/**
-	 * Set the shape of the block.
-	 *
-	 * @param state            the <code>BlockState</code> of the block
-	 * @param getter           the <code>BlockGetter</code> for the block
-	 * @param pos              the <code>BlockPos</code> the block is at
-	 * @param collisionContext the <code>CollisionContext</code> of the block
-	 * @return VoxelShape
-	 */
+	/// Set the shape of the block.
+	///
+	/// @param state            the `BlockState` of the block
+	/// @param getter           the `BlockGetter` for the block
+	/// @param pos              the `BlockPos` the block is at
+	/// @param collisionContext the `CollisionContext` of the block
+	/// @return VoxelShape
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos, CollisionContext collisionContext) {
 		return switch (state.getValue(FACING)) {
@@ -92,22 +86,18 @@ public class BarrelTapBlock extends BasicOrientableBlock implements SimpleWaterl
 		};
 	}
 
-	/**
-	 * Create the BlockState definition.
-	 *
-	 * @param builder the <code>StateDefinition.Builder</code> of the block
-	 */
+	/// Create the BlockState definition.
+	///
+	/// @param builder the `StateDefinition.Builder` of the block
 	@Override
 	public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(FACING, WATERLOGGED);
 	}
 
-	/**
-	 * Set placement properties. Sets the facing direction of the block for placement.
-	 *
-	 * @param context the <code>BlockPlaceContext</code> during placement
-	 * @return BlockState
-	 */
+	/// Set placement properties. Sets the facing direction of the block for placement.
+	///
+	/// @param context the `BlockPlaceContext` during placement
+	/// @return BlockState
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
 		return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
@@ -129,7 +119,7 @@ public class BarrelTapBlock extends BasicOrientableBlock implements SimpleWaterl
 
 					if (optional.isPresent()) {
 						BarrelTapRecipe recipe = optional.get().value();
-						player.getInventory().add(recipe.result().copy());
+						player.getInventory().add(recipe.result().create());
 						itemInHand.shrink(1);
 						container.removeItem(i, recipe.getMaterialCount());
 

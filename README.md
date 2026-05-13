@@ -5,7 +5,6 @@
 [![](https://cf.way2muchnoise.eu/full_494454_Downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/immersive-weapons)
 [![](https://cf.way2muchnoise.eu/versions/494454.svg)](https://www.curseforge.com/minecraft/mc-mods/immersive-weapons)
 [![](https://img.shields.io/modrinth/dt/QZFdnUQ5?logo=modrinth)](https://modrinth.com/mod/immersive-weapons)
-[![CodeFactor](https://www.codefactor.io/repository/github/anonymoushacker1279/immersiveweapons/badge/master)](https://www.codefactor.io/repository/github/anonymoushacker1279/immersiveweapons/overview/master)
 [![Discord](https://img.shields.io/discord/871953129355214858?color=2a3445)](https://discord.gg/WNMCTg7TsT)
 
 ## A weapons mod for Minecraft
@@ -18,14 +17,13 @@ intrusion by invaders.
 
 A few things that will be the highlight of your experience:
 
-- Tiered Pikes, so you can stab someone from way over there
-- Flintlock Pistol, Blunderbuss, and Musket, so you can shoot someone from way over there
-- New and Powerful Swords, so you can slice someone that isn't way over there
-- Tiered Gauntlets, so you can punch someone that isn't way over there, but not over there enough to use a sword
-- Medical Equipment, so you can survive getting stabbed, shot, and sliced
-- Environmental Traps, so you can stop people from coming over to stab, shoot, and slice you
-- Accessories, to improve your ability to stab, shoot, and slice people (or to improve your ability to not get stabbed,
-  shot, and sliced)
+- New and Powerful Swords
+- Mauls and Gauntlets
+- Flintlock Pistol, Blunderbuss, Musket, and more firearms
+- Medical Equipment
+- Environmental Traps
+- Accessories
+- A new dimension and biomes to explore
 
 A few other notes:
 
@@ -44,16 +42,14 @@ A few other notes:
 Active development will be focused on the latest Minecraft version. You should upgrade to newer versions of Immersive
 Weapons for bug fixes and new features.
 
-When looking at the mod file, the version looks like
-this: `ImmersiveWeapons-<Minecraft version>-<Immersive Weapons version>`. For example, `ImmersiveWeapons-1.18.2-1.15.0`.
-
 This table lists the latest Immersive Weapons version for a Minecraft version. If anything is listed other than
 **Latest**, consider it to be at the End of Life. In some cases, an older version will receive bugfixes should the
 community describe an interest in it (This excludes versions listed as **N/A - Build From Source**).
 
 | MC Version | Immersive Weapons Latest Version                                                                     |
 |------------|------------------------------------------------------------------------------------------------------|
-| 1.21.11    | [Latest](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases)                           |
+| 26.1.2     | [Latest](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases)                           |
+| 1.21.11    | [1.36.0](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.36.0)               |
 | 1.21.10    | [1.34.0](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.34.0)               |
 | 1.21.8     | [1.33.0](https://github.com/AnonymousHacker1279/ImmersiveWeapons/releases/tag/v1.33.0)               |
 | 1.21.7     | [N/A - Build From Source](https://github.com/AnonymousHacker1279/ImmersiveWeapons/tree/1.21.7-dev)   |

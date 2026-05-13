@@ -30,15 +30,15 @@ import java.util.List;
 
 public class FlareEntity extends BulletEntity implements ItemSupplier {
 
-	private int explodeDelay = 45;
-	private int deathDelay = 600;
-	private BlockPos previousLightPosition = BlockPos.ZERO;
-	private final List<BlockPos> lightPositions = new ArrayList<>(10);
-	private boolean hasHitEntity = false;
 	static final BlockState lightState = Blocks.LIGHT.defaultBlockState();
 	static final BlockState airState = Blocks.AIR.defaultBlockState();
 	private static final EntityDataAccessor<Boolean> USE_LEGACY_LIGHTING = SynchedEntityData.defineId(FlareEntity.class,
 			EntityDataSerializers.BOOLEAN);
+	private final List<BlockPos> lightPositions = new ArrayList<>(10);
+	private int explodeDelay = 45;
+	private int deathDelay = 600;
+	private BlockPos previousLightPosition = BlockPos.ZERO;
+	private boolean hasHitEntity = false;
 
 	public FlareEntity(EntityType<? extends Arrow> entityType, Level level) {
 		super(entityType, level);
@@ -124,11 +124,9 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 		}
 	}
 
-	/**
-	 * Runs when an entity is hit.
-	 *
-	 * @param entity the <code>Entity</code> being hit
-	 */
+	/// Runs when an entity is hit.
+	///
+	/// @param entity the `Entity` being hit
 	@Override
 	protected void doWhenHitEntity(Entity entity) {
 		super.doWhenHitEntity(entity);
@@ -140,11 +138,9 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 		}
 	}
 
-	/**
-	 * Get the item associated with this entity.
-	 *
-	 * @return ItemStack
-	 */
+	/// Get the item associated with this entity.
+	///
+	/// @return ItemStack
 	@Override
 	public ItemStack getItem() {
 		return new ItemStack(ItemRegistry.FLARE.get());

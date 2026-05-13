@@ -18,9 +18,9 @@ import java.util.List;
 
 public class MolotovEntity extends AdvancedThrowableItemProjectile {
 
-	private static final byte VANILLA_IMPACT_STATUS_ID = 3;
 	static final BlockState airState = Blocks.AIR.defaultBlockState();
 	static final BlockState fireState = Blocks.FIRE.defaultBlockState();
+	private static final byte VANILLA_IMPACT_STATUS_ID = 3;
 
 	public MolotovEntity(EntityType<? extends MolotovEntity> entityType, Level level) {
 		super(entityType, level);
@@ -34,22 +34,18 @@ public class MolotovEntity extends AdvancedThrowableItemProjectile {
 		super(EntityRegistry.MOLOTOV_COCKTAIL_ENTITY.get(), level, x, y, z, ItemRegistry.MOLOTOV_COCKTAIL.get().getDefaultInstance());
 	}
 
-	/**
-	 * ProjectileItemEntity::setItem uses this to save storage space. It only stores the itemStack if the itemStack is
-	 * not the default item.
-	 *
-	 * @return Item
-	 */
+	/// ProjectileItemEntity::setItem uses this to save storage space. It only stores the itemStack if the itemStack is
+	/// not the default item.
+	///
+	/// @return Item
 	@Override
 	protected Item getDefaultItem() {
 		return ItemRegistry.MOLOTOV_COCKTAIL.get();
 	}
 
-	/**
-	 * Runs when an entity/block is hit.
-	 *
-	 * @param rayTraceResult the <code>RayTraceResult</code> instance
-	 */
+	/// Runs when an entity/block is hit.
+	///
+	/// @param rayTraceResult the `RayTraceResult` instance
 	@Override
 	protected void onHit(HitResult rayTraceResult) {
 		super.onHit(rayTraceResult);
@@ -84,13 +80,11 @@ public class MolotovEntity extends AdvancedThrowableItemProjectile {
 		}
 	}
 
-	/**
-	 * Move the position down until a solid block is under it.
-	 *
-	 * @param pos          the <code>BlockPos</code> being moved
-	 * @param distanceDown the number of blocks to try moving down
-	 * @return BlockPos
-	 */
+	/// Move the position down until a solid block is under it.
+	///
+	/// @param pos          the `BlockPos` being moved
+	/// @param distanceDown the number of blocks to try moving down
+	/// @return BlockPos
 	private BlockPos adjustFirePosition(BlockPos pos, int distanceDown) {
 		BlockPos movedPosition = pos;
 		for (int i = 0; i <= distanceDown; i++) {
@@ -102,11 +96,9 @@ public class MolotovEntity extends AdvancedThrowableItemProjectile {
 		return pos;
 	}
 
-	/**
-	 * Handle entity events.
-	 *
-	 * @param statusID the <code>byte</code> containing status ID
-	 */
+	/// Handle entity events.
+	///
+	/// @param statusID the `byte` containing status ID
 	@Override
 	public void handleEntityEvent(byte statusID) {
 		if (statusID == VANILLA_IMPACT_STATUS_ID) {

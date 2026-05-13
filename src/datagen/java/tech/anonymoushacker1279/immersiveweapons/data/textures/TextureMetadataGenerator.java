@@ -21,12 +21,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-/**
- * Automatically generates animated texture metadata for items and blocks. Registry fields must be annotated with
- * {@link TextureMetadataMarker} to be included in the generation process.
- * <p>
- * Fields under {@link ItemRegistry} and {@link BlockRegistry} are automatically scanned for the annotation.
- */
+/// Automatically generates animated texture metadata for items and blocks. Registry fields must be annotated with
+/// [TextureMetadataMarker] to be included in the generation process.
+///
+/// Fields under [ItemRegistry] and [BlockRegistry] are automatically scanned for the annotation.
 public record TextureMetadataGenerator(PackOutput packOutput) implements DataProvider {
 
 	private static final List<TextureMetadata> METADATA = new ArrayList<>(5);

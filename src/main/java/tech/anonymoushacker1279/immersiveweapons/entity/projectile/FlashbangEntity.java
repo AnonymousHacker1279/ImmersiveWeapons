@@ -66,7 +66,7 @@ public class FlashbangEntity extends AdvancedThrowableItemProjectile {
 											200, 0, true, false, false));
 								}
 							}
-						} else if (entity instanceof Mob mob && !mob.getType().is(EntityTypes.BOSSES)) {
+						} else if (entity instanceof Mob mob && !mob.is(EntityTypes.BOSSES)) {
 							if (canSee(mob, this, false)) {
 								mob.goalSelector.addGoal(1, new DisorientedWanderingGoal(mob, IWConfigs.SERVER.flashbangDisorientTime.getAsInt() * 20));
 								mob.addEffect(new MobEffectInstance(MobEffects.SLOWNESS,

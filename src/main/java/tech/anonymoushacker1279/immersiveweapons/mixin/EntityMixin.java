@@ -12,15 +12,11 @@ import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IW
 
 import java.util.List;
 
-/**
- * See individual methods for notes.
- */
+/// See individual methods for notes.
 @Mixin(Entity.class)
 public abstract class EntityMixin {
 
-	/**
-	 * Allow an entity to dampen vibrations if wearing padded leather armor.
-	 */
+	/// Allow an entity to dampen vibrations if wearing padded leather armor.
 	@Inject(method = "dampensVibrations", at = @At("RETURN"), cancellable = true)
 	public void dampensVibrations(CallbackInfoReturnable<Boolean> ci) {
 		// Check if the entity is wearing padded leather armor

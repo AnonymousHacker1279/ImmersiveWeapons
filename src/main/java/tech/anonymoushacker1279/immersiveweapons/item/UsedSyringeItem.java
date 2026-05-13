@@ -12,11 +12,9 @@ import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
 public class UsedSyringeItem extends Item {
 
-	/**
-	 * Constructor for UsedSyringeItem.
-	 *
-	 * @param properties the <code>Properties</code> for the item
-	 */
+	/// Constructor for UsedSyringeItem.
+	///
+	/// @param properties the `Properties` for the item
 	public UsedSyringeItem(Properties properties) {
 		super(properties);
 	}

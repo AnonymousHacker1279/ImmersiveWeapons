@@ -15,9 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Builder for creating accessory effects.
- */
+/// Builder for creating accessory effects.
 public class AccessoryEffectBuilder {
 
 	private final List<AccessoryEffectInstance> effects = new ArrayList<>(5);
@@ -26,87 +24,73 @@ public class AccessoryEffectBuilder {
 	private final List<MobEffectInstance> mobEffects = new ArrayList<>(5);
 	private final List<SerializableTooltip> tooltips = new ArrayList<>(5);
 
-	/**
-	 * Add an effect to the accessory. See {@link AccessoryEffectTypeRegistry} for a list of available effects.
-	 *
-	 * @param type  the <code>AccessoryEffectType</code>
-	 * @param value the value of the effect
-	 * @return the <code>EffectBuilder</code> for chaining
-	 */
+	/// Add an effect to the accessory. See [AccessoryEffectTypeRegistry] for a list of available effects.
+	///
+	/// @param type  the `AccessoryEffectType`
+	/// @param value the value of the effect
+	/// @return the `EffectBuilder` for chaining
 	public AccessoryEffectBuilder addEffect(AccessoryEffectType type, double value) {
 		effects.add(new AccessoryEffectInstance(type, Optional.empty(), value));
 		return this;
 	}
 
-	/**
-	 * Add an effect to the accessory. See {@link AccessoryEffectTypeRegistry} for a list of available effects. Accepts
-	 * a scaling type, which will be used to scale the effect value based player conditions.
-	 *
-	 * @param type        the <code>AccessoryEffectType</code>
-	 * @param value       the value of the effect
-	 * @param scalingType the <code>AccessoryEffectScalingType</code> to use
-	 * @return the <code>EffectBuilder</code> for chaining
-	 */
+	/// Add an effect to the accessory. See [AccessoryEffectTypeRegistry] for a list of available effects. Accepts a
+	/// scaling type, which will be used to scale the effect value based player conditions.
+	///
+	/// @param type        the `AccessoryEffectType`
+	/// @param value       the value of the effect
+	/// @param scalingType the `AccessoryEffectScalingType` to use
+	/// @return the `EffectBuilder` for chaining
 	public AccessoryEffectBuilder addEffect(AccessoryEffectType type, double value, AccessoryEffectScalingType scalingType) {
 		effects.add(new AccessoryEffectInstance(type, Optional.of(scalingType), value));
 		return this;
 	}
 
-	/**
-	 * Add an attribute modifier to the accessory. These are static and unchanging in value.
-	 *
-	 * @param modifier  the <code>AttributeModifier</code>
-	 * @param attribute the <code>Attribute</code>
-	 * @return the <code>EffectBuilder</code> for chaining
-	 */
+	/// Add an attribute modifier to the accessory. These are static and unchanging in value.
+	///
+	/// @param modifier  the `AttributeModifier`
+	/// @param attribute the `Attribute`
+	/// @return the `EffectBuilder` for chaining
 	public AccessoryEffectBuilder addAttributeModifier(AttributeModifier modifier, Holder<Attribute> attribute) {
 		attributeModifiers.add(new AttributeOperation(modifier, attribute));
 		return this;
 	}
 
-	/**
-	 * Add a dynamic attribute modifier to the accessory. These are reconstructed as necessary to achieve the target
-	 * value.
-	 *
-	 * @param modifier    the <code>AttributeModifier</code>
-	 * @param attribute   the <code>Attribute</code>
-	 * @param targetValue the target value of the attribute
-	 * @return the <code>EffectBuilder</code> for chaining
-	 */
+	/// Add a dynamic attribute modifier to the accessory. These are reconstructed as necessary to achieve the target
+	/// value.
+	///
+	/// @param modifier    the `AttributeModifier`
+	/// @param attribute   the `Attribute`
+	/// @param targetValue the target value of the attribute
+	/// @return the `EffectBuilder` for chaining
 	public AccessoryEffectBuilder addDynamicAttributeModifier(AttributeModifier modifier, Holder<Attribute> attribute, double targetValue) {
 		dynamicAttributeModifiers.add(new DynamicAttributeOperationInstance(new AttributeOperation(modifier, attribute), targetValue));
 		return this;
 	}
 
-	/**
-	 * Add a mob effect to the accessory.
-	 *
-	 * @param effect the <code>MobEffectInstance</code>
-	 * @return the <code>EffectBuilder</code> for chaining
-	 */
+	/// Add a mob effect to the accessory.
+	///
+	/// @param effect the `MobEffectInstance`
+	/// @return the `EffectBuilder` for chaining
 	public AccessoryEffectBuilder addMobEffect(MobEffectInstance effect) {
 		mobEffects.add(effect);
 		return this;
 	}
 
-	/**
-	 * Add a tooltip to the accessory.
-	 *
-	 * @param key     the translation key for the tooltip
-	 * @param formats the <code>ChatFormatting</code> to apply to the tooltip
-	 * @return the <code>EffectBuilder</code> for chaining
-	 */
+	/// Add a tooltip to the accessory.
+	///
+	/// @param key     the translation key for the tooltip
+	/// @param formats the `ChatFormatting` to apply to the tooltip
+	/// @return the `EffectBuilder` for chaining
 	public AccessoryEffectBuilder addTooltip(String key, ChatFormatting... formats) {
 		tooltips.add(SerializableTooltip.fromComponent(key, formats));
 		return this;
 	}
 
-	/**
-	 * Add all effects from another builder to this builder.
-	 *
-	 * @param builder the <code>EffectBuilder</code> to add from
-	 * @return the <code>EffectBuilder</code> for chaining
-	 */
+	/// Add all effects from another builder to this builder.
+	///
+	/// @param builder the `EffectBuilder` to add from
+	/// @return the `EffectBuilder` for chaining
 	public AccessoryEffectBuilder addObjectsFromBuilder(AccessoryEffectBuilder builder) {
 		effects.addAll(builder.getEffects());
 		attributeModifiers.addAll(builder.getAttributeModifiers());

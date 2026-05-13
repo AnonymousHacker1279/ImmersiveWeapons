@@ -28,11 +28,9 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.Stream;
 
-/**
- * Some language categories are automatically generated based on the contents of registries. Exclusions can be made
- * using the {@link DatagenExclusionMarker} annotation, and language entries can be overridden using the
- * {@link LanguageEntryOverride} annotation.
- */
+/// Some language categories are automatically generated based on the contents of registries. Exclusions can be made
+/// using the [DatagenExclusionMarker] annotation, and language entries can be overridden using the
+/// [LanguageEntryOverride] annotation.
 public class LanguageGenerator extends IWLanguageProvider {
 
 	private static final Map<LanguageCategory, List<DeferredHolder<?, ?>>> LANGUAGE_EXCLUSIONS = new HashMap<>(50);
@@ -51,9 +49,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		}
 	}
 
-	/**
-	 * Gather all language exclusions and overrides from the registry classes.
-	 */
+	/// Gather all language exclusions and overrides from the registry classes.
 	private static void init() {
 		for (Class<?> registryClass : REGISTRY_CLASSES) {
 			for (Field field : registryClass.getDeclaredFields()) {
@@ -1255,12 +1251,10 @@ public class LanguageGenerator extends IWLanguageProvider {
 		add("tooltip.iwcompatbridge.accessory_note", "Equip this in a Curios slot to gain the effect.");
 	}
 
-	/**
-	 * Capitalizes the first letter of each word in a string.
-	 *
-	 * @param str the string to capitalize
-	 * @return the capitalized string
-	 */
+	/// Capitalizes the first letter of each word in a string.
+	///
+	/// @param str the string to capitalize
+	/// @return the capitalized string
 	private String capitalizeWords(String str) {
 		String[] words = str.split(" ");
 		StringBuilder capitalizedString = new StringBuilder(25);

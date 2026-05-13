@@ -25,14 +25,14 @@ import java.util.function.Supplier;
 public class CustomArrowItem<T extends CustomArrowEntity> extends ArrowItem {
 
 	public final Supplier<EntityType<T>> entitySupplier;
+	public final double damage;
+	public final int color;
+	final double gravityModifier;
 	private final int pierceLevel;
 	private final boolean canBeInfinite;
-	final double gravityModifier;
 	private final InaccuracySettings inaccuracySettings;
 	private final int knockbackStrength;
-	public final double damage;
 	private final HitEffect hitEffect;
-	public final int color;
 
 	protected CustomArrowItem(Properties properties, double damage, Supplier<EntityType<T>> arrowEntity,
 	                          int pierceLevel, boolean canBeInfinite, double gravityModifier,
@@ -86,15 +86,13 @@ public class CustomArrowItem<T extends CustomArrowEntity> extends ArrowItem {
 		}
 	}
 
-	/**
-	 * Check if the arrow is infinite. A more flexible check than Vanilla provides. Restricts the ability to lower level
-	 * arrows for balance.
-	 *
-	 * @param arrow   the arrow being checked
-	 * @param bow     the bow firing the arrow
-	 * @param shooter the entity firing the bow
-	 * @return boolean
-	 */
+	/// Check if the arrow is infinite. A more flexible check than Vanilla provides. Restricts the ability to lower
+	/// level arrows for balance.
+	///
+	/// @param arrow   the arrow being checked
+	/// @param bow     the bow firing the arrow
+	/// @param shooter the entity firing the bow
+	/// @return boolean
 	@Override
 	public boolean isInfinite(ItemStack arrow, ItemStack bow, LivingEntity shooter) {
 		HolderGetter<Enchantment> enchantmentGetter = shooter.registryAccess().lookup(Registries.ENCHANTMENT).orElseThrow();

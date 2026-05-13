@@ -2,7 +2,6 @@
   "type": "minecraft:stonecutting",
   "ingredient": "immersiveweapons:blood_sandstone",
   "result": {
-    "count": 1,
     "id": "immersiveweapons:blood_sandstone_stairs"
   }
 }

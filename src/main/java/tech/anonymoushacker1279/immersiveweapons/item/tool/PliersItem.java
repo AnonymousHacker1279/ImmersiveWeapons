@@ -37,16 +37,16 @@ public class PliersItem extends Item {
 		if (context.getLevel().getBlockEntity(context.getClickedPos()) instanceof TeleporterBlockEntity blockEntity) {
 			if (linkedTeleporterPos != null) {
 				blockEntity.setLinkedTeleporter(linkedTeleporterPos, linkedTeleporterDimension);
-				player.displayClientMessage(Component.translatable("immersiveweapons.item.pliers.set_linked_teleporter", linkedTeleporterPos.getX(), linkedTeleporterPos.getY(), linkedTeleporterPos.getZ())
-						.withStyle(ChatFormatting.GREEN), true);
+				player.sendOverlayMessage(Component.translatable("immersiveweapons.item.pliers.set_linked_teleporter", linkedTeleporterPos.getX(), linkedTeleporterPos.getY(), linkedTeleporterPos.getZ())
+						.withStyle(ChatFormatting.GREEN));
 
 				linkedTeleporterPos = null;
 				linkedTeleporterDimension = null;
 			} else {
 				linkedTeleporterPos = context.getClickedPos();
 				linkedTeleporterDimension = context.getLevel().dimension().identifier();
-				player.displayClientMessage(Component.translatable("immersiveweapons.item.pliers.store_linked_teleporter", linkedTeleporterPos.getX(), linkedTeleporterPos.getY(), linkedTeleporterPos.getZ())
-						.withStyle(ChatFormatting.GREEN), true);
+				player.sendOverlayMessage(Component.translatable("immersiveweapons.item.pliers.store_linked_teleporter", linkedTeleporterPos.getX(), linkedTeleporterPos.getY(), linkedTeleporterPos.getZ())
+						.withStyle(ChatFormatting.GREEN));
 			}
 
 			return InteractionResult.SUCCESS;
@@ -54,8 +54,8 @@ public class PliersItem extends Item {
 			if (player.isCrouching() && linkedTeleporterPos != null && linkedTeleporterDimension != null) {
 				linkedTeleporterPos = null;
 				linkedTeleporterDimension = null;
-				player.displayClientMessage(Component.translatable("immersiveweapons.item.pliers.clear_linked_teleporter")
-						.withStyle(ChatFormatting.RED), true);
+				player.sendOverlayMessage(Component.translatable("immersiveweapons.item.pliers.clear_linked_teleporter")
+						.withStyle(ChatFormatting.RED));
 			}
 		}
 

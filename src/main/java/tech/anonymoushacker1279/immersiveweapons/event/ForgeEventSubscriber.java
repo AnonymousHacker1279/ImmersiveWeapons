@@ -69,8 +69,6 @@ import tech.anonymoushacker1279.immersiveweapons.api.events.ComputeEnchantedLoot
 import tech.anonymoushacker1279.immersiveweapons.block.StarstormCrystalBlock;
 import tech.anonymoushacker1279.immersiveweapons.data.IWEnchantments;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.StarmiteEntity;
-import tech.anonymoushacker1279.immersiveweapons.entity.npc.trading.MerchantTrades;
-import tech.anonymoushacker1279.immersiveweapons.entity.npc.trading.TradeLoader;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MeteorEntity;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MudBallEntity;
 import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryEffects;
@@ -85,14 +83,12 @@ import tech.anonymoushacker1279.immersiveweapons.item.armor.TickableArmor;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.PistonCrushingRecipe;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.DamageIndicatorPayload;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.SyncAccessoryDataPayload;
-import tech.anonymoushacker1279.immersiveweapons.network.payload.SyncMerchantTradesPayload;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.SyncPlayerDataPayload;
 import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.Set;
 
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID)
@@ -372,7 +368,7 @@ public class ForgeEventSubscriber {
 			}
 		}
 
-		if (dyingEntity.getTags().contains("ChampionTowerMinibossSpider")) {
+		if (dyingEntity.entityTags().contains("ChampionTowerMinibossSpider")) {
 			Level level = dyingEntity.level();
 			for (int i = 0; i < 10; i++) {
 				CaveSpider spider = EntityType.CAVE_SPIDER.create(level, EntitySpawnReason.EVENT);
@@ -412,7 +408,7 @@ public class ForgeEventSubscriber {
 		}
 
 		// Handle Big Slime in the Champion Tower, because size is overridden during finalizeSpawn...
-		if (event.getEntity() instanceof Slime slime && slime.getTags().contains("ChampionTowerMiniboss") && slime.getSpawnType() == EntitySpawnReason.STRUCTURE) {
+		if (event.getEntity() instanceof Slime slime && slime.entityTags().contains("ChampionTowerMiniboss") && slime.getSpawnType() == EntitySpawnReason.STRUCTURE) {
 			slime.setSize(4, true);
 			slime.getAttribute(Attributes.MAX_HEALTH).setBaseValue(150.0d);
 			slime.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(50.0d);
@@ -446,7 +442,7 @@ public class ForgeEventSubscriber {
 
 			// If a recipe was found, drop the output of the recipe
 			if (recipe != null) {
-				ItemStack drop = recipe.value().result().copy();
+				ItemStack drop = recipe.value().result().create();
 				drop.setCount(recipe.value().getRandomDropAmount());
 				Block.popResource(level, belowPos, drop);
 
@@ -589,7 +585,6 @@ public class ForgeEventSubscriber {
 
 	@SubscribeEvent
 	public static void addReloadListenerEvent(AddServerReloadListenersEvent event) {
-		event.addListener(TradeLoader.ID, new TradeLoader());
 		event.addListener(AccessoryLoader.ID, new AccessoryLoader());
 	}
 
@@ -650,16 +645,9 @@ public class ForgeEventSubscriber {
 				PotionRegistry.LONG_BROKEN_ARMOR_POTION);
 	}
 
-
 	@SubscribeEvent
 	public static void onDatapackSyncEvent(OnDatapackSyncEvent event) {
 		ImmersiveWeapons.LOGGER.info("Syncing datapack objects");
-
-		for (Entry<EntityType<?>, MerchantTrades> entry : TradeLoader.TRADES.entrySet()) {
-			SyncMerchantTradesPayload payload = new SyncMerchantTradesPayload(entry.getKey(), entry.getValue());
-			PacketDistributor.sendToAllPlayers(payload);
-		}
-
 		event.sendRecipes(RecipeTypeRegistry.STAR_FORGE_RECIPE_TYPE.get(), RecipeTypeRegistry.SMALL_PARTS_RECIPE_TYPE.get());
 	}
 }

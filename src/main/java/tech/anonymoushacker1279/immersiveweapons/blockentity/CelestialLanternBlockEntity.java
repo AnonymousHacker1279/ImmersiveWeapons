@@ -11,20 +11,16 @@ import tech.anonymoushacker1279.immersiveweapons.world.level.saveddata.Celestial
 
 public class CelestialLanternBlockEntity extends BlockEntity implements EntityBlock {
 
-	/**
-	 * Constructor for CelestialLanternBlockEntity.
-	 */
+	/// Constructor for CelestialLanternBlockEntity.
 	public CelestialLanternBlockEntity(BlockPos blockPos, BlockState blockState) {
 		super(BlockEntityRegistry.CELESTIAL_LANTERN_BLOCK_ENTITY.get(), blockPos, blockState);
 	}
 
-	/**
-	 * Create a block entity for the block.
-	 *
-	 * @param blockPos   the <code>BlockPos</code> the block is at
-	 * @param blockState the <code>BlockState</code> of the block
-	 * @return BlockEntity
-	 */
+	/// Create a block entity for the block.
+	///
+	/// @param blockPos   the `BlockPos` the block is at
+	/// @param blockState the `BlockState` of the block
+	/// @return BlockEntity
 	@Nullable
 	@Override
 	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {

@@ -14,6 +14,7 @@ import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.MenuTypeRegistry;
@@ -28,18 +29,16 @@ import java.util.List;
 
 public class SmallPartsMenu extends AbstractContainerMenu {
 
+	public static final List<Pair<Item, Item>> ALL_CRAFTABLES = new ArrayList<>(15);
 	private static final int INV_SLOT_START = 4;
 	private static final int INV_SLOT_END_USE_ROW_SLOT_START = 31;
 	private static final int USE_ROW_SLOT_END = 38;
-	public static final List<Pair<Item, Item>> ALL_CRAFTABLES = new ArrayList<>(15);
 	private final ContainerLevelAccess access;
 	private final DataSlot selectedPartsPatternIndex = DataSlot.standalone();
-	private Runnable slotUpdateListener = () -> {
-	};
 	private final Slot materialSlot;
 	private final Slot resultSlot;
-	private long lastSoundTime;
-
+	private Runnable slotUpdateListener = () -> {
+	};
 	private final Container inputContainer = new SimpleContainer(1) {
 		@Override
 		public void setChanged() {
@@ -48,6 +47,7 @@ public class SmallPartsMenu extends AbstractContainerMenu {
 			slotUpdateListener.run();
 		}
 	};
+	private long lastSoundTime;
 
 	public SmallPartsMenu(int containerID, Inventory inventory) {
 		this(containerID, inventory, ContainerLevelAccess.NULL);
@@ -112,13 +112,11 @@ public class SmallPartsMenu extends AbstractContainerMenu {
 	public static void initializeRecipes(Collection<RecipeHolder<SmallPartsRecipe>> recipes) {
 		for (RecipeHolder<SmallPartsRecipe> recipeHolder : recipes) {
 			SmallPartsRecipe recipe = recipeHolder.value();
-			for (ItemStack craftable : recipe.craftables()) {
-				if (!craftable.isEmpty()) {
-					for (Holder<Item> material : recipe.input().getValues()) {
-						Pair<Item, Item> pair = new Pair<>(material.value(), craftable.getItem());
-						if (!ALL_CRAFTABLES.contains(pair)) {
-							ALL_CRAFTABLES.add(pair);
-						}
+			for (ItemStackTemplate craftable : recipe.craftables()) {
+				for (Holder<Item> material : recipe.input().getValues()) {
+					Pair<Item, Item> pair = new Pair<>(material.value(), craftable.item().value());
+					if (!ALL_CRAFTABLES.contains(pair)) {
+						ALL_CRAFTABLES.add(pair);
 					}
 				}
 			}
@@ -145,9 +143,7 @@ public class SmallPartsMenu extends AbstractContainerMenu {
 		return selectedPartsPatternIndex.get();
 	}
 
-	/**
-	 * Determines whether supplied player can use this container
-	 */
+	/// Determines whether supplied player can use this container
 	@Override
 	public boolean stillValid(Player pPlayer) {
 		return stillValid(access, pPlayer, BlockRegistry.SMALL_PARTS_TABLE.get());
@@ -164,9 +160,7 @@ public class SmallPartsMenu extends AbstractContainerMenu {
 		}
 	}
 
-	/**
-	 * Callback for when the crafting matrix is changed.
-	 */
+	/// Callback for when the crafting matrix is changed.
 	@Override
 	public void slotsChanged(Container pInventory) {
 		resultSlot.set(ItemStack.EMPTY);
@@ -180,10 +174,8 @@ public class SmallPartsMenu extends AbstractContainerMenu {
 		slotUpdateListener = runnable;
 	}
 
-	/**
-	 * Handle when the ingredient in slot {@code index} is shift-clicked. Normally this moves the ingredient between the
-	 * player inventory and the other inventory(s).
-	 */
+	/// Handle when the ingredient in slot `index` is shift-clicked. Normally this moves the ingredient between the
+	/// player inventory and the other inventory(s).
 	@Override
 	public ItemStack quickMoveStack(Player pPlayer, int pIndex) {
 		ItemStack stack = ItemStack.EMPTY;
@@ -227,9 +219,7 @@ public class SmallPartsMenu extends AbstractContainerMenu {
 		return stack;
 	}
 
-	/**
-	 * Called when the container is closed.
-	 */
+	/// Called when the container is closed.
 	@Override
 	public void removed(Player pPlayer) {
 		super.removed(pPlayer);

@@ -8,7 +8,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
-import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.Identifier;
@@ -17,10 +17,19 @@ import tech.anonymoushacker1279.immersiveweapons.entity.projectile.DragonFirebal
 public class DragonFireballBulletRenderer extends EntityRenderer<DragonFireballBulletEntity, EntityRenderState> {
 
 	private static final Identifier TEXTURE_LOCATION = Identifier.withDefaultNamespace("textures/entity/enderdragon/dragon_fireball.png");
-	private static final RenderType RENDER_TYPE = RenderTypes.entityCutoutNoCull(TEXTURE_LOCATION);
+	private static final RenderType RENDER_TYPE = RenderTypes.entityCutout(TEXTURE_LOCATION);
 
 	public DragonFireballBulletRenderer(Context context) {
 		super(context);
+	}
+
+	private static void vertex(VertexConsumer consumer, PoseStack.Pose pose, int packedLight, float x, int y, int u, int v) {
+		consumer.addVertex(pose, x - 0.5F, (float) y - 0.25F, 0.0F)
+				.setColor(-1)
+				.setUv((float) u, (float) v)
+				.setOverlay(OverlayTexture.NO_OVERLAY)
+				.setLight(packedLight)
+				.setNormal(pose, 0.0F, 1.0F, 0.0F);
 	}
 
 	@Override
@@ -46,14 +55,5 @@ public class DragonFireballBulletRenderer extends EntityRenderer<DragonFireballB
 		});
 		stack.popPose();
 		super.submit(state, stack, collector, cameraState);
-	}
-
-	private static void vertex(VertexConsumer consumer, PoseStack.Pose pose, int packedLight, float x, int y, int u, int v) {
-		consumer.addVertex(pose, x - 0.5F, (float) y - 0.25F, 0.0F)
-				.setColor(-1)
-				.setUv((float) u, (float) v)
-				.setOverlay(OverlayTexture.NO_OVERLAY)
-				.setLight(packedLight)
-				.setNormal(pose, 0.0F, 1.0F, 0.0F);
 	}
 }

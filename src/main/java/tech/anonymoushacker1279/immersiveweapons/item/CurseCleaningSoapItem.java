@@ -22,8 +22,8 @@ public class CurseCleaningSoapItem extends Item {
 		// Get all curses in the player's persistent data
 		if (level.isClientSide()) {
 			if (player.getPersistentData().isEmpty()) {
-				player.displayClientMessage(Component.translatable("immersiveweapons.item.curse_cleaning_soap.not_cursed")
-						.withStyle(ChatFormatting.YELLOW), true);
+				player.sendOverlayMessage(Component.translatable("immersiveweapons.item.curse_cleaning_soap.not_cursed")
+						.withStyle(ChatFormatting.YELLOW));
 			}
 
 			handleData(player);
@@ -57,13 +57,13 @@ public class CurseCleaningSoapItem extends Item {
 		);
 
 		if (initialSize != player.getPersistentData().keySet().size()) {
-			player.displayClientMessage(Component.translatable("immersiveweapons.item.curse_cleaning_soap.cleaned")
-					.withStyle(ChatFormatting.GREEN), true);
+			player.sendOverlayMessage(Component.translatable("immersiveweapons.item.curse_cleaning_soap.cleaned")
+					.withStyle(ChatFormatting.GREEN));
 
 			return true;
 		} else {
-			player.displayClientMessage(Component.translatable("immersiveweapons.item.curse_cleaning_soap.not_cursed")
-					.withStyle(ChatFormatting.YELLOW), true);
+			player.sendOverlayMessage(Component.translatable("immersiveweapons.item.curse_cleaning_soap.not_cursed")
+					.withStyle(ChatFormatting.YELLOW));
 
 			return false;
 		}

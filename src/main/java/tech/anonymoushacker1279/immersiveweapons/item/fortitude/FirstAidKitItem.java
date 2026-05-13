@@ -8,11 +8,9 @@ import java.util.List;
 
 public class FirstAidKitItem extends AbstractFortitudeItem {
 
-	/**
-	 * Constructor for FirstAidKitItem.
-	 *
-	 * @param properties the <code>Properties</code> for the item
-	 */
+	/// Constructor for FirstAidKitItem.
+	///
+	/// @param properties the `Properties` for the item
 	public FirstAidKitItem(Properties properties) {
 		super(properties, true);
 	}

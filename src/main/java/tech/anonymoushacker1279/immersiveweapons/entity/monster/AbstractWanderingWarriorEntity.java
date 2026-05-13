@@ -33,31 +33,25 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 
 	protected MeleeAttackGoal meleeAttackGoal = new MeleeAttackGoal(this, 1.2D, false);
 
-	/**
-	 * Constructor for AbstractWanderingWarriorEntity.
-	 *
-	 * @param type  the <code>EntityType</code> instance
-	 * @param level the <code>Level</code> the entity is in
-	 */
+	/// Constructor for AbstractWanderingWarriorEntity.
+	///
+	/// @param type  the `EntityType` instance
+	/// @param level the `Level` the entity is in
 	AbstractWanderingWarriorEntity(EntityType<? extends Monster> type, Level level) {
 		super(type, level);
 		setCombatTask();
 	}
 
-	/**
-	 * Register this entity's attributes.
-	 *
-	 * @return AttributeSupplier.Builder
-	 */
+	/// Register this entity's attributes.
+	///
+	/// @return AttributeSupplier.Builder
 	public static AttributeSupplier.Builder registerAttributes() {
 		return Monster.createMonsterAttributes()
 				.add(Attributes.MOVEMENT_SPEED, 0.25D)
 				.add(Attributes.ARMOR, 4.0D);
 	}
 
-	/**
-	 * Register entity goals and targets.
-	 */
+	/// Register entity goals and targets.
 	@Override
 	protected void registerGoals() {
 		goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));
@@ -79,20 +73,16 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 		checkForDiscovery(this);
 	}
 
-	/**
-	 * Play the step sound.
-	 *
-	 * @param pos   the <code>BlockPos</code> the entity is at
-	 * @param state the <code>BlockState</code> of the block being stepped on
-	 */
+	/// Play the step sound.
+	///
+	/// @param pos   the `BlockPos` the entity is at
+	/// @param state the `BlockState` of the block being stepped on
 	@Override
 	protected void playStepSound(BlockPos pos, BlockState state) {
 		playSound(SoundEventRegistry.WANDERING_WARRIOR_STEP.get(), 1.0F, 1.0F);
 	}
 
-	/**
-	 * Handles updating while riding another entity
-	 */
+	/// Handles updating while riding another entity
 	@Override
 	public void rideTick() {
 		super.rideTick();
@@ -101,11 +91,9 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 		}
 	}
 
-	/**
-	 * Gives armor or weapon for entity based on given DifficultyInstance
-	 *
-	 * @param difficulty the <code>DifficultyInstance</code> of the world
-	 */
+	/// Gives armor or weapon for entity based on given DifficultyInstance
+	///
+	/// @param difficulty the `DifficultyInstance` of the world
 	@Override
 	protected void populateDefaultEquipmentSlots(RandomSource randomSource, DifficultyInstance difficulty) {
 		super.populateDefaultEquipmentSlots(randomSource, difficulty);
@@ -146,9 +134,7 @@ public abstract class AbstractWanderingWarriorEntity extends Monster implements 
 		return super.finalizeSpawn(level, difficulty, spawnReason, spawnGroupData);
 	}
 
-	/**
-	 * Set the entity's combat AI.
-	 */
+	/// Set the entity's combat AI.
 	void setCombatTask() {
 		if (level() instanceof ServerLevel serverLevel) {
 			goalSelector.removeGoal(meleeAttackGoal);

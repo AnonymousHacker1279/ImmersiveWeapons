@@ -12,7 +12,6 @@
   "maxShards": 5,
   "minShards": 2,
   "replacement": {
-    "count": 1,
     "id": "immersiveweapons:wooden_shard"
   }
 }

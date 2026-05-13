@@ -12,6 +12,33 @@ public record SmokeGrenadeParticleOptions(int color, float scale) implements Par
 		this.scale = Mth.clamp(scale, 0.001F, 100.0F);
 	}
 
+	/// Utility for getting particle colors from resources spawning smoke grenade particles.
+	///
+	/// @param colorID the ID representing the color to be selected.
+	///
+	/// 0 -> Gray
+	///
+	/// 1 -> Red
+	///
+	/// 2 -> Green
+	///
+	/// 3 -> Blue
+	///
+	/// 4 -> Purple
+	///
+	/// 5 -> Yellow
+	/// @return SmokeGrenadeParticleOptions
+	public static SmokeGrenadeParticleOptions getParticleByColor(int colorID) {
+		return switch (colorID) {
+			case 1 -> new SmokeGrenadeParticleOptions(SmokeGrenadeColors.RED, 1.0F);
+			case 2 -> new SmokeGrenadeParticleOptions(SmokeGrenadeColors.GREEN, 1.0F);
+			case 3 -> new SmokeGrenadeParticleOptions(SmokeGrenadeColors.BLUE, 1.0F);
+			case 4 -> new SmokeGrenadeParticleOptions(SmokeGrenadeColors.PURPLE, 1.0F);
+			case 5 -> new SmokeGrenadeParticleOptions(SmokeGrenadeColors.YELLOW, 1.0F);
+			default -> new SmokeGrenadeParticleOptions(SmokeGrenadeColors.GRAY, 1.0F);
+		};
+	}
+
 	@Override
 	public ParticleType<SmokeGrenadeParticleOptions> getType() {
 		return ParticleTypesRegistry.SMOKE_GRENADE_PARTICLE.get();
@@ -24,28 +51,5 @@ public record SmokeGrenadeParticleOptions(int color, float scale) implements Par
 		public static final int BLUE = 1644912;
 		public static final int PURPLE = 5046349;
 		public static final int YELLOW = 16318253;
-	}
-
-	/**
-	 * Utility for getting particle colors from resources spawning smoke grenade particles.
-	 *
-	 * @param colorID the ID representing the color to be selected.
-	 *                <br>0 -> Gray
-	 *                <br>1 -> Red
-	 *                <br>2 -> Green
-	 *                <br>3 -> Blue
-	 *                <br>4 -> Purple
-	 *                <br>5 -> Yellow
-	 * @return SmokeGrenadeParticleOptions
-	 */
-	public static SmokeGrenadeParticleOptions getParticleByColor(int colorID) {
-		return switch (colorID) {
-			case 1 -> new SmokeGrenadeParticleOptions(SmokeGrenadeColors.RED, 1.0F);
-			case 2 -> new SmokeGrenadeParticleOptions(SmokeGrenadeColors.GREEN, 1.0F);
-			case 3 -> new SmokeGrenadeParticleOptions(SmokeGrenadeColors.BLUE, 1.0F);
-			case 4 -> new SmokeGrenadeParticleOptions(SmokeGrenadeColors.PURPLE, 1.0F);
-			case 5 -> new SmokeGrenadeParticleOptions(SmokeGrenadeColors.YELLOW, 1.0F);
-			default -> new SmokeGrenadeParticleOptions(SmokeGrenadeColors.GRAY, 1.0F);
-		};
 	}
 }

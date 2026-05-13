@@ -17,13 +17,10 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import tech.anonymoushacker1279.immersiveweapons.api.events.ComputeEnchantedLootBonusEvent;
 
-/**
- * Loot-related mixins in this package are based on Puzzles Lib's implementation. Provided as a solution to NeoForge
- * <a href="https://github.com/neoforged/NeoForge/issues/1112">issue #1112</a>.
- * <br>
- * <a
- * href="https://github.com/Fuzss/puzzleslib/blob/main/1.21.1/NeoForge/src/main/java/fuzs/puzzleslib/neoforge/mixin/EnchantedCountIncreaseFunctionNeoForgeMixin.java">Source</a>
- */
+/// Loot-related mixins in this package are based on Puzzles Lib's implementation. Provided as a solution to NeoForge
+/// [issue #1112](https://github.com/neoforged/NeoForge/issues/1112).
+///
+/// [Source](https://github.com/Fuzss/puzzleslib/blob/main/1.21.1/NeoForge/src/main/java/fuzs/puzzleslib/neoforge/mixin/EnchantedCountIncreaseFunctionNeoForgeMixin.java)
 @Mixin(EnchantedCountIncreaseFunction.class)
 public abstract class EnchantedCountIncreaseFunctionMixin {
 
@@ -32,7 +29,7 @@ public abstract class EnchantedCountIncreaseFunctionMixin {
 	private Holder<Enchantment> enchantment;
 	@Shadow
 	@Final
-	private NumberProvider value;
+	private NumberProvider count;
 	@Shadow
 	@Final
 	private int limit;
@@ -52,7 +49,7 @@ public abstract class EnchantedCountIncreaseFunctionMixin {
 		if (!(context.getOptionalParameter(LootContextParams.ATTACKING_ENTITY) instanceof LivingEntity)) {
 			int enchantmentLevel = ComputeEnchantedLootBonusEvent.onComputeEnchantedLootBonus(this.enchantment, 0, context);
 			if (enchantmentLevel != 0) {
-				float modifier = (float) enchantmentLevel * this.value.getFloat(context);
+				float modifier = (float) enchantmentLevel * this.count.getFloat(context);
 				stack.grow(Math.round(modifier));
 				if (this.hasLimit()) {
 					stack.limitSize(this.limit);

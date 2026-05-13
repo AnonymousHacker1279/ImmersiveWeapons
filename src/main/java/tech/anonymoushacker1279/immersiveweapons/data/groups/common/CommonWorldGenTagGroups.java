@@ -10,11 +10,9 @@ public class CommonWorldGenTagGroups {
 	public static final TagKey<Biome> IS_WET_CAVE = createBiomeTag("is_wet_cave");
 	public static final TagKey<Biome> IS_LUSH_CAVE = createBiomeTag("is_lush_cave");
 
-	/**
-	 * Helper method for creating a biome tag for containing biomes.
-	 *
-	 * @param tag a string to be used for the tag
-	 */
+	/// Helper method for creating a biome tag for containing biomes.
+	///
+	/// @param tag a string to be used for the tag
 	private static TagKey<Biome> createBiomeTag(String tag) {
 		return TagKey.create(Registries.BIOME, Identifier.fromNamespaceAndPath("c", tag));
 	}

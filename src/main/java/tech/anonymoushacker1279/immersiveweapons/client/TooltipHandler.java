@@ -43,13 +43,10 @@ import java.util.function.Supplier;
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, value = Dist.CLIENT)
 public class TooltipHandler {
 
+	static final Map<Item, Triplet<String[], ChatFormatting[], Class<? extends DynamicTooltip>>> TOOLTIP_MAP = new HashMap<>(150);
 	static int jonnyCurseRandomizer = (int) (Math.random() * 11 + 1);
 
-	static final Map<Item, Triplet<String[], ChatFormatting[], Class<? extends DynamicTooltip>>> TOOLTIP_MAP = new HashMap<>(150);
-
-	/**
-	 * Compiles all item tooltips with a {@link TooltipMarker} annotation.
-	 */
+	/// Compiles all item tooltips with a [TooltipMarker] annotation.
 	public static void compileTooltips() {
 		ImmersiveWeapons.LOGGER.info("Compiling item tooltips...");
 
@@ -93,11 +90,9 @@ public class TooltipHandler {
 		ImmersiveWeapons.LOGGER.info("Compiled {} item tooltips in {}ms", tooltips, System.currentTimeMillis() - time);
 	}
 
-	/**
-	 * Handles adding tooltips to items.
-	 *
-	 * @param event the <code>ItemTooltipEvent</code> instance
-	 */
+	/// Handles adding tooltips to items.
+	///
+	/// @param event the `ItemTooltipEvent` instance
 	@SubscribeEvent
 	public static void addItemTooltip(ItemTooltipEvent event) {
 		ItemStack stack = event.getItemStack();
@@ -236,12 +231,10 @@ public class TooltipHandler {
 		}
 	}
 
-	/**
-	 * Adds tooltips which appear while the player holds SHIFT.
-	 *
-	 * @param existingTooltips The list of tooltips already on the item.
-	 * @param shiftTooltips    The list of tooltips to add if the player is holding SHIFT.
-	 */
+	/// Adds tooltips which appear while the player holds SHIFT.
+	///
+	/// @param existingTooltips The list of tooltips already on the item.
+	/// @param shiftTooltips    The list of tooltips to add if the player is holding SHIFT.
 	public static void addShiftTooltip(List<Component> existingTooltips, List<Component> shiftTooltips) {
 		if (!Minecraft.getInstance().hasShiftDown()) {
 			existingTooltips.add(Component.translatable("tooltip.immersiveweapons.shift_for_info").withStyle(ChatFormatting.GOLD, ChatFormatting.ITALIC));
@@ -250,12 +243,10 @@ public class TooltipHandler {
 		}
 	}
 
-	/**
-	 * Adds tooltips which appear while the player holds ALT.
-	 *
-	 * @param existingTooltips The list of tooltips already on the item.
-	 * @param altTooltips      The list of tooltips to add if the player is holding ALT.
-	 */
+	/// Adds tooltips which appear while the player holds ALT.
+	///
+	/// @param existingTooltips The list of tooltips already on the item.
+	/// @param altTooltips      The list of tooltips to add if the player is holding ALT.
 	private static void addAltTooltip(List<Component> existingTooltips, List<Component> altTooltips) {
 		if (!Minecraft.getInstance().hasAltDown()) {
 			existingTooltips.add(Component.translatable("tooltip.immersiveweapons.alt_for_info").withStyle(ChatFormatting.LIGHT_PURPLE, ChatFormatting.ITALIC));
@@ -264,12 +255,10 @@ public class TooltipHandler {
 		}
 	}
 
-	/**
-	 * Add accessory-specific tooltips (typically for use inside {@link #addShiftTooltip(List, List)})
-	 *
-	 * @param accessory the accessory to add tooltips for
-	 * @param player    the player holding the item
-	 */
+	/// Add accessory-specific tooltips (typically for use inside [#addShiftTooltip(List, List)])
+	///
+	/// @param accessory the accessory to add tooltips for
+	/// @param player    the player holding the item
 	private static void addAccessoryTooltips(Accessory accessory, Player player, ItemStack stack, List<Component> existingTooltips) {
 		List<Component> shiftTooltips = new ArrayList<>(5);
 		List<Component> altTooltips = new ArrayList<>(10);

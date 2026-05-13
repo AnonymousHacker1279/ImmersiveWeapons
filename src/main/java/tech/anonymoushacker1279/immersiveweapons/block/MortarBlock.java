@@ -112,13 +112,11 @@ public class MortarBlock extends BasicOrientableBlock {
 		}
 	}
 
-	/**
-	 * Fires a mortar shell and sends packets to tracking players.
-	 *
-	 * @param level the <code>Level</code> the block is in
-	 * @param pos   the <code>BlockPos</code> the block is at
-	 * @param state the <code>BlockState</code> of the block
-	 */
+	/// Fires a mortar shell and sends packets to tracking players.
+	///
+	/// @param level the `Level` the block is in
+	/// @param pos   the `BlockPos` the block is at
+	/// @param state the `BlockState` of the block
 	private void fire(Level level, BlockPos pos, BlockState state, @Nullable Player player) {
 		if (level instanceof ServerLevel serverLevel) {
 			serverLevel.sendParticles(ParticleTypes.LARGE_SMOKE, pos.getX(), pos.getY(), pos.getZ(),

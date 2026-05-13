@@ -7,9 +7,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.ArmorUtils;
 
-/**
- * Increase swimming speed in lava when wearing Molten Armor.
- */
+/// Increase swimming speed in lava when wearing Molten Armor.
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
 

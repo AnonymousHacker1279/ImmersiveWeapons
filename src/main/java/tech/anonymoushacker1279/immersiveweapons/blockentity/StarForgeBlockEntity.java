@@ -40,7 +40,9 @@ import java.util.stream.Collectors;
 
 public class StarForgeBlockEntity extends BaseContainerBlockEntity implements EntityBlock {
 
+	public static final List<RecipeHolder<StarForgeRecipe>> ALL_RECIPES = new ArrayList<>(20);
 	protected final NonNullList<ItemStack> inventory = NonNullList.withSize(3, ItemStack.EMPTY);
+	public List<RecipeHolder<StarForgeRecipe>> availableRecipes = new ArrayList<>(20);
 	protected boolean hasSolarEnergy = false;
 	protected int temperature = 0;
 	protected int smeltTime = 0;
@@ -48,19 +50,17 @@ public class StarForgeBlockEntity extends BaseContainerBlockEntity implements En
 	protected boolean inUse = false;
 	public final ContainerData containerData = new ContainerData() {
 
-		/**
-		 * Retrieves the value at the specified index.
-		 *
-		 * @param index the index of the data to retrieve. The following indices are used:
-		 *              <ul>
-		 *              <li>0: Solar energy status (1 if the Star Forge has solar energy, 0 otherwise)</li>
-		 *              <li>1: Temperature (0-1000)</li>
-		 *              <li>2: Smelt time</li>
-		 *              <li>3: Menu selection index</li>
-		 *              <li>4: In use status (1 if it is being used, 0 otherwise)</li>
-		 *              </ul>
-		 * @return the value at the specified index
-		 */
+		/// Retrieves the value at the specified index.
+		///
+		/// @param index the index of the data to retrieve. The following indices are used:
+		///
+		///   - 0: Solar energy status (1 if the Star Forge has solar energy, 0 otherwise)
+		///   - 1: Temperature (0-1000)
+		///   - 2: Smelt time
+		///   - 3: Menu selection index
+		///   - 4: In use status (1 if it is being used, 0 otherwise)
+		///
+		/// @return the value at the specified index
 		@Override
 		public int get(int index) {
 			return switch (index) {
@@ -89,9 +89,6 @@ public class StarForgeBlockEntity extends BaseContainerBlockEntity implements En
 			return 5;
 		}
 	};
-
-	public static final List<RecipeHolder<StarForgeRecipe>> ALL_RECIPES = new ArrayList<>(20);
-	public List<RecipeHolder<StarForgeRecipe>> availableRecipes = new ArrayList<>(20);
 
 	public StarForgeBlockEntity(BlockPos blockPos, BlockState blockState) {
 		super(BlockEntityRegistry.STAR_FORGE_BLOCK_ENTITY.get(), blockPos, blockState);
@@ -229,9 +226,7 @@ public class StarForgeBlockEntity extends BaseContainerBlockEntity implements En
 		}
 	}
 
-	/**
-	 * Create a list of available recipes based on the current inputs.
-	 */
+	/// Create a list of available recipes based on the current inputs.
 	public List<RecipeHolder<StarForgeRecipe>> getAvailableRecipes(ItemStack primaryMaterial, ItemStack secondaryMaterial) {
 		if (level instanceof ServerLevel serverLevel) {
 			initializeRecipes(serverLevel.recipeAccess(), serverLevel);
@@ -312,7 +307,7 @@ public class StarForgeBlockEntity extends BaseContainerBlockEntity implements En
 			// Check if the inputs are sufficient
 			if (recipe.primaryMaterialCount() <= inventory.get(0).getCount() && recipe.secondaryMaterialCount() <= inventory.get(1).getCount()) {
 				// Set the result slot
-				setItem(2, recipe.result());
+				setItem(2, recipe.result().create());
 			} else {
 				setItem(2, ItemStack.EMPTY);
 			}

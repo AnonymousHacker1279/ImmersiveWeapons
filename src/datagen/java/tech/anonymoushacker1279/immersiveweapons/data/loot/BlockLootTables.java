@@ -169,6 +169,7 @@ public class BlockLootTables extends BlockLootSubProvider {
 		add(BlockRegistry.CLOUD.get(), noDrop());
 		add(BlockRegistry.POTTED_DEATHWEED.get(), noDrop());
 		add(BlockRegistry.POTTED_MOONGLOW.get(), noDrop());
+		add(BlockRegistry.POTTED_STARDUST_SAPLING.get(), noDrop());
 
 		// Complex block drops
 		add(BlockRegistry.BURNED_OAK_DOOR.get(), this::createDoorTable);

@@ -1,0 +1,9 @@
+{
+  "amount": {
+    "type": "minecraft:uniform",
+    "max": 2.0,
+    "min": 1.0
+  },
+  "random_sequence": "immersiveweapons:trade_set/skeleton_merchant/level_2",
+  "trades": "#immersiveweapons:skeleton_merchant/level_2"
+}

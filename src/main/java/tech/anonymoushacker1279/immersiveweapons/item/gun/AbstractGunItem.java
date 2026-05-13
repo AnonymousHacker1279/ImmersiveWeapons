@@ -49,12 +49,21 @@ public abstract class AbstractGunItem extends Item {
 	protected static final Predicate<ItemStack> FLARES = (stack) -> stack.is(IWItemTagGroups.FLARES);
 	protected static final Predicate<ItemStack> CANNONBALLS = (stack) -> stack.is(IWItemTagGroups.CANNONBALLS);
 	protected static final Predicate<ItemStack> DRAGON_FIREBALLS = (stack) -> stack.is(IWItemTagGroups.DRAGON_FIREBALLS);
-	protected static final Predicate<ItemStack> FLAMMABLE_POWDERS = (stack) -> stack.getItemHolder().getData(POWDER_TYPE) != null;
+	protected static final Predicate<ItemStack> FLAMMABLE_POWDERS = (stack) -> stack.typeHolder().getData(POWDER_TYPE) != null;
 
 	final DataComponentType<Float> DENSITY_MODIFIER = DataComponentTypeRegistry.DENSITY_MODIFIER.get();
 
 	protected AbstractGunItem(Properties properties) {
 		super(properties);
+	}
+
+	protected static ItemStack getHeldPredicate(LivingEntity livingEntity, Predicate<ItemStack> predicate) {
+		if (predicate.test(livingEntity.getItemInHand(InteractionHand.OFF_HAND))) {
+			return livingEntity.getItemInHand(InteractionHand.OFF_HAND);
+		} else {
+			return predicate.test(livingEntity.getItemInHand(InteractionHand.MAIN_HAND)) ?
+					livingEntity.getItemInHand(InteractionHand.MAIN_HAND) : ItemStack.EMPTY;
+		}
 	}
 
 	@Override
@@ -138,8 +147,8 @@ public abstract class AbstractGunItem extends Item {
 					}
 				} else {
 					// Handle recoil
-					player.setYRot(player.getYRot() + (getMaxYRecoil() + level.random.nextFloat() * 10f) * (level.random.nextBoolean() ? 1 : -1));
-					player.setXRot(player.getXRot() + (getMaxXRecoil() + level.random.nextFloat() * 0.5f));
+					player.setYRot(player.getYRot() + (getMaxYRecoil() + level.getRandom().nextFloat() * 10f) * (level.getRandom().nextBoolean() ? 1 : -1));
+					player.setXRot(player.getXRot() + (getMaxXRecoil() + level.getRandom().nextFloat() * 0.5f));
 				}
 
 				level.playSound(null,
@@ -224,15 +233,6 @@ public abstract class AbstractGunItem extends Item {
 		return null;
 	}
 
-	protected static ItemStack getHeldPredicate(LivingEntity livingEntity, Predicate<ItemStack> predicate) {
-		if (predicate.test(livingEntity.getItemInHand(InteractionHand.OFF_HAND))) {
-			return livingEntity.getItemInHand(InteractionHand.OFF_HAND);
-		} else {
-			return predicate.test(livingEntity.getItemInHand(InteractionHand.MAIN_HAND)) ?
-					livingEntity.getItemInHand(InteractionHand.MAIN_HAND) : ItemStack.EMPTY;
-		}
-	}
-
 	@Override
 	public InteractionResult use(Level level, Player player, InteractionHand hand) {
 
@@ -247,29 +247,23 @@ public abstract class AbstractGunItem extends Item {
 		}
 	}
 
-	/**
-	 * Get the predicate to match ammunition when searching the player's inventory, not their main/offhand
-	 *
-	 * @return Predicate extending ItemStack
-	 */
+	/// Get the predicate to match ammunition when searching the player's inventory, not their main/offhand
+	///
+	/// @return Predicate extending ItemStack
 	public Predicate<ItemStack> getInventoryAmmoPredicate() {
 		return MUSKET_BALLS;
 	}
 
-	/**
-	 * Get the default ammunition.
-	 *
-	 * @return Item
-	 */
+	/// Get the default ammunition.
+	///
+	/// @return Item
 	public Item defaultAmmo() {
 		return ItemRegistry.IRON_MUSKET_BALL.get();
 	}
 
-	/**
-	 * Get the default powder.
-	 *
-	 * @return Item
-	 */
+	/// Get the default powder.
+	///
+	/// @return Item
 	public Item defaultPowder() {
 		return Items.GUNPOWDER;
 	}
@@ -279,39 +273,31 @@ public abstract class AbstractGunItem extends Item {
 		return Integer.MAX_VALUE;
 	}
 
-	/**
-	 * Get the misfire sound.
-	 *
-	 * @return SoundEvent
-	 */
+	/// Get the misfire sound.
+	///
+	/// @return SoundEvent
 	SoundEvent getMisfireSound() {
 		return SoundEventRegistry.FLINTLOCK_PISTOL_MISFIRE.get();
 	}
 
-	/**
-	 * Get the fire sound.
-	 *
-	 * @return SoundEvent
-	 */
+	/// Get the fire sound.
+	///
+	/// @return SoundEvent
 	public SoundEvent getFireSound() {
 		return SoundEventRegistry.FLINTLOCK_PISTOL_FIRE.get();
 	}
 
-	/**
-	 * Get the maximum number of bullets that can be fired at once.
-	 *
-	 * @return int
-	 */
+	/// Get the maximum number of bullets that can be fired at once.
+	///
+	/// @return int
 	public int getMaxBulletsToFire() {
 		return 1;
 	}
 
-	/**
-	 * Get the number of bullets to fire.
-	 *
-	 * @param itemStack the ammunition <code>ItemStack</code>
-	 * @return int
-	 */
+	/// Get the number of bullets to fire.
+	///
+	/// @param itemStack the ammunition `ItemStack`
+	/// @return int
 	public int getBulletsToFire(ItemStack itemStack) {
 		return Math.min(itemStack.getCount(), getMaxBulletsToFire());
 	}
@@ -502,7 +488,7 @@ public abstract class AbstractGunItem extends Item {
 	public record PowderType(ItemStack powder, FlammablePowder data) {
 
 		public PowderType(ItemStack powder) {
-			this(powder, Objects.requireNonNull(powder.getItemHolder().getData(POWDER_TYPE)));
+			this(powder, Objects.requireNonNull(powder.typeHolder().getData(POWDER_TYPE)));
 		}
 	}
 }

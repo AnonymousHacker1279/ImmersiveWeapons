@@ -65,6 +65,6 @@ public class VoidArmorPayloadHandler {
 		cloud.addEffect(new MobEffectInstance(MobEffects.INSTANT_DAMAGE, 1, 1));
 		level.addFreshEntity(cloud);
 
-		level.playSound(null, player.blockPosition(), SoundEvents.DRAGON_FIREBALL_EXPLODE, player.getSoundSource(), 1.0f, Mth.randomBetween(level.random, 0.8f, 1.1f));
+		level.playSound(null, player.blockPosition(), SoundEvents.DRAGON_FIREBALL_EXPLODE, player.getSoundSource(), 1.0f, Mth.randomBetween(level.getRandom(), 0.8f, 1.1f));
 	}
 }

@@ -34,15 +34,6 @@ public class SmokeGrenadeEntity extends AdvancedThrowableItemProjectile {
 		super(EntityRegistry.SMOKE_GRENADE_ENTITY.get(), level, x, y, z, ItemRegistry.SMOKE_GRENADE.get().getDefaultInstance());
 	}
 
-	/**
-	 * Set the particle color. Color IDs can be found in {@link SmokeGrenadeParticleOptions.SmokeGrenadeColors}.
-	 *
-	 * @param color a color ID
-	 */
-	public void setColor(int color) {
-		this.color = color;
-	}
-
 	public static void runOnClientImpact(double x, double y, double z, int color, Level level, int forcedParticleCount) {
 		int particles = forcedParticleCount == -1 ? IWConfigs.CLIENT.smokeGrenadeParticles.getAsInt() : forcedParticleCount;
 
@@ -53,13 +44,20 @@ public class SmokeGrenadeEntity extends AdvancedThrowableItemProjectile {
 		for (int i = 0; i < particles; ++i) {
 			level.addParticle(SmokeGrenadeParticleOptions.getParticleByColor(color),
 					true, true, x, y, z,
-					(0.1d * level.random.nextGaussian()),
-					(0.1d * level.random.nextGaussian()),
-					(0.1d * level.random.nextGaussian()));
+					(0.1d * level.getRandom().nextGaussian()),
+					(0.1d * level.getRandom().nextGaussian()),
+					(0.1d * level.getRandom().nextGaussian()));
 		}
 
 		level.playLocalSound(x, y, z, SoundEventRegistry.SMOKE_GRENADE_HISS.get(),
 				SoundSource.NEUTRAL, 0.2f, 0.6f, true);
+	}
+
+	/// Set the particle color. Color IDs can be found in [SmokeGrenadeParticleOptions.SmokeGrenadeColors].
+	///
+	/// @param color a color ID
+	public void setColor(int color) {
+		this.color = color;
 	}
 
 	@Override
@@ -86,7 +84,7 @@ public class SmokeGrenadeEntity extends AdvancedThrowableItemProjectile {
 							.stream()
 							.filter(entity -> !entity.isSpectator())
 							.forEach(entity -> {
-								if (entity instanceof Mob mob && !mob.getType().is(EntityTypes.BOSSES)) {
+								if (entity instanceof Mob mob && !mob.is(EntityTypes.BOSSES)) {
 									if (canSee(mob, this, false)) {
 										mob.setTarget(null);
 									}

@@ -15,9 +15,7 @@ import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem;
 
 public class DispenserBehaviorRegistry implements DispenseItemBehavior {
 
-	/**
-	 * Initialize the dispenser behavior registry.
-	 */
+	/// Initialize the dispenser behavior registry.
 	public static void init() {
 		ImmersiveWeapons.LOGGER.info("Initializing dispenser behavior registry");
 
@@ -39,13 +37,11 @@ public class DispenserBehaviorRegistry implements DispenseItemBehavior {
 		DispenserBlock.registerBehavior(ItemRegistry.STARDUST_CHEST_BOAT.get(), new BoatDispenseItemBehavior(EntityRegistry.STARDUST_CHEST_BOAT_ENTITY.get()));
 	}
 
-	/**
-	 * Custom dispense behavior.
-	 *
-	 * @param source    the <code>BlockSource</code> instance
-	 * @param itemStack the <code>ItemStack</code> being dispensed
-	 * @return ItemStack
-	 */
+	/// Custom dispense behavior.
+	///
+	/// @param source    the `BlockSource` instance
+	/// @param itemStack the `ItemStack` being dispensed
+	/// @return ItemStack
 	@Override
 	public ItemStack dispense(BlockSource source, ItemStack itemStack) {
 		return null;

@@ -42,13 +42,11 @@ import java.util.Optional;
 public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity implements EntityBlock {
 
 	protected final NonNullList<ItemStack> inventory = NonNullList.withSize(7, ItemStack.EMPTY);
-	protected float densityModifier = 0.0f;
+	protected final NonNullList<Integer> slotCosts = NonNullList.withSize(7, 0);
+	final DataComponentType<Float> DENSITY_MODIFIER = DataComponentTypeRegistry.DENSITY_MODIFIER.get();
 	public int excessStackSize = 0;
 	public ItemStack excessStack = ItemStack.EMPTY;
-	protected final NonNullList<Integer> slotCosts = NonNullList.withSize(7, 0);
-
-	final DataComponentType<Float> DENSITY_MODIFIER = DataComponentTypeRegistry.DENSITY_MODIFIER.get();
-
+	protected float densityModifier = 0.0f;
 	public final ContainerData containerData = new ContainerData() {
 		@Override
 		public int get(int index) {
@@ -127,24 +125,20 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 		ContainerHelper.saveAllItems(valueOutput, inventory);
 		valueOutput.putFloat("densityModifier", densityModifier);
 		valueOutput.putInt("excessStackSize", excessStackSize);
-		valueOutput.putString("excessStack", excessStack.getItemHolder().getRegisteredName());
+		valueOutput.putString("excessStack", excessStack.typeHolder().getRegisteredName());
 	}
 
-	/**
-	 * Get the number of slots in the inventory.
-	 *
-	 * @return int
-	 */
+	/// Get the number of slots in the inventory.
+	///
+	/// @return int
 	@Override
 	public int getContainerSize() {
 		return inventory.size();
 	}
 
-	/**
-	 * Check if the inventory is empty.
-	 *
-	 * @return boolean
-	 */
+	/// Check if the inventory is empty.
+	///
+	/// @return boolean
 	@Override
 	public boolean isEmpty() {
 		for (ItemStack itemStack : inventory) {
@@ -156,46 +150,38 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 		return true;
 	}
 
-	/**
-	 * Get the ingredient in the given slot.
-	 *
-	 * @param index the slot index
-	 * @return ItemStack
-	 */
+	/// Get the ingredient in the given slot.
+	///
+	/// @param index the slot index
+	/// @return ItemStack
 	@Override
 	public ItemStack getItem(int index) {
 		return inventory.get(index);
 	}
 
-	/**
-	 * Removes up to a specified number of items from an inventory slot and returns them in a new ingredient.
-	 *
-	 * @param index the slot index
-	 * @param count the number to remove
-	 * @return ItemStack
-	 */
+	/// Removes up to a specified number of items from an inventory slot and returns them in a new ingredient.
+	///
+	/// @param index the slot index
+	/// @param count the number to remove
+	/// @return ItemStack
 	@Override
 	public ItemStack removeItem(int index, int count) {
 		return ContainerHelper.removeItem(inventory, index, count);
 	}
 
-	/**
-	 * Removes a ingredient from the given slot and returns it.
-	 *
-	 * @param index the slot index
-	 * @return ItemStack
-	 */
+	/// Removes a ingredient from the given slot and returns it.
+	///
+	/// @param index the slot index
+	/// @return ItemStack
 	@Override
 	public ItemStack removeItemNoUpdate(int index) {
 		return ContainerHelper.takeItem(inventory, index);
 	}
 
-	/**
-	 * Sets the given item ingredient to the specified slot in the inventory.
-	 *
-	 * @param index the slot index
-	 * @param stack the <code>ItemStack</code> to set
-	 */
+	/// Sets the given item ingredient to the specified slot in the inventory.
+	///
+	/// @param index the slot index
+	/// @param stack the `ItemStack` to set
 	@Override
 	public void setItem(int index, ItemStack stack) {
 		inventory.set(index, stack);
@@ -235,20 +221,16 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 		return true;
 	}
 
-	/**
-	 * Clear the inventory.
-	 */
+	/// Clear the inventory.
 	@Override
 	public void clearContent() {
 		inventory.clear();
 	}
 
-	/**
-	 * Try to find a valid recipe based on the first item in the inventory.
-	 *
-	 * @param serverLevel the <code>ServerLevel</code> instance
-	 * @return RecipeHolder
-	 */
+	/// Try to find a valid recipe based on the first item in the inventory.
+	///
+	/// @param serverLevel the `ServerLevel` instance
+	/// @return RecipeHolder
 	private @Nullable RecipeHolder<AmmunitionTableRecipe> getValidRecipe(ServerLevel serverLevel) {
 		// Create a temporary inventory to hold the items that only include the first 6 slots
 		NonNullList<ItemStack> tempInventory = NonNullList.withSize(6, ItemStack.EMPTY);
@@ -262,13 +244,11 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 		return optional.orElse(null);
 	}
 
-	/**
-	 * Calculates the output size based on the current recipe and available inventory materials. It will additionally
-	 * set slot costs for each input item.
-	 *
-	 * @param materialGroups the list of <code>MaterialGroup</code> instances
-	 * @return int
-	 */
+	/// Calculates the output size based on the current recipe and available inventory materials. It will additionally
+	/// set slot costs for each input item.
+	///
+	/// @param materialGroups the list of `MaterialGroup` instances
+	/// @return int
 	private int calculateOutputSize(List<MaterialGroup> materialGroups) {
 		NonNullList<Integer> outputPerSlot = NonNullList.withSize(6, 0);
 
@@ -289,9 +269,7 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 		return outputPerSlot.stream().mapToInt(Integer::intValue).sum();
 	}
 
-	/**
-	 * Calculate the output item based on the given inputs.
-	 */
+	/// Calculate the output item based on the given inputs.
 	public void calculateOutput(boolean didCraft) {
 		if (level == null || remove) {
 			return;
@@ -312,7 +290,7 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 			}
 
 			List<MaterialGroup> recipeMaterials = recipe.value().materials();
-			ItemStack result = recipe.value().result().copy();
+			ItemStack result = recipe.value().result().create();
 
 			slotCosts.clear();
 			int outputSize = calculateOutputSize(recipeMaterials);
@@ -338,10 +316,8 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 		}
 	}
 
-	/**
-	 * Runs after a result ingredient has been taken. Decreases the ingredient size of each input item by the amount
-	 * specified in the slotCosts list.
-	 */
+	/// Runs after a result ingredient has been taken. Decreases the ingredient size of each input item by the amount
+	/// specified in the slotCosts list.
 	public void depleteMaterials() {
 		for (int i = 0; i < 6; i++) {
 			ItemStack stack = inventory.get(i);
@@ -351,9 +327,7 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 		}
 	}
 
-	/**
-	 * Handle excess output that cannot fit in the output slot.
-	 */
+	/// Handle excess output that cannot fit in the output slot.
 	public void handleExcess() {
 		int excess = containerData.get(1);
 		if (excess > 0 && !excessStack.isEmpty()) {
@@ -384,11 +358,9 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 		}
 	}
 
-	/**
-	 * Checks if there are no materials present (first six slots)
-	 *
-	 * @return boolean
-	 */
+	/// Checks if there are no materials present (first six slots)
+	///
+	/// @return boolean
 	public boolean hasNoMaterials() {
 		return inventory.stream().limit(6).allMatch(ItemStack::isEmpty);
 	}

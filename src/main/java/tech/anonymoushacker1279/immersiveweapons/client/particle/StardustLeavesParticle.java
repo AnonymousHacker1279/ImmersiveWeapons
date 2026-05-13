@@ -32,8 +32,8 @@ public class StardustLeavesParticle extends SingleQuadParticle {
 		gCol = 1.0F;
 		bCol = 1.0F;
 		quadSize *= 0.95F;
-		lifetime = (int) (600.0D / (level.random.nextFloat() * 0.2D + 0.8D));
-		setSprite(spriteSet.get(level.random));
+		lifetime = (int) (600.0D / (level.getRandom().nextFloat() * 0.2D + 0.8D));
+		setSprite(spriteSet.get(level.getRandom()));
 		hasPhysics = true;
 	}
 

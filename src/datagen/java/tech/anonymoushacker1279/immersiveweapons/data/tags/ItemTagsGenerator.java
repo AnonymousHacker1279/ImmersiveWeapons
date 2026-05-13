@@ -52,9 +52,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		}.run();
 	}
 
-	/**
-	 * Add tags under the Forge namespace
-	 */
+	/// Add tags under the Forge namespace
 	@SuppressWarnings("unchecked")
 	private void addCommonTags() {
 		// Ingot tags
@@ -103,9 +101,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		tag(Tags.Items.FOODS_FOOD_POISONING).add(ItemRegistry.MOLDY_BREAD.get());
 	}
 
-	/**
-	 * Add tags under the Immersive Weapons namespace
-	 */
+	/// Add tags under the Immersive Weapons namespace
 	@SuppressWarnings("unchecked")
 	private void addImmersiveWeaponsTags() {
 		// Projectile tags
@@ -347,9 +343,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 				ItemRegistry.VOID_BOOTS.get());
 	}
 
-	/**
-	 * Add tags under the Minecraft namespace
-	 */
+	/// Add tags under the Minecraft namespace
 	@SuppressWarnings("unchecked")
 	private void addMinecraftTags() {
 		// Sign tags
@@ -393,8 +387,16 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 				ItemRegistry.ASTRAL_INGOT.get(),
 				ItemRegistry.STARSTORM_INGOT.get());
 
-		// Dyeable items tag
-		tag(ItemTags.DYEABLE).add(
+		// Cauldron remove dye tag
+		tag(ItemTags.CAULDRON_CAN_REMOVE_DYE).add(
+				ItemRegistry.PADDED_LEATHER_HELMET.get(),
+				ItemRegistry.PADDED_LEATHER_CHESTPLATE.get(),
+				ItemRegistry.PADDED_LEATHER_LEGGINGS.get(),
+				ItemRegistry.PADDED_LEATHER_BOOTS.get()
+		);
+
+		// Freeze immune tag
+		tag(ItemTags.FREEZE_IMMUNE_WEARABLES).add(
 				ItemRegistry.PADDED_LEATHER_HELMET.get(),
 				ItemRegistry.PADDED_LEATHER_CHESTPLATE.get(),
 				ItemRegistry.PADDED_LEATHER_LEGGINGS.get(),

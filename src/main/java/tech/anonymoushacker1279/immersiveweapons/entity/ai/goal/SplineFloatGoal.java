@@ -29,13 +29,11 @@ public class SplineFloatGoal extends Goal {
 	private int targetingCooldown;
 	private int pathRecalculationTimer = 0;
 
-	/**
-	 * Constructor with custom configuration.
-	 *
-	 * @param entity          The mob to control.
-	 * @param config          Configuration for pathfinding behavior.
-	 * @param canUseCondition Additional condition for when the goal can be used.
-	 */
+	/// Constructor with custom configuration.
+	///
+	/// @param entity          The mob to control.
+	/// @param config          Configuration for pathfinding behavior.
+	/// @param canUseCondition Additional condition for when the goal can be used.
 	public SplineFloatGoal(Mob entity, SplineFloatGoalConfig config, Predicate<Mob> canUseCondition) {
 		this.entity = entity;
 		this.config = config;
@@ -87,9 +85,7 @@ public class SplineFloatGoal extends Goal {
 		}
 	}
 
-	/**
-	 * Generates a smooth spline path through open air spaces. Uses waypoints and Catmull-Rom spline interpolation.
-	 */
+	/// Generates a smooth spline path through open air spaces. Uses waypoints and Catmull-Rom spline interpolation.
 	private void generateSplinePath() {
 		List<Vec3> waypoints = generateWaypoints();
 
@@ -131,9 +127,7 @@ public class SplineFloatGoal extends Goal {
 		}
 	}
 
-	/**
-	 * Generates waypoints in open air spaces. Attempts to find positions that are far from obstacles.
-	 */
+	/// Generates waypoints in open air spaces. Attempts to find positions that are far from obstacles.
 	private List<Vec3> generateWaypoints() {
 		List<Vec3> waypoints = new ArrayList<>(config.waypointCount());
 		Vec3 currentPos = entity.position();
@@ -157,12 +151,10 @@ public class SplineFloatGoal extends Goal {
 		return waypoints;
 	}
 
-	/**
-	 * Generates a candidate waypoint position relative to a starting position.
-	 *
-	 * @param from The starting position.
-	 * @return A candidate waypoint position.
-	 */
+	/// Generates a candidate waypoint position relative to a starting position.
+	///
+	/// @param from The starting position.
+	/// @return A candidate waypoint position.
 	private Vec3 generateCandidateWaypoint(Vec3 from) {
 		double xOffset = (entity.getRandom().nextDouble() - 0.5d) * 2 * config.searchRadiusHorizontal();
 		double yOffset = (entity.getRandom().nextDouble() - 0.5d) * 2 * config.searchRadiusVertical();
@@ -189,13 +181,11 @@ public class SplineFloatGoal extends Goal {
 		return candidate;
 	}
 
-	/**
-	 * Validates that a waypoint is suitable for pathfinding.
-	 *
-	 * @param from      The position from which the waypoint is generated.
-	 * @param candidate The candidate waypoint position.
-	 * @return True if the waypoint is valid, false otherwise.
-	 */
+	/// Validates that a waypoint is suitable for pathfinding.
+	///
+	/// @param from      The position from which the waypoint is generated.
+	/// @param candidate The candidate waypoint position.
+	/// @return True if the waypoint is valid, false otherwise.
 	private boolean isValidWaypoint(Vec3 from, Vec3 candidate) {
 		// Check minimum distance
 		if (from.distanceTo(candidate) < config.minWaypointDistance()) {
@@ -231,12 +221,10 @@ public class SplineFloatGoal extends Goal {
 		return hitResult.getType() == HitResult.Type.MISS;
 	}
 
-	/**
-	 * Checks if a position is in open space (air blocks). Checks the position and immediate surrounding area.
-	 *
-	 * @param pos The position to check.
-	 * @return True if the area is open space, false otherwise.
-	 */
+	/// Checks if a position is in open space (air blocks). Checks the position and immediate surrounding area.
+	///
+	/// @param pos The position to check.
+	/// @return True if the area is open space, false otherwise.
 	private boolean isOpenSpace(Vec3 pos) {
 		BlockPos blockPos = BlockPos.containing(pos);
 
@@ -255,16 +243,14 @@ public class SplineFloatGoal extends Goal {
 		return true;
 	}
 
-	/**
-	 * Catmull-Rom spline interpolation for smooth curves.
-	 *
-	 * @param p0 Point before start
-	 * @param p1 Start point
-	 * @param p2 End point
-	 * @param p3 Point after end
-	 * @param t  Interpolation parameter (0 to 1)
-	 * @return Interpolated point
-	 */
+	/// Catmull-Rom spline interpolation for smooth curves.
+	///
+	/// @param p0 Point before start
+	/// @param p1 Start point
+	/// @param p2 End point
+	/// @param p3 Point after end
+	/// @param t  Interpolation parameter (0 to 1)
+	/// @return Interpolated point
 	private Vec3 catmullRomInterpolate(Vec3 p0, Vec3 p1, Vec3 p2, Vec3 p3, double t) {
 		double t2 = t * t;
 		double t3 = t2 * t;
@@ -283,11 +269,9 @@ public class SplineFloatGoal extends Goal {
 		return new Vec3(x, y, z);
 	}
 
-	/**
-	 * Moves the entity toward a target point.
-	 *
-	 * @param target The target position to move towards.
-	 */
+	/// Moves the entity toward a target point.
+	///
+	/// @param target The target position to move towards.
 	private void moveTowards(Vec3 target) {
 		double deltaX = target.x - entity.getX();
 		double deltaY = target.y - entity.getY();

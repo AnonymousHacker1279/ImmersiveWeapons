@@ -32,11 +32,9 @@ public class PunjiSticksBlock extends Block implements SimpleWaterloggedBlock {
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D);
 
-	/**
-	 * Constructor for PunjiSticksBlock.
-	 *
-	 * @param properties the <code>Properties</code> of the block
-	 */
+	/// Constructor for PunjiSticksBlock.
+	///
+	/// @param properties the `Properties` of the block
 	public PunjiSticksBlock(Properties properties) {
 		super(properties);
 		registerDefaultState(stateDefinition.any().setValue(WATERLOGGED, Boolean.FALSE));

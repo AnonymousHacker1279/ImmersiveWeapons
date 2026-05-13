@@ -20,46 +20,38 @@ public class WoodenTableBlock extends Block implements SimpleWaterloggedBlock {
 			Block.box(7.0D, 0.0D, 7.0D, 9.0D, 14.0D, 9.0D));
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
-	/**
-	 * Constructor for WoodenTableBlock.
-	 *
-	 * @param properties the <code>Properties</code> of the block
-	 */
+	/// Constructor for WoodenTableBlock.
+	///
+	/// @param properties the `Properties` of the block
 	public WoodenTableBlock(Properties properties) {
 		super(properties);
 		registerDefaultState(stateDefinition.any().setValue(WATERLOGGED, false));
 	}
 
-	/**
-	 * Create the BlockState definition.
-	 *
-	 * @param builder the <code>StateDefinition.Builder</code> of the block
-	 */
+	/// Create the BlockState definition.
+	///
+	/// @param builder the `StateDefinition.Builder` of the block
 	@Override
 	public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(WATERLOGGED);
 	}
 
-	/**
-	 * Set FluidState properties. Allows the block to exhibit waterlogged behavior.
-	 *
-	 * @param state the <code>BlockState</code> of the block
-	 * @return FluidState
-	 */
+	/// Set FluidState properties. Allows the block to exhibit waterlogged behavior.
+	///
+	/// @param state the `BlockState` of the block
+	/// @return FluidState
 	@Override
 	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 
-	/**
-	 * Set the shape of the block.
-	 *
-	 * @param state            the <code>BlockState</code> of the block
-	 * @param reader           the <code>BlockGetter</code> for the block
-	 * @param pos              the <code>BlockPos</code> the block is at
-	 * @param collisionContext the <code>CollisionContext</code> of the block
-	 * @return VoxelShape
-	 */
+	/// Set the shape of the block.
+	///
+	/// @param state            the `BlockState` of the block
+	/// @param reader           the `BlockGetter` for the block
+	/// @param pos              the `BlockPos` the block is at
+	/// @param collisionContext the `CollisionContext` of the block
+	/// @return VoxelShape
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter reader, BlockPos pos, CollisionContext collisionContext) {
 		return SHAPE;

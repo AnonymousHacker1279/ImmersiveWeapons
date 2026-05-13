@@ -21,6 +21,8 @@ import tech.anonymoushacker1279.immersiveweapons.data.structures.StructureGenera
 import tech.anonymoushacker1279.immersiveweapons.data.structures.StructureProcessorListGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.structures.StructureSetGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.structures.StructureTemplatePoolGenerator;
+import tech.anonymoushacker1279.immersiveweapons.data.trades.TradeGenerator;
+import tech.anonymoushacker1279.immersiveweapons.data.trades.TradeSetGenerator;
 
 import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
@@ -42,7 +44,9 @@ public class DatapackRegistriesGenerator extends DatapackBuiltinEntriesProvider 
 			.add(Registries.STRUCTURE, StructureGenerator::bootstrap)
 			.add(Registries.STRUCTURE_SET, StructureSetGenerator::bootstrap)
 			.add(Registries.ENCHANTMENT, EnchantmentsGenerator::bootstrap)
-			.add(Registries.JUKEBOX_SONG, IWJukeboxSongs::bootstrap);
+			.add(Registries.JUKEBOX_SONG, IWJukeboxSongs::bootstrap)
+			.add(Registries.TRADE_SET, TradeSetGenerator::bootstrap)
+			.add(Registries.VILLAGER_TRADE, TradeGenerator::bootstrap);
 
 	public DatapackRegistriesGenerator(PackOutput output, CompletableFuture<Provider> registries) {
 		super(output, registries, BUILDER, Collections.singleton(ImmersiveWeapons.MOD_ID));

@@ -38,15 +38,15 @@ public class AzulLocatorItem extends Item {
 	public void onUseTick(Level level, LivingEntity livingEntity, ItemStack stack, int remainingUseDuration) {
 		if (livingEntity instanceof Player player) {
 			if (player.getUseItemRemainingTicks() > 1) {
-				player.displayClientMessage(Component.translatable("immersiveweapons.item.azul_locator.teleporting",
+				player.sendOverlayMessage(Component.translatable("immersiveweapons.item.azul_locator.teleporting",
 								player.getUseItemRemainingTicks() / 20)
-						.withStyle(ChatFormatting.GOLD), true);
+						.withStyle(ChatFormatting.GOLD));
 			}
 			if (player.getUseItemRemainingTicks() == 1) {
 				if (player instanceof ServerPlayer serverPlayer) {
 					if (serverPlayer.getRespawnConfig() == null) {
-						player.displayClientMessage(Component.translatable("immersiveweapons.item.azul_locator.no_spawn")
-								.withStyle(ChatFormatting.RED), true);
+						player.sendOverlayMessage(Component.translatable("immersiveweapons.item.azul_locator.no_spawn")
+								.withStyle(ChatFormatting.RED));
 						player.getCooldowns().addCooldown(stack, 60);
 					} else {
 						BlockPos spawnPos = serverPlayer.getRespawnConfig().respawnData().pos();
@@ -55,8 +55,8 @@ public class AzulLocatorItem extends Item {
 						if (spawnLevel != null) {
 							serverPlayer.teleportTo(spawnLevel, spawnPos.getX() + 0.5f, spawnPos.getY(), spawnPos.getZ() + 0.5f, Set.of(), player.getYRot(), player.getXRot(), false);
 							player.teleportTo(spawnPos.getX() + 0.5f, spawnPos.getY(), spawnPos.getZ() + 0.5f);
-							player.displayClientMessage(Component.translatable("immersiveweapons.item.azul_locator.teleported")
-									.withStyle(ChatFormatting.GREEN), true);
+							player.sendOverlayMessage(Component.translatable("immersiveweapons.item.azul_locator.teleported")
+									.withStyle(ChatFormatting.GREEN));
 						}
 
 						if (!player.isCreative()) {

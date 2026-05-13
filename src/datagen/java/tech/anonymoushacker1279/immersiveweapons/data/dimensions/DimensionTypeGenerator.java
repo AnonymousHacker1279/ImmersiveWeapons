@@ -8,9 +8,12 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TimelineTags;
 import net.minecraft.util.valueproviders.BiasedToBottomInt;
 import net.minecraft.world.attribute.EnvironmentAttributeMap;
+import net.minecraft.world.level.CardinalLighting;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.neoforged.neoforge.common.world.NeoForgeEnvironmentAttributes;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+
+import java.util.Optional;
 
 public class DimensionTypeGenerator {
 
@@ -22,6 +25,7 @@ public class DimensionTypeGenerator {
 				true,
 				false,
 				false,
+				false,
 				16.0D,
 				-64,
 				256,
@@ -30,11 +34,12 @@ public class DimensionTypeGenerator {
 				0.05f,
 				new DimensionType.MonsterSettings(BiasedToBottomInt.of(0, 7), 0),
 				DimensionType.Skybox.OVERWORLD,
-				DimensionType.CardinalLightType.DEFAULT,
+				CardinalLighting.Type.DEFAULT,
 				EnvironmentAttributeMap.builder()
 						.set(NeoForgeEnvironmentAttributes.CUSTOM_SKYBOX, TILTROS)
 						.build(),
-				context.lookup(Registries.TIMELINE).getOrThrow(TimelineTags.UNIVERSAL)
+				context.lookup(Registries.TIMELINE).getOrThrow(TimelineTags.UNIVERSAL),
+				Optional.empty()
 		));
 	}
 }

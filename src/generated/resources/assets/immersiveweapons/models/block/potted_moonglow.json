@@ -1,7 +1,7 @@
 {
-  "parent": "minecraft:block/flower_pot_cross",
-  "render_type": "minecraft:cutout",
+  "parent": "minecraft:block/flower_pot_cross_emissive",
   "textures": {
+    "cross_emissive": "immersiveweapons:block/moonglow_emissive",
     "plant": "immersiveweapons:block/moonglow"
   }
 }

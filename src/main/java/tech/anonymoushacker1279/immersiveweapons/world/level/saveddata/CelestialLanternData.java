@@ -3,9 +3,11 @@ package tech.anonymoushacker1279.immersiveweapons.world.level.saveddata;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.saveddata.SavedDataType;
+import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +21,7 @@ public class CelestialLanternData extends SavedData {
 	);
 
 	public static final SavedDataType<CelestialLanternData> TYPE = new SavedDataType<>(
-			"iw_celestial_lanterns",
+			Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "celestial_lanterns"),
 			CelestialLanternData::new,
 			CODEC
 	);

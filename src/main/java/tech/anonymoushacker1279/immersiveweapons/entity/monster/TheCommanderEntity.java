@@ -38,18 +38,15 @@ import java.util.List;
 
 public class TheCommanderEntity extends DyingSoldierEntity implements AttackerTracker, WaveSummoningBoss {
 
-	public final ServerBossEvent bossEvent = new ServerBossEvent(getDisplayName(), BossBarColor.RED,
-			BossBarOverlay.PROGRESS);
+	public final ServerBossEvent bossEvent = new ServerBossEvent(getUUID(), getDisplayName(), BossBarColor.RED, BossBarOverlay.PROGRESS);
+	final List<Entity> attackingEntities = new ArrayList<>(5);
 	private final RangedGunAttackGoal<DyingSoldierEntity> rangedGunAttackGoal =
 			new RangedGunAttackGoal<>(this, 1.0D, 120, 12.0F);
-
 	private int totalWavesToSpawn;
 	private int waveSizeModifier;
 	private int wavesSpawned = 0;
 	private boolean doneSpawningWaves = false;
 	private boolean breakTowerFences = false;
-
-	final List<Entity> attackingEntities = new ArrayList<>(5);
 
 	public TheCommanderEntity(EntityType<? extends DyingSoldierEntity> entityType, Level level) {
 		super(entityType, level);

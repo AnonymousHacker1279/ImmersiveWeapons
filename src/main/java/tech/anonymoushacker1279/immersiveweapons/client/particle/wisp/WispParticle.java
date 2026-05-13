@@ -24,15 +24,15 @@ public class WispParticle extends SingleQuadParticle {
 		bCol = (float) (color & 0xFF) / 255.0F;
 		alpha = 0.75F;
 		quadSize *= 0.5F;
-		lifetime = 40 + level.random.nextInt(20);
+		lifetime = 40 + level.getRandom().nextInt(20);
 	}
 
 	@Override
-	public int getLightColor(float partialTick) {
-		float lifeProgress = (this.age + partialTick) / this.lifetime;
+	protected int getLightCoords(float a) {
+		float lifeProgress = (this.age + a) / this.lifetime;
 		float clampedProgress = Mth.clamp(lifeProgress, 0.0F, 1.0F);
 
-		int packedLight = super.getLightColor(partialTick);
+		int packedLight = super.getLightCoords(a);
 		int blockLight = packedLight & 0xFF;
 		int skyLight = (packedLight >> 16) & 0xFF;
 

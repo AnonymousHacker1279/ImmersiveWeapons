@@ -67,7 +67,7 @@ public class EnvironmentEffects {
 			float damage = event.getAmount();
 
 			// Each level of the effect results in a 10% increase in damage taken (excluding bosses, which take 5%)
-			if (damagedEntity.getType().is(EntityTypes.BOSSES)) {
+			if (damagedEntity.is(EntityTypes.BOSSES)) {
 				damage *= ((level + 1) * 0.05f) + 1.0f;
 			} else {
 				damage *= ((level + 1) * 0.1f) + 1.0f;

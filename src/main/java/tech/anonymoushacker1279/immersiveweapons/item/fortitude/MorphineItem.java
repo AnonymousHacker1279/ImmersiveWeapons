@@ -11,11 +11,9 @@ import java.util.List;
 
 public class MorphineItem extends AbstractFortitudeItem {
 
-	/**
-	 * Constructor for MorphineItem.
-	 *
-	 * @param properties the <code>Properties</code> for the item
-	 */
+	/// Constructor for MorphineItem.
+	///
+	/// @param properties the `Properties` for the item
 	public MorphineItem(Properties properties) {
 		super(properties, false);
 	}

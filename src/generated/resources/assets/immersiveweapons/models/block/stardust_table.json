@@ -1,6 +1,5 @@
 {
   "parent": "immersiveweapons:block/table",
-  "render_type": "minecraft:cutout_mipped",
   "textures": {
     "all": "immersiveweapons:block/stardust_planks"
   }

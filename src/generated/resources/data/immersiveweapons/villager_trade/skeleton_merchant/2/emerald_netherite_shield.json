@@ -1,0 +1,12 @@
+{
+  "gives": {
+    "id": "immersiveweapons:netherite_shield"
+  },
+  "max_uses": 1.0,
+  "reputation_discount": 0.05,
+  "wants": {
+    "count": 28.0,
+    "id": "minecraft:emerald"
+  },
+  "xp": 8.0
+}

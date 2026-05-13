@@ -32,8 +32,8 @@ public class MoonglowParticle extends SingleQuadParticle {
 		gCol = 1.0F;
 		bCol = 1.0F;
 		quadSize *= 0.95F;
-		lifetime = (int) (40.0D / (level.random.nextFloat() * 0.8D + 0.2D));
-		setSprite(spriteSet.get(level.random));
+		lifetime = (int) (40.0D / (level.getRandom().nextFloat() * 0.8D + 0.2D));
+		setSprite(spriteSet.get(level.getRandom()));
 		hasPhysics = true;
 	}
 
