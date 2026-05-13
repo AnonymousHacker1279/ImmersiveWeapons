@@ -77,9 +77,7 @@ public class PistonCrushingRecipe extends SingleItemRecipe {
 		return "";
 	}
 
-	/**
-	 * Get a random drop amount based on the min and max count (inclusive).
-	 */
+	/// Get a random drop amount based on the min and max count (inclusive).
 	public int getRandomDropAmount() {
 		return minCount + (int) (Math.random() * ((maxCount - minCount) + 1));
 	}

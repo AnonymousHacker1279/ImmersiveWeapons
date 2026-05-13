@@ -247,11 +247,9 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 		}
 	}
 
-	/**
-	 * Attempt to dodge falling players. Particularly those using a mace.
-	 *
-	 * @param player The player to check.
-	 */
+	/// Attempt to dodge falling players. Particularly those using a mace.
+	///
+	/// @param player The player to check.
 	private void tryShadowDodge(Player player) {
 		boolean shouldDodgeFallingPlayers = (player.getDeltaMovement().y < -0.5D) && (player.fallDistance > 1.5f);
 		int dodgeChance = switch (level().getDifficulty()) {
@@ -269,11 +267,9 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 		}
 	}
 
-	/**
-	 * Attempt to block a spear attack with a shield if the player is moving fast enough.
-	 *
-	 * @param player The player to check.
-	 */
+	/// Attempt to block a spear attack with a shield if the player is moving fast enough.
+	///
+	/// @param player The player to check.
 	private void tryBlockSpear(Player player) {
 		Vec3 lookAngle = player.getLookAngle();
 		double dotMotion = lookAngle.dot(KineticWeapon.getMotion(player));

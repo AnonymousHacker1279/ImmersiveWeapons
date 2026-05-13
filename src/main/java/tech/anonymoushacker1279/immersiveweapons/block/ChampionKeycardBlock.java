@@ -37,9 +37,7 @@ public class ChampionKeycardBlock extends Block {
 		return InteractionResult.PASS;
 	}
 
-	/**
-	 * Break neighboring keycard blocks that share a side with the block that was broken
-	 */
+	/// Break neighboring keycard blocks that share a side with the block that was broken
 	private void propagateToNearbyBlocks(Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
 		BlockPos[] nearbyBlocks = new BlockPos[]{
 				pos.north(),

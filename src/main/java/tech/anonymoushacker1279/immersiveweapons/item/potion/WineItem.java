@@ -8,11 +8,9 @@ import java.util.List;
 
 public class WineItem extends CustomPotionItem {
 
-	/**
-	 * Constructor for WineItem.
-	 *
-	 * @param properties the <code>Properties</code> for the item
-	 */
+	/// Constructor for WineItem.
+	///
+	/// @param properties the `Properties` for the item
 	public WineItem(Properties properties) {
 		super(properties);
 	}

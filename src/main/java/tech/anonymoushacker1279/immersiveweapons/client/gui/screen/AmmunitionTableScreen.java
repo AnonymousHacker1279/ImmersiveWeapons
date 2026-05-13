@@ -76,13 +76,11 @@ public class AmmunitionTableScreen extends AbstractContainerScreen<AmmunitionTab
 		return super.mouseDragged(event, dragX, dragY);
 	}
 
-	/**
-	 * Check if the mouse is over the density scrollbar.
-	 *
-	 * @param mouseX the mouse's X position
-	 * @param mouseY the mouse's Y position
-	 * @return boolean
-	 */
+	/// Check if the mouse is over the density scrollbar.
+	///
+	/// @param mouseX the mouse's X position
+	/// @param mouseY the mouse's Y position
+	/// @return boolean
 	private boolean isOverDensityScrollbar(double mouseX, double mouseY) {
 		return mouseX >= leftPos + 72 && mouseX <= leftPos + 102 && mouseY >= topPos + 19 && mouseY <= topPos + 27;
 	}

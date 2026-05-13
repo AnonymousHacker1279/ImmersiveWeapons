@@ -91,31 +91,25 @@ public abstract class WaveSummonGoal<T extends Mob & WaveSummoningBoss> extends 
 		level.addFreshEntity(mob);
 	}
 
-	/**
-	 * Get a nearby position for spawning an entity, within 8 blocks of the tower on the X/Z plane.
-	 *
-	 * @return BlockPos
-	 */
+	/// Get a nearby position for spawning an entity, within 8 blocks of the tower on the X/Z plane.
+	///
+	/// @return BlockPos
 	private BlockPos getRandomNearbyPosForSpawning() {
 		return new BlockPos(mob.getBlockX() + mob.getRandom().nextIntBetweenInclusive(-8, 8),
 				mob.getBlockY(),
 				mob.getBlockZ() + mob.getRandom().nextIntBetweenInclusive(-8, 8));
 	}
 
-	/**
-	 * Add a mob to the spawn queue. A wave of entities is not spawned all at once for performance reasons.
-	 *
-	 * @param mob the <code>Mob</code> to add
-	 */
+	/// Add a mob to the spawn queue. A wave of entities is not spawned all at once for performance reasons.
+	///
+	/// @param mob the `Mob` to add
 	protected void addToSpawnQueue(Mob mob, boolean isFodder) {
 		mobSpawnQueue.put(mob, isFodder);
 	}
 
-	/**
-	 * Spawn a given amount of mobs from the spawn queue.
-	 *
-	 * @param amount the amount of mobs to spawn
-	 */
+	/// Spawn a given amount of mobs from the spawn queue.
+	///
+	/// @param amount the amount of mobs to spawn
 	protected void spawnFromMobQueue(int amount) {
 		for (int i = amount; i > 0; i--) {
 			if (!mobSpawnQueue.isEmpty()) {

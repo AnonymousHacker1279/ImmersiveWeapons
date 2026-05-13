@@ -6,9 +6,7 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.StringRepresentable;
 import net.neoforged.neoforge.network.codec.NeoForgeStreamCodecs;
 
-/**
- * An enum of accessory slots.
- */
+/// An enum of accessory slots.
 public enum AccessorySlot implements StringRepresentable {
 	HEAD("head"),
 	BODY("body"),

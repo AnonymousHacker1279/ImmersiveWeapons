@@ -22,9 +22,7 @@ public class DeferredRegistryHandler {
 			.displayItems(ItemRegistry.ITEMS.getEntries())
 			.build());
 
-	/**
-	 * Initialize deferred registers.
-	 */
+	/// Initialize deferred registers.
 	public static void init(IEventBus modEventBus) {
 		ImmersiveWeapons.LOGGER.info("Initializing deferred registry for items");
 		ItemRegistry.ITEMS.register(modEventBus);

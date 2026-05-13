@@ -53,11 +53,9 @@ public class SmokeGrenadeEntity extends AdvancedThrowableItemProjectile {
 				SoundSource.NEUTRAL, 0.2f, 0.6f, true);
 	}
 
-	/**
-	 * Set the particle color. Color IDs can be found in {@link SmokeGrenadeParticleOptions.SmokeGrenadeColors}.
-	 *
-	 * @param color a color ID
-	 */
+	/// Set the particle color. Color IDs can be found in [SmokeGrenadeParticleOptions.SmokeGrenadeColors].
+	///
+	/// @param color a color ID
 	public void setColor(int color) {
 		this.color = color;
 	}

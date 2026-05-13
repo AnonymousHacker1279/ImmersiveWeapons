@@ -31,9 +31,7 @@ public abstract class AbstractMerchantEntity extends AbstractVillager implements
 		super(entityType, level);
 	}
 
-	/**
-	 * Get the time until trades refresh. Used by IWCB for a plugin, hence the unused warning suppression.
-	 */
+	/// Get the time until trades refresh. Used by IWCB for a plugin, hence the unused warning suppression.
 	@SuppressWarnings("unused")
 	public int getTradeRefreshTime() {
 		return entityData.get(TRADE_REFRESH_TIME);

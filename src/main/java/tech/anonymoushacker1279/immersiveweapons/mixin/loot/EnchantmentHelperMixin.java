@@ -14,13 +14,10 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import tech.anonymoushacker1279.immersiveweapons.api.events.ComputeEnchantedLootBonusEvent;
 
-/**
- * Loot-related mixins in this package are based on Puzzles Lib's implementation. Provided as a solution to NeoForge
- * <a href="https://github.com/neoforged/NeoForge/issues/1112">issue #1112</a>.
- * <br>
- * <a
- * href="https://github.com/Fuzss/puzzleslib/blob/main/1.21.1/NeoForge/src/main/java/fuzs/puzzleslib/neoforge/mixin/EnchantmentHelperNeoForgeMixin.java">Source</a>
- */
+/// Loot-related mixins in this package are based on Puzzles Lib's implementation. Provided as a solution to NeoForge
+/// [issue #1112](https://github.com/neoforged/NeoForge/issues/1112).
+///
+/// [Source](https://github.com/Fuzss/puzzleslib/blob/main/1.21.1/NeoForge/src/main/java/fuzs/puzzleslib/neoforge/mixin/EnchantmentHelperNeoForgeMixin.java)
 @Mixin(EnchantmentHelper.class)
 public abstract class EnchantmentHelperMixin {
 

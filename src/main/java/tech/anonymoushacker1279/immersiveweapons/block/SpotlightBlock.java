@@ -128,14 +128,12 @@ public class SpotlightBlock extends BasicOrientableBlock implements SimpleWaterl
 		stateToggled(pos, level, state, true);
 	}
 
-	/**
-	 * Get the light value of the block.
-	 *
-	 * @param state  the <code>BlockState</code> of the block
-	 * @param reader the <code>BlockGetter</code> of the block
-	 * @param pos    the <code>BlockPos</code> the block is at
-	 * @return int
-	 */
+	/// Get the light value of the block.
+	///
+	/// @param state  the `BlockState` of the block
+	/// @param reader the `BlockGetter` of the block
+	/// @param pos    the `BlockPos` the block is at
+	/// @return int
 	@Override
 	public int getLightEmission(BlockState state, BlockGetter reader, BlockPos pos) {
 		if (state.getValue(LIT)) {

@@ -16,7 +16,7 @@ public class SmallPartsRecipeBuilder extends IWRecipeBuilder {
 
 	private final Ingredient material;
 	private final List<ItemStackTemplate> craftables;
-	private Identifier tagName;
+	private final Identifier tagName;
 
 	public SmallPartsRecipeBuilder(Ingredient material, List<ItemStackTemplate> craftables, Identifier tagName) {
 		this.material = material;

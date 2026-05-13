@@ -17,18 +17,21 @@ public class BlockEntityRegistry {
 	// Block Entity Register
 	public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, ImmersiveWeapons.MOD_ID);
 	public static final Supplier<BlockEntityType<CustomSignBlockEntity>> CUSTOM_SIGN_ENTITY = BLOCK_ENTITIES.register("sign", () -> new BlockEntityType<>(CustomSignBlockEntity::new, BlockRegistry.BURNED_OAK_SIGN.get(), BlockRegistry.BURNED_OAK_WALL_SIGN.get(), BlockRegistry.STARDUST_SIGN.get(), BlockRegistry.STARDUST_WALL_SIGN.get()));    // Block Entities
-	public static final Supplier<BlockEntityType<CustomHangingSignBlockEntity>> CUSTOM_HANGING_SIGN_ENTITY = BLOCK_ENTITIES.register("hanging_sign", () -> new BlockEntityType<>(CustomHangingSignBlockEntity::new, BlockRegistry.BURNED_OAK_HANGING_SIGN.get(), BlockRegistry.BURNED_OAK_WALL_HANGING_SIGN.get(), BlockRegistry.STARDUST_HANGING_SIGN.get(), BlockRegistry.STARDUST_WALL_HANGING_SIGN.get()));	public static final Supplier<BlockEntityType<BearTrapBlockEntity>> BEAR_TRAP_BLOCK_ENTITY = BLOCK_ENTITIES.register("bear_trap", () -> new BlockEntityType<>(BearTrapBlockEntity::new, Sets.newHashSet(BlockRegistry.BEAR_TRAP.get())));
-	public static final Supplier<BlockEntityType<CustomSkullBlockEntity>> CUSTOM_SKULL_BLOCK_ENTITY = BLOCK_ENTITIES.register("custom_skull", () -> new BlockEntityType<>(CustomSkullBlockEntity::new, getSkullBlocks()));
+	public static final Supplier<BlockEntityType<CustomHangingSignBlockEntity>> CUSTOM_HANGING_SIGN_ENTITY = BLOCK_ENTITIES.register("hanging_sign", () -> new BlockEntityType<>(CustomHangingSignBlockEntity::new, BlockRegistry.BURNED_OAK_HANGING_SIGN.get(), BlockRegistry.BURNED_OAK_WALL_HANGING_SIGN.get(), BlockRegistry.STARDUST_HANGING_SIGN.get(), BlockRegistry.STARDUST_WALL_HANGING_SIGN.get()));
+	public static final Supplier<BlockEntityType<CustomSkullBlockEntity>> CUSTOM_SKULL_BLOCK_ENTITY = BLOCK_ENTITIES.register("custom_skull", () -> new BlockEntityType<>(CustomSkullBlockEntity::new, getSkullBlocks()));	public static final Supplier<BlockEntityType<BearTrapBlockEntity>> BEAR_TRAP_BLOCK_ENTITY = BLOCK_ENTITIES.register("bear_trap", () -> new BlockEntityType<>(BearTrapBlockEntity::new, Sets.newHashSet(BlockRegistry.BEAR_TRAP.get())));
 
 	private static Block[] getSkullBlocks() {
 		return BlockRegistry.BLOCKS.getEntries().stream()
 				.map(Supplier::get)
 				.filter(block -> block instanceof SkullBlock || block instanceof CustomWallSkullBlock)
 				.toArray(Block[]::new);
-	}	public static final Supplier<BlockEntityType<ShelfBlockEntity>> SHELF_BLOCK_ENTITY = BLOCK_ENTITIES.register("wall_shelf", () -> new BlockEntityType<>(ShelfBlockEntity::new, Sets.newHashSet(BlockRegistry.WALL_SHELF.get())));
+	}
+
+
+
+	public static final Supplier<BlockEntityType<ShelfBlockEntity>> SHELF_BLOCK_ENTITY = BLOCK_ENTITIES.register("wall_shelf", () -> new BlockEntityType<>(ShelfBlockEntity::new, Sets.newHashSet(BlockRegistry.WALL_SHELF.get())));
 
 	public static final Supplier<BlockEntityType<PanicAlarmBlockEntity>> PANIC_ALARM_BLOCK_ENTITY = BLOCK_ENTITIES.register("panic_alarm", () -> new BlockEntityType<>(PanicAlarmBlockEntity::new, Sets.newHashSet(BlockRegistry.PANIC_ALARM.get())));
-
 
 
 	public static final Supplier<BlockEntityType<MinutemanStatueBlockEntity>> MINUTEMAN_STATUE_BLOCK_ENTITY = BLOCK_ENTITIES.register("minuteman_statue", () -> new BlockEntityType<>(MinutemanStatueBlockEntity::new, Sets.newHashSet(BlockRegistry.MINUTEMAN_STATUE.get())));

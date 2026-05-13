@@ -143,9 +143,7 @@ public class SmallPartsMenu extends AbstractContainerMenu {
 		return selectedPartsPatternIndex.get();
 	}
 
-	/**
-	 * Determines whether supplied player can use this container
-	 */
+	/// Determines whether supplied player can use this container
 	@Override
 	public boolean stillValid(Player pPlayer) {
 		return stillValid(access, pPlayer, BlockRegistry.SMALL_PARTS_TABLE.get());
@@ -162,9 +160,7 @@ public class SmallPartsMenu extends AbstractContainerMenu {
 		}
 	}
 
-	/**
-	 * Callback for when the crafting matrix is changed.
-	 */
+	/// Callback for when the crafting matrix is changed.
 	@Override
 	public void slotsChanged(Container pInventory) {
 		resultSlot.set(ItemStack.EMPTY);
@@ -178,10 +174,8 @@ public class SmallPartsMenu extends AbstractContainerMenu {
 		slotUpdateListener = runnable;
 	}
 
-	/**
-	 * Handle when the ingredient in slot {@code index} is shift-clicked. Normally this moves the ingredient between the
-	 * player inventory and the other inventory(s).
-	 */
+	/// Handle when the ingredient in slot `index` is shift-clicked. Normally this moves the ingredient between the
+	/// player inventory and the other inventory(s).
 	@Override
 	public ItemStack quickMoveStack(Player pPlayer, int pIndex) {
 		ItemStack stack = ItemStack.EMPTY;
@@ -225,9 +219,7 @@ public class SmallPartsMenu extends AbstractContainerMenu {
 		return stack;
 	}
 
-	/**
-	 * Called when the container is closed.
-	 */
+	/// Called when the container is closed.
 	@Override
 	public void removed(Player pPlayer) {
 		super.removed(pPlayer);

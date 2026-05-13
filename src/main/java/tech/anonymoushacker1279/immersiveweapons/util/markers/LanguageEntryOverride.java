@@ -11,11 +11,9 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface LanguageEntryOverride {
 
-	/**
-	 * The value of the language entry.
-	 * <p>
-	 * Note specifically for {@link PotionRegistry} entries: Overrides will still have some modifications made due to
-	 * potion variations.
-	 */
+	/// The value of the language entry.
+	///
+	/// Note specifically for [PotionRegistry] entries: Overrides will still have some modifications made due to potion
+	/// variations.
 	String value();
 }

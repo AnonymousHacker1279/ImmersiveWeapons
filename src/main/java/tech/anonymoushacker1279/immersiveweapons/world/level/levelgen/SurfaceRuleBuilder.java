@@ -34,23 +34,33 @@ public class SurfaceRuleBuilder {
 		return INSTANCE;
 	}
 
-	/**
-	 * Restricts surface to only one biome.
-	 *
-	 * @param biomeKey {@link ResourceKey} for the {@link Biome}.
-	 * @return same {@link SurfaceRuleBuilder} instance.
-	 */
+	/// Internal function, will take entry from cache or create it if necessary.
+	///
+	/// @param name     [String] entry internal name.
+	/// @param supplier [Supplier] for [SurfaceRuleEntry].
+	/// @return new or existing [SurfaceRuleEntry].
+	private static SurfaceRuleEntry getFromCache(String name, Supplier<SurfaceRuleEntry> supplier) {
+		SurfaceRuleEntry entry = RULES_CACHE.get(name);
+		if (entry == null) {
+			entry = supplier.get();
+			RULES_CACHE.put(name, entry);
+		}
+		return entry;
+	}
+
+	/// Restricts surface to only one biome.
+	///
+	/// @param biomeKey [ResourceKey] for the [Biome].
+	/// @return same [SurfaceRuleBuilder] instance.
 	public SurfaceRuleBuilder biome(ResourceKey<Biome> biomeKey) {
 		this.biomeKey = biomeKey;
 		return this;
 	}
 
-	/**
-	 * Set biome surface with specified {@link BlockState}. Example - block of grass in the Overworld biomes
-	 *
-	 * @param state {@link BlockState} for the ground cover.
-	 * @return same {@link SurfaceRuleBuilder} instance.
-	 */
+	/// Set biome surface with specified [BlockState]. Example - block of grass in the Overworld biomes
+	///
+	/// @param state [BlockState] for the ground cover.
+	/// @return same [SurfaceRuleBuilder] instance.
 	public SurfaceRuleBuilder surface(BlockState state) {
 		entryInstance = getFromCache("surface_" + state, () -> {
 			SurfaceRules.RuleSource rule = SurfaceRules.state(state);
@@ -63,13 +73,11 @@ public class SurfaceRuleBuilder {
 		return this;
 	}
 
-	/**
-	 * Set biome subsurface with specified {@link BlockState}. Example - dirt in the Overworld biomes.
-	 *
-	 * @param state {@link BlockState} for the subterranean layer.
-	 * @param depth block layer depth.
-	 * @return same {@link SurfaceRuleBuilder} instance.
-	 */
+	/// Set biome subsurface with specified [BlockState]. Example - dirt in the Overworld biomes.
+	///
+	/// @param state [BlockState] for the subterranean layer.
+	/// @param depth block layer depth.
+	/// @return same [SurfaceRuleBuilder] instance.
 	public SurfaceRuleBuilder subsurface(BlockState state, int depth) {
 		entryInstance = getFromCache("subsurface_" + depth + "_" + state, () -> {
 			SurfaceRules.RuleSource rule = SurfaceRules.state(state);
@@ -82,24 +90,20 @@ public class SurfaceRuleBuilder {
 		return this;
 	}
 
-	/**
-	 * Set biome filler with specified {@link BlockState}. Example - stone in the Overworld biomes. The rule is added
-	 * with priority 10.
-	 *
-	 * @param state {@link BlockState} for filling.
-	 * @return same {@link SurfaceRuleBuilder} instance.
-	 */
+	/// Set biome filler with specified [BlockState]. Example - stone in the Overworld biomes. The rule is added with
+	/// priority 10.
+	///
+	/// @param state [BlockState] for filling.
+	/// @return same [SurfaceRuleBuilder] instance.
 	public SurfaceRuleBuilder filler(BlockState state) {
 		entryInstance = getFromCache("fill_" + state, () -> new SurfaceRuleEntry(10, SurfaceRules.state(state)));
 		rules.add(entryInstance);
 		return this;
 	}
 
-	/**
-	 * Finalize rule building process.
-	 *
-	 * @return {@link SurfaceRules.RuleSource}.
-	 */
+	/// Finalize rule building process.
+	///
+	/// @return [SurfaceRules.RuleSource].
 	public SurfaceRules.RuleSource build() {
 		Collections.sort(rules);
 		List<SurfaceRules.RuleSource> ruleList = rules.stream().map(SurfaceRuleEntry::rule).toList();
@@ -111,29 +115,11 @@ public class SurfaceRuleBuilder {
 		return rule;
 	}
 
-	/**
-	 * Internal function, will take entry from cache or create it if necessary.
-	 *
-	 * @param name     {@link String} entry internal name.
-	 * @param supplier {@link Supplier} for {@link SurfaceRuleEntry}.
-	 * @return new or existing {@link SurfaceRuleEntry}.
-	 */
-	private static SurfaceRuleEntry getFromCache(String name, Supplier<SurfaceRuleEntry> supplier) {
-		SurfaceRuleEntry entry = RULES_CACHE.get(name);
-		if (entry == null) {
-			entry = supplier.get();
-			RULES_CACHE.put(name, entry);
-		}
-		return entry;
-	}
-
-	/**
-	 * Allows adding a custom rule.
-	 *
-	 * @param priority rule priority, lower values = higher priority (rule will be applied before others).
-	 * @param rule     custom {@link SurfaceRules.RuleSource}.
-	 * @return same {@link SurfaceRuleBuilder} instance.
-	 */
+	/// Allows adding a custom rule.
+	///
+	/// @param priority rule priority, lower values = higher priority (rule will be applied before others).
+	/// @param rule     custom [SurfaceRules.RuleSource].
+	/// @return same [SurfaceRuleBuilder] instance.
 	public SurfaceRuleBuilder rule(int priority, SurfaceRules.RuleSource rule) {
 		rules.add(new SurfaceRuleEntry(priority, rule));
 		return this;

@@ -39,6 +39,24 @@ public abstract class AdvancedThrowableItemProjectile extends ThrowableItemProje
 		super(entityType, x, y, z, level, stack);
 	}
 
+	public static boolean canSee(LivingEntity livingEntity, Entity entity, boolean lookingAt) {
+		if (livingEntity.hasLineOfSight(entity)) {
+			if (!lookingAt) {
+				return true;
+			}
+
+			Vec3 lookVec = livingEntity.getLookAngle();
+			Vec3 toEntity = entity.position().subtract(livingEntity.position()).normalize();
+
+			double dotProduct = lookVec.dot(toEntity);
+			double maxCosine = Math.cos(Math.toRadians(90));
+			double angleToGround = 180 - (Math.acos(lookVec.y) * (180.0f / Math.PI));
+			return dotProduct > maxCosine || angleToGround < 30;
+		}
+
+		return false;
+	}
+
 	@Override
 	protected void onHit(HitResult hitResult) {
 		super.onHit(hitResult);
@@ -146,24 +164,6 @@ public abstract class AdvancedThrowableItemProjectile extends ThrowableItemProje
 		this.shoot(newX, newY, newZ, velocity, inaccuracy);
 	}
 
-	public static boolean canSee(LivingEntity livingEntity, Entity entity, boolean lookingAt) {
-		if (livingEntity.hasLineOfSight(entity)) {
-			if (!lookingAt) {
-				return true;
-			}
-
-			Vec3 lookVec = livingEntity.getLookAngle();
-			Vec3 toEntity = entity.position().subtract(livingEntity.position()).normalize();
-
-			double dotProduct = lookVec.dot(toEntity);
-			double maxCosine = Math.cos(Math.toRadians(90));
-			double angleToGround = 180 - (Math.acos(lookVec.y) * (180.0f / Math.PI));
-			return dotProduct > maxCosine || angleToGround < 30;
-		}
-
-		return false;
-	}
-
 	@Override
 	public void addAdditionalSaveData(ValueOutput valueOutput) {
 		super.addAdditionalSaveData(valueOutput);
@@ -182,17 +182,13 @@ public abstract class AdvancedThrowableItemProjectile extends ThrowableItemProje
 		ticksInGround = valueInput.getIntOr("ticksInGround", 0);
 	}
 
-	/**
-	 * Called whenever activation effects should take place.
-	 */
+	/// Called whenever activation effects should take place.
 	protected void onActivate() {
 	}
 
-	/**
-	 * Get the number of ticks the projectile has been in the ground. Used by IWCB.
-	 *
-	 * @return int
-	 */
+	/// Get the number of ticks the projectile has been in the ground. Used by IWCB.
+	///
+	/// @return int
 	@SuppressWarnings("unused")
 	public int getTicksInGround() {
 		return ticksInGround;

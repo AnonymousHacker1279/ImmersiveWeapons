@@ -40,11 +40,9 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 	public static final BooleanProperty POWERED = BooleanProperty.create("powered");
 	protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D);
 
-	/**
-	 * Constructor for SpikeTrapBlock.
-	 *
-	 * @param properties the <code>Properties</code> of the block
-	 */
+	/// Constructor for SpikeTrapBlock.
+	///
+	/// @param properties the `Properties` of the block
 	public SpikeTrapBlock(Properties properties) {
 		super(properties);
 		registerDefaultState(stateDefinition.any().setValue(WATERLOGGED, Boolean.FALSE).setValue(POWERED, Boolean.FALSE));
@@ -93,15 +91,13 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 		}
 	}
 
-	/**
-	 * Runs when neighboring blocks change state.
-	 *
-	 * @param state    the <code>BlockState</code> of the block
-	 * @param level    the <code>Level</code> the block is in
-	 * @param pos      the <code>BlockPos</code> the block is at
-	 * @param oldState the <code>BlockState</code> the block previously had
-	 * @param isMoving determines if the block is moving
-	 */
+	/// Runs when neighboring blocks change state.
+	///
+	/// @param state    the `BlockState` of the block
+	/// @param level    the `Level` the block is in
+	/// @param pos      the `BlockPos` the block is at
+	/// @param oldState the `BlockState` the block previously had
+	/// @param isMoving determines if the block is moving
 	@Override
 	public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
 		if (!oldState.is(state.getBlock())) {

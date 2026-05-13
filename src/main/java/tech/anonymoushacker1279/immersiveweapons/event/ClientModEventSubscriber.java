@@ -57,11 +57,9 @@ import java.util.List;
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, value = Dist.CLIENT)
 public class ClientModEventSubscriber {
 
-	/**
-	 * Event handler for the FMLClientSetupEvent.
-	 *
-	 * @param event the <code>FMLClientSetupEvent</code> instance
-	 */
+	/// Event handler for the FMLClientSetupEvent.
+	///
+	/// @param event the `FMLClientSetupEvent` instance
 	@SubscribeEvent
 	public static void clientSetup(FMLClientSetupEvent event) {
 		ImmersiveWeapons.LOGGER.debug("Initializing client setup");
@@ -152,11 +150,9 @@ public class ClientModEventSubscriber {
 		}
 	}
 
-	/**
-	 * Event handler for the EntityRenderersEvent.RegisterRenderers
-	 *
-	 * @param event the <code>RegisterRenderers</code> instance
-	 */
+	/// Event handler for the EntityRenderersEvent.RegisterRenderers
+	///
+	/// @param event the `RegisterRenderers` instance
 	@SubscribeEvent
 	public static void entityRenderers(EntityRenderersEvent.RegisterRenderers event) {
 		ImmersiveWeapons.LOGGER.info("Registering entity renderers");
@@ -291,11 +287,9 @@ public class ClientModEventSubscriber {
 		event.registerEntityModifier(RockSpiderRenderer.class, (entity, state) -> state.setRenderData(RockSpiderRenderer.DEEPSLATE_VARIANT, entity.isDeepslateVariant()));
 	}
 
-	/**
-	 * Event handler for the RegisterLayerDefinitions.
-	 *
-	 * @param event the <code>RegisterLayerDefinitions</code> instance
-	 */
+	/// Event handler for the RegisterLayerDefinitions.
+	///
+	/// @param event the `RegisterLayerDefinitions` instance
 	@SubscribeEvent
 	public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
 		ImmersiveWeapons.LOGGER.info("Registering entity layer definitions");
@@ -321,11 +315,9 @@ public class ClientModEventSubscriber {
 		event.registerLayerDefinition(ModelLayerLocations.STARDUST_CHEST_BOAT_LAYER, BoatModel::createChestBoatModel);
 	}
 
-	/**
-	 * Event handler for the ParticleFactoryRegisterEvent.
-	 *
-	 * @param event the <code>ParticleFactoryRegisterEvent</code> instance
-	 */
+	/// Event handler for the ParticleFactoryRegisterEvent.
+	///
+	/// @param event the `ParticleFactoryRegisterEvent` instance
 	@SubscribeEvent
 	public static void registerParticleFactories(RegisterParticleProvidersEvent event) {
 		ImmersiveWeapons.LOGGER.info("Registering particle factories");

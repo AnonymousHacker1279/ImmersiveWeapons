@@ -72,6 +72,10 @@ public class WispEntity extends AmbientCreature implements GrantAdvancementOnDis
 		return wisp;
 	}
 
+	public static boolean checkSpawnRules(EntityType<WispEntity> entityType, ServerLevelAccessor accessor, EntitySpawnReason reason, BlockPos blockPos, RandomSource random) {
+		return true;
+	}
+
 	@Override
 	protected void registerGoals() {
 		goalSelector.addGoal(1, new WispOrbitEntityGoal(this));
@@ -123,9 +127,7 @@ public class WispEntity extends AmbientCreature implements GrantAdvancementOnDis
 		}
 	}
 
-	/**
-	 * Scans for nearby entities within range and sets a target if conditions are met.
-	 */
+	/// Scans for nearby entities within range and sets a target if conditions are met.
 	private void scanForNearbyEntities() {
 		if (targetEntity != null && !targetEntity.isAlive()) {
 			targetEntity = null;
@@ -166,9 +168,7 @@ public class WispEntity extends AmbientCreature implements GrantAdvancementOnDis
 		}
 	}
 
-	/**
-	 * Counts the number of wisps of a specific type around an entity.
-	 */
+	/// Counts the number of wisps of a specific type around an entity.
 	private int countWispsAroundEntity(Entity entity, int wispType) {
 		List<WispEntity> nearbyWisps = level()
 				.getEntitiesOfClass(WispEntity.class,
@@ -177,7 +177,6 @@ public class WispEntity extends AmbientCreature implements GrantAdvancementOnDis
 
 		return nearbyWisps.size();
 	}
-
 
 	public int getWispType() {
 		return entityData.get(WISP_TYPE);
@@ -235,10 +234,6 @@ public class WispEntity extends AmbientCreature implements GrantAdvancementOnDis
 		}
 
 		return super.finalizeSpawn(level, difficulty, spawnReason, spawnGroupData);
-	}
-
-	public static boolean checkSpawnRules(EntityType<WispEntity> entityType, ServerLevelAccessor accessor, EntitySpawnReason reason, BlockPos blockPos, RandomSource random) {
-		return true;
 	}
 
 	@Override

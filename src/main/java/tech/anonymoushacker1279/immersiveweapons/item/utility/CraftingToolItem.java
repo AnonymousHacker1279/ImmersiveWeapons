@@ -7,11 +7,9 @@ import org.jspecify.annotations.Nullable;
 
 public class CraftingToolItem extends Item {
 
-	/**
-	 * A basic item type that simply is not used up during crafting.
-	 *
-	 * @param properties the <code>Properties</code> for the item
-	 */
+	/// A basic item type that simply is not used up during crafting.
+	///
+	/// @param properties the `Properties` for the item
 	public CraftingToolItem(Properties properties) {
 		super(properties);
 	}

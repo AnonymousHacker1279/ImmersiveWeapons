@@ -233,46 +233,38 @@ public class StarForgeScreen extends AbstractContainerScreen<StarForgeMenu> {
 		}
 	}
 
-	/**
-	 * Check if the mouse is over the scrollbar region.
-	 *
-	 * @param x the x position of the mouse
-	 * @param y the y position of the mouse
-	 * @return boolean
-	 */
+	/// Check if the mouse is over the scrollbar region.
+	///
+	/// @param x the x position of the mouse
+	/// @param y the y position of the mouse
+	/// @return boolean
 	private boolean isOverScrollbar(int x, int y) {
 		return x >= leftPos + 119 && x < leftPos + 119 + 11 && y >= topPos + 13 && y < topPos + 13 + 56;
 	}
 
-	/**
-	 * Check if the mouse is over the solar indicator region.
-	 *
-	 * @param x the x position of the mouse
-	 * @param y the y position of the mouse
-	 * @return boolean
-	 */
+	/// Check if the mouse is over the solar indicator region.
+	///
+	/// @param x the x position of the mouse
+	/// @param y the y position of the mouse
+	/// @return boolean
 	private boolean isOverSolarIndicator(int x, int y) {
 		return x >= leftPos + 37 && x <= leftPos + 47 && y >= topPos + 28 && y <= topPos + 38;
 	}
 
-	/**
-	 * Check if the mouse is over the temperature bar region.
-	 *
-	 * @param x the x position of the mouse
-	 * @param y the y position of the mouse
-	 * @return boolean
-	 */
+	/// Check if the mouse is over the temperature bar region.
+	///
+	/// @param x the x position of the mouse
+	/// @param y the y position of the mouse
+	/// @return boolean
 	private boolean isOverTemperatureBar(int x, int y) {
 		return x >= leftPos + 11 && x <= leftPos + 23 && y >= topPos + 10 && y <= topPos + 48;
 	}
 
-	/**
-	 * Check if the mouse is over the crafting icon region.
-	 *
-	 * @param x the x position of the mouse
-	 * @param y the y position of the mouse
-	 * @return boolean
-	 */
+	/// Check if the mouse is over the crafting icon region.
+	///
+	/// @param x the x position of the mouse
+	/// @param y the y position of the mouse
+	/// @return boolean
 	private boolean isOverCraftingIcon(int x, int y) {
 		return x >= leftPos + 144 && x <= leftPos + 159 && y >= topPos + 8 && y <= topPos + 23;
 	}

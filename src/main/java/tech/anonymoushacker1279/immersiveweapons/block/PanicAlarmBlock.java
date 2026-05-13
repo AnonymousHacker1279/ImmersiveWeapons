@@ -37,11 +37,9 @@ public class PanicAlarmBlock extends BasicOrientableBlock implements SimpleWater
 	private static final VoxelShape SHAPE_EAST = Block.box(0.0D, 4.0D, 4.0D, 3.0D, 11.0D, 12.0D);
 	private static final VoxelShape SHAPE_WEST = Block.box(13.0D, 4.0D, 4.0D, 16.0D, 11.0D, 12.0D);
 
-	/**
-	 * Constructor for PanicAlarmBlock.
-	 *
-	 * @param properties the <code>Properties</code> of the block
-	 */
+	/// Constructor for PanicAlarmBlock.
+	///
+	/// @param properties the `Properties` of the block
 	public PanicAlarmBlock(Properties properties) {
 		super(properties);
 		registerDefaultState(stateDefinition.any().setValue(WATERLOGGED, false).setValue(FACING, Direction.NORTH));
@@ -118,12 +116,10 @@ public class PanicAlarmBlock extends BasicOrientableBlock implements SimpleWater
 		return !state.canSurvive(level, pos) ? Blocks.AIR.defaultBlockState() : super.updateShape(state, level, scheduledTickAccess, pos, direction, neighborPos, neighborState, random);
 	}
 
-	/**
-	 * Plays a sound when powered.
-	 *
-	 * @param level the <code>Level</code> the block is at
-	 * @param pos   the <code>BlockPos</code> the block is at
-	 */
+	/// Plays a sound when powered.
+	///
+	/// @param level the `Level` the block is at
+	/// @param pos   the `BlockPos` the block is at
 	private void checkPowered(Level level, BlockPos pos) {
 		BlockEntity blockEntity = level.getBlockEntity(pos);
 

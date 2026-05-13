@@ -18,22 +18,18 @@ import java.util.List;
 
 public abstract class CustomPotionItem extends Item {
 
-	/**
-	 * Constructor for AbstractBottleItem.
-	 *
-	 * @param properties the <code>Properties</code> for the item
-	 */
+	/// Constructor for AbstractBottleItem.
+	///
+	/// @param properties the `Properties` for the item
 	CustomPotionItem(Properties properties) {
 		super(properties);
 	}
 
-	/**
-	 * Runs when the item is used.
-	 *
-	 * @param level  the <code>Level</code> the player is in
-	 * @param player the <code>Player</code> instance
-	 * @param hand   the <code>InteractionHand</code> the player is using
-	 */
+	/// Runs when the item is used.
+	///
+	/// @param level  the `Level` the player is in
+	/// @param player the `Player` instance
+	/// @param hand   the `InteractionHand` the player is using
 	@Override
 	public InteractionResult use(Level level, Player player, InteractionHand hand) {
 		return ItemUtils.startUsingInstantly(level, player, hand);
@@ -82,12 +78,10 @@ public abstract class CustomPotionItem extends Item {
 		return 32;
 	}
 
-	/**
-	 * Get the use animation.
-	 *
-	 * @param stack the <code>ItemStack</code> instance
-	 * @return UseAction
-	 */
+	/// Get the use animation.
+	///
+	/// @param stack the `ItemStack` instance
+	/// @return UseAction
 	@Override
 	public ItemUseAnimation getUseAnimation(ItemStack stack) {
 		return ItemUseAnimation.DRINK;

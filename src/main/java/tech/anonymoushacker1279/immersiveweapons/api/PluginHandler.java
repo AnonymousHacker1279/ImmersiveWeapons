@@ -12,16 +12,14 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class PluginHandler {
 
-	private static boolean havePluginsInitialized = false;
 	private static final List<IWPlugin> PLUGINS = new ArrayList<>(0);
 	private static final LinkedHashSet<String> PLUGIN_NAMES = new LinkedHashSet<>(0);
+	private static boolean havePluginsInitialized = false;
 
-	/**
-	 * Initialize plugins. This should NOT be called in your own code, IW will automatically initialize plugins during
-	 * its common setup stage.
-	 *
-	 * @param event the {@link FMLCommonSetupEvent} instance
-	 */
+	/// Initialize plugins. This should NOT be called in your own code, IW will automatically initialize plugins during
+	/// its common setup stage.
+	///
+	/// @param event the [FMLCommonSetupEvent] instance
 	@Internal
 	public static void initializePlugins(FMLCommonSetupEvent event) {
 		ImmersiveWeapons.LOGGER.info("Initializing plugins");
@@ -38,15 +36,15 @@ public class PluginHandler {
 		havePluginsInitialized = true;
 	}
 
-	/**
-	 * Register your plugin here from your mod's constructor.
-	 * <br><br>
-	 * Registration will fail in either of the two conditions:
-	 * <br>- a plugin already exists with the name of your plugin
-	 * <br>- the initialization stage has already passed
-	 *
-	 * @param plugin the {@link IWPlugin} instance you are registering
-	 */
+	/// Register your plugin here from your mod's constructor.
+	///
+	/// Registration will fail in either of the two conditions:
+	///
+	/// - a plugin already exists with the name of your plugin
+	///
+	/// - the initialization stage has already passed
+	///
+	/// @param plugin the [IWPlugin] instance you are registering
 	@AvailableSince("1.17.0")
 	public static void registerPlugin(IWPlugin plugin) {
 		String name = plugin.getPluginName();
@@ -65,24 +63,20 @@ public class PluginHandler {
 		}
 	}
 
-	/**
-	 * Check if a plugin has been registered. Note, a plugin may be registered but not active. If you are checking if a
-	 * plugin is active, use {@link #isPluginActive(String)} instead.
-	 *
-	 * @param name the name of the plugin
-	 * @return true if the plugin has been registered, false otherwise
-	 */
+	/// Check if a plugin has been registered. Note, a plugin may be registered but not active. If you are checking if a
+	/// plugin is active, use [#isPluginActive(String)] instead.
+	///
+	/// @param name the name of the plugin
+	/// @return true if the plugin has been registered, false otherwise
 	@AvailableSince("1.20.0")
 	public static boolean isPluginRegistered(String name) {
 		return PLUGIN_NAMES.contains(name);
 	}
 
-	/**
-	 * Check if a plugin is active.
-	 *
-	 * @param name the name of the plugin
-	 * @return true if the plugin is active, false otherwise
-	 */
+	/// Check if a plugin is active.
+	///
+	/// @param name the name of the plugin
+	/// @return true if the plugin is active, false otherwise
 	@AvailableSince("1.23.0")
 	public static boolean isPluginActive(String name) {
 		for (IWPlugin plugin : PLUGINS) {

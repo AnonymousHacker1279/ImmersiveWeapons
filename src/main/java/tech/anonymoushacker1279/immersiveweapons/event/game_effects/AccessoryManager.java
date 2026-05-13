@@ -18,13 +18,11 @@ import java.util.List;
 
 public class AccessoryManager {
 
-	/**
-	 * Collect the value of the given effect from all accessories in the player's inventory.
-	 *
-	 * @param type   the <code>EffectType</code> to collect
-	 * @param player the <code>Player</code> to collect from
-	 * @return the value of the effect
-	 */
+	/// Collect the value of the given effect from all accessories in the player's inventory.
+	///
+	/// @param type   the `EffectType` to collect
+	/// @param player the `Player` to collect from
+	/// @return the value of the effect
 	public static double collectEffects(AccessoryEffectType type, Player player) {
 		AccessoryEvent.CollectEffects event = new AccessoryEvent.CollectEffects(player, type);
 		double effectValue = NeoForge.EVENT_BUS.post(event).getEffect();
@@ -32,44 +30,36 @@ public class AccessoryManager {
 		return type.clamp() ? Mth.clamp(effectValue, 0, 1) : effectValue;
 	}
 
-	/**
-	 * Collect the attribute modifiers from all active accessories in the player's inventory.
-	 *
-	 * @param player the <code>Player</code> to collect from
-	 * @return a <code>Map</code> of attribute modifiers
-	 */
+	/// Collect the attribute modifiers from all active accessories in the player's inventory.
+	///
+	/// @param player the `Player` to collect from
+	/// @return a `Map` of attribute modifiers
 	public static List<AttributeOperation> collectStandardAttributes(Player player) {
 		AccessoryEvent.CollectStandardAttributes event = new AccessoryEvent.CollectStandardAttributes(player);
 		return NeoForge.EVENT_BUS.post(event).getAttributes();
 	}
 
-	/**
-	 * Collect the dynamic attribute modifiers from all active accessories in the player's inventory.
-	 *
-	 * @param player the <code>Player</code> to collect from
-	 * @return a <code>Map</code> of dynamic attribute modifiers with their target values
-	 */
+	/// Collect the dynamic attribute modifiers from all active accessories in the player's inventory.
+	///
+	/// @param player the `Player` to collect from
+	/// @return a `Map` of dynamic attribute modifiers with their target values
 	public static List<DynamicAttributeOperationInstance> collectDynamicAttributes(Player player) {
 		AccessoryEvent.CollectDynamicAttributes event = new AccessoryEvent.CollectDynamicAttributes(player);
 		return NeoForge.EVENT_BUS.post(event).getAttributes();
 	}
 
-	/**
-	 * Collect the mob effect instances from all active accessories in the player's inventory.
-	 *
-	 * @param player the <code>Player</code> to collect from
-	 * @return a <code>List</code> of mob effect instances
-	 */
+	/// Collect the mob effect instances from all active accessories in the player's inventory.
+	///
+	/// @param player the `Player` to collect from
+	/// @return a `List` of mob effect instances
 	public static List<MobEffectInstance> collectMobEffects(Player player) {
 		AccessoryEvent.CollectMobEffects event = new AccessoryEvent.CollectMobEffects(player);
 		return NeoForge.EVENT_BUS.post(event).getEffects();
 	}
 
-	/**
-	 * Handle accessories with mob effects during the player tick event.
-	 *
-	 * @param player the <code>Player</code> to handle for
-	 */
+	/// Handle accessories with mob effects during the player tick event.
+	///
+	/// @param player the `Player` to handle for
 	public static void handleAccessoryMobEffects(Player player) {
 		List<MobEffectInstance> activeMobEffects = AccessoryManager.collectMobEffects(player);
 		for (MobEffectInstance effect : activeMobEffects) {
@@ -79,23 +69,19 @@ public class AccessoryManager {
 		}
 	}
 
-	/**
-	 * Handle accessories with attribute modifiers during the player tick event.
-	 *
-	 * @param player the <code>Player</code> to handle for
-	 */
+	/// Handle accessories with attribute modifiers during the player tick event.
+	///
+	/// @param player the `Player` to handle for
 	public static void handleAccessoryAttributes(Player player) {
 		List<AttributeOperation> activeStandardAttributeModifiers = handleStandardAttributeModifiers(player);
 		List<DynamicAttributeOperationInstance> activeDynamicAttributeModifiers = handleDynamicAttributeModifiers(player);
 		handleRemovedAttributes(player, activeStandardAttributeModifiers, activeDynamicAttributeModifiers);
 	}
 
-	/**
-	 * Handle the adding of standard (non-dynamic) attribute modifiers from accessories.
-	 *
-	 * @param player the <code>Player</code> to handle for
-	 * @return a <code>Map</code> of active standard attribute modifiers
-	 */
+	/// Handle the adding of standard (non-dynamic) attribute modifiers from accessories.
+	///
+	/// @param player the `Player` to handle for
+	/// @return a `Map` of active standard attribute modifiers
 	private static List<AttributeOperation> handleStandardAttributeModifiers(Player player) {
 		List<AttributeOperation> activeStandardAttributeModifiers = AccessoryManager.collectStandardAttributes(player);
 		for (AttributeOperation entry : activeStandardAttributeModifiers) {
@@ -113,12 +99,10 @@ public class AccessoryManager {
 		return activeStandardAttributeModifiers;
 	}
 
-	/**
-	 * Handle the adding of dynamic attribute modifiers from accessories.
-	 *
-	 * @param player the <code>Player</code> to handle for
-	 * @return a <code>Map</code> of active dynamic attribute modifiers with their target values
-	 */
+	/// Handle the adding of dynamic attribute modifiers from accessories.
+	///
+	/// @param player the `Player` to handle for
+	/// @return a `Map` of active dynamic attribute modifiers with their target values
 	private static List<DynamicAttributeOperationInstance> handleDynamicAttributeModifiers(Player player) {
 		List<DynamicAttributeOperationInstance> activeDynamicAttributeModifiers = AccessoryManager.collectDynamicAttributes(player);
 		for (DynamicAttributeOperationInstance entry : activeDynamicAttributeModifiers) {
@@ -150,13 +134,11 @@ public class AccessoryManager {
 		return activeDynamicAttributeModifiers;
 	}
 
-	/**
-	 * Handle the removal of attribute modifiers from accessories.
-	 *
-	 * @param player                           the <code>Player</code> to handle for
-	 * @param activeStandardAttributeModifiers the <code>Map</code> of active standard attribute modifiers
-	 * @param activeDynamicAttributeModifiers  the <code>Map</code> of active dynamic attribute modifiers
-	 */
+	/// Handle the removal of attribute modifiers from accessories.
+	///
+	/// @param player                           the `Player` to handle for
+	/// @param activeStandardAttributeModifiers the `Map` of active standard attribute modifiers
+	/// @param activeDynamicAttributeModifiers  the `Map` of active dynamic attribute modifiers
 	private static void handleRemovedAttributes(Player player, List<AttributeOperation> activeStandardAttributeModifiers, List<DynamicAttributeOperationInstance> activeDynamicAttributeModifiers) {
 		// Remove any attribute modifiers that are no present in the activeAttributeModifiers map
 		for (AttributeOperation entry : Accessory.getGlobalAttributeModifiers()) {

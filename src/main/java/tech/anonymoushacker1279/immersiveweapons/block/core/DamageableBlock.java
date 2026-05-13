@@ -28,15 +28,13 @@ public abstract class DamageableBlock extends BasicOrientableBlock implements Si
 	protected final Item repairItem;
 	private final IntegerProperty damageStage;
 
-	/**
-	 * Constructor for DamageableBlock. These blocks have a limited health pool and are destroyed over time. This is
-	 * used for blocks like wooden spikes, which slowly degrade as they deal damage.
-	 *
-	 * @param properties the <code>Properties</code> of the block
-	 * @param maxHealth  the health of the block, or number of uses before it breaks
-	 * @param stages     the number of visual stages the block will have before it breaks
-	 * @param repairItem the <code>Item</code> that can repair the block
-	 */
+	/// Constructor for DamageableBlock. These blocks have a limited health pool and are destroyed over time. This is
+	/// used for blocks like wooden spikes, which slowly degrade as they deal damage.
+	///
+	/// @param properties the `Properties` of the block
+	/// @param maxHealth  the health of the block, or number of uses before it breaks
+	/// @param stages     the number of visual stages the block will have before it breaks
+	/// @param repairItem the `Item` that can repair the block
 	public DamageableBlock(Properties properties, int maxHealth, int stages, Item repairItem, IntegerProperty damageStage) {
 		super(properties);
 

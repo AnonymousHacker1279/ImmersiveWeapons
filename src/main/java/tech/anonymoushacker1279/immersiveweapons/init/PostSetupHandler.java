@@ -23,9 +23,7 @@ public class PostSetupHandler {
 
 	private static final ResourceKey<Level> TILTROS = ResourceKey.create(Registries.DIMENSION, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "tiltros"));
 
-	/**
-	 * Initialize attributes which must be applied after setup.
-	 */
+	/// Initialize attributes which must be applied after setup.
 	public static void init() {
 		ImmersiveWeapons.LOGGER.info("Initializing post-setup handler");
 

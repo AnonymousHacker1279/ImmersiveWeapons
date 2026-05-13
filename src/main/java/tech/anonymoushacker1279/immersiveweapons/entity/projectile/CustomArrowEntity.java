@@ -152,17 +152,13 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 				.scale(velocity);
 	}
 
-	/**
-	 * Additional stuff to do while ticking. Runs early in the tick method.
-	 */
+	/// Additional stuff to do while ticking. Runs early in the tick method.
 	protected void doWhileTicking() {
 	}
 
-	/**
-	 * Additional stuff to do when an entity is hit.
-	 *
-	 * @param entity the <code>Entity</code> being hit
-	 */
+	/// Additional stuff to do when an entity is hit.
+	///
+	/// @param entity the `Entity` being hit
 	protected void doWhenHitEntity(Entity entity) {
 		level().broadcastEntityEvent(this, VANILLA_IMPACT_STATUS_ID);
 	}

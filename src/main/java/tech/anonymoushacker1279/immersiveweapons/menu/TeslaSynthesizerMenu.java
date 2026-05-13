@@ -14,9 +14,6 @@ import tech.anonymoushacker1279.immersiveweapons.init.MenuTypeRegistry;
 
 public class TeslaSynthesizerMenu extends AbstractContainerMenu {
 
-	private final Container container;
-	private final ContainerData containerData;
-
 	// Slot indices for easy reference
 	private static final int FIRST_INGREDIENT_SLOT = 0;
 	private static final int SECOND_INGREDIENT_SLOT = 1;
@@ -25,25 +22,23 @@ public class TeslaSynthesizerMenu extends AbstractContainerMenu {
 	private static final int RESULT_SLOT = 4;
 	private static final int PLAYER_INVENTORY_START = 5;
 	private static final int PLAYER_INVENTORY_END = 41;
+	private final Container container;
+	private final ContainerData containerData;
 
-	/**
-	 * Constructor for TeslaSynthesizerMenu.
-	 *
-	 * @param id        the ID of the container
-	 * @param inventory the <code>Inventory</code> instance
-	 */
+	/// Constructor for TeslaSynthesizerMenu.
+	///
+	/// @param id        the ID of the container
+	/// @param inventory the `Inventory` instance
 	public TeslaSynthesizerMenu(int id, Inventory inventory) {
 		this(id, inventory, new SimpleContainer(5), new SimpleContainerData(4));
 	}
 
-	/**
-	 * Constructor for TeslaSynthesizerMenu.
-	 *
-	 * @param id            the ID of the container
-	 * @param inventory     the player inventory
-	 * @param container     the container
-	 * @param containerData the container data
-	 */
+	/// Constructor for TeslaSynthesizerMenu.
+	///
+	/// @param id            the ID of the container
+	/// @param inventory     the player inventory
+	/// @param container     the container
+	/// @param containerData the container data
 	public TeslaSynthesizerMenu(int id, Inventory inventory, Container container, ContainerData containerData) {
 		super(MenuTypeRegistry.TESLA_SYNTHESIZER_MENU.get(), id);
 		checkContainerSize(container, 5);
@@ -145,32 +140,26 @@ public class TeslaSynthesizerMenu extends AbstractContainerMenu {
 		return newStack;
 	}
 
-	/**
-	 * Check if the given ItemStack is a fuel item.
-	 *
-	 * @param stack the <code>ItemStack</code> being checked
-	 * @return boolean
-	 */
+	/// Check if the given ItemStack is a fuel item.
+	///
+	/// @param stack the `ItemStack` being checked
+	/// @return boolean
 	public boolean isFuel(ItemStack stack) {
 		return TeslaSynthesizerBlockEntity.isFuel(stack);
 	}
 
-	/**
-	 * Get the current progression.
-	 *
-	 * @return int
-	 */
+	/// Get the current progression.
+	///
+	/// @return int
 	public int getCookProgressionScaled() {
 		int i = containerData.get(2);
 		int j = containerData.get(3);
 		return j != 0 && i != 0 ? i * 24 / j : 0;
 	}
 
-	/**
-	 * Get the scaled burn time left.
-	 *
-	 * @return int
-	 */
+	/// Get the scaled burn time left.
+	///
+	/// @return int
 	public int getBurnLeftScaled() {
 		int i = containerData.get(1);
 		if (i == 0) {
@@ -180,11 +169,9 @@ public class TeslaSynthesizerMenu extends AbstractContainerMenu {
 		return containerData.get(0) * 13 / i;
 	}
 
-	/**
-	 * Check if the fuel is currently burning.
-	 *
-	 * @return boolean
-	 */
+	/// Check if the fuel is currently burning.
+	///
+	/// @return boolean
 	public boolean isBurning() {
 		return containerData.get(0) > 0;
 	}

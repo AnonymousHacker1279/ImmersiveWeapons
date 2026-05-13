@@ -9,11 +9,9 @@ import tech.anonymoushacker1279.immersiveweapons.entity.AttackerTracker;
 
 import java.util.stream.Stream;
 
-/**
- * Rolls are based on the number of entities that attacked the entity dropping loot.
- * <p>
- * Entities using this loot table must implement {@link AttackerTracker}, otherwise this will do nothing.
- */
+/// Rolls are based on the number of entities that attacked the entity dropping loot.
+///
+/// Entities using this loot table must implement [AttackerTracker], otherwise this will do nothing.
 public record EntityKillersValue() implements NumberProvider {
 
 	public static final MapCodec<EntityKillersValue> MAP_CODEC = new MapCodec<>() {

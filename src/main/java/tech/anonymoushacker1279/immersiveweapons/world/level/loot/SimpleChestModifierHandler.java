@@ -45,31 +45,27 @@ public class SimpleChestModifierHandler extends LootModifier {
 	private final int maxEnchantLevels;
 	private final boolean allowTreasure;
 
-	/**
-	 * Create a simple chest modifier. This will add the specified item to the loot pool if the conditions are met.
-	 *
-	 * @param itemConditions The conditions that must be met for the item to be added to the loot pool
-	 * @param minQuantity    The minimum quantity of the item to add to the loot pool
-	 * @param maxQuantity    The maximum quantity of the item to add to the loot pool
-	 * @param rollChance     The chance that the item will be added to the loot pool
-	 * @param item           The item to add to the loot pool
-	 */
+	/// Create a simple chest modifier. This will add the specified item to the loot pool if the conditions are met.
+	///
+	/// @param itemConditions The conditions that must be met for the item to be added to the loot pool
+	/// @param minQuantity    The minimum quantity of the item to add to the loot pool
+	/// @param maxQuantity    The maximum quantity of the item to add to the loot pool
+	/// @param rollChance     The chance that the item will be added to the loot pool
+	/// @param item           The item to add to the loot pool
 	public SimpleChestModifierHandler(LootItemCondition[] itemConditions, int minQuantity, int maxQuantity, float rollChance, ItemStackTemplate item) {
 		this(itemConditions, 1000, minQuantity, maxQuantity, rollChance, item, 0, false);
 	}
 
-	/**
-	 * Create a simple chest modifier. This will add the specified item to the loot pool if the conditions are met. The
-	 * item will be randomly enchanted given the specified max enchantment levels.
-	 *
-	 * @param itemConditions   The conditions that must be met for the item to be added to the loot pool
-	 * @param minQuantity      The minimum quantity of the item to add to the loot pool
-	 * @param maxQuantity      The maximum quantity of the item to add to the loot pool
-	 * @param rollChance       The chance that the item will be added to the loot pool
-	 * @param item             The item to add to the loot pool
-	 * @param maxEnchantLevels The maximum number of enchantment levels to apply to the item
-	 * @param allowTreasure    Whether to allow treasure enchantments
-	 */
+	/// Create a simple chest modifier. This will add the specified item to the loot pool if the conditions are met. The
+	/// item will be randomly enchanted given the specified max enchantment levels.
+	///
+	/// @param itemConditions   The conditions that must be met for the item to be added to the loot pool
+	/// @param minQuantity      The minimum quantity of the item to add to the loot pool
+	/// @param maxQuantity      The maximum quantity of the item to add to the loot pool
+	/// @param rollChance       The chance that the item will be added to the loot pool
+	/// @param item             The item to add to the loot pool
+	/// @param maxEnchantLevels The maximum number of enchantment levels to apply to the item
+	/// @param allowTreasure    Whether to allow treasure enchantments
 	public SimpleChestModifierHandler(LootItemCondition[] itemConditions, int priority, int minQuantity, int maxQuantity, float rollChance, ItemStackTemplate item, int maxEnchantLevels, boolean allowTreasure) {
 		super(itemConditions, priority);
 		this.minQuantity = minQuantity;

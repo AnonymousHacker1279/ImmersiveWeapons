@@ -247,29 +247,23 @@ public abstract class AbstractGunItem extends Item {
 		}
 	}
 
-	/**
-	 * Get the predicate to match ammunition when searching the player's inventory, not their main/offhand
-	 *
-	 * @return Predicate extending ItemStack
-	 */
+	/// Get the predicate to match ammunition when searching the player's inventory, not their main/offhand
+	///
+	/// @return Predicate extending ItemStack
 	public Predicate<ItemStack> getInventoryAmmoPredicate() {
 		return MUSKET_BALLS;
 	}
 
-	/**
-	 * Get the default ammunition.
-	 *
-	 * @return Item
-	 */
+	/// Get the default ammunition.
+	///
+	/// @return Item
 	public Item defaultAmmo() {
 		return ItemRegistry.IRON_MUSKET_BALL.get();
 	}
 
-	/**
-	 * Get the default powder.
-	 *
-	 * @return Item
-	 */
+	/// Get the default powder.
+	///
+	/// @return Item
 	public Item defaultPowder() {
 		return Items.GUNPOWDER;
 	}
@@ -279,39 +273,31 @@ public abstract class AbstractGunItem extends Item {
 		return Integer.MAX_VALUE;
 	}
 
-	/**
-	 * Get the misfire sound.
-	 *
-	 * @return SoundEvent
-	 */
+	/// Get the misfire sound.
+	///
+	/// @return SoundEvent
 	SoundEvent getMisfireSound() {
 		return SoundEventRegistry.FLINTLOCK_PISTOL_MISFIRE.get();
 	}
 
-	/**
-	 * Get the fire sound.
-	 *
-	 * @return SoundEvent
-	 */
+	/// Get the fire sound.
+	///
+	/// @return SoundEvent
 	public SoundEvent getFireSound() {
 		return SoundEventRegistry.FLINTLOCK_PISTOL_FIRE.get();
 	}
 
-	/**
-	 * Get the maximum number of bullets that can be fired at once.
-	 *
-	 * @return int
-	 */
+	/// Get the maximum number of bullets that can be fired at once.
+	///
+	/// @return int
 	public int getMaxBulletsToFire() {
 		return 1;
 	}
 
-	/**
-	 * Get the number of bullets to fire.
-	 *
-	 * @param itemStack the ammunition <code>ItemStack</code>
-	 * @return int
-	 */
+	/// Get the number of bullets to fire.
+	///
+	/// @param itemStack the ammunition `ItemStack`
+	/// @return int
 	public int getBulletsToFire(ItemStack itemStack) {
 		return Math.min(itemStack.getCount(), getMaxBulletsToFire());
 	}

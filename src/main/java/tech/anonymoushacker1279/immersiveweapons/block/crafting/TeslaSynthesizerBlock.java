@@ -37,38 +37,32 @@ public class TeslaSynthesizerBlock extends Block implements SimpleWaterloggedBlo
 	protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 6.0D, 16.0D);
 	private static final Component CONTAINER_NAME = Component.translatable("container.immersiveweapons.tesla_synthesizer");
 
-	/**
-	 * Constructor for TeslaSynthesizerBlock.
-	 *
-	 * @param properties the <code>Properties</code> of the block
-	 */
+	/// Constructor for TeslaSynthesizerBlock.
+	///
+	/// @param properties the `Properties` of the block
 	public TeslaSynthesizerBlock(Properties properties) {
 		super(properties);
 		registerDefaultState(stateDefinition.any().setValue(WATERLOGGED, false));
 	}
 
-	/**
-	 * Create a block entity for the block.
-	 *
-	 * @param blockPos   the <code>BlockPos</code> the block is at
-	 * @param blockState the <code>BlockState</code> of the block
-	 * @return BlockEntity
-	 */
+	/// Create a block entity for the block.
+	///
+	/// @param blockPos   the `BlockPos` the block is at
+	/// @param blockState the `BlockState` of the block
+	/// @return BlockEntity
 	@Nullable
 	@Override
 	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
 		return new TeslaSynthesizerBlockEntity(blockPos, blockState);
 	}
 
-	/**
-	 * Set the shape of the block.
-	 *
-	 * @param state            the <code>BlockState</code> of the block
-	 * @param getter           the <code>BlockGetter</code> for the block
-	 * @param pos              the <code>BlockPos</code> the block is at
-	 * @param collisionContext the <code>CollisionContext</code> of the block
-	 * @return VoxelShape
-	 */
+	/// Set the shape of the block.
+	///
+	/// @param state            the `BlockState` of the block
+	/// @param getter           the `BlockGetter` for the block
+	/// @param pos              the `BlockPos` the block is at
+	/// @param collisionContext the `CollisionContext` of the block
+	/// @return VoxelShape
 	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter getter, BlockPos pos,
 	                           CollisionContext collisionContext) {
@@ -76,15 +70,13 @@ public class TeslaSynthesizerBlock extends Block implements SimpleWaterloggedBlo
 		return SHAPE;
 	}
 
-	/**
-	 * Get the ticker for the block.
-	 *
-	 * @param level           the <code>Level</code> the block is in
-	 * @param blockState      the <code>BlockState</code> of the block
-	 * @param blockEntityType the <code>BlockEntityType</code> to get the ticker of
-	 * @param <T>             the type extending BlockEntity
-	 * @return BlockEntityTicker
-	 */
+	/// Get the ticker for the block.
+	///
+	/// @param level           the `Level` the block is in
+	/// @param blockState      the `BlockState` of the block
+	/// @param blockEntityType the `BlockEntityType` to get the ticker of
+	/// @param <T>             the type extending BlockEntity
+	/// @return BlockEntityTicker
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState,
 	                                                              BlockEntityType<T> blockEntityType) {
@@ -97,22 +89,18 @@ public class TeslaSynthesizerBlock extends Block implements SimpleWaterloggedBlo
 		return null;
 	}
 
-	/**
-	 * Create the BlockState definition.
-	 *
-	 * @param builder the <code>StateDefinition.Builder</code> of the block
-	 */
+	/// Create the BlockState definition.
+	///
+	/// @param builder the `StateDefinition.Builder` of the block
 	@Override
 	public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(WATERLOGGED);
 	}
 
-	/**
-	 * Set FluidState properties. Allows the block to exhibit waterlogged behavior.
-	 *
-	 * @param state the <code>BlockState</code> of the block
-	 * @return FluidState
-	 */
+	/// Set FluidState properties. Allows the block to exhibit waterlogged behavior.
+	///
+	/// @param state the `BlockState` of the block
+	/// @return FluidState
 	@Override
 	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
@@ -131,14 +119,12 @@ public class TeslaSynthesizerBlock extends Block implements SimpleWaterloggedBlo
 		return InteractionResult.SUCCESS;
 	}
 
-	/**
-	 * Runs occasionally to create animations.
-	 *
-	 * @param state  the <code>BlockState</code> of the block
-	 * @param level  the <code>Level</code> the block is in
-	 * @param pos    the <code>BlockPos</code> the block is at
-	 * @param random a <code>RandomSource</code> instance
-	 */
+	/// Runs occasionally to create animations.
+	///
+	/// @param state  the `BlockState` of the block
+	/// @param level  the `Level` the block is in
+	/// @param pos    the `BlockPos` the block is at
+	/// @param random a `RandomSource` instance
 	@Override
 	public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
 		level.addParticle(ParticleTypes.SOUL_FIRE_FLAME,

@@ -52,9 +52,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		}.run();
 	}
 
-	/**
-	 * Add tags under the Forge namespace
-	 */
+	/// Add tags under the Forge namespace
 	@SuppressWarnings("unchecked")
 	private void addCommonTags() {
 		// Ingot tags
@@ -103,9 +101,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 		tag(Tags.Items.FOODS_FOOD_POISONING).add(ItemRegistry.MOLDY_BREAD.get());
 	}
 
-	/**
-	 * Add tags under the Immersive Weapons namespace
-	 */
+	/// Add tags under the Immersive Weapons namespace
 	@SuppressWarnings("unchecked")
 	private void addImmersiveWeaponsTags() {
 		// Projectile tags
@@ -347,9 +343,7 @@ public class ItemTagsGenerator extends ItemTagsProvider {
 				ItemRegistry.VOID_BOOTS.get());
 	}
 
-	/**
-	 * Add tags under the Minecraft namespace
-	 */
+	/// Add tags under the Minecraft namespace
 	@SuppressWarnings("unchecked")
 	private void addMinecraftTags() {
 		// Sign tags

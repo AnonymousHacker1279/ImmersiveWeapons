@@ -25,9 +25,7 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 		super(output, lookupProvider, ImmersiveWeapons.MOD_ID);
 	}
 
-	/**
-	 * Add tags to data generation.
-	 */
+	/// Add tags to data generation.
 	@Override
 	protected void addTags(Provider provider) {
 		addCommonTags();
@@ -43,9 +41,7 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 		}.run();
 	}
 
-	/**
-	 * Add tags under the Forge namespace
-	 */
+	/// Add tags under the Forge namespace
 	private void addCommonTags() {
 		// Bulletproof glass tag
 		tag(CommonBlockTagGroups.BULLETPROOF_GLASS).add(
@@ -92,9 +88,7 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 		tag(Blocks.GLASS_PANES_COLORLESS).add(BlockRegistry.BULLETPROOF_GLASS_PANE.get());
 	}
 
-	/**
-	 * Add tags under the Minecraft namespace
-	 */
+	/// Add tags under the Minecraft namespace
 	private void addMinecraftTags() {
 		tag(BlockTags.STANDING_SIGNS).add(BlockRegistry.BURNED_OAK_SIGN.get(),
 				BlockRegistry.STARDUST_SIGN.get());
@@ -162,9 +156,7 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 		tag(IWBlockTagGroups.NEEDS_HANSIUM_TOOL);
 	}
 
-	/**
-	 * Add block tags for mining with tools
-	 */
+	/// Add block tags for mining with tools
 	private void addMiningBlockTags() {
 		List<Block> blocks = new ArrayList<>(250);
 		BlockRegistry.BLOCKS.getEntries().stream().map(Supplier::get).forEach(blocks::add);

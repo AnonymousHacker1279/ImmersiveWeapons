@@ -20,9 +20,7 @@ import tech.anonymoushacker1279.immersiveweapons.entity.monster.SuperHansEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
-/**
- * Handles the respawning of Super Hans when tossing a Hans' Blessing into a fire block.
- */
+/// Handles the respawning of Super Hans when tossing a Hans' Blessing into a fire block.
 @Mixin(BaseFireBlock.class)
 public abstract class BaseFireBlockMixin {
 

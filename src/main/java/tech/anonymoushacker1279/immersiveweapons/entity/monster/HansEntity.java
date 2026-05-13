@@ -32,52 +32,42 @@ public class HansEntity extends AbstractWanderingWarriorEntity {
 				.add(Attributes.ARMOR, 20.0D);
 	}
 
-	/**
-	 * Get the ambient sound.
-	 *
-	 * @return SoundEvent
-	 */
+	/// Get the ambient sound.
+	///
+	/// @return SoundEvent
 	@Override
 	protected SoundEvent getAmbientSound() {
 		return SoundEventRegistry.WANDERING_WARRIOR_AMBIENT.get();
 	}
 
-	/**
-	 * Get the ambient sound interval.
-	 *
-	 * @return int
-	 */
+	/// Get the ambient sound interval.
+	///
+	/// @return int
 	@Override
 	public int getAmbientSoundInterval() {
 		return getRandom().nextIntBetweenInclusive(240, 1600);
 	}
 
-	/**
-	 * Get the hurt sound.
-	 *
-	 * @param damageSource the <code>DamageSource</code> instance
-	 * @return SoundEvent
-	 */
+	/// Get the hurt sound.
+	///
+	/// @param damageSource the `DamageSource` instance
+	/// @return SoundEvent
 	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSource) {
 		return SoundEventRegistry.WANDERING_WARRIOR_HURT.get();
 	}
 
-	/**
-	 * Get the death sound.
-	 *
-	 * @return SoundEvent
-	 */
+	/// Get the death sound.
+	///
+	/// @return SoundEvent
 	@Override
 	protected SoundEvent getDeathSound() {
 		return SoundEventRegistry.WANDERING_WARRIOR_DEATH.get();
 	}
 
-	/**
-	 * Gives armor or weapon for entity based on given DifficultyInstance
-	 *
-	 * @param difficulty the <code>DifficultyInstance</code> of the world
-	 */
+	/// Gives armor or weapon for entity based on given DifficultyInstance
+	///
+	/// @param difficulty the `DifficultyInstance` of the world
 	@Override
 	public void populateDefaultEquipmentSlots(RandomSource random, DifficultyInstance difficulty) {
 		setItemSlot(EquipmentSlot.HEAD, new ItemStack(Items.IRON_HELMET));

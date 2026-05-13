@@ -37,11 +37,9 @@ import tech.anonymoushacker1279.immersiveweapons.menu.StarForgeMenu;
 public class ClientForgeEventSubscriber {
 
 
-	/**
-	 * Event handler for the RenderBlockScreenEffectEvent.
-	 *
-	 * @param event the <code>RenderBlockScreenEffectEvent</code> instance
-	 */
+	/// Event handler for the RenderBlockScreenEffectEvent.
+	///
+	/// @param event the `RenderBlockScreenEffectEvent` instance
 	@SubscribeEvent
 	public static void renderBlockScreenEffectEvent(RenderBlockScreenEffectEvent event) {
 		Player player = event.getPlayer();

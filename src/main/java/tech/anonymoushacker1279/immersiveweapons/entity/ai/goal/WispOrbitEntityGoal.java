@@ -9,13 +9,13 @@ import tech.anonymoushacker1279.immersiveweapons.entity.ambient.WispEntity;
 
 public class WispOrbitEntityGoal extends Goal {
 
-	private final WispEntity entity;
-	private double orbitAngle;
-	private final double tiltAngle;
-	private final double tiltDirection;
 	private static final double ORBIT_RADIUS = 2.0d;
 	private static final double ORBIT_SPEED = 0.05d; // Radians per tick
 	private static final double VERTICAL_OFFSET = 0.5d; // Height offset from entity center
+	private final WispEntity entity;
+	private final double tiltAngle;
+	private final double tiltDirection;
+	private double orbitAngle;
 
 	public WispOrbitEntityGoal(WispEntity wisp) {
 		entity = wisp;
@@ -71,12 +71,10 @@ public class WispOrbitEntityGoal extends Goal {
 		}
 	}
 
-	/**
-	 * Calculates the position on a tilted circular orbit around the target entity.
-	 *
-	 * @param target The entity to orbit around.
-	 * @return The calculated orbit position as a Vec3.
-	 */
+	/// Calculates the position on a tilted circular orbit around the target entity.
+	///
+	/// @param target The entity to orbit around.
+	/// @return The calculated orbit position as a Vec3.
 	private Vec3 calculateOrbitPosition(Entity target) {
 		Vec3 center = target.position().add(0, VERTICAL_OFFSET, 0);
 
@@ -109,11 +107,9 @@ public class WispOrbitEntityGoal extends Goal {
 		return center.add(x2, z2, y2);
 	}
 
-	/**
-	 * Moves the entity toward a target position.
-	 *
-	 * @param target The target position to move towards.
-	 */
+	/// Moves the entity toward a target position.
+	///
+	/// @param target The target position to move towards.
 	private void moveTowards(Vec3 target) {
 		double deltaX = target.x - entity.getX();
 		double deltaY = target.y - entity.getY();

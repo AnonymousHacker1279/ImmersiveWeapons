@@ -12,24 +12,16 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface TooltipMarker {
 
-	/**
-	 * An array of {@link ChatFormatting} styles to apply to the tooltip.
-	 */
+	/// An array of [ChatFormatting] styles to apply to the tooltip.
 	ChatFormatting[] style() default {};
 
-	/**
-	 * The number of components the tooltip contains. Each component will be represented with an integer appended to the
-	 * item name, if more than one exist. Used for simple tooltips.
-	 */
+	/// The number of components the tooltip contains. Each component will be represented with an integer appended to
+	/// the item name, if more than one exist. Used for simple tooltips.
 	int components() default 1;
 
-	/**
-	 * The key to use for the tooltip. If not provided, the item name will be used.
-	 */
+	/// The key to use for the tooltip. If not provided, the item name will be used.
 	String key() default "";
 
-	/**
-	 * A class to handle dynamic tooltips. See {@link DynamicTooltip} for more information.
-	 */
+	/// A class to handle dynamic tooltips. See [DynamicTooltip] for more information.
 	Class<? extends DynamicTooltip> dynamicTooltip() default DynamicTooltip.class;
 }

@@ -28,10 +28,9 @@ import terrablender.api.SurfaceRuleManager;
 public class ImmersiveWeapons {
 
 	public static final String MOD_ID = "immersiveweapons";
-	public static boolean IWCB_LOADED = false;
-
 	// Setup logger
 	public static final Logger LOGGER = LogUtils.getLogger();
+	public static boolean IWCB_LOADED = false;
 
 	// Mod setup begins here
 	public ImmersiveWeapons(IEventBus modEventBus, ModContainer container) {
@@ -49,11 +48,9 @@ public class ImmersiveWeapons {
 		modEventBus.addListener(this::constructMod);
 	}
 
-	/**
-	 * Event handler for the FMLCommonSetupEvent. Most of this is registry related.
-	 *
-	 * @param event the <code>FMLCommonSetupEvent</code> instance
-	 */
+	/// Event handler for the FMLCommonSetupEvent. Most of this is registry related.
+	///
+	/// @param event the `FMLCommonSetupEvent` instance
 	public void setup(FMLCommonSetupEvent event) {
 		DispenserBehaviorRegistry.init();
 		event.enqueueWork(() -> {

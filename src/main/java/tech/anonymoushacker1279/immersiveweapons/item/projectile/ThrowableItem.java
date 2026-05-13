@@ -23,24 +23,20 @@ public class ThrowableItem extends Item {
 	public final ThrowableType type;
 	public final int color;
 
-	/**
-	 * Creates a throwable item for a specific {@link ThrowableType}
-	 *
-	 * @param properties the <code>Properties</code> for the item
-	 * @param type       the <code>ThrowableType</code> to create
-	 */
+	/// Creates a throwable item for a specific [ThrowableType]
+	///
+	/// @param properties the `Properties` for the item
+	/// @param type       the `ThrowableType` to create
 	public ThrowableItem(Properties properties, ThrowableType type) {
 		super(properties);
 		this.type = type;
 		this.color = -1;
 	}
 
-	/**
-	 * Creates a throwable item, specifically for a smoke grenade.
-	 *
-	 * @param properties the <code>Properties</code> for the item
-	 * @param color      the color of the smoke grenade
-	 */
+	/// Creates a throwable item, specifically for a smoke grenade.
+	///
+	/// @param properties the `Properties` for the item
+	/// @param color      the color of the smoke grenade
 	public ThrowableItem(Properties properties, int color) {
 		super(properties);
 		this.type = ThrowableType.SMOKE_GRENADE;

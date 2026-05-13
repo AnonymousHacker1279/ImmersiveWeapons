@@ -34,15 +34,13 @@ public class LogShardsLootModifierHandler extends LootModifier {
 	private final TagKey<Item> tag;
 	private final ItemStackTemplate replacement;
 
-	/**
-	 * Create a new log shards modifier.
-	 *
-	 * @param itemConditions the <code>LootItemCondition</code>s
-	 * @param tag            the tag of the item to replace
-	 * @param minShards      the minimum number of shards to drop
-	 * @param maxShards      the maximum number of shards to drop
-	 * @param replacement    the returned item
-	 */
+	/// Create a new log shards modifier.
+	///
+	/// @param itemConditions the `LootItemCondition`s
+	/// @param tag            the tag of the item to replace
+	/// @param minShards      the minimum number of shards to drop
+	/// @param maxShards      the maximum number of shards to drop
+	/// @param replacement    the returned item
 	public LogShardsLootModifierHandler(LootItemCondition[] itemConditions, int priority, TagKey<Item> tag, int minShards, int maxShards, ItemStackTemplate replacement) {
 		super(itemConditions, priority);
 		this.tag = tag;
@@ -51,13 +49,11 @@ public class LogShardsLootModifierHandler extends LootModifier {
 		this.replacement = replacement;
 	}
 
-	/**
-	 * Apply loot table modifications.
-	 *
-	 * @param generatedLoot the <code>List</code> of generated items
-	 * @param context       the <code>LootContext</code> instance
-	 * @return List extending ItemStack
-	 */
+	/// Apply loot table modifications.
+	///
+	/// @param generatedLoot the `List` of generated items
+	/// @param context       the `LootContext` instance
+	/// @return List extending ItemStack
 	@Override
 	public ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
 		int shardCount = 0;

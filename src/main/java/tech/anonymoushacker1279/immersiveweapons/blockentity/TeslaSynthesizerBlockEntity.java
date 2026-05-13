@@ -96,22 +96,18 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 		super(BlockEntityRegistry.TESLA_SYNTHESIZER_BLOCK_ENTITY.get(), blockPos, blockState);
 	}
 
-	/**
-	 * Checks if an item is valid fuel for the Tesla Synthesizer
-	 *
-	 * @param stack The ItemStack to check
-	 * @return true if the item is valid fuel
-	 */
+	/// Checks if an item is valid fuel for the Tesla Synthesizer
+	///
+	/// @param stack The ItemStack to check
+	/// @return true if the item is valid fuel
 	public static boolean isFuel(ItemStack stack) {
 		return FUEL_BURN_TIMES.containsKey(stack.getItem());
 	}
 
-	/**
-	 * Gets the burn time for a fuel item
-	 *
-	 * @param fuel The fuel ItemStack
-	 * @return The burn time in ticks, or 0 if not a valid fuel
-	 */
+	/// Gets the burn time for a fuel item
+	///
+	/// @param fuel The fuel ItemStack
+	/// @return The burn time in ticks, or 0 if not a valid fuel
 	private static int getBurnTime(ItemStack fuel) {
 		if (fuel.isEmpty()) {
 			return 0;
@@ -119,9 +115,7 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 		return FUEL_BURN_TIMES.getOrDefault(fuel.getItem(), 0);
 	}
 
-	/**
-	 * Processes recipes and manages fuel consumption each tick
-	 */
+	/// Processes recipes and manages fuel consumption each tick
 	public void tick(ServerLevel level) {
 		boolean wasBurning = isBurning();
 		boolean inventoryChanged = false;
@@ -205,11 +199,9 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 		}
 	}
 
-	/**
-	 * Processes a recipe, consuming inputs and producing output
-	 *
-	 * @param recipe The recipe to process
-	 */
+	/// Processes a recipe, consuming inputs and producing output
+	///
+	/// @param recipe The recipe to process
 	private void smeltRecipe(TeslaSynthesizerRecipe recipe) {
 		if (!canSmelt(recipe)) {
 			return;
@@ -231,12 +223,10 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 		items.get(SLOT_INPUT_3).shrink(1);
 	}
 
-	/**
-	 * Determines if a recipe can be processed with current inventory
-	 *
-	 * @param recipe The recipe to check
-	 * @return true if the recipe can be processed
-	 */
+	/// Determines if a recipe can be processed with current inventory
+	///
+	/// @param recipe The recipe to check
+	/// @return true if the recipe can be processed
 	private boolean canSmelt(@Nullable TeslaSynthesizerRecipe recipe) {
 		if (recipe == null) {
 			return false;
@@ -270,11 +260,9 @@ public class TeslaSynthesizerBlockEntity extends BaseContainerBlockEntity implem
 		return (combinedCount <= getMaxStackSize() && combinedCount <= outputStack.getMaxStackSize());
 	}
 
-	/**
-	 * Checks if fuel is currently burning
-	 *
-	 * @return true if burning
-	 */
+	/// Checks if fuel is currently burning
+	///
+	/// @return true if burning
 	public boolean isBurning() {
 		return burnTime > 0;
 	}

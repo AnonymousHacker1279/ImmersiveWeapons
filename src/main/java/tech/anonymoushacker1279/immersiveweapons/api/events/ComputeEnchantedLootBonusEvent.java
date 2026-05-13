@@ -12,25 +12,21 @@ import net.neoforged.neoforge.event.entity.living.LivingEvent;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
-/**
- * Called just before a {@link LivingEntity} drops all its loot for determining the level of a loot bonus enchantment
- * such as {@link net.minecraft.world.item.enchantment.Enchantments#LOOTING} that should be applied to the drops.
- * <p>
- * Specifically the event allows for controlling the enchantment level when applying the:
- * <ul>
- *     <li>loot item function <code>minecraft:enchanted_count_increase</code></li>
- *     <li>loot item condition <code>minecraft:random_chance_with_enchanted_bonus</code></li>
- *     <li>enchantment effect component <code>minecraft:equipment_drops</code></li>
- * </ul>
- * <p>
- * This event is fired on the {@link NeoForge#EVENT_BUS}.
- * <p>
- * Based on Puzzles Lib's implementation.
- * Provided as a solution to NeoForge
- * <a href="https://github.com/neoforged/NeoForge/issues/1112">issue #1112</a>.
- * <br>
- * <a href="https://github.com/Fuzss/puzzleslib/blob/main/1.21.1/NeoForge/src/main/java/fuzs/puzzleslib/neoforge/mixin/LootItemRandomChanceWithEnchantedBonusConditionNeoForgeMixin.java">Source</a>
- */
+/// Called just before a [LivingEntity] drops all its loot for determining the level of a loot bonus enchantment such as
+/// [net.minecraft.world.item.enchantment.Enchantments#LOOTING] that should be applied to the drops.
+///
+/// Specifically the event allows for controlling the enchantment level when applying the:
+///
+///   - loot item function `minecraft:enchanted\_count\_increase`
+///   - loot item condition `minecraft:random\_chance\_with\_enchanted\_bonus`
+///   - enchantment effect component `minecraft:equipment\_drops`
+///
+/// This event is fired on the [NeoForge#EVENT\_BUS].
+///
+/// Based on Puzzles Lib's implementation. Provided as a solution to NeoForge [issue
+/// #1112](https://github.com/neoforged/NeoForge/issues/1112).
+///
+/// [Source](https://github.com/Fuzss/puzzleslib/blob/main/1.21.1/NeoForge/src/main/java/fuzs/puzzleslib/neoforge/mixin/LootItemRandomChanceWithEnchantedBonusConditionNeoForgeMixin.java)
 public class ComputeEnchantedLootBonusEvent extends LivingEvent {
 	@Nullable
 	private final DamageSource damageSource;
@@ -42,23 +38,6 @@ public class ComputeEnchantedLootBonusEvent extends LivingEvent {
 		super(entity);
 		this.damageSource = damageSource;
 		this.enchantment = enchantment;
-		this.enchantmentLevel = enchantmentLevel;
-	}
-
-	@Nullable
-	public DamageSource getDamageSource() {
-		return this.damageSource;
-	}
-
-	public Holder<Enchantment> getEnchantment() {
-		return this.enchantment;
-	}
-
-	public int getEnchantmentLevel() {
-		return this.enchantmentLevel;
-	}
-
-	public void setEnchantmentLevel(int enchantmentLevel) {
 		this.enchantmentLevel = enchantmentLevel;
 	}
 
@@ -77,5 +56,22 @@ public class ComputeEnchantedLootBonusEvent extends LivingEvent {
 		return NeoForge.EVENT_BUS.post(
 						new ComputeEnchantedLootBonusEvent(livingEntity, damageSource, enchantment, enchantmentLevel))
 				.getEnchantmentLevel();
+	}
+
+	@Nullable
+	public DamageSource getDamageSource() {
+		return this.damageSource;
+	}
+
+	public Holder<Enchantment> getEnchantment() {
+		return this.enchantment;
+	}
+
+	public int getEnchantmentLevel() {
+		return this.enchantmentLevel;
+	}
+
+	public void setEnchantmentLevel(int enchantmentLevel) {
+		this.enchantmentLevel = enchantmentLevel;
 	}
 }

@@ -372,13 +372,11 @@ public class LavaRevenantEntity extends Mob implements Enemy, GrantAdvancementOn
 		return false;
 	}
 
-	/**
-	 * Destroy blocks in the way of the entity.
-	 *
-	 * @param area        the area to check
-	 * @param serverLevel the server level
-	 * @return true if the entity is stuck in a block
-	 */
+	/// Destroy blocks in the way of the entity.
+	///
+	/// @param area        the area to check
+	/// @param serverLevel the server level
+	/// @return true if the entity is stuck in a block
 	private boolean breakBlocks(AABB area, ServerLevel serverLevel) {
 		int minX = Mth.floor(area.minX);
 		int minY = Mth.floor(area.minY);

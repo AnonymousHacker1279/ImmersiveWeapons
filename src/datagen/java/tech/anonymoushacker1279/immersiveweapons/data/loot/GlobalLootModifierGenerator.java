@@ -230,22 +230,18 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 				new ItemStackTemplate(ItemRegistry.VENTUS_SHARD.get())));
 	}
 
-	/**
-	 * Create a loot condition that has a single loot table as criteria.
-	 *
-	 * @param lootTable the loot table to use
-	 * @return the loot item condition
-	 */
+	/// Create a loot condition that has a single loot table as criteria.
+	///
+	/// @param lootTable the loot table to use
+	/// @return the loot item condition
 	private LootItemCondition[] singleLootTableCondition(ResourceKey<LootTable> lootTable) {
 		return new LootItemCondition[]{LootTableIdCondition.builder(lootTable.identifier()).build()};
 	}
 
-	/**
-	 * Create a loot condition that has multiple loot tables as criteria.
-	 *
-	 * @param lootTables the loot tables to use
-	 * @return the loot item condition
-	 */
+	/// Create a loot condition that has multiple loot tables as criteria.
+	///
+	/// @param lootTables the loot tables to use
+	/// @return the loot item condition
 	@SafeVarargs
 	private LootItemCondition[] multipleLootTablesCondition(ResourceKey<LootTable>... lootTables) {
 		LootItemCondition.Builder[] builders = new LootItemCondition.Builder[lootTables.length];
@@ -257,12 +253,10 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 		return new LootItemCondition[]{AnyOfCondition.anyOf(builders).build()};
 	}
 
-	/**
-	 * Create a loot condition that only has a random chance and looting multiplier as criteria.
-	 *
-	 * @param chance            the chance of the item dropping
-	 * @param lootingMultiplier the looting multiplier
-	 */
+	/// Create a loot condition that only has a random chance and looting multiplier as criteria.
+	///
+	/// @param chance            the chance of the item dropping
+	/// @param lootingMultiplier the looting multiplier
 	private LootItemCondition[] simpleDropCondition(float chance, float lootingMultiplier) {
 		return new LootItemCondition[]{
 				LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(registries, chance, lootingMultiplier)
@@ -270,12 +264,10 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 						.build()};
 	}
 
-	/**
-	 * Create a loot condition that has a single entity type and being killed by a player as criteria.
-	 *
-	 * @param entityType the entity type to use
-	 * @return the loot item condition
-	 */
+	/// Create a loot condition that has a single entity type and being killed by a player as criteria.
+	///
+	/// @param entityType the entity type to use
+	/// @return the loot item condition
 	private LootItemCondition[] simpleEntityDropCondition(EntityType<?> entityType) {
 		return new LootItemCondition[]{
 				LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS,
@@ -286,14 +278,12 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 						.build()};
 	}
 
-	/**
-	 * Similar to {@link #simpleEntityDropCondition(EntityType)} but with a random chance and looting multiplier.
-	 *
-	 * @param entityType        the entity type to use
-	 * @param chance            the chance of the item dropping
-	 * @param lootingMultiplier the looting multiplier
-	 * @return the loot item condition
-	 */
+	/// Similar to [#simpleEntityDropCondition(EntityType)] but with a random chance and looting multiplier.
+	///
+	/// @param entityType        the entity type to use
+	/// @param chance            the chance of the item dropping
+	/// @param lootingMultiplier the looting multiplier
+	/// @return the loot item condition
 	private LootItemCondition[] simpleEntityDropCondition(EntityType<?> entityType, float chance, float lootingMultiplier) {
 		return new LootItemCondition[]{
 				LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS,
@@ -305,12 +295,10 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 						.build()};
 	}
 
-	/**
-	 * Create a loot condition that has a single entity type as criteria.
-	 *
-	 * @param entityType the entity type to use
-	 * @return the loot item condition
-	 */
+	/// Create a loot condition that has a single entity type as criteria.
+	///
+	/// @param entityType the entity type to use
+	/// @return the loot item condition
 	private LootItemCondition[] simpleEntityCondition(EntityType<?> entityType) {
 		return new LootItemCondition[]{
 				LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS,
@@ -325,12 +313,10 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 				MatchTool.toolMatches(ItemPredicate.Builder.item().of(itemGetter, tagKey)).build()};
 	}
 
-	/**
-	 * Create a loot condition that applies to {@link BuiltInLootTables#SIMPLE_DUNGEON} loot tables in a given biome.
-	 *
-	 * @param biome the biome to use
-	 * @return the loot item condition
-	 */
+	/// Create a loot condition that applies to [BuiltInLootTables#SIMPLE\_DUNGEON] loot tables in a given biome.
+	///
+	/// @param biome the biome to use
+	/// @return the loot item condition
 	private LootItemCondition[] inBiomeDungeonCondition(ResourceKey<Biome> biome) {
 		HolderGetter<Biome> holderGetter = registries.lookupOrThrow(Registries.BIOME);
 

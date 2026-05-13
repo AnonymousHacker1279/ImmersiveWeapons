@@ -26,25 +26,21 @@ public class CursedItem extends Item {
 	final DataComponentType<Boolean> AT_MAX_CHARGE = DataComponentTypeRegistry.AT_MAX_CHARGE.get();
 	private final String name;
 
-	/**
-	 * Cursed items cannot be removed once used. Their effects are permanent in survival mode, even persisting through
-	 * death. They are "charged" and require 100 entity kills while the item is in the inventory to be used.
-	 * <p>
-	 * The only way to clear the effects of a cursed item is to use a {@link CurseCleaningSoapItem} item, which is not
-	 * obtainable in survival mode.
-	 *
-	 * @param properties the <code>Properties</code> for the item
-	 * @param name       the name of the item, used for setting tags on the player
-	 */
+	/// Cursed items cannot be removed once used. Their effects are permanent in survival mode, even persisting through
+	/// death. They are "charged" and require 100 entity kills while the item is in the inventory to be used.
+	///
+	/// The only way to clear the effects of a cursed item is to use a [CurseCleaningSoapItem] item, which is not
+	/// obtainable in survival mode.
+	///
+	/// @param properties the `Properties` for the item
+	/// @param name       the name of the item, used for setting tags on the player
 	public CursedItem(Properties properties, String name) {
 		super(properties);
 
 		this.name = name;
 	}
 
-	/**
-	 * Get a list of cursed accessories in the player's inventory.
-	 */
+	/// Get a list of cursed accessories in the player's inventory.
 	public static List<ItemStack> getCurses(Player player) {
 		List<ItemStack> curses = new ArrayList<>(5);
 		for (int i = 0; i < player.getInventory().getContainerSize(); i++) {

@@ -11,40 +11,32 @@ import java.util.function.Predicate;
 
 public class FlareGunItem extends SimplePistolItem {
 
-	/**
-	 * Constructor for FlareGunItem.
-	 *
-	 * @param properties the <code>Properties</code> for the item
-	 */
+	/// Constructor for FlareGunItem.
+	///
+	/// @param properties the `Properties` for the item
 	public FlareGunItem(Properties properties) {
 		super(properties);
 	}
 
-	/**
-	 * Get the default ammunition.
-	 *
-	 * @return Item
-	 */
+	/// Get the default ammunition.
+	///
+	/// @return Item
 	@Override
 	public Item defaultAmmo() {
 		return ItemRegistry.FLARE.get();
 	}
 
-	/**
-	 * Get ammo predicates.
-	 *
-	 * @return Predicate extending ItemStack
-	 */
+	/// Get ammo predicates.
+	///
+	/// @return Predicate extending ItemStack
 	@Override
 	public Predicate<ItemStack> getInventoryAmmoPredicate() {
 		return FLARES;
 	}
 
-	/**
-	 * Get the fire sound.
-	 *
-	 * @return SoundEvent
-	 */
+	/// Get the fire sound.
+	///
+	/// @return SoundEvent
 	@Override
 	public SoundEvent getFireSound() {
 		return SoundEventRegistry.FLARE_GUN_FIRE.get();

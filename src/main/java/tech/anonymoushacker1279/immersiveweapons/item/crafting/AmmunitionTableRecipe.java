@@ -139,15 +139,13 @@ public class AmmunitionTableRecipe implements Recipe<RecipeInput> {
 				MaterialGroup::new
 		);
 
-		/**
-		 * Represents a group of materials within a recipe for the Ammunition Table.
-		 *
-		 * @param ingredient     an <code>Ingredient</code>
-		 * @param density        the density of the material
-		 * @param baseMultiplier the base multiplier for the material (how much this item is worth)
-		 *                       <p>
-		 *                       For example, an ingot may be 1x, while its nugget is 1/9th of that, or 0.11x.
-		 */
+		/// Represents a group of materials within a recipe for the Ammunition Table.
+		///
+		/// @param ingredient     an `Ingredient`
+		/// @param density        the density of the material
+		/// @param baseMultiplier the base multiplier for the material (how much this item is worth)
+		///
+		/// For example, an ingot may be 1x, while its nugget is 1/9th of that, or 0.11x.
 		public MaterialGroup {
 		}
 

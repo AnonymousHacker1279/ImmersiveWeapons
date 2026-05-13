@@ -206,14 +206,12 @@ public class IWBlockModelGenerator {
 		blockModels.createTrivialCube(BlockRegistry.VOID_ORE.get());
 	}
 
-	/**
-	 * A close copy of the vanilla generator in {@link BlockModelGenerators#createGlassBlocks(Block, Block)}, but with a
-	 * translucent render type specified.
-	 *
-	 * @param models     the block model generator
-	 * @param glassBlock the glass block
-	 * @param paneBlock  the glass pane block
-	 */
+	/// A close copy of the vanilla generator in [BlockModelGenerators#createGlassBlocks(Block, Block)], but with a
+	/// translucent render type specified.
+	///
+	/// @param models     the block model generator
+	/// @param glassBlock the glass block
+	/// @param paneBlock  the glass pane block
 	private static void createGlassBlocks(BlockModelGenerators models, Block glassBlock, Block paneBlock) {
 		models.createTrivialCube(glassBlock);
 		TextureMapping paneMapping = TextureMapping.pane(glassBlock, paneBlock);
@@ -238,13 +236,11 @@ public class IWBlockModelGenerator {
 		);
 	}
 
-	/**
-	 * Generate a horizontally rotated blockstate for a pre-existing model.
-	 *
-	 * @param models  the block model generator
-	 * @param block   the block to generate the state for
-	 * @param flipped whether to flip the model 180 degrees
-	 */
+	/// Generate a horizontally rotated blockstate for a pre-existing model.
+	///
+	/// @param models  the block model generator
+	/// @param block   the block to generate the state for
+	/// @param flipped whether to flip the model 180 degrees
 	private static void generateHorizontalStateOnly(BlockModelGenerators models, Block block, boolean flipped) {
 		MultiVariant variant = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block));
 		PropertyDispatch<VariantMutator> rotationMutator = flipped
@@ -253,48 +249,40 @@ public class IWBlockModelGenerator {
 		models.blockStateOutput.accept(MultiVariantGenerator.dispatch(block, variant).with(rotationMutator));
 	}
 
-	/**
-	 * Generate a blockstate orientable in all directions for a pre-existing model.
-	 *
-	 * @param models the block model generator
-	 * @param block  the block to generate the state for
-	 */
+	/// Generate a blockstate orientable in all directions for a pre-existing model.
+	///
+	/// @param models the block model generator
+	/// @param block  the block to generate the state for
 	private static void generateOrientableStateOnly(BlockModelGenerators models, Block block) {
 		MultiVariant variant = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block));
 		models.blockStateOutput.accept(MultiVariantGenerator.dispatch(block, variant).with(BlockModelGenerators.ROTATION_FACING));
 	}
 
-	/**
-	 * Generate a basic blockstate for a pre-existing model.
-	 *
-	 * @param models the block model generator
-	 * @param block  the block to generate the state for
-	 */
+	/// Generate a basic blockstate for a pre-existing model.
+	///
+	/// @param models the block model generator
+	/// @param block  the block to generate the state for
 	private static void generateStateOnly(BlockModelGenerators models, Block block) {
 		MultiVariant variant = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block));
 		models.blockStateOutput.accept(MultiVariantGenerator.dispatch(block, variant));
 	}
 
-	/**
-	 * Generate a basic blockstate for a pre-existing model with a tint source.
-	 *
-	 * @param models     the block model generator
-	 * @param block      the block to generate the state for
-	 * @param tintSource the tint source for the item model
-	 */
+	/// Generate a basic blockstate for a pre-existing model with a tint source.
+	///
+	/// @param models     the block model generator
+	/// @param block      the block to generate the state for
+	/// @param tintSource the tint source for the item model
 	private static void generateTintedStateOnly(BlockModelGenerators models, Block block, ItemTintSource tintSource) {
 		MultiVariant variant = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block));
 		models.blockStateOutput.accept(MultiVariantGenerator.dispatch(block, variant));
 		models.registerSimpleTintedItemModel(block, ModelLocationUtils.getModelLocation(block), tintSource);
 	}
 
-	/**
-	 * Generate a bear trap type blockstate with a pre-existing model. Bear traps have multiple states:
-	 * {@link BearTrapBlock#TRIGGERED} and {@link BearTrapBlock#VINES}.
-	 *
-	 * @param models the block model generator
-	 * @param block  the block to generate the state for
-	 */
+	/// Generate a bear trap type blockstate with a pre-existing model. Bear traps have multiple states:
+	/// [BearTrapBlock#TRIGGERED] and [BearTrapBlock#VINES].
+	///
+	/// @param models the block model generator
+	/// @param block  the block to generate the state for
 	private static void generateBearTrap(BlockModelGenerators models, Block block) {
 		Identifier openPath = Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/bear_trap_open");
 		MultiVariant open = BlockModelGenerators.plainVariant(openPath);
@@ -312,13 +300,11 @@ public class IWBlockModelGenerator {
 		models.registerSimpleItemModel(block, openPath);
 	}
 
-	/**
-	 * Generate a barbed wire type blockstate with a pre-existing model. Barbed wire has multiple states:
-	 * {@link BarbedWireBlock#DAMAGE_STAGE}, and then an inherited horizontal state.
-	 *
-	 * @param models the block model generator
-	 * @param block  the block to generate the state for
-	 */
+	/// Generate a barbed wire type blockstate with a pre-existing model. Barbed wire has multiple states:
+	/// [BarbedWireBlock#DAMAGE\_STAGE], and then an inherited horizontal state.
+	///
+	/// @param models the block model generator
+	/// @param block  the block to generate the state for
 	private static void generateBarbedWire(BlockModelGenerators models, Block block) {
 		Identifier damageStagePath0 = Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/barbed_wire_0");
 		MultiVariant damageStage0 = BlockModelGenerators.plainVariant(damageStagePath0);
@@ -335,13 +321,11 @@ public class IWBlockModelGenerator {
 		models.registerSimpleItemModel(block, damageStagePath0);
 	}
 
-	/**
-	 * Generate a landmine type blockstate with a pre-existing model. Landmines have multiple states:
-	 * {@link LandmineBlock#ARMED}, {@link LandmineBlock#SAND}, and {@link LandmineBlock#VINES}.
-	 *
-	 * @param models the block model generator
-	 * @param block  the block to generate the state for
-	 */
+	/// Generate a landmine type blockstate with a pre-existing model. Landmines have multiple states:
+	/// [LandmineBlock#ARMED], [LandmineBlock#SAND], and [LandmineBlock#VINES].
+	///
+	/// @param models the block model generator
+	/// @param block  the block to generate the state for
 	private static void generateLandmine(BlockModelGenerators models, Block block) {
 		Identifier disarmedPath = Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/landmine_disarmed");
 		MultiVariant disarmed = BlockModelGenerators.plainVariant(disarmedPath);
@@ -365,13 +349,11 @@ public class IWBlockModelGenerator {
 		models.registerSimpleItemModel(block, disarmedPath);
 	}
 
-	/**
-	 * Generate a spike trap type blockstate with a pre-existing model. Spike traps have a single
-	 * {@link SpikeTrapBlock#POWERED} state.
-	 *
-	 * @param models the block model generator
-	 * @param block  the block to generate the state for
-	 */
+	/// Generate a spike trap type blockstate with a pre-existing model. Spike traps have a single
+	/// [SpikeTrapBlock#POWERED] state.
+	///
+	/// @param models the block model generator
+	/// @param block  the block to generate the state for
 	private static void generateSpikeTrap(BlockModelGenerators models, Block block) {
 		Identifier poweredPath = Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/spike_trap_powered");
 		MultiVariant powered = BlockModelGenerators.plainVariant(poweredPath);
@@ -385,13 +367,11 @@ public class IWBlockModelGenerator {
 		models.registerSimpleItemModel(block, poweredPath);
 	}
 
-	/**
-	 * Generate a sandbag type blockstate with a pre-existing model. Sandbags have multiple states:
-	 * {@link SandbagBlock#BAGS}, and then an inherited horizontal state.
-	 *
-	 * @param models the block model generator
-	 * @param block  the block to generate the state for
-	 */
+	/// Generate a sandbag type blockstate with a pre-existing model. Sandbags have multiple states:
+	/// [SandbagBlock#BAGS], and then an inherited horizontal state.
+	///
+	/// @param models the block model generator
+	/// @param block  the block to generate the state for
 	private static void generateSandbag(BlockModelGenerators models, Block block) {
 		Identifier shape0Path = Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/sandbag_0");
 		MultiVariant shape0 = BlockModelGenerators.plainVariant(shape0Path);
@@ -410,13 +390,11 @@ public class IWBlockModelGenerator {
 		models.registerSimpleItemModel(block, shape0Path);
 	}
 
-	/**
-	 * Generate a spotlight type blockstate with a pre-existing model. Spotlights have multiple states:
-	 * {@link SpotlightBlock#LIT}, and then an inherited horizontal state.
-	 *
-	 * @param models the block model generator
-	 * @param block  the block to generate the state for
-	 */
+	/// Generate a spotlight type blockstate with a pre-existing model. Spotlights have multiple states:
+	/// [SpotlightBlock#LIT], and then an inherited horizontal state.
+	///
+	/// @param models the block model generator
+	/// @param block  the block to generate the state for
 	private static void generateSpotlight(BlockModelGenerators models, Block block) {
 		Identifier unlitPath = Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/spotlight_unlit");
 		MultiVariant unlit = BlockModelGenerators.plainVariant(unlitPath);
@@ -431,13 +409,11 @@ public class IWBlockModelGenerator {
 		models.registerSimpleItemModel(block, unlitPath);
 	}
 
-	/**
-	 * Generate a mortar type blockstate with a pre-existing model. Mortars have multiple states:
-	 * {@link MortarBlock#LOADED}, {@link MortarBlock#ROTATION}, and then an inherited horizontal state.
-	 *
-	 * @param models the block model generator
-	 * @param block  the block to generate the state for
-	 */
+	/// Generate a mortar type blockstate with a pre-existing model. Mortars have multiple states: [MortarBlock#LOADED],
+	/// [MortarBlock#ROTATION], and then an inherited horizontal state.
+	///
+	/// @param models the block model generator
+	/// @param block  the block to generate the state for
 	private static void generateMortar(BlockModelGenerators models, Block block) {
 		Identifier unloadedPath0 = Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/mortar_0_unloaded");
 		MultiVariant unloaded0 = BlockModelGenerators.plainVariant(unloadedPath0);
@@ -460,37 +436,31 @@ public class IWBlockModelGenerator {
 		models.registerSimpleItemModel(block, unloadedPath0);
 	}
 
-	/**
-	 * Generate a table type blockstate and model.
-	 *
-	 * @param models the block model generator
-	 * @param block  the block to generate the state and model for
-	 */
+	/// Generate a table type blockstate and model.
+	///
+	/// @param models the block model generator
+	/// @param block  the block to generate the state and model for
 	private static void generateTable(BlockModelGenerators models, Block block, Block base) {
 		models.createTrivialBlock(block, TexturedModel.createDefault(b -> new TextureMapping()
 						.put(TextureSlot.ALL, new Material(ModelLocationUtils.getModelLocation(base))),
 				IWModelTemplates.TABLE));
 	}
 
-	/**
-	 * Generate a fence type blockstate with a pre-existing model.
-	 *
-	 * @param models the block model generator
-	 * @param block  the block to generate the state for
-	 */
+	/// Generate a fence type blockstate with a pre-existing model.
+	///
+	/// @param models the block model generator
+	/// @param block  the block to generate the state for
 	private static void generateFence(BlockModelGenerators models, Block block) {
 		MultiVariant post = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block).withSuffix("_post"));
 		MultiVariant side = BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(block).withSuffix("_side"));
 		models.blockStateOutput.accept(BlockModelGenerators.createFence(block, post, side));
 	}
 
-	/**
-	 * Generate a fence type blockstate and model.
-	 *
-	 * @param models the block model generator
-	 * @param block  the block to generate the state and model for
-	 * @param base   the base block to use for the fence
-	 */
+	/// Generate a fence type blockstate and model.
+	///
+	/// @param models the block model generator
+	/// @param block  the block to generate the state and model for
+	/// @param base   the base block to use for the fence
 	private static void generateFence(BlockModelGenerators models, Block block, Block base) {
 		TextureMapping mapping = new TextureMapping().put(TextureSlot.TEXTURE, new Material(ModelLocationUtils.getModelLocation(base)));
 		MultiVariant post = BlockModelGenerators.plainVariant(ModelTemplates.FENCE_POST.create(block, mapping, models.modelOutput));
@@ -501,13 +471,11 @@ public class IWBlockModelGenerator {
 	}
 
 
-	/**
-	 * Generate a fence gate type blockstate and model.
-	 *
-	 * @param models the block model generator
-	 * @param block  the block to generate the state and model for
-	 * @param base   the base block to use for the fence gate
-	 */
+	/// Generate a fence gate type blockstate and model.
+	///
+	/// @param models the block model generator
+	/// @param block  the block to generate the state and model for
+	/// @param base   the base block to use for the fence gate
 	private static void generateFenceGate(BlockModelGenerators models, Block block, Block base) {
 		TextureMapping mapping = new TextureMapping().put(TextureSlot.TEXTURE, new Material(ModelLocationUtils.getModelLocation(base)));
 		MultiVariant open = BlockModelGenerators.plainVariant(ModelTemplates.FENCE_GATE_OPEN.create(block, mapping, models.modelOutput));
@@ -517,24 +485,20 @@ public class IWBlockModelGenerator {
 		models.blockStateOutput.accept(BlockModelGenerators.createFenceGate(block, open, closed, wallOpen, wallClosed, true));
 	}
 
-	/**
-	 * Generate a blockstate and model for a stairs type block.
-	 *
-	 * @param models the block model generator
-	 * @param block  the block to generate the state and model for
-	 * @param base   the base block to use for the stairs
-	 */
+	/// Generate a blockstate and model for a stairs type block.
+	///
+	/// @param models the block model generator
+	/// @param block  the block to generate the state and model for
+	/// @param base   the base block to use for the stairs
 	private static void generateStairs(BlockModelGenerators models, Block block, Block base) {
 		generateStairs(models, block, new Material(ModelLocationUtils.getModelLocation(base)));
 	}
 
-	/**
-	 * Generate a blockstate and model for a stairs type block.
-	 *
-	 * @param models      the block model generator
-	 * @param block       the block to generate the state and model for
-	 * @param baseTexture the base texture to use for the stairs
-	 */
+	/// Generate a blockstate and model for a stairs type block.
+	///
+	/// @param models      the block model generator
+	/// @param block       the block to generate the state and model for
+	/// @param baseTexture the base texture to use for the stairs
 	private static void generateStairs(BlockModelGenerators models, Block block, Material baseTexture) {
 		TextureMapping mapping = new TextureMapping()
 				.put(TextureSlot.TOP, baseTexture)
@@ -548,13 +512,11 @@ public class IWBlockModelGenerator {
 		models.registerSimpleItemModel(block, straightLocation);
 	}
 
-	/**
-	 * Generate a slab type blockstate and model.
-	 *
-	 * @param models the block model generator
-	 * @param block  the block to generate the state and model for
-	 * @param base   the base block to use for the slab
-	 */
+	/// Generate a slab type blockstate and model.
+	///
+	/// @param models the block model generator
+	/// @param block  the block to generate the state and model for
+	/// @param base   the base block to use for the slab
 	private static void generateSlab(BlockModelGenerators models, Block block, Block base, boolean isColumn) {
 		Identifier baseLocation = ModelLocationUtils.getModelLocation(base);
 		if (isColumn) {
@@ -570,15 +532,13 @@ public class IWBlockModelGenerator {
 		}
 	}
 
-	/**
-	 * Generate a slab type blockstate and model.
-	 *
-	 * @param models        the block model generator
-	 * @param block         the block to generate the state and model for
-	 * @param sideTexture   the texture to use for the sides
-	 * @param topTexture    the texture to use for the top
-	 * @param bottomTexture the texture to use for the bottom
-	 */
+	/// Generate a slab type blockstate and model.
+	///
+	/// @param models        the block model generator
+	/// @param block         the block to generate the state and model for
+	/// @param sideTexture   the texture to use for the sides
+	/// @param topTexture    the texture to use for the top
+	/// @param bottomTexture the texture to use for the bottom
 	private static void generateSlab(BlockModelGenerators models, Block block, Block base, Material sideTexture, Material topTexture, Material bottomTexture) {
 		TextureMapping mapping = new TextureMapping()
 				.put(TextureSlot.TOP, topTexture)
@@ -592,13 +552,11 @@ public class IWBlockModelGenerator {
 		models.registerSimpleItemModel(block, bottomLocation);
 	}
 
-	/**
-	 * Generate a wall type blockstate and model.
-	 *
-	 * @param models the block model generator
-	 * @param block  the block to generate the state and model for
-	 * @param base   the base block to use for the wall
-	 */
+	/// Generate a wall type blockstate and model.
+	///
+	/// @param models the block model generator
+	/// @param block  the block to generate the state and model for
+	/// @param base   the base block to use for the wall
 	private static void generateWall(BlockModelGenerators models, Block block, Block base) {
 		TextureMapping mapping = new TextureMapping().put(TextureSlot.WALL, new Material(ModelLocationUtils.getModelLocation(base)));
 		MultiVariant post = BlockModelGenerators.plainVariant(ModelTemplates.WALL_POST.create(block, mapping, models.modelOutput));
@@ -609,12 +567,10 @@ public class IWBlockModelGenerator {
 		models.registerSimpleItemModel(block, inventoryLocation);
 	}
 
-	/**
-	 * Generate a pressure plate type blockstate and model.
-	 *
-	 * @param models the block model generator
-	 * @param block  the block to generate the state and model for
-	 */
+	/// Generate a pressure plate type blockstate and model.
+	///
+	/// @param models the block model generator
+	/// @param block  the block to generate the state and model for
 	private static void generatePressurePlate(BlockModelGenerators models, Block block, Block base) {
 		TextureMapping mapping = TextureMapping.defaultTexture(base);
 		MultiVariant up = BlockModelGenerators.plainVariant(ModelTemplates.PRESSURE_PLATE_UP.create(block, mapping, models.modelOutput));
@@ -623,14 +579,12 @@ public class IWBlockModelGenerator {
 		models.registerSimpleItemModel(block, ModelLocationUtils.getModelLocation(block));
 	}
 
-	/**
-	 * Generate a sign/wall sign type blockstate and model.
-	 *
-	 * @param models   the block model generator
-	 * @param sign     the sign block to generate the state and model for
-	 * @param wallSign the wall sign block to generate the state and model for
-	 * @param base     the base block to use for the particle
-	 */
+	/// Generate a sign/wall sign type blockstate and model.
+	///
+	/// @param models   the block model generator
+	/// @param sign     the sign block to generate the state and model for
+	/// @param wallSign the wall sign block to generate the state and model for
+	/// @param base     the base block to use for the particle
 	private static void generateSign(BlockModelGenerators models, Block sign, Block wallSign, Block base) {
 		TextureMapping mapping = TextureMapping.particle(base);
 		MultiVariant particle = BlockModelGenerators.plainVariant(ModelTemplates.PARTICLE_ONLY.create(sign, mapping, models.modelOutput));
@@ -639,14 +593,12 @@ public class IWBlockModelGenerator {
 		models.registerSimpleFlatItemModel(sign.asItem());
 	}
 
-	/**
-	 * Generate a hanging sign/wall sign type blockstate and model.
-	 *
-	 * @param models   the block model generator
-	 * @param sign     the sign block to generate the state and model for
-	 * @param wallSign the wall sign block to generate the state and model for
-	 * @param base     the base block to use for the particle
-	 */
+	/// Generate a hanging sign/wall sign type blockstate and model.
+	///
+	/// @param models   the block model generator
+	/// @param sign     the sign block to generate the state and model for
+	/// @param wallSign the wall sign block to generate the state and model for
+	/// @param base     the base block to use for the particle
 	private static void generateHangingSign(BlockModelGenerators models, Block sign, Block wallSign, Block base) {
 		MultiVariant particle = models.createParticleOnlyBlockModel(sign, base);
 		models.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(sign, particle));
@@ -654,13 +606,11 @@ public class IWBlockModelGenerator {
 		models.registerSimpleFlatItemModel(sign.asItem());
 	}
 
-	/**
-	 * Generate a button type blockstate and model.
-	 *
-	 * @param models the block model generator
-	 * @param block  the block to generate the state and model for
-	 * @param base   the base block to use for the button
-	 */
+	/// Generate a button type blockstate and model.
+	///
+	/// @param models the block model generator
+	/// @param block  the block to generate the state and model for
+	/// @param base   the base block to use for the button
 	private static void generateButton(BlockModelGenerators models, Block block, Block base) {
 		TextureMapping mapping = TextureMapping.defaultTexture(base);
 		MultiVariant normal = BlockModelGenerators.plainVariant(ModelTemplates.BUTTON.create(block, mapping, models.modelOutput));
@@ -670,13 +620,11 @@ public class IWBlockModelGenerator {
 		models.registerSimpleItemModel(block, inventoryLocation);
 	}
 
-	/**
-	 * Generate a wooden spikes type blockstate with a pre-existing model. Wooden spikes have multiple states:
-	 * {@link WoodenSpikesBlock#DAMAGE_STAGE}, and then an inherited horizontal state.
-	 *
-	 * @param models the block model generator
-	 * @param block  the block to generate the state for
-	 */
+	/// Generate a wooden spikes type blockstate with a pre-existing model. Wooden spikes have multiple states:
+	/// [WoodenSpikesBlock#DAMAGE\_STAGE], and then an inherited horizontal state.
+	///
+	/// @param models the block model generator
+	/// @param block  the block to generate the state for
 	private static void generateWoodenSpikes(BlockModelGenerators models, Block block) {
 		Identifier damageStagePath0 = Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/wooden_spikes_0");
 		MultiVariant damageStage0 = BlockModelGenerators.plainVariant(damageStagePath0);
@@ -695,13 +643,11 @@ public class IWBlockModelGenerator {
 		models.registerSimpleItemModel(block, damageStagePath0);
 	}
 
-	/**
-	 * Generate a flagpole type blockstate with a pre-existing model. Flagpoles have a single
-	 * {@link FlagPoleBlock#IS_BASE} state.
-	 *
-	 * @param models the block model generator
-	 * @param block  the block to generate the state for
-	 */
+	/// Generate a flagpole type blockstate with a pre-existing model. Flagpoles have a single [FlagPoleBlock#IS\_BASE]
+	/// state.
+	///
+	/// @param models the block model generator
+	/// @param block  the block to generate the state for
 	private static void generateFlagPole(BlockModelGenerators models, Block block) {
 		Identifier path = ModelLocationUtils.getModelLocation(block);
 		MultiVariant base = BlockModelGenerators.plainVariant(path.withSuffix("_base"));
@@ -714,36 +660,30 @@ public class IWBlockModelGenerator {
 		models.registerSimpleItemModel(block, path);
 	}
 
-	/**
-	 * Generate a flag type blockstate with a pre-existing model. Flags have a single
-	 *
-	 * @param models the block model generator
-	 * @param block  the block to generate the state for
-	 */
+	/// Generate a flag type blockstate with a pre-existing model. Flags have a single
+	///
+	/// @param models the block model generator
+	/// @param block  the block to generate the state for
 	private static void generateFlag(BlockModelGenerators models, Block block) {
 		models.createHorizontallyRotatedBlock(block, TexturedModel.createDefault(b -> new TextureMapping()
 						.put(IWModelTemplates.Slots.FLAG, new Material(ModelLocationUtils.getModelLocation(block))),
 				IWModelTemplates.FLAG));
 	}
 
-	/**
-	 * Generate a crystal type blockstate and model.
-	 *
-	 * @param models the block model generator
-	 * @param block  the block to generate the state and model for
-	 */
+	/// Generate a crystal type blockstate and model.
+	///
+	/// @param models the block model generator
+	/// @param block  the block to generate the state and model for
 	private static void generateCrystal(BlockModelGenerators models, Block block) {
 		MultiVariant cross = BlockModelGenerators.plainVariant(ModelTemplates.CROSS.create(block, TextureMapping.cross(block), models.modelOutput));
 		models.blockStateOutput.accept(MultiVariantGenerator.dispatch(block, cross).with(BlockModelGenerators.ROTATIONS_COLUMN_WITH_FACING));
 		models.registerSimpleItemModel(block.asItem(), models.createFlatItemModelWithBlockTexture(block.asItem(), block));
 	}
 
-	/**
-	 * Generate a stardust leaves type blockstate and model. Stardust leaves have a second overlay layer.
-	 *
-	 * @param models the block model generator
-	 * @param block  the block to generate the state and model for
-	 */
+	/// Generate a stardust leaves type blockstate and model. Stardust leaves have a second overlay layer.
+	///
+	/// @param models the block model generator
+	/// @param block  the block to generate the state and model for
 	private static void generateStardustLeaves(BlockModelGenerators models, Block block) {
 		TextureMapping mapping = TextureMapping.cube(block)
 				.put(TextureSlot.LAYER1, new Material(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/stardust_granule_overlay")));
@@ -760,12 +700,10 @@ public class IWBlockModelGenerator {
 		models.createTrivialBlock(block, TexturedModel.createDefault(b -> mapping, template));
 	}
 
-	/**
-	 * Generate a stardust log type blockstate and model. Stardust logs have a second overlay layer.
-	 *
-	 * @param models the block model generator
-	 * @param block  the block to generate the state and model for
-	 */
+	/// Generate a stardust log type blockstate and model. Stardust logs have a second overlay layer.
+	///
+	/// @param models the block model generator
+	/// @param block  the block to generate the state and model for
 	private static void generateStardustLog(BlockModelGenerators models, Block block) {
 		TextureMapping mapping = TextureMapping.column(block)
 				.put(TextureSlot.END, new Material(ModelLocationUtils.getModelLocation(block).withSuffix("_top")))
@@ -795,12 +733,10 @@ public class IWBlockModelGenerator {
 		models.createAxisAlignedPillarBlock(block, TexturedModel.createDefault(b -> mapping, template));
 	}
 
-	/**
-	 * Generate a stardust wood type blockstate and model. Stardust wood has a second overlay layer.
-	 *
-	 * @param models the block model generator
-	 * @param block  the block to generate the state and model for
-	 */
+	/// Generate a stardust wood type blockstate and model. Stardust wood has a second overlay layer.
+	///
+	/// @param models the block model generator
+	/// @param block  the block to generate the state and model for
 	private static void generateStardustWood(BlockModelGenerators models, Block block) {
 		TextureMapping mapping = TextureMapping.column(block)
 				.put(TextureSlot.END, new Material(ModelLocationUtils.getModelLocation(BlockRegistry.STARDUST_LOG.get())))

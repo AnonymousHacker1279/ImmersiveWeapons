@@ -45,76 +45,9 @@ public class StarForgeControllerBlock extends BasicOrientableBlock implements En
 		registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LIT, Boolean.FALSE));
 	}
 
-	@Override
-	public void createBlockStateDefinition(Builder<Block, BlockState> builder) {
-		super.createBlockStateDefinition(builder);
-		builder.add(LIT);
-	}
-
-	@Override
-	public BlockState getStateForPlacement(BlockPlaceContext context) {
-		return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
-	}
-
-	@Override
-	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-		return new StarForgeBlockEntity(blockPos, blockState);
-	}
-
-	@Override
-	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
-
-		return level.isClientSide() ? null : (world, pos, state, entity) -> ((StarForgeBlockEntity) entity).tick((ServerLevel) world, pos, state);
-	}
-
-	@Override
-	protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
-		if (level.isClientSide()) {
-			return InteractionResult.SUCCESS;
-		} else {
-			if (level.getBlockEntity(pos) instanceof StarForgeBlockEntity blockEntity && player instanceof ServerPlayer serverPlayer) {
-				if (player.getItemInHand(hand).is(Items.LAVA_BUCKET)) {
-					blockEntity.raiseTemperature(150);
-
-					if (!player.isCreative()) {
-						player.getItemInHand(hand).shrink(1);
-						player.getInventory().add(new ItemStack(Items.BUCKET));
-					}
-				} else {
-					if (blockEntity.isInUse()) {
-						return InteractionResult.FAIL;
-					}
-
-					serverPlayer.openMenu(new SimpleMenuProvider((id, inventory, player1) -> new StarForgeMenu(id, inventory, blockEntity, blockEntity.containerData), CONTAINER_NAME), buffer -> {
-						List<ResourceKey<Recipe<?>>> keys = blockEntity.getAvailableRecipeKeys();
-						buffer.writeVarInt(keys.size());
-
-						for (ResourceKey<Recipe<?>> key : keys) {
-							buffer.writeResourceKey(key);
-						}
-					});
-
-				}
-			}
-
-			return InteractionResult.CONSUME;
-		}
-	}
-
-	@Override
-	public MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
-		if (level.getBlockEntity(pos) instanceof StarForgeBlockEntity blockEntity) {
-			return new SimpleMenuProvider((id, inventory, player) -> new StarForgeMenu(id, inventory, blockEntity.getAvailableRecipeKeys()), CONTAINER_NAME);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Scan the 3x3x5 area around the controller to check for a valid multiblock structure.
-	 *
-	 * @return boolean
-	 */
+	/// Scan the 3x3x5 area around the controller to check for a valid multiblock structure.
+	///
+	/// @return boolean
 	public static boolean checkForValidMultiBlock(BlockState controllerState, BlockPos controllerPos, ServerLevel level) {
 		// Get the selection of blocks to check relative to the controller's direction
 		// The controller is always in front of the forge
@@ -151,15 +84,13 @@ public class StarForgeControllerBlock extends BasicOrientableBlock implements En
 		return !isSliceInvalid(sliceStart, controllerPos, 4, level);
 	}
 
-	/**
-	 * Check a slice of the multiblock structure for validity.
-	 *
-	 * @param centerPos     the center position of the slice
-	 * @param controllerPos the position of the controller
-	 * @param slice         the slice to check
-	 * @param level         the <code>ServerLevel</code> instance
-	 * @return boolean
-	 */
+	/// Check a slice of the multiblock structure for validity.
+	///
+	/// @param centerPos     the center position of the slice
+	/// @param controllerPos the position of the controller
+	/// @param slice         the slice to check
+	/// @param level         the `ServerLevel` instance
+	/// @return boolean
 	public static boolean isSliceInvalid(BlockPos centerPos, BlockPos controllerPos, int slice, ServerLevel level) {
 		boolean isValid = true;
 		switch (slice) {
@@ -259,5 +190,70 @@ public class StarForgeControllerBlock extends BasicOrientableBlock implements En
 		}
 
 		return !isValid;
+	}
+
+	@Override
+	public void createBlockStateDefinition(Builder<Block, BlockState> builder) {
+		super.createBlockStateDefinition(builder);
+		builder.add(LIT);
+	}
+
+	@Override
+	public BlockState getStateForPlacement(BlockPlaceContext context) {
+		return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+	}
+
+	@Override
+	public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
+		return new StarForgeBlockEntity(blockPos, blockState);
+	}
+
+	@Override
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> blockEntityType) {
+
+		return level.isClientSide() ? null : (world, pos, state, entity) -> ((StarForgeBlockEntity) entity).tick((ServerLevel) world, pos, state);
+	}
+
+	@Override
+	protected InteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult result) {
+		if (level.isClientSide()) {
+			return InteractionResult.SUCCESS;
+		} else {
+			if (level.getBlockEntity(pos) instanceof StarForgeBlockEntity blockEntity && player instanceof ServerPlayer serverPlayer) {
+				if (player.getItemInHand(hand).is(Items.LAVA_BUCKET)) {
+					blockEntity.raiseTemperature(150);
+
+					if (!player.isCreative()) {
+						player.getItemInHand(hand).shrink(1);
+						player.getInventory().add(new ItemStack(Items.BUCKET));
+					}
+				} else {
+					if (blockEntity.isInUse()) {
+						return InteractionResult.FAIL;
+					}
+
+					serverPlayer.openMenu(new SimpleMenuProvider((id, inventory, player1) -> new StarForgeMenu(id, inventory, blockEntity, blockEntity.containerData), CONTAINER_NAME), buffer -> {
+						List<ResourceKey<Recipe<?>>> keys = blockEntity.getAvailableRecipeKeys();
+						buffer.writeVarInt(keys.size());
+
+						for (ResourceKey<Recipe<?>> key : keys) {
+							buffer.writeResourceKey(key);
+						}
+					});
+
+				}
+			}
+
+			return InteractionResult.CONSUME;
+		}
+	}
+
+	@Override
+	public MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
+		if (level.getBlockEntity(pos) instanceof StarForgeBlockEntity blockEntity) {
+			return new SimpleMenuProvider((id, inventory, player) -> new StarForgeMenu(id, inventory, blockEntity.getAvailableRecipeKeys()), CONTAINER_NAME);
+		}
+
+		return null;
 	}
 }

@@ -324,12 +324,10 @@ public class ServerConfig {
 		builder.pop();
 	}
 
-	/**
-	 * Finds a given enchant cap within the configuration list
-	 *
-	 * @param enchantment the enchantment to find, must be namespaced
-	 * @return the enchantment cap
-	 */
+	/// Finds a given enchant cap within the configuration list
+	///
+	/// @param enchantment the enchantment to find, must be namespaced
+	/// @return the enchantment cap
 	public static int getEnchantCap(String enchantment) {
 		List<?> caps = IWConfigs.SERVER.celestialAltarEnchantCaps.get();
 		AtomicInteger enchantCap = new AtomicInteger(-1);
@@ -345,11 +343,9 @@ public class ServerConfig {
 		return enchantCap.get();
 	}
 
-	/**
-	 * Convert the enchant caps map into a list.
-	 *
-	 * @return a list of enchant caps
-	 */
+	/// Convert the enchant caps map into a list.
+	///
+	/// @return a list of enchant caps
 	private static List<?> enchantCapMapToList() {
 		List<Object> enchantCaps = new ArrayList<>(50);
 		Map<String, Integer> enchantCapsMap = getEnchantCapsMap();

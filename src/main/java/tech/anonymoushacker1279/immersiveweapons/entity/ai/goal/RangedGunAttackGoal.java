@@ -13,8 +13,8 @@ public class RangedGunAttackGoal<T extends Mob & RangedAttackMob> extends Goal {
 
 	private final T mob;
 	private final double speedModifier;
-	private int attackIntervalMin;
 	private final float attackRadiusSqr;
+	private int attackIntervalMin;
 	private int attackTime = -1;
 	private int seeTime;
 	private boolean strafingClockwise;
@@ -48,9 +48,7 @@ public class RangedGunAttackGoal<T extends Mob & RangedAttackMob> extends Goal {
 		return (this.canUse() || !this.mob.getNavigation().isDone()) && this.isHoldingGun();
 	}
 
-	/**
-	 * Execute a one shot task or start executing a continuous task
-	 */
+	/// Execute a one shot task or start executing a continuous task
 	@Override
 	public void start() {
 		super.start();

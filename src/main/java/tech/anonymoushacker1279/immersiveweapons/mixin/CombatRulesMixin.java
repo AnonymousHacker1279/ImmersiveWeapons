@@ -18,10 +18,8 @@ import tech.anonymoushacker1279.immersiveweapons.init.AttributeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
 import tech.anonymoushacker1279.immersiveweapons.potion.BrokenArmorEffect;
 
-/**
- * Replace the vanilla armor cap of 20 points with a configurable value. Additionally, it allows a custom armor breach
- * attribute to be used.
- */
+/// Replace the vanilla armor cap of 20 points with a configurable value. Additionally, it allows a custom armor breach
+/// attribute to be used.
 @Mixin(CombatRules.class)
 public abstract class CombatRulesMixin {
 

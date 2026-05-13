@@ -113,12 +113,10 @@ public class TeslaArmorItem extends Item implements TickableArmor {
 		}
 	}
 
-	/**
-	 * Play a sound while the armor effect is toggled.
-	 *
-	 * @param level  the <code>Level</code> the player is in
-	 * @param player the <code>Player</code> instance
-	 */
+	/// Play a sound while the armor effect is toggled.
+	///
+	/// @param level  the `Level` the player is in
+	/// @param player the `Player` instance
 	private void effectNoise(Level level, Player player) {
 		if (noiseCooldown == 0 && IWConfigs.CLIENT.teslaArmorEffectSound.getAsBoolean()) {
 			level.playSound(player,

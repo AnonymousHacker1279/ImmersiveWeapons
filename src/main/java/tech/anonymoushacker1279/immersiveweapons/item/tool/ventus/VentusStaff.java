@@ -47,9 +47,7 @@ public class VentusStaff extends Item {
 				(0.03d * level.getRandom().nextGaussian()));
 	}
 
-	/**
-	 * Get nearby entities and push them away from the player.
-	 */
+	/// Get nearby entities and push them away from the player.
 	private void pushEntities(Level level, Player player, ItemStack itemInHand) {
 		List<Entity> entities = level.getEntities(player, player.getBoundingBox().inflate(IWConfigs.SERVER.ventusStaffRadius.getAsInt()));
 
@@ -80,9 +78,7 @@ public class VentusStaff extends Item {
 		}
 	}
 
-	/**
-	 * Summon a {@link WindCharge} entity in the direction the player is looking.
-	 */
+	/// Summon a [WindCharge] entity in the direction the player is looking.
 	private void launchWindCharge(Level level, Player player, ItemStack itemInHand) {
 		if (!level.isClientSide()) {
 			WindCharge windCharge = new WindCharge(player, level, player.position().x(), player.getEyePosition().y(), player.position().z());

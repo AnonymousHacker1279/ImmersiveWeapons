@@ -60,9 +60,7 @@ public class FieldMedicHealEntitiesGoal extends Goal {
 		}
 	}
 
-	/**
-	 * Scan the nearby area for hurt entities that are in the target list.
-	 */
+	/// Scan the nearby area for hurt entities that are in the target list.
 	private void scanForHurtEntities() {
 		List<LivingEntity> nearbyEntities = medic.level().getEntitiesOfClass(LivingEntity.class,
 				medic.getBoundingBox().inflate(24, 5, 24),
@@ -85,11 +83,9 @@ public class FieldMedicHealEntitiesGoal extends Goal {
 		}
 	}
 
-	/**
-	 * Navigate to the target entity and heal them.
-	 *
-	 * @param entity the <code>LivingEntity</code> to heal
-	 */
+	/// Navigate to the target entity and heal them.
+	///
+	/// @param entity the `LivingEntity` to heal
 	private void goHealEntity(LivingEntity entity) {
 		medic.getNavigation().moveTo(entity, 1.0D);
 

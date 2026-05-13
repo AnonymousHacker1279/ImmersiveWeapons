@@ -27,11 +27,9 @@ public class SandbagBlock extends BasicOrientableBlock {
 	private static final VoxelShape SHAPE_2 = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 12.0D, 16.0D);
 	private static final VoxelShape SHAPE_3 = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
 
-	/**
-	 * Constructor for SandbagBlock.
-	 *
-	 * @param properties the <code>Properties</code> of the block
-	 */
+	/// Constructor for SandbagBlock.
+	///
+	/// @param properties the `Properties` of the block
 	public SandbagBlock(Properties properties) {
 		super(properties);
 		registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(BAGS, 0));
