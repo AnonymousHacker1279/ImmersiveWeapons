@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "immersiveweapons:block/moonglow"
+    "layer0": "immersiveweapons:block/moonglow",
+    "layer1": "immersiveweapons:block/moonglow_emissive"
   }
 }

@@ -154,7 +154,7 @@ public class IWBlockModelGenerator {
 		blockModels.createHead(BlockRegistry.HANS_HEAD.get(), BlockRegistry.HANS_WALL_HEAD.get(), CustomSkullTypes.HANS, TEMPLATE_SKULL);
 		blockModels.createHead(BlockRegistry.STORM_CREEPER_HEAD.get(), BlockRegistry.STORM_CREEPER_WALL_HEAD.get(), CustomSkullTypes.STORM_CREEPER, TEMPLATE_SKULL);
 		blockModels.createHead(BlockRegistry.SKELETON_MERCHANT_HEAD.get(), BlockRegistry.SKELETON_MERCHANT_WALL_HEAD.get(), CustomSkullTypes.SKELETON_MERCHANT, TEMPLATE_SKULL);
-		blockModels.createPlantWithDefaultItem(BlockRegistry.MOONGLOW.get(), BlockRegistry.POTTED_MOONGLOW.get(), BlockModelGenerators.PlantType.NOT_TINTED);
+		blockModels.createPlantWithDefaultItem(BlockRegistry.MOONGLOW.get(), BlockRegistry.POTTED_MOONGLOW.get(), BlockModelGenerators.PlantType.EMISSIVE_NOT_TINTED);
 		generateStardustWood(blockModels, BlockRegistry.STARDUST_WOOD.get());
 		generateStardustLog(blockModels, BlockRegistry.STARDUST_LOG.get());
 		blockModels.woodProvider(BlockRegistry.STRIPPED_STARDUST_LOG.get())
