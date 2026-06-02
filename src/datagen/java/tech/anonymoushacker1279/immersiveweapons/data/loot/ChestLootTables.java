@@ -37,18 +37,18 @@ public record ChestLootTables(HolderLookup.Provider registries) implements LootT
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
 								.add(LootItem.lootTableItem(Items.COPPER_NUGGET).setWeight(10)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 4.0F))))
-								.add(LootItem.lootTableItem(Items.STONE).setWeight(10)
+								.add(LootItem.lootTableItem(Items.DEEPSLATE).setWeight(10)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 12.0F))))
-								.add(LootItem.lootTableItem(Items.GOLD_NUGGET).setWeight(8)
+								.add(LootItem.lootTableItem(Items.GOLD_INGOT).setWeight(8)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F))))
-								.add(LootItem.lootTableItem(Items.COPPER_PICKAXE).setWeight(5)
+								.add(LootItem.lootTableItem(Items.GOLD_NUGGET).setWeight(6)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 4.0F))))
+								.add(LootItem.lootTableItem(Items.IRON_PICKAXE).setWeight(5)
 										.apply(EnchantWithLevelsFunction.enchantWithLevels(
 												this.registries, UniformGenerator.between(5.0F, 15.0F)
 										)))
-								.add(LootItem.lootTableItem(ItemRegistry.OBSIDIAN_SHARD.get()).setWeight(4))
-								.add(LootItem.lootTableItem(Items.GOLDEN_CARROT).setWeight(3)
-										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 5.0F))))
-								.add(LootItem.lootTableItem(ItemRegistry.ELECTRIC_INGOT.get()).setWeight(1))));
+								.add(LootItem.lootTableItem(Items.OBSIDIAN).setWeight(4))
+								.add(LootItem.lootTableItem(ItemRegistry.TESLA_NUGGET.get()).setWeight(1))));
 
 		output.accept(LootTableLocations.BATTLEFIELD_CAMP,
 				LootTable.lootTable()

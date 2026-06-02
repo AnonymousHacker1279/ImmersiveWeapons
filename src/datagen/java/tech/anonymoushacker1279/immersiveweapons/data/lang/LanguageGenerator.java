@@ -760,13 +760,13 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("swim_in_lava.title", "Lava Bath");
 		addAdvancement("swim_in_lava.description", "Swim in lava with a full set of Molten armor");
 
-		// Electric/Tesla advancements
-		addAdvancement("conductive_alloy.title", "Electrician");
-		addAdvancement("conductive_alloy.description", "Craft a conductive alloy");
-		addAdvancement("electric_ingot.title", "Electrician: Part 2");
-		addAdvancement("electric_ingot.description", "Obtain an electric ingot, a rare and powerful energy source");
-		addAdvancement("tesla_ingot.title", "Electrician: The Final Saga");
-		addAdvancement("tesla_ingot.description", "Obtain a Tesla ingot, the answer to your mass energy requirements");
+		// Tesla advancements
+		addAdvancement("dormant_tesla_ore.title", "Something Powerful Sleeps");
+		addAdvancement("dormant_tesla_ore.description", "Obtain Dormant Tesla Ore");
+		addAdvancement("tesla_nugget.title", "Ride the Lightning");
+		addAdvancement("tesla_nugget.description", "Use the factory crucible to acquire Active Tesla Ore, and mine it for nuggets");
+		addAdvancement("tesla_ingot.title", "New Found Power");
+		addAdvancement("tesla_ingot.description", "Obtain a Tesla ingot, the final form of Tesla ore");
 		addAdvancement("tesla_sword.title", "A Shocking Experience");
 		addAdvancement("tesla_sword.description", "Obtain a Tesla sword");
 		addAdvancement("tesla_pickaxe.title", "Tesla Tools: Pickaxe");

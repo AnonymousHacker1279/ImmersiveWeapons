@@ -241,11 +241,9 @@ public class ItemRegistry {
 	public static final Supplier<Item> ASTRAL_INGOT = ITEMS.registerItem("astral_ingot", Item::new);
 	public static final Supplier<Item> ASTRAL_NUGGET = ITEMS.registerItem("astral_nugget", Item::new);
 	public static final Supplier<Item> RAW_ASTRAL = ITEMS.registerItem("raw_astral", Item::new);
-	@TextureMetadataMarker
+	@TextureMetadataMarker(frameTime = 2)
 	public static final Supplier<Item> TESLA_INGOT = ITEMS.registerItem("tesla_ingot", Item::new);
 	public static final Supplier<Item> TESLA_NUGGET = ITEMS.registerItem("tesla_nugget", Item::new);
-	public static final Supplier<Item> ELECTRIC_INGOT = ITEMS.registerItem("electric_ingot", Item::new);
-	public static final Supplier<Item> CONDUCTIVE_ALLOY = ITEMS.registerItem("conductive_alloy", Item::new);
 	public static final Supplier<Item> MOLTEN_INGOT = ITEMS.registerItem("molten_ingot", (properties) -> new FuelItem(properties.fireResistant(), 24000));
 	public static final Supplier<Item> MOLTEN_SMITHING_TEMPLATE = ITEMS.registerItem("molten_smithing_template", (properties) -> new Item(properties.fireResistant()));
 	public static final Supplier<Item> VENTUS_SMITHING_TEMPLATE = ITEMS.registerItem("ventus_smithing_template", Item::new);

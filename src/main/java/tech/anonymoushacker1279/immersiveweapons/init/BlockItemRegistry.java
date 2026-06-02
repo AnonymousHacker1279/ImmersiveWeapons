@@ -15,7 +15,8 @@ public class BlockItemRegistry {
 
 	// Block Items
 	public static final Supplier<BlockItem> MOLTEN_ORE_ITEM = ItemRegistry.ITEMS.registerItem("molten_ore", (properties) -> new BlockItem(BlockRegistry.MOLTEN_ORE.get(), properties.useBlockDescriptionPrefix().fireResistant()));
-	public static final Supplier<BlockItem> ELECTRIC_ORE_ITEM = ItemRegistry.ITEMS.registerItem("electric_ore", (properties) -> new BlockItem(BlockRegistry.ELECTRIC_ORE.get(), properties.useBlockDescriptionPrefix()));
+	public static final Supplier<BlockItem> DORMANT_TESLA_ORE_ITEM = ItemRegistry.ITEMS.registerItem("dormant_tesla_ore", (properties) -> new BlockItem(BlockRegistry.DORMANT_TESLA_ORE.get(), properties.useBlockDescriptionPrefix()));
+	public static final Supplier<BlockItem> ACTIVE_TESLA_ORE_ITEM = ItemRegistry.ITEMS.registerItem("active_tesla_ore", (properties -> new BlockItem(BlockRegistry.ACTIVE_TESLA_ORE.get(), properties.useBlockDescriptionPrefix())));
 	public static final Supplier<BlockItem> COBALT_ORE_ITEM = ItemRegistry.ITEMS.registerItem("cobalt_ore", (properties) -> new BlockItem(BlockRegistry.COBALT_ORE.get(), properties.useBlockDescriptionPrefix()));
 	public static final Supplier<BlockItem> DEEPSLATE_COBALT_ORE_ITEM = ItemRegistry.ITEMS.registerItem("deepslate_cobalt_ore", (properties) -> new BlockItem(BlockRegistry.DEEPSLATE_COBALT_ORE.get(), properties.useBlockDescriptionPrefix()));
 	public static final Supplier<BlockItem> VENTUS_ORE_ITEM = ItemRegistry.ITEMS.registerItem("ventus_ore", (properties) -> new BlockItem(BlockRegistry.VENTUS_ORE.get(), properties.useBlockDescriptionPrefix()));
@@ -116,7 +117,6 @@ public class BlockItemRegistry {
 	public static final Supplier<BlockItem> MINUTEMAN_STATUE_ITEM = ItemRegistry.ITEMS.registerItem("minuteman_statue", (properties) -> new BlockItem(BlockRegistry.MINUTEMAN_STATUE.get(), properties.useBlockDescriptionPrefix()));
 	@TooltipMarker(style = {ChatFormatting.GREEN, ChatFormatting.ITALIC})
 	public static final Supplier<BlockItem> MEDIC_STATUE_ITEM = ItemRegistry.ITEMS.registerItem("medic_statue", (properties) -> new BlockItem(BlockRegistry.MEDIC_STATUE.get(), properties.useBlockDescriptionPrefix()));
-	public static final Supplier<BlockItem> TESLA_SYNTHESIZER_ITEM = ItemRegistry.ITEMS.registerItem("tesla_synthesizer", (properties) -> new BlockItem(BlockRegistry.TESLA_SYNTHESIZER.get(), properties.useBlockDescriptionPrefix()));
 	@TooltipMarker(style = {ChatFormatting.LIGHT_PURPLE, ChatFormatting.ITALIC})
 	public static final Supplier<BlockItem> TELEPORTER_ITEM = ItemRegistry.ITEMS.registerItem("teleporter", (properties) -> new BlockItem(BlockRegistry.TELEPORTER.get(), properties.useBlockDescriptionPrefix()));
 	public static final Supplier<BlockItem> CLOUD_ITEM = ItemRegistry.ITEMS.registerItem("cloud", (properties) -> new BlockItem(BlockRegistry.CLOUD.get(), properties.useBlockDescriptionPrefix()));

@@ -33,7 +33,10 @@ import tech.anonymoushacker1279.immersiveweapons.client.CustomArmPoses;
 import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import tech.anonymoushacker1279.immersiveweapons.client.ModelLayerLocations;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
-import tech.anonymoushacker1279.immersiveweapons.client.gui.screen.*;
+import tech.anonymoushacker1279.immersiveweapons.client.gui.screen.AmmunitionTableScreen;
+import tech.anonymoushacker1279.immersiveweapons.client.gui.screen.CelestialAltarScreen;
+import tech.anonymoushacker1279.immersiveweapons.client.gui.screen.SmallPartsTableScreen;
+import tech.anonymoushacker1279.immersiveweapons.client.gui.screen.StarForgeScreen;
 import tech.anonymoushacker1279.immersiveweapons.client.model.*;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.*;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact.BulletImpactParticle;
@@ -94,7 +97,6 @@ public class ClientModEventSubscriber {
 	@SubscribeEvent
 	public static void registerMenuScreensEvent(RegisterMenuScreensEvent event) {
 		event.register(MenuTypeRegistry.SMALL_PARTS_TABLE_MENU.get(), SmallPartsTableScreen::new);
-		event.register(MenuTypeRegistry.TESLA_SYNTHESIZER_MENU.get(), TeslaSynthesizerScreen::new);
 		event.register(MenuTypeRegistry.AMMUNITION_TABLE_MENU.get(), AmmunitionTableScreen::new);
 		event.register(MenuTypeRegistry.STAR_FORGE_MENU.get(), StarForgeScreen::new);
 		event.register(MenuTypeRegistry.CELESTIAL_ALTAR_MENU.get(), CelestialAltarScreen::new);

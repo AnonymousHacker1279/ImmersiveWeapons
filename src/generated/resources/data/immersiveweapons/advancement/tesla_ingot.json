@@ -1,5 +1,5 @@
 {
-  "parent": "immersiveweapons:electric_ingot",
+  "parent": "immersiveweapons:tesla_nugget",
   "criteria": {
     "hold": {
       "conditions": {

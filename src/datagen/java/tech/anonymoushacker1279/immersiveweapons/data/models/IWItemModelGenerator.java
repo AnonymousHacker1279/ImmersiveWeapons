@@ -69,20 +69,20 @@ public class IWItemModelGenerator {
 		generateStateOnly(itemModels, ItemRegistry.FLARE_GUN.get());
 		generateStateOnly(itemModels, ItemRegistry.HAND_CANNON.get());
 		generateStateOnly(itemModels, ItemRegistry.DRAGONS_BREATH_CANNON.get());
-		generateGauntletItem(itemModels, ItemRegistry.WOODEN_GAUNTLET.get(), Identifier.withDefaultNamespace("block/stripped_oak_log"));
-		generateGauntletItem(itemModels, ItemRegistry.STONE_GAUNTLET.get(), Identifier.withDefaultNamespace("block/stone"));
-		generateGauntletItem(itemModels, ItemRegistry.GOLDEN_GAUNTLET.get(), Identifier.withDefaultNamespace("block/gold_block"));
-		generateGauntletItem(itemModels, ItemRegistry.COPPER_GAUNTLET.get(), Identifier.withDefaultNamespace("block/copper_block"));
-		generateIronGauntletItem(itemModels, ItemRegistry.IRON_GAUNTLET.get(), Identifier.withDefaultNamespace("block/iron_block"));
-		generateGauntletItem(itemModels, ItemRegistry.COBALT_GAUNTLET.get(), Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/cobalt_block"));
-		generateGauntletItem(itemModels, ItemRegistry.DIAMOND_GAUNTLET.get(), Identifier.withDefaultNamespace("block/diamond_block"));
-		generateGauntletItem(itemModels, ItemRegistry.NETHERITE_GAUNTLET.get(), Identifier.withDefaultNamespace("block/netherite_block"));
-		generateGauntletItem(itemModels, ItemRegistry.MOLTEN_GAUNTLET.get(), Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/custom/molten"));
-		generateGauntletItem(itemModels, ItemRegistry.TESLA_GAUNTLET.get(), Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/custom/tesla"));
-		generateGauntletItem(itemModels, ItemRegistry.VENTUS_GAUNTLET.get(), Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/custom/ventus"));
-		generateGauntletItem(itemModels, ItemRegistry.ASTRAL_GAUNTLET.get(), Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/custom/astral"));
-		generateGauntletItem(itemModels, ItemRegistry.STARSTORM_GAUNTLET.get(), Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/custom/starstorm"));
-		generateGauntletItem(itemModels, ItemRegistry.VOID_GAUNTLET.get(), Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/custom/void"));
+		generateGauntletItem(itemModels, ItemRegistry.WOODEN_GAUNTLET.get());
+		generateGauntletItem(itemModels, ItemRegistry.STONE_GAUNTLET.get());
+		generateGauntletItem(itemModels, ItemRegistry.GOLDEN_GAUNTLET.get());
+		generateGauntletItem(itemModels, ItemRegistry.COPPER_GAUNTLET.get());
+		generateIronGauntletItem(itemModels, ItemRegistry.IRON_GAUNTLET.get());
+		generateGauntletItem(itemModels, ItemRegistry.COBALT_GAUNTLET.get());
+		generateGauntletItem(itemModels, ItemRegistry.DIAMOND_GAUNTLET.get());
+		generateGauntletItem(itemModels, ItemRegistry.NETHERITE_GAUNTLET.get());
+		generateGauntletItem(itemModels, ItemRegistry.MOLTEN_GAUNTLET.get());
+		generateGauntletItem(itemModels, ItemRegistry.TESLA_GAUNTLET.get());
+		generateGauntletItem(itemModels, ItemRegistry.VENTUS_GAUNTLET.get());
+		generateGauntletItem(itemModels, ItemRegistry.ASTRAL_GAUNTLET.get());
+		generateGauntletItem(itemModels, ItemRegistry.STARSTORM_GAUNTLET.get());
+		generateGauntletItem(itemModels, ItemRegistry.VOID_GAUNTLET.get());
 		generateMaulItem(itemModels, ItemRegistry.WOODEN_MAUL.get(), Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/wooden_maul_base"));
 		generateMaulItem(itemModels, ItemRegistry.STONE_MAUL.get(), Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/wooden_maul_base"));
 		generateMaulItem(itemModels, ItemRegistry.GOLDEN_MAUL.get(), Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/wooden_maul_base"));
@@ -121,8 +121,6 @@ public class IWItemModelGenerator {
 		itemModels.generateFlatItem(ItemRegistry.RAW_ASTRAL.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.TESLA_INGOT.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.TESLA_NUGGET.get(), ModelTemplates.FLAT_ITEM);
-		itemModels.generateFlatItem(ItemRegistry.ELECTRIC_INGOT.get(), ModelTemplates.FLAT_ITEM);
-		itemModels.generateFlatItem(ItemRegistry.CONDUCTIVE_ALLOY.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.MOLTEN_INGOT.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.MOLTEN_SMITHING_TEMPLATE.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.VENTUS_SMITHING_TEMPLATE.get(), ModelTemplates.FLAT_ITEM);
@@ -332,28 +330,30 @@ public class IWItemModelGenerator {
 		itemModels.generateFlatItem(ItemRegistry.SKELETON_MERCHANT_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
 	}
 
-	private static void generateGauntletItem(ItemModelGenerators models, Item item, Identifier materialLocation) {
+	private static void generateGauntletItem(ItemModelGenerators models, Item item) {
+		Material material = new Material(ModelLocationUtils.getModelLocation(item));
 		models.itemModelOutput.accept(
 				item,
 				ItemModelUtils.plainModel(
 						IWModelTemplates.GAUNTLET.create(
 								item,
 								new TextureMapping()
-										.put(IWModelTemplates.Slots.MATERIAL, new Material(materialLocation))
-										.put(TextureSlot.PARTICLE, new Material(materialLocation)),
+										.put(IWModelTemplates.Slots.MATERIAL, material)
+										.put(TextureSlot.PARTICLE, material),
 								models.modelOutput
 						)
 				)
 		);
 	}
 
-	private static void generateIronGauntletItem(ItemModelGenerators models, Item item, Identifier materialLocation) {
+	private static void generateIronGauntletItem(ItemModelGenerators models, Item item) {
+		Material material = new Material(ModelLocationUtils.getModelLocation(item));
 		ItemModel.Unbaked model = ItemModelUtils.plainModel(
 				IWModelTemplates.GAUNTLET.create(
 						item,
 						new TextureMapping()
-								.put(IWModelTemplates.Slots.MATERIAL, new Material(materialLocation))
-								.put(TextureSlot.PARTICLE, new Material(materialLocation)),
+								.put(IWModelTemplates.Slots.MATERIAL, material)
+								.put(TextureSlot.PARTICLE, material),
 						models.modelOutput
 				)
 		);

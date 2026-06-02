@@ -54,16 +54,16 @@
     "immersiveweapons:star_forge_bricks",
     "immersiveweapons:teleporter",
     "immersiveweapons:molten_ore",
-    "immersiveweapons:electric_ore",
     "immersiveweapons:ventus_ore",
     "immersiveweapons:molten_block",
     "immersiveweapons:tesla_block",
-    "immersiveweapons:tesla_synthesizer",
     "immersiveweapons:tiltros_portal_frame",
     "immersiveweapons:astral_ore",
     "immersiveweapons:astral_block",
     "immersiveweapons:starstorm_crystal",
     "immersiveweapons:starstorm_block",
-    "immersiveweapons:void_ore"
+    "immersiveweapons:dormant_tesla_ore",
+    "immersiveweapons:void_ore",
+    "immersiveweapons:active_tesla_ore"
   ]
 }

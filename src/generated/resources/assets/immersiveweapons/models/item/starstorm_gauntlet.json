@@ -1,6 +1,6 @@
 {
   "parent": "immersiveweapons:item/gauntlet",
   "textures": {
-    "material": "immersiveweapons:item/custom/starstorm"
+    "material": "immersiveweapons:item/starstorm_gauntlet"
   }
 }

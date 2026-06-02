@@ -25,8 +25,9 @@ public abstract class BlockItemTagsGenerator extends BlockItemTagsProvider {
 						BlockRegistry.STARDUST_WOOD.get(),
 						BlockRegistry.STRIPPED_STARDUST_LOG.get(),
 						BlockRegistry.STRIPPED_STARDUST_WOOD.get());
-		tag(IWBlockTagGroups.ELECTRIC_ORES, IWItemTagGroups.ELECTRIC_ORES)
-				.add(BlockRegistry.ELECTRIC_ORE.get());
+		tag(IWBlockTagGroups.TESLA_ORES, IWItemTagGroups.TESLA_ORES)
+				.add(BlockRegistry.DORMANT_TESLA_ORE.get())
+				.add(BlockRegistry.ACTIVE_TESLA_ORE.get());
 		tag(IWBlockTagGroups.MOLTEN_ORES, IWItemTagGroups.MOLTEN_ORES)
 				.add(BlockRegistry.MOLTEN_ORE.get());
 		tag(IWBlockTagGroups.VENTUS_ORES, IWItemTagGroups.VENTUS_ORES)
@@ -48,7 +49,7 @@ public abstract class BlockItemTagsGenerator extends BlockItemTagsProvider {
 				CommonBlockTagGroups.COBALT_ORES,
 				CommonBlockTagGroups.SULFUR_ORES,
 				CommonBlockTagGroups.POTASSIUM_NITRATE_ORES,
-				IWBlockTagGroups.ELECTRIC_ORES,
+				IWBlockTagGroups.TESLA_ORES,
 				IWBlockTagGroups.MOLTEN_ORES,
 				IWBlockTagGroups.VENTUS_ORES,
 				IWBlockTagGroups.ASTRAL_ORES,

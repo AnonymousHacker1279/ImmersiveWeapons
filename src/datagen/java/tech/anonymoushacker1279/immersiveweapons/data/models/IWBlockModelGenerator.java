@@ -27,7 +27,8 @@ public class IWBlockModelGenerator {
 	public static void registerModels(BlockModelGenerators blockModels) {
 		blockModels.createTrivialCube(BlockRegistry.ASTRAL_ORE.get());
 		blockModels.createTrivialCube(BlockRegistry.MOLTEN_ORE.get());
-		blockModels.createTrivialCube(BlockRegistry.ELECTRIC_ORE.get());
+		blockModels.createTrivialCube(BlockRegistry.DORMANT_TESLA_ORE.get());
+		blockModels.createTrivialCube(BlockRegistry.ACTIVE_TESLA_ORE.get());
 		blockModels.createTrivialCube(BlockRegistry.COBALT_ORE.get());
 		blockModels.createTrivialCube(BlockRegistry.DEEPSLATE_COBALT_ORE.get());
 		blockModels.createTrivialCube(BlockRegistry.VENTUS_ORE.get());
@@ -102,7 +103,6 @@ public class IWBlockModelGenerator {
 		generateHorizontalStateOnly(blockModels, BlockRegistry.BIOHAZARD_BOX.get(), true);
 		generateHorizontalStateOnly(blockModels, BlockRegistry.MINUTEMAN_STATUE.get(), false);
 		generateHorizontalStateOnly(blockModels, BlockRegistry.MEDIC_STATUE.get(), false);
-		generateStateOnly(blockModels, BlockRegistry.TESLA_SYNTHESIZER.get());
 		generateStateOnly(blockModels, BlockRegistry.TELEPORTER.get());
 		blockModels.createTrivialCube(BlockRegistry.CLOUD.get());
 		blockModels.createTrivialCube(BlockRegistry.CLOUD_MARBLE.get());

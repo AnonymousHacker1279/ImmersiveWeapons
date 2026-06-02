@@ -150,7 +150,7 @@ dependencies {
 	// Include OpenPortals
 	implementation "tech.anonymoushacker1279.openportals:OpenPortals:${openportals_version}"
 	// Include Immersive Weapons Compatibility Bridge (IWCB)
-	// implementation "tech.anonymoushacker1279.iwcompatbridge:IWCompatibilityBridge:${iwcb_version}"
+	implementation "tech.anonymoushacker1279.iwcompatbridge:IWCompatibilityBridge:${iwcb_version}"
 
 	// Include TerraBlender
 	implementation "com.github.glitchfiend:TerraBlender-neoforge:${terrablender_version}"

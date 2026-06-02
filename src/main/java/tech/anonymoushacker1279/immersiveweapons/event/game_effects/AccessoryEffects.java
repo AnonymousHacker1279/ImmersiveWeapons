@@ -7,11 +7,11 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.event.enchanting.EnchantedEntityLootEvent;
 import net.neoforged.neoforge.event.entity.living.LivingExperienceDropEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.entity.living.LivingKnockBackEvent;
 import net.neoforged.neoforge.event.entity.player.CriticalHitEvent;
-import tech.anonymoushacker1279.immersiveweapons.api.events.ComputeEnchantedLootBonusEvent;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.MeteorEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.AccessoryEffectTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
@@ -216,7 +216,7 @@ public class AccessoryEffects {
 		}
 	}
 
-	public static void lootingEffects(ComputeEnchantedLootBonusEvent event, Player player) {
+	public static void lootingEffects(EnchantedEntityLootEvent event, Player player) {
 		// Get the total looting level from all items
 		double lootingLevel = AccessoryManager.collectEffects(AccessoryEffectTypeRegistry.LOOTING_LEVEL.get(), player);
 

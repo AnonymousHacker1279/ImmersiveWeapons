@@ -1,11 +1,9 @@
 {
   "values": [
     "immersiveweapons:molten_ore",
-    "immersiveweapons:electric_ore",
     "immersiveweapons:ventus_ore",
     "immersiveweapons:molten_block",
     "immersiveweapons:tesla_block",
-    "immersiveweapons:tesla_synthesizer",
     "immersiveweapons:tiltros_portal_frame"
   ]
 }

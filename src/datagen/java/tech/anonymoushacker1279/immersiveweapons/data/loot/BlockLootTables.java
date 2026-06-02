@@ -85,7 +85,7 @@ public class BlockLootTables extends BlockLootSubProvider {
 		dropSelf(BlockRegistry.IRON_PANEL.get());
 		dropSelf(BlockRegistry.IRON_PANEL_BARS.get());
 		dropSelf(BlockRegistry.DRIED_MUD.get());
-		dropSelf(BlockRegistry.ELECTRIC_ORE.get());
+		dropSelf(BlockRegistry.DORMANT_TESLA_ORE.get());
 		dropSelf(BlockRegistry.FLAG_POLE.get());
 		dropSelf(BlockRegistry.GADSDEN_FLAG.get());
 		dropSelf(BlockRegistry.HARDENED_MUD.get());
@@ -110,7 +110,6 @@ public class BlockLootTables extends BlockLootSubProvider {
 		dropSelf(BlockRegistry.STRIPPED_BURNED_OAK_LOG.get());
 		dropSelf(BlockRegistry.STRIPPED_BURNED_OAK_WOOD.get());
 		dropSelf(BlockRegistry.TESLA_BLOCK.get());
-		dropSelf(BlockRegistry.TESLA_SYNTHESIZER.get());
 		dropSelf(BlockRegistry.TROLL_FLAG.get());
 		dropSelf(BlockRegistry.WALL_SHELF.get());
 		dropSelf(BlockRegistry.MOONGLOW.get());
@@ -179,6 +178,7 @@ public class BlockLootTables extends BlockLootSubProvider {
 		add(BlockRegistry.COBALT_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.RAW_COBALT.get()));
 		add(BlockRegistry.DEEPSLATE_COBALT_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.RAW_COBALT.get()));
 		add(BlockRegistry.MOLTEN_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.MOLTEN_SHARD.get(), 3, 6));
+		add(BlockRegistry.ACTIVE_TESLA_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.TESLA_NUGGET.get(), 4, 5));
 		add(BlockRegistry.SULFUR_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.SULFUR.get(), 2, 4));
 		add(BlockRegistry.DEEPSLATE_SULFUR_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.SULFUR.get(), 2, 4));
 		add(BlockRegistry.NETHER_SULFUR_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.SULFUR.get(), 2, 4));

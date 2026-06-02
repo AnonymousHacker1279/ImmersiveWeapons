@@ -198,25 +198,25 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 				.save(consumer, prefixString("swim_in_lava"));
 
 		// Tesla Advancements
-		AdvancementHolder craftConductiveAlloy = Builder.advancement().parent(root)
-				.display(ItemRegistry.CONDUCTIVE_ALLOY.get(),
-						createTitle("conductive_alloy"),
-						createDescription("conductive_alloy"),
+		AdvancementHolder obtainDormantTeslaOre = Builder.advancement().parent(root)
+				.display(BlockItemRegistry.DORMANT_TESLA_ORE_ITEM.get(),
+						createTitle("dormant_tesla_ore"),
+						createDescription("dormant_tesla_ore"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.CONDUCTIVE_ALLOY.get()))
-				.save(consumer, prefixString("conductive_alloy"));
+						InventoryChangeTrigger.TriggerInstance.hasItems(BlockItemRegistry.DORMANT_TESLA_ORE_ITEM.get()))
+				.save(consumer, prefixString("dormant_tesla_ore"));
 
-		AdvancementHolder obtainElectricIngot = Builder.advancement().parent(craftConductiveAlloy)
-				.display(ItemRegistry.ELECTRIC_INGOT.get(),
-						createTitle("electric_ingot"),
-						createDescription("electric_ingot"),
+		AdvancementHolder obtainTeslaNuggets = Builder.advancement().parent(obtainDormantTeslaOre)
+				.display(ItemRegistry.TESLA_NUGGET.get(),
+						createTitle("tesla_nugget"),
+						createDescription("tesla_nugget"),
 						null, AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
-						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.ELECTRIC_INGOT.get()))
-				.save(consumer, prefixString("electric_ingot"));
+						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.TESLA_NUGGET.get()))
+				.save(consumer, prefixString("tesla_nugget"));
 
-		AdvancementHolder craftTeslaIngot = Builder.advancement().parent(obtainElectricIngot)
+		AdvancementHolder craftTeslaIngot = Builder.advancement().parent(obtainTeslaNuggets)
 				.display(ItemRegistry.TESLA_INGOT.get(),
 						createTitle("tesla_ingot"),
 						createDescription("tesla_ingot"),
@@ -318,16 +318,6 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 								ItemRegistry.TESLA_BOOTS.get()))
 				.rewards(AdvancementRewards.Builder.experience(100))
 				.save(consumer, prefixString("tesla_armor"));
-
-		Builder.advancement().parent(craftTeslaIngot)
-				.display(BlockRegistry.TESLA_SYNTHESIZER.get(),
-						createTitle("tesla_synthesizer"),
-						createDescription("tesla_synthesizer"),
-						null, AdvancementType.TASK, true, true, false)
-				.addCriterion("hold",
-						InventoryChangeTrigger.TriggerInstance.hasItems(BlockRegistry.TESLA_SYNTHESIZER.get()))
-				.rewards(AdvancementRewards.Builder.experience(150))
-				.save(consumer, prefixString("tesla_synthesizer"));
 
 		// Ventus Advancements
 		AdvancementHolder obtainVentusShard = Builder.advancement().parent(root)

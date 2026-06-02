@@ -10,7 +10,7 @@ public class IWItemTagGroups {
 
 	public static final TagKey<Item> BURNED_OAK_LOGS = createItemTag("burned_oak_logs");
 	public static final TagKey<Item> STARDUST_LOGS = createItemTag("stardust_logs");
-	public static final TagKey<Item> ELECTRIC_ORES = createItemTag("ores/electric");
+	public static final TagKey<Item> TESLA_ORES = createItemTag("ores/tesla");
 	public static final TagKey<Item> MOLTEN_ORES = createItemTag("ores/molten");
 	public static final TagKey<Item> VENTUS_ORES = createItemTag("ores/ventus");
 	public static final TagKey<Item> ASTRAL_ORES = createItemTag("ores/astral");
@@ -20,7 +20,6 @@ public class IWItemTagGroups {
 	public static final TagKey<Item> CANNONBALLS = createItemTag("projectiles/cannonballs");
 	public static final TagKey<Item> DRAGON_FIREBALLS = createItemTag("projectiles/dragon_fireballs");
 	public static final TagKey<Item> MOLTEN_INGOTS = createItemTag("ingots/molten");
-	public static final TagKey<Item> ELECTRIC_INGOTS = createItemTag("ingots/electric");
 	public static final TagKey<Item> TESLA_INGOTS = createItemTag("ingots/tesla");
 	public static final TagKey<Item> TESLA_NUGGETS = createItemTag("nuggets/tesla");
 	public static final TagKey<Item> SHARDS = createItemTag("shards/shards");

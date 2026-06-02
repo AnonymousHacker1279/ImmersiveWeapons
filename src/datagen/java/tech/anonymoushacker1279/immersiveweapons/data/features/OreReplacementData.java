@@ -24,6 +24,10 @@ public class OreReplacementData {
 				OreConfiguration.target(ReplacementRules.NETHER_STONE,
 						BlockRegistry.MOLTEN_ORE.get().defaultBlockState())
 		);
+		public static final List<TargetBlockState> TESLA_ORE_TARGETS = List.of(
+				OreConfiguration.target(ReplacementRules.DEEPSLATE_STONE,
+						BlockRegistry.DORMANT_TESLA_ORE.get().defaultBlockState())
+		);
 		public static final List<TargetBlockState> SULFUR_ORE_TARGETS = List.of(
 				OreConfiguration.target(ReplacementRules.REGULAR_STONE,
 						BlockRegistry.SULFUR_ORE.get().defaultBlockState()),
