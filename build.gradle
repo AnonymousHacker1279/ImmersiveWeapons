@@ -107,11 +107,6 @@ neoForge {
 			programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
 		}
 
-		exportClient {
-			client()
-			systemProperty 'wiki_exporter.enabled', 'true'
-		}
-
 		configureEach {
 			systemProperty 'forge.logging.markers', 'REGISTRIES'
 			logLevel = org.slf4j.event.Level.DEBUG

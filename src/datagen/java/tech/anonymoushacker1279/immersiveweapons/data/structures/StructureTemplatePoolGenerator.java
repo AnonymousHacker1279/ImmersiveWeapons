@@ -49,7 +49,7 @@ public class StructureTemplatePoolGenerator {
 		register(context, ABANDONED_FACTORY, new StructureTemplatePool(
 				templatePoolHolderGetter.getOrThrow(Pools.EMPTY),
 				ImmutableList.of(
-						Pair.of(StructurePoolElement.single(ImmersiveWeapons.MOD_ID + ":abandoned_factory"), 1)
+						Pair.of(StructurePoolElement.single(ImmersiveWeapons.MOD_ID + ":abandoned_factory", processorListsHolderGetter.getOrThrow(StructureProcessorListGenerator.ABANDONED_FACTORY_DECAY)), 1)
 				),
 				Projection.RIGID));
 

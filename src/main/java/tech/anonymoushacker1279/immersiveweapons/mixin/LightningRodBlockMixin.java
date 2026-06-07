@@ -5,6 +5,8 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.LightningRodBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -41,16 +43,17 @@ public abstract class LightningRodBlockMixin {
 						if (level.getBlockState(pos.below(i)).getBlock() == BlockRegistry.DORMANT_TESLA_ORE.get()) {
 							level.setBlockAndUpdate(pos.below(i), BlockRegistry.ACTIVE_TESLA_ORE.get().defaultBlockState());
 							serverLevel.sendParticles(
-									ParticleTypes.ELECTRIC_SPARK,
+									ParticleTypes.POOF,
 									pos.getX() + 0.5f,
 									pos.getY() - i + 0.5f,
 									pos.getZ() + 0.5f,
-									12,
-									0.5f,
-									0.5f,
-									0.5f,
-									0.1f
+									32,
+									level.getRandom().nextGaussian() * 0.5f,
+									level.getRandom().nextGaussian() * 0.5f,
+									level.getRandom().nextGaussian() * 0.5f,
+									0.25f
 							);
+
 							break;
 						}
 					}
