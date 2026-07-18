@@ -31,6 +31,7 @@ public class IWDamageSources {
 	public static final ResourceKey<DamageType> EXPLOSIVE_CANNONBALL_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "explosive_cannonball"));
 	public static final ResourceKey<DamageType> EXPLOSIVE_ARROW_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "explosive_arrow"));
 	public static final ResourceKey<DamageType> HELLFIRE_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "hellfire"));
+	public static final ResourceKey<DamageType> SUPERCHARGED_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "supercharged"));
 
 	private static DamageSource getDamageSource(RegistryAccess registryAccess, ResourceKey<DamageType> key) {
 		return new DamageSource(registryAccess.lookupOrThrow(Registries.DAMAGE_TYPE).getOrThrow(key));
@@ -114,5 +115,9 @@ public class IWDamageSources {
 
 	public static DamageSource explosiveArrow(Entity entity, Entity owner) {
 		return getEntityDamageSource(entity.level().registryAccess(), EXPLOSIVE_ARROW_KEY, entity, owner);
+	}
+
+	public static DamageSource supercharged(Entity entity, Entity owner) {
+		return getEntityDamageSource(entity.level().registryAccess(), SUPERCHARGED_KEY, entity, owner);
 	}
 }

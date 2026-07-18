@@ -25,5 +25,6 @@ public class DamageTypesGenerator {
 		context.register(IWDamageTypes.EXPLOSIVE_CANNONBALL_KEY, IWDamageTypes.EXPLOSIVE_CANNONBALL);
 		context.register(IWDamageTypes.EXPLOSIVE_ARROW_KEY, IWDamageTypes.EXPLOSIVE_ARROW);
 		context.register(IWDamageTypes.HELLFIRE_KEY, IWDamageTypes.HELLFIRE);
+		context.register(IWDamageTypes.SUPERCHARGED_KEY, IWDamageTypes.SUPERCHARGED);
 	}
 }

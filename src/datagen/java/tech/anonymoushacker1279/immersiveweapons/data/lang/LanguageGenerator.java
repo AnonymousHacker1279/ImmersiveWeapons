@@ -722,6 +722,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addDeathMessage("explosive_arrow.item", "%1$s was blown up by an explosive arrow fired by %2$s using %3$s");
 		addDeathMessage("hellfire", "%1$s melted in hellfire");
 		addDeathMessage("hellfire.player", "%1$s was doomed to melt in hellfire by %2$s");
+		addDeathMessage("supercharged", "%1$s learned they were conductive");
+		addDeathMessage("supercharged.player", "%1$s learned they were conductive at the hands of %2$s");
 	}
 
 	private void addBiomes() {

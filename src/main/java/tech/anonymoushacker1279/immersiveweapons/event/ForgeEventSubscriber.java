@@ -280,6 +280,28 @@ public class ForgeEventSubscriber {
 				}
 			}
 		}
+
+		// Handle Supercharged effect
+		if (damagedEntity.hasEffect(EffectRegistry.SUPERCHARGED_EFFECT) && !event.getSource().is(IWDamageSources.SUPERCHARGED_KEY)) {
+			if (sourceEntity != null && damagedEntity.level() instanceof ServerLevel serverLevel) {
+				MobEffectInstance effect = damagedEntity.getEffect(EffectRegistry.SUPERCHARGED_EFFECT);
+
+				if (effect != null) {
+					int damage = EffectRegistry.SUPERCHARGED_EFFECT.value().getDamage(damagedEntity.getRandom(), effect.getAmplifier());
+					sourceEntity.hurtServer(serverLevel, IWDamageSources.supercharged(sourceEntity, damagedEntity), damage);
+
+					serverLevel.sendParticles(ParticleTypes.ELECTRIC_SPARK,
+							damagedEntity.getX(),
+							damagedEntity.getY() + damagedEntity.getBbHeight() / 2,
+							damagedEntity.getZ(),
+							12,
+							serverLevel.getRandom().nextGaussian() * 0.5f,
+							serverLevel.getRandom().nextGaussian() * 0.5f,
+							serverLevel.getRandom().nextGaussian() * 0.5f,
+							0.5f);
+				}
+			}
+		}
 	}
 
 	@SubscribeEvent
@@ -639,6 +661,20 @@ public class ForgeEventSubscriber {
 				PotionRegistry.BROKEN_ARMOR_POTION,
 				Items.REDSTONE,
 				PotionRegistry.LONG_BROKEN_ARMOR_POTION);
+
+		// Supercharged Brew potions
+		builder.addMix(
+				Potions.AWKWARD,
+				ItemRegistry.TESLA_NUGGET.get(),
+				PotionRegistry.SUPERCHARGED_BREW);
+		builder.addMix(
+				PotionRegistry.SUPERCHARGED_BREW,
+				Items.GLOWSTONE_DUST,
+				PotionRegistry.STRONG_SUPERCHARGED_BREW);
+		builder.addMix(
+				PotionRegistry.SUPERCHARGED_BREW,
+				Items.REDSTONE,
+				PotionRegistry.LONG_SUPERCHARGED_BREW);
 	}
 
 	@SubscribeEvent
