@@ -99,7 +99,7 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 				singleLootTableCondition(BuiltInLootTables.NETHER_BRIDGE),
 				1000,
 				1, 1, 0.2f,
-				new ItemStackTemplate(ItemRegistry.AURORA_BOW.get()), 25, true));
+				new ItemStackTemplate(ItemRegistry.DRAGONS_BREATH_BOW.get()), 25, true));
 
 		add("ice_bow", new SimpleChestModifierHandler(
 				singleLootTableCondition(BuiltInLootTables.IGLOO_CHEST),

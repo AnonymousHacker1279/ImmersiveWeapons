@@ -117,7 +117,7 @@ public class BlockRegistry {
 	public static final Supplier<DropExperienceBlock> VENTUS_ORE = BLOCKS.registerBlock("ventus_ore", (properties) -> new DropExperienceBlock(UniformInt.of(5, 10), properties.mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(3.5f, 6.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 	@TextureMetadataMarker(frameTime = 12, interpolate = true)
 	public static final Supplier<Block> MOLTEN_BLOCK = BLOCKS.registerBlock("molten_block", (properties) -> new Block(properties.mapColor(MapColor.METAL).strength(45.0f, 1100.0f).sound(SoundType.METAL).requiresCorrectToolForDrops()));
-	@TextureMetadataMarker(frameTime = 2, interpolate = true)
+	@TextureMetadataMarker(frameTime = 2)
 	public static final Supplier<Block> TESLA_BLOCK = BLOCKS.registerBlock("tesla_block", (properties) -> new BasicOrientableBlock(properties.mapColor(MapColor.METAL).strength(35.0f).sound(SoundType.METAL).requiresCorrectToolForDrops()));
 	public static final Supplier<Block> TILTROS_PORTAL_FRAME = BLOCKS.registerBlock("tiltros_portal_frame", (properties) -> new Block(properties.mapColor(MapColor.COLOR_BLACK).strength(50.0f, 1200f).sound(SoundType.STONE).requiresCorrectToolForDrops().noOcclusion()));
 	// Netherite tier
