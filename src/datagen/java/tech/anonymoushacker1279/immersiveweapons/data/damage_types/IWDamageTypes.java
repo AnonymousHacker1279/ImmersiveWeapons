@@ -135,4 +135,11 @@ public class IWDamageTypes {
 			DamageScaling.ALWAYS,
 			0.1f
 	);
+
+	public static final ResourceKey<DamageType> SUPERCHARGED_KEY = ResourceKey.create(Registries.DAMAGE_TYPE, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "supercharged"));
+	public static final DamageType SUPERCHARGED = new DamageType(
+			"immersiveweapons.supercharged",
+			DamageScaling.ALWAYS,
+			0.1f
+	);
 }

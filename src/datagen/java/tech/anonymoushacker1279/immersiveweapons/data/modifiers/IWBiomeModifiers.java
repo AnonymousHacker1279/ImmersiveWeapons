@@ -29,6 +29,13 @@ public class IWBiomeModifiers {
 						Decoration.UNDERGROUND_ORES
 				));
 
+		biomeModifier(context, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "tesla_ore"),
+				new BiomeModifiers.AddFeaturesBiomeModifier(
+						context.lookup(Registries.BIOME).getOrThrow(BiomeTags.IS_OVERWORLD),
+						HolderSet.direct(context.lookup(Registries.PLACED_FEATURE).getOrThrow(IWPlacedFeatures.TESLA_ORE)),
+						Decoration.UNDERGROUND_ORES
+				));
+
 		biomeModifier(context, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "nether_sulfur_ore"),
 				new BiomeModifiers.AddFeaturesBiomeModifier(
 						context.lookup(Registries.BIOME).getOrThrow(BiomeTags.IS_NETHER),

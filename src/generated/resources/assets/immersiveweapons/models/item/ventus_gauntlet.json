@@ -1,6 +1,6 @@
 {
   "parent": "immersiveweapons:item/gauntlet",
   "textures": {
-    "material": "immersiveweapons:item/custom/ventus"
+    "material": "immersiveweapons:item/ventus_gauntlet"
   }
 }

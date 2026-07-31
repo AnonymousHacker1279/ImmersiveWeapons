@@ -55,6 +55,7 @@ import net.neoforged.neoforge.event.AddServerReloadListenersEvent;
 import net.neoforged.neoforge.event.AnvilUpdateEvent;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
 import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
+import net.neoforged.neoforge.event.enchanting.EnchantedEntityLootEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.entity.player.CriticalHitEvent;
@@ -65,7 +66,6 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 import org.joml.Vector3f;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-import tech.anonymoushacker1279.immersiveweapons.api.events.ComputeEnchantedLootBonusEvent;
 import tech.anonymoushacker1279.immersiveweapons.block.StarstormCrystalBlock;
 import tech.anonymoushacker1279.immersiveweapons.data.IWEnchantments;
 import tech.anonymoushacker1279.immersiveweapons.entity.monster.StarmiteEntity;
@@ -280,6 +280,28 @@ public class ForgeEventSubscriber {
 				}
 			}
 		}
+
+		// Handle Supercharged effect
+		if (damagedEntity.hasEffect(EffectRegistry.SUPERCHARGED_EFFECT) && !event.getSource().is(IWDamageSources.SUPERCHARGED_KEY)) {
+			if (sourceEntity != null && damagedEntity.level() instanceof ServerLevel serverLevel) {
+				MobEffectInstance effect = damagedEntity.getEffect(EffectRegistry.SUPERCHARGED_EFFECT);
+
+				if (effect != null) {
+					int damage = EffectRegistry.SUPERCHARGED_EFFECT.value().getDamage(damagedEntity.getRandom(), effect.getAmplifier());
+					sourceEntity.hurtServer(serverLevel, IWDamageSources.supercharged(sourceEntity, damagedEntity), damage);
+
+					serverLevel.sendParticles(ParticleTypes.ELECTRIC_SPARK,
+							damagedEntity.getX(),
+							damagedEntity.getY() + damagedEntity.getBbHeight() / 2,
+							damagedEntity.getZ(),
+							12,
+							serverLevel.getRandom().nextGaussian() * 0.5f,
+							serverLevel.getRandom().nextGaussian() * 0.5f,
+							serverLevel.getRandom().nextGaussian() * 0.5f,
+							0.5f);
+				}
+			}
+		}
 	}
 
 	@SubscribeEvent
@@ -327,7 +349,7 @@ public class ForgeEventSubscriber {
 		Entity damagedEntity = event.getEntity();
 
 		if (event.getSource().getEntity() instanceof ServerPlayer player) {
-			PacketDistributor.sendToPlayer(player, new DamageIndicatorPayload(event.getNewDamage(), new Vector3f(
+			PacketDistributor.sendToPlayer(player, new DamageIndicatorPayload(event.getHealthDamage(), new Vector3f(
 					(float) damagedEntity.getX(),
 					(float) (damagedEntity.getY() + damagedEntity.getBbHeight() + 0.5f),
 					(float) damagedEntity.getZ()
@@ -464,11 +486,7 @@ public class ForgeEventSubscriber {
 	}
 
 	@SubscribeEvent
-	public static void computeEnchantedLootBonusEvent(ComputeEnchantedLootBonusEvent event) {
-		if (event.getDamageSource() == null) {
-			return;
-		}
-
+	public static void enchantedEntityLootEvent(EnchantedEntityLootEvent event) {
 		if (event.getDamageSource().getEntity() instanceof Player player) {
 			// Increase the looting level by 3 with the Bloody Sacrifice curse
 			if (player.getPersistentData().getBooleanOr("used_curse_accessory_bloody_sacrifice", false)) {
@@ -643,6 +661,20 @@ public class ForgeEventSubscriber {
 				PotionRegistry.BROKEN_ARMOR_POTION,
 				Items.REDSTONE,
 				PotionRegistry.LONG_BROKEN_ARMOR_POTION);
+
+		// Supercharged Brew potions
+		builder.addMix(
+				Potions.AWKWARD,
+				ItemRegistry.TESLA_NUGGET.get(),
+				PotionRegistry.SUPERCHARGED_BREW);
+		builder.addMix(
+				PotionRegistry.SUPERCHARGED_BREW,
+				Items.GLOWSTONE_DUST,
+				PotionRegistry.STRONG_SUPERCHARGED_BREW);
+		builder.addMix(
+				PotionRegistry.SUPERCHARGED_BREW,
+				Items.REDSTONE,
+				PotionRegistry.LONG_SUPERCHARGED_BREW);
 	}
 
 	@SubscribeEvent

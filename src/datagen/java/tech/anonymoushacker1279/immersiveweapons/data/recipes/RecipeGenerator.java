@@ -14,7 +14,10 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.*;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.ArrowItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStackTemplate;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.CookingBookCategory;
@@ -55,10 +58,6 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 
 	protected static String getItemName(ItemLike itemLike) {
 		return Objects.requireNonNull(BuiltInRegistries.ITEM.getKey(itemLike.asItem())).getPath();
-	}
-
-	protected static String getItemName(ItemStack itemStack) {
-		return Objects.requireNonNull(BuiltInRegistries.ITEM.getKey(itemStack.getItem())).getPath();
 	}
 
 	protected static String getTagName(TagKey<Item> tagKey) {
@@ -390,30 +389,29 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 	}
 
 	private void createTeslaItems() {
-		createTeslaIngot(ItemRegistry.TESLA_INGOT.get(), BlockItemRegistry.TESLA_BLOCK_ITEM.get());
+		// Ingot
+		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.MISC, ItemRegistry.TESLA_INGOT.get())
+				.define('a', IWItemTagGroups.TESLA_NUGGETS)
+				.define('b', Tags.Items.NUGGETS_COPPER)
+				.define('c', Tags.Items.NUGGETS_GOLD)
+				.pattern("aaa")
+				.pattern("abb")
+				.pattern("cc ")
+				.group("tesla")
+				.unlockedBy("tesla_ingot", has(IWItemTagGroups.TESLA_INGOTS))
+				.save(output, String.valueOf(DataGenUtils.getItemFromNuggetsLocation(ItemRegistry.TESLA_INGOT.get().asItem())));
 
-		ShapelessRecipeBuilder shapelessRecipeBuilder = ShapelessRecipeBuilder.shapeless(itemGetter, RecipeCategory.MISC, ItemRegistry.TESLA_NUGGET.get(), 9)
+		// Ingot from block
+		ShapelessRecipeBuilder shapelessRecipeBuilder = ShapelessRecipeBuilder.shapeless(itemGetter, RecipeCategory.MISC, ItemRegistry.TESLA_INGOT.get(), 9)
+				.group("tesla")
+				.unlockedBy("tesla_ingot", has(IWItemTagGroups.TESLA_INGOTS));
+		createIngotFromBlock(shapelessRecipeBuilder, BlockItemRegistry.TESLA_BLOCK_ITEM.get());
+
+		// Nugget from ingot
+		shapelessRecipeBuilder = ShapelessRecipeBuilder.shapeless(itemGetter, RecipeCategory.MISC, ItemRegistry.TESLA_NUGGET.get(), 4)
 				.group("tesla")
 				.unlockedBy("tesla_ingot", has(IWItemTagGroups.TESLA_INGOTS));
 		createNuggetFromIngot(shapelessRecipeBuilder, IWItemTagGroups.TESLA_INGOTS);
-
-		teslaSynthesizing(Items.STONE, Items.LAPIS_LAZULI, ItemRegistry.CONDUCTIVE_ALLOY.get(), 12000,
-				ItemRegistry.ELECTRIC_INGOT.get());
-
-		// Tesla Synthesizer
-		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.BUILDING_BLOCKS, BlockRegistry.TESLA_SYNTHESIZER.get())
-				.define('a', Items.NETHERITE_INGOT)
-				.define('b', BlockItemRegistry.MOLTEN_BLOCK_ITEM.get())
-				.define('c', Tags.Items.INGOTS_COPPER)
-				.define('d', Tags.Items.GLASS_PANES)
-				.define('e', Tags.Items.INGOTS_IRON)
-				.define('f', ItemRegistry.TESLA_INGOT.get())
-				.pattern("fff")
-				.pattern("cde")
-				.pattern("aba")
-				.group("tesla")
-				.unlockedBy("tesla_ingot", has(IWItemTagGroups.TESLA_INGOTS))
-				.save(output);
 
 		// Tesla block
 		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.TESLA_BLOCK_ITEM.get())
@@ -423,13 +421,15 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 
 		// Tesla smithing template
 		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.MISC, ItemRegistry.TESLA_SMITHING_TEMPLATE.get())
-				.define('a', IWItemTagGroups.TESLA_INGOTS)
+				.define('a', IWItemTagGroups.TESLA_NUGGETS)
 				.define('b', Tags.Items.OBSIDIANS)
-				.pattern(" a ")
-				.pattern("aba")
-				.pattern(" a ")
+				.define('c', Tags.Items.INGOTS_COPPER)
+				.define('d', Tags.Items.INGOTS_GOLD)
+				.pattern("cca")
+				.pattern("cbd")
+				.pattern("add")
 				.group("tesla")
-				.unlockedBy("tesla_ingot", has(IWItemTagGroups.TESLA_INGOTS))
+				.unlockedBy("tesla_ingot", has(IWItemTagGroups.TESLA_NUGGETS))
 				.save(output);
 	}
 
@@ -1471,14 +1471,6 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.group("cloth_scrap")
 				.unlockedBy("grass", has(Items.SHORT_GRASS))
 				.save(output);
-		// Conductive alloy
-		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.MISC, ItemRegistry.CONDUCTIVE_ALLOY.get())
-				.define('a', Tags.Items.INGOTS_COPPER)
-				.define('b', Tags.Items.INGOTS_GOLD)
-				.pattern("ab")
-				.group("conductive_alloy")
-				.unlockedBy("gold", has(Tags.Items.INGOTS_GOLD))
-				.save(output);
 		// Mortar and pestle
 		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.MISC, ItemRegistry.MORTAR_AND_PESTLE.get())
 				.define('a', Items.BOWL)
@@ -1781,35 +1773,6 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				1.2f, 600, "molten");
 	}
 
-	private void createTeslaIngot(ItemLike ingotItem, ItemLike ingotBlock) {
-		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.MISC, ingotItem)
-				.define('a', IWItemTagGroups.ELECTRIC_INGOTS)
-				.define('b', ItemRegistry.CONDUCTIVE_ALLOY.get())
-				.pattern("ab ")
-				.group("tesla")
-				.unlockedBy("electric_ingot", has(IWItemTagGroups.ELECTRIC_INGOTS))
-				.save(output);
-
-		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.MISC, ingotItem)
-				.define('a', IWItemTagGroups.TESLA_NUGGETS)
-				.pattern("aaa")
-				.pattern("aaa")
-				.pattern("aaa")
-				.group("tesla")
-				.unlockedBy("tesla_ingot", has(IWItemTagGroups.TESLA_INGOTS))
-				.save(output, String.valueOf(DataGenUtils.getItemFromNuggetsLocation(ingotItem.asItem())));
-
-		ShapelessRecipeBuilder shapelessRecipeBuilder = ShapelessRecipeBuilder.shapeless(itemGetter, RecipeCategory.MISC, ingotItem, 9)
-				.group("tesla")
-				.unlockedBy("electric_ingot", has(IWItemTagGroups.ELECTRIC_INGOTS));
-		createIngotFromBlock(shapelessRecipeBuilder, ingotBlock);
-
-		createSmeltingRecipe(BlockItemRegistry.ELECTRIC_ORE_ITEM.get(), ItemRegistry.ELECTRIC_INGOT.get(),
-				1.3f, 200, "tesla");
-		createBlastingRecipe(BlockItemRegistry.ELECTRIC_ORE_ITEM.get(), ItemRegistry.ELECTRIC_INGOT.get(),
-				1.3f, 100, "tesla");
-	}
-
 	private void createBulletproofStainedGlass(ItemLike stainedGlassItem, ItemLike stainedGlassPaneItem, TagKey<Item> colorTag) {
 		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.BUILDING_BLOCKS, stainedGlassItem, 8)
 				.define('a', BlockRegistry.BULLETPROOF_GLASS.get())
@@ -1974,14 +1937,6 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 						Ingredient.of(Items.NETHERITE_INGOT), RecipeCategory.MISC, pResultItem)
 				.unlocks("has_netherite_ingot", has(Items.NETHERITE_INGOT))
 				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(pResultItem) + "_smithing");
-	}
-
-	private void teslaSynthesizing(ItemLike material1, ItemLike material2, ItemLike material3, int cookTime,
-	                               Item result) {
-		TeslaSynthesizerRecipeBuilder.synthesizing(Ingredient.of(material1), Ingredient.of(material2), Ingredient.of(material3),
-						cookTime, new ItemStackTemplate(result))
-				.unlockedBy("tesla_ingot", has(IWItemTagGroups.TESLA_INGOTS))
-				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_tesla_synthesizing");
 	}
 
 	private void smallPartsTinkering(TagKey<Item> material, List<Item> craftables) {

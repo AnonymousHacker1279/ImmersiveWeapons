@@ -1,5 +1,6 @@
 {
   "values": [
-    "immersiveweapons:void_ore"
+    "immersiveweapons:void_ore",
+    "immersiveweapons:active_tesla_ore"
   ]
 }

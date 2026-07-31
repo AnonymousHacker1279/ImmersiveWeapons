@@ -37,6 +37,7 @@ public class IWConfiguredFeatures {
 	public static final ResourceKey<ConfiguredFeature<?, ?>> ASTRAL_GEODE_CONFIGURATION = createKey("astral_geode");
 
 	public static final ResourceKey<ConfiguredFeature<?, ?>> MOLTEN_ORE_CONFIGURATION = createKey("molten_ore");
+	public static final ResourceKey<ConfiguredFeature<?, ?>> TESLA_ORE_CONFIGURATION = createKey("tesla_ore");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> NETHER_SULFUR_ORE_CONFIGURATION = createKey("nether_sulfur_ore");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> DEEPSLATE_SULFUR_ORE_CONFIGURATION = createKey("deepslate_sulfur_ore");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> SULFUR_ORE_CONFIGURATION = createKey("sulfur_ore");
@@ -120,6 +121,9 @@ public class IWConfiguredFeatures {
 
 		register(context, MOLTEN_ORE_CONFIGURATION, Feature.ORE,
 				new OreConfiguration(OreReplacementTargets.MOLTEN_ORE_TARGETS, 4, 1.0f));
+
+		register(context, TESLA_ORE_CONFIGURATION, Feature.ORE,
+				new OreConfiguration(OreReplacementTargets.TESLA_ORE_TARGETS, 4, 0.8f));
 
 		register(context, NETHER_SULFUR_ORE_CONFIGURATION, Feature.ORE,
 				new OreConfiguration(OreReplacementTargets.SULFUR_ORE_TARGETS, 16, 0.08f));

@@ -1,7 +1,7 @@
 plugins {
 	id 'java-library'
 	id 'maven-publish'
-	id 'net.neoforged.moddev' version '2.0.141'
+	id 'net.neoforged.moddev' version '2.0.142'
 	id "com.hypherionmc.modutils.modpublisher" version "2.1.8"
 	id 'idea'
 }
@@ -107,11 +107,6 @@ neoForge {
 			programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
 		}
 
-		exportClient {
-			client()
-			systemProperty 'wiki_exporter.enabled', 'true'
-		}
-
 		configureEach {
 			systemProperty 'forge.logging.markers', 'REGISTRIES'
 			logLevel = org.slf4j.event.Level.DEBUG
@@ -150,7 +145,7 @@ dependencies {
 	// Include OpenPortals
 	implementation "tech.anonymoushacker1279.openportals:OpenPortals:${openportals_version}"
 	// Include Immersive Weapons Compatibility Bridge (IWCB)
-	// implementation "tech.anonymoushacker1279.iwcompatbridge:IWCompatibilityBridge:${iwcb_version}"
+	implementation "tech.anonymoushacker1279.iwcompatbridge:IWCompatibilityBridge:${iwcb_version}"
 
 	// Include TerraBlender
 	implementation "com.github.glitchfiend:TerraBlender-neoforge:${terrablender_version}"

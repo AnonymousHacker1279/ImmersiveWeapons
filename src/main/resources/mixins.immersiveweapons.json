@@ -9,13 +9,11 @@
 		"EntityMixin",
 		"ILivingEntityExtensionMixin",
 		"ItemPropertiesMixin",
+		"LightningRodBlockMixin",
 		"LivingEntityMixin",
 		"ProjectileMixin",
 		"RangedAttributeAccessor",
-		"WindChargeMixin",
-		"loot.EnchantedCountIncreaseFunctionMixin",
-		"loot.EnchantmentHelperMixin",
-		"loot.LootItemRandomChanceWithEnchantedBonusConditionMixin"
+		"WindChargeMixin"
 	],
 	"client": [
 		"AbstractContainerScreenMixin",

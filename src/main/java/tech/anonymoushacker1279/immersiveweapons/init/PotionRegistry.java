@@ -28,4 +28,10 @@ public class PotionRegistry {
 	public static final DeferredHolder<Potion, Potion> BROKEN_ARMOR_POTION = POTIONS.register("broken_armor", () -> new Potion("broken_armor", new MobEffectInstance(EffectRegistry.BROKEN_ARMOR_EFFECT, 1800)));
 	public static final DeferredHolder<Potion, Potion> STRONG_BROKEN_ARMOR_POTION = POTIONS.register("strong_broken_armor", () -> new Potion("broken_armor", new MobEffectInstance(EffectRegistry.BROKEN_ARMOR_EFFECT, 1200, 1)));
 	public static final DeferredHolder<Potion, Potion> LONG_BROKEN_ARMOR_POTION = POTIONS.register("long_broken_armor", () -> new Potion("broken_armor", new MobEffectInstance(EffectRegistry.BROKEN_ARMOR_EFFECT, 2400)));
+	@LanguageEntryOverride("Supercharged Brew")
+	public static final DeferredHolder<Potion, Potion> SUPERCHARGED_BREW = POTIONS.register("supercharged_brew", () -> new Potion("supercharged_brew", new MobEffectInstance(EffectRegistry.SUPERCHARGED_EFFECT, 1200)));
+	@LanguageEntryOverride("Supercharged Brew")
+	public static final DeferredHolder<Potion, Potion> LONG_SUPERCHARGED_BREW = POTIONS.register("long_supercharged_brew", () -> new Potion("supercharged_brew", new MobEffectInstance(EffectRegistry.SUPERCHARGED_EFFECT, 1800)));
+	@LanguageEntryOverride("Supercharged Brew")
+	public static final DeferredHolder<Potion, Potion> STRONG_SUPERCHARGED_BREW = POTIONS.register("strong_supercharged_brew", () -> new Potion("supercharged_brew",  new MobEffectInstance(EffectRegistry.SUPERCHARGED_EFFECT, 600, 1)));
 }

@@ -114,13 +114,11 @@ public class BlockRegistry {
 	// Diamond tier
 	@TextureMetadataMarker(frameTime = 12, interpolate = true)
 	public static final Supplier<DropExperienceBlock> MOLTEN_ORE = BLOCKS.registerBlock("molten_ore", (properties) -> new DropExperienceBlock(UniformInt.of(5, 10), properties.mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(6.0f, 8.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
-	public static final Supplier<DropExperienceBlock> ELECTRIC_ORE = BLOCKS.registerBlock("electric_ore", (properties) -> new DropExperienceBlock(ConstantInt.of(0), properties.mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(6.0f, 8.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 	public static final Supplier<DropExperienceBlock> VENTUS_ORE = BLOCKS.registerBlock("ventus_ore", (properties) -> new DropExperienceBlock(UniformInt.of(5, 10), properties.mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).strength(3.5f, 6.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
 	@TextureMetadataMarker(frameTime = 12, interpolate = true)
 	public static final Supplier<Block> MOLTEN_BLOCK = BLOCKS.registerBlock("molten_block", (properties) -> new Block(properties.mapColor(MapColor.METAL).strength(45.0f, 1100.0f).sound(SoundType.METAL).requiresCorrectToolForDrops()));
-	@TextureMetadataMarker(frameTime = 2, interpolate = true)
+	@TextureMetadataMarker(frameTime = 2)
 	public static final Supplier<Block> TESLA_BLOCK = BLOCKS.registerBlock("tesla_block", (properties) -> new BasicOrientableBlock(properties.mapColor(MapColor.METAL).strength(35.0f).sound(SoundType.METAL).requiresCorrectToolForDrops()));
-	public static final Supplier<TeslaSynthesizerBlock> TESLA_SYNTHESIZER = BLOCKS.registerBlock("tesla_synthesizer", (properties) -> new TeslaSynthesizerBlock(properties.mapColor(MapColor.METAL).strength(10.0f).sound(SoundType.METAL).requiresCorrectToolForDrops().noOcclusion()));
 	public static final Supplier<Block> TILTROS_PORTAL_FRAME = BLOCKS.registerBlock("tiltros_portal_frame", (properties) -> new Block(properties.mapColor(MapColor.COLOR_BLACK).strength(50.0f, 1200f).sound(SoundType.STONE).requiresCorrectToolForDrops().noOcclusion()));
 	// Netherite tier
 	public static final Supplier<DropExperienceBlock> ASTRAL_ORE = BLOCKS.registerBlock("astral_ore", (properties) -> new DropExperienceBlock(UniformInt.of(7, 12), properties.mapColor(MapColor.COLOR_PURPLE).instrument(NoteBlockInstrument.BASEDRUM).strength(8.0f, 10.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
@@ -128,9 +126,14 @@ public class BlockRegistry {
 	public static final Supplier<AmethystClusterBlock> STARSTORM_CRYSTAL = BLOCKS.registerBlock("starstorm_crystal", (properties) -> new StarstormCrystalBlock(7, 10, properties.mapColor(MapColor.COLOR_ORANGE).randomTicks().strength(0.4f).sound(SoundType.AMETHYST_CLUSTER).requiresCorrectToolForDrops().lightLevel((blockState) -> 6)));
 	@TextureMetadataMarker(frameTime = 24, interpolate = true, frames = {0, 1, 2, 3, 2, 1})
 	public static final Supplier<Block> STARSTORM_BLOCK = BLOCKS.registerBlock("starstorm_block", (properties) -> new Block(properties.mapColor(MapColor.COLOR_ORANGE).strength(30.0f).sound(SoundType.AMETHYST).requiresCorrectToolForDrops()));
+	@LanguageEntryOverride("Tesla Ore (Dormant)")
+	public static final Supplier<Block> DORMANT_TESLA_ORE = BLOCKS.registerBlock("dormant_tesla_ore", (properties) -> new Block(properties.mapColor(MapColor.DEEPSLATE).instrument(NoteBlockInstrument.BASEDRUM).strength(6.0f, 8.0f).sound(SoundType.DEEPSLATE).requiresCorrectToolForDrops()));
 	// Astral / Starstorm tier
 	@TextureMetadataMarker(frameTime = 36, interpolate = true)
 	public static final Supplier<Block> VOID_ORE = BLOCKS.registerBlock("void_ore", (properties) -> new DropExperienceBlock(ConstantInt.of(0), properties.mapColor(MapColor.COLOR_BLACK).instrument(NoteBlockInstrument.BASEDRUM).strength(8.0f, 10.0f).sound(SoundType.STONE).requiresCorrectToolForDrops()));
+	@LanguageEntryOverride("Tesla Ore (Active)")
+	@TextureMetadataMarker(frameTime = 2)
+	public static final Supplier<DropExperienceBlock> ACTIVE_TESLA_ORE = BLOCKS.registerBlock("active_tesla_ore", (properties) -> new DropExperienceBlock(UniformInt.of(10, 12), properties.mapColor(MapColor.DEEPSLATE).instrument(NoteBlockInstrument.BASEDRUM).strength(12.0f, 16.0f).sound(SoundType.DEEPSLATE).requiresCorrectToolForDrops()));
 
 	// Breakable via axe
 	// Wood tier

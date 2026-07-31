@@ -1,0 +1,32 @@
+{
+  "parent": "immersiveweapons:dormant_tesla_ore",
+  "criteria": {
+    "hold": {
+      "conditions": {
+        "items": [
+          {
+            "items": "immersiveweapons:tesla_nugget"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersiveweapons.tesla_nugget.description"
+    },
+    "icon": {
+      "id": "immersiveweapons:tesla_nugget"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.tesla_nugget.title"
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

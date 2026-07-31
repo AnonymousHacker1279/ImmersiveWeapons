@@ -3,12 +3,14 @@
   "category": "misc",
   "group": "tesla",
   "key": {
-    "a": "#immersiveweapons:nuggets/tesla"
+    "a": "#immersiveweapons:nuggets/tesla",
+    "b": "#c:nuggets/copper",
+    "c": "#c:nuggets/gold"
   },
   "pattern": [
     "aaa",
-    "aaa",
-    "aaa"
+    "abb",
+    "cc "
   ],
   "result": {
     "id": "immersiveweapons:tesla_ingot"

@@ -30,6 +30,7 @@ public class IWPlacedFeatures {
 	public static final ResourceKey<PlacedFeature> PATCH_FIREFLY_BUSH = createKey("patch_firefly_bush");
 
 	public static final ResourceKey<PlacedFeature> MOLTEN_ORE = createKey("molten_ore");
+	public static final ResourceKey<PlacedFeature> TESLA_ORE = createKey("tesla_ore");
 	public static final ResourceKey<PlacedFeature> NETHER_SULFUR_ORE = createKey("nether_sulfur_ore");
 	public static final ResourceKey<PlacedFeature> DEEPSLATE_SULFUR_ORE = createKey("deepslate_sulfur_ore");
 	public static final ResourceKey<PlacedFeature> SULFUR_ORE = createKey("sulfur_ore");
@@ -109,6 +110,14 @@ public class IWPlacedFeatures {
 						BiomeFilter.biome(),
 						InSquarePlacement.spread(),
 						CountPlacement.of(6)
+				));
+
+		register(context, TESLA_ORE, configuredFeatures.getOrThrow(IWConfiguredFeatures.TESLA_ORE_CONFIGURATION),
+				List.of(HeightRangePlacement.triangle(VerticalAnchor.absolute(-64),
+								VerticalAnchor.absolute(-28)),
+						BiomeFilter.biome(),
+						InSquarePlacement.spread(),
+						CountPlacement.of(2)
 				));
 
 		register(context, NETHER_SULFUR_ORE, configuredFeatures.getOrThrow(IWConfiguredFeatures.NETHER_SULFUR_ORE_CONFIGURATION),

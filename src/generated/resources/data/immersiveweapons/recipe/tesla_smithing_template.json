@@ -3,13 +3,15 @@
   "category": "misc",
   "group": "tesla",
   "key": {
-    "a": "#immersiveweapons:ingots/tesla",
-    "b": "#c:obsidians"
+    "a": "#immersiveweapons:nuggets/tesla",
+    "b": "#c:obsidians",
+    "c": "#c:ingots/copper",
+    "d": "#c:ingots/gold"
   },
   "pattern": [
-    " a ",
-    "aba",
-    " a "
+    "cca",
+    "cbd",
+    "add"
   ],
   "result": {
     "id": "immersiveweapons:tesla_smithing_template"

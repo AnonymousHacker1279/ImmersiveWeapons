@@ -21,7 +21,7 @@ public class IWBlockTagGroups {
 	public static final TagKey<Block> NEEDS_ASTRAL_STARSTORM_TOOL = createBlockTag("needs_astral_starstorm_tool");
 	public static final TagKey<Block> NEEDS_VOID_TOOL = createBlockTag("needs_void_tool");
 	public static final TagKey<Block> NEEDS_HANSIUM_TOOL = createBlockTag("needs_hansium_tool");
-	public static final TagKey<Block> ELECTRIC_ORES = createBlockTag("ores/electric");
+	public static final TagKey<Block> TESLA_ORES = createBlockTag("ores/tesla");
 	public static final TagKey<Block> MOLTEN_ORES = createBlockTag("ores/molten");
 	public static final TagKey<Block> VENTUS_ORES = createBlockTag("ores/ventus");
 	public static final TagKey<Block> ASTRAL_ORES = createBlockTag("ores/astral");

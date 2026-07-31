@@ -1,6 +1,6 @@
 {
   "parent": "immersiveweapons:item/gauntlet",
   "textures": {
-    "material": "minecraft:block/netherite_block"
+    "material": "immersiveweapons:item/netherite_gauntlet"
   }
 }

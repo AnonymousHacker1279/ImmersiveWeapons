@@ -27,6 +27,17 @@ public class RecoveryStaffItem extends Item implements SummoningStaff {
 		super(properties);
 	}
 
+	@SubscribeEvent
+	public static void livingHurtEvent(LivingDamageEvent.Post event) {
+		if (event.getEntity() instanceof Player player) {
+			for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+				if (player.getInventory().getItem(i).getItem() instanceof RecoveryStaffItem staff) {
+					staff.setHealAmount(event.getHealthDamage() / 2 + 4);
+				}
+			}
+		}
+	}
+
 	@Override
 	public InteractionResult use(Level level, Player player, InteractionHand hand) {
 
@@ -85,22 +96,11 @@ public class RecoveryStaffItem extends Item implements SummoningStaff {
 		return IWConfigs.SERVER.recoveryStaffMaxUseRange.getAsInt();
 	}
 
-	public void setHealAmount(float healAmount) {
-		this.healAmount = healAmount;
-	}
-
 	public float getHealAmount() {
 		return healAmount;
 	}
 
-	@SubscribeEvent
-	public static void livingHurtEvent(LivingDamageEvent.Post event) {
-		if (event.getEntity() instanceof Player player) {
-			for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
-				if (player.getInventory().getItem(i).getItem() instanceof RecoveryStaffItem staff) {
-					staff.setHealAmount(event.getNewDamage() / 2 + 4);
-				}
-			}
-		}
+	public void setHealAmount(float healAmount) {
+		this.healAmount = healAmount;
 	}
 }
