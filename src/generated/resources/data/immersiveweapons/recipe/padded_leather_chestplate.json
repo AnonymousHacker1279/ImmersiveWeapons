@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "group": "padded_leather_armor",
   "key": {
     "a": "minecraft:leather_chestplate",

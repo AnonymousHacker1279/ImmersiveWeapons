@@ -2,13 +2,11 @@
   "type": "minecraft:chest",
   "pools": [
     {
-      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
           "functions": [
             {
-              "add": false,
               "count": 1.0,
               "function": "minecraft:set_count"
             },
@@ -29,7 +27,6 @@
           "type": "minecraft:item",
           "functions": [
             {
-              "add": false,
               "count": 1.0,
               "function": "minecraft:set_count"
             },
@@ -50,7 +47,6 @@
           "type": "minecraft:item",
           "functions": [
             {
-              "add": false,
               "count": 1.0,
               "function": "minecraft:set_count"
             },
@@ -71,7 +67,6 @@
           "type": "minecraft:item",
           "functions": [
             {
-              "add": false,
               "count": 1.0,
               "function": "minecraft:set_count"
             },
@@ -92,7 +87,6 @@
           "type": "minecraft:item",
           "functions": [
             {
-              "add": false,
               "count": 1.0,
               "function": "minecraft:set_count"
             },
@@ -113,7 +107,6 @@
           "type": "minecraft:item",
           "functions": [
             {
-              "add": false,
               "count": 1.0,
               "function": "minecraft:set_count"
             },
@@ -134,7 +127,6 @@
           "type": "minecraft:item",
           "functions": [
             {
-              "add": false,
               "count": 1.0,
               "function": "minecraft:set_count"
             },
@@ -155,7 +147,6 @@
           "type": "minecraft:item",
           "functions": [
             {
-              "add": false,
               "count": 1.0,
               "function": "minecraft:set_count"
             },
@@ -176,7 +167,6 @@
           "type": "minecraft:item",
           "functions": [
             {
-              "add": false,
               "count": 1.0,
               "function": "minecraft:set_count"
             },
@@ -197,7 +187,6 @@
           "type": "minecraft:item",
           "functions": [
             {
-              "add": false,
               "count": 1.0,
               "function": "minecraft:set_count"
             },
@@ -218,7 +207,6 @@
           "type": "minecraft:item",
           "functions": [
             {
-              "add": false,
               "count": {
                 "type": "minecraft:uniform",
                 "max": 32.0,
@@ -234,7 +222,6 @@
           "type": "minecraft:item",
           "functions": [
             {
-              "add": false,
               "count": 1.0,
               "function": "minecraft:set_count"
             },
@@ -255,7 +242,6 @@
           "type": "minecraft:item",
           "functions": [
             {
-              "add": false,
               "count": 1.0,
               "function": "minecraft:set_count"
             },
@@ -276,7 +262,6 @@
           "type": "minecraft:item",
           "functions": [
             {
-              "add": false,
               "count": 1.0,
               "function": "minecraft:set_count"
             },
@@ -297,7 +282,6 @@
           "type": "minecraft:item",
           "functions": [
             {
-              "add": false,
               "count": {
                 "type": "minecraft:uniform",
                 "max": 12.0,

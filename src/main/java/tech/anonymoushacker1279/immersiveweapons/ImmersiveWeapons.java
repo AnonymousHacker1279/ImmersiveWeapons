@@ -58,7 +58,7 @@ public class ImmersiveWeapons {
 			WoodTypes.init();
 
 			Regions.register(new IWOverworldBiomesProvider(Identifier.fromNamespaceAndPath(MOD_ID, "overworld_biome_provider"), RegionType.OVERWORLD, 1));
-			SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, MOD_ID, IWOverworldBiomesProvider.makeSurfaceRules());
+			SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, MOD_ID, IWOverworldBiomesProvider::makeSurfaceRules);
 		});
 		PostSetupHandler.init();
 

@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "group": "bloody_sacrifice",
   "key": {
     "a": "minecraft:spider_eye",

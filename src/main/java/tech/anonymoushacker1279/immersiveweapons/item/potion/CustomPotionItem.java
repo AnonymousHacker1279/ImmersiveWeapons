@@ -1,6 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.item.potion;
 
-import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.advancements.triggers.CriteriaTriggers;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
@@ -44,8 +44,8 @@ public abstract class CustomPotionItem extends Item {
 
 		if (level instanceof ServerLevel serverLevel) {
 			for (MobEffectInstance effectInstance : getEffects()) {
-				if (effectInstance.getEffect().value().isInstantenous()) {
-					effectInstance.getEffect().value().applyInstantenousEffect(serverLevel, player, player, livingEntity, effectInstance.getAmplifier(), 1.0D);
+				if (effectInstance.getEffect().value().isInstantaneous()) {
+					effectInstance.getEffect().value().applyInstantaneousEffect(serverLevel, player, player, livingEntity, effectInstance.getAmplifier(), 1.0D);
 				} else {
 					livingEntity.addEffect(new MobEffectInstance(effectInstance));
 				}

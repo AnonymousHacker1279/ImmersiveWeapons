@@ -15,11 +15,11 @@
   "slot": "ring",
   "tooltips": [
     {
-      "formats": [
-        "dark_purple",
-        "italic"
-      ],
-      "key": "tooltip.immersiveweapons.death_gem_ring"
+      "key": "tooltip.immersiveweapons.death_gem_ring",
+      "style": {
+        "color": "dark_purple",
+        "italic": true
+      }
     }
   ]
 }

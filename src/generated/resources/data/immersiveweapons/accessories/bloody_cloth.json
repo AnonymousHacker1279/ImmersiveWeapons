@@ -22,11 +22,11 @@
   "slot": "head",
   "tooltips": [
     {
-      "formats": [
-        "green",
-        "italic"
-      ],
-      "key": "tooltip.immersiveweapons.bloody_cloth"
+      "key": "tooltip.immersiveweapons.bloody_cloth",
+      "style": {
+        "color": "green",
+        "italic": true
+      }
     }
   ]
 }

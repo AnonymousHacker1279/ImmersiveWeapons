@@ -22,11 +22,11 @@
   "slot": "ring",
   "tooltips": [
     {
-      "formats": [
-        "green",
-        "italic"
-      ],
-      "key": "tooltip.immersiveweapons.iron_ring"
+      "key": "tooltip.immersiveweapons.iron_ring",
+      "style": {
+        "color": "green",
+        "italic": true
+      }
     }
   ]
 }

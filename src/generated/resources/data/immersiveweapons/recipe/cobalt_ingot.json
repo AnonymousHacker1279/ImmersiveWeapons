@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "group": "cobalt",
   "key": {
     "a": "#c:nuggets/cobalt"

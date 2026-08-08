@@ -70,7 +70,7 @@ public class MeteorEntity extends Projectile {
 			}
 
 			// Set the meteor's position to the starting position and set the target position
-			meteorEntity.setPos(meteorEntity.startPos.getCenter());
+			meteorEntity.setPos(Vec3.atCenterOf(meteorEntity.startPos));
 			meteorEntity.targetPos = targetPos;
 
 			// Set the owner and damage source
@@ -93,7 +93,7 @@ public class MeteorEntity extends Projectile {
 			}
 
 			// Move towards the target position
-			Vec3 blockCenter = targetPos.getCenter();
+			Vec3 blockCenter = Vec3.atCenterOf(targetPos);
 			Vec3 entityPos = meteorEntity.position();
 			Vec3 direction = blockCenter.subtract(entityPos).normalize();
 
@@ -146,7 +146,7 @@ public class MeteorEntity extends Projectile {
 
 		// Handle movement
 		if (!level().isClientSide()) {
-			lookAt(Anchor.EYES, targetPos.getCenter());
+			lookAt(Anchor.EYES, Vec3.atCenterOf(targetPos));
 
 			// Calculate the speed of the meteor
 			// First, calculate the linear distance using the Pythagorean theorem

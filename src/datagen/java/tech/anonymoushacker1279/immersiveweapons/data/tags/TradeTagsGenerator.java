@@ -3,7 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.data.tags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.tags.KeyTagProvider;
+import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.world.item.trading.VillagerTrade;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.trades.TradeGenerator;
@@ -11,7 +11,7 @@ import tech.anonymoushacker1279.immersiveweapons.data.trades.TradeTags;
 
 import java.util.concurrent.CompletableFuture;
 
-public class TradeTagsGenerator extends KeyTagProvider<VillagerTrade> {
+public class TradeTagsGenerator extends TagsProvider<VillagerTrade> {
 
 	public TradeTagsGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
 		super(output, Registries.VILLAGER_TRADE, lookupProvider, ImmersiveWeapons.MOD_ID);

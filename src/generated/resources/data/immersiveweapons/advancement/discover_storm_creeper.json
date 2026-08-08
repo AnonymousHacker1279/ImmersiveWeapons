@@ -8,7 +8,7 @@
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "type": "immersiveweapons:storm_creeper"
+              "minecraft:entity_type": "immersiveweapons:storm_creeper"
             }
           }
         ]

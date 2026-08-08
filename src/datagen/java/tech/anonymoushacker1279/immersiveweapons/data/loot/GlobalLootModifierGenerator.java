@@ -1,8 +1,8 @@
 package tech.anonymoushacker1279.immersiveweapons.data.loot;
 
-import net.minecraft.advancements.criterion.EntityPredicate;
-import net.minecraft.advancements.criterion.ItemPredicate;
-import net.minecraft.advancements.criterion.LocationPredicate;
+import net.minecraft.advancements.predicates.ItemPredicate;
+import net.minecraft.advancements.predicates.LocationPredicate;
+import net.minecraft.advancements.predicates.entity.EntityPredicate;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.registries.Registries;
@@ -12,6 +12,7 @@ import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.level.biome.Biome;
@@ -108,19 +109,19 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 				new ItemStackTemplate(ItemRegistry.ICE_BOW.get()), 20, true));
 
 		add("insomnia_amulet", new SimpleDropModifierHandler(
-				simpleEntityDropCondition(EntityType.PHANTOM, 0.05f, 0.02f),
+				simpleEntityDropCondition(EntityTypes.PHANTOM, 0.05f, 0.02f),
 				new ItemStackTemplate(ItemRegistry.INSOMNIA_AMULET.get())));
 
 		add("medal_of_adequacy", new SimpleDropModifierHandler(
-				simpleEntityDropCondition(EntityType.ENDER_DRAGON),
+				simpleEntityDropCondition(EntityTypes.ENDER_DRAGON),
 				new ItemStackTemplate(ItemRegistry.MEDAL_OF_ADEQUACY.get())));
 
 		add("night_vision_goggles", new SimpleDropModifierHandler(
-				simpleEntityDropCondition(EntityType.ENDERMAN, 0.01f, 0.02f),
+				simpleEntityDropCondition(EntityTypes.ENDERMAN, 0.01f, 0.02f),
 				new ItemStackTemplate(ItemRegistry.NIGHT_VISION_GOGGLES.get())));
 
 		add("warden_heart", new SimpleDropModifierHandler(
-				simpleEntityDropCondition(EntityType.WARDEN),
+				simpleEntityDropCondition(EntityTypes.WARDEN),
 				new ItemStackTemplate(ItemRegistry.WARDEN_HEART.get())));
 
 		add("copper_ring", new SimpleDropModifierHandler(
@@ -135,7 +136,7 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 				new ItemStackTemplate(ItemRegistry.WOODEN_SHARD.get())));
 
 		add("molten_tool_smelting", new ToolSmeltingModifierHandler(
-				simpleEntityCondition(EntityType.PLAYER),
+				simpleEntityCondition(EntityTypes.PLAYER),
 				1000,
 				IWItemTagGroups.MOLTEN_TOOLS
 		));
@@ -211,21 +212,21 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 				new ItemStackTemplate(ItemRegistry.KILL_COUNTER.get())));
 
 		add("ender_essence_enderman", new SimpleDropModifierHandler(
-				simpleEntityDropCondition(EntityType.ENDERMAN, 0.005f, 0.001f),
+				simpleEntityDropCondition(EntityTypes.ENDERMAN, 0.005f, 0.001f),
 				new ItemStackTemplate(ItemRegistry.ENDER_ESSENCE.get())));
 
 		add("ender_essence_shulker", new SimpleDropModifierHandler(
-				simpleEntityDropCondition(EntityType.SHULKER, 0.03f, 0.005f),
+				simpleEntityDropCondition(EntityTypes.SHULKER, 0.03f, 0.005f),
 				1, 2,
 				new ItemStackTemplate(ItemRegistry.ENDER_ESSENCE.get())));
 
 		add("ender_essence_ender_dragon", new SimpleDropModifierHandler(
-				simpleEntityDropCondition(EntityType.ENDER_DRAGON),
+				simpleEntityDropCondition(EntityTypes.ENDER_DRAGON),
 				8, 12,
 				new ItemStackTemplate(ItemRegistry.ENDER_ESSENCE.get())));
 
 		add("ventus_shard", new SimpleDropModifierHandler(
-				simpleEntityDropCondition(EntityType.BREEZE, 0.05f, 0.01f),
+				simpleEntityDropCondition(EntityTypes.BREEZE, 0.05f, 0.01f),
 				1, 3,
 				new ItemStackTemplate(ItemRegistry.VENTUS_SHARD.get())));
 	}

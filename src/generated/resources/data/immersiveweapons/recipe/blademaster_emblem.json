@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "group": "blademaster_emblem",
   "key": {
     "a": "#immersiveweapons:shards/starstorm",

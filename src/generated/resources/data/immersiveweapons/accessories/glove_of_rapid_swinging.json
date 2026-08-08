@@ -16,11 +16,11 @@
   "slot": "hand",
   "tooltips": [
     {
-      "formats": [
-        "green",
-        "italic"
-      ],
-      "key": "tooltip.immersiveweapons.glove_of_rapid_swinging"
+      "key": "tooltip.immersiveweapons.glove_of_rapid_swinging",
+      "style": {
+        "color": "green",
+        "italic": true
+      }
     }
   ]
 }

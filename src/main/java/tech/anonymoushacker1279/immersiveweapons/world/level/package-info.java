@@ -1,8 +1,5 @@
 @ParametersAreNonnullByDefault
-@MethodsReturnNonnullByDefault
 package tech.anonymoushacker1279.immersiveweapons.world.level;
 
-
-import com.mojang.logging.annotations.MethodsReturnNonnullByDefault;
 
 import javax.annotation.ParametersAreNonnullByDefault;

@@ -29,18 +29,18 @@
   "slot": "body",
   "tooltips": [
     {
-      "formats": [
-        "green",
-        "italic"
-      ],
-      "key": "tooltip.immersiveweapons.super_blanket_cape_1"
+      "key": "tooltip.immersiveweapons.super_blanket_cape_1",
+      "style": {
+        "color": "green",
+        "italic": true
+      }
     },
     {
-      "formats": [
-        "dark_purple",
-        "italic"
-      ],
-      "key": "tooltip.immersiveweapons.super_blanket_cape_2"
+      "key": "tooltip.immersiveweapons.super_blanket_cape_2",
+      "style": {
+        "color": "dark_purple",
+        "italic": true
+      }
     }
   ]
 }

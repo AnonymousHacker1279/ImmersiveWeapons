@@ -50,7 +50,7 @@ public class SculkStaffItem extends Item implements SummoningStaff {
 				}, 0.0f);
 
 		BlockPos lookingAt = getBlockLookingAt(player, level, getMaxRange());
-		double particleDistance = (lookingAt != null && !canBlastThroughWalls) ? eyePos.distanceTo(lookingAt.getCenter()) : getMaxRange();
+		double particleDistance = (lookingAt != null && !canBlastThroughWalls) ? eyePos.distanceTo(Vec3.atCenterOf(lookingAt)) : getMaxRange();
 
 		if (hitResult != null && hitResult.getEntity() instanceof LivingEntity nearestEntity) {
 			nearestEntity.hurt(nearestEntity.damageSources().sonicBoom(player), 10.0F);

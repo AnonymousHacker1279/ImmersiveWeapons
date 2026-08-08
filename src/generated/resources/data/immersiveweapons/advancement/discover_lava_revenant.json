@@ -8,7 +8,7 @@
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "type": "immersiveweapons:lava_revenant"
+              "minecraft:entity_type": "immersiveweapons:lava_revenant"
             }
           }
         ]

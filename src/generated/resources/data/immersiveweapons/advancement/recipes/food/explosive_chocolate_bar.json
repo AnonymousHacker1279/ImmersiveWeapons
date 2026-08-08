@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:explosive_chocolate_bar"
+        "recipe": "immersiveweapons:explosive_chocolate_bar"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:explosive_chocolate_bar"
+      "immersiveweapons:explosive_chocolate_bar"
     ]
   }
 }

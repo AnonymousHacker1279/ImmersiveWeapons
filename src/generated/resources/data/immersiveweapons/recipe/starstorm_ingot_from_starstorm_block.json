@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "category": "misc",
   "group": "starstorm",
   "ingredients": [
     "immersiveweapons:starstorm_block"

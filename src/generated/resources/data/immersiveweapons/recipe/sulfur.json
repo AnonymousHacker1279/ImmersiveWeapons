@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "category": "misc",
   "group": "sulfur",
   "ingredients": [
     "immersiveweapons:raw_sulfur_block"

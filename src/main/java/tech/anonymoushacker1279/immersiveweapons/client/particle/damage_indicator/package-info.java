@@ -1,8 +1,5 @@
 @ParametersAreNonnullByDefault
-@MethodsReturnNonnullByDefault
 package tech.anonymoushacker1279.immersiveweapons.client.particle.damage_indicator;
 
-
-import com.mojang.logging.annotations.MethodsReturnNonnullByDefault;
 
 import javax.annotation.ParametersAreNonnullByDefault;

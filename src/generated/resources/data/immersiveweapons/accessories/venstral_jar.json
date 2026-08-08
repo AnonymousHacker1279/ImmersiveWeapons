@@ -7,11 +7,11 @@
   "slot": "belt",
   "tooltips": [
     {
-      "formats": [
-        "green",
-        "italic"
-      ],
-      "key": "tooltip.immersiveweapons.venstral_jar"
+      "key": "tooltip.immersiveweapons.venstral_jar",
+      "style": {
+        "color": "green",
+        "italic": true
+      }
     }
   ]
 }

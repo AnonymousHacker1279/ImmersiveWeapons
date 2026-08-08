@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "category": "misc",
   "group": "smoke_grenade",
   "ingredients": [
     "immersiveweapons:mortar_and_pestle",

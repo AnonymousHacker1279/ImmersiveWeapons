@@ -12,7 +12,7 @@ import java.awt.*;
 
 public class DamageIndicatorParticle extends Particle {
 
-	public static final ParticleRenderType RENDER_TYPE = new ParticleRenderType("DAMAGE_INDICATOR");
+	public static final ParticleRenderType RENDER_TYPE = new ParticleRenderType("DAMAGE_INDICATOR", "DI");
 
 	final String damage;
 	int color;

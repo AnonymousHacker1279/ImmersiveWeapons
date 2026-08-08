@@ -7,18 +7,18 @@
   "slot": "necklace",
   "tooltips": [
     {
-      "formats": [
-        "green",
-        "italic"
-      ],
-      "key": "tooltip.immersiveweapons.deadeye_pendant_1"
+      "key": "tooltip.immersiveweapons.deadeye_pendant_1",
+      "style": {
+        "color": "green",
+        "italic": true
+      }
     },
     {
-      "formats": [
-        "green",
-        "italic"
-      ],
-      "key": "tooltip.immersiveweapons.deadeye_pendant_2"
+      "key": "tooltip.immersiveweapons.deadeye_pendant_2",
+      "style": {
+        "color": "green",
+        "italic": true
+      }
     }
   ]
 }

@@ -1,6 +1,5 @@
 package tech.anonymoushacker1279.immersiveweapons.entity;
 
-import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -17,13 +16,13 @@ public interface GrantAdvancementOnDiscovery {
 
 	default void checkForDiscovery(LivingEntity entity) {
 		Level level = entity.level();
-		BlockPos entityPos = entity.blockPosition();
+		Vec3 entityPos = entity.position();
 
 		if (level instanceof ServerLevel serverLevel && entity.tickCount % 20 == 0) {
 			int scanningRange = IWConfigs.SERVER.discoveryAdvancementRange.getAsInt();
 			AABB scanningBox = new AABB(
-					entityPos.offset(-scanningRange, -scanningRange, -scanningRange).getCenter(),
-					entityPos.offset(scanningRange, scanningRange, scanningRange).getCenter()
+					entityPos.add(-scanningRange, -scanningRange, -scanningRange),
+					entityPos.add(scanningRange, scanningRange, scanningRange)
 			);
 
 			for (Player player : serverLevel.getNearbyPlayers(TargetingConditions.forNonCombat(), entity, scanningBox)) {

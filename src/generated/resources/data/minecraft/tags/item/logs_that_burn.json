@@ -1,6 +1,6 @@
 {
   "values": [
-    "#immersiveweapons:burned_oak_logs",
-    "#immersiveweapons:stardust_logs"
+    "immersiveweapons:burned_oak_log",
+    "immersiveweapons:stardust_log"
   ]
 }

@@ -8,7 +8,7 @@
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "type": "immersiveweapons:starmite"
+              "minecraft:entity_type": "immersiveweapons:starmite"
             }
           }
         ]

@@ -9,7 +9,8 @@ version = "${mod_version}"
 displayName = "Immersive Weapons"
 displayURL = "https://www.curseforge.com/minecraft/mc-mods/immersive-weapons"
 updateJSONURL = "https://raw.githubusercontent.com/AnonymousHacker1279/ImmersiveWeapons/master/update.json"
-logoFile = "logo.png"
+bannerFile = "banner.png"
+iconFile = "icon.png"
 credits = "Written by AnonymousHacker1279 - Visually designed with the help of Jonny-fox and gamingwarrior68 - Sound designed with the help of RandomDev and Jonny-fox"
 authors = "AnonymousHacker1279"
 description = '''
@@ -34,14 +35,14 @@ side = "BOTH"
 [[dependencies.immersiveweapons]]
 modId = "terrablender"
 type = "required"
-versionRange = "[26.1.2-26.1.2.0.1,)"
+versionRange = "[26.2-26.2.0.0.2,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.immersiveweapons]]
 modId = "openportals"
 type = "required"
-versionRange = "[1.2.0,)"
+versionRange = "[1.3.0,)"
 ordering = "NONE"
 side = "BOTH"
 

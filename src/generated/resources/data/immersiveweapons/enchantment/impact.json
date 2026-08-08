@@ -18,7 +18,7 @@
           "condition": "minecraft:entity_properties",
           "entity": "direct_attacker",
           "predicate": {
-            "type": "#immersiveweapons:musket_balls"
+            "minecraft:entity_type": "#immersiveweapons:musket_balls"
           }
         }
       }

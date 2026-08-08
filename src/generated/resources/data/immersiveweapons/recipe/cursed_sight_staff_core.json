@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "group": "cursed_sight_staff",
   "key": {
     "a": "immersiveweapons:celestial_fragment",

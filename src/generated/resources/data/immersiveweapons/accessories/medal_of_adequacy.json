@@ -15,11 +15,11 @@
   "slot": "necklace",
   "tooltips": [
     {
-      "formats": [
-        "white",
-        "italic"
-      ],
-      "key": "tooltip.immersiveweapons.medal_of_adequacy"
+      "key": "tooltip.immersiveweapons.medal_of_adequacy",
+      "style": {
+        "color": "white",
+        "italic": true
+      }
     }
   ]
 }

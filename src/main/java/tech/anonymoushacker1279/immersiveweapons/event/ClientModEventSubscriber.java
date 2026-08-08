@@ -3,7 +3,6 @@ package tech.anonymoushacker1279.immersiveweapons.event;
 import net.minecraft.client.color.block.BlockTintSources;
 import net.minecraft.client.model.object.boat.BoatModel;
 import net.minecraft.client.model.object.skull.SkullModel;
-import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.HangingSignRenderer;
 import net.minecraft.client.renderer.blockentity.SkullBlockRenderer;
 import net.minecraft.client.renderer.blockentity.StandingSignRenderer;
@@ -16,6 +15,7 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.PotionContents;
+import net.minecraft.world.level.block.state.properties.WoodType;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -87,8 +87,8 @@ public class ClientModEventSubscriber {
 			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.SKELETON_MERCHANT, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 					"textures/entity/heads/skeleton_merchant.png"));
 
-			Sheets.addWoodType(WoodTypes.BURNED_OAK);
-			Sheets.addWoodType(WoodTypes.STARDUST);
+			WoodType.register(WoodTypes.BURNED_OAK);
+			WoodType.register(WoodTypes.STARDUST);
 
 			CustomArmPoses.bootstrap();
 		});

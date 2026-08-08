@@ -1,6 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.item.bow;
 
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.item.BowItem;
@@ -21,7 +21,7 @@ public class DragonBreathBow extends BowItem {
 			return customArrowEntity;
 		} else if (abstractArrow.getOwner() instanceof LivingEntity owner) {
 			// Create a new CustomArrowEntity
-			CustomArrowEntity customArrowEntity = new CustomArrowEntity(EntityType.ARROW, owner, abstractArrow.level(), weaponStack);
+			CustomArrowEntity customArrowEntity = new CustomArrowEntity(EntityTypes.ARROW, owner, abstractArrow.level(), weaponStack);
 			customArrowEntity.isExplosive = true;
 
 			return customArrowEntity;

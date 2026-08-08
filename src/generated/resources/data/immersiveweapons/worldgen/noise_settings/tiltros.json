@@ -109,17 +109,13 @@
         "type": "minecraft:condition",
         "if_true": {
           "type": "minecraft:biome",
-          "biome_is": [
-            "immersiveweapons:starlight_plains"
-          ]
+          "biome_is": "immersiveweapons:starlight_plains"
         },
         "then_run": {
           "type": "minecraft:condition",
           "if_true": {
             "type": "minecraft:biome",
-            "biome_is": [
-              "immersiveweapons:starlight_plains"
-            ]
+            "biome_is": "immersiveweapons:starlight_plains"
           },
           "then_run": {
             "type": "minecraft:sequence",
@@ -225,17 +221,13 @@
         "type": "minecraft:condition",
         "if_true": {
           "type": "minecraft:biome",
-          "biome_is": [
-            "immersiveweapons:tiltros_wastes"
-          ]
+          "biome_is": "immersiveweapons:tiltros_wastes"
         },
         "then_run": {
           "type": "minecraft:condition",
           "if_true": {
             "type": "minecraft:biome",
-            "biome_is": [
-              "immersiveweapons:tiltros_wastes"
-            ]
+            "biome_is": "immersiveweapons:tiltros_wastes"
           },
           "then_run": {
             "type": "minecraft:sequence",
@@ -341,17 +333,13 @@
         "type": "minecraft:condition",
         "if_true": {
           "type": "minecraft:biome",
-          "biome_is": [
-            "immersiveweapons:deadmans_desert"
-          ]
+          "biome_is": "immersiveweapons:deadmans_desert"
         },
         "then_run": {
           "type": "minecraft:condition",
           "if_true": {
             "type": "minecraft:biome",
-            "biome_is": [
-              "immersiveweapons:deadmans_desert"
-            ]
+            "biome_is": "immersiveweapons:deadmans_desert"
           },
           "then_run": {
             "type": "minecraft:sequence",

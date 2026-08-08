@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "group": "pedestal_augments",
   "key": {
     "a": "immersiveweapons:hansium_ingot",

@@ -27,11 +27,11 @@
   "slot": "body",
   "tooltips": [
     {
-      "formats": [
-        "green",
-        "italic"
-      ],
-      "key": "tooltip.immersiveweapons.netherite_shield"
+      "key": "tooltip.immersiveweapons.netherite_shield",
+      "style": {
+        "color": "green",
+        "italic": true
+      }
     }
   ]
 }

@@ -10,10 +10,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.ConversionParams;
-import net.minecraft.world.entity.EntitySpawnReason;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.cow.AbstractCow;
 import net.minecraft.world.entity.player.Player;
@@ -75,12 +72,12 @@ public class MooGlowEntity extends AbstractCow implements IShearable, GrantAdvan
 	@Override
 	public List<ItemStack> onSheared(@Nullable Player player, ItemStack item, Level level, BlockPos pos) {
 		level.playSound(null, this, SoundEvents.MOOSHROOM_SHEAR, SoundSource.AMBIENT, 1.0F, 1.0F);
-		if (!EventHooks.canLivingConvert(this, EntityType.COW, (timer) -> {
+		if (!EventHooks.canLivingConvert(this, EntityTypes.COW, (timer) -> {
 		})) {
 			return List.of();
 		}
 
-		convertTo(EntityType.COW, ConversionParams.single(this, false, false), cow -> EventHooks.onLivingConvert(this, cow));
+		convertTo(EntityTypes.COW, ConversionParams.single(this, false, false), cow -> EventHooks.onLivingConvert(this, cow));
 
 		for (int i = 0; i < 12; i++) {
 			level.addParticle(ParticleTypesRegistry.MOONGLOW_PARTICLE.get(), getX(), getY() + 0.5D, getZ(),

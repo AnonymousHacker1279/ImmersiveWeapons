@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "group": "ventus",
   "key": {
     "a": "immersiveweapons:ventus_staff_core",

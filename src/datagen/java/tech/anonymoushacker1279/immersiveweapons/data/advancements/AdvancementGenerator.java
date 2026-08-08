@@ -6,8 +6,13 @@ import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementRequirements.Strategy;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.AdvancementType;
-import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.advancements.criterion.*;
+import net.minecraft.advancements.predicates.DamageSourcePredicate;
+import net.minecraft.advancements.predicates.ItemPredicate;
+import net.minecraft.advancements.predicates.LocationPredicate;
+import net.minecraft.advancements.predicates.entity.EntityEquipmentPredicate;
+import net.minecraft.advancements.predicates.entity.EntityPredicate;
+import net.minecraft.advancements.predicates.entity.PlayerPredicate;
+import net.minecraft.advancements.triggers.*;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.registries.Registries;
@@ -157,7 +162,7 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("have_advancements",
 						PlayerTrigger.TriggerInstance.located(
-								EntityPredicate.Builder.entity().subPredicate(
+								EntityPredicate.Builder.entity().player(
 										PlayerPredicate.Builder.player()
 												.checkAdvancementDone(prefixRL("molten_sword"), true)
 												.checkAdvancementDone(prefixRL("molten_pickaxe"), true)
@@ -292,7 +297,7 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("have_advancements",
 						PlayerTrigger.TriggerInstance.located(
-								EntityPredicate.Builder.entity().subPredicate(
+								EntityPredicate.Builder.entity().player(
 										PlayerPredicate.Builder.player()
 												.checkAdvancementDone(prefixRL("tesla_sword"), true)
 												.checkAdvancementDone(prefixRL("tesla_pickaxe"), true)
@@ -396,7 +401,7 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("have_advancements",
 						PlayerTrigger.TriggerInstance.located(
-								EntityPredicate.Builder.entity().subPredicate(
+								EntityPredicate.Builder.entity().player(
 										PlayerPredicate.Builder.player()
 												.checkAdvancementDone(prefixRL("ventus_sword"), true)
 												.checkAdvancementDone(prefixRL("ventus_pickaxe"), true)
@@ -528,7 +533,7 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("have_advancements",
 						PlayerTrigger.TriggerInstance.located(
-								EntityPredicate.Builder.entity().subPredicate(
+								EntityPredicate.Builder.entity().player(
 										PlayerPredicate.Builder.player()
 												.checkAdvancementDone(prefixRL("astral_sword"), true)
 												.checkAdvancementDone(prefixRL("astral_pickaxe"), true)
@@ -641,7 +646,7 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("have_advancements",
 						PlayerTrigger.TriggerInstance.located(
-								EntityPredicate.Builder.entity().subPredicate(
+								EntityPredicate.Builder.entity().player(
 										PlayerPredicate.Builder.player()
 												.checkAdvancementDone(prefixRL("starstorm_sword"), true)
 												.checkAdvancementDone(prefixRL("starstorm_pickaxe"), true)
@@ -753,7 +758,7 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("have_advancements",
 						PlayerTrigger.TriggerInstance.located(
-								EntityPredicate.Builder.entity().subPredicate(
+								EntityPredicate.Builder.entity().player(
 										PlayerPredicate.Builder.player()
 												.checkAdvancementDone(prefixRL("void_sword"), true)
 												.checkAdvancementDone(prefixRL("void_pickaxe"), true)
@@ -1128,7 +1133,7 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 						null, AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("have_advancements",
 						PlayerTrigger.TriggerInstance.located(
-								EntityPredicate.Builder.entity().subPredicate(
+								EntityPredicate.Builder.entity().player(
 										PlayerPredicate.Builder.player().checkAdvancementDone(
 												prefixRL("cobalt_sword"), true
 										).checkAdvancementDone(

@@ -1,5 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.data.features;
 
+import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.Identifier;
@@ -7,6 +8,8 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.GeodeBlockSettings;
 import net.minecraft.world.level.levelgen.GeodeCrackSettings;
@@ -51,6 +54,10 @@ public class IWConfiguredFeatures {
 	}
 
 	public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
+		HolderGetter<Biome> biomeGetter = context.lookup(Registries.BIOME);
+		HolderGetter<Block> blockGetter = context.lookup(Registries.BLOCK);
+		BlockStateProvider belowTrunkProvider = TreeConfiguration.defaultPlaceBelowTreeTrunkProvider(biomeGetter);
+
 		register(context, PATCH_WOODEN_SPIKES_CONFIGURATION, Feature.BLOCK_PILE,
 				new BlockPileConfiguration(BlockStateProvider.simple(BlockRegistry.WOODEN_SPIKES.get()))
 		);
@@ -61,8 +68,8 @@ public class IWConfiguredFeatures {
 						new StraightTrunkPlacer(7, 3, 3),
 						BlockStateProvider.simple(Blocks.AIR),
 						new BlobFoliagePlacer(ConstantInt.ZERO, ConstantInt.ZERO, 0),
-						new TwoLayersFeatureSize(1, 0, 1)
-				)
+						new TwoLayersFeatureSize(1, 0, 1),
+						belowTrunkProvider)
 						.decorators(List.of(new BurnedBranchDecorator(0.95f)))
 						.ignoreVines()
 						.build());
@@ -76,8 +83,8 @@ public class IWConfiguredFeatures {
 						new FancyTrunkPlacer(5, 3, 3),
 						BlockStateProvider.simple(BlockRegistry.STARDUST_LEAVES.get()),
 						new FancyFoliagePlacer(ConstantInt.of(2), ConstantInt.of(4), 4),
-						new TwoLayersFeatureSize(1, 0, 3)
-				)
+						new TwoLayersFeatureSize(1, 0, 3),
+						belowTrunkProvider)
 						.ignoreVines()
 						.build());
 
@@ -93,8 +100,8 @@ public class IWConfiguredFeatures {
 								BlockStateProvider.simple(Blocks.CALCITE.defaultBlockState()),
 								BlockStateProvider.simple(Blocks.TUFF.defaultBlockState()),
 								List.of(BlockRegistry.ASTRAL_CRYSTAL.get().defaultBlockState()),
-								BlockTags.FEATURES_CANNOT_REPLACE,
-								BlockTags.GEODE_INVALID_BLOCKS
+								blockGetter.getOrThrow(BlockTags.FEATURES_CANNOT_REPLACE),
+								blockGetter.getOrThrow(BlockTags.GEODE_INVALID_BLOCKS)
 						),
 						new GeodeLayerSettings(
 								1.7d,

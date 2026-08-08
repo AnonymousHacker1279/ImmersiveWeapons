@@ -55,7 +55,7 @@ public class CustomDataGenerator {
 		generator.addProvider(true, new LootTableGenerator(output, lookupProvider));
 		BlockTagsGenerator blockTagsGenerator = new BlockTagsGenerator(output, lookupProvider);
 		generator.addProvider(true, blockTagsGenerator);
-		generator.addProvider(true, new ItemTagsGenerator(output, lookupProvider));
+		generator.addProvider(true, new ItemTagsGenerator(output, lookupProvider, blockTagsGenerator.contentsGetter()));
 		generator.addProvider(true, new TradeTagsGenerator(output, lookupProvider));
 		generator.addProvider(true, new FamilyGenerator.Runner(output, lookupProvider));
 		generator.addProvider(true, new EntityTypeTagsGenerator(output, lookupProvider));

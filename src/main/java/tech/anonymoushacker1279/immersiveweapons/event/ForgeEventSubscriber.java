@@ -21,14 +21,14 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.monster.Slime;
+import net.minecraft.world.entity.monster.cubemob.Slime;
 import net.minecraft.world.entity.monster.spider.CaveSpider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
@@ -393,7 +393,7 @@ public class ForgeEventSubscriber {
 		if (dyingEntity.entityTags().contains("ChampionTowerMinibossSpider")) {
 			Level level = dyingEntity.level();
 			for (int i = 0; i < 10; i++) {
-				CaveSpider spider = EntityType.CAVE_SPIDER.create(level, EntitySpawnReason.EVENT);
+				CaveSpider spider = EntityTypes.CAVE_SPIDER.create(level, EntitySpawnReason.EVENT);
 				if (spider != null) {
 					spider.snapTo(dyingEntity.getX(), dyingEntity.getY(), dyingEntity.getZ(), dyingEntity.getYRot(), dyingEntity.getXRot());
 					spider.addEffect(new MobEffectInstance(MobEffects.RESISTANCE, 20, 4, true, false));

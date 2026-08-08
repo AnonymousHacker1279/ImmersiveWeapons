@@ -3,6 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.item.tool;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -45,6 +46,26 @@ public class GauntletItem extends Item implements HitEffectUtils {
 		}
 	}
 
+	public static ItemAttributeModifiers createAttributes(ToolMaterial material, float attackSpeedModifier) {
+		return ItemAttributeModifiers.builder()
+				.add(
+						Attributes.ATTACK_DAMAGE,
+						new AttributeModifier(
+								BASE_ATTACK_DAMAGE_ID,
+								(float) 2 + material.attackDamageBonus(),
+								AttributeModifier.Operation.ADD_VALUE
+						),
+						EquipmentSlotGroup.MAINHAND)
+				.add(
+						Attributes.ATTACK_SPEED,
+						new AttributeModifier(
+								BASE_ATTACK_SPEED_ID,
+								attackSpeedModifier,
+								AttributeModifier.Operation.ADD_VALUE),
+						EquipmentSlotGroup.MAINHAND)
+				.build();
+	}
+
 	public float getBleedChance() {
 		return bleedChance;
 	}
@@ -76,7 +97,8 @@ public class GauntletItem extends Item implements HitEffectUtils {
 				target.addEffect(new MobEffectInstance(MobEffects.MINING_FATIGUE, duration, 0, true, false));
 
 				// Knock back the target
-				target.knockback(0.5f, attacker.getX() - target.getX(), attacker.getZ() - target.getZ());
+				DamageSource source = target.level().damageSources().mobAttack(attacker);
+				target.knockback(0.5f, attacker.getX() - target.getX(), attacker.getZ() - target.getZ(), source, 0.0f);
 			}
 		}
 
@@ -99,25 +121,5 @@ public class GauntletItem extends Item implements HitEffectUtils {
 		}
 
 		return true;
-	}
-
-	public static ItemAttributeModifiers createAttributes(ToolMaterial material, float attackSpeedModifier) {
-		return ItemAttributeModifiers.builder()
-				.add(
-						Attributes.ATTACK_DAMAGE,
-						new AttributeModifier(
-								BASE_ATTACK_DAMAGE_ID,
-								(float) 2 + material.attackDamageBonus(),
-								AttributeModifier.Operation.ADD_VALUE
-						),
-						EquipmentSlotGroup.MAINHAND)
-				.add(
-						Attributes.ATTACK_SPEED,
-						new AttributeModifier(
-								BASE_ATTACK_SPEED_ID,
-								attackSpeedModifier,
-								AttributeModifier.Operation.ADD_VALUE),
-						EquipmentSlotGroup.MAINHAND)
-				.build();
 	}
 }

@@ -15,18 +15,18 @@
   "slot": "spirit",
   "tooltips": [
     {
-      "formats": [
-        "green",
-        "italic"
-      ],
-      "key": "tooltip.immersiveweapons.hans_blessing_1"
+      "key": "tooltip.immersiveweapons.hans_blessing_1",
+      "style": {
+        "color": "green",
+        "italic": true
+      }
     },
     {
-      "formats": [
-        "light_purple",
-        "italic"
-      ],
-      "key": "tooltip.immersiveweapons.hans_blessing_2"
+      "key": "tooltip.immersiveweapons.hans_blessing_2",
+      "style": {
+        "color": "light_purple",
+        "italic": true
+      }
     }
   ]
 }

@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "group": "bloody_cloth",
   "key": {
     "a": "immersiveweapons:cloth_scrap",

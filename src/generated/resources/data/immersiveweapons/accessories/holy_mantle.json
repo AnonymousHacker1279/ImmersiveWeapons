@@ -7,25 +7,25 @@
   "slot": "belt",
   "tooltips": [
     {
-      "formats": [
-        "green",
-        "italic"
-      ],
-      "key": "tooltip.immersiveweapons.holy_mantle_1"
+      "key": "tooltip.immersiveweapons.holy_mantle_1",
+      "style": {
+        "color": "green",
+        "italic": true
+      }
     },
     {
-      "formats": [
-        "gold",
-        "italic"
-      ],
-      "key": "tooltip.immersiveweapons.holy_mantle_2"
+      "key": "tooltip.immersiveweapons.holy_mantle_2",
+      "style": {
+        "color": "gold",
+        "italic": true
+      }
     },
     {
-      "formats": [
-        "dark_gray",
-        "italic"
-      ],
-      "key": "tooltip.immersiveweapons.holy_mantle_3"
+      "key": "tooltip.immersiveweapons.holy_mantle_3",
+      "style": {
+        "color": "dark_gray",
+        "italic": true
+      }
     }
   ]
 }

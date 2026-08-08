@@ -1,7 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.item.accessory;
 
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.Holder;
+import net.minecraft.network.chat.Style;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -79,11 +79,11 @@ public class AccessoryEffectBuilder {
 
 	/// Add a tooltip to the accessory.
 	///
-	/// @param key     the translation key for the tooltip
-	/// @param formats the `ChatFormatting` to apply to the tooltip
+	/// @param key   the translation key for the tooltip
+	/// @param style the `ChatFormatting` to apply to the tooltip
 	/// @return the `EffectBuilder` for chaining
-	public AccessoryEffectBuilder addTooltip(String key, ChatFormatting... formats) {
-		tooltips.add(SerializableTooltip.fromComponent(key, formats));
+	public AccessoryEffectBuilder addTooltip(String key, Style style) {
+		tooltips.add(new SerializableTooltip(key, Optional.of(style)));
 		return this;
 	}
 

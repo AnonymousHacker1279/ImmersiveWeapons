@@ -24,11 +24,11 @@
   "slot": "bracelet",
   "tooltips": [
     {
-      "formats": [
-        "green",
-        "italic"
-      ],
-      "key": "tooltip.immersiveweapons.agility_bracelet"
+      "key": "tooltip.immersiveweapons.agility_bracelet",
+      "style": {
+        "color": "green",
+        "italic": true
+      }
     }
   ]
 }

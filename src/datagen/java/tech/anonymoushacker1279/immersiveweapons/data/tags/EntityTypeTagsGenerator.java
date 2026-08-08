@@ -18,29 +18,30 @@ public class EntityTypeTagsGenerator extends EntityTypeTagsProvider {
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	protected void addTags(Provider provider) {
 		tag(IWEntityTypeTagGroups.MUSKET_BALLS).add(
-				EntityRegistry.WOODEN_MUSKET_BALL_ENTITY.get(),
-				EntityRegistry.STONE_MUSKET_BALL_ENTITY.get(),
-				EntityRegistry.GOLDEN_MUSKET_BALL_ENTITY.get(),
-				EntityRegistry.COPPER_MUSKET_BALL_ENTITY.get(),
-				EntityRegistry.IRON_MUSKET_BALL_ENTITY.get(),
-				EntityRegistry.COBALT_MUSKET_BALL_ENTITY.get(),
-				EntityRegistry.DIAMOND_MUSKET_BALL_ENTITY.get(),
-				EntityRegistry.NETHERITE_MUSKET_BALL_ENTITY.get(),
-				EntityRegistry.MOLTEN_MUSKET_BALL_ENTITY.get(),
-				EntityRegistry.TESLA_MUSKET_BALL_ENTITY.get(),
-				EntityRegistry.VENTUS_MUSKET_BALL_ENTITY.get(),
-				EntityRegistry.ASTRAL_MUSKET_BALL_ENTITY.get(),
-				EntityRegistry.STARSTORM_MUSKET_BALL_ENTITY.get(),
-				EntityRegistry.VOID_MUSKET_BALL_ENTITY.get());
+				EntityRegistry.WOODEN_MUSKET_BALL_ENTITY.getKey(),
+				EntityRegistry.STONE_MUSKET_BALL_ENTITY.getKey(),
+				EntityRegistry.GOLDEN_MUSKET_BALL_ENTITY.getKey(),
+				EntityRegistry.COPPER_MUSKET_BALL_ENTITY.getKey(),
+				EntityRegistry.IRON_MUSKET_BALL_ENTITY.getKey(),
+				EntityRegistry.COBALT_MUSKET_BALL_ENTITY.getKey(),
+				EntityRegistry.DIAMOND_MUSKET_BALL_ENTITY.getKey(),
+				EntityRegistry.NETHERITE_MUSKET_BALL_ENTITY.getKey(),
+				EntityRegistry.MOLTEN_MUSKET_BALL_ENTITY.getKey(),
+				EntityRegistry.TESLA_MUSKET_BALL_ENTITY.getKey(),
+				EntityRegistry.VENTUS_MUSKET_BALL_ENTITY.getKey(),
+				EntityRegistry.ASTRAL_MUSKET_BALL_ENTITY.getKey(),
+				EntityRegistry.STARSTORM_MUSKET_BALL_ENTITY.getKey(),
+				EntityRegistry.VOID_MUSKET_BALL_ENTITY.getKey());
 
-		tag(EntityTypes.BOSSES).add(EntityRegistry.CELESTIAL_TOWER_ENTITY.get(),
-				EntityRegistry.SUPER_HANS_ENTITY.get(),
-				EntityRegistry.THE_COMMANDER_ENTITY.get());
+		tag(EntityTypes.BOSSES).add(EntityRegistry.CELESTIAL_TOWER_ENTITY.getKey(),
+				EntityRegistry.SUPER_HANS_ENTITY.getKey(),
+				EntityRegistry.THE_COMMANDER_ENTITY.getKey());
 
 		tag(EntityTypeTags.RAIDERS).add(
-				EntityRegistry.DYING_SOLDIER_ENTITY.get(),
-				EntityRegistry.THE_COMMANDER_ENTITY.get());
+				EntityRegistry.DYING_SOLDIER_ENTITY.getKey(),
+				EntityRegistry.THE_COMMANDER_ENTITY.getKey());
 	}
 }

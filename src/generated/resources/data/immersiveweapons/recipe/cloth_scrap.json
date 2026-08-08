@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "group": "cloth_scrap",
   "key": {
     "a": "#c:strings",

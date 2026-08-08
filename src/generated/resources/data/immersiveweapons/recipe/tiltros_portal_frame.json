@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "group": "tiltros_portal_frame",
   "key": {
     "a": "immersiveweapons:molten_block",

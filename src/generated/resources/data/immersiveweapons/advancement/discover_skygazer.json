@@ -8,7 +8,7 @@
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "type": "immersiveweapons:skygazer"
+              "minecraft:entity_type": "immersiveweapons:skygazer"
             }
           }
         ]

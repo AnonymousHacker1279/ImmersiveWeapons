@@ -22,11 +22,11 @@
   "slot": "charm",
   "tooltips": [
     {
-      "formats": [
-        "green",
-        "italic"
-      ],
-      "key": "tooltip.immersiveweapons.blademaster_emblem"
+      "key": "tooltip.immersiveweapons.blademaster_emblem",
+      "style": {
+        "color": "green",
+        "italic": true
+      }
     }
   ]
 }
