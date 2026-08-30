@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "category": "misc",
   "group": "hand_of_doom",
   "ingredients": [
     "immersiveweapons:melee_masters_molten_glove",

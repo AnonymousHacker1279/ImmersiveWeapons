@@ -15,11 +15,11 @@
   "slot": "charm",
   "tooltips": [
     {
-      "formats": [
-        "green",
-        "italic"
-      ],
-      "key": "tooltip.immersiveweapons.ancient_scroll"
+      "key": "tooltip.immersiveweapons.ancient_scroll",
+      "style": {
+        "color": "green",
+        "italic": true
+      }
     }
   ]
 }

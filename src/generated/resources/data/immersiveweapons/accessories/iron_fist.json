@@ -22,18 +22,18 @@
   "slot": "hand",
   "tooltips": [
     {
-      "formats": [
-        "green",
-        "italic"
-      ],
-      "key": "tooltip.immersiveweapons.iron_fist_1"
+      "key": "tooltip.immersiveweapons.iron_fist_1",
+      "style": {
+        "color": "green",
+        "italic": true
+      }
     },
     {
-      "formats": [
-        "dark_purple",
-        "italic"
-      ],
-      "key": "tooltip.immersiveweapons.iron_fist_2"
+      "key": "tooltip.immersiveweapons.iron_fist_2",
+      "style": {
+        "color": "dark_purple",
+        "italic": true
+      }
     }
   ]
 }

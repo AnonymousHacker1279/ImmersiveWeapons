@@ -5,6 +5,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.*;
 import net.minecraft.world.level.levelgen.synth.NormalNoise;
@@ -20,12 +21,13 @@ public class NoiseGenerator {
 	public static final ResourceKey<NoiseGeneratorSettings> TILTROS = ResourceKey.create(Registries.NOISE_SETTINGS, DimensionTypeGenerator.TILTROS);
 
 	public static void bootstrap(BootstrapContext<NoiseGeneratorSettings> context) {
+		HolderGetter<Biome> getter = context.lookup(Registries.BIOME);
 		register(context, TILTROS, new NoiseGeneratorSettings(
 				NoiseSettings.create(-64, 256, 2, 1),
 				Blocks.STONE.defaultBlockState(),
 				Blocks.WATER.defaultBlockState(),
 				modifiedFloatingIslands(context.lookup(Registries.DENSITY_FUNCTION), context.lookup(Registries.NOISE)),
-				makeSurfaceRules(),
+				makeSurfaceRules(getter),
 				List.of(),
 				-64,
 				false,
@@ -35,8 +37,8 @@ public class NoiseGenerator {
 		));
 	}
 
-	public static SurfaceRules.RuleSource makeSurfaceRules() {
-		SurfaceRules.RuleSource starlightPlains = SurfaceRuleBuilder.start()
+	public static SurfaceRules.RuleSource makeSurfaceRules(HolderGetter<Biome> getter) {
+		SurfaceRules.RuleSource starlightPlains = SurfaceRuleBuilder.start(getter)
 				.biome(IWBiomes.STARLIGHT_PLAINS)
 				.surface(Blocks.GRASS_BLOCK.defaultBlockState())
 				.subsurface(Blocks.DIRT.defaultBlockState(), 3)
@@ -47,7 +49,7 @@ public class NoiseGenerator {
 						SurfaceRules.state(Blocks.DEEPSLATE.defaultBlockState())))
 				.build();
 
-		SurfaceRules.RuleSource tiltrosWastes = SurfaceRuleBuilder.start()
+		SurfaceRules.RuleSource tiltrosWastes = SurfaceRuleBuilder.start(getter)
 				.biome(IWBiomes.TILTROS_WASTES)
 				.surface(Blocks.GRASS_BLOCK.defaultBlockState())
 				.subsurface(Blocks.COARSE_DIRT.defaultBlockState(), 3)
@@ -58,7 +60,7 @@ public class NoiseGenerator {
 						SurfaceRules.state(Blocks.DEEPSLATE.defaultBlockState())))
 				.build();
 
-		SurfaceRules.RuleSource deadmansDesert = SurfaceRuleBuilder.start()
+		SurfaceRules.RuleSource deadmansDesert = SurfaceRuleBuilder.start(getter)
 				.biome(IWBiomes.DEADMANS_DESERT)
 				.surface(BlockRegistry.BLOOD_SAND.get().defaultBlockState())
 				.subsurface(BlockRegistry.BLOOD_SANDSTONE.get().defaultBlockState(), 3)
@@ -70,9 +72,9 @@ public class NoiseGenerator {
 				.build();
 
 		return SurfaceRules.sequence(
-				SurfaceRules.ifTrue(SurfaceRules.isBiome(IWBiomes.STARLIGHT_PLAINS), starlightPlains),
-				SurfaceRules.ifTrue(SurfaceRules.isBiome(IWBiomes.TILTROS_WASTES), tiltrosWastes),
-				SurfaceRules.ifTrue(SurfaceRules.isBiome(IWBiomes.DEADMANS_DESERT), deadmansDesert)
+				SurfaceRules.ifTrue(SurfaceRules.isBiome(getter, IWBiomes.STARLIGHT_PLAINS), starlightPlains),
+				SurfaceRules.ifTrue(SurfaceRules.isBiome(getter, IWBiomes.TILTROS_WASTES), tiltrosWastes),
+				SurfaceRules.ifTrue(SurfaceRules.isBiome(getter, IWBiomes.DEADMANS_DESERT), deadmansDesert)
 		);
 	}
 

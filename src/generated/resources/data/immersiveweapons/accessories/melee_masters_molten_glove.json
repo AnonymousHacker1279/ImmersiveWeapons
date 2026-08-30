@@ -22,11 +22,11 @@
   "slot": "hand",
   "tooltips": [
     {
-      "formats": [
-        "green",
-        "italic"
-      ],
-      "key": "tooltip.immersiveweapons.melee_masters_molten_glove"
+      "key": "tooltip.immersiveweapons.melee_masters_molten_glove",
+      "style": {
+        "color": "green",
+        "italic": true
+      }
     }
   ]
 }

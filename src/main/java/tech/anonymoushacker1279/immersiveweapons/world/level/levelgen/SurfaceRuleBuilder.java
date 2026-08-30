@@ -2,6 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.world.level.levelgen;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import net.minecraft.core.HolderGetter;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
@@ -24,13 +25,15 @@ public class SurfaceRuleBuilder {
 	private SurfaceRuleEntry entryInstance;
 	@Nullable
 	private ResourceKey<Biome> biomeKey;
+	private HolderGetter<Biome> biomeGetter;
 
 	private SurfaceRuleBuilder() {
 	}
 
-	public static SurfaceRuleBuilder start() {
+	public static SurfaceRuleBuilder start(HolderGetter<Biome> biomeGetter) {
 		INSTANCE.biomeKey = null;
 		INSTANCE.rules.clear();
+		INSTANCE.biomeGetter = biomeGetter;
 		return INSTANCE;
 	}
 
@@ -110,7 +113,7 @@ public class SurfaceRuleBuilder {
 		SurfaceRules.RuleSource[] ruleArray = ruleList.toArray(RULE_SOURCES);
 		SurfaceRules.RuleSource rule = SurfaceRules.sequence(ruleArray);
 		if (biomeKey != null) {
-			rule = SurfaceRules.ifTrue(SurfaceRules.isBiome(biomeKey), rule);
+			rule = SurfaceRules.ifTrue(SurfaceRules.isBiome(biomeGetter, biomeKey), rule);
 		}
 		return rule;
 	}

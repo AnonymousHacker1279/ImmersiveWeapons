@@ -15,18 +15,18 @@
   "slot": "body",
   "tooltips": [
     {
-      "formats": [
-        "green",
-        "italic"
-      ],
-      "key": "tooltip.immersiveweapons.powder_horn_1"
+      "key": "tooltip.immersiveweapons.powder_horn_1",
+      "style": {
+        "color": "green",
+        "italic": true
+      }
     },
     {
-      "formats": [
-        "green",
-        "italic"
-      ],
-      "key": "tooltip.immersiveweapons.powder_horn_2"
+      "key": "tooltip.immersiveweapons.powder_horn_2",
+      "style": {
+        "color": "green",
+        "italic": true
+      }
     }
   ]
 }

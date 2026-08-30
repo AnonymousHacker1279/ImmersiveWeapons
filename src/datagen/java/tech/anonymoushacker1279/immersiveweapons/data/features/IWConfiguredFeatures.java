@@ -1,5 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.data.features;
 
+import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.Identifier;
@@ -7,6 +8,8 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.GeodeBlockSettings;
 import net.minecraft.world.level.levelgen.GeodeCrackSettings;
@@ -38,12 +41,8 @@ public class IWConfiguredFeatures {
 
 	public static final ResourceKey<ConfiguredFeature<?, ?>> MOLTEN_ORE_CONFIGURATION = createKey("molten_ore");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> TESLA_ORE_CONFIGURATION = createKey("tesla_ore");
-	public static final ResourceKey<ConfiguredFeature<?, ?>> NETHER_SULFUR_ORE_CONFIGURATION = createKey("nether_sulfur_ore");
-	public static final ResourceKey<ConfiguredFeature<?, ?>> DEEPSLATE_SULFUR_ORE_CONFIGURATION = createKey("deepslate_sulfur_ore");
-	public static final ResourceKey<ConfiguredFeature<?, ?>> SULFUR_ORE_CONFIGURATION = createKey("sulfur_ore");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> DEEPSLATE_COBALT_ORE_CONFIGURATION = createKey("deepslate_cobalt_ore");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> COBALT_ORE_CONFIGURATION = createKey("cobalt_ore");
-	public static final ResourceKey<ConfiguredFeature<?, ?>> POTASSIUM_NITRATE_ORE_CONFIGURATION = createKey("potassium_nitrate_ore");
 	public static final ResourceKey<ConfiguredFeature<?, ?>> VOID_ORE_CONFIGURATION = createKey("void_ore");
 
 	private static ResourceKey<ConfiguredFeature<?, ?>> createKey(String name) {
@@ -51,6 +50,10 @@ public class IWConfiguredFeatures {
 	}
 
 	public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
+		HolderGetter<Biome> biomeGetter = context.lookup(Registries.BIOME);
+		HolderGetter<Block> blockGetter = context.lookup(Registries.BLOCK);
+		BlockStateProvider belowTrunkProvider = TreeConfiguration.defaultPlaceBelowTreeTrunkProvider(biomeGetter);
+
 		register(context, PATCH_WOODEN_SPIKES_CONFIGURATION, Feature.BLOCK_PILE,
 				new BlockPileConfiguration(BlockStateProvider.simple(BlockRegistry.WOODEN_SPIKES.get()))
 		);
@@ -61,8 +64,8 @@ public class IWConfiguredFeatures {
 						new StraightTrunkPlacer(7, 3, 3),
 						BlockStateProvider.simple(Blocks.AIR),
 						new BlobFoliagePlacer(ConstantInt.ZERO, ConstantInt.ZERO, 0),
-						new TwoLayersFeatureSize(1, 0, 1)
-				)
+						new TwoLayersFeatureSize(1, 0, 1),
+						belowTrunkProvider)
 						.decorators(List.of(new BurnedBranchDecorator(0.95f)))
 						.ignoreVines()
 						.build());
@@ -76,8 +79,8 @@ public class IWConfiguredFeatures {
 						new FancyTrunkPlacer(5, 3, 3),
 						BlockStateProvider.simple(BlockRegistry.STARDUST_LEAVES.get()),
 						new FancyFoliagePlacer(ConstantInt.of(2), ConstantInt.of(4), 4),
-						new TwoLayersFeatureSize(1, 0, 3)
-				)
+						new TwoLayersFeatureSize(1, 0, 3),
+						belowTrunkProvider)
 						.ignoreVines()
 						.build());
 
@@ -93,8 +96,8 @@ public class IWConfiguredFeatures {
 								BlockStateProvider.simple(Blocks.CALCITE.defaultBlockState()),
 								BlockStateProvider.simple(Blocks.TUFF.defaultBlockState()),
 								List.of(BlockRegistry.ASTRAL_CRYSTAL.get().defaultBlockState()),
-								BlockTags.FEATURES_CANNOT_REPLACE,
-								BlockTags.GEODE_INVALID_BLOCKS
+								blockGetter.getOrThrow(BlockTags.FEATURES_CANNOT_REPLACE),
+								blockGetter.getOrThrow(BlockTags.GEODE_INVALID_BLOCKS)
 						),
 						new GeodeLayerSettings(
 								1.7d,
@@ -125,23 +128,11 @@ public class IWConfiguredFeatures {
 		register(context, TESLA_ORE_CONFIGURATION, Feature.ORE,
 				new OreConfiguration(OreReplacementTargets.TESLA_ORE_TARGETS, 4, 0.8f));
 
-		register(context, NETHER_SULFUR_ORE_CONFIGURATION, Feature.ORE,
-				new OreConfiguration(OreReplacementTargets.SULFUR_ORE_TARGETS, 16, 0.08f));
-
-		register(context, DEEPSLATE_SULFUR_ORE_CONFIGURATION, Feature.ORE,
-				new OreConfiguration(OreReplacementTargets.SULFUR_ORE_TARGETS, 16, 0.04f));
-
-		register(context, SULFUR_ORE_CONFIGURATION, Feature.ORE,
-				new OreConfiguration(OreReplacementTargets.SULFUR_ORE_TARGETS, 6, 0.1f));
-
 		register(context, DEEPSLATE_COBALT_ORE_CONFIGURATION, Feature.ORE,
 				new OreConfiguration(OreReplacementTargets.COBALT_ORE_TARGETS, 12, 0.1f));
 
 		register(context, COBALT_ORE_CONFIGURATION, Feature.ORE,
 				new OreConfiguration(OreReplacementTargets.COBALT_ORE_TARGETS, 12, 0.15f));
-
-		register(context, POTASSIUM_NITRATE_ORE_CONFIGURATION, Feature.ORE,
-				new OreConfiguration(OreReplacementTargets.POTASSIUM_NITRATE_ORE_TARGETS, 6, 0.05f));
 
 		register(context, VOID_ORE_CONFIGURATION, Feature.ORE,
 				new OreConfiguration(OreReplacementTargets.VOID_ORE_TARGETS, 4, 1.0f));

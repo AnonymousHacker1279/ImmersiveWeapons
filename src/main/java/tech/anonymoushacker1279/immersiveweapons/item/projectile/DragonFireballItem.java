@@ -4,6 +4,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.Position;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.hurtingprojectile.DragonFireball;
 import net.minecraft.world.item.ItemStack;
@@ -40,7 +41,7 @@ public class DragonFireballItem extends BulletItem<DragonFireballBulletEntity> {
 		double y = random.triangle(direction.getStepY(), 0.11485);
 		double z = random.triangle(direction.getStepZ(), 0.11485);
 		Vec3 movement = new Vec3(x, y, z);
-		DragonFireball fireball = new DragonFireball(EntityType.DRAGON_FIREBALL, level);
+		DragonFireball fireball = new DragonFireball(EntityTypes.DRAGON_FIREBALL, level);
 		fireball.addDeltaMovement(movement.normalize());
 		fireball.snapTo(pos.x() + direction.getStepX(), pos.y() + direction.getStepY(), pos.z() + direction.getStepZ(), 0.0F, 0.0F);
 		return fireball;

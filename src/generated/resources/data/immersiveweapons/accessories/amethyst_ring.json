@@ -15,11 +15,11 @@
   "slot": "ring",
   "tooltips": [
     {
-      "formats": [
-        "green",
-        "italic"
-      ],
-      "key": "tooltip.immersiveweapons.amethyst_ring"
+      "key": "tooltip.immersiveweapons.amethyst_ring",
+      "style": {
+        "color": "green",
+        "italic": true
+      }
     }
   ]
 }

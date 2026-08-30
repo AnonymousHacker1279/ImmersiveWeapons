@@ -1,6 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.world.level.levelgen;
 
 import com.mojang.datafixers.util.Pair;
+import net.minecraft.core.HolderGetter;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
@@ -25,13 +26,8 @@ public class IWOverworldBiomesProvider extends Region {
 		super(name, type, weight);
 	}
 
-	@Override
-	public void addBiomes(Registry<Biome> registry, Consumer<Pair<Climate.ParameterPoint, ResourceKey<Biome>>> mapper) {
-		addModifiedVanillaOverworldBiomes(mapper, modifier -> modifier.replaceBiome(Biomes.PLAINS, BATTLEFIELD));
-	}
-
-	public static SurfaceRules.RuleSource makeSurfaceRules() {
-		SurfaceRules.RuleSource battlefield = SurfaceRuleBuilder.start()
+	public static SurfaceRules.RuleSource makeSurfaceRules(HolderGetter<Biome> getter) {
+		SurfaceRules.RuleSource battlefield = SurfaceRuleBuilder.start(getter)
 				.biome(BATTLEFIELD)
 				.surface(Blocks.GRASS_BLOCK.defaultBlockState())
 				.subsurface(Blocks.COARSE_DIRT.defaultBlockState(), 3)
@@ -43,7 +39,12 @@ public class IWOverworldBiomesProvider extends Region {
 				.build();
 
 		return SurfaceRules.sequence(
-				SurfaceRules.ifTrue(SurfaceRules.isBiome(BATTLEFIELD), battlefield)
+				SurfaceRules.ifTrue(SurfaceRules.isBiome(getter, BATTLEFIELD), battlefield)
 		);
+	}
+
+	@Override
+	public void addBiomes(Registry<Biome> registry, Consumer<Pair<Climate.ParameterPoint, ResourceKey<Biome>>> mapper) {
+		addModifiedVanillaOverworldBiomes(mapper, modifier -> modifier.replaceBiome(Biomes.PLAINS, BATTLEFIELD));
 	}
 }

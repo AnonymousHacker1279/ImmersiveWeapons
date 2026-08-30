@@ -15,11 +15,11 @@
   "slot": "belt",
   "tooltips": [
     {
-      "formats": [
-        "green",
-        "italic"
-      ],
-      "key": "tooltip.immersiveweapons.satchel"
+      "key": "tooltip.immersiveweapons.satchel",
+      "style": {
+        "color": "green",
+        "italic": true
+      }
     }
   ]
 }

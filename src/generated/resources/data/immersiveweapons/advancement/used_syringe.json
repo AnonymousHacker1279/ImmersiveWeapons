@@ -12,7 +12,7 @@
         ],
         "killing_blow": {
           "source_entity": {
-            "equipment": {
+            "minecraft:equipment": {
               "mainhand": {
                 "items": "immersiveweapons:used_syringe"
               }

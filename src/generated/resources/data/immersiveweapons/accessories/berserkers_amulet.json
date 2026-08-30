@@ -29,18 +29,18 @@
   "slot": "charm",
   "tooltips": [
     {
-      "formats": [
-        "green",
-        "italic"
-      ],
-      "key": "tooltip.immersiveweapons.berserkers_amulet_1"
+      "key": "tooltip.immersiveweapons.berserkers_amulet_1",
+      "style": {
+        "color": "green",
+        "italic": true
+      }
     },
     {
-      "formats": [
-        "dark_red",
-        "italic"
-      ],
-      "key": "tooltip.immersiveweapons.berserkers_amulet_2"
+      "key": "tooltip.immersiveweapons.berserkers_amulet_2",
+      "style": {
+        "color": "dark_red",
+        "italic": true
+      }
     }
   ]
 }

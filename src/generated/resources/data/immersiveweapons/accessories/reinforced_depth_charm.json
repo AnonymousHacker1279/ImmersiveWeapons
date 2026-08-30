@@ -39,11 +39,11 @@
   "slot": "charm",
   "tooltips": [
     {
-      "formats": [
-        "green",
-        "italic"
-      ],
-      "key": "tooltip.immersiveweapons.reinforced_depth_charm"
+      "key": "tooltip.immersiveweapons.reinforced_depth_charm",
+      "style": {
+        "color": "green",
+        "italic": true
+      }
     }
   ]
 }

@@ -16,11 +16,11 @@
   "slot": "body",
   "tooltips": [
     {
-      "formats": [
-        "green",
-        "italic"
-      ],
-      "key": "tooltip.immersiveweapons.bloated_heart"
+      "key": "tooltip.immersiveweapons.bloated_heart",
+      "style": {
+        "color": "green",
+        "italic": true
+      }
     }
   ]
 }

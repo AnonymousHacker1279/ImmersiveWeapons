@@ -7,6 +7,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
@@ -62,7 +63,7 @@ public class StructureGenerator {
 										MobCategory.MONSTER,
 										new StructureSpawnOverride(
 												BoundingBoxType.STRUCTURE,
-												WeightedList.of(new SpawnerData(EntityType.ZOMBIE, 1, 2))
+												WeightedList.of(new SpawnerData(EntityTypes.ZOMBIE, 1, 2))
 										)
 								)
 						)
@@ -102,7 +103,7 @@ public class StructureGenerator {
 										MobCategory.CREATURE,
 										new StructureSpawnOverride(
 												BoundingBoxType.STRUCTURE,
-												WeightedList.of(new SpawnerData(EntityType.CAT, 1, 2))
+												WeightedList.of(new SpawnerData(EntityTypes.CAT, 1, 2))
 										)
 								)
 						)
@@ -164,7 +165,7 @@ public class StructureGenerator {
 										MobCategory.MONSTER,
 										new StructureSpawnOverride(
 												BoundingBoxType.STRUCTURE,
-												WeightedList.of(new SpawnerData(EntityType.SKELETON, 1, 2))
+												WeightedList.of(new SpawnerData(EntityTypes.SKELETON, 1, 2))
 										)
 								)
 						)
@@ -238,7 +239,7 @@ public class StructureGenerator {
 										MobCategory.MONSTER,
 										new StructureSpawnOverride(
 												BoundingBoxType.STRUCTURE,
-												WeightedList.of(new SpawnerData(EntityType.ZOMBIE, 1, 2))
+												WeightedList.of(new SpawnerData(EntityTypes.ZOMBIE, 1, 2))
 										)
 								)
 						)

@@ -7,18 +7,18 @@
   "slot": "spirit",
   "tooltips": [
     {
-      "formats": [
-        "green",
-        "italic"
-      ],
-      "key": "tooltip.immersiveweapons.celestial_spirit_1"
+      "key": "tooltip.immersiveweapons.celestial_spirit_1",
+      "style": {
+        "color": "green",
+        "italic": true
+      }
     },
     {
-      "formats": [
-        "dark_green",
-        "italic"
-      ],
-      "key": "tooltip.immersiveweapons.celestial_spirit_2"
+      "key": "tooltip.immersiveweapons.celestial_spirit_2",
+      "style": {
+        "color": "dark_green",
+        "italic": true
+      }
     }
   ]
 }

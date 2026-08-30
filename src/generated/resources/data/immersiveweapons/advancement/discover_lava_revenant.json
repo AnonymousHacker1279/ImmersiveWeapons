@@ -8,7 +8,7 @@
             "condition": "minecraft:entity_properties",
             "entity": "this",
             "predicate": {
-              "type": "immersiveweapons:lava_revenant"
+              "minecraft:entity_type": "immersiveweapons:lava_revenant"
             }
           }
         ]
@@ -21,7 +21,7 @@
       "translate": "advancements.immersiveweapons.discover_lava_revenant.description"
     },
     "icon": {
-      "id": "immersiveweapons:sulfur"
+      "id": "immersiveweapons:sulfur_dust"
     },
     "title": {
       "translate": "advancements.immersiveweapons.discover_lava_revenant.title"

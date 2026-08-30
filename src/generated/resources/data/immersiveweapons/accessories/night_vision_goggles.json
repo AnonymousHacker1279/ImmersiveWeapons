@@ -14,11 +14,11 @@
   "slot": "head",
   "tooltips": [
     {
-      "formats": [
-        "green",
-        "italic"
-      ],
-      "key": "tooltip.immersiveweapons.night_vision_goggles"
+      "key": "tooltip.immersiveweapons.night_vision_goggles",
+      "style": {
+        "color": "green",
+        "italic": true
+      }
     }
   ]
 }

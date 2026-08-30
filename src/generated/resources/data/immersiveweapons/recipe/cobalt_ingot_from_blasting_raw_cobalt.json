@@ -1,7 +1,5 @@
 {
   "type": "minecraft:blasting",
-  "category": "misc",
-  "cookingtime": 100,
   "experience": 0.8,
   "group": "cobalt",
   "ingredient": "immersiveweapons:raw_cobalt",

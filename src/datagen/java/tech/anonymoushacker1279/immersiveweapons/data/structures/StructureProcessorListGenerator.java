@@ -73,45 +73,45 @@ public class StructureProcessorListGenerator {
 				new RuleProcessor(stairRules(Blocks.STONE_BRICK_STAIRS, Blocks.MOSSY_STONE_BRICK_STAIRS, 0.25f)),
 				new RuleProcessor(ImmutableList.of(
 						new ProcessorRule(
-								new RandomBlockMatchTest(Blocks.COPPER_BLOCK, 0.1F),
+								new RandomBlockMatchTest(Blocks.COPPER_BLOCK.weathering().unaffected(), 0.1F),
 								AlwaysTrueTest.INSTANCE,
-								Blocks.OXIDIZED_COPPER.defaultBlockState()),
+								Blocks.COPPER_BLOCK.weathering().oxidized().defaultBlockState()),
 						new ProcessorRule(
-								new RandomBlockMatchTest(Blocks.COPPER_BLOCK, 0.33333334F),
+								new RandomBlockMatchTest(Blocks.COPPER_BLOCK.weathering().unaffected(), 0.33333334F),
 								AlwaysTrueTest.INSTANCE,
-								Blocks.WEATHERED_COPPER.defaultBlockState()),
+								Blocks.COPPER_BLOCK.weathering().weathered().defaultBlockState()),
 						new ProcessorRule(
-								new RandomBlockMatchTest(Blocks.COPPER_BLOCK, 0.5F),
+								new RandomBlockMatchTest(Blocks.COPPER_BLOCK.weathering().unaffected(), 0.5F),
 								AlwaysTrueTest.INSTANCE,
-								Blocks.EXPOSED_COPPER.defaultBlockState()),
+								Blocks.COPPER_BLOCK.weathering().exposed().defaultBlockState()),
 						new ProcessorRule(
-								new RandomBlockMatchTest(Blocks.COPPER_GRATE, 0.1F),
+								new RandomBlockMatchTest(Blocks.COPPER_GRATE.weathering().unaffected(), 0.1F),
 								AlwaysTrueTest.INSTANCE,
-								Blocks.OXIDIZED_COPPER_GRATE.defaultBlockState()),
+								Blocks.COPPER_GRATE.weathering().oxidized().defaultBlockState()),
 						new ProcessorRule(
-								new RandomBlockMatchTest(Blocks.COPPER_GRATE, 0.33333334F),
+								new RandomBlockMatchTest(Blocks.COPPER_GRATE.weathering().unaffected(), 0.33333334F),
 								AlwaysTrueTest.INSTANCE,
-								Blocks.WEATHERED_COPPER_GRATE.defaultBlockState()),
+								Blocks.COPPER_GRATE.weathering().weathered().defaultBlockState()),
 						new ProcessorRule(
-								new RandomBlockMatchTest(Blocks.COPPER_GRATE, 0.5F),
+								new RandomBlockMatchTest(Blocks.COPPER_GRATE.weathering().unaffected(), 0.5F),
 								AlwaysTrueTest.INSTANCE,
-								Blocks.EXPOSED_COPPER_GRATE.defaultBlockState()),
+								Blocks.COPPER_GRATE.weathering().exposed().defaultBlockState()),
 						new ProcessorRule(
-								new RandomBlockMatchTest(Blocks.CHISELED_COPPER, 0.1F),
+								new RandomBlockMatchTest(Blocks.CHISELED_COPPER.weathering().unaffected(), 0.1F),
 								AlwaysTrueTest.INSTANCE,
-								Blocks.OXIDIZED_CHISELED_COPPER.defaultBlockState()),
+								Blocks.CHISELED_COPPER.weathering().oxidized().defaultBlockState()),
 						new ProcessorRule(
-								new RandomBlockMatchTest(Blocks.CHISELED_COPPER, 0.33333334F),
+								new RandomBlockMatchTest(Blocks.CHISELED_COPPER.weathering().unaffected(), 0.33333334F),
 								AlwaysTrueTest.INSTANCE,
-								Blocks.WEATHERED_CHISELED_COPPER.defaultBlockState()),
+								Blocks.CHISELED_COPPER.weathering().weathered().defaultBlockState()),
 						new ProcessorRule(
-								new RandomBlockMatchTest(Blocks.CHISELED_COPPER, 0.5F),
+								new RandomBlockMatchTest(Blocks.CHISELED_COPPER.weathering().unaffected(), 0.5F),
 								AlwaysTrueTest.INSTANCE,
-								Blocks.EXPOSED_CHISELED_COPPER.defaultBlockState())
+								Blocks.CHISELED_COPPER.weathering().exposed().defaultBlockState())
 				)),
-				new RuleProcessor(stairRules(Blocks.CUT_COPPER_STAIRS, Blocks.OXIDIZED_CUT_COPPER_STAIRS, 0.1F)),
-				new RuleProcessor(stairRules(Blocks.CUT_COPPER_STAIRS, Blocks.WEATHERED_CUT_COPPER_STAIRS, 0.3333334F)),
-				new RuleProcessor(stairRules(Blocks.CUT_COPPER_STAIRS, Blocks.EXPOSED_CUT_COPPER_STAIRS, 0.5F))
+				new RuleProcessor(stairRules(Blocks.CUT_COPPER_STAIRS.weathering().unaffected(), Blocks.CUT_COPPER_STAIRS.weathering().oxidized(), 0.1F)),
+				new RuleProcessor(stairRules(Blocks.CUT_COPPER_STAIRS.weathering().unaffected(), Blocks.CUT_COPPER_STAIRS.weathering().weathered(), 0.3333334F)),
+				new RuleProcessor(stairRules(Blocks.CUT_COPPER_STAIRS.weathering().unaffected(), Blocks.CUT_COPPER_STAIRS.weathering().exposed(), 0.5F))
 		));
 	}
 

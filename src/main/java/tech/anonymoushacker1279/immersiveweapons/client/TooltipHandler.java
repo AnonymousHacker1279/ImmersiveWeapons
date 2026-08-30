@@ -63,7 +63,7 @@ public class TooltipHandler {
 									TooltipMarker marker = field.getAnnotation(TooltipMarker.class);
 
 									String baseKey = marker.key().isEmpty()
-											? "tooltip.immersiveweapons." + item.builtInRegistryHolder().getRegisteredName().replaceAll(ImmersiveWeapons.MOD_ID + ":", "")
+											? "tooltip.immersiveweapons." + item.builtInRegistryHolder().getRegisteredName().replace(ImmersiveWeapons.MOD_ID + ":", "")
 											: "tooltip.immersiveweapons." + marker.key();
 
 									String[] keys = new String[marker.components()];

@@ -1,9 +1,9 @@
 package tech.anonymoushacker1279.immersiveweapons.data.loot;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.advancements.criterion.EntityFlagsPredicate;
-import net.minecraft.advancements.criterion.EntityPredicate;
-import net.minecraft.advancements.criterion.NbtPredicate;
+import net.minecraft.advancements.predicates.NbtPredicate;
+import net.minecraft.advancements.predicates.entity.EntityFlagsPredicate;
+import net.minecraft.advancements.predicates.entity.EntityPredicate;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.registries.Registries;
@@ -81,7 +81,7 @@ public class EntityLootTables extends EntityLootSubProvider {
 				.withPool(LootPool.lootPool()
 						.name("sulfur")
 						.setRolls(ConstantValue.exactly(1.0F))
-						.add(LootItem.lootTableItem(ItemRegistry.SULFUR.get())
+						.add(LootItem.lootTableItem(ItemRegistry.SULFUR_DUST.get())
 								.apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 8.0F)))
 								.apply(EnchantedCountIncreaseFunction.lootingMultiplier(this.registries, UniformGenerator.between(2.0F, 4.0F)))))
 				.withPool(LootPool.lootPool()
@@ -266,7 +266,7 @@ public class EntityLootTables extends EntityLootSubProvider {
 						.add(LootItem.lootTableItem(Items.GUNPOWDER)
 								.apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 2.0F)))
 								.apply(EnchantedCountIncreaseFunction.lootingMultiplier(this.registries, UniformGenerator.between(0.0F, 1.0F))))
-						.add(LootItem.lootTableItem(ItemRegistry.SULFUR.get())
+						.add(LootItem.lootTableItem(ItemRegistry.SULFUR_DUST.get())
 								.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 4.0F)))
 								.apply(EnchantedCountIncreaseFunction.lootingMultiplier(this.registries, UniformGenerator.between(0.0F, 2.0F)))))
 				.withPool(LootPool.lootPool()

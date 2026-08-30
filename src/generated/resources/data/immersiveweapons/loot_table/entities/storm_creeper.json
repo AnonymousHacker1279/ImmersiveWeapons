@@ -2,13 +2,11 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
           "functions": [
             {
-              "add": false,
               "count": {
                 "type": "minecraft:uniform",
                 "max": 2.0,
@@ -32,7 +30,6 @@
           "type": "minecraft:item",
           "functions": [
             {
-              "add": false,
               "count": {
                 "type": "minecraft:uniform",
                 "max": 4.0,
@@ -50,20 +47,19 @@
               "function": "minecraft:enchanted_count_increase"
             }
           ],
-          "name": "immersiveweapons:sulfur"
+          "name": "immersiveweapons:sulfur_dust"
         }
       ],
       "name": "main",
       "rolls": 1.0
     },
     {
-      "bonus_rolls": 0.0,
       "conditions": [
         {
           "condition": "minecraft:entity_properties",
           "entity": "attacker",
           "predicate": {
-            "type": "#minecraft:skeletons"
+            "minecraft:entity_type": "#minecraft:skeletons"
           }
         }
       ],

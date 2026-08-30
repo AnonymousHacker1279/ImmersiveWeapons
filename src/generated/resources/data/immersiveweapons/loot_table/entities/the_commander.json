@@ -2,7 +2,6 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "bonus_rolls": 0.0,
       "conditions": [
         {
           "condition": "minecraft:killed_by_player"
@@ -18,7 +17,6 @@
       "rolls": 1.0
     },
     {
-      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
@@ -27,7 +25,6 @@
       ],
       "functions": [
         {
-          "add": false,
           "count": {
             "type": "minecraft:uniform",
             "max": 24.0,
@@ -49,7 +46,6 @@
       "rolls": 1.0
     },
     {
-      "bonus_rolls": 0.0,
       "conditions": [
         {
           "condition": "minecraft:killed_by_player"
@@ -60,7 +56,6 @@
           "type": "minecraft:item",
           "functions": [
             {
-              "add": false,
               "count": {
                 "type": "minecraft:uniform",
                 "max": 20.0,
@@ -85,7 +80,6 @@
       "rolls": 1.0
     },
     {
-      "bonus_rolls": 0.0,
       "conditions": [
         {
           "condition": "minecraft:killed_by_player"

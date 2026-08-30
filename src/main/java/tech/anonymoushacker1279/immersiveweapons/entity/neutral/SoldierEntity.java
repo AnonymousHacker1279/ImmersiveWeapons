@@ -126,7 +126,7 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 
 	@Override
 	public boolean canAttack(LivingEntity target) {
-		return super.canAttack(target) && !target.is(EntityType.CREEPER) && !target.is(getType());
+		return super.canAttack(target) && !target.is(EntityTypes.CREEPER) && !target.is(getType());
 	}
 
 	@Override

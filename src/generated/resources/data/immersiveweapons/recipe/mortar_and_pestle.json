@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "category": "misc",
   "group": "mortar_and_pestle",
   "key": {
     "a": "minecraft:bowl",

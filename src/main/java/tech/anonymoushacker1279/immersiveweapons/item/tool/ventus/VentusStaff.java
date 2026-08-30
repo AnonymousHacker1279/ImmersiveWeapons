@@ -5,6 +5,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -56,7 +57,8 @@ public class VentusStaff extends Item {
 				if (entity instanceof LivingEntity livingEntity) {
 					spawnParticles(livingEntity, level);
 
-					livingEntity.knockback(1.5f, player.getLookAngle().reverse().x(), player.getLookAngle().reverse().z());
+					DamageSource source = level.damageSources().playerAttack(player);
+					livingEntity.knockback(1.5f, player.getLookAngle().reverse().x(), player.getLookAngle().reverse().z(), source, 0.0f);
 					livingEntity.hurtMarked = true;
 				} else if (entity instanceof Projectile projectile) {
 					spawnParticles(projectile, level);

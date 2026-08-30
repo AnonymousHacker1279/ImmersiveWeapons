@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "category": "misc",
   "group": "first_aid",
   "ingredients": [
     "immersiveweapons:syringe",

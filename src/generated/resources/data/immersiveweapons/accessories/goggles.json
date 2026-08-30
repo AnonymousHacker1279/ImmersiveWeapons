@@ -15,11 +15,11 @@
   "slot": "head",
   "tooltips": [
     {
-      "formats": [
-        "green",
-        "italic"
-      ],
-      "key": "tooltip.immersiveweapons.goggles"
+      "key": "tooltip.immersiveweapons.goggles",
+      "style": {
+        "color": "green",
+        "italic": true
+      }
     }
   ]
 }

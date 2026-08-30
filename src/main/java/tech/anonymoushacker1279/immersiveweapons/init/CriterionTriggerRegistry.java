@@ -1,6 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.init;
 
-import net.minecraft.advancements.CriterionTrigger;
+import net.minecraft.advancements.triggers.CriterionTrigger;
 import net.minecraft.core.registries.Registries;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;

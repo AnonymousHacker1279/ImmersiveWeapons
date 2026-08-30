@@ -1,7 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.data.recipes.families;
 
-import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.criterion.InventoryChangeTrigger;
+import net.minecraft.advancements.triggers.Criterion;
+import net.minecraft.advancements.triggers.InventoryChangeTrigger;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.HolderSet;

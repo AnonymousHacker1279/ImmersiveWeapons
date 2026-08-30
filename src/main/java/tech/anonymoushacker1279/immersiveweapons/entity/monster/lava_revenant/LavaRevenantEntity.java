@@ -88,7 +88,6 @@ public class LavaRevenantEntity extends Mob implements Enemy, GrantAdvancementOn
 		tail = new LavaRevenantPart(this, "tail", 1.25F, 1.25F);
 		subEntities = new LavaRevenantPart[]{wing1, wing2, head, body, tail};
 		noPhysics = true;
-		setId(ENTITY_COUNTER.getAndAdd(subEntities.length + 1) + 1);
 	}
 
 	public static AttributeSupplier.Builder registerAttributes() {

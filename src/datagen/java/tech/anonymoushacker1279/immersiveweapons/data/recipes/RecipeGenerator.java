@@ -1,9 +1,9 @@
 package tech.anonymoushacker1279.immersiveweapons.data.recipes;
 
 import com.google.common.collect.ImmutableList;
-import net.minecraft.advancements.Criterion;
-import net.minecraft.advancements.criterion.InventoryChangeTrigger;
-import net.minecraft.advancements.criterion.ItemPredicate;
+import net.minecraft.advancements.predicates.ItemPredicate;
+import net.minecraft.advancements.triggers.Criterion;
+import net.minecraft.advancements.triggers.InventoryChangeTrigger;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderSet;
@@ -103,9 +103,9 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 
 		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.AMERICAN_FLAG_ITEM.get())
 				.define('a', FLAG_POLE)
-				.define('b', Items.BLUE_WOOL)
-				.define('c', Items.RED_WOOL)
-				.define('d', Items.WHITE_WOOL)
+				.define('b', Items.WOOL.blue())
+				.define('c', Items.WOOL.red())
+				.define('d', Items.WOOL.white())
 				.pattern("bcc")
 				.pattern("bdd")
 				.pattern("a  ")
@@ -115,9 +115,9 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 
 		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.BRITISH_FLAG_ITEM.get())
 				.define('a', FLAG_POLE)
-				.define('b', Items.BLUE_WOOL)
-				.define('c', Items.RED_WOOL)
-				.define('d', Items.WHITE_WOOL)
+				.define('b', Items.WOOL.blue())
+				.define('c', Items.WOOL.red())
+				.define('d', Items.WOOL.white())
 				.pattern("cbc")
 				.pattern("dcd")
 				.pattern("a  ")
@@ -127,8 +127,8 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 
 		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.CANADIAN_FLAG_ITEM.get())
 				.define('a', FLAG_POLE)
-				.define('b', Items.RED_WOOL)
-				.define('c', Items.WHITE_WOOL)
+				.define('b', Items.WOOL.red())
+				.define('c', Items.WOOL.white())
 				.pattern("bcb")
 				.pattern("bbb")
 				.pattern("a  ")
@@ -138,9 +138,9 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 
 		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.GADSDEN_FLAG_ITEM.get())
 				.define('a', FLAG_POLE)
-				.define('b', Items.YELLOW_WOOL)
-				.define('c', Items.BLACK_WOOL)
-				.define('d', Items.GREEN_WOOL)
+				.define('b', Items.WOOL.yellow())
+				.define('c', Items.WOOL.black())
+				.define('d', Items.WOOL.green())
 				.pattern("bcb")
 				.pattern("bdb")
 				.pattern("a  ")
@@ -150,10 +150,10 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 
 		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.MEXICAN_FLAG_ITEM.get())
 				.define('a', FLAG_POLE)
-				.define('b', Items.GREEN_WOOL)
-				.define('c', Items.WHITE_WOOL)
-				.define('d', Items.BROWN_WOOL)
-				.define('e', Items.RED_WOOL)
+				.define('b', Items.WOOL.green())
+				.define('c', Items.WOOL.white())
+				.define('d', Items.WOOL.brown())
+				.define('e', Items.WOOL.red())
 				.pattern("bce")
 				.pattern("bde")
 				.pattern("a  ")
@@ -164,8 +164,8 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 
 		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.TROLL_FLAG_ITEM.get())
 				.define('a', FLAG_POLE)
-				.define('b', Items.WHITE_WOOL)
-				.define('c', Items.BLACK_WOOL)
+				.define('b', Items.WOOL.white())
+				.define('c', Items.WOOL.black())
 				.pattern("bcb")
 				.pattern("cbc")
 				.pattern("a  ")
@@ -176,9 +176,9 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 
 		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.IMMERSIVE_WEAPONS_FLAG_ITEM.get())
 				.define('a', FLAG_POLE)
-				.define('b', Items.BLACK_WOOL)
+				.define('b', Items.WOOL.black())
 				.define('c', Items.GOLDEN_SWORD)
-				.define('d', Items.BLUE_WOOL)
+				.define('d', Items.WOOL.blue())
 				.pattern("bcb")
 				.pattern("bdb")
 				.pattern("a  ")
@@ -916,7 +916,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		// Spotlight
 		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.SPOTLIGHT_ITEM.get())
 				.define('a', Items.REDSTONE_LAMP)
-				.define('b', Items.BLACK_CONCRETE)
+				.define('b', Items.CONCRETE.black())
 				.define('c', CommonItemTagGroups.METAL_INGOTS)
 				.pattern("bab")
 				.pattern("c c")
@@ -1006,7 +1006,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.requires(Items.GUNPOWDER)
 				.group("food")
 				.unlockedBy("chocolate_bar", has(ItemRegistry.CHOCOLATE_BAR.get()))
-				.save(output, "explosive_chocolate_bar");
+				.save(output, "immersiveweapons:explosive_chocolate_bar");
 		// MRE
 		ShapelessRecipeBuilder.shapeless(itemGetter, RecipeCategory.FOOD, ItemRegistry.MRE.get())
 				.requires(Items.CARROT)
@@ -1498,24 +1498,6 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.pattern("a a")
 				.group("pliers")
 				.unlockedBy("small_parts_metal_tool", has(ItemRegistry.TOOL_JOINT.get()))
-				.save(output);
-
-		// Sulfur stuff
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.RAW_SULFUR_BLOCK_ITEM.get())
-				.group("sulfur")
-				.unlockedBy("sulfur", has(ItemRegistry.SULFUR.get()));
-		create3x3Object(builder, ItemRegistry.SULFUR.get());
-
-		ShapelessRecipeBuilder.shapeless(itemGetter, RecipeCategory.MISC, ItemRegistry.SULFUR.get(), 9)
-				.requires(BlockItemRegistry.RAW_SULFUR_BLOCK_ITEM.get())
-				.group("sulfur")
-				.unlockedBy("raw_sulfur_block", has(BlockItemRegistry.RAW_SULFUR_BLOCK_ITEM.get()))
-				.save(output);
-
-		ShapelessRecipeBuilder.shapeless(itemGetter, RecipeCategory.MISC, ItemRegistry.SULFUR_DUST.get(), 4)
-				.requires(ItemRegistry.SULFUR.get())
-				.requires(ItemRegistry.MORTAR_AND_PESTLE.get())
-				.unlockedBy("sulfur", has(ItemRegistry.SULFUR.get()))
 				.save(output);
 
 		// Black Powder

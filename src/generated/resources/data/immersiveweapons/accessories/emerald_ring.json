@@ -14,11 +14,11 @@
   "slot": "ring",
   "tooltips": [
     {
-      "formats": [
-        "green",
-        "italic"
-      ],
-      "key": "tooltip.immersiveweapons.emerald_ring"
+      "key": "tooltip.immersiveweapons.emerald_ring",
+      "style": {
+        "color": "green",
+        "italic": true
+      }
     }
   ]
 }

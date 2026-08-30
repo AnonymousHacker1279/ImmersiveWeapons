@@ -2,6 +2,8 @@
   "values": [
     "immersiveweapons:cloud_marble_brick_slab",
     "immersiveweapons:blood_sandstone_slab",
-    "immersiveweapons:smooth_blood_sandstone_slab"
+    "immersiveweapons:cut_blood_sandstone_slab",
+    "immersiveweapons:smooth_blood_sandstone_slab",
+    "immersiveweapons:hardened_mud_slab"
   ]
 }

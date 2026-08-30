@@ -22,11 +22,11 @@
   "slot": "ring",
   "tooltips": [
     {
-      "formats": [
-        "green",
-        "italic"
-      ],
-      "key": "tooltip.immersiveweapons.netherite_ring"
+      "key": "tooltip.immersiveweapons.netherite_ring",
+      "style": {
+        "color": "green",
+        "italic": true
+      }
     }
   ]
 }

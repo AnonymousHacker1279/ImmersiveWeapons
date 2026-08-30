@@ -7,7 +7,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.skeleton.Skeleton;
@@ -53,7 +53,7 @@ public class CelestialTowerSummonGoal extends WaveSummonGoal<CelestialTowerEntit
 		}
 
 		for (int i = powerMobsToSpawn; i > 0; i--) {
-			Zombie zombie = new Zombie(EntityType.ZOMBIE, mob.level());
+			Zombie zombie = new Zombie(EntityTypes.ZOMBIE, mob.level());
 
 			ItemStack sword = new ItemStack(Items.IRON_SWORD);
 			sword.enchant(enchantmentGetter.getOrThrow(Enchantments.SHARPNESS), mob.getRandom().nextIntBetweenInclusive(2, 3 + mob.getWavesSpawned()));
@@ -75,7 +75,7 @@ public class CelestialTowerSummonGoal extends WaveSummonGoal<CelestialTowerEntit
 		}
 
 		for (int i = mobsToSpawn; i > 0; i--) {
-			Skeleton skeleton = new Skeleton(EntityType.SKELETON, mob.level());
+			Skeleton skeleton = new Skeleton(EntityTypes.SKELETON, mob.level());
 
 			ItemStack bow = new ItemStack(Items.BOW);
 			bow.enchant(enchantmentGetter.getOrThrow(Enchantments.POWER), mob.getRandom().nextIntBetweenInclusive(1, 3 + mob.getWavesSpawned()));
