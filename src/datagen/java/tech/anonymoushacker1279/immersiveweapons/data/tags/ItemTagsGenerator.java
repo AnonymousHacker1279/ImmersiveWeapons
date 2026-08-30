@@ -469,6 +469,26 @@ public class ItemTagsGenerator extends BlockTagCopyingItemTagProvider {
 				BlockItemRegistry.HANS_HEAD_ITEM.getKey(),
 				BlockItemRegistry.STORM_CREEPER_HEAD_ITEM.getKey());
 
+		tag(ItemTags.SULFUR_CUBE_ARCHETYPE_SLOW_FLAT)
+				.addTag(CommonItemTagGroups.COBALT_ORES)
+				.add(BlockItemRegistry.COBALT_BLOCK_ITEM.getKey(),
+						BlockItemRegistry.RAW_COBALT_BLOCK_ITEM.getKey(),
+						BlockItemRegistry.RUSTED_IRON_BLOCK_ITEM.getKey());
+
+		tag(ItemTags.SULFUR_CUBE_ARCHETYPE_FAST_FLAT)
+				.addTag(IWItemTagGroups.ASTRAL_ORES)
+				.add(BlockItemRegistry.ASTRAL_BLOCK_ITEM.getKey(),
+						BlockItemRegistry.STARSTORM_BLOCK_ITEM.getKey());
+
+		tag(ItemTags.SULFUR_CUBE_ARCHETYPE_HIGH_RESISTANCE)
+				.addTags(IWItemTagGroups.MOLTEN_ORES,
+						IWItemTagGroups.TESLA_ORES)
+				.add(BlockItemRegistry.MOLTEN_BLOCK_ITEM.getKey(),
+						BlockItemRegistry.TESLA_BLOCK_ITEM.getKey());
+
+		tag(ItemTags.SULFUR_CUBE_ARCHETYPE_LIGHT).add(
+				BlockItemRegistry.VENTUS_ORE_ITEM.getKey());
+
 		// Spear tags
 		tag(ItemTags.SPEARS).add(
 				ItemRegistry.COBALT_SPEAR.getKey(),

@@ -220,13 +220,13 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 				BlockRegistry.CLOUD_MARBLE_BRICK_WALL.getKey(),
 				BlockRegistry.BLOOD_SANDSTONE_WALL.getKey());
 
-		tag(BlockTags.LOGS).add(
-				BlockRegistry.BURNED_OAK_LOG.getKey(),
-				BlockRegistry.STARDUST_LOG.getKey());
+		tag(BlockTags.LOGS).addTags(
+				IWBlockTagGroups.BURNED_OAK_LOGS,
+				IWBlockTagGroups.STARDUST_LOGS);
 
-		tag(LOGS_THAT_BURN).add(
-				BlockRegistry.BURNED_OAK_LOG.getKey(),
-				BlockRegistry.STARDUST_LOG.getKey());
+		tag(LOGS_THAT_BURN).addTags(
+				IWBlockTagGroups.BURNED_OAK_LOGS,
+				IWBlockTagGroups.STARDUST_LOGS);
 
 		tag(SMELTS_TO_GLASS).add(
 				BlockRegistry.BLOOD_SAND.getKey());

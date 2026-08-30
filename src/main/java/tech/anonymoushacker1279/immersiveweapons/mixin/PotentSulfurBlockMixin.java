@@ -44,7 +44,7 @@ public class PotentSulfurBlockMixin<T extends BlockEntity> {
 						for (int z = -radius; z < radius; z++) {
 							BlockPos checkPos = pos.offset(x, y, z);
 
-							if (x == 0 || y == 1 || z == 0) continue;    // ignore the block above the potent sulfur
+							if (x == 0 && y == 0 && z == 0) continue;    // ignore the block above the potent sulfur
 
 							BlockState aboveState = level.getBlockState(checkPos.above());
 							if ((aboveState.isAir() || aboveState.getFluidState().getType() == Fluids.WATER)

@@ -61,6 +61,13 @@ public class DamageTypeTagsGenerator extends TagsProvider<DamageType> {
 				.add(IWDamageTypes.PUNJI_STICKS_FALL_KEY)
 				.add(IWDamageTypes.WOODEN_SPIKES_KEY);
 
+		tag(DamageTypeTags.SULFUR_CUBE_WITH_BLOCK_IMMUNE_TO)
+				.add(IWDamageTypes.BULLET_KEY)
+				.add(IWDamageTypes.CANNONBALL_KEY)
+				.add(IWDamageTypes.EXPLOSIVE_CANNONBALL_KEY)
+				.add(IWDamageTypes.EXPLOSIVE_ARROW_KEY)
+				.add(IWDamageTypes.MORTAR_KEY);
+
 		addForgeTags();
 	}
 
