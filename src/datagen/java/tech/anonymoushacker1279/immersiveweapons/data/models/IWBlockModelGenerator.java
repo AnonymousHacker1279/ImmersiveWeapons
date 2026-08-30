@@ -32,11 +32,6 @@ public class IWBlockModelGenerator {
 		blockModels.createTrivialCube(BlockRegistry.COBALT_ORE.get());
 		blockModels.createTrivialCube(BlockRegistry.DEEPSLATE_COBALT_ORE.get());
 		blockModels.createTrivialCube(BlockRegistry.VENTUS_ORE.get());
-		blockModels.createTrivialCube(BlockRegistry.SULFUR_ORE.get());
-		blockModels.createTrivialCube(BlockRegistry.DEEPSLATE_SULFUR_ORE.get());
-		blockModels.createTrivialCube(BlockRegistry.NETHER_SULFUR_ORE.get());
-		blockModels.createTrivialCube(BlockRegistry.RAW_SULFUR_BLOCK.get());
-		blockModels.createTrivialCube(BlockRegistry.POTASSIUM_NITRATE_ORE.get());
 		blockModels.createTrivialCube(BlockRegistry.MOLTEN_BLOCK.get());
 		blockModels.createHorizontallyRotatedBlock(BlockRegistry.TESLA_BLOCK.get(), TexturedModel.CUBE);
 		blockModels.createTrivialCube(BlockRegistry.ASTRAL_BLOCK.get());
@@ -204,6 +199,7 @@ public class IWBlockModelGenerator {
 		blockModels.createTrivialCube(BlockRegistry.CHAMPION_BASE.get());
 		blockModels.createTrivialCube(BlockRegistry.CHAMPION_KEYCARD_BRICKS.get());
 		blockModels.createTrivialCube(BlockRegistry.VOID_ORE.get());
+		blockModels.createRotatedVariantBlock(BlockRegistry.MINERAL_DEPOSIT.get());
 	}
 
 	/// A close copy of the vanilla generator in [BlockModelGenerators#createGlassBlocks(Block, Block)], but with a

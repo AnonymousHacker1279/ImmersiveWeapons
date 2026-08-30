@@ -8,8 +8,6 @@ import net.minecraft.world.item.Item;
 public class CommonItemTagGroups {
 
 	public static final TagKey<Item> COBALT_ORES = createItemTag("ores/cobalt");
-	public static final TagKey<Item> SULFUR_ORES = createItemTag("ores/sulfur");
-	public static final TagKey<Item> POTASSIUM_NITRATE_ORES = createItemTag("ores/potassium_nitrate");
 	public static final TagKey<Item> COBALT_INGOTS = createItemTag("ingots/cobalt");
 	public static final TagKey<Item> METAL_INGOTS = createItemTag("ingots/metal");
 	public static final TagKey<Item> COBALT_NUGGETS = createItemTag("nuggets/cobalt");

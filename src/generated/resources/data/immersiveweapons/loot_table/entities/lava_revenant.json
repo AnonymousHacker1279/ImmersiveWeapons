@@ -24,7 +24,7 @@
               "function": "minecraft:enchanted_count_increase"
             }
           ],
-          "name": "immersiveweapons:sulfur"
+          "name": "immersiveweapons:sulfur_dust"
         }
       ],
       "name": "sulfur",

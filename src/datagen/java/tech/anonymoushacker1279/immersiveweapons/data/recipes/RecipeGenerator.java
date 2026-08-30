@@ -1500,24 +1500,6 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.unlockedBy("small_parts_metal_tool", has(ItemRegistry.TOOL_JOINT.get()))
 				.save(output);
 
-		// Sulfur stuff
-		ShapedRecipeBuilder builder = ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.RAW_SULFUR_BLOCK_ITEM.get())
-				.group("sulfur")
-				.unlockedBy("sulfur", has(ItemRegistry.SULFUR.get()));
-		create3x3Object(builder, ItemRegistry.SULFUR.get());
-
-		ShapelessRecipeBuilder.shapeless(itemGetter, RecipeCategory.MISC, ItemRegistry.SULFUR.get(), 9)
-				.requires(BlockItemRegistry.RAW_SULFUR_BLOCK_ITEM.get())
-				.group("sulfur")
-				.unlockedBy("raw_sulfur_block", has(BlockItemRegistry.RAW_SULFUR_BLOCK_ITEM.get()))
-				.save(output);
-
-		ShapelessRecipeBuilder.shapeless(itemGetter, RecipeCategory.MISC, ItemRegistry.SULFUR_DUST.get(), 4)
-				.requires(ItemRegistry.SULFUR.get())
-				.requires(ItemRegistry.MORTAR_AND_PESTLE.get())
-				.unlockedBy("sulfur", has(ItemRegistry.SULFUR.get()))
-				.save(output);
-
 		// Black Powder
 		ShapelessRecipeBuilder.shapeless(itemGetter, RecipeCategory.MISC, ItemRegistry.BLACKPOWDER.get(), 8)
 				.requires(CommonItemTagGroups.SULFUR_DUSTS)

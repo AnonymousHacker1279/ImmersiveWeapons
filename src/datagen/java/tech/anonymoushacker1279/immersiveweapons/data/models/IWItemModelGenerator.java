@@ -10,6 +10,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.component.DyedItemColor;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.event.ClientModEventSubscriber;
+import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.DataComponentTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.properties.HasSpecificName;
@@ -130,7 +131,6 @@ public class IWItemModelGenerator {
 		itemModels.generateFlatItem(ItemRegistry.VOID_INGOT.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.HANSIUM_INGOT.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.BLACKPOWDER.get(), ModelTemplates.FLAT_ITEM);
-		itemModels.generateFlatItem(ItemRegistry.SULFUR.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.SULFUR_DUST.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.POTASSIUM_NITRATE.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.VENTUS_STAFF_CORE.get(), ModelTemplates.FLAT_ITEM);
@@ -328,6 +328,7 @@ public class IWItemModelGenerator {
 		itemModels.generateFlatItem(ItemRegistry.WISP_IN_A_BOTTLE_ORANGE.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.SKYGAZER_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.SKELETON_MERCHANT_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
+		itemModels.generateFlatItem(BlockItemRegistry.MINERAL_DEPOSIT_ITEM.get(), ModelTemplates.FLAT_ITEM);
 	}
 
 	private static void generateGauntletItem(ItemModelGenerators models, Item item) {

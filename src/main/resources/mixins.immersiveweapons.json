@@ -1,6 +1,6 @@
 {
 	"package": "tech.anonymoushacker1279.immersiveweapons.mixin",
-	"compatibilityLevel": "JAVA_21",
+	"compatibilityLevel": "JAVA_25",
 	"mixins": [
 		"AbstractArrowMixin",
 		"BaseFireBlockMixin",
@@ -11,6 +11,7 @@
 		"ItemPropertiesMixin",
 		"LightningRodBlockMixin",
 		"LivingEntityMixin",
+		"PotentSulfurBlockMixin",
 		"ProjectileMixin",
 		"RangedAttributeAccessor",
 		"WindChargeMixin"

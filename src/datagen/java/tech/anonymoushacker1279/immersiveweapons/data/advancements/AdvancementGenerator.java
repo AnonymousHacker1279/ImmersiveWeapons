@@ -1261,7 +1261,7 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 				.save(consumer, prefixString("discover_super_hans"));
 
 		Builder.advancement().parent(entityDiscovery)
-				.display(ItemRegistry.SULFUR.get(),
+				.display(ItemRegistry.SULFUR_DUST.get(),
 						createTitle("discover_lava_revenant"),
 						createDescription("discover_lava_revenant"),
 						null, AdvancementType.TASK, true, true, false)

@@ -28,25 +28,11 @@ public class OreReplacementData {
 				OreConfiguration.target(ReplacementRules.DEEPSLATE_STONE,
 						BlockRegistry.DORMANT_TESLA_ORE.get().defaultBlockState())
 		);
-		public static final List<TargetBlockState> SULFUR_ORE_TARGETS = List.of(
-				OreConfiguration.target(ReplacementRules.REGULAR_STONE,
-						BlockRegistry.SULFUR_ORE.get().defaultBlockState()),
-
-				OreConfiguration.target(ReplacementRules.DEEPSLATE_STONE,
-						BlockRegistry.DEEPSLATE_SULFUR_ORE.get().defaultBlockState()),
-
-				OreConfiguration.target(ReplacementRules.NETHER_STONE,
-						BlockRegistry.NETHER_SULFUR_ORE.get().defaultBlockState())
-		);
 		public static final List<TargetBlockState> COBALT_ORE_TARGETS = List.of(
 				OreConfiguration.target(ReplacementRules.REGULAR_STONE,
 						BlockRegistry.COBALT_ORE.get().defaultBlockState()),
 				OreConfiguration.target(ReplacementRules.DEEPSLATE_STONE,
 						BlockRegistry.DEEPSLATE_COBALT_ORE.get().defaultBlockState())
-		);
-		public static final List<TargetBlockState> POTASSIUM_NITRATE_ORE_TARGETS = List.of(
-				OreConfiguration.target(ReplacementRules.REGULAR_STONE,
-						BlockRegistry.POTASSIUM_NITRATE_ORE.get().defaultBlockState())
 		);
 		public static final List<TargetBlockState> VOID_ORE_TARGETS = List.of(
 				OreConfiguration.target(ReplacementRules.END_STONE,

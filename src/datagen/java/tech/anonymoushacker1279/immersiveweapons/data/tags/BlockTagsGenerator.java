@@ -115,18 +115,10 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 		tag(CommonBlockTagGroups.COBALT_ORES).add(
 				BlockRegistry.COBALT_ORE.getKey(),
 				BlockRegistry.DEEPSLATE_COBALT_ORE.getKey());
-		tag(CommonBlockTagGroups.SULFUR_ORES).add(
-				BlockRegistry.SULFUR_ORE.getKey(),
-				BlockRegistry.DEEPSLATE_SULFUR_ORE.getKey(),
-				BlockRegistry.NETHER_SULFUR_ORE.getKey());
-		tag(CommonBlockTagGroups.POTASSIUM_NITRATE_ORES).add(
-				BlockRegistry.POTASSIUM_NITRATE_ORE.getKey());
 
 
 		tag(Tags.Blocks.ORES).addTags(
 				CommonBlockTagGroups.COBALT_ORES,
-				CommonBlockTagGroups.SULFUR_ORES,
-				CommonBlockTagGroups.POTASSIUM_NITRATE_ORES,
 				IWBlockTagGroups.MOLTEN_ORES,
 				IWBlockTagGroups.TESLA_ORES,
 				IWBlockTagGroups.VENTUS_ORES,

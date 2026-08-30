@@ -1,7 +1,7 @@
 plugins {
 	id 'java-library'
 	id 'maven-publish'
-	id 'net.neoforged.moddev' version '2.0.143'
+	id 'net.neoforged.moddev' version '2.0.144'
 	id "com.hypherionmc.modutils.modpublisher" version "2.2.2"
 	id 'idea'
 }
@@ -18,24 +18,20 @@ group = mod_group_id
 repositories {
 	mavenLocal()
 	maven {
-		name "AnonymousHacker1279"
-		url "https://maven.anonymoushacker1279.tech/releases"
+		name = "AnonymousHacker1279"
+		url = "https://maven.anonymoushacker1279.tech/releases"
 	}
 	maven {
-		name "Forge"
-		url "https://maven.minecraftforge.net/"
+		name = "Forge"
+		url = "https://maven.minecraftforge.net/"
 	}
 	maven {
-		name "Bai Maven"
-		url "https://maven2.bai.lol"
+		name = "Bai Maven"
+		url = "https://maven2.bai.lol"
 	}
 	maven {
-		name "Jared's maven"
-		url "https://maven.blamejared.com/"
-	}
-	maven {
-		name "Su5eD's maven"
-		url "https://maven.su5ed.dev/releases"
+		name = "Jared's maven"
+		url = "https://maven.blamejared.com/"
 	}
 }
 
@@ -189,11 +185,6 @@ tasks.named('sourcesJar', Jar).configure {
 	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
-artifacts {
-	archives javadocJar
-	archives sourcesJar
-}
-
 publishing {
 	publications {
 		register('mavenJava', MavenPublication) {
@@ -204,10 +195,10 @@ publishing {
 	}
 	repositories {
 		maven {
-			name "AnonymousHacker1279"
+			name = "AnonymousHacker1279"
 
 			String baseMavenUrl = "https://maven.anonymoushacker1279.tech/"
-			url mod_version.contains("SNAPSHOT") ? baseMavenUrl + "snapshots" : baseMavenUrl + "releases"
+			url = mod_version.contains("SNAPSHOT") ? baseMavenUrl + "snapshots" : baseMavenUrl + "releases"
 
 			credentials(PasswordCredentials)
 			authentication {

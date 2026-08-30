@@ -253,7 +253,6 @@ public class ItemRegistry {
 	public static final DeferredHolder<Item, Item> VOID_INGOT = ITEMS.registerItem("void_ingot", Item::new);
 	public static final DeferredHolder<Item, Item> HANSIUM_INGOT = ITEMS.registerItem("hansium_ingot", Item::new);
 	public static final DeferredHolder<Item, Item> BLACKPOWDER = ITEMS.registerItem("blackpowder", Item::new);
-	public static final DeferredHolder<Item, Item> SULFUR = ITEMS.registerItem("sulfur", Item::new);
 	public static final DeferredHolder<Item, Item> SULFUR_DUST = ITEMS.registerItem("sulfur_dust", Item::new);
 	public static final DeferredHolder<Item, Item> POTASSIUM_NITRATE = ITEMS.registerItem("potassium_nitrate", Item::new);
 	@TextureMetadataMarker(frameTime = 25, interpolate = true)

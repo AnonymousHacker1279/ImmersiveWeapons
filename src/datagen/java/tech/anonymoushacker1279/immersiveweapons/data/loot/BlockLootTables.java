@@ -102,7 +102,6 @@ public class BlockLootTables extends BlockLootSubProvider {
 		dropSelf(BlockRegistry.PANIC_ALARM.get());
 		dropSelf(BlockRegistry.PUNJI_STICKS.get());
 		dropSelf(BlockRegistry.RAW_COBALT_BLOCK.get());
-		dropSelf(BlockRegistry.RAW_SULFUR_BLOCK.get());
 		dropSelf(BlockRegistry.SMALL_PARTS_TABLE.get());
 		dropSelf(BlockRegistry.AMMUNITION_TABLE.get());
 		dropSelf(BlockRegistry.SPIKE_TRAP.get());
@@ -179,10 +178,6 @@ public class BlockLootTables extends BlockLootSubProvider {
 		add(BlockRegistry.DEEPSLATE_COBALT_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.RAW_COBALT.get()));
 		add(BlockRegistry.MOLTEN_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.MOLTEN_SHARD.get(), 3, 6));
 		add(BlockRegistry.ACTIVE_TESLA_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.TESLA_NUGGET.get(), 4, 5));
-		add(BlockRegistry.SULFUR_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.SULFUR.get(), 2, 4));
-		add(BlockRegistry.DEEPSLATE_SULFUR_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.SULFUR.get(), 2, 4));
-		add(BlockRegistry.NETHER_SULFUR_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.SULFUR.get(), 2, 4));
-		add(BlockRegistry.POTASSIUM_NITRATE_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.POTASSIUM_NITRATE.get(), 4, 6));
 		add(BlockRegistry.ASTRAL_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.RAW_ASTRAL.get(), 1, 3));
 		add(BlockRegistry.PITFALL.get(), this::createSilkTouchOnlyTable);
 		add(BlockRegistry.VENTUS_ORE.get(), (block) -> createOreDrop(block, ItemRegistry.VENTUS_SHARD.get(), 1, 2));
@@ -230,14 +225,29 @@ public class BlockLootTables extends BlockLootSubProvider {
 												.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
 														.setProperties(StatePropertiesPredicate.Builder.properties()
 																.hasProperty(SandbagBlock.BAGS, 3))))))));
+		add(BlockRegistry.MINERAL_DEPOSIT.get(), (block) -> LootTable.lootTable()
+				.withPool(LootPool.lootPool()
+						.name("sulfur")
+						.setRolls(ConstantValue.exactly(1.0F))
+						.add(applyExplosionDecay(
+								block, LootItem.lootTableItem(ItemRegistry.SULFUR_DUST.get())
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 3)))
+										.apply(ApplyBonusCount.addOreBonusCount(registries.getOrThrow(Enchantments.FORTUNE)))))
+				).withPool(LootPool.lootPool()
+						.name("potassium_nitrate")
+						.setRolls(ConstantValue.exactly(1.0F))
+						.add(applyExplosionDecay(
+								block, LootItem.lootTableItem(ItemRegistry.POTASSIUM_NITRATE.get())
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 3)))
+										.apply(ApplyBonusCount.addOreBonusCount(registries.getOrThrow(Enchantments.FORTUNE)))))));
 	}
 
 	protected LootTable.Builder createOreDrop(Block block, Item item, int min, int max) {
-		HolderLookup.RegistryLookup<Enchantment> registrylookup = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
+		HolderLookup.RegistryLookup<Enchantment> registrylookup = registries.lookupOrThrow(Registries.ENCHANTMENT);
 
-		return this.createSilkTouchDispatchTable(
+		return createSilkTouchDispatchTable(
 				block,
-				this.applyExplosionDecay(
+				applyExplosionDecay(
 						block, LootItem.lootTableItem(item)
 								.apply(SetItemCountFunction.setCount(UniformGenerator.between(min, max)))
 								.apply(ApplyBonusCount.addOreBonusCount(registrylookup.getOrThrow(Enchantments.FORTUNE)))

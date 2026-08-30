@@ -31,12 +31,8 @@ public class IWPlacedFeatures {
 
 	public static final ResourceKey<PlacedFeature> MOLTEN_ORE = createKey("molten_ore");
 	public static final ResourceKey<PlacedFeature> TESLA_ORE = createKey("tesla_ore");
-	public static final ResourceKey<PlacedFeature> NETHER_SULFUR_ORE = createKey("nether_sulfur_ore");
-	public static final ResourceKey<PlacedFeature> DEEPSLATE_SULFUR_ORE = createKey("deepslate_sulfur_ore");
-	public static final ResourceKey<PlacedFeature> SULFUR_ORE = createKey("sulfur_ore");
 	public static final ResourceKey<PlacedFeature> DEEPSLATE_COBALT_ORE = createKey("deepslate_cobalt_ore");
 	public static final ResourceKey<PlacedFeature> COBALT_ORE = createKey("cobalt_ore");
-	public static final ResourceKey<PlacedFeature> POTASSIUM_NITRATE_ORE = createKey("potassium_nitrate_ore");
 	public static final ResourceKey<PlacedFeature> VOID_ORE = createKey("void_ore");
 
 	private static ResourceKey<PlacedFeature> createKey(String name) {
@@ -120,30 +116,6 @@ public class IWPlacedFeatures {
 						CountPlacement.of(2)
 				));
 
-		register(context, NETHER_SULFUR_ORE, configuredFeatures.getOrThrow(IWConfiguredFeatures.NETHER_SULFUR_ORE_CONFIGURATION),
-				List.of(HeightRangePlacement.triangle(VerticalAnchor.absolute(-16),
-								VerticalAnchor.absolute(128)),
-						BiomeFilter.biome(),
-						InSquarePlacement.spread(),
-						CountPlacement.of(12)
-				));
-
-		register(context, DEEPSLATE_SULFUR_ORE, configuredFeatures.getOrThrow(IWConfiguredFeatures.DEEPSLATE_SULFUR_ORE_CONFIGURATION),
-				List.of(HeightRangePlacement.triangle(VerticalAnchor.absolute(-64),
-								VerticalAnchor.absolute(0)),
-						BiomeFilter.biome(),
-						InSquarePlacement.spread(),
-						CountPlacement.of(4)
-				));
-
-		register(context, SULFUR_ORE, configuredFeatures.getOrThrow(IWConfiguredFeatures.SULFUR_ORE_CONFIGURATION),
-				List.of(HeightRangePlacement.uniform(VerticalAnchor.absolute(32),
-								VerticalAnchor.absolute(72)),
-						BiomeFilter.biome(),
-						InSquarePlacement.spread(),
-						CountPlacement.of(6)
-				));
-
 		register(context, DEEPSLATE_COBALT_ORE, configuredFeatures.getOrThrow(IWConfiguredFeatures.DEEPSLATE_COBALT_ORE_CONFIGURATION),
 				List.of(HeightRangePlacement.triangle(VerticalAnchor.absolute(-64),
 								VerticalAnchor.absolute(0)),
@@ -158,14 +130,6 @@ public class IWPlacedFeatures {
 						BiomeFilter.biome(),
 						InSquarePlacement.spread(),
 						CountPlacement.of(4)
-				));
-
-		register(context, POTASSIUM_NITRATE_ORE, configuredFeatures.getOrThrow(IWConfiguredFeatures.POTASSIUM_NITRATE_ORE_CONFIGURATION),
-				List.of(HeightRangePlacement.triangle(VerticalAnchor.absolute(10),
-								VerticalAnchor.absolute(50)),
-						BiomeFilter.biome(),
-						InSquarePlacement.spread(),
-						CountPlacement.of(8)
 				));
 
 		register(context, VOID_ORE, configuredFeatures.getOrThrow(IWConfiguredFeatures.VOID_ORE_CONFIGURATION),

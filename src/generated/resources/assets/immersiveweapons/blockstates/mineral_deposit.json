@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "immersiveweapons:block/mineral_deposit"
+      },
+      {
+        "model": "immersiveweapons:block/mineral_deposit",
+        "y": 90
+      },
+      {
+        "model": "immersiveweapons:block/mineral_deposit",
+        "y": 180
+      },
+      {
+        "model": "immersiveweapons:block/mineral_deposit",
+        "y": 270
+      }
+    ]
+  }
+}

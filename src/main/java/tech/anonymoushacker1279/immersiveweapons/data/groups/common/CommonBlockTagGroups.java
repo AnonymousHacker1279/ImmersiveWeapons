@@ -10,8 +10,6 @@ public class CommonBlockTagGroups {
 	public static final TagKey<Block> BULLETPROOF_GLASS = createBlockTag("bulletproof_glass");
 	public static final TagKey<Block> BULLETPROOF_GLASS_PANES = createBlockTag("bulletproof_glass_panes");
 	public static final TagKey<Block> COBALT_ORES = createBlockTag("ores/cobalt");
-	public static final TagKey<Block> SULFUR_ORES = createBlockTag("ores/sulfur");
-	public static final TagKey<Block> POTASSIUM_NITRATE_ORES = createBlockTag("ores/potassium_nitrate");
 
 	private static TagKey<Block> createBlockTag(String tag) {
 		return TagKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath("c", tag));

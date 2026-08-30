@@ -89,8 +89,6 @@ public class ItemTagsGenerator extends BlockTagCopyingItemTagProvider {
 		tag(Tags.Items.FOODS_FOOD_POISONING).add(ItemRegistry.MOLDY_BREAD.getKey());
 
 		copy(CommonBlockTagGroups.COBALT_ORES, CommonItemTagGroups.COBALT_ORES);
-		copy(CommonBlockTagGroups.SULFUR_ORES, CommonItemTagGroups.SULFUR_ORES);
-		copy(CommonBlockTagGroups.POTASSIUM_NITRATE_ORES, CommonItemTagGroups.POTASSIUM_NITRATE_ORES);
 		copy(Tags.Blocks.ORES, Tags.Items.ORES);
 		copy(Tags.Blocks.NATURAL_LOGS, Tags.Items.NATURAL_LOGS);
 		copy(BlockTags.FENCES, Tags.Items.FENCES);
