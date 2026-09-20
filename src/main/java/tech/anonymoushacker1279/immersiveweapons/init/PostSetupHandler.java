@@ -28,12 +28,6 @@ public class PostSetupHandler {
 	public static void init() {
 		ImmersiveWeapons.LOGGER.info("Initializing post-setup handler");
 
-		// Add custom plants to the flower pot block
-		FlowerPotBlock emptyPot = ((FlowerPotBlock) Blocks.FLOWER_POT);
-		emptyPot.addPlant(BuiltInRegistries.BLOCK.getKey(BlockRegistry.MOONGLOW.get()), BlockRegistry.POTTED_MOONGLOW);
-		emptyPot.addPlant(BuiltInRegistries.BLOCK.getKey(BlockRegistry.DEATHWEED.get()), BlockRegistry.POTTED_DEATHWEED);
-		emptyPot.addPlant(BuiltInRegistries.BLOCK.getKey(BlockRegistry.STARDUST_SAPLING.get()), BlockRegistry.POTTED_STARDUST_SAPLING);
-
 		// Compile simple tooltips
 		TooltipHandler.compileTooltips();
 

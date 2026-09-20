@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:musket"
+        "recipes": "immersiveweapons:musket"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

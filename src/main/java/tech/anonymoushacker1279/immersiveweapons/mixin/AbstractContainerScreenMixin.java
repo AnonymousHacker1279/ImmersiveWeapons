@@ -54,7 +54,8 @@ public abstract class AbstractContainerScreenMixin {
 				x,
 				y,
 				DefaultTooltipPositioner.INSTANCE,
-				null
+				null,
+				false
 		);
 	}
 }

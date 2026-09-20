@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:blademaster_emblem"
+        "recipes": "immersiveweapons:blademaster_emblem"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

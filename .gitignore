@@ -35,3 +35,6 @@ gradlew.bat
 
 # Token property file, used for publishing
 tokens.properties
+
+# Other
+CLAUDE.md

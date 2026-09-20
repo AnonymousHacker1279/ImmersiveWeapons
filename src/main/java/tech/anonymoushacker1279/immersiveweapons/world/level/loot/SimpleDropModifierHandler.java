@@ -6,6 +6,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
@@ -42,19 +43,19 @@ public class SimpleDropModifierHandler extends LootModifier {
 	@Nullable
 	private final TagKey<EntityType<?>> mobType;
 
-	public SimpleDropModifierHandler(LootItemCondition[] itemConditions, ItemStackTemplate item) {
+	public SimpleDropModifierHandler(Optional<Holder<LootItemCondition>> itemConditions, ItemStackTemplate item) {
 		this(itemConditions, 1000, 1, 1, item, Optional.empty());
 	}
 
-	public SimpleDropModifierHandler(LootItemCondition[] itemConditions, int minQuantity, int maxQuantity, ItemStackTemplate item) {
+	public SimpleDropModifierHandler(Optional<Holder<LootItemCondition>> itemConditions, int minQuantity, int maxQuantity, ItemStackTemplate item) {
 		this(itemConditions, 1000, minQuantity, maxQuantity, item, Optional.empty());
 	}
 
-	public SimpleDropModifierHandler(LootItemCondition[] itemConditions, ItemStackTemplate item, Optional<TagKey<EntityType<?>>> type) {
+	public SimpleDropModifierHandler(Optional<Holder<LootItemCondition>> itemConditions, ItemStackTemplate item, Optional<TagKey<EntityType<?>>> type) {
 		this(itemConditions, 1000, 1, 1, item, type);
 	}
 
-	public SimpleDropModifierHandler(LootItemCondition[] itemConditions, int priority, int minQuantity, int maxQuantity, ItemStackTemplate item, Optional<TagKey<EntityType<?>>> type) {
+	public SimpleDropModifierHandler(Optional<Holder<LootItemCondition>> itemConditions, int priority, int minQuantity, int maxQuantity, ItemStackTemplate item, Optional<TagKey<EntityType<?>>> type) {
 		super(itemConditions, priority);
 		this.minQuantity = minQuantity;
 		this.maxQuantity = maxQuantity;
@@ -82,7 +83,7 @@ public class SimpleDropModifierHandler extends LootModifier {
 		ItemStack stack = item.create().copyWithCount(lootQuantity);
 
 		if (mobType != null) {
-			if (context.getOptionalParameter(LootContextParams.THIS_ENTITY) instanceof Mob mob && mob.is(mobType)) {
+			if (context.getOptional(LootContextParams.THIS_ENTITY) instanceof Mob mob && mob.is(mobType)) {
 				generatedLoot.add(stack);
 			}
 		} else {

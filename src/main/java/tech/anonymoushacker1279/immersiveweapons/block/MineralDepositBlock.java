@@ -67,6 +67,6 @@ public class MineralDepositBlock extends Block implements SimpleWaterloggedBlock
 
 	@Override
 	public @Nullable PushReaction getPistonPushReaction(BlockState state) {
-		return PushReaction.DESTROY;
+		return PushReaction.POPPED;
 	}
 }

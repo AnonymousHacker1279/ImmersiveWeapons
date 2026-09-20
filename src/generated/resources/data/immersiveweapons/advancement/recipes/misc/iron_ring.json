@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:iron_ring"
+        "recipes": "immersiveweapons:iron_ring"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -40,14 +40,14 @@ public record ShelfRenderer(
 
 				// Rotate by direction
 				switch (state.facing) {
-					case EAST -> stack.mulPose(Axis.YP.rotationDegrees(270f));
-					case SOUTH -> stack.mulPose(Axis.YP.rotationDegrees(180f));
-					case WEST -> stack.mulPose(Axis.YP.rotationDegrees(90f));
-					default -> stack.mulPose(Axis.YP.rotationDegrees(0f));
+					case EAST -> stack.rotate(Axis.YP.rotationDegrees(270f));
+					case SOUTH -> stack.rotate(Axis.YP.rotationDegrees(180f));
+					case WEST -> stack.rotate(Axis.YP.rotationDegrees(90f));
+					default -> stack.rotate(Axis.YP.rotationDegrees(0f));
 				}
 
 				// Rotation occurs here
-				stack.mulPose(Axis.XP.rotationDegrees(50f));
+				stack.rotate(Axis.XP.rotationDegrees(50f));
 				stack.translate(0.0D, 0.10D, -0.10D);
 				if (state.items[0] == itemStackRenderState) {
 					// First item goes on bottom left

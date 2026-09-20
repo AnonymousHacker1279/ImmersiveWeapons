@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:ventus_pickaxe_smithing"
+        "recipes": "immersiveweapons:ventus_pickaxe_smithing"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

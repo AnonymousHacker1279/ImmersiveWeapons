@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:troll_flag"
+        "recipes": "immersiveweapons:troll_flag"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -40,8 +40,8 @@ public class FireflyRenderer extends MobRenderer<FireflyEntity, FireflyRenderSta
 	public void submit(FireflyRenderState state, PoseStack stack, SubmitNodeCollector collector, CameraRenderState cameraState) {
 		if (state.isResting) {
 			switch (state.facing) {
-				case NORTH, SOUTH -> stack.mulPose(Axis.XP.rotationDegrees(90));
-				case EAST, WEST -> stack.mulPose(Axis.ZP.rotationDegrees(90));
+				case NORTH, SOUTH -> stack.rotate(Axis.XP.rotationDegrees(90));
+				case EAST, WEST -> stack.rotate(Axis.ZP.rotationDegrees(90));
 			}
 		}
 		super.submit(state, stack, collector, cameraState);

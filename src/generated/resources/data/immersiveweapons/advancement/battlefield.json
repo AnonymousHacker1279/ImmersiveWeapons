@@ -3,17 +3,15 @@
   "criteria": {
     "visit": {
       "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:location": {
-                "biomes": "immersiveweapons:battlefield"
-              }
+        "player": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:location": {
+              "biomes": "immersiveweapons:battlefield"
             }
           }
-        ]
+        }
       },
       "trigger": "minecraft:location"
     }

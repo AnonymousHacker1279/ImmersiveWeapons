@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:stone_gauntlet"
+        "recipes": "immersiveweapons:stone_gauntlet"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -1,10 +1,12 @@
 package tech.anonymoushacker1279.immersiveweapons.world.level.loot.number_providers;
 
 import com.mojang.serialization.*;
+import net.minecraft.core.Holder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.ValidationContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.world.level.storage.loot.providers.number.NumberProvider;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProvider;
 import tech.anonymoushacker1279.immersiveweapons.entity.AttackerTracker;
 
 import java.util.stream.Stream;
@@ -12,7 +14,7 @@ import java.util.stream.Stream;
 /// Rolls are based on the number of entities that attacked the entity dropping loot.
 ///
 /// Entities using this loot table must implement [AttackerTracker], otherwise this will do nothing.
-public record EntityKillersValue() implements NumberProvider {
+public record EntityKillersValue() implements ContextIntProvider {
 
 	public static final MapCodec<EntityKillersValue> MAP_CODEC = new MapCodec<>() {
 		@Override
@@ -36,12 +38,18 @@ public record EntityKillersValue() implements NumberProvider {
 		}
 	};
 
-	public static EntityKillersValue create() {
-		return new EntityKillersValue();
+	public static Holder<ContextIntProvider> create() {
+		return Holder.direct(new EntityKillersValue());
 	}
 
-	public float getFloat(LootContext lootContext) {
-		Entity entity = lootContext.getParameter(LootContextParams.THIS_ENTITY);
+	@Override
+	public void validate(ValidationContext context) {
+		// No validation required
+	}
+
+	@Override
+	public int getIntUnsafe(LootContext lootContext) {
+		Entity entity = lootContext.getOptional(LootContextParams.THIS_ENTITY);
 
 		if (entity instanceof AttackerTracker attackerTracker) {
 			return attackerTracker.getAttackingEntities();
@@ -51,7 +59,7 @@ public record EntityKillersValue() implements NumberProvider {
 	}
 
 	@Override
-	public MapCodec<? extends NumberProvider> codec() {
+	public MapCodec<? extends ContextIntProvider> codec() {
 		return MAP_CODEC;
 	}
 

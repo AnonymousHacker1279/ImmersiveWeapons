@@ -5,6 +5,7 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
@@ -24,6 +25,7 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import net.neoforged.neoforge.common.loot.LootModifier;
 
+import java.util.Optional;
 import java.util.function.Supplier;
 
 public class ToolSmeltingModifierHandler extends LootModifier {
@@ -36,7 +38,7 @@ public class ToolSmeltingModifierHandler extends LootModifier {
 
 	private final TagKey<Item> tools;
 
-	public ToolSmeltingModifierHandler(LootItemCondition[] conditions, int priority, TagKey<Item> tools) {
+	public ToolSmeltingModifierHandler(Optional<Holder<LootItemCondition>> conditions, int priority, TagKey<Item> tools) {
 		super(conditions, priority);
 		this.tools = tools;
 	}
@@ -44,14 +46,14 @@ public class ToolSmeltingModifierHandler extends LootModifier {
 	@Override
 	public ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
 		// If a molten tool is used and the player is crouching, the block is smelted
-		if (context.getOptionalParameter(LootContextParams.THIS_ENTITY) instanceof Player player) {
+		if (context.getOptional(LootContextParams.THIS_ENTITY) instanceof Player player) {
 			if (player.isCrouching() && player.getItemInHand(InteractionHand.MAIN_HAND).is(tools)) {
 				// Query smelting recipes to see if the block can be smelted
 				if (player.level() instanceof ServerLevel serverLevel) {
 					RecipeManager manager = serverLevel.recipeAccess();
 
 					// If the block can be smelted, smelt it
-					BlockState state = context.getOptionalParameter(LootContextParams.BLOCK_STATE);
+					BlockState state = context.getOptional(LootContextParams.BLOCK_STATE);
 					if (state != null) {
 						ItemStack blockItemStack = state.getBlock().asItem().getDefaultInstance();
 						SingleRecipeInput input = new SingleRecipeInput(blockItemStack);
@@ -61,7 +63,7 @@ public class ToolSmeltingModifierHandler extends LootModifier {
 									.get().value().assemble(input);
 
 							// Drop the smelted item
-							Vec3 origin = context.getOptionalParameter(LootContextParams.ORIGIN);
+							Vec3 origin = context.getOptional(LootContextParams.ORIGIN);
 							if (origin != null) {
 								BlockPos dropPos = BlockPos.containing(origin.x, origin.y, origin.z);
 								Block.popResource(player.level(), dropPos, smeltedItem);

@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:starstorm_shovel_star_forge_smelting"
+        "recipes": "immersiveweapons:starstorm_shovel_star_forge_smelting"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

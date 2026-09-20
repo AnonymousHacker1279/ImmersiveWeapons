@@ -24,7 +24,7 @@ public class MooGlowMoonglowLayer extends RenderLayer<MooGlowRenderState, CowMod
 				int overlayCoords = LivingEntityRenderer.getOverlayCoords(renderState, 0.0F);
 				poseStack.pushPose();
 				poseStack.translate(0.2F, -0.35F, 0.5F);
-				poseStack.mulPose(Axis.YP.rotationDegrees(-48.0F));
+				poseStack.rotate(Axis.YP.rotationDegrees(-48.0F));
 				poseStack.scale(-0.5F, -0.5F, 0.5F);
 				poseStack.translate(-0.5F, -1.0F, -0.5F);
 				submitBlock(poseStack, nodeCollector, 0xFF, appearsGlowingWithInvisibility, renderState.outlineColor, renderState.moonglowModel, overlayCoords);
@@ -32,9 +32,9 @@ public class MooGlowMoonglowLayer extends RenderLayer<MooGlowRenderState, CowMod
 				poseStack.popPose();
 				poseStack.pushPose();
 				poseStack.translate(0.2F, -0.35F, 0.5F);
-				poseStack.mulPose(Axis.YP.rotationDegrees(42.0F));
+				poseStack.rotate(Axis.YP.rotationDegrees(42.0F));
 				poseStack.translate(0.1F, 0.0F, -0.6F);
-				poseStack.mulPose(Axis.YP.rotationDegrees(-48.0F));
+				poseStack.rotate(Axis.YP.rotationDegrees(-48.0F));
 				poseStack.scale(-0.5F, -0.5F, 0.5F);
 				poseStack.translate(-0.5F, -1.0F, -0.5F);
 				submitBlock(poseStack, nodeCollector, 0xFF, appearsGlowingWithInvisibility, renderState.outlineColor, renderState.moonglowModel, overlayCoords);
@@ -44,7 +44,7 @@ public class MooGlowMoonglowLayer extends RenderLayer<MooGlowRenderState, CowMod
 				getParentModel().getHead().translateAndRotate(poseStack);
 
 				poseStack.translate(0.0F, -0.7F, -0.2F);
-				poseStack.mulPose(Axis.YP.rotationDegrees(-78.0F));
+				poseStack.rotate(Axis.YP.rotationDegrees(-78.0F));
 				poseStack.scale(-0.5F, -0.5F, 0.5F);
 				poseStack.translate(-0.5F, -1.0F, -0.5F);
 				submitBlock(poseStack, nodeCollector, 0xFF, appearsGlowingWithInvisibility, renderState.outlineColor, renderState.moonglowModel, overlayCoords);

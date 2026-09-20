@@ -2,7 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.HumanoidModel.ArmPose;
-import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.state.level.PlayerRenderState;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
@@ -19,11 +19,11 @@ public class ClientExtensions {
 		}
 
 		@Override
-		public boolean applyForgeHandTransform(PoseStack poseStack, LocalPlayer player, HumanoidArm arm,
+		public boolean applyForgeHandTransform(PoseStack poseStack, PlayerRenderState playerRenderState, HumanoidArm arm,
 		                                       ItemStack itemInHand, float partialTick, float equipProcess, float swingProcess) {
 
 			// Don't use custom transform until it is fully equipped
-			if (equipProcess < 1.0f && !player.isUsingItem()) {
+			if (equipProcess < 1.0f && playerRenderState.avatarRenderState.ticksUsingItem(arm) <= 0) {
 				return false;
 			}
 

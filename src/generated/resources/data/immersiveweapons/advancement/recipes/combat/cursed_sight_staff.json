@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:cursed_sight_staff"
+        "recipes": "immersiveweapons:cursed_sight_staff"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

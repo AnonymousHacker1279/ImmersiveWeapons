@@ -3,23 +3,21 @@
   "criteria": {
     "have_advancements": {
       "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:type_specific/player": {
-                "advancements": {
-                  "immersiveweapons:cobalt_axe": true,
-                  "immersiveweapons:cobalt_hoe": true,
-                  "immersiveweapons:cobalt_pickaxe": true,
-                  "immersiveweapons:cobalt_shovel": true,
-                  "immersiveweapons:cobalt_sword": true
-                }
+        "player": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:type_specific/player": {
+              "advancements": {
+                "immersiveweapons:cobalt_axe": true,
+                "immersiveweapons:cobalt_hoe": true,
+                "immersiveweapons:cobalt_pickaxe": true,
+                "immersiveweapons:cobalt_shovel": true,
+                "immersiveweapons:cobalt_sword": true
               }
             }
           }
-        ]
+        }
       },
       "trigger": "minecraft:location"
     }

@@ -13,7 +13,7 @@ public class IWKeyBinds {
 
 	public static final KeyMapping TOGGLE_ARMOR_EFFECT = new KeyMapping("key." + ImmersiveWeapons.MOD_ID + ".toggleArmorEffect",
 			KeyConflictContext.IN_GAME,
-			Type.KEYSYM,
+			Type.KEYBOARD,
 			InputConstants.KEY_N,
 			CATEGORY);
 	public static final KeyMapping ARMOR_ACTION = new KeyMapping("key." + ImmersiveWeapons.MOD_ID + ".armorAction",

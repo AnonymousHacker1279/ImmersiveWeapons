@@ -35,8 +35,8 @@ public class CannonballRenderer extends EntityRenderer<CannonballEntity, LivingE
 	public void submit(LivingEntityRenderState state, PoseStack stack, SubmitNodeCollector collector, CameraRenderState cameraState) {
 		stack.pushPose();
 
-		stack.mulPose(Axis.YP.rotationDegrees(state.yRot));
-		stack.mulPose(Axis.XP.rotationDegrees(state.xRot));
+		stack.rotate(Axis.YP.rotationDegrees(state.yRot));
+		stack.rotate(Axis.XP.rotationDegrees(state.xRot));
 
 		stack.scale(1.25f, 1.25f, 1.25f);
 		stack.translate(-0.125f, 0.0125f, -0.125f);

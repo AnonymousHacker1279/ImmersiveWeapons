@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:first_aid_kit"
+        "recipes": "immersiveweapons:first_aid_kit"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

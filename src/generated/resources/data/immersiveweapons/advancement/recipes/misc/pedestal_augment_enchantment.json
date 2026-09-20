@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:pedestal_augment_enchantment"
+        "recipes": "immersiveweapons:pedestal_augment_enchantment"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

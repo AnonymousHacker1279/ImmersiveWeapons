@@ -20,6 +20,44 @@
         "sound": "immersiveweapons:starlight_plains_background_music"
       }
     },
+    "minecraft:gameplay/creature_world_gen_spawn_probability": 0.45,
+    "minecraft:gameplay/natural_mob_spawns": {
+      "argument": {
+        "spawn_costs": {},
+        "spawns_by_category": {
+          "creature": [
+            {
+              "type": "immersiveweapons:firefly",
+              "count": {
+                "type": "minecraft:uniform",
+                "max_inclusive": 20,
+                "min_inclusive": 4
+              },
+              "weight": 10
+            },
+            {
+              "type": "immersiveweapons:star_wolf",
+              "count": {
+                "type": "minecraft:uniform",
+                "max_inclusive": 2,
+                "min_inclusive": 1
+              },
+              "weight": 2
+            },
+            {
+              "type": "immersiveweapons:mooglow",
+              "count": {
+                "type": "minecraft:uniform",
+                "max_inclusive": 4,
+                "min_inclusive": 1
+              },
+              "weight": 6
+            }
+          ]
+        }
+      },
+      "modifier": "overlay"
+    },
     "minecraft:visual/fog_color": "#2b2f77",
     "minecraft:visual/sky_color": "#070b34",
     "minecraft:visual/water_fog_color": "#cbccbd"
@@ -29,7 +67,6 @@
     "minecraft:cave_extra_underground",
     "minecraft:canyon"
   ],
-  "creature_spawn_probability": 0.45,
   "downfall": 0.0,
   "effects": {
     "foliage_color": "#d3dfdc",
@@ -97,35 +134,5 @@
     ]
   ],
   "has_precipitation": false,
-  "spawn_costs": {},
-  "spawners": {
-    "ambient": [],
-    "axolotls": [],
-    "creature": [
-      {
-        "type": "immersiveweapons:firefly",
-        "maxCount": 20,
-        "minCount": 4,
-        "weight": 10
-      },
-      {
-        "type": "immersiveweapons:star_wolf",
-        "maxCount": 2,
-        "minCount": 1,
-        "weight": 2
-      },
-      {
-        "type": "immersiveweapons:mooglow",
-        "maxCount": 4,
-        "minCount": 1,
-        "weight": 6
-      }
-    ],
-    "misc": [],
-    "monster": [],
-    "underground_water_creature": [],
-    "water_ambient": [],
-    "water_creature": []
-  },
   "temperature": 0.6
 }

@@ -1,12 +1,10 @@
 {
   "type": "immersiveweapons:simple_chest",
   "allow_treasure": true,
-  "conditions": [
-    {
-      "condition": "neoforge:loot_table_id",
-      "loot_table_id": "minecraft:chests/nether_bridge"
-    }
-  ],
+  "condition": {
+    "type": "neoforge:loot_table_id",
+    "loot_table_id": "minecraft:chests/nether_bridge"
+  },
   "item": {
     "id": "immersiveweapons:dragons_breath_bow"
   },

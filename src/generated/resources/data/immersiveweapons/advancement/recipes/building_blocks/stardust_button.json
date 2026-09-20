@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:stardust_button"
+        "recipes": "immersiveweapons:stardust_button"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

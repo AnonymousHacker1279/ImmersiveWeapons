@@ -2,15 +2,16 @@ package tech.anonymoushacker1279.immersiveweapons.advancement;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.advancements.predicates.ContextAwarePredicate;
 import net.minecraft.advancements.predicates.entity.EntityPredicate;
 import net.minecraft.advancements.triggers.Criterion;
 import net.minecraft.advancements.triggers.SimpleCriterionTrigger;
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import tech.anonymoushacker1279.immersiveweapons.init.CriterionTriggerRegistry;
 
 import java.util.Optional;
@@ -27,13 +28,13 @@ public class EntityDiscoveredTrigger extends SimpleCriterionTrigger<EntityDiscov
 		this.trigger(serverPlayer, predicate -> predicate.matches(lootContext));
 	}
 
-	public record TriggerInstance(Optional<ContextAwarePredicate> player,
-	                              Optional<ContextAwarePredicate> entity) implements SimpleCriterionTrigger.SimpleInstance {
+	public record TriggerInstance(Optional<Holder<LootItemCondition>> player,
+	                              Optional<Holder<LootItemCondition>> entity) implements SimpleCriterionTrigger.SimpleInstance {
 
 		public static final Codec<EntityDiscoveredTrigger.TriggerInstance> CODEC = RecordCodecBuilder.create(
 				instance -> instance.group(
-								EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("player").forGetter(EntityDiscoveredTrigger.TriggerInstance::player),
-								EntityPredicate.ADVANCEMENT_CODEC.optionalFieldOf("entity").forGetter(EntityDiscoveredTrigger.TriggerInstance::entity)
+								LootItemCondition.CODEC.optionalFieldOf("player").forGetter(EntityDiscoveredTrigger.TriggerInstance::player),
+								LootItemCondition.CODEC.optionalFieldOf("entity").forGetter(EntityDiscoveredTrigger.TriggerInstance::entity)
 						)
 						.apply(instance, EntityDiscoveredTrigger.TriggerInstance::new)
 		);
@@ -50,7 +51,7 @@ public class EntityDiscoveredTrigger extends SimpleCriterionTrigger<EntityDiscov
 		}
 
 		public boolean matches(LootContext lootContext) {
-			return entity.isPresent() && entity.get().matches(lootContext);
+			return entity.isPresent() && entity.get().value().test(lootContext);
 		}
 	}
 }

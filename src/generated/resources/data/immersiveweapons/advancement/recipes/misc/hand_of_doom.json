@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:hand_of_doom"
+        "recipes": "immersiveweapons:hand_of_doom"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:tesla_block"
+        "recipes": "immersiveweapons:tesla_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:cobalt_axe"
+        "recipes": "immersiveweapons:cobalt_axe"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

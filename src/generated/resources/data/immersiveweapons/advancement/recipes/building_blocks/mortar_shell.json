@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:mortar_shell"
+        "recipes": "immersiveweapons:mortar_shell"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

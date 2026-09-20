@@ -20,6 +20,50 @@
         "sound": "immersiveweapons:tiltros_wastes_music"
       }
     },
+    "minecraft:gameplay/natural_mob_spawns": {
+      "argument": {
+        "spawn_costs": {
+          "immersiveweapons:lava_revenant": {
+            "charge": 1.0,
+            "energy_budget": 2.0
+          }
+        },
+        "spawns_by_category": {
+          "ambient": [
+            {
+              "type": "immersiveweapons:wisp",
+              "count": {
+                "type": "minecraft:uniform",
+                "max_inclusive": 2,
+                "min_inclusive": 1
+              },
+              "weight": 50
+            }
+          ],
+          "monster": [
+            {
+              "type": "immersiveweapons:rock_spider",
+              "count": {
+                "type": "minecraft:uniform",
+                "max_inclusive": 4,
+                "min_inclusive": 2
+              },
+              "weight": 85
+            },
+            {
+              "type": "immersiveweapons:lava_revenant",
+              "count": {
+                "type": "minecraft:uniform",
+                "max_inclusive": 1,
+                "min_inclusive": 1
+              },
+              "weight": 10
+            }
+          ]
+        }
+      },
+      "modifier": "overlay"
+    },
     "minecraft:visual/fog_color": "#2b2f77",
     "minecraft:visual/sky_color": "#070b34",
     "minecraft:visual/water_fog_color": "#483475"
@@ -94,41 +138,5 @@
     ]
   ],
   "has_precipitation": false,
-  "spawn_costs": {
-    "immersiveweapons:lava_revenant": {
-      "charge": 1.0,
-      "energy_budget": 2.0
-    }
-  },
-  "spawners": {
-    "ambient": [
-      {
-        "type": "immersiveweapons:wisp",
-        "maxCount": 2,
-        "minCount": 1,
-        "weight": 50
-      }
-    ],
-    "axolotls": [],
-    "creature": [],
-    "misc": [],
-    "monster": [
-      {
-        "type": "immersiveweapons:rock_spider",
-        "maxCount": 4,
-        "minCount": 2,
-        "weight": 85
-      },
-      {
-        "type": "immersiveweapons:lava_revenant",
-        "maxCount": 1,
-        "minCount": 1,
-        "weight": 10
-      }
-    ],
-    "underground_water_creature": [],
-    "water_ambient": [],
-    "water_creature": []
-  },
   "temperature": 0.6
 }

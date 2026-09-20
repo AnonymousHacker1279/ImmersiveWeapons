@@ -1,12 +1,10 @@
 {
   "type": "immersiveweapons:simple_chest",
   "allow_treasure": false,
-  "conditions": [
-    {
-      "condition": "neoforge:loot_table_id",
-      "loot_table_id": "minecraft:chests/trial_chambers/reward"
-    }
-  ],
+  "condition": {
+    "type": "neoforge:loot_table_id",
+    "loot_table_id": "minecraft:chests/trial_chambers/reward"
+  },
   "item": {
     "id": "immersiveweapons:cobalt_arrow"
   },

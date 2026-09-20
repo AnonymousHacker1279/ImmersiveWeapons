@@ -10,10 +10,11 @@ import net.minecraft.world.level.biome.BiomeGenerationSettings;
 import net.minecraft.world.level.biome.BiomeSpecialEffects;
 import net.minecraft.world.level.biome.BiomeSpecialEffects.GrassColorModifier;
 import net.minecraft.world.level.biome.MobSpawnSettings;
-import net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData;
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
-import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
+import net.minecraft.world.level.levelgen.carver.WorldCarver;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+import net.minecraft.util.ARGB;
+import net.minecraft.util.valueproviders.UniformInt;
 import tech.anonymoushacker1279.immersiveweapons.data.features.IWConfiguredCarvers;
 import tech.anonymoushacker1279.immersiveweapons.data.features.IWPlacedFeatures;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
@@ -24,7 +25,7 @@ import java.util.Optional;
 
 public class BiomesGenerator {
 
-	public static Biome battlefieldBiome(HolderGetter<PlacedFeature> placedFeatures, HolderGetter<ConfiguredWorldCarver<?>> worldCarvers) {
+	public static Biome battlefieldBiome(HolderGetter<PlacedFeature> placedFeatures, HolderGetter<WorldCarver> worldCarvers) {
 		return new Biome.BiomeBuilder()
 				.temperature(0.8f)
 				.downfall(0.3f)
@@ -38,9 +39,9 @@ public class BiomesGenerator {
 						.build())
 				.mobSpawnSettings(getBattlefieldSpawns())
 				.generationSettings(getBattlefieldGenerationSettings(placedFeatures, worldCarvers))
-				.setAttribute(EnvironmentAttributes.SKY_COLOR, 7628662)
-				.setAttribute(EnvironmentAttributes.FOG_COLOR, 9464960)
-				.setAttribute(EnvironmentAttributes.WATER_FOG_COLOR, 5258098)
+				.setAttribute(EnvironmentAttributes.SKY_COLOR, ARGB.vector3fFromRGB24(7628662))
+				.setAttribute(EnvironmentAttributes.FOG_COLOR, ARGB.vector3fFromRGB24(9464960))
+				.setAttribute(EnvironmentAttributes.WATER_FOG_COLOR, ARGB.vector3fFromRGB24(5258098))
 				.setAttribute(EnvironmentAttributes.AMBIENT_SOUNDS, new AmbientSounds(
 						Optional.of(SoundEventRegistry.BATTLEFIELD_AMBIENT),
 						Optional.empty(),
@@ -49,7 +50,7 @@ public class BiomesGenerator {
 				.build();
 	}
 
-	public static Biome tiltrosWastesBiome(HolderGetter<PlacedFeature> placedFeatures, HolderGetter<ConfiguredWorldCarver<?>> worldCarvers) {
+	public static Biome tiltrosWastesBiome(HolderGetter<PlacedFeature> placedFeatures, HolderGetter<WorldCarver> worldCarvers) {
 		return new Biome.BiomeBuilder()
 				.temperature(0.6f)
 				.downfall(0.0f)
@@ -63,9 +64,9 @@ public class BiomesGenerator {
 						.build())
 				.mobSpawnSettings(getTiltrosWastesSpawns())
 				.generationSettings(getTiltrosWastesGenerationSettings(placedFeatures, worldCarvers))
-				.setAttribute(EnvironmentAttributes.SKY_COLOR, 461620)
-				.setAttribute(EnvironmentAttributes.FOG_COLOR, 2830199)
-				.setAttribute(EnvironmentAttributes.WATER_FOG_COLOR, 4732021)
+				.setAttribute(EnvironmentAttributes.SKY_COLOR, ARGB.vector3fFromRGB24(461620))
+				.setAttribute(EnvironmentAttributes.FOG_COLOR, ARGB.vector3fFromRGB24(2830199))
+				.setAttribute(EnvironmentAttributes.WATER_FOG_COLOR, ARGB.vector3fFromRGB24(4732021))
 				.setAttribute(EnvironmentAttributes.BACKGROUND_MUSIC, new BackgroundMusic(SoundEventRegistry.TILTROS_WASTES_MUSIC))
 				.setAttribute(EnvironmentAttributes.AMBIENT_SOUNDS, new AmbientSounds(
 						Optional.of(SoundEventRegistry.TILTROS_WASTES_AMBIENT),
@@ -79,7 +80,7 @@ public class BiomesGenerator {
 				.build();
 	}
 
-	public static Biome starlightPlainsBiome(HolderGetter<PlacedFeature> placedFeatures, HolderGetter<ConfiguredWorldCarver<?>> worldCarvers) {
+	public static Biome starlightPlainsBiome(HolderGetter<PlacedFeature> placedFeatures, HolderGetter<WorldCarver> worldCarvers) {
 		return new Biome.BiomeBuilder()
 				.temperature(0.6f)
 				.downfall(0.0f)
@@ -93,9 +94,10 @@ public class BiomesGenerator {
 						.build())
 				.mobSpawnSettings(getStarlightPlainsSpawns())
 				.generationSettings(getStarlightPlainsGenerationSettings(placedFeatures, worldCarvers))
-				.setAttribute(EnvironmentAttributes.SKY_COLOR, 461620)
-				.setAttribute(EnvironmentAttributes.FOG_COLOR, 2830199)
-				.setAttribute(EnvironmentAttributes.WATER_FOG_COLOR, 13356221)
+				.setAttribute(EnvironmentAttributes.CREATURE_WORLD_GEN_SPAWN_PROBABILITY, 0.45f)
+				.setAttribute(EnvironmentAttributes.SKY_COLOR, ARGB.vector3fFromRGB24(461620))
+				.setAttribute(EnvironmentAttributes.FOG_COLOR, ARGB.vector3fFromRGB24(2830199))
+				.setAttribute(EnvironmentAttributes.WATER_FOG_COLOR, ARGB.vector3fFromRGB24(13356221))
 				.setAttribute(EnvironmentAttributes.BACKGROUND_MUSIC, new BackgroundMusic(SoundEventRegistry.STARLIGHT_PLAINS_BACKGROUND_MUSIC))
 				.setAttribute(EnvironmentAttributes.AMBIENT_SOUNDS, new AmbientSounds(
 						Optional.of(SoundEventRegistry.STARLIGHT_PLAINS_AMBIENT),
@@ -109,7 +111,7 @@ public class BiomesGenerator {
 				.build();
 	}
 
-	public static Biome deadmansDesertBiome(HolderGetter<PlacedFeature> placedFeatures, HolderGetter<ConfiguredWorldCarver<?>> worldCarvers) {
+	public static Biome deadmansDesertBiome(HolderGetter<PlacedFeature> placedFeatures, HolderGetter<WorldCarver> worldCarvers) {
 		return new Biome.BiomeBuilder()
 				.temperature(0.35f)
 				.downfall(0.0f)
@@ -123,9 +125,9 @@ public class BiomesGenerator {
 						.build())
 				.mobSpawnSettings(getDeadmansDesertSpawns())
 				.generationSettings(getDeadmansDesertGenerationSettings(placedFeatures, worldCarvers))
-				.setAttribute(EnvironmentAttributes.SKY_COLOR, 10885401)
-				.setAttribute(EnvironmentAttributes.FOG_COLOR, 5063491)
-				.setAttribute(EnvironmentAttributes.WATER_FOG_COLOR, 13356221)
+				.setAttribute(EnvironmentAttributes.SKY_COLOR, ARGB.vector3fFromRGB24(10885401))
+				.setAttribute(EnvironmentAttributes.FOG_COLOR, ARGB.vector3fFromRGB24(5063491))
+				.setAttribute(EnvironmentAttributes.WATER_FOG_COLOR, ARGB.vector3fFromRGB24(13356221))
 				.setAttribute(EnvironmentAttributes.BACKGROUND_MUSIC, new BackgroundMusic(SoundEventRegistry.DEADMANS_DESERT_BACKGROUND_MUSIC))
 				.setAttribute(EnvironmentAttributes.AMBIENT_SOUNDS, new AmbientSounds(
 						Optional.of(SoundEventRegistry.DEADMANS_DESERT_AMBIENT),
@@ -141,8 +143,7 @@ public class BiomesGenerator {
 
 	private static MobSpawnSettings getBattlefieldSpawns() {
 		MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder()
-				.addSpawn(MobCategory.MONSTER, 95, new SpawnerData(
-						EntityRegistry.DYING_SOLDIER_ENTITY.get(), 1, 3));
+				.addSpawn(EntityRegistry.DYING_SOLDIER_ENTITY.get(), MobCategory.MONSTER, 95, UniformInt.of(1, 3));
 
 		BiomeDefaultFeatures.commonSpawns(spawnBuilder);
 
@@ -151,45 +152,35 @@ public class BiomesGenerator {
 
 	private static MobSpawnSettings getTiltrosWastesSpawns() {
 		MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder()
-				.addSpawn(MobCategory.MONSTER, 85, new SpawnerData(
-						EntityRegistry.ROCK_SPIDER_ENTITY.get(), 2, 4))
-				.addSpawn(MobCategory.MONSTER, 10, new SpawnerData(
-						EntityRegistry.LAVA_REVENANT_ENTITY.get(), 1, 1))
-				.addSpawn(MobCategory.AMBIENT, 50, new SpawnerData(
-						EntityRegistry.WISP_ENTITY.get(), 1, 2))
-				.addMobCharge(EntityRegistry.LAVA_REVENANT_ENTITY.get(), 1d, 2d);
+				.addSpawn(EntityRegistry.ROCK_SPIDER_ENTITY.get(), MobCategory.MONSTER, 85, UniformInt.of(2, 4))
+				.addSpawn(EntityRegistry.LAVA_REVENANT_ENTITY.get(), MobCategory.MONSTER, 10, UniformInt.of(1, 1))
+				.addSpawn(EntityRegistry.WISP_ENTITY.get(), MobCategory.AMBIENT, 50, UniformInt.of(1, 2))
+				.addMobSpawnCost(EntityRegistry.LAVA_REVENANT_ENTITY.get(), 1d, 2d);
 
 		return spawnBuilder.build();
 	}
 
 	private static MobSpawnSettings getStarlightPlainsSpawns() {
 		MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder()
-				.creatureGenerationProbability(0.45f)
-				.addSpawn(MobCategory.CREATURE, 10, new SpawnerData(
-						EntityRegistry.FIREFLY_ENTITY.get(), 4, 20))
-				.addSpawn(MobCategory.CREATURE, 2, new SpawnerData(
-						EntityRegistry.STAR_WOLF_ENTITY.get(), 1, 2))
-				.addSpawn(MobCategory.CREATURE, 6, new SpawnerData(
-						EntityRegistry.MOOGLOW_ENTITY.get(), 1, 4));
+				.addSpawn(EntityRegistry.FIREFLY_ENTITY.get(), MobCategory.CREATURE, 10, UniformInt.of(4, 20))
+				.addSpawn(EntityRegistry.STAR_WOLF_ENTITY.get(), MobCategory.CREATURE, 2, UniformInt.of(1, 2))
+				.addSpawn(EntityRegistry.MOOGLOW_ENTITY.get(), MobCategory.CREATURE, 6, UniformInt.of(1, 4));
 
 		return spawnBuilder.build();
 	}
 
 	private static MobSpawnSettings getDeadmansDesertSpawns() {
 		MobSpawnSettings.Builder spawnBuilder = new MobSpawnSettings.Builder()
-				.addSpawn(MobCategory.MONSTER, 5, new SpawnerData(
-						EntityRegistry.CELESTIAL_TOWER_ENTITY.get(), 1, 1))
-				.addSpawn(MobCategory.MONSTER, 10, new SpawnerData(
-						EntityRegistry.STORM_CREEPER_ENTITY.get(), 1, 1))
-				.addSpawn(MobCategory.MONSTER, 7, new SpawnerData(
-						EntityRegistry.EVIL_EYE_ENTITY.get(), 1, 2))
-				.addMobCharge(EntityRegistry.EVIL_EYE_ENTITY.get(), 0.15d, 12d);
+				.addSpawn(EntityRegistry.CELESTIAL_TOWER_ENTITY.get(), MobCategory.MONSTER, 5, UniformInt.of(1, 1))
+				.addSpawn(EntityRegistry.STORM_CREEPER_ENTITY.get(), MobCategory.MONSTER, 10, UniformInt.of(1, 1))
+				.addSpawn(EntityRegistry.EVIL_EYE_ENTITY.get(), MobCategory.MONSTER, 7, UniformInt.of(1, 2))
+				.addMobSpawnCost(EntityRegistry.EVIL_EYE_ENTITY.get(), 0.15d, 12d);
 
 		return spawnBuilder.build();
 	}
 
 	private static BiomeGenerationSettings getBattlefieldGenerationSettings(HolderGetter<PlacedFeature> placedFeatures,
-	                                                                        HolderGetter<ConfiguredWorldCarver<?>> worldCarvers) {
+	                                                                        HolderGetter<WorldCarver> worldCarvers) {
 
 		BiomeGenerationSettings.Builder generationBuilder = new BiomeGenerationSettings.Builder(placedFeatures, worldCarvers)
 				.addCarver(IWConfiguredCarvers.TRENCH)
@@ -203,7 +194,7 @@ public class BiomesGenerator {
 	}
 
 	private static BiomeGenerationSettings getTiltrosWastesGenerationSettings(HolderGetter<PlacedFeature> placedFeatures,
-	                                                                          HolderGetter<ConfiguredWorldCarver<?>> worldCarvers) {
+	                                                                          HolderGetter<WorldCarver> worldCarvers) {
 
 		BiomeGenerationSettings.Builder generationBuilder = new BiomeGenerationSettings.Builder(placedFeatures, worldCarvers)
 				.addCarver(IWConfiguredCarvers.TILTROS_WASTES)
@@ -216,7 +207,7 @@ public class BiomesGenerator {
 	}
 
 	private static BiomeGenerationSettings getStarlightPlainsGenerationSettings(HolderGetter<PlacedFeature> placedFeatures,
-	                                                                            HolderGetter<ConfiguredWorldCarver<?>> worldCarvers) {
+	                                                                            HolderGetter<WorldCarver> worldCarvers) {
 
 		BiomeGenerationSettings.Builder generationBuilder = new BiomeGenerationSettings.Builder(placedFeatures, worldCarvers)
 				.addFeature(Decoration.VEGETAL_DECORATION, IWPlacedFeatures.PATCH_MOONGLOW)
@@ -231,7 +222,7 @@ public class BiomesGenerator {
 	}
 
 	private static BiomeGenerationSettings getDeadmansDesertGenerationSettings(HolderGetter<PlacedFeature> placedFeatures,
-	                                                                           HolderGetter<ConfiguredWorldCarver<?>> worldCarvers) {
+	                                                                           HolderGetter<WorldCarver> worldCarvers) {
 
 		BiomeGenerationSettings.Builder generationBuilder = new BiomeGenerationSettings.Builder(placedFeatures, worldCarvers)
 				.addFeature(Decoration.VEGETAL_DECORATION, IWPlacedFeatures.PATCH_DEATHWEED);

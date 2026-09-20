@@ -16,7 +16,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.InputEvent;
 import net.neoforged.neoforge.client.event.RecipesReceivedEvent;
-import net.neoforged.neoforge.client.event.RenderBlockScreenEffectEvent;
+import net.neoforged.neoforge.client.event.ExtractBlockScreenEffectEvent;
 import net.neoforged.neoforge.client.event.ViewportEvent.ComputeFogColor;
 import net.neoforged.neoforge.client.event.ViewportEvent.ComputeFov;
 import net.neoforged.neoforge.client.event.ViewportEvent.RenderFog;
@@ -37,17 +37,17 @@ import tech.anonymoushacker1279.immersiveweapons.menu.StarForgeMenu;
 public class ClientForgeEventSubscriber {
 
 
-	/// Event handler for the RenderBlockScreenEffectEvent.
+	/// Event handler for the ExtractBlockScreenEffectEvent.
 	///
-	/// @param event the `RenderBlockScreenEffectEvent` instance
+	/// @param event the `ExtractBlockScreenEffectEvent` instance
 	@SubscribeEvent
-	public static void renderBlockScreenEffectEvent(RenderBlockScreenEffectEvent event) {
+	public static void extractBlockScreenEffectEvent(ExtractBlockScreenEffectEvent event) {
 		Player player = event.getPlayer();
 
 		// Remove fire overlay from players wearing a full set of molten armor
 		if (ArmorUtils.isWearingMoltenArmor(player)) {
 			if (player.isInLava()) {
-				if (event.getBlockState() == Blocks.FIRE.defaultBlockState()) {
+				if (event.getState() == Blocks.FIRE.defaultBlockState()) {
 					event.setCanceled(true);
 				}
 			}
@@ -55,7 +55,7 @@ public class ClientForgeEventSubscriber {
 
 		if (Accessory.isAccessoryActive(player, ItemRegistry.LAVA_GOGGLES.get())) {
 			if (player.isInLava()) {
-				if (event.getBlockState() == Blocks.FIRE.defaultBlockState()) {
+				if (event.getState() == Blocks.FIRE.defaultBlockState()) {
 					event.setCanceled(true);
 				}
 			}
@@ -76,7 +76,7 @@ public class ClientForgeEventSubscriber {
 			boolean hasLavaGoggles = Accessory.isAccessoryActive(player, ItemRegistry.LAVA_GOGGLES.get());
 			if (ArmorUtils.isWearingMoltenArmor(player)) {
 				if (level != null) {
-					BlockState state = level.getBlockState(new BlockPos(player.blockPosition().above(1)));
+					BlockState state = level.getBlockState(player.blockPosition().above(1));
 					if (state.is(Blocks.LAVA)) {
 						float modifier = hasLavaGoggles ? 1.5f : 1.0f;
 						event.setNearPlaneDistance(16.0f * modifier);
@@ -85,7 +85,7 @@ public class ClientForgeEventSubscriber {
 				}
 			} else if (hasLavaGoggles) {
 				if (level != null) {
-					BlockState state = level.getBlockState(new BlockPos(player.blockPosition().above(1)));
+					BlockState state = level.getBlockState(player.blockPosition().above(1));
 					if (state.is(Blocks.LAVA)) {
 						event.setNearPlaneDistance(8.0f);
 						event.setFarPlaneDistance(16.0f);

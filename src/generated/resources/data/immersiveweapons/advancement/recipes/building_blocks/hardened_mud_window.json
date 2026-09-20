@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:hardened_mud_window"
+        "recipes": "immersiveweapons:hardened_mud_window"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

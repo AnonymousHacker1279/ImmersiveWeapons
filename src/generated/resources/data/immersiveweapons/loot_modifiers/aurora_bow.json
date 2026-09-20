@@ -1,12 +1,10 @@
 {
   "type": "immersiveweapons:simple_chest",
   "allow_treasure": true,
-  "conditions": [
-    {
-      "condition": "neoforge:loot_table_id",
-      "loot_table_id": "minecraft:chests/end_city_treasure"
-    }
-  ],
+  "condition": {
+    "type": "neoforge:loot_table_id",
+    "loot_table_id": "minecraft:chests/end_city_treasure"
+  },
   "item": {
     "id": "immersiveweapons:aurora_bow"
   },

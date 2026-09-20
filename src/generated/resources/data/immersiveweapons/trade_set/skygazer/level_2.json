@@ -1,8 +1,8 @@
 {
   "amount": {
     "type": "minecraft:uniform",
-    "max": 2.0,
-    "min": 1.0
+    "max": 2,
+    "min": 1
   },
   "random_sequence": "immersiveweapons:trade_set/skygazer/level_2",
   "trades": "#immersiveweapons:skygazer/level_2"

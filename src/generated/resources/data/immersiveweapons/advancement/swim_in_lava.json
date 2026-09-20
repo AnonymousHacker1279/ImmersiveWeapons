@@ -22,7 +22,7 @@
     },
     "swim": {
       "conditions": {
-        "block": "minecraft:lava"
+        "blocks": "minecraft:lava"
       },
       "trigger": "minecraft:enter_block"
     }

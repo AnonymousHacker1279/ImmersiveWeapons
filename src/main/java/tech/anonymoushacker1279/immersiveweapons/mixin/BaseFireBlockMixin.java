@@ -31,7 +31,7 @@ public abstract class BaseFireBlockMixin {
 			if (level instanceof ServerLevel serverLevel) {
 				Structure structure = serverLevel.structureManager().registryAccess().lookupOrThrow(Registries.STRUCTURE).getValue(SuperHansEntity.CHAMPION_TOWER_KEY);
 				if (structure != null) {
-					StructureStart structureStart = serverLevel.structureManager().getStructureWithPieceAt(pos, structure);
+					StructureStart structureStart = serverLevel.structureManager().getStructureWithPieceAt(pos, holder -> holder.value() == structure);
 					if (structureStart.isValid()) {
 						SuperHansEntity superHans = new SuperHansEntity(EntityRegistry.SUPER_HANS_ENTITY.get(), level);
 						superHans.setPos(entity.position());

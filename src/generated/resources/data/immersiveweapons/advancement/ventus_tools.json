@@ -3,24 +3,22 @@
   "criteria": {
     "have_advancements": {
       "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:type_specific/player": {
-                "advancements": {
-                  "immersiveweapons:ventus_axe": true,
-                  "immersiveweapons:ventus_hoe": true,
-                  "immersiveweapons:ventus_pickaxe": true,
-                  "immersiveweapons:ventus_shovel": true,
-                  "immersiveweapons:ventus_spear": true,
-                  "immersiveweapons:ventus_sword": true
-                }
+        "player": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:type_specific/player": {
+              "advancements": {
+                "immersiveweapons:ventus_axe": true,
+                "immersiveweapons:ventus_hoe": true,
+                "immersiveweapons:ventus_pickaxe": true,
+                "immersiveweapons:ventus_shovel": true,
+                "immersiveweapons:ventus_spear": true,
+                "immersiveweapons:ventus_sword": true
               }
             }
           }
-        ]
+        }
       },
       "trigger": "minecraft:location"
     }

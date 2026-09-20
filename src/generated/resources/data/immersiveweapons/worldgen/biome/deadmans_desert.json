@@ -20,6 +20,48 @@
         "sound": "immersiveweapons:deadmans_desert_background_music"
       }
     },
+    "minecraft:gameplay/natural_mob_spawns": {
+      "argument": {
+        "spawn_costs": {
+          "immersiveweapons:evil_eye": {
+            "charge": 0.15,
+            "energy_budget": 12.0
+          }
+        },
+        "spawns_by_category": {
+          "monster": [
+            {
+              "type": "immersiveweapons:celestial_tower",
+              "count": {
+                "type": "minecraft:uniform",
+                "max_inclusive": 1,
+                "min_inclusive": 1
+              },
+              "weight": 5
+            },
+            {
+              "type": "immersiveweapons:storm_creeper",
+              "count": {
+                "type": "minecraft:uniform",
+                "max_inclusive": 1,
+                "min_inclusive": 1
+              },
+              "weight": 10
+            },
+            {
+              "type": "immersiveweapons:evil_eye",
+              "count": {
+                "type": "minecraft:uniform",
+                "max_inclusive": 2,
+                "min_inclusive": 1
+              },
+              "weight": 7
+            }
+          ]
+        }
+      },
+      "modifier": "overlay"
+    },
     "minecraft:visual/fog_color": "#4d4343",
     "minecraft:visual/sky_color": "#a61919",
     "minecraft:visual/water_fog_color": "#cbccbd"
@@ -99,40 +141,5 @@
     ]
   ],
   "has_precipitation": false,
-  "spawn_costs": {
-    "immersiveweapons:evil_eye": {
-      "charge": 0.15,
-      "energy_budget": 12.0
-    }
-  },
-  "spawners": {
-    "ambient": [],
-    "axolotls": [],
-    "creature": [],
-    "misc": [],
-    "monster": [
-      {
-        "type": "immersiveweapons:celestial_tower",
-        "maxCount": 1,
-        "minCount": 1,
-        "weight": 5
-      },
-      {
-        "type": "immersiveweapons:storm_creeper",
-        "maxCount": 1,
-        "minCount": 1,
-        "weight": 10
-      },
-      {
-        "type": "immersiveweapons:evil_eye",
-        "maxCount": 2,
-        "minCount": 1,
-        "weight": 7
-      }
-    ],
-    "underground_water_creature": [],
-    "water_ambient": [],
-    "water_creature": []
-  },
   "temperature": 0.35
 }

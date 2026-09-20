@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:camp_chair"
+        "recipes": "immersiveweapons:camp_chair"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

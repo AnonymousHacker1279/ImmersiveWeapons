@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:stardust_trapdoor"
+        "recipes": "immersiveweapons:stardust_trapdoor"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

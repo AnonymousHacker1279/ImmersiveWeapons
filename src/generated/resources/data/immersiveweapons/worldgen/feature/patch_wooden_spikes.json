@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:block_pile",
+  "state_provider": {
+    "id": "immersiveweapons:wooden_spikes",
+    "properties": {
+      "damage_stage": "0",
+      "facing": "north",
+      "waterlogged": "false"
+    }
+  }
+}

@@ -3,15 +3,13 @@
   "criteria": {
     "discover": {
       "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:entity_type": "immersiveweapons:lava_revenant"
-            }
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:entity_type": "immersiveweapons:lava_revenant"
           }
-        ]
+        }
       },
       "trigger": "immersiveweapons:entity_discovered"
     }

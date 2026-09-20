@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:flintlock_pistol"
+        "recipes": "immersiveweapons:flintlock_pistol"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

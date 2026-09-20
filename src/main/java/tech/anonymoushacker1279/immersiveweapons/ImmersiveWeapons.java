@@ -1,7 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons;
 
 import com.mojang.logging.LogUtils;
-import net.minecraft.resources.Identifier;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
@@ -19,10 +18,7 @@ import tech.anonymoushacker1279.immersiveweapons.init.DeferredRegistryHandler;
 import tech.anonymoushacker1279.immersiveweapons.init.DispenserBehaviorRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.PostSetupHandler;
 import tech.anonymoushacker1279.immersiveweapons.world.level.CustomBlockSetTypes;
-import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.IWOverworldBiomesProvider;
-import terrablender.api.RegionType;
-import terrablender.api.Regions;
-import terrablender.api.SurfaceRuleManager;
+// TODO: waiting for update (TerraBlender) - re-add imports: IWOverworldBiomesProvider, Identifier, terrablender.api.RegionType/Regions/SurfaceRuleManager
 
 @Mod(ImmersiveWeapons.MOD_ID)
 public class ImmersiveWeapons {
@@ -57,8 +53,9 @@ public class ImmersiveWeapons {
 			CustomBlockSetTypes.init();
 			WoodTypes.init();
 
-			Regions.register(new IWOverworldBiomesProvider(Identifier.fromNamespaceAndPath(MOD_ID, "overworld_biome_provider"), RegionType.OVERWORLD, 1));
-			SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, MOD_ID, IWOverworldBiomesProvider::makeSurfaceRules);
+			// TODO: waiting for update (TerraBlender)
+			// Regions.register(new IWOverworldBiomesProvider(Identifier.fromNamespaceAndPath(MOD_ID, "overworld_biome_provider"), RegionType.OVERWORLD, 1));
+			// SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, MOD_ID, IWOverworldBiomesProvider::makeSurfaceRules);
 		});
 		PostSetupHandler.init();
 

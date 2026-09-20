@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:diamond_maul"
+        "recipes": "immersiveweapons:diamond_maul"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

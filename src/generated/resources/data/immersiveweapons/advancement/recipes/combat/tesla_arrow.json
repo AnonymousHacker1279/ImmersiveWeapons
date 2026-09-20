@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:tesla_arrow"
+        "recipes": "immersiveweapons:tesla_arrow"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

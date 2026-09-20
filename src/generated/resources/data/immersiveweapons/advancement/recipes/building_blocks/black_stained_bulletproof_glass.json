@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:black_stained_bulletproof_glass"
+        "recipes": "immersiveweapons:black_stained_bulletproof_glass"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

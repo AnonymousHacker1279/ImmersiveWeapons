@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:bloody_cloth"
+        "recipes": "immersiveweapons:bloody_cloth"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

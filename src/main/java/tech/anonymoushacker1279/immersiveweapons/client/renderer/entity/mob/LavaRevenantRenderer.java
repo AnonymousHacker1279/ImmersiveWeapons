@@ -42,7 +42,7 @@ public class LavaRevenantRenderer extends MobRenderer<LavaRevenantEntity, LavaRe
 	@Override
 	protected void setupRotations(LavaRevenantRenderState renderState, PoseStack poseStack, float bodyRot, float scale) {
 		super.setupRotations(renderState, poseStack, bodyRot, scale);
-		poseStack.mulPose(Axis.XP.rotationDegrees(renderState.xRot));
+		poseStack.rotate(Axis.XP.rotationDegrees(renderState.xRot));
 	}
 
 	@Override
@@ -53,7 +53,7 @@ public class LavaRevenantRenderer extends MobRenderer<LavaRevenantEntity, LavaRe
 	}
 
 	@Override
-	protected AABB getBoundingBoxForCulling(LavaRevenantEntity entity) {
-		return super.getBoundingBoxForCulling(entity).inflate(2d);
+	protected AABB getBoundingBoxForCulling(LavaRevenantEntity entity, float partialTick) {
+		return super.getBoundingBoxForCulling(entity, partialTick).inflate(2d);
 	}
 }

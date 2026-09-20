@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:recovery_staff"
+        "recipes": "immersiveweapons:recovery_staff"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

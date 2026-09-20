@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:the_sword"
+        "recipes": "immersiveweapons:the_sword"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

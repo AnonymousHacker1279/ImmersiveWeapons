@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:dragon_fireball"
+        "recipes": "immersiveweapons:dragon_fireball"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

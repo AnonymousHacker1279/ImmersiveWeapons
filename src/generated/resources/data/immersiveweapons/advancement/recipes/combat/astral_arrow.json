@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:astral_arrow"
+        "recipes": "immersiveweapons:astral_arrow"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

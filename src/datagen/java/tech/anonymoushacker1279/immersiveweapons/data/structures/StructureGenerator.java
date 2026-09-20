@@ -21,6 +21,7 @@ import net.minecraft.world.level.levelgen.structure.StructureSpawnOverride.Bound
 import net.minecraft.world.level.levelgen.structure.TerrainAdjustment;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
 import net.minecraft.world.level.levelgen.structure.structures.JigsawStructure;
+import net.minecraft.util.valueproviders.UniformInt;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWWorldGenTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
@@ -63,7 +64,7 @@ public class StructureGenerator {
 										MobCategory.MONSTER,
 										new StructureSpawnOverride(
 												BoundingBoxType.STRUCTURE,
-												WeightedList.of(new SpawnerData(EntityTypes.ZOMBIE, 1, 2))
+												WeightedList.of(new SpawnerData(EntityTypes.ZOMBIE, UniformInt.of(1, 2)))
 										)
 								)
 						)
@@ -83,7 +84,7 @@ public class StructureGenerator {
 										MobCategory.MONSTER,
 										new StructureSpawnOverride(
 												BoundingBoxType.STRUCTURE,
-												WeightedList.of(new SpawnerData(EntityRegistry.DYING_SOLDIER_ENTITY.get(), 2, 2))
+												WeightedList.of(new SpawnerData(EntityRegistry.DYING_SOLDIER_ENTITY.get(), UniformInt.of(2, 2)))
 										)
 								)
 						)
@@ -103,7 +104,7 @@ public class StructureGenerator {
 										MobCategory.CREATURE,
 										new StructureSpawnOverride(
 												BoundingBoxType.STRUCTURE,
-												WeightedList.of(new SpawnerData(EntityTypes.CAT, 1, 2))
+												WeightedList.of(new SpawnerData(EntityTypes.CAT, UniformInt.of(1, 2)))
 										)
 								)
 						)
@@ -145,7 +146,7 @@ public class StructureGenerator {
 										MobCategory.MISC,
 										new StructureSpawnOverride(
 												BoundingBoxType.STRUCTURE,
-												WeightedList.of(new SpawnerData(EntityRegistry.MINUTEMAN_ENTITY.get(), 1, 2))
+												WeightedList.of(new SpawnerData(EntityRegistry.MINUTEMAN_ENTITY.get(), UniformInt.of(1, 2)))
 										)
 								)
 						)
@@ -165,7 +166,7 @@ public class StructureGenerator {
 										MobCategory.MONSTER,
 										new StructureSpawnOverride(
 												BoundingBoxType.STRUCTURE,
-												WeightedList.of(new SpawnerData(EntityTypes.SKELETON, 1, 2))
+												WeightedList.of(new SpawnerData(EntityTypes.SKELETON, UniformInt.of(1, 2)))
 										)
 								)
 						)
@@ -208,7 +209,7 @@ public class StructureGenerator {
 										MobCategory.MONSTER,
 										new StructureSpawnOverride(
 												BoundingBoxType.STRUCTURE,
-												WeightedList.of(new SpawnerData(EntityRegistry.DYING_SOLDIER_ENTITY.get(), 1, 2))
+												WeightedList.of(new SpawnerData(EntityRegistry.DYING_SOLDIER_ENTITY.get(), UniformInt.of(1, 2)))
 										)
 								)
 						)
@@ -239,7 +240,7 @@ public class StructureGenerator {
 										MobCategory.MONSTER,
 										new StructureSpawnOverride(
 												BoundingBoxType.STRUCTURE,
-												WeightedList.of(new SpawnerData(EntityTypes.ZOMBIE, 1, 2))
+												WeightedList.of(new SpawnerData(EntityTypes.ZOMBIE, UniformInt.of(1, 2)))
 										)
 								)
 						)
@@ -303,7 +304,7 @@ public class StructureGenerator {
 										MobCategory.MONSTER,
 										new StructureSpawnOverride(
 												BoundingBoxType.STRUCTURE,
-												WeightedList.of(new SpawnerData(EntityRegistry.DYING_SOLDIER_ENTITY.get(), 1, 2))
+												WeightedList.of(new SpawnerData(EntityRegistry.DYING_SOLDIER_ENTITY.get(), UniformInt.of(1, 2)))
 										)
 								)
 						)

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:smooth_blood_sandstone_from_smelting_blood_sandstone"
+        "recipes": "immersiveweapons:smooth_blood_sandstone_from_smelting_blood_sandstone"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

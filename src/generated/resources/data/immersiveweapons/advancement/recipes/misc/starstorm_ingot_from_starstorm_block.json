@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:starstorm_ingot_from_starstorm_block"
+        "recipes": "immersiveweapons:starstorm_ingot_from_starstorm_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

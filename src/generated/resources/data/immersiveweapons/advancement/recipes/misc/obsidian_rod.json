@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:obsidian_rod"
+        "recipes": "immersiveweapons:obsidian_rod"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

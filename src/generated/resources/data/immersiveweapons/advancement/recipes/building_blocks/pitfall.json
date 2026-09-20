@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:pitfall"
+        "recipes": "immersiveweapons:pitfall"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

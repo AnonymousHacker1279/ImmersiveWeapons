@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:ventus_smithing_template"
+        "recipes": "immersiveweapons:ventus_smithing_template"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:dragons_breath_cannon"
+        "recipes": "immersiveweapons:dragons_breath_cannon"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

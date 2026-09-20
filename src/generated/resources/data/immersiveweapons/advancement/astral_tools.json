@@ -3,24 +3,22 @@
   "criteria": {
     "have_advancements": {
       "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:type_specific/player": {
-                "advancements": {
-                  "immersiveweapons:astral_axe": true,
-                  "immersiveweapons:astral_hoe": true,
-                  "immersiveweapons:astral_pickaxe": true,
-                  "immersiveweapons:astral_shovel": true,
-                  "immersiveweapons:astral_spear": true,
-                  "immersiveweapons:astral_sword": true
-                }
+        "player": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:type_specific/player": {
+              "advancements": {
+                "immersiveweapons:astral_axe": true,
+                "immersiveweapons:astral_hoe": true,
+                "immersiveweapons:astral_pickaxe": true,
+                "immersiveweapons:astral_shovel": true,
+                "immersiveweapons:astral_spear": true,
+                "immersiveweapons:astral_sword": true
               }
             }
           }
-        ]
+        }
       },
       "trigger": "minecraft:location"
     }

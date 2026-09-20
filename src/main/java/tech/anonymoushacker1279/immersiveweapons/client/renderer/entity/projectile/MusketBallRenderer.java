@@ -39,8 +39,8 @@ public class MusketBallRenderer extends EntityRenderer<BulletEntity, LivingEntit
 	public void submit(LivingEntityRenderState state, PoseStack stack, SubmitNodeCollector collector, CameraRenderState cameraState) {
 		stack.pushPose();
 
-		stack.mulPose(Axis.YP.rotationDegrees(state.yRot));
-		stack.mulPose(Axis.XP.rotationDegrees(state.xRot));
+		stack.rotate(Axis.YP.rotationDegrees(state.yRot));
+		stack.rotate(Axis.XP.rotationDegrees(state.xRot));
 
 		stack.scale(1.25f, 1.25f, 1.25f);
 		stack.translate(-0.025f, 0.025f, -0.025f);

@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:raw_cobalt"
+        "recipes": "immersiveweapons:raw_cobalt"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

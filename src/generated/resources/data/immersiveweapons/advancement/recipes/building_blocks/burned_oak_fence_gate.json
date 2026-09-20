@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:burned_oak_fence_gate"
+        "recipes": "immersiveweapons:burned_oak_fence_gate"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

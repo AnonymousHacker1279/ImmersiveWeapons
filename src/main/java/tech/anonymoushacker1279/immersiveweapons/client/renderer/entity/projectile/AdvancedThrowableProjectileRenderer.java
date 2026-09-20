@@ -31,7 +31,7 @@ public class AdvancedThrowableProjectileRenderer extends EntityRenderer<Advanced
 		stack.pushPose();
 
 		if (state.movementLengthSqr < 0.01f) {
-			stack.mulPose(Axis.XP.rotationDegrees(90.0F));
+			stack.rotate(Axis.XP.rotationDegrees(90.0F));
 			stack.translate(0.0D, 0.4D, 0.0D);
 		} else {
 			stack.translate(0.0D, 0.6D, 0.0D);

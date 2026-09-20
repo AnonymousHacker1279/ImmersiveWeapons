@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:netherite_musket_ball"
+        "recipes": "immersiveweapons:netherite_musket_ball"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

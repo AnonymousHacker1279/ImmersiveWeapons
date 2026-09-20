@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:powder_horn"
+        "recipes": "immersiveweapons:powder_horn"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

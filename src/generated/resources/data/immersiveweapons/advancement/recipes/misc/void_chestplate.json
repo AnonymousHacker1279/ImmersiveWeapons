@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:void_chestplate"
+        "recipes": "immersiveweapons:void_chestplate"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

@@ -4,6 +4,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.equipment.ArmorType;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -88,9 +89,9 @@ public class ItemRegistry {
 	public static final DeferredHolder<Item, TeslaSpear> TESLA_SPEAR = ITEMS.registerItem("tesla_spear", TeslaSpear::new);
 	public static final DeferredHolder<Item, Item> COBALT_SWORD = ITEMS.registerItem("cobalt_sword", (properties) -> new Item(properties.sword(IWToolMaterials.COBALT, 3, -2.4f)));
 	public static final DeferredHolder<Item, Item> COBALT_PICKAXE = ITEMS.registerItem("cobalt_pickaxe", (properties) -> new Item(properties.pickaxe(IWToolMaterials.COBALT, 1, -2.8f)));
-	public static final DeferredHolder<Item, AxeItem> COBALT_AXE = ITEMS.registerItem("cobalt_axe", (properties) -> new AxeItem(IWToolMaterials.COBALT, 6, -3.1f, properties));
-	public static final DeferredHolder<Item, ShovelItem> COBALT_SHOVEL = ITEMS.registerItem("cobalt_shovel", (properties) -> new ShovelItem(IWToolMaterials.COBALT, 1.5f, -3.0f, properties));
-	public static final DeferredHolder<Item, HoeItem> COBALT_HOE = ITEMS.registerItem("cobalt_hoe", (properties) -> new HoeItem(IWToolMaterials.COBALT, -2, -1.0f, properties));
+	public static final DeferredHolder<Item, Item> COBALT_AXE = ITEMS.registerItem("cobalt_axe", (properties) -> new Item(properties.axe(IWToolMaterials.COBALT, 6, -3.1f)));
+	public static final DeferredHolder<Item, Item> COBALT_SHOVEL = ITEMS.registerItem("cobalt_shovel", (properties) -> new Item(properties.shovel(IWToolMaterials.COBALT, 1.5f, -3.0f)));
+	public static final DeferredHolder<Item, Item> COBALT_HOE = ITEMS.registerItem("cobalt_hoe", (properties) -> new Item(properties.hoe(IWToolMaterials.COBALT, -2, -1.0f)));
 	public static final DeferredHolder<Item, Item> COBALT_SPEAR = ITEMS.registerItem("cobalt_spear", (properties -> new Item(properties.spear(IWToolMaterials.COBALT, 0.975F, 0.975F, 0.575F, 2.25F, 7.75F, 6.5F, 4.85F, 11F, 4.35F))));
 	@TextureMetadataMarker(frameTime = 5)
 	@TooltipMarker(style = {ChatFormatting.GRAY, ChatFormatting.ITALIC})
@@ -111,21 +112,21 @@ public class ItemRegistry {
 	@TooltipMarker(style = {ChatFormatting.DARK_PURPLE, ChatFormatting.ITALIC})
 	public static final DeferredHolder<Item, Item> ASTRAL_SWORD = ITEMS.registerItem("astral_sword", (properties) -> new Item(properties.sword(IWToolMaterials.ASTRAL, 3, -1.5f)));
 	public static final DeferredHolder<Item, Item> ASTRAL_PICKAXE = ITEMS.registerItem("astral_pickaxe", (properties) -> new Item(properties.pickaxe(IWToolMaterials.ASTRAL, 1, -1.9f)));
-	public static final DeferredHolder<Item, AxeItem> ASTRAL_AXE = ITEMS.registerItem("astral_axe", (properties) -> new AxeItem(IWToolMaterials.ASTRAL, 5, -2.1f, properties));
-	public static final DeferredHolder<Item, ShovelItem> ASTRAL_SHOVEL = ITEMS.registerItem("astral_shovel", (properties) -> new ShovelItem(IWToolMaterials.ASTRAL, 1.5f, -2.1f, properties));
-	public static final DeferredHolder<Item, HoeItem> ASTRAL_HOE = ITEMS.registerItem("astral_hoe", (properties) -> new HoeItem(IWToolMaterials.ASTRAL, -4, 0.8f, properties));
+	public static final DeferredHolder<Item, Item> ASTRAL_AXE = ITEMS.registerItem("astral_axe", (properties) -> new Item(properties.axe(IWToolMaterials.ASTRAL, 5, -2.1f)));
+	public static final DeferredHolder<Item, Item> ASTRAL_SHOVEL = ITEMS.registerItem("astral_shovel", (properties) -> new Item(properties.shovel(IWToolMaterials.ASTRAL, 1.5f, -2.1f)));
+	public static final DeferredHolder<Item, Item> ASTRAL_HOE = ITEMS.registerItem("astral_hoe", (properties) -> new Item(properties.hoe(IWToolMaterials.ASTRAL, -4, 0.8f)));
 	public static final DeferredHolder<Item, Item> ASTRAL_SPEAR = ITEMS.registerItem("astral_spear", (properties -> new Item(properties.spear(IWToolMaterials.ASTRAL, 0.8f, 1.1f, 0.2f, 2.35f, 6.85f, 5.15f, 4.95f, 7f, 4.3f))));
 	@TextureMetadataMarker(frameTime = 4, frames = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0}, interpolate = true)
 	@TooltipMarker(style = {ChatFormatting.RED, ChatFormatting.ITALIC})
 	public static final DeferredHolder<Item, Item> STARSTORM_SWORD = ITEMS.registerItem("starstorm_sword", (properties) -> new Item(properties.sword(IWToolMaterials.STARSTORM, 3, -2.4f)));
 	@TextureMetadataMarker(frameTime = 4, frames = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0}, interpolate = true)
-	public static final DeferredHolder<Item, Item> STARSTORM_PICKAXE = ITEMS.registerItem("starstorm_pickaxe", (properties) -> new Item(properties.sword(IWToolMaterials.STARSTORM, 1, -2.8f)));
+	public static final DeferredHolder<Item, Item> STARSTORM_PICKAXE = ITEMS.registerItem("starstorm_pickaxe", (properties) -> new Item(properties.pickaxe(IWToolMaterials.STARSTORM, 1, -2.8f)));
 	@TextureMetadataMarker(frameTime = 4, frames = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0}, interpolate = true)
-	public static final DeferredHolder<Item, AxeItem> STARSTORM_AXE = ITEMS.registerItem("starstorm_axe", (properties) -> new AxeItem(IWToolMaterials.STARSTORM, 5, -3.0f, properties));
+	public static final DeferredHolder<Item, Item> STARSTORM_AXE = ITEMS.registerItem("starstorm_axe", (properties) -> new Item(properties.axe(IWToolMaterials.STARSTORM, 5, -3.0f)));
 	@TextureMetadataMarker(frameTime = 4, frames = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0}, interpolate = true)
-	public static final DeferredHolder<Item, ShovelItem> STARSTORM_SHOVEL = ITEMS.registerItem("starstorm_shovel", (properties) -> new ShovelItem(IWToolMaterials.STARSTORM, 1.5f, -3.0f, properties));
+	public static final DeferredHolder<Item, Item> STARSTORM_SHOVEL = ITEMS.registerItem("starstorm_shovel", (properties) -> new Item(properties.shovel(IWToolMaterials.STARSTORM, 1.5f, -3.0f)));
 	@TextureMetadataMarker(frameTime = 4, frames = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0}, interpolate = true)
-	public static final DeferredHolder<Item, HoeItem> STARSTORM_HOE = ITEMS.registerItem("starstorm_hoe", (properties) -> new HoeItem(IWToolMaterials.STARSTORM, -7, 0.0f, properties));
+	public static final DeferredHolder<Item, Item> STARSTORM_HOE = ITEMS.registerItem("starstorm_hoe", (properties) -> new Item(properties.hoe(IWToolMaterials.STARSTORM, -7, 0.0f)));
 	@TextureMetadataMarker(frameTime = 4, frames = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0}, interpolate = true)
 	public static final DeferredHolder<Item, Item> STARSTORM_SPEAR = ITEMS.registerItem("starstorm_spear", (properties -> new Item(properties.spear(IWToolMaterials.STARSTORM, 1.4f, 1.4f, 0.3f, 2.35f, 6.85f, 5.15f, 4.95f, 7f, 4.45f))));
 	@TextureMetadataMarker(frameTime = 25, interpolate = true)
@@ -134,11 +135,11 @@ public class ItemRegistry {
 	@TextureMetadataMarker(frameTime = 25, interpolate = true)
 	public static final DeferredHolder<Item, Item> VOID_PICKAXE = ITEMS.registerItem("void_pickaxe", (properties) -> new Item(properties.pickaxe(IWToolMaterials.VOID, 1, -1.7f)));
 	@TextureMetadataMarker(frameTime = 25, interpolate = true)
-	public static final DeferredHolder<Item, AxeItem> VOID_AXE = ITEMS.registerItem("void_axe", (properties) -> new AxeItem(IWToolMaterials.VOID, 5, -1.9f, properties));
+	public static final DeferredHolder<Item, Item> VOID_AXE = ITEMS.registerItem("void_axe", (properties) -> new Item(properties.axe(IWToolMaterials.VOID, 5, -1.9f)));
 	@TextureMetadataMarker(frameTime = 25, interpolate = true)
-	public static final DeferredHolder<Item, ShovelItem> VOID_SHOVEL = ITEMS.registerItem("void_shovel", (properties) -> new ShovelItem(IWToolMaterials.VOID, 1.5f, -1.9f, properties));
+	public static final DeferredHolder<Item, Item> VOID_SHOVEL = ITEMS.registerItem("void_shovel", (properties) -> new Item(properties.shovel(IWToolMaterials.VOID, 1.5f, -1.9f)));
 	@TextureMetadataMarker(frameTime = 25, interpolate = true)
-	public static final DeferredHolder<Item, HoeItem> VOID_HOE = ITEMS.registerItem("void_hoe", (properties) -> new HoeItem(IWToolMaterials.VOID, -9, 1.1f, properties));
+	public static final DeferredHolder<Item, Item> VOID_HOE = ITEMS.registerItem("void_hoe", (properties) -> new Item(properties.hoe(IWToolMaterials.VOID, -9, 1.1f)));
 	@TextureMetadataMarker(frameTime = 25, interpolate = true)
 	public static final DeferredHolder<Item, Item> VOID_SPEAR = ITEMS.registerItem("void_spear", (properties -> new Item(properties.spear(IWToolMaterials.VOID, 1.5f, 1.45f, 0.2f, 2.2f, 6.7f, 5f, 4.8f, 6.5f, 4.3f))));
 	public static final DeferredHolder<Item, TheSword> THE_SWORD = ITEMS.registerItem("the_sword", TheSword::new);
@@ -404,10 +405,10 @@ public class ItemRegistry {
 	public static final DeferredHolder<Item, AlcoholItem> BOTTLE_OF_ALCOHOL = ITEMS.registerItem("bottle_of_alcohol", (properties) -> new AlcoholItem(properties.stacksTo(16)));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC})
 	public static final DeferredHolder<Item, WineItem> BOTTLE_OF_WINE = ITEMS.registerItem("bottle_of_wine", (properties) -> new WineItem(properties.stacksTo(16)));
-	public static final DeferredHolder<Item, ChocolateBarItem> CHOCOLATE_BAR = ITEMS.registerItem("chocolate_bar", (properties) -> new ChocolateBarItem(properties.food(FoodItemProperties.CHOCOLATE_BAR, FoodItemProperties.CHOCOLATE_BAR_CONSUMABLE)));
+	public static final DeferredHolder<Item, ChocolateBarItem> CHOCOLATE_BAR = ITEMS.registerItem("chocolate_bar", (properties) -> new ChocolateBarItem(properties.food(FoodItemProperties.CHOCOLATE_BAR, FoodItemProperties.CHOCOLATE_BAR_CONSUMABLE).compostable(ContextIntProviders.COMPOSTABLE_LOW)));
 	@LanguageEntryOverride("Meal Ready-to-Eat (MRE)")
 	@TooltipMarker(style = {ChatFormatting.GREEN, ChatFormatting.ITALIC})
-	public static final DeferredHolder<Item, Item> MRE = ITEMS.registerItem("mre", (properties) -> new Item(properties.food(FoodItemProperties.MRE)));
+	public static final DeferredHolder<Item, Item> MRE = ITEMS.registerItem("mre", (properties) -> new Item(properties.food(FoodItemProperties.MRE).compostable(ContextIntProviders.COMPOSTABLE_ALWAYS_ADD_ONE)));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC})
 	public static final DeferredHolder<Item, Item> MOLDY_BREAD = ITEMS.registerItem("moldy_bread", (properties) -> new Item(properties.food(FoodItemProperties.MOLDY_BREAD, FoodItemProperties.MOLDY_BREAD_CONSUMABLE)));
 	@TooltipMarker(style = {ChatFormatting.GREEN, ChatFormatting.ITALIC})

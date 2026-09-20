@@ -12,9 +12,7 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": {
-            "Name": "immersiveweapons:rusted_iron_block"
-          }
+          "output_state": "immersiveweapons:rusted_iron_block"
         }
       ]
     }

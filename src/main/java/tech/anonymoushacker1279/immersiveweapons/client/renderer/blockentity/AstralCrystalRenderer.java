@@ -36,7 +36,7 @@ public record AstralCrystalRenderer(
 				stack.pushPose();
 
 				// Rotation occurs here
-				stack.mulPose(Axis.XP.rotationDegrees(90f));
+				stack.rotate(Axis.XP.rotationDegrees(90f));
 				stack.translate(0.5D, 0.5D, -0.25D);
 				if (state.items[0] == itemStackRenderState) {
 					// First item goes on top
@@ -44,28 +44,28 @@ public record AstralCrystalRenderer(
 				} else if (state.items[1] == itemStackRenderState) {
 					// Second item goes on right
 					stack.translate(-1D, 0D, 0D);
-					stack.mulPose(Axis.ZP.rotationDegrees(90f));
+					stack.rotate(Axis.ZP.rotationDegrees(90f));
 				} else if (state.items[2] == itemStackRenderState) {
 					// Third item goes on bottom
 					stack.translate(0D, -1D, 0D);
-					stack.mulPose(Axis.ZP.rotationDegrees(180f));
+					stack.rotate(Axis.ZP.rotationDegrees(180f));
 				} else if (state.items[3] == itemStackRenderState) {
 					// Fourth item goes on left
 					stack.translate(1D, 0D, 0D);
-					stack.mulPose(Axis.ZN.rotationDegrees(90f));
+					stack.rotate(Axis.ZN.rotationDegrees(90f));
 				}
 
 				// Scale render
 				stack.scale(0.75F, 0.75F, 0.75F);
 
 				// Rotate all items 45 degrees diagonally
-				stack.mulPose(Axis.XN.rotationDegrees(45f));
+				stack.rotate(Axis.XN.rotationDegrees(45f));
 
 				Level level = Minecraft.getInstance().level;
 
 				// All the items should smoothly rotate around the center of the block
 				if (level != null) {
-					stack.mulPose(Axis.ZP.rotationDegrees((Minecraft.getInstance().level.getGameTime() + state.partialTick) * 2f));
+					stack.rotate(Axis.ZP.rotationDegrees((Minecraft.getInstance().level.getGameTime() + state.partialTick) * 2f));
 					itemStackRenderState.submit(stack, collector, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);
 				}
 

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:cloud_marble_pillar"
+        "recipes": "immersiveweapons:cloud_marble_pillar"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

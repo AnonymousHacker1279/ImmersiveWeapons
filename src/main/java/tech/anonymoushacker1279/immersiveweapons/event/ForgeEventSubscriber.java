@@ -34,7 +34,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.entity.projectile.arrow.ThrownTrident;
 import net.minecraft.world.item.*;
-import net.minecraft.world.item.alchemy.PotionBrewing;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
@@ -54,7 +53,6 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.AddServerReloadListenersEvent;
 import net.neoforged.neoforge.event.AnvilUpdateEvent;
 import net.neoforged.neoforge.event.OnDatapackSyncEvent;
-import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent;
 import net.neoforged.neoforge.event.enchanting.EnchantedEntityLootEvent;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.living.*;
@@ -604,77 +602,6 @@ public class ForgeEventSubscriber {
 	@SubscribeEvent
 	public static void addReloadListenerEvent(AddServerReloadListenersEvent event) {
 		event.addListener(AccessoryLoader.ID, new AccessoryLoader());
-	}
-
-	@SubscribeEvent
-	public static void registerBrewingRecipesEvent(RegisterBrewingRecipesEvent event) {
-		ImmersiveWeapons.LOGGER.info("Registering brewing recipes");
-
-		PotionBrewing.Builder builder = event.getBuilder();
-
-		// Celestial potions
-		builder.addMix(
-				Potions.AWKWARD,
-				BlockItemRegistry.MOONGLOW_ITEM.get(),
-				PotionRegistry.CELESTIAL_BREW_POTION);
-		builder.addMix(
-				PotionRegistry.CELESTIAL_BREW_POTION,
-				Items.REDSTONE,
-				PotionRegistry.LONG_CELESTIAL_BREW_POTION);
-
-		// Death potions
-		builder.addMix(
-				Potions.AWKWARD,
-				BlockItemRegistry.DEATHWEED_ITEM.get(),
-				PotionRegistry.DEATH_POTION);
-		builder.addMix(
-				PotionRegistry.DEATH_POTION,
-				Items.GLOWSTONE_DUST,
-				PotionRegistry.STRONG_DEATH_POTION);
-		builder.addMix(
-				PotionRegistry.DEATH_POTION,
-				Items.REDSTONE,
-				PotionRegistry.LONG_DEATH_POTION);
-		builder.addMix(
-				Potions.STRENGTH,
-				Items.FERMENTED_SPIDER_EYE,
-				PotionRegistry.DEATH_POTION);
-		builder.addMix(
-				Potions.STRONG_STRENGTH,
-				Items.FERMENTED_SPIDER_EYE,
-				PotionRegistry.STRONG_DEATH_POTION);
-		builder.addMix(
-				Potions.LONG_STRENGTH,
-				Items.FERMENTED_SPIDER_EYE,
-				PotionRegistry.LONG_DEATH_POTION);
-
-		// Broken Armor potions
-		builder.addMix(
-				Potions.AWKWARD,
-				Items.PRISMARINE_SHARD,
-				PotionRegistry.BROKEN_ARMOR_POTION);
-		builder.addMix(
-				PotionRegistry.BROKEN_ARMOR_POTION,
-				Items.GLOWSTONE_DUST,
-				PotionRegistry.STRONG_BROKEN_ARMOR_POTION);
-		builder.addMix(
-				PotionRegistry.BROKEN_ARMOR_POTION,
-				Items.REDSTONE,
-				PotionRegistry.LONG_BROKEN_ARMOR_POTION);
-
-		// Supercharged Brew potions
-		builder.addMix(
-				Potions.AWKWARD,
-				ItemRegistry.TESLA_NUGGET.get(),
-				PotionRegistry.SUPERCHARGED_BREW);
-		builder.addMix(
-				PotionRegistry.SUPERCHARGED_BREW,
-				Items.GLOWSTONE_DUST,
-				PotionRegistry.STRONG_SUPERCHARGED_BREW);
-		builder.addMix(
-				PotionRegistry.SUPERCHARGED_BREW,
-				Items.REDSTONE,
-				PotionRegistry.LONG_SUPERCHARGED_BREW);
 	}
 
 	@SubscribeEvent

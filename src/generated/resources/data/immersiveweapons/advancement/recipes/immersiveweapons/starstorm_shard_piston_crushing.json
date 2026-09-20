@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:starstorm_shard_piston_crushing"
+        "recipes": "immersiveweapons:starstorm_shard_piston_crushing"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

@@ -1,16 +1,16 @@
 package tech.anonymoushacker1279.immersiveweapons.client.renderer.dimension;
 
-import com.mojang.blaze3d.PrimitiveTopology;
-import com.mojang.blaze3d.buffers.GpuBuffer;
-import com.mojang.blaze3d.buffers.GpuBufferSlice;
 import com.mojang.blaze3d.pipeline.RenderTarget;
-import com.mojang.blaze3d.systems.RenderPass;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.textures.GpuTextureView;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.ByteBufferBuilder;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.MeshData;
+import com.mojang.renderpearl.api.buffers.GpuBuffer;
+import com.mojang.renderpearl.api.buffers.GpuBufferSlice;
+import com.mojang.renderpearl.api.commands.RenderPass;
+import com.mojang.renderpearl.api.pipeline.PrimitiveTopology;
+import com.mojang.renderpearl.api.textures.GpuTextureView;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.renderer.texture.AbstractTexture;
@@ -82,10 +82,10 @@ public class TiltrosDimensionRenderer {
 		try (RenderPass renderPass = RenderSystem.getDevice()
 				.createCommandEncoder()
 				.createRenderPass(() -> "Tiltros sky", colorTexture, Optional.empty(), depthTexture, OptionalDouble.empty())) {
-			renderPass.setPipeline(RenderPipelines.END_SKY);
+			renderPass.setPipeline(RenderSystem.getCompiledPipeline(RenderPipelines.END_SKY));
 			RenderSystem.bindDefaultUniforms(renderPass);
 			renderPass.setUniform("DynamicTransforms", dynamicTransforms);
-			renderPass.bindTexture("Sampler0", tiltrosSkyTexture.getTextureView(), tiltrosSkyTexture.getSampler());
+			renderPass.setUniform("Sampler0", tiltrosSkyTexture.getTextureView(), tiltrosSkyTexture.getSampler());
 			renderPass.setVertexBuffer(0, skyBuffer.slice());
 			renderPass.setIndexBuffer(indexBuffer, autoIndices.type());
 			renderPass.drawIndexed(36, 1, 0, 0, 0);

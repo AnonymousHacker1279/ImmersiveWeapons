@@ -12,9 +12,7 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": {
-            "Name": "minecraft:mossy_stone_bricks"
-          }
+          "output_state": "minecraft:mossy_stone_bricks"
         },
         {
           "input_predicate": {
@@ -25,15 +23,13 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": {
-            "Name": "minecraft:cracked_stone_bricks"
-          }
+          "output_state": "minecraft:cracked_stone_bricks"
         },
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:stone_brick_slab",
-              "Properties": {
+              "id": "minecraft:stone_brick_slab",
+              "properties": {
                 "type": "top",
                 "waterlogged": "false"
               }
@@ -45,8 +41,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:mossy_stone_brick_slab",
-            "Properties": {
+            "id": "minecraft:mossy_stone_brick_slab",
+            "properties": {
               "type": "top",
               "waterlogged": "false"
             }
@@ -60,8 +56,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:stone_brick_stairs",
-              "Properties": {
+              "id": "minecraft:stone_brick_stairs",
+              "properties": {
                 "facing": "north",
                 "half": "top",
                 "shape": "straight",
@@ -75,8 +71,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:mossy_stone_brick_stairs",
-            "Properties": {
+            "id": "minecraft:mossy_stone_brick_stairs",
+            "properties": {
               "facing": "north",
               "half": "top",
               "shape": "straight",
@@ -87,8 +83,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:stone_brick_stairs",
-              "Properties": {
+              "id": "minecraft:stone_brick_stairs",
+              "properties": {
                 "facing": "north",
                 "half": "top",
                 "shape": "inner_left",
@@ -102,8 +98,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:mossy_stone_brick_stairs",
-            "Properties": {
+            "id": "minecraft:mossy_stone_brick_stairs",
+            "properties": {
               "facing": "north",
               "half": "top",
               "shape": "inner_left",
@@ -114,8 +110,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:stone_brick_stairs",
-              "Properties": {
+              "id": "minecraft:stone_brick_stairs",
+              "properties": {
                 "facing": "north",
                 "half": "top",
                 "shape": "inner_right",
@@ -129,8 +125,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:mossy_stone_brick_stairs",
-            "Properties": {
+            "id": "minecraft:mossy_stone_brick_stairs",
+            "properties": {
               "facing": "north",
               "half": "top",
               "shape": "inner_right",
@@ -141,8 +137,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:stone_brick_stairs",
-              "Properties": {
+              "id": "minecraft:stone_brick_stairs",
+              "properties": {
                 "facing": "north",
                 "half": "top",
                 "shape": "outer_left",
@@ -156,8 +152,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:mossy_stone_brick_stairs",
-            "Properties": {
+            "id": "minecraft:mossy_stone_brick_stairs",
+            "properties": {
               "facing": "north",
               "half": "top",
               "shape": "outer_left",
@@ -168,8 +164,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:stone_brick_stairs",
-              "Properties": {
+              "id": "minecraft:stone_brick_stairs",
+              "properties": {
                 "facing": "north",
                 "half": "top",
                 "shape": "outer_right",
@@ -183,8 +179,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:mossy_stone_brick_stairs",
-            "Properties": {
+            "id": "minecraft:mossy_stone_brick_stairs",
+            "properties": {
               "facing": "north",
               "half": "top",
               "shape": "outer_right",
@@ -194,36 +190,20 @@
         },
         {
           "input_predicate": {
-            "block_state": {
-              "Name": "minecraft:stone_brick_stairs",
-              "Properties": {
-                "facing": "north",
-                "half": "bottom",
-                "shape": "straight",
-                "waterlogged": "false"
-              }
-            },
+            "block_state": "minecraft:stone_brick_stairs",
             "predicate_type": "minecraft:random_blockstate_match",
             "probability": 0.25
           },
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": {
-            "Name": "minecraft:mossy_stone_brick_stairs",
-            "Properties": {
-              "facing": "north",
-              "half": "bottom",
-              "shape": "straight",
-              "waterlogged": "false"
-            }
-          }
+          "output_state": "minecraft:mossy_stone_brick_stairs"
         },
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:stone_brick_stairs",
-              "Properties": {
+              "id": "minecraft:stone_brick_stairs",
+              "properties": {
                 "facing": "north",
                 "half": "bottom",
                 "shape": "inner_left",
@@ -237,8 +217,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:mossy_stone_brick_stairs",
-            "Properties": {
+            "id": "minecraft:mossy_stone_brick_stairs",
+            "properties": {
               "facing": "north",
               "half": "bottom",
               "shape": "inner_left",
@@ -249,8 +229,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:stone_brick_stairs",
-              "Properties": {
+              "id": "minecraft:stone_brick_stairs",
+              "properties": {
                 "facing": "north",
                 "half": "bottom",
                 "shape": "inner_right",
@@ -264,8 +244,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:mossy_stone_brick_stairs",
-            "Properties": {
+            "id": "minecraft:mossy_stone_brick_stairs",
+            "properties": {
               "facing": "north",
               "half": "bottom",
               "shape": "inner_right",
@@ -276,8 +256,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:stone_brick_stairs",
-              "Properties": {
+              "id": "minecraft:stone_brick_stairs",
+              "properties": {
                 "facing": "north",
                 "half": "bottom",
                 "shape": "outer_left",
@@ -291,8 +271,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:mossy_stone_brick_stairs",
-            "Properties": {
+            "id": "minecraft:mossy_stone_brick_stairs",
+            "properties": {
               "facing": "north",
               "half": "bottom",
               "shape": "outer_left",
@@ -303,8 +283,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:stone_brick_stairs",
-              "Properties": {
+              "id": "minecraft:stone_brick_stairs",
+              "properties": {
                 "facing": "north",
                 "half": "bottom",
                 "shape": "outer_right",
@@ -318,8 +298,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:mossy_stone_brick_stairs",
-            "Properties": {
+            "id": "minecraft:mossy_stone_brick_stairs",
+            "properties": {
               "facing": "north",
               "half": "bottom",
               "shape": "outer_right",
@@ -330,8 +310,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:stone_brick_stairs",
-              "Properties": {
+              "id": "minecraft:stone_brick_stairs",
+              "properties": {
                 "facing": "east",
                 "half": "top",
                 "shape": "straight",
@@ -345,8 +325,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:mossy_stone_brick_stairs",
-            "Properties": {
+            "id": "minecraft:mossy_stone_brick_stairs",
+            "properties": {
               "facing": "east",
               "half": "top",
               "shape": "straight",
@@ -357,8 +337,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:stone_brick_stairs",
-              "Properties": {
+              "id": "minecraft:stone_brick_stairs",
+              "properties": {
                 "facing": "east",
                 "half": "top",
                 "shape": "inner_left",
@@ -372,8 +352,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:mossy_stone_brick_stairs",
-            "Properties": {
+            "id": "minecraft:mossy_stone_brick_stairs",
+            "properties": {
               "facing": "east",
               "half": "top",
               "shape": "inner_left",
@@ -384,8 +364,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:stone_brick_stairs",
-              "Properties": {
+              "id": "minecraft:stone_brick_stairs",
+              "properties": {
                 "facing": "east",
                 "half": "top",
                 "shape": "inner_right",
@@ -399,8 +379,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:mossy_stone_brick_stairs",
-            "Properties": {
+            "id": "minecraft:mossy_stone_brick_stairs",
+            "properties": {
               "facing": "east",
               "half": "top",
               "shape": "inner_right",
@@ -411,8 +391,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:stone_brick_stairs",
-              "Properties": {
+              "id": "minecraft:stone_brick_stairs",
+              "properties": {
                 "facing": "east",
                 "half": "top",
                 "shape": "outer_left",
@@ -426,8 +406,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:mossy_stone_brick_stairs",
-            "Properties": {
+            "id": "minecraft:mossy_stone_brick_stairs",
+            "properties": {
               "facing": "east",
               "half": "top",
               "shape": "outer_left",
@@ -438,8 +418,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:stone_brick_stairs",
-              "Properties": {
+              "id": "minecraft:stone_brick_stairs",
+              "properties": {
                 "facing": "east",
                 "half": "top",
                 "shape": "outer_right",
@@ -453,8 +433,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:mossy_stone_brick_stairs",
-            "Properties": {
+            "id": "minecraft:mossy_stone_brick_stairs",
+            "properties": {
               "facing": "east",
               "half": "top",
               "shape": "outer_right",
@@ -465,8 +445,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:stone_brick_stairs",
-              "Properties": {
+              "id": "minecraft:stone_brick_stairs",
+              "properties": {
                 "facing": "east",
                 "half": "bottom",
                 "shape": "straight",
@@ -480,8 +460,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:mossy_stone_brick_stairs",
-            "Properties": {
+            "id": "minecraft:mossy_stone_brick_stairs",
+            "properties": {
               "facing": "east",
               "half": "bottom",
               "shape": "straight",
@@ -492,8 +472,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:stone_brick_stairs",
-              "Properties": {
+              "id": "minecraft:stone_brick_stairs",
+              "properties": {
                 "facing": "east",
                 "half": "bottom",
                 "shape": "inner_left",
@@ -507,8 +487,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:mossy_stone_brick_stairs",
-            "Properties": {
+            "id": "minecraft:mossy_stone_brick_stairs",
+            "properties": {
               "facing": "east",
               "half": "bottom",
               "shape": "inner_left",
@@ -519,8 +499,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:stone_brick_stairs",
-              "Properties": {
+              "id": "minecraft:stone_brick_stairs",
+              "properties": {
                 "facing": "east",
                 "half": "bottom",
                 "shape": "inner_right",
@@ -534,8 +514,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:mossy_stone_brick_stairs",
-            "Properties": {
+            "id": "minecraft:mossy_stone_brick_stairs",
+            "properties": {
               "facing": "east",
               "half": "bottom",
               "shape": "inner_right",
@@ -546,8 +526,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:stone_brick_stairs",
-              "Properties": {
+              "id": "minecraft:stone_brick_stairs",
+              "properties": {
                 "facing": "east",
                 "half": "bottom",
                 "shape": "outer_left",
@@ -561,8 +541,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:mossy_stone_brick_stairs",
-            "Properties": {
+            "id": "minecraft:mossy_stone_brick_stairs",
+            "properties": {
               "facing": "east",
               "half": "bottom",
               "shape": "outer_left",
@@ -573,8 +553,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:stone_brick_stairs",
-              "Properties": {
+              "id": "minecraft:stone_brick_stairs",
+              "properties": {
                 "facing": "east",
                 "half": "bottom",
                 "shape": "outer_right",
@@ -588,8 +568,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:mossy_stone_brick_stairs",
-            "Properties": {
+            "id": "minecraft:mossy_stone_brick_stairs",
+            "properties": {
               "facing": "east",
               "half": "bottom",
               "shape": "outer_right",
@@ -600,8 +580,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:stone_brick_stairs",
-              "Properties": {
+              "id": "minecraft:stone_brick_stairs",
+              "properties": {
                 "facing": "south",
                 "half": "top",
                 "shape": "straight",
@@ -615,8 +595,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:mossy_stone_brick_stairs",
-            "Properties": {
+            "id": "minecraft:mossy_stone_brick_stairs",
+            "properties": {
               "facing": "south",
               "half": "top",
               "shape": "straight",
@@ -627,8 +607,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:stone_brick_stairs",
-              "Properties": {
+              "id": "minecraft:stone_brick_stairs",
+              "properties": {
                 "facing": "south",
                 "half": "top",
                 "shape": "inner_left",
@@ -642,8 +622,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:mossy_stone_brick_stairs",
-            "Properties": {
+            "id": "minecraft:mossy_stone_brick_stairs",
+            "properties": {
               "facing": "south",
               "half": "top",
               "shape": "inner_left",
@@ -654,8 +634,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:stone_brick_stairs",
-              "Properties": {
+              "id": "minecraft:stone_brick_stairs",
+              "properties": {
                 "facing": "south",
                 "half": "top",
                 "shape": "inner_right",
@@ -669,8 +649,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:mossy_stone_brick_stairs",
-            "Properties": {
+            "id": "minecraft:mossy_stone_brick_stairs",
+            "properties": {
               "facing": "south",
               "half": "top",
               "shape": "inner_right",
@@ -681,8 +661,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:stone_brick_stairs",
-              "Properties": {
+              "id": "minecraft:stone_brick_stairs",
+              "properties": {
                 "facing": "south",
                 "half": "top",
                 "shape": "outer_left",
@@ -696,8 +676,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:mossy_stone_brick_stairs",
-            "Properties": {
+            "id": "minecraft:mossy_stone_brick_stairs",
+            "properties": {
               "facing": "south",
               "half": "top",
               "shape": "outer_left",
@@ -708,8 +688,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:stone_brick_stairs",
-              "Properties": {
+              "id": "minecraft:stone_brick_stairs",
+              "properties": {
                 "facing": "south",
                 "half": "top",
                 "shape": "outer_right",
@@ -723,8 +703,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:mossy_stone_brick_stairs",
-            "Properties": {
+            "id": "minecraft:mossy_stone_brick_stairs",
+            "properties": {
               "facing": "south",
               "half": "top",
               "shape": "outer_right",
@@ -735,8 +715,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:stone_brick_stairs",
-              "Properties": {
+              "id": "minecraft:stone_brick_stairs",
+              "properties": {
                 "facing": "south",
                 "half": "bottom",
                 "shape": "straight",
@@ -750,8 +730,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:mossy_stone_brick_stairs",
-            "Properties": {
+            "id": "minecraft:mossy_stone_brick_stairs",
+            "properties": {
               "facing": "south",
               "half": "bottom",
               "shape": "straight",
@@ -762,8 +742,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:stone_brick_stairs",
-              "Properties": {
+              "id": "minecraft:stone_brick_stairs",
+              "properties": {
                 "facing": "south",
                 "half": "bottom",
                 "shape": "inner_left",
@@ -777,8 +757,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:mossy_stone_brick_stairs",
-            "Properties": {
+            "id": "minecraft:mossy_stone_brick_stairs",
+            "properties": {
               "facing": "south",
               "half": "bottom",
               "shape": "inner_left",
@@ -789,8 +769,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:stone_brick_stairs",
-              "Properties": {
+              "id": "minecraft:stone_brick_stairs",
+              "properties": {
                 "facing": "south",
                 "half": "bottom",
                 "shape": "inner_right",
@@ -804,8 +784,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:mossy_stone_brick_stairs",
-            "Properties": {
+            "id": "minecraft:mossy_stone_brick_stairs",
+            "properties": {
               "facing": "south",
               "half": "bottom",
               "shape": "inner_right",
@@ -816,8 +796,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:stone_brick_stairs",
-              "Properties": {
+              "id": "minecraft:stone_brick_stairs",
+              "properties": {
                 "facing": "south",
                 "half": "bottom",
                 "shape": "outer_left",
@@ -831,8 +811,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:mossy_stone_brick_stairs",
-            "Properties": {
+            "id": "minecraft:mossy_stone_brick_stairs",
+            "properties": {
               "facing": "south",
               "half": "bottom",
               "shape": "outer_left",
@@ -843,8 +823,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:stone_brick_stairs",
-              "Properties": {
+              "id": "minecraft:stone_brick_stairs",
+              "properties": {
                 "facing": "south",
                 "half": "bottom",
                 "shape": "outer_right",
@@ -858,8 +838,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:mossy_stone_brick_stairs",
-            "Properties": {
+            "id": "minecraft:mossy_stone_brick_stairs",
+            "properties": {
               "facing": "south",
               "half": "bottom",
               "shape": "outer_right",
@@ -870,8 +850,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:stone_brick_stairs",
-              "Properties": {
+              "id": "minecraft:stone_brick_stairs",
+              "properties": {
                 "facing": "west",
                 "half": "top",
                 "shape": "straight",
@@ -885,8 +865,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:mossy_stone_brick_stairs",
-            "Properties": {
+            "id": "minecraft:mossy_stone_brick_stairs",
+            "properties": {
               "facing": "west",
               "half": "top",
               "shape": "straight",
@@ -897,8 +877,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:stone_brick_stairs",
-              "Properties": {
+              "id": "minecraft:stone_brick_stairs",
+              "properties": {
                 "facing": "west",
                 "half": "top",
                 "shape": "inner_left",
@@ -912,8 +892,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:mossy_stone_brick_stairs",
-            "Properties": {
+            "id": "minecraft:mossy_stone_brick_stairs",
+            "properties": {
               "facing": "west",
               "half": "top",
               "shape": "inner_left",
@@ -924,8 +904,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:stone_brick_stairs",
-              "Properties": {
+              "id": "minecraft:stone_brick_stairs",
+              "properties": {
                 "facing": "west",
                 "half": "top",
                 "shape": "inner_right",
@@ -939,8 +919,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:mossy_stone_brick_stairs",
-            "Properties": {
+            "id": "minecraft:mossy_stone_brick_stairs",
+            "properties": {
               "facing": "west",
               "half": "top",
               "shape": "inner_right",
@@ -951,8 +931,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:stone_brick_stairs",
-              "Properties": {
+              "id": "minecraft:stone_brick_stairs",
+              "properties": {
                 "facing": "west",
                 "half": "top",
                 "shape": "outer_left",
@@ -966,8 +946,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:mossy_stone_brick_stairs",
-            "Properties": {
+            "id": "minecraft:mossy_stone_brick_stairs",
+            "properties": {
               "facing": "west",
               "half": "top",
               "shape": "outer_left",
@@ -978,8 +958,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:stone_brick_stairs",
-              "Properties": {
+              "id": "minecraft:stone_brick_stairs",
+              "properties": {
                 "facing": "west",
                 "half": "top",
                 "shape": "outer_right",
@@ -993,8 +973,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:mossy_stone_brick_stairs",
-            "Properties": {
+            "id": "minecraft:mossy_stone_brick_stairs",
+            "properties": {
               "facing": "west",
               "half": "top",
               "shape": "outer_right",
@@ -1005,8 +985,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:stone_brick_stairs",
-              "Properties": {
+              "id": "minecraft:stone_brick_stairs",
+              "properties": {
                 "facing": "west",
                 "half": "bottom",
                 "shape": "straight",
@@ -1020,8 +1000,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:mossy_stone_brick_stairs",
-            "Properties": {
+            "id": "minecraft:mossy_stone_brick_stairs",
+            "properties": {
               "facing": "west",
               "half": "bottom",
               "shape": "straight",
@@ -1032,8 +1012,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:stone_brick_stairs",
-              "Properties": {
+              "id": "minecraft:stone_brick_stairs",
+              "properties": {
                 "facing": "west",
                 "half": "bottom",
                 "shape": "inner_left",
@@ -1047,8 +1027,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:mossy_stone_brick_stairs",
-            "Properties": {
+            "id": "minecraft:mossy_stone_brick_stairs",
+            "properties": {
               "facing": "west",
               "half": "bottom",
               "shape": "inner_left",
@@ -1059,8 +1039,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:stone_brick_stairs",
-              "Properties": {
+              "id": "minecraft:stone_brick_stairs",
+              "properties": {
                 "facing": "west",
                 "half": "bottom",
                 "shape": "inner_right",
@@ -1074,8 +1054,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:mossy_stone_brick_stairs",
-            "Properties": {
+            "id": "minecraft:mossy_stone_brick_stairs",
+            "properties": {
               "facing": "west",
               "half": "bottom",
               "shape": "inner_right",
@@ -1086,8 +1066,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:stone_brick_stairs",
-              "Properties": {
+              "id": "minecraft:stone_brick_stairs",
+              "properties": {
                 "facing": "west",
                 "half": "bottom",
                 "shape": "outer_left",
@@ -1101,8 +1081,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:mossy_stone_brick_stairs",
-            "Properties": {
+            "id": "minecraft:mossy_stone_brick_stairs",
+            "properties": {
               "facing": "west",
               "half": "bottom",
               "shape": "outer_left",
@@ -1113,8 +1093,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:stone_brick_stairs",
-              "Properties": {
+              "id": "minecraft:stone_brick_stairs",
+              "properties": {
                 "facing": "west",
                 "half": "bottom",
                 "shape": "outer_right",
@@ -1128,8 +1108,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:mossy_stone_brick_stairs",
-            "Properties": {
+            "id": "minecraft:mossy_stone_brick_stairs",
+            "properties": {
               "facing": "west",
               "half": "bottom",
               "shape": "outer_right",
@@ -1151,9 +1131,7 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": {
-            "Name": "minecraft:oxidized_copper"
-          }
+          "output_state": "minecraft:oxidized_copper"
         },
         {
           "input_predicate": {
@@ -1164,9 +1142,7 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": {
-            "Name": "minecraft:weathered_copper"
-          }
+          "output_state": "minecraft:weathered_copper"
         },
         {
           "input_predicate": {
@@ -1177,9 +1153,7 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": {
-            "Name": "minecraft:exposed_copper"
-          }
+          "output_state": "minecraft:exposed_copper"
         },
         {
           "input_predicate": {
@@ -1190,12 +1164,7 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": {
-            "Name": "minecraft:oxidized_copper_grate",
-            "Properties": {
-              "waterlogged": "false"
-            }
-          }
+          "output_state": "minecraft:oxidized_copper_grate"
         },
         {
           "input_predicate": {
@@ -1206,12 +1175,7 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": {
-            "Name": "minecraft:weathered_copper_grate",
-            "Properties": {
-              "waterlogged": "false"
-            }
-          }
+          "output_state": "minecraft:weathered_copper_grate"
         },
         {
           "input_predicate": {
@@ -1222,12 +1186,7 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": {
-            "Name": "minecraft:exposed_copper_grate",
-            "Properties": {
-              "waterlogged": "false"
-            }
-          }
+          "output_state": "minecraft:exposed_copper_grate"
         },
         {
           "input_predicate": {
@@ -1238,9 +1197,7 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": {
-            "Name": "minecraft:oxidized_chiseled_copper"
-          }
+          "output_state": "minecraft:oxidized_chiseled_copper"
         },
         {
           "input_predicate": {
@@ -1251,9 +1208,7 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": {
-            "Name": "minecraft:weathered_chiseled_copper"
-          }
+          "output_state": "minecraft:weathered_chiseled_copper"
         },
         {
           "input_predicate": {
@@ -1264,9 +1219,7 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": {
-            "Name": "minecraft:exposed_chiseled_copper"
-          }
+          "output_state": "minecraft:exposed_chiseled_copper"
         }
       ]
     },
@@ -1276,8 +1229,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "north",
                 "half": "top",
                 "shape": "straight",
@@ -1291,8 +1244,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:oxidized_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:oxidized_cut_copper_stairs",
+            "properties": {
               "facing": "north",
               "half": "top",
               "shape": "straight",
@@ -1303,8 +1256,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "north",
                 "half": "top",
                 "shape": "inner_left",
@@ -1318,8 +1271,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:oxidized_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:oxidized_cut_copper_stairs",
+            "properties": {
               "facing": "north",
               "half": "top",
               "shape": "inner_left",
@@ -1330,8 +1283,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "north",
                 "half": "top",
                 "shape": "inner_right",
@@ -1345,8 +1298,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:oxidized_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:oxidized_cut_copper_stairs",
+            "properties": {
               "facing": "north",
               "half": "top",
               "shape": "inner_right",
@@ -1357,8 +1310,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "north",
                 "half": "top",
                 "shape": "outer_left",
@@ -1372,8 +1325,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:oxidized_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:oxidized_cut_copper_stairs",
+            "properties": {
               "facing": "north",
               "half": "top",
               "shape": "outer_left",
@@ -1384,8 +1337,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "north",
                 "half": "top",
                 "shape": "outer_right",
@@ -1399,8 +1352,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:oxidized_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:oxidized_cut_copper_stairs",
+            "properties": {
               "facing": "north",
               "half": "top",
               "shape": "outer_right",
@@ -1410,36 +1363,20 @@
         },
         {
           "input_predicate": {
-            "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
-                "facing": "north",
-                "half": "bottom",
-                "shape": "straight",
-                "waterlogged": "false"
-              }
-            },
+            "block_state": "minecraft:cut_copper_stairs",
             "predicate_type": "minecraft:random_blockstate_match",
             "probability": 0.1
           },
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": {
-            "Name": "minecraft:oxidized_cut_copper_stairs",
-            "Properties": {
-              "facing": "north",
-              "half": "bottom",
-              "shape": "straight",
-              "waterlogged": "false"
-            }
-          }
+          "output_state": "minecraft:oxidized_cut_copper_stairs"
         },
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "north",
                 "half": "bottom",
                 "shape": "inner_left",
@@ -1453,8 +1390,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:oxidized_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:oxidized_cut_copper_stairs",
+            "properties": {
               "facing": "north",
               "half": "bottom",
               "shape": "inner_left",
@@ -1465,8 +1402,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "north",
                 "half": "bottom",
                 "shape": "inner_right",
@@ -1480,8 +1417,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:oxidized_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:oxidized_cut_copper_stairs",
+            "properties": {
               "facing": "north",
               "half": "bottom",
               "shape": "inner_right",
@@ -1492,8 +1429,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "north",
                 "half": "bottom",
                 "shape": "outer_left",
@@ -1507,8 +1444,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:oxidized_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:oxidized_cut_copper_stairs",
+            "properties": {
               "facing": "north",
               "half": "bottom",
               "shape": "outer_left",
@@ -1519,8 +1456,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "north",
                 "half": "bottom",
                 "shape": "outer_right",
@@ -1534,8 +1471,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:oxidized_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:oxidized_cut_copper_stairs",
+            "properties": {
               "facing": "north",
               "half": "bottom",
               "shape": "outer_right",
@@ -1546,8 +1483,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "east",
                 "half": "top",
                 "shape": "straight",
@@ -1561,8 +1498,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:oxidized_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:oxidized_cut_copper_stairs",
+            "properties": {
               "facing": "east",
               "half": "top",
               "shape": "straight",
@@ -1573,8 +1510,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "east",
                 "half": "top",
                 "shape": "inner_left",
@@ -1588,8 +1525,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:oxidized_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:oxidized_cut_copper_stairs",
+            "properties": {
               "facing": "east",
               "half": "top",
               "shape": "inner_left",
@@ -1600,8 +1537,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "east",
                 "half": "top",
                 "shape": "inner_right",
@@ -1615,8 +1552,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:oxidized_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:oxidized_cut_copper_stairs",
+            "properties": {
               "facing": "east",
               "half": "top",
               "shape": "inner_right",
@@ -1627,8 +1564,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "east",
                 "half": "top",
                 "shape": "outer_left",
@@ -1642,8 +1579,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:oxidized_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:oxidized_cut_copper_stairs",
+            "properties": {
               "facing": "east",
               "half": "top",
               "shape": "outer_left",
@@ -1654,8 +1591,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "east",
                 "half": "top",
                 "shape": "outer_right",
@@ -1669,8 +1606,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:oxidized_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:oxidized_cut_copper_stairs",
+            "properties": {
               "facing": "east",
               "half": "top",
               "shape": "outer_right",
@@ -1681,8 +1618,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "east",
                 "half": "bottom",
                 "shape": "straight",
@@ -1696,8 +1633,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:oxidized_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:oxidized_cut_copper_stairs",
+            "properties": {
               "facing": "east",
               "half": "bottom",
               "shape": "straight",
@@ -1708,8 +1645,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "east",
                 "half": "bottom",
                 "shape": "inner_left",
@@ -1723,8 +1660,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:oxidized_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:oxidized_cut_copper_stairs",
+            "properties": {
               "facing": "east",
               "half": "bottom",
               "shape": "inner_left",
@@ -1735,8 +1672,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "east",
                 "half": "bottom",
                 "shape": "inner_right",
@@ -1750,8 +1687,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:oxidized_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:oxidized_cut_copper_stairs",
+            "properties": {
               "facing": "east",
               "half": "bottom",
               "shape": "inner_right",
@@ -1762,8 +1699,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "east",
                 "half": "bottom",
                 "shape": "outer_left",
@@ -1777,8 +1714,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:oxidized_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:oxidized_cut_copper_stairs",
+            "properties": {
               "facing": "east",
               "half": "bottom",
               "shape": "outer_left",
@@ -1789,8 +1726,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "east",
                 "half": "bottom",
                 "shape": "outer_right",
@@ -1804,8 +1741,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:oxidized_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:oxidized_cut_copper_stairs",
+            "properties": {
               "facing": "east",
               "half": "bottom",
               "shape": "outer_right",
@@ -1816,8 +1753,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "south",
                 "half": "top",
                 "shape": "straight",
@@ -1831,8 +1768,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:oxidized_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:oxidized_cut_copper_stairs",
+            "properties": {
               "facing": "south",
               "half": "top",
               "shape": "straight",
@@ -1843,8 +1780,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "south",
                 "half": "top",
                 "shape": "inner_left",
@@ -1858,8 +1795,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:oxidized_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:oxidized_cut_copper_stairs",
+            "properties": {
               "facing": "south",
               "half": "top",
               "shape": "inner_left",
@@ -1870,8 +1807,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "south",
                 "half": "top",
                 "shape": "inner_right",
@@ -1885,8 +1822,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:oxidized_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:oxidized_cut_copper_stairs",
+            "properties": {
               "facing": "south",
               "half": "top",
               "shape": "inner_right",
@@ -1897,8 +1834,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "south",
                 "half": "top",
                 "shape": "outer_left",
@@ -1912,8 +1849,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:oxidized_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:oxidized_cut_copper_stairs",
+            "properties": {
               "facing": "south",
               "half": "top",
               "shape": "outer_left",
@@ -1924,8 +1861,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "south",
                 "half": "top",
                 "shape": "outer_right",
@@ -1939,8 +1876,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:oxidized_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:oxidized_cut_copper_stairs",
+            "properties": {
               "facing": "south",
               "half": "top",
               "shape": "outer_right",
@@ -1951,8 +1888,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "south",
                 "half": "bottom",
                 "shape": "straight",
@@ -1966,8 +1903,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:oxidized_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:oxidized_cut_copper_stairs",
+            "properties": {
               "facing": "south",
               "half": "bottom",
               "shape": "straight",
@@ -1978,8 +1915,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "south",
                 "half": "bottom",
                 "shape": "inner_left",
@@ -1993,8 +1930,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:oxidized_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:oxidized_cut_copper_stairs",
+            "properties": {
               "facing": "south",
               "half": "bottom",
               "shape": "inner_left",
@@ -2005,8 +1942,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "south",
                 "half": "bottom",
                 "shape": "inner_right",
@@ -2020,8 +1957,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:oxidized_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:oxidized_cut_copper_stairs",
+            "properties": {
               "facing": "south",
               "half": "bottom",
               "shape": "inner_right",
@@ -2032,8 +1969,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "south",
                 "half": "bottom",
                 "shape": "outer_left",
@@ -2047,8 +1984,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:oxidized_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:oxidized_cut_copper_stairs",
+            "properties": {
               "facing": "south",
               "half": "bottom",
               "shape": "outer_left",
@@ -2059,8 +1996,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "south",
                 "half": "bottom",
                 "shape": "outer_right",
@@ -2074,8 +2011,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:oxidized_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:oxidized_cut_copper_stairs",
+            "properties": {
               "facing": "south",
               "half": "bottom",
               "shape": "outer_right",
@@ -2086,8 +2023,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "west",
                 "half": "top",
                 "shape": "straight",
@@ -2101,8 +2038,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:oxidized_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:oxidized_cut_copper_stairs",
+            "properties": {
               "facing": "west",
               "half": "top",
               "shape": "straight",
@@ -2113,8 +2050,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "west",
                 "half": "top",
                 "shape": "inner_left",
@@ -2128,8 +2065,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:oxidized_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:oxidized_cut_copper_stairs",
+            "properties": {
               "facing": "west",
               "half": "top",
               "shape": "inner_left",
@@ -2140,8 +2077,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "west",
                 "half": "top",
                 "shape": "inner_right",
@@ -2155,8 +2092,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:oxidized_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:oxidized_cut_copper_stairs",
+            "properties": {
               "facing": "west",
               "half": "top",
               "shape": "inner_right",
@@ -2167,8 +2104,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "west",
                 "half": "top",
                 "shape": "outer_left",
@@ -2182,8 +2119,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:oxidized_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:oxidized_cut_copper_stairs",
+            "properties": {
               "facing": "west",
               "half": "top",
               "shape": "outer_left",
@@ -2194,8 +2131,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "west",
                 "half": "top",
                 "shape": "outer_right",
@@ -2209,8 +2146,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:oxidized_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:oxidized_cut_copper_stairs",
+            "properties": {
               "facing": "west",
               "half": "top",
               "shape": "outer_right",
@@ -2221,8 +2158,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "west",
                 "half": "bottom",
                 "shape": "straight",
@@ -2236,8 +2173,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:oxidized_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:oxidized_cut_copper_stairs",
+            "properties": {
               "facing": "west",
               "half": "bottom",
               "shape": "straight",
@@ -2248,8 +2185,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "west",
                 "half": "bottom",
                 "shape": "inner_left",
@@ -2263,8 +2200,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:oxidized_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:oxidized_cut_copper_stairs",
+            "properties": {
               "facing": "west",
               "half": "bottom",
               "shape": "inner_left",
@@ -2275,8 +2212,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "west",
                 "half": "bottom",
                 "shape": "inner_right",
@@ -2290,8 +2227,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:oxidized_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:oxidized_cut_copper_stairs",
+            "properties": {
               "facing": "west",
               "half": "bottom",
               "shape": "inner_right",
@@ -2302,8 +2239,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "west",
                 "half": "bottom",
                 "shape": "outer_left",
@@ -2317,8 +2254,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:oxidized_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:oxidized_cut_copper_stairs",
+            "properties": {
               "facing": "west",
               "half": "bottom",
               "shape": "outer_left",
@@ -2329,8 +2266,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "west",
                 "half": "bottom",
                 "shape": "outer_right",
@@ -2344,8 +2281,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:oxidized_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:oxidized_cut_copper_stairs",
+            "properties": {
               "facing": "west",
               "half": "bottom",
               "shape": "outer_right",
@@ -2361,8 +2298,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "north",
                 "half": "top",
                 "shape": "straight",
@@ -2376,8 +2313,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:weathered_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:weathered_cut_copper_stairs",
+            "properties": {
               "facing": "north",
               "half": "top",
               "shape": "straight",
@@ -2388,8 +2325,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "north",
                 "half": "top",
                 "shape": "inner_left",
@@ -2403,8 +2340,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:weathered_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:weathered_cut_copper_stairs",
+            "properties": {
               "facing": "north",
               "half": "top",
               "shape": "inner_left",
@@ -2415,8 +2352,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "north",
                 "half": "top",
                 "shape": "inner_right",
@@ -2430,8 +2367,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:weathered_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:weathered_cut_copper_stairs",
+            "properties": {
               "facing": "north",
               "half": "top",
               "shape": "inner_right",
@@ -2442,8 +2379,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "north",
                 "half": "top",
                 "shape": "outer_left",
@@ -2457,8 +2394,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:weathered_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:weathered_cut_copper_stairs",
+            "properties": {
               "facing": "north",
               "half": "top",
               "shape": "outer_left",
@@ -2469,8 +2406,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "north",
                 "half": "top",
                 "shape": "outer_right",
@@ -2484,8 +2421,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:weathered_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:weathered_cut_copper_stairs",
+            "properties": {
               "facing": "north",
               "half": "top",
               "shape": "outer_right",
@@ -2495,36 +2432,20 @@
         },
         {
           "input_predicate": {
-            "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
-                "facing": "north",
-                "half": "bottom",
-                "shape": "straight",
-                "waterlogged": "false"
-              }
-            },
+            "block_state": "minecraft:cut_copper_stairs",
             "predicate_type": "minecraft:random_blockstate_match",
             "probability": 0.3333334
           },
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": {
-            "Name": "minecraft:weathered_cut_copper_stairs",
-            "Properties": {
-              "facing": "north",
-              "half": "bottom",
-              "shape": "straight",
-              "waterlogged": "false"
-            }
-          }
+          "output_state": "minecraft:weathered_cut_copper_stairs"
         },
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "north",
                 "half": "bottom",
                 "shape": "inner_left",
@@ -2538,8 +2459,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:weathered_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:weathered_cut_copper_stairs",
+            "properties": {
               "facing": "north",
               "half": "bottom",
               "shape": "inner_left",
@@ -2550,8 +2471,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "north",
                 "half": "bottom",
                 "shape": "inner_right",
@@ -2565,8 +2486,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:weathered_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:weathered_cut_copper_stairs",
+            "properties": {
               "facing": "north",
               "half": "bottom",
               "shape": "inner_right",
@@ -2577,8 +2498,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "north",
                 "half": "bottom",
                 "shape": "outer_left",
@@ -2592,8 +2513,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:weathered_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:weathered_cut_copper_stairs",
+            "properties": {
               "facing": "north",
               "half": "bottom",
               "shape": "outer_left",
@@ -2604,8 +2525,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "north",
                 "half": "bottom",
                 "shape": "outer_right",
@@ -2619,8 +2540,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:weathered_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:weathered_cut_copper_stairs",
+            "properties": {
               "facing": "north",
               "half": "bottom",
               "shape": "outer_right",
@@ -2631,8 +2552,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "east",
                 "half": "top",
                 "shape": "straight",
@@ -2646,8 +2567,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:weathered_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:weathered_cut_copper_stairs",
+            "properties": {
               "facing": "east",
               "half": "top",
               "shape": "straight",
@@ -2658,8 +2579,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "east",
                 "half": "top",
                 "shape": "inner_left",
@@ -2673,8 +2594,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:weathered_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:weathered_cut_copper_stairs",
+            "properties": {
               "facing": "east",
               "half": "top",
               "shape": "inner_left",
@@ -2685,8 +2606,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "east",
                 "half": "top",
                 "shape": "inner_right",
@@ -2700,8 +2621,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:weathered_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:weathered_cut_copper_stairs",
+            "properties": {
               "facing": "east",
               "half": "top",
               "shape": "inner_right",
@@ -2712,8 +2633,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "east",
                 "half": "top",
                 "shape": "outer_left",
@@ -2727,8 +2648,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:weathered_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:weathered_cut_copper_stairs",
+            "properties": {
               "facing": "east",
               "half": "top",
               "shape": "outer_left",
@@ -2739,8 +2660,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "east",
                 "half": "top",
                 "shape": "outer_right",
@@ -2754,8 +2675,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:weathered_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:weathered_cut_copper_stairs",
+            "properties": {
               "facing": "east",
               "half": "top",
               "shape": "outer_right",
@@ -2766,8 +2687,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "east",
                 "half": "bottom",
                 "shape": "straight",
@@ -2781,8 +2702,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:weathered_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:weathered_cut_copper_stairs",
+            "properties": {
               "facing": "east",
               "half": "bottom",
               "shape": "straight",
@@ -2793,8 +2714,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "east",
                 "half": "bottom",
                 "shape": "inner_left",
@@ -2808,8 +2729,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:weathered_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:weathered_cut_copper_stairs",
+            "properties": {
               "facing": "east",
               "half": "bottom",
               "shape": "inner_left",
@@ -2820,8 +2741,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "east",
                 "half": "bottom",
                 "shape": "inner_right",
@@ -2835,8 +2756,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:weathered_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:weathered_cut_copper_stairs",
+            "properties": {
               "facing": "east",
               "half": "bottom",
               "shape": "inner_right",
@@ -2847,8 +2768,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "east",
                 "half": "bottom",
                 "shape": "outer_left",
@@ -2862,8 +2783,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:weathered_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:weathered_cut_copper_stairs",
+            "properties": {
               "facing": "east",
               "half": "bottom",
               "shape": "outer_left",
@@ -2874,8 +2795,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "east",
                 "half": "bottom",
                 "shape": "outer_right",
@@ -2889,8 +2810,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:weathered_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:weathered_cut_copper_stairs",
+            "properties": {
               "facing": "east",
               "half": "bottom",
               "shape": "outer_right",
@@ -2901,8 +2822,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "south",
                 "half": "top",
                 "shape": "straight",
@@ -2916,8 +2837,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:weathered_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:weathered_cut_copper_stairs",
+            "properties": {
               "facing": "south",
               "half": "top",
               "shape": "straight",
@@ -2928,8 +2849,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "south",
                 "half": "top",
                 "shape": "inner_left",
@@ -2943,8 +2864,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:weathered_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:weathered_cut_copper_stairs",
+            "properties": {
               "facing": "south",
               "half": "top",
               "shape": "inner_left",
@@ -2955,8 +2876,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "south",
                 "half": "top",
                 "shape": "inner_right",
@@ -2970,8 +2891,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:weathered_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:weathered_cut_copper_stairs",
+            "properties": {
               "facing": "south",
               "half": "top",
               "shape": "inner_right",
@@ -2982,8 +2903,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "south",
                 "half": "top",
                 "shape": "outer_left",
@@ -2997,8 +2918,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:weathered_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:weathered_cut_copper_stairs",
+            "properties": {
               "facing": "south",
               "half": "top",
               "shape": "outer_left",
@@ -3009,8 +2930,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "south",
                 "half": "top",
                 "shape": "outer_right",
@@ -3024,8 +2945,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:weathered_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:weathered_cut_copper_stairs",
+            "properties": {
               "facing": "south",
               "half": "top",
               "shape": "outer_right",
@@ -3036,8 +2957,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "south",
                 "half": "bottom",
                 "shape": "straight",
@@ -3051,8 +2972,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:weathered_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:weathered_cut_copper_stairs",
+            "properties": {
               "facing": "south",
               "half": "bottom",
               "shape": "straight",
@@ -3063,8 +2984,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "south",
                 "half": "bottom",
                 "shape": "inner_left",
@@ -3078,8 +2999,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:weathered_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:weathered_cut_copper_stairs",
+            "properties": {
               "facing": "south",
               "half": "bottom",
               "shape": "inner_left",
@@ -3090,8 +3011,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "south",
                 "half": "bottom",
                 "shape": "inner_right",
@@ -3105,8 +3026,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:weathered_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:weathered_cut_copper_stairs",
+            "properties": {
               "facing": "south",
               "half": "bottom",
               "shape": "inner_right",
@@ -3117,8 +3038,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "south",
                 "half": "bottom",
                 "shape": "outer_left",
@@ -3132,8 +3053,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:weathered_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:weathered_cut_copper_stairs",
+            "properties": {
               "facing": "south",
               "half": "bottom",
               "shape": "outer_left",
@@ -3144,8 +3065,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "south",
                 "half": "bottom",
                 "shape": "outer_right",
@@ -3159,8 +3080,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:weathered_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:weathered_cut_copper_stairs",
+            "properties": {
               "facing": "south",
               "half": "bottom",
               "shape": "outer_right",
@@ -3171,8 +3092,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "west",
                 "half": "top",
                 "shape": "straight",
@@ -3186,8 +3107,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:weathered_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:weathered_cut_copper_stairs",
+            "properties": {
               "facing": "west",
               "half": "top",
               "shape": "straight",
@@ -3198,8 +3119,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "west",
                 "half": "top",
                 "shape": "inner_left",
@@ -3213,8 +3134,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:weathered_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:weathered_cut_copper_stairs",
+            "properties": {
               "facing": "west",
               "half": "top",
               "shape": "inner_left",
@@ -3225,8 +3146,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "west",
                 "half": "top",
                 "shape": "inner_right",
@@ -3240,8 +3161,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:weathered_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:weathered_cut_copper_stairs",
+            "properties": {
               "facing": "west",
               "half": "top",
               "shape": "inner_right",
@@ -3252,8 +3173,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "west",
                 "half": "top",
                 "shape": "outer_left",
@@ -3267,8 +3188,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:weathered_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:weathered_cut_copper_stairs",
+            "properties": {
               "facing": "west",
               "half": "top",
               "shape": "outer_left",
@@ -3279,8 +3200,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "west",
                 "half": "top",
                 "shape": "outer_right",
@@ -3294,8 +3215,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:weathered_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:weathered_cut_copper_stairs",
+            "properties": {
               "facing": "west",
               "half": "top",
               "shape": "outer_right",
@@ -3306,8 +3227,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "west",
                 "half": "bottom",
                 "shape": "straight",
@@ -3321,8 +3242,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:weathered_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:weathered_cut_copper_stairs",
+            "properties": {
               "facing": "west",
               "half": "bottom",
               "shape": "straight",
@@ -3333,8 +3254,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "west",
                 "half": "bottom",
                 "shape": "inner_left",
@@ -3348,8 +3269,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:weathered_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:weathered_cut_copper_stairs",
+            "properties": {
               "facing": "west",
               "half": "bottom",
               "shape": "inner_left",
@@ -3360,8 +3281,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "west",
                 "half": "bottom",
                 "shape": "inner_right",
@@ -3375,8 +3296,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:weathered_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:weathered_cut_copper_stairs",
+            "properties": {
               "facing": "west",
               "half": "bottom",
               "shape": "inner_right",
@@ -3387,8 +3308,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "west",
                 "half": "bottom",
                 "shape": "outer_left",
@@ -3402,8 +3323,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:weathered_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:weathered_cut_copper_stairs",
+            "properties": {
               "facing": "west",
               "half": "bottom",
               "shape": "outer_left",
@@ -3414,8 +3335,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "west",
                 "half": "bottom",
                 "shape": "outer_right",
@@ -3429,8 +3350,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:weathered_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:weathered_cut_copper_stairs",
+            "properties": {
               "facing": "west",
               "half": "bottom",
               "shape": "outer_right",
@@ -3446,8 +3367,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "north",
                 "half": "top",
                 "shape": "straight",
@@ -3461,8 +3382,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:exposed_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:exposed_cut_copper_stairs",
+            "properties": {
               "facing": "north",
               "half": "top",
               "shape": "straight",
@@ -3473,8 +3394,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "north",
                 "half": "top",
                 "shape": "inner_left",
@@ -3488,8 +3409,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:exposed_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:exposed_cut_copper_stairs",
+            "properties": {
               "facing": "north",
               "half": "top",
               "shape": "inner_left",
@@ -3500,8 +3421,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "north",
                 "half": "top",
                 "shape": "inner_right",
@@ -3515,8 +3436,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:exposed_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:exposed_cut_copper_stairs",
+            "properties": {
               "facing": "north",
               "half": "top",
               "shape": "inner_right",
@@ -3527,8 +3448,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "north",
                 "half": "top",
                 "shape": "outer_left",
@@ -3542,8 +3463,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:exposed_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:exposed_cut_copper_stairs",
+            "properties": {
               "facing": "north",
               "half": "top",
               "shape": "outer_left",
@@ -3554,8 +3475,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "north",
                 "half": "top",
                 "shape": "outer_right",
@@ -3569,8 +3490,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:exposed_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:exposed_cut_copper_stairs",
+            "properties": {
               "facing": "north",
               "half": "top",
               "shape": "outer_right",
@@ -3580,36 +3501,20 @@
         },
         {
           "input_predicate": {
-            "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
-                "facing": "north",
-                "half": "bottom",
-                "shape": "straight",
-                "waterlogged": "false"
-              }
-            },
+            "block_state": "minecraft:cut_copper_stairs",
             "predicate_type": "minecraft:random_blockstate_match",
             "probability": 0.5
           },
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": {
-            "Name": "minecraft:exposed_cut_copper_stairs",
-            "Properties": {
-              "facing": "north",
-              "half": "bottom",
-              "shape": "straight",
-              "waterlogged": "false"
-            }
-          }
+          "output_state": "minecraft:exposed_cut_copper_stairs"
         },
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "north",
                 "half": "bottom",
                 "shape": "inner_left",
@@ -3623,8 +3528,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:exposed_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:exposed_cut_copper_stairs",
+            "properties": {
               "facing": "north",
               "half": "bottom",
               "shape": "inner_left",
@@ -3635,8 +3540,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "north",
                 "half": "bottom",
                 "shape": "inner_right",
@@ -3650,8 +3555,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:exposed_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:exposed_cut_copper_stairs",
+            "properties": {
               "facing": "north",
               "half": "bottom",
               "shape": "inner_right",
@@ -3662,8 +3567,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "north",
                 "half": "bottom",
                 "shape": "outer_left",
@@ -3677,8 +3582,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:exposed_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:exposed_cut_copper_stairs",
+            "properties": {
               "facing": "north",
               "half": "bottom",
               "shape": "outer_left",
@@ -3689,8 +3594,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "north",
                 "half": "bottom",
                 "shape": "outer_right",
@@ -3704,8 +3609,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:exposed_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:exposed_cut_copper_stairs",
+            "properties": {
               "facing": "north",
               "half": "bottom",
               "shape": "outer_right",
@@ -3716,8 +3621,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "east",
                 "half": "top",
                 "shape": "straight",
@@ -3731,8 +3636,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:exposed_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:exposed_cut_copper_stairs",
+            "properties": {
               "facing": "east",
               "half": "top",
               "shape": "straight",
@@ -3743,8 +3648,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "east",
                 "half": "top",
                 "shape": "inner_left",
@@ -3758,8 +3663,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:exposed_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:exposed_cut_copper_stairs",
+            "properties": {
               "facing": "east",
               "half": "top",
               "shape": "inner_left",
@@ -3770,8 +3675,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "east",
                 "half": "top",
                 "shape": "inner_right",
@@ -3785,8 +3690,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:exposed_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:exposed_cut_copper_stairs",
+            "properties": {
               "facing": "east",
               "half": "top",
               "shape": "inner_right",
@@ -3797,8 +3702,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "east",
                 "half": "top",
                 "shape": "outer_left",
@@ -3812,8 +3717,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:exposed_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:exposed_cut_copper_stairs",
+            "properties": {
               "facing": "east",
               "half": "top",
               "shape": "outer_left",
@@ -3824,8 +3729,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "east",
                 "half": "top",
                 "shape": "outer_right",
@@ -3839,8 +3744,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:exposed_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:exposed_cut_copper_stairs",
+            "properties": {
               "facing": "east",
               "half": "top",
               "shape": "outer_right",
@@ -3851,8 +3756,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "east",
                 "half": "bottom",
                 "shape": "straight",
@@ -3866,8 +3771,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:exposed_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:exposed_cut_copper_stairs",
+            "properties": {
               "facing": "east",
               "half": "bottom",
               "shape": "straight",
@@ -3878,8 +3783,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "east",
                 "half": "bottom",
                 "shape": "inner_left",
@@ -3893,8 +3798,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:exposed_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:exposed_cut_copper_stairs",
+            "properties": {
               "facing": "east",
               "half": "bottom",
               "shape": "inner_left",
@@ -3905,8 +3810,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "east",
                 "half": "bottom",
                 "shape": "inner_right",
@@ -3920,8 +3825,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:exposed_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:exposed_cut_copper_stairs",
+            "properties": {
               "facing": "east",
               "half": "bottom",
               "shape": "inner_right",
@@ -3932,8 +3837,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "east",
                 "half": "bottom",
                 "shape": "outer_left",
@@ -3947,8 +3852,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:exposed_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:exposed_cut_copper_stairs",
+            "properties": {
               "facing": "east",
               "half": "bottom",
               "shape": "outer_left",
@@ -3959,8 +3864,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "east",
                 "half": "bottom",
                 "shape": "outer_right",
@@ -3974,8 +3879,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:exposed_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:exposed_cut_copper_stairs",
+            "properties": {
               "facing": "east",
               "half": "bottom",
               "shape": "outer_right",
@@ -3986,8 +3891,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "south",
                 "half": "top",
                 "shape": "straight",
@@ -4001,8 +3906,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:exposed_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:exposed_cut_copper_stairs",
+            "properties": {
               "facing": "south",
               "half": "top",
               "shape": "straight",
@@ -4013,8 +3918,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "south",
                 "half": "top",
                 "shape": "inner_left",
@@ -4028,8 +3933,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:exposed_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:exposed_cut_copper_stairs",
+            "properties": {
               "facing": "south",
               "half": "top",
               "shape": "inner_left",
@@ -4040,8 +3945,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "south",
                 "half": "top",
                 "shape": "inner_right",
@@ -4055,8 +3960,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:exposed_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:exposed_cut_copper_stairs",
+            "properties": {
               "facing": "south",
               "half": "top",
               "shape": "inner_right",
@@ -4067,8 +3972,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "south",
                 "half": "top",
                 "shape": "outer_left",
@@ -4082,8 +3987,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:exposed_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:exposed_cut_copper_stairs",
+            "properties": {
               "facing": "south",
               "half": "top",
               "shape": "outer_left",
@@ -4094,8 +3999,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "south",
                 "half": "top",
                 "shape": "outer_right",
@@ -4109,8 +4014,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:exposed_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:exposed_cut_copper_stairs",
+            "properties": {
               "facing": "south",
               "half": "top",
               "shape": "outer_right",
@@ -4121,8 +4026,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "south",
                 "half": "bottom",
                 "shape": "straight",
@@ -4136,8 +4041,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:exposed_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:exposed_cut_copper_stairs",
+            "properties": {
               "facing": "south",
               "half": "bottom",
               "shape": "straight",
@@ -4148,8 +4053,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "south",
                 "half": "bottom",
                 "shape": "inner_left",
@@ -4163,8 +4068,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:exposed_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:exposed_cut_copper_stairs",
+            "properties": {
               "facing": "south",
               "half": "bottom",
               "shape": "inner_left",
@@ -4175,8 +4080,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "south",
                 "half": "bottom",
                 "shape": "inner_right",
@@ -4190,8 +4095,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:exposed_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:exposed_cut_copper_stairs",
+            "properties": {
               "facing": "south",
               "half": "bottom",
               "shape": "inner_right",
@@ -4202,8 +4107,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "south",
                 "half": "bottom",
                 "shape": "outer_left",
@@ -4217,8 +4122,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:exposed_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:exposed_cut_copper_stairs",
+            "properties": {
               "facing": "south",
               "half": "bottom",
               "shape": "outer_left",
@@ -4229,8 +4134,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "south",
                 "half": "bottom",
                 "shape": "outer_right",
@@ -4244,8 +4149,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:exposed_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:exposed_cut_copper_stairs",
+            "properties": {
               "facing": "south",
               "half": "bottom",
               "shape": "outer_right",
@@ -4256,8 +4161,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "west",
                 "half": "top",
                 "shape": "straight",
@@ -4271,8 +4176,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:exposed_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:exposed_cut_copper_stairs",
+            "properties": {
               "facing": "west",
               "half": "top",
               "shape": "straight",
@@ -4283,8 +4188,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "west",
                 "half": "top",
                 "shape": "inner_left",
@@ -4298,8 +4203,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:exposed_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:exposed_cut_copper_stairs",
+            "properties": {
               "facing": "west",
               "half": "top",
               "shape": "inner_left",
@@ -4310,8 +4215,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "west",
                 "half": "top",
                 "shape": "inner_right",
@@ -4325,8 +4230,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:exposed_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:exposed_cut_copper_stairs",
+            "properties": {
               "facing": "west",
               "half": "top",
               "shape": "inner_right",
@@ -4337,8 +4242,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "west",
                 "half": "top",
                 "shape": "outer_left",
@@ -4352,8 +4257,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:exposed_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:exposed_cut_copper_stairs",
+            "properties": {
               "facing": "west",
               "half": "top",
               "shape": "outer_left",
@@ -4364,8 +4269,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "west",
                 "half": "top",
                 "shape": "outer_right",
@@ -4379,8 +4284,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:exposed_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:exposed_cut_copper_stairs",
+            "properties": {
               "facing": "west",
               "half": "top",
               "shape": "outer_right",
@@ -4391,8 +4296,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "west",
                 "half": "bottom",
                 "shape": "straight",
@@ -4406,8 +4311,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:exposed_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:exposed_cut_copper_stairs",
+            "properties": {
               "facing": "west",
               "half": "bottom",
               "shape": "straight",
@@ -4418,8 +4323,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "west",
                 "half": "bottom",
                 "shape": "inner_left",
@@ -4433,8 +4338,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:exposed_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:exposed_cut_copper_stairs",
+            "properties": {
               "facing": "west",
               "half": "bottom",
               "shape": "inner_left",
@@ -4445,8 +4350,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "west",
                 "half": "bottom",
                 "shape": "inner_right",
@@ -4460,8 +4365,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:exposed_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:exposed_cut_copper_stairs",
+            "properties": {
               "facing": "west",
               "half": "bottom",
               "shape": "inner_right",
@@ -4472,8 +4377,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "west",
                 "half": "bottom",
                 "shape": "outer_left",
@@ -4487,8 +4392,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:exposed_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:exposed_cut_copper_stairs",
+            "properties": {
               "facing": "west",
               "half": "bottom",
               "shape": "outer_left",
@@ -4499,8 +4404,8 @@
         {
           "input_predicate": {
             "block_state": {
-              "Name": "minecraft:cut_copper_stairs",
-              "Properties": {
+              "id": "minecraft:cut_copper_stairs",
+              "properties": {
                 "facing": "west",
                 "half": "bottom",
                 "shape": "outer_right",
@@ -4514,8 +4419,8 @@
             "predicate_type": "minecraft:always_true"
           },
           "output_state": {
-            "Name": "minecraft:exposed_cut_copper_stairs",
-            "Properties": {
+            "id": "minecraft:exposed_cut_copper_stairs",
+            "properties": {
               "facing": "west",
               "half": "bottom",
               "shape": "outer_right",

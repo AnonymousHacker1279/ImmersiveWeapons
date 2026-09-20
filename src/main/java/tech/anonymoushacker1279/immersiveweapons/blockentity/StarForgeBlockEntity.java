@@ -19,7 +19,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
-import net.minecraft.world.item.crafting.RecipeMap;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -97,10 +96,10 @@ public class StarForgeBlockEntity extends BaseContainerBlockEntity implements En
 	public void initializeRecipes(RecipeManager manager, ServerLevel serverLevel) {
 		ALL_RECIPES.clear();
 
-		RecipeMap.create(manager.getRecipes())
-				.getRecipesFor(RecipeTypeRegistry.STAR_FORGE_RECIPE_TYPE.get(),
-						new StarForgeRecipeInput(inventory.getFirst(), inventory.get(1)), serverLevel)
-				.forEach(recipeHolder -> ALL_RECIPES.add(new RecipeHolder<>(recipeHolder.id(), recipeHolder.value())));
+		StarForgeRecipeInput input = new StarForgeRecipeInput(inventory.getFirst(), inventory.get(1));
+		manager.getRecipes().stream()
+				.filter(recipeHolder -> recipeHolder.value() instanceof StarForgeRecipe recipe && recipe.matches(input, serverLevel))
+				.forEach(recipeHolder -> ALL_RECIPES.add(new RecipeHolder<>(recipeHolder.id(), (StarForgeRecipe) recipeHolder.value())));
 	}
 
 	@Nullable

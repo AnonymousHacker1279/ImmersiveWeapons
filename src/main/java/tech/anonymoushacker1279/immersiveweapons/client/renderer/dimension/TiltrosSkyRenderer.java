@@ -1,5 +1,6 @@
 package tech.anonymoushacker1279.immersiveweapons.client.renderer.dimension;
 
+import com.mojang.renderpearl.api.buffers.GpuBufferSlice;
 import net.minecraft.client.renderer.state.level.LevelRenderState;
 import net.minecraft.client.renderer.state.level.SkyRenderState;
 import net.neoforged.neoforge.client.CustomSkyboxRenderer;
@@ -14,8 +15,7 @@ public class TiltrosSkyRenderer implements CustomSkyboxRenderer {
 	}
 
 	@Override
-	public boolean renderSky(LevelRenderState levelRenderState, SkyRenderState skyRenderState, Matrix4fc modelViewMatrix, Runnable setupFog) {
-		setupFog.run();
+	public boolean renderSky(LevelRenderState levelRenderState, SkyRenderState skyRenderState, Matrix4fc modelViewMatrix, GpuBufferSlice skyFog) {
 		renderer.renderSky();
 		return true;
 	}

@@ -4,7 +4,6 @@ import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.common.data.DataMapProvider;
-import net.neoforged.neoforge.registries.datamaps.builtin.Compostable;
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps;
 import net.neoforged.neoforge.registries.datamaps.builtin.VibrationFrequency;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
@@ -29,14 +28,7 @@ public class DataMapsGenerator extends DataMapProvider {
 				.add(GameEventRegistry.SMOKE_GRENADE_HISS, new VibrationFrequency(14), false)
 				.add(GameEventRegistry.PANIC_ALARM_TRIGGER, new VibrationFrequency(15), false);
 
-		builder(NeoForgeDataMaps.COMPOSTABLES)
-				.add(BlockItemRegistry.STARDUST_SAPLING_ITEM.get().builtInRegistryHolder(), new Compostable(0.3f), false)
-				.add(BlockItemRegistry.STARDUST_LEAVES_ITEM.get().builtInRegistryHolder(), new Compostable(0.5f), false)
-				.add(BlockItemRegistry.BURNED_OAK_BRANCH_ITEM.get().builtInRegistryHolder(), new Compostable(0.3f), false)
-				.add(BlockItemRegistry.MOONGLOW_ITEM.get().builtInRegistryHolder(), new Compostable(0.65f), false)
-				.add(BlockItemRegistry.DEATHWEED_ITEM.get().builtInRegistryHolder(), new Compostable(0.65f), false)
-				.add(ItemRegistry.CHOCOLATE_BAR.get().builtInRegistryHolder(), new Compostable(0.2f), false)
-				.add(ItemRegistry.MRE.get().builtInRegistryHolder(), new Compostable(1.0f), false);
+		// Compostables are now item components, see Item.Properties#compostable
 
 		builder(AbstractGunItem.POWDER_TYPE)
 				.add(ItemRegistry.SULFUR_DUST.get().builtInRegistryHolder(), new FlammablePowder(0.9f, -0.05f, 2, 3), false)

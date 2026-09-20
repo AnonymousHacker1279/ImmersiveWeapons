@@ -45,8 +45,8 @@ public abstract class AbstractArrowMixin implements ArrowAttributeAccessor {
 			boolean didHurt = instance.hurtOrSimulate(bulletEntity.getDamageSource(owner), bulletEntity.calculateDamage());
 
 			// Bullets disable invulnerability. Otherwise, items like the blunderbuss would be useless.
-			instance.invulnerableTime = 0;
-			instance.setInvulnerable(false);
+			instance.setInvulnerableTime(0);
+			instance.setPermanentlyInvulnerable(false);
 
 			return didHurt;
 		} else {

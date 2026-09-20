@@ -5,6 +5,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -15,6 +16,7 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import net.neoforged.neoforge.common.loot.LootModifier;
 
+import java.util.Optional;
 import java.util.function.Supplier;
 
 public class LogShardsLootModifierHandler extends LootModifier {
@@ -41,7 +43,7 @@ public class LogShardsLootModifierHandler extends LootModifier {
 	/// @param minShards      the minimum number of shards to drop
 	/// @param maxShards      the maximum number of shards to drop
 	/// @param replacement    the returned item
-	public LogShardsLootModifierHandler(LootItemCondition[] itemConditions, int priority, TagKey<Item> tag, int minShards, int maxShards, ItemStackTemplate replacement) {
+	public LogShardsLootModifierHandler(Optional<Holder<LootItemCondition>> itemConditions, int priority, TagKey<Item> tag, int minShards, int maxShards, ItemStackTemplate replacement) {
 		super(itemConditions, priority);
 		this.tag = tag;
 		this.minShards = minShards;

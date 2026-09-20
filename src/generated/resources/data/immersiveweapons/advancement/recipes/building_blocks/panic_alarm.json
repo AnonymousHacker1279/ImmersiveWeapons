@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:panic_alarm"
+        "recipes": "immersiveweapons:panic_alarm"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

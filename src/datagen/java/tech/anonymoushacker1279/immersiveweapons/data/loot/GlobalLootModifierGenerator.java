@@ -3,6 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.data.loot;
 import net.minecraft.advancements.predicates.ItemPredicate;
 import net.minecraft.advancements.predicates.LocationPredicate;
 import net.minecraft.advancements.predicates.entity.EntityPredicate;
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.registries.Registries;
@@ -15,6 +16,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStackTemplate;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootContext.EntityTarget;
@@ -38,6 +40,7 @@ import java.util.concurrent.ExecutionException;
 public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 
 	private final Provider registries;
+	private final HolderGetter<Enchantment> enchantmentGetter;
 	private final HolderGetter<EntityType<?>> entityTypeGetter;
 	private final HolderGetter<Item> itemGetter;
 
@@ -49,6 +52,7 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 			provider = lookupProvider.get();
 			entityTypeGetter = provider.lookupOrThrow(Registries.ENTITY_TYPE);
 			itemGetter = provider.lookupOrThrow(Registries.ITEM);
+			enchantmentGetter = provider.lookupOrThrow(Registries.ENCHANTMENT);
 		} catch (InterruptedException | ExecutionException e) {
 			throw new RuntimeException(e);
 		}
@@ -231,12 +235,17 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 				new ItemStackTemplate(ItemRegistry.VENTUS_SHARD.get())));
 	}
 
+	/// Wrap a condition builder into the optional inlined holder used by loot modifiers.
+	private Optional<Holder<LootItemCondition>> holder(LootItemCondition.Builder builder) {
+		return Optional.of(Holder.direct(builder.build()));
+	}
+
 	/// Create a loot condition that has a single loot table as criteria.
 	///
 	/// @param lootTable the loot table to use
 	/// @return the loot item condition
-	private LootItemCondition[] singleLootTableCondition(ResourceKey<LootTable> lootTable) {
-		return new LootItemCondition[]{LootTableIdCondition.builder(lootTable.identifier()).build()};
+	private Optional<Holder<LootItemCondition>> singleLootTableCondition(ResourceKey<LootTable> lootTable) {
+		return holder(LootTableIdCondition.builder(lootTable.identifier()));
 	}
 
 	/// Create a loot condition that has multiple loot tables as criteria.
@@ -244,39 +253,35 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 	/// @param lootTables the loot tables to use
 	/// @return the loot item condition
 	@SafeVarargs
-	private LootItemCondition[] multipleLootTablesCondition(ResourceKey<LootTable>... lootTables) {
+	private Optional<Holder<LootItemCondition>> multipleLootTablesCondition(ResourceKey<LootTable>... lootTables) {
 		LootItemCondition.Builder[] builders = new LootItemCondition.Builder[lootTables.length];
 
 		for (int i = 0; i < lootTables.length; i++) {
 			builders[i] = LootTableIdCondition.builder(lootTables[i].identifier());
 		}
 
-		return new LootItemCondition[]{AnyOfCondition.anyOf(builders).build()};
+		return holder(AnyOfCondition.anyOf(builders));
 	}
 
 	/// Create a loot condition that only has a random chance and looting multiplier as criteria.
 	///
 	/// @param chance            the chance of the item dropping
 	/// @param lootingMultiplier the looting multiplier
-	private LootItemCondition[] simpleDropCondition(float chance, float lootingMultiplier) {
-		return new LootItemCondition[]{
-				LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(registries, chance, lootingMultiplier)
-						.and(LootItemKilledByPlayerCondition.killedByPlayer())
-						.build()};
+	private Optional<Holder<LootItemCondition>> simpleDropCondition(float chance, float lootingMultiplier) {
+		return holder(LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(enchantmentGetter, chance, lootingMultiplier)
+				.and(LootItemKilledByPlayerCondition.killedByPlayer()));
 	}
 
 	/// Create a loot condition that has a single entity type and being killed by a player as criteria.
 	///
 	/// @param entityType the entity type to use
 	/// @return the loot item condition
-	private LootItemCondition[] simpleEntityDropCondition(EntityType<?> entityType) {
-		return new LootItemCondition[]{
-				LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS,
-								EntityPredicate.Builder.entity()
-										.of(entityTypeGetter, entityType)
-										.build())
-						.and(LootItemKilledByPlayerCondition.killedByPlayer())
-						.build()};
+	private Optional<Holder<LootItemCondition>> simpleEntityDropCondition(EntityType<?> entityType) {
+		return holder(LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS,
+						EntityPredicate.Builder.entity()
+								.of(entityTypeGetter, entityType)
+								.build())
+				.and(LootItemKilledByPlayerCondition.killedByPlayer()));
 	}
 
 	/// Similar to [#simpleEntityDropCondition(EntityType)] but with a random chance and looting multiplier.
@@ -285,44 +290,38 @@ public class GlobalLootModifierGenerator extends GlobalLootModifierProvider {
 	/// @param chance            the chance of the item dropping
 	/// @param lootingMultiplier the looting multiplier
 	/// @return the loot item condition
-	private LootItemCondition[] simpleEntityDropCondition(EntityType<?> entityType, float chance, float lootingMultiplier) {
-		return new LootItemCondition[]{
-				LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS,
-								EntityPredicate.Builder.entity()
-										.of(entityTypeGetter, entityType)
-										.build())
-						.and(LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(registries, chance, lootingMultiplier))
-						.and(LootItemKilledByPlayerCondition.killedByPlayer())
-						.build()};
+	private Optional<Holder<LootItemCondition>> simpleEntityDropCondition(EntityType<?> entityType, float chance, float lootingMultiplier) {
+		return holder(LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS,
+						EntityPredicate.Builder.entity()
+								.of(entityTypeGetter, entityType)
+								.build())
+				.and(LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(enchantmentGetter, chance, lootingMultiplier))
+				.and(LootItemKilledByPlayerCondition.killedByPlayer()));
 	}
 
 	/// Create a loot condition that has a single entity type as criteria.
 	///
 	/// @param entityType the entity type to use
 	/// @return the loot item condition
-	private LootItemCondition[] simpleEntityCondition(EntityType<?> entityType) {
-		return new LootItemCondition[]{
-				LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS,
-						EntityPredicate.Builder.entity()
-								.of(entityTypeGetter, entityType)
-								.build())
-						.build()};
+	private Optional<Holder<LootItemCondition>> simpleEntityCondition(EntityType<?> entityType) {
+		return holder(LootItemEntityPropertyCondition.hasProperties(EntityTarget.THIS,
+				EntityPredicate.Builder.entity()
+						.of(entityTypeGetter, entityType)
+						.build()));
 	}
 
-	private LootItemCondition[] matchToolCondition(TagKey<Item> tagKey) {
-		return new LootItemCondition[]{
-				MatchTool.toolMatches(ItemPredicate.Builder.item().of(itemGetter, tagKey)).build()};
+	private Optional<Holder<LootItemCondition>> matchToolCondition(TagKey<Item> tagKey) {
+		return holder(MatchTool.toolMatches(ItemPredicate.Builder.item().of(itemGetter, tagKey)));
 	}
 
 	/// Create a loot condition that applies to [BuiltInLootTables#SIMPLE_DUNGEON] loot tables in a given biome.
 	///
 	/// @param biome the biome to use
 	/// @return the loot item condition
-	private LootItemCondition[] inBiomeDungeonCondition(ResourceKey<Biome> biome) {
+	private Optional<Holder<LootItemCondition>> inBiomeDungeonCondition(ResourceKey<Biome> biome) {
 		HolderGetter<Biome> holderGetter = registries.lookupOrThrow(Registries.BIOME);
 
-		return new LootItemCondition[]{LootTableIdCondition.builder(BuiltInLootTables.SIMPLE_DUNGEON.identifier())
-				.and(LocationCheck.checkLocation(LocationPredicate.Builder.inBiome(holderGetter.getOrThrow(biome))))
-				.build()};
+		return holder(LootTableIdCondition.builder(BuiltInLootTables.SIMPLE_DUNGEON.identifier())
+				.and(LocationCheck.checkLocation(LocationPredicate.Builder.inBiome(holderGetter.getOrThrow(biome)))));
 	}
 }

@@ -1,17 +1,21 @@
 package tech.anonymoushacker1279.immersiveweapons.data.recipes.families;
 
+import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.triggers.Criterion;
 import net.minecraft.advancements.triggers.InventoryChangeTrigger;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.HolderLookup.Provider;
 import net.minecraft.core.HolderSet;
+import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.data.PackOutput;
+import net.minecraft.core.registries.MultiRegistryBootstrap;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.*;
+import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
@@ -19,12 +23,12 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.recipes.RecipeGenerator;
 
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
+import java.util.Set;
 
 public class FamilyGenerator extends RecipeGenerator {
 
-	public FamilyGenerator(HolderLookup.Provider registries, RecipeOutput output) {
-		super(registries, output);
+	public FamilyGenerator(BootstrapContext<Recipe<?>> recipeOutput, BootstrapContext<Advancement> advancementOutput) {
+		super(recipeOutput, advancementOutput);
 	}
 
 	@Override
@@ -414,20 +418,18 @@ public class FamilyGenerator extends RecipeGenerator {
 		}
 	}
 
-	public static class Runner extends RecipeProvider.Runner {
+	/// Creates the bootstrap which generates both recipes and their advancements.
+	public static MultiRegistryBootstrap create() {
+		return new MultiRegistryBootstrap() {
+			@Override
+			public Set<ResourceKey<? extends Registry<?>>> requestedRegistries() {
+				return Set.of(Registries.RECIPE, Registries.ADVANCEMENT);
+			}
 
-		public Runner(PackOutput output, CompletableFuture<Provider> registries) {
-			super(output, registries);
-		}
-
-		@Override
-		protected RecipeProvider createRecipeProvider(Provider registries, RecipeOutput output) {
-			return new FamilyGenerator(registries, output);
-		}
-
-		@Override
-		public String getName() {
-			return "Immersive Weapons Recipes";
-		}
+			@Override
+			public void run(BootstrapGetter registries) {
+				new FamilyGenerator(registries.get(Registries.RECIPE), registries.get(Registries.ADVANCEMENT)).buildRecipes();
+			}
+		};
 	}
 }

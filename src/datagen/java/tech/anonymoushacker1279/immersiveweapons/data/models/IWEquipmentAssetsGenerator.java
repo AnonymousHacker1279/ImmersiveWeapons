@@ -19,16 +19,16 @@ public class IWEquipmentAssetsGenerator extends EquipmentAssetProvider {
 
 	@Override
 	protected void registerModels(BiConsumer<ResourceKey<EquipmentAsset>, EquipmentClientInfo> output) {
-		output.accept(IWEquipmentAssets.MOLTEN, onlyHumanoid("immersiveweapons:molten"));
-		output.accept(IWEquipmentAssets.TESLA, onlyHumanoid("immersiveweapons:tesla"));
-		output.accept(IWEquipmentAssets.COBALT, onlyHumanoid("immersiveweapons:cobalt"));
-		output.accept(IWEquipmentAssets.VENTUS, onlyHumanoid("immersiveweapons:ventus"));
-		output.accept(IWEquipmentAssets.ASTRAL, onlyHumanoid("immersiveweapons:astral"));
-		output.accept(IWEquipmentAssets.STARSTORM, onlyHumanoid("immersiveweapons:starstorm"));
+		output.accept(IWEquipmentAssets.MOLTEN, onlyHumanoid("immersiveweapons:molten").build());
+		output.accept(IWEquipmentAssets.TESLA, onlyHumanoid("immersiveweapons:tesla").build());
+		output.accept(IWEquipmentAssets.COBALT, onlyHumanoid("immersiveweapons:cobalt").build());
+		output.accept(IWEquipmentAssets.VENTUS, onlyHumanoid("immersiveweapons:ventus").build());
+		output.accept(IWEquipmentAssets.ASTRAL, onlyHumanoid("immersiveweapons:astral").build());
+		output.accept(IWEquipmentAssets.STARSTORM, onlyHumanoid("immersiveweapons:starstorm").build());
 		output.accept(IWEquipmentAssets.PADDED_LEATHER, EquipmentClientInfo.builder()
 				.addHumanoidLayers(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "padded_leather"), true)
 				.addHumanoidLayers(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "padded_leather_overlay"), false)
 				.build());
-		output.accept(IWEquipmentAssets.VOID, onlyHumanoid("immersiveweapons:void"));
+		output.accept(IWEquipmentAssets.VOID, onlyHumanoid("immersiveweapons:void").build());
 	}
 }

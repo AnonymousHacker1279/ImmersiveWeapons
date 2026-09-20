@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:stone_maul"
+        "recipes": "immersiveweapons:stone_maul"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

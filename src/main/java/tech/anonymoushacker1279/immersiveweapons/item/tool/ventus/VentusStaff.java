@@ -59,7 +59,7 @@ public class VentusStaff extends Item {
 
 					DamageSource source = level.damageSources().playerAttack(player);
 					livingEntity.knockback(1.5f, player.getLookAngle().reverse().x(), player.getLookAngle().reverse().z(), source, 0.0f);
-					livingEntity.hurtMarked = true;
+					livingEntity.syncVelocity = true;
 				} else if (entity instanceof Projectile projectile) {
 					spawnParticles(projectile, level);
 

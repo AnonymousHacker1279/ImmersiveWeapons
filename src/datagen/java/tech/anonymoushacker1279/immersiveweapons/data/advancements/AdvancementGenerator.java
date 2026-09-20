@@ -2,7 +2,9 @@ package tech.anonymoushacker1279.immersiveweapons.data.advancements;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.Advancement.Builder;
+import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
+import net.minecraft.advancements.DisplayInfo;
 import net.minecraft.advancements.AdvancementRequirements.Strategy;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.AdvancementType;
@@ -14,15 +16,17 @@ import net.minecraft.advancements.predicates.entity.EntityPredicate;
 import net.minecraft.advancements.predicates.entity.PlayerPredicate;
 import net.minecraft.advancements.triggers.*;
 import net.minecraft.core.HolderGetter;
-import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.core.ClientAsset;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.advancements.AdvancementSubProvider;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
@@ -39,9 +43,13 @@ import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
-import java.util.function.Consumer;
+import java.util.Optional;
 
-public record AdvancementGenerator() implements AdvancementSubProvider {
+public class AdvancementGenerator extends AdvancementSubProvider {
+
+	public AdvancementGenerator(BootstrapContext<Advancement> output) {
+		super(output);
+	}
 
 	private static Identifier prefixRL(String string) {
 		return Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, string);
@@ -60,106 +68,107 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 	}
 
 	@Override
-	public void generate(Provider provider, Consumer<AdvancementHolder> consumer) {
-		HolderGetter<Item> itemLookup = provider.lookupOrThrow(Registries.ITEM);
-		HolderGetter<Block> blockLookup = provider.lookupOrThrow(Registries.BLOCK);
-		HolderGetter<EntityType<?>> entityTypeLookup = provider.lookupOrThrow(Registries.ENTITY_TYPE);
+	public void generate() {
+		HolderGetter<Item> itemLookup = output.lookup(Registries.ITEM);
+		HolderGetter<Block> blockLookup = output.lookup(Registries.BLOCK);
+		HolderGetter<EntityType<?>> entityTypeLookup = output.lookup(Registries.ENTITY_TYPE);
 
 		// Root advancement
 		AdvancementHolder root = Builder.advancement()
-				.display(ItemRegistry.TESLA_SWORD.get(),
+				.display(new DisplayInfo(
+						new ItemStackTemplate(ItemRegistry.TESLA_SWORD.get()),
 						createTitle("root").withStyle(ChatFormatting.DARK_RED),
 						createDescription("root"),
-						Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/red_stained_bulletproof_glass"),
-						AdvancementType.TASK, false, false, false)
+						Optional.of(new ClientAsset.ResourceTexture(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/red_stained_bulletproof_glass"))),
+						AdvancementType.TASK, false, false, false))
 				.addCriterion("exist",
 						PlayerTrigger.TriggerInstance.located(LocationPredicate.Builder.inDimension(Level.OVERWORLD)))
-				.save(consumer, prefixString("root"));
+				.save(output, prefixString("root"));
 
 		// Molten advancements
 		AdvancementHolder obtainMoltenShard = Builder.advancement().parent(root)
 				.display(ItemRegistry.MOLTEN_SHARD.get(),
 						createTitle("molten_shard"),
 						createDescription("molten_shard"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLTEN_SHARD.get()))
-				.save(consumer, prefixString("molten_shard"));
+				.save(output, prefixString("molten_shard"));
 
 		AdvancementHolder smeltMoltenIngot = Builder.advancement().parent(obtainMoltenShard)
 				.display(ItemRegistry.MOLTEN_INGOT.get(),
 						createTitle("molten_ingot"),
 						createDescription("molten_ingot"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLTEN_INGOT.get()))
-				.save(consumer, prefixString("molten_ingot"));
+				.save(output, prefixString("molten_ingot"));
 
 		Builder.advancement().parent(smeltMoltenIngot)
 				.display(ItemRegistry.MOLTEN_SWORD.get(),
 						createTitle("molten_sword"),
 						createDescription("molten_sword"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLTEN_SWORD.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, prefixString("molten_sword"));
+				.save(output, prefixString("molten_sword"));
 
 		Builder.advancement().parent(smeltMoltenIngot)
 				.display(ItemRegistry.MOLTEN_PICKAXE.get(),
 						createTitle("molten_pickaxe"),
 						createDescription("molten_pickaxe"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLTEN_PICKAXE.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, prefixString("molten_pickaxe"));
+				.save(output, prefixString("molten_pickaxe"));
 
 		Builder.advancement().parent(smeltMoltenIngot)
 				.display(ItemRegistry.MOLTEN_AXE.get(),
 						createTitle("molten_axe"),
 						createDescription("molten_axe"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLTEN_AXE.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, prefixString("molten_axe"));
+				.save(output, prefixString("molten_axe"));
 
 		Builder.advancement().parent(smeltMoltenIngot)
 				.display(ItemRegistry.MOLTEN_SHOVEL.get(),
 						createTitle("molten_shovel"),
 						createDescription("molten_shovel"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLTEN_SHOVEL.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, prefixString("molten_shovel"));
+				.save(output, prefixString("molten_shovel"));
 
 		Builder.advancement().parent(smeltMoltenIngot)
 				.display(ItemRegistry.MOLTEN_HOE.get(),
 						createTitle("molten_hoe"),
 						createDescription("molten_hoe"),
-						null, AdvancementType.CHALLENGE, true, true, false)
+						AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLTEN_HOE.get()))
 				.rewards(AdvancementRewards.Builder.experience(50))
-				.save(consumer, prefixString("molten_hoe"));
+				.save(output, prefixString("molten_hoe"));
 
 		Builder.advancement().parent(smeltMoltenIngot)
 				.display(ItemRegistry.MOLTEN_SPEAR.get(),
 						createTitle("molten_spear"),
 						createDescription("molten_spear"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLTEN_SPEAR.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, prefixString("molten_spear"));
+				.save(output, prefixString("molten_spear"));
 
 		Builder.advancement().parent(smeltMoltenIngot)
 				.display(BlockItemRegistry.MOLTEN_BLOCK_ITEM.get(),
 						createTitle("molten_tools"),
 						createDescription("molten_tools"),
-						null, AdvancementType.CHALLENGE, true, true, false)
+						AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("have_advancements",
 						PlayerTrigger.TriggerInstance.located(
 								EntityPredicate.Builder.entity().player(
@@ -175,126 +184,126 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 						)
 				)
 				.rewards(AdvancementRewards.Builder.experience(150))
-				.save(consumer, prefixString("molten_tools"));
+				.save(output, prefixString("molten_tools"));
 
 		AdvancementHolder moltenArmor = Builder.advancement().parent(smeltMoltenIngot)
 				.display(ItemRegistry.MOLTEN_HELMET.get(),
 						createTitle("molten_armor"),
 						createDescription("molten_armor"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLTEN_HELMET.get(),
 								ItemRegistry.MOLTEN_CHESTPLATE.get(), ItemRegistry.MOLTEN_LEGGINGS.get(),
 								ItemRegistry.MOLTEN_BOOTS.get()))
 				.rewards(AdvancementRewards.Builder.experience(100))
-				.save(consumer, prefixString("molten_armor"));
+				.save(output, prefixString("molten_armor"));
 
 		Builder.advancement().parent(moltenArmor)
 				.display(Items.LAVA_BUCKET,
 						createTitle("swim_in_lava"),
 						createDescription("swim_in_lava"),
-						null, AdvancementType.CHALLENGE, true, true, false)
+						AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLTEN_HELMET.get(),
 								ItemRegistry.MOLTEN_CHESTPLATE.get(), ItemRegistry.MOLTEN_LEGGINGS.get(),
 								ItemRegistry.MOLTEN_BOOTS.get()))
-				.addCriterion("swim", EnterBlockTrigger.TriggerInstance.entersBlock(Blocks.LAVA))
+				.addCriterion("swim", EnterBlockTrigger.TriggerInstance.entersBlock(blockLookup, Blocks.LAVA))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, prefixString("swim_in_lava"));
+				.save(output, prefixString("swim_in_lava"));
 
 		// Tesla Advancements
 		AdvancementHolder obtainDormantTeslaOre = Builder.advancement().parent(root)
 				.display(BlockItemRegistry.DORMANT_TESLA_ORE_ITEM.get(),
 						createTitle("dormant_tesla_ore"),
 						createDescription("dormant_tesla_ore"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(BlockItemRegistry.DORMANT_TESLA_ORE_ITEM.get()))
-				.save(consumer, prefixString("dormant_tesla_ore"));
+				.save(output, prefixString("dormant_tesla_ore"));
 
 		AdvancementHolder obtainTeslaNuggets = Builder.advancement().parent(obtainDormantTeslaOre)
 				.display(ItemRegistry.TESLA_NUGGET.get(),
 						createTitle("tesla_nugget"),
 						createDescription("tesla_nugget"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.TESLA_NUGGET.get()))
-				.save(consumer, prefixString("tesla_nugget"));
+				.save(output, prefixString("tesla_nugget"));
 
 		AdvancementHolder craftTeslaIngot = Builder.advancement().parent(obtainTeslaNuggets)
 				.display(ItemRegistry.TESLA_INGOT.get(),
 						createTitle("tesla_ingot"),
 						createDescription("tesla_ingot"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.TESLA_INGOT.get()))
-				.save(consumer, prefixString("tesla_ingot"));
+				.save(output, prefixString("tesla_ingot"));
 
 		Builder.advancement().parent(craftTeslaIngot)
 				.display(ItemRegistry.TESLA_SWORD.get(),
 						createTitle("tesla_sword"),
 						createDescription("tesla_sword"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.TESLA_SWORD.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, prefixString("tesla_sword"));
+				.save(output, prefixString("tesla_sword"));
 
 		Builder.advancement().parent(craftTeslaIngot)
 				.display(ItemRegistry.TESLA_PICKAXE.get(),
 						createTitle("tesla_pickaxe"),
 						createDescription("tesla_pickaxe"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.TESLA_PICKAXE.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, prefixString("tesla_pickaxe"));
+				.save(output, prefixString("tesla_pickaxe"));
 
 		Builder.advancement().parent(craftTeslaIngot)
 				.display(ItemRegistry.TESLA_AXE.get(),
 						createTitle("tesla_axe"),
 						createDescription("tesla_axe"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.TESLA_AXE.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, prefixString("tesla_axe"));
+				.save(output, prefixString("tesla_axe"));
 
 		Builder.advancement().parent(craftTeslaIngot)
 				.display(ItemRegistry.TESLA_SHOVEL.get(),
 						createTitle("tesla_shovel"),
 						createDescription("tesla_shovel"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.TESLA_SHOVEL.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, prefixString("tesla_shovel"));
+				.save(output, prefixString("tesla_shovel"));
 
 		Builder.advancement().parent(craftTeslaIngot)
 				.display(ItemRegistry.TESLA_HOE.get(),
 						createTitle("tesla_hoe"),
 						createDescription("tesla_hoe"),
-						null, AdvancementType.CHALLENGE, true, true, false)
+						AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.TESLA_HOE.get()))
 				.rewards(AdvancementRewards.Builder.experience(65))
-				.save(consumer, prefixString("tesla_hoe"));
+				.save(output, prefixString("tesla_hoe"));
 
 		Builder.advancement().parent(craftTeslaIngot)
 				.display(ItemRegistry.TESLA_SPEAR.get(),
 						createTitle("tesla_spear"),
 						createDescription("tesla_spear"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.TESLA_SPEAR.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, prefixString("tesla_spear"));
+				.save(output, prefixString("tesla_spear"));
 
 		Builder.advancement().parent(craftTeslaIngot)
 				.display(BlockItemRegistry.TESLA_BLOCK_ITEM.get(),
 						createTitle("tesla_tools"),
 						createDescription("tesla_tools"),
-						null, AdvancementType.CHALLENGE, true, true, false)
+						AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("have_advancements",
 						PlayerTrigger.TriggerInstance.located(
 								EntityPredicate.Builder.entity().player(
@@ -310,95 +319,95 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 						)
 				)
 				.rewards(AdvancementRewards.Builder.experience(150))
-				.save(consumer, prefixString("tesla_tools"));
+				.save(output, prefixString("tesla_tools"));
 
 		Builder.advancement().parent(craftTeslaIngot)
 				.display(ItemRegistry.TESLA_HELMET.get(),
 						createTitle("tesla_armor"),
 						createDescription("tesla_armor"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.TESLA_HELMET.get(),
 								ItemRegistry.TESLA_CHESTPLATE.get(), ItemRegistry.TESLA_LEGGINGS.get(),
 								ItemRegistry.TESLA_BOOTS.get()))
 				.rewards(AdvancementRewards.Builder.experience(100))
-				.save(consumer, prefixString("tesla_armor"));
+				.save(output, prefixString("tesla_armor"));
 
 		// Ventus Advancements
 		AdvancementHolder obtainVentusShard = Builder.advancement().parent(root)
 				.display(ItemRegistry.VENTUS_SHARD.get(),
 						createTitle("ventus_shard"),
 						createDescription("ventus_shard"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VENTUS_SHARD.get()))
-				.save(consumer, prefixString("ventus_shard"));
+				.save(output, prefixString("ventus_shard"));
 
 		Builder.advancement().parent(obtainVentusShard)
 				.display(ItemRegistry.VENTUS_SWORD.get(),
 						createTitle("ventus_sword"),
 						createDescription("ventus_sword"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VENTUS_SWORD.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, prefixString("ventus_sword"));
+				.save(output, prefixString("ventus_sword"));
 
 		Builder.advancement().parent(obtainVentusShard)
 				.display(ItemRegistry.VENTUS_PICKAXE.get(),
 						createTitle("ventus_pickaxe"),
 						createDescription("ventus_pickaxe"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VENTUS_PICKAXE.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, prefixString("ventus_pickaxe"));
+				.save(output, prefixString("ventus_pickaxe"));
 
 		Builder.advancement().parent(obtainVentusShard)
 				.display(ItemRegistry.VENTUS_AXE.get(),
 						createTitle("ventus_axe"),
 						createDescription("ventus_axe"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VENTUS_AXE.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, prefixString("ventus_axe"));
+				.save(output, prefixString("ventus_axe"));
 
 		Builder.advancement().parent(obtainVentusShard)
 				.display(ItemRegistry.VENTUS_SHOVEL.get(),
 						createTitle("ventus_shovel"),
 						createDescription("ventus_shovel"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VENTUS_SHOVEL.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, prefixString("ventus_shovel"));
+				.save(output, prefixString("ventus_shovel"));
 
 		Builder.advancement().parent(obtainVentusShard)
 				.display(ItemRegistry.VENTUS_HOE.get(),
 						createTitle("ventus_hoe"),
 						createDescription("ventus_hoe"),
-						null, AdvancementType.CHALLENGE, true, true, false)
+						AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VENTUS_HOE.get()))
 				.rewards(AdvancementRewards.Builder.experience(50))
-				.save(consumer, prefixString("ventus_hoe"));
+				.save(output, prefixString("ventus_hoe"));
 
 		Builder.advancement().parent(obtainVentusShard)
 				.display(ItemRegistry.VENTUS_SPEAR.get(),
 						createTitle("ventus_spear"),
 						createDescription("ventus_spear"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VENTUS_SPEAR.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, prefixString("ventus_spear"));
+				.save(output, prefixString("ventus_spear"));
 
 		Builder.advancement().parent(obtainVentusShard)
 				.display(BlockItemRegistry.VENTUS_ORE_ITEM.get(),
 						createTitle("ventus_tools"),
 						createDescription("ventus_tools"),
-						null, AdvancementType.CHALLENGE, true, true, false)
+						AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("have_advancements",
 						PlayerTrigger.TriggerInstance.located(
 								EntityPredicate.Builder.entity().player(
@@ -414,123 +423,123 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 						)
 				)
 				.rewards(AdvancementRewards.Builder.experience(150))
-				.save(consumer, prefixString("ventus_tools"));
+				.save(output, prefixString("ventus_tools"));
 
 		Builder.advancement().parent(obtainVentusShard)
 				.display(ItemRegistry.VENTUS_HELMET.get(),
 						createTitle("ventus_armor"),
 						createDescription("ventus_armor"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VENTUS_HELMET.get(),
 								ItemRegistry.VENTUS_CHESTPLATE.get(), ItemRegistry.VENTUS_LEGGINGS.get(),
 								ItemRegistry.VENTUS_BOOTS.get()))
 				.rewards(AdvancementRewards.Builder.experience(100))
-				.save(consumer, prefixString("ventus_armor"));
+				.save(output, prefixString("ventus_armor"));
 
 		AdvancementHolder craftVentusStaffCore = Builder.advancement().parent(obtainVentusShard)
 				.display(ItemRegistry.VENTUS_STAFF_CORE.get(),
 						createTitle("ventus_staff_core"),
 						createDescription("ventus_staff_core"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VENTUS_STAFF_CORE.get()))
-				.save(consumer, prefixString("ventus_staff_core"));
+				.save(output, prefixString("ventus_staff_core"));
 
 		Builder.advancement().parent(craftVentusStaffCore)
 				.display(ItemRegistry.VENTUS_STAFF.get(),
 						createTitle("ventus_staff"),
 						createDescription("ventus_staff"),
-						null, AdvancementType.CHALLENGE, true, true, false)
+						AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VENTUS_STAFF.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, prefixString("ventus_staff"));
+				.save(output, prefixString("ventus_staff"));
 
 		// Astral advancements
 		AdvancementHolder obtainAstralCrystal = Builder.advancement().parent(root)
-				.display(BlockRegistry.ASTRAL_CRYSTAL.get(),
+				.display(BlockRegistry.ASTRAL_CRYSTAL.get().asItem(),
 						createTitle("astral_crystal"),
 						createDescription("astral_crystal"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(BlockRegistry.ASTRAL_CRYSTAL.get()))
-				.save(consumer, prefixString("astral_crystal"));
+				.save(output, prefixString("astral_crystal"));
 
 		AdvancementHolder obtainAstralIngot = Builder.advancement().parent(obtainAstralCrystal)
 				.display(ItemRegistry.ASTRAL_INGOT.get(),
 						createTitle("astral_ingot"),
 						createDescription("astral_ingot"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.ASTRAL_INGOT.get()))
-				.save(consumer, prefixString("astral_ingot"));
+				.save(output, prefixString("astral_ingot"));
 
 		Builder.advancement().parent(obtainAstralIngot)
 				.display(ItemRegistry.ASTRAL_SWORD.get(),
 						createTitle("astral_sword"),
 						createDescription("astral_sword"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.ASTRAL_SWORD.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, prefixString("astral_sword"));
+				.save(output, prefixString("astral_sword"));
 
 		Builder.advancement().parent(obtainAstralIngot)
 				.display(ItemRegistry.ASTRAL_PICKAXE.get(),
 						createTitle("astral_pickaxe"),
 						createDescription("astral_pickaxe"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.ASTRAL_PICKAXE.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, prefixString("astral_pickaxe"));
+				.save(output, prefixString("astral_pickaxe"));
 
 		Builder.advancement().parent(obtainAstralIngot)
 				.display(ItemRegistry.ASTRAL_AXE.get(),
 						createTitle("astral_axe"),
 						createDescription("astral_axe"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.ASTRAL_AXE.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, prefixString("astral_axe"));
+				.save(output, prefixString("astral_axe"));
 
 		Builder.advancement().parent(obtainAstralIngot)
 				.display(ItemRegistry.ASTRAL_SHOVEL.get(),
 						createTitle("astral_shovel"),
 						createDescription("astral_shovel"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.ASTRAL_SHOVEL.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, prefixString("astral_shovel"));
+				.save(output, prefixString("astral_shovel"));
 
 		Builder.advancement().parent(obtainAstralIngot)
 				.display(ItemRegistry.ASTRAL_HOE.get(),
 						createTitle("astral_hoe"),
 						createDescription("astral_hoe"),
-						null, AdvancementType.CHALLENGE, true, true, false)
+						AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.ASTRAL_HOE.get()))
 				.rewards(AdvancementRewards.Builder.experience(50))
-				.save(consumer, prefixString("astral_hoe"));
+				.save(output, prefixString("astral_hoe"));
 
 		Builder.advancement().parent(obtainAstralIngot)
 				.display(ItemRegistry.ASTRAL_SPEAR.get(),
 						createTitle("astral_spear"),
 						createDescription("astral_spear"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.ASTRAL_SPEAR.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, prefixString("astral_spear"));
+				.save(output, prefixString("astral_spear"));
 
 		Builder.advancement().parent(obtainAstralIngot)
 				.display(BlockItemRegistry.ASTRAL_BLOCK_ITEM.get(),
 						createTitle("astral_tools"),
 						createDescription("astral_tools"),
-						null, AdvancementType.CHALLENGE, true, true, false)
+						AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("have_advancements",
 						PlayerTrigger.TriggerInstance.located(
 								EntityPredicate.Builder.entity().player(
@@ -546,104 +555,104 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 						)
 				)
 				.rewards(AdvancementRewards.Builder.experience(150))
-				.save(consumer, prefixString("astral_tools"));
+				.save(output, prefixString("astral_tools"));
 
 		Builder.advancement().parent(obtainAstralIngot)
 				.display(ItemRegistry.ASTRAL_HELMET.get(),
 						createTitle("astral_armor"),
 						createDescription("astral_armor"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.ASTRAL_HELMET.get(),
 								ItemRegistry.ASTRAL_CHESTPLATE.get(), ItemRegistry.ASTRAL_LEGGINGS.get(),
 								ItemRegistry.ASTRAL_BOOTS.get()))
 				.rewards(AdvancementRewards.Builder.experience(100))
-				.save(consumer, prefixString("astral_armor"));
+				.save(output, prefixString("astral_armor"));
 
 		// Starstorm advancements
 		AdvancementHolder obtainStarstormCrystal = Builder.advancement().parent(root)
-				.display(BlockRegistry.STARSTORM_CRYSTAL.get(),
+				.display(BlockRegistry.STARSTORM_CRYSTAL.get().asItem(),
 						createTitle("starstorm_crystal"),
 						createDescription("starstorm_crystal"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(BlockRegistry.STARSTORM_CRYSTAL.get()))
-				.save(consumer, prefixString("starstorm_crystal"));
+				.save(output, prefixString("starstorm_crystal"));
 
 		AdvancementHolder obtainStarstormIngot = Builder.advancement().parent(obtainStarstormCrystal)
 				.display(ItemRegistry.STARSTORM_INGOT.get(),
 						createTitle("starstorm_ingot"),
 						createDescription("starstorm_ingot"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.STARSTORM_INGOT.get()))
-				.save(consumer, prefixString("starstorm_ingot"));
+				.save(output, prefixString("starstorm_ingot"));
 
 		Builder.advancement().parent(obtainStarstormIngot)
 				.display(ItemRegistry.STARSTORM_SWORD.get(),
 						createTitle("starstorm_sword"),
 						createDescription("starstorm_sword"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.STARSTORM_SWORD.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, prefixString("starstorm_sword"));
+				.save(output, prefixString("starstorm_sword"));
 
 		Builder.advancement().parent(obtainStarstormIngot)
 				.display(ItemRegistry.STARSTORM_PICKAXE.get(),
 						createTitle("starstorm_pickaxe"),
 						createDescription("starstorm_pickaxe"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.STARSTORM_PICKAXE.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, prefixString("starstorm_pickaxe"));
+				.save(output, prefixString("starstorm_pickaxe"));
 
 		Builder.advancement().parent(obtainStarstormIngot)
 				.display(ItemRegistry.STARSTORM_AXE.get(),
 						createTitle("starstorm_axe"),
 						createDescription("starstorm_axe"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.STARSTORM_AXE.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, prefixString("starstorm_axe"));
+				.save(output, prefixString("starstorm_axe"));
 
 		Builder.advancement().parent(obtainStarstormIngot)
 				.display(ItemRegistry.STARSTORM_SHOVEL.get(),
 						createTitle("starstorm_shovel"),
 						createDescription("starstorm_shovel"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.STARSTORM_SHOVEL.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, prefixString("starstorm_shovel"));
+				.save(output, prefixString("starstorm_shovel"));
 
 		Builder.advancement().parent(obtainStarstormIngot)
 				.display(ItemRegistry.STARSTORM_HOE.get(),
 						createTitle("starstorm_hoe"),
 						createDescription("starstorm_hoe"),
-						null, AdvancementType.CHALLENGE, true, true, false)
+						AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.STARSTORM_HOE.get()))
 				.rewards(AdvancementRewards.Builder.experience(50))
-				.save(consumer, prefixString("starstorm_hoe"));
+				.save(output, prefixString("starstorm_hoe"));
 
 		Builder.advancement().parent(obtainStarstormIngot)
 				.display(ItemRegistry.STARSTORM_SPEAR.get(),
 						createTitle("starstorm_spear"),
 						createDescription("starstorm_spear"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.STARSTORM_SPEAR.get()))
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, prefixString("starstorm_spear"));
+				.save(output, prefixString("starstorm_spear"));
 
 		Builder.advancement().parent(obtainStarstormIngot)
 				.display(BlockItemRegistry.STARSTORM_BLOCK_ITEM.get(),
 						createTitle("starstorm_tools"),
 						createDescription("starstorm_tools"),
-						null, AdvancementType.CHALLENGE, true, true, false)
+						AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("have_advancements",
 						PlayerTrigger.TriggerInstance.located(
 								EntityPredicate.Builder.entity().player(
@@ -659,103 +668,103 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 						)
 				)
 				.rewards(AdvancementRewards.Builder.experience(150))
-				.save(consumer, prefixString("starstorm_tools"));
+				.save(output, prefixString("starstorm_tools"));
 
 		Builder.advancement().parent(obtainStarstormIngot)
 				.display(ItemRegistry.STARSTORM_HELMET.get(),
 						createTitle("starstorm_armor"),
 						createDescription("starstorm_armor"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.STARSTORM_HELMET.get(),
 								ItemRegistry.STARSTORM_CHESTPLATE.get(), ItemRegistry.STARSTORM_LEGGINGS.get(),
 								ItemRegistry.STARSTORM_BOOTS.get()))
 				.rewards(AdvancementRewards.Builder.experience(100))
-				.save(consumer, prefixString("starstorm_armor"));
+				.save(output, prefixString("starstorm_armor"));
 
 		AdvancementHolder obtainEnderEssence = Builder.advancement().parent(root)
 				.display(ItemRegistry.ENDER_ESSENCE.get(),
 						createTitle("ender_essence"),
 						createDescription("ender_essence"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.ENDER_ESSENCE.get()))
-				.save(consumer, prefixString("ender_essence"));
+				.save(output, prefixString("ender_essence"));
 
 		AdvancementHolder obtainVoidIngot = Builder.advancement().parent(obtainEnderEssence)
 				.display(ItemRegistry.VOID_INGOT.get(),
 						createTitle("void_ingot"),
 						createDescription("void_ingot"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VOID_INGOT.get()))
-				.save(consumer, prefixString("void_ingot"));
+				.save(output, prefixString("void_ingot"));
 
 		Builder.advancement().parent(obtainVoidIngot)
 				.display(ItemRegistry.VOID_SWORD.get(),
 						createTitle("void_sword"),
 						createDescription("void_sword"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VOID_SWORD.get()))
 				.rewards(AdvancementRewards.Builder.experience(50))
-				.save(consumer, prefixString("void_sword"));
+				.save(output, prefixString("void_sword"));
 
 		Builder.advancement().parent(obtainVoidIngot)
 				.display(ItemRegistry.VOID_PICKAXE.get(),
 						createTitle("void_pickaxe"),
 						createDescription("void_pickaxe"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VOID_PICKAXE.get()))
 				.rewards(AdvancementRewards.Builder.experience(50))
-				.save(consumer, prefixString("void_pickaxe"));
+				.save(output, prefixString("void_pickaxe"));
 
 		Builder.advancement().parent(obtainVoidIngot)
 				.display(ItemRegistry.VOID_AXE.get(),
 						createTitle("void_axe"),
 						createDescription("void_axe"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VOID_AXE.get()))
 				.rewards(AdvancementRewards.Builder.experience(50))
-				.save(consumer, prefixString("void_axe"));
+				.save(output, prefixString("void_axe"));
 
 		Builder.advancement().parent(obtainVoidIngot)
 				.display(ItemRegistry.VOID_SHOVEL.get(),
 						createTitle("void_shovel"),
 						createDescription("void_shovel"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VOID_SHOVEL.get()))
 				.rewards(AdvancementRewards.Builder.experience(50))
-				.save(consumer, prefixString("void_shovel"));
+				.save(output, prefixString("void_shovel"));
 
 		Builder.advancement().parent(obtainVoidIngot)
 				.display(ItemRegistry.VOID_HOE.get(),
 						createTitle("void_hoe"),
 						createDescription("void_hoe"),
-						null, AdvancementType.CHALLENGE, true, true, false)
+						AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VOID_HOE.get()))
 				.rewards(AdvancementRewards.Builder.experience(75))
-				.save(consumer, prefixString("void_hoe"));
+				.save(output, prefixString("void_hoe"));
 
 		Builder.advancement().parent(obtainVoidIngot)
 				.display(ItemRegistry.VOID_SPEAR.get(),
 						createTitle("void_spear"),
 						createDescription("void_spear"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VOID_SPEAR.get()))
 				.rewards(AdvancementRewards.Builder.experience(50))
-				.save(consumer, prefixString("void_spear"));
+				.save(output, prefixString("void_spear"));
 
 		Builder.advancement().parent(obtainVoidIngot)
 				.display(BlockItemRegistry.VOID_ORE_ITEM.get(),
 						createTitle("void_tools"),
 						createDescription("void_tools"),
-						null, AdvancementType.CHALLENGE, true, true, false)
+						AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("have_advancements",
 						PlayerTrigger.TriggerInstance.located(
 								EntityPredicate.Builder.entity().player(
@@ -771,145 +780,145 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 						)
 				)
 				.rewards(AdvancementRewards.Builder.experience(200))
-				.save(consumer, prefixString("void_tools"));
+				.save(output, prefixString("void_tools"));
 
 		Builder.advancement().parent(obtainVoidIngot)
 				.display(ItemRegistry.VOID_HELMET.get(),
 						createTitle("void_armor"),
 						createDescription("void_armor"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.VOID_HELMET.get(),
 								ItemRegistry.VOID_CHESTPLATE.get(), ItemRegistry.VOID_LEGGINGS.get(),
 								ItemRegistry.VOID_BOOTS.get()))
 				.rewards(AdvancementRewards.Builder.experience(100))
-				.save(consumer, prefixString("void_armor"));
+				.save(output, prefixString("void_armor"));
 
 		Builder.advancement().parent(obtainVoidIngot)
 				.display(ItemRegistry.DRAGONS_BREATH_CANNON.get(),
 						createTitle("dragons_breath_cannon"),
 						createDescription("dragons_breath_cannon"),
-						null, AdvancementType.CHALLENGE, true, true, false)
+						AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.DRAGONS_BREATH_CANNON.get()))
 				.rewards(AdvancementRewards.Builder.experience(125))
-				.save(consumer, prefixString("dragons_breath_cannon"));
+				.save(output, prefixString("dragons_breath_cannon"));
 
 		AdvancementHolder obtainTeleporter = Builder.advancement().parent(obtainVoidIngot)
 				.display(BlockItemRegistry.TELEPORTER_ITEM.get(),
 						createTitle("teleporter"),
 						createDescription("teleporter"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(BlockItemRegistry.TELEPORTER_ITEM.get()))
 				.rewards(AdvancementRewards.Builder.experience(100))
-				.save(consumer, prefixString("teleporter"));
+				.save(output, prefixString("teleporter"));
 
 		Builder.advancement().parent(obtainTeleporter)
 				.display(ItemRegistry.MOLDY_BREAD.get(),
 						createTitle("moldy_bread"),
 						createDescription("moldy_bread"),
-						null, AdvancementType.CHALLENGE, true, true, true)
+						AdvancementType.CHALLENGE, true, true, true)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLDY_BREAD.get()))
 				.rewards(AdvancementRewards.Builder.experience(150))
-				.save(consumer, prefixString("moldy_bread"));
+				.save(output, prefixString("moldy_bread"));
 
 		// Padded Leather advancements
 		Builder.advancement().parent(root)
 				.display(ItemRegistry.PADDED_LEATHER_HELMET.get(),
 						createTitle("padded_leather_armor"),
 						createDescription("padded_leather_armor"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.PADDED_LEATHER_HELMET.get(),
 								ItemRegistry.PADDED_LEATHER_CHESTPLATE.get(), ItemRegistry.PADDED_LEATHER_LEGGINGS.get(),
 								ItemRegistry.PADDED_LEATHER_BOOTS.get()))
 				.rewards(AdvancementRewards.Builder.experience(100))
-				.save(consumer, prefixString("padded_leather_armor"));
+				.save(output, prefixString("padded_leather_armor"));
 
 		// Tool advancements
 		AdvancementHolder shards = Builder.advancement().parent(root)
 				.display(ItemRegistry.STONE_SHARD.get(),
 						createTitle("shards"),
 						createDescription("shards"),
-						null, AdvancementType.TASK, false, false, false)
+						AdvancementType.TASK, false, false, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(itemLookup, IWItemTagGroups.SHARDS).build()))
 				.requirements(Strategy.OR)
-				.save(consumer, prefixString("shards"));
+				.save(output, prefixString("shards"));
 
 		Builder.advancement().parent(shards)
 				.display(ItemRegistry.WOODEN_SHARD.get(),
 						createTitle("wooden_shard"),
 						createDescription("wooden_shard"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.WOODEN_SHARD.get()))
-				.save(consumer, prefixString("wooden_shard"));
+				.save(output, prefixString("wooden_shard"));
 
 		Builder.advancement().parent(shards)
 				.display(ItemRegistry.STONE_SHARD.get(),
 						createTitle("stone_shard"),
 						createDescription("stone_shard"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.STONE_SHARD.get()))
-				.save(consumer, prefixString("stone_shard"));
+				.save(output, prefixString("stone_shard"));
 
 		Builder.advancement().parent(shards)
 				.display(ItemRegistry.DIAMOND_SHARD.get(),
 						createTitle("diamond_shard"),
 						createDescription("diamond_shard"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.DIAMOND_SHARD.get()))
-				.save(consumer, prefixString("diamond_shard"));
+				.save(output, prefixString("diamond_shard"));
 
 		Builder.advancement().parent(shards)
 				.display(ItemRegistry.OBSIDIAN_SHARD.get(),
 						createTitle("obsidian_shard"),
 						createDescription("obsidian_shard"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.OBSIDIAN_SHARD.get()))
-				.save(consumer, prefixString("obsidian_shard"));
+				.save(output, prefixString("obsidian_shard"));
 
 		Builder.advancement().parent(root)
 				.display(ItemRegistry.NETHERITE_ARROW.get(),
 						createTitle("netherite_projectile"),
 						createDescription("netherite_projectile"),
-						null, AdvancementType.CHALLENGE, true, true, false)
+						AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.NETHERITE_ARROW.get()))
 				.addCriterion("hold1",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.NETHERITE_MUSKET_BALL.get()))
 				.rewards(AdvancementRewards.Builder.experience(50))
-				.save(consumer, prefixString("netherite_projectile"));
+				.save(output, prefixString("netherite_projectile"));
 
 		Builder.advancement().parent(root)
 				.display(ItemRegistry.GOLDEN_MUSKET_BALL.get(),
 						createTitle("musket_ball"),
 						createDescription("musket_ball"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(itemLookup, IWItemTagGroups.MUSKET_BALLS).build()))
-				.save(consumer, prefixString("musket_ball"));
+				.save(output, prefixString("musket_ball"));
 
 		Builder.advancement().parent(root)
-				.display(BlockRegistry.AMMUNITION_TABLE.get(),
+				.display(BlockRegistry.AMMUNITION_TABLE.get().asItem(),
 						createTitle("ammunition_table"),
 						createDescription("ammunition_table"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(BlockRegistry.AMMUNITION_TABLE.get()))
-				.save(consumer, prefixString("ammunition_table"));
+				.save(output, prefixString("ammunition_table"));
 
 		Builder.advancement().parent(root)
-				.display(BlockRegistry.STAR_FORGE_CONTROLLER.get(),
+				.display(BlockRegistry.STAR_FORGE_CONTROLLER.get().asItem(),
 						createTitle("star_forge"),
 						createDescription("star_forge"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(
 								BlockRegistry.STAR_FORGE_CONTROLLER.get(),
@@ -917,220 +926,220 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 								BlockRegistry.SOLAR_LENS.get(),
 								Items.IRON_BARS
 						))
-				.save(consumer, prefixString("star_forge"));
+				.save(output, prefixString("star_forge"));
 
 		AdvancementHolder smallPartsTable = Builder.advancement().parent(root)
-				.display(BlockRegistry.SMALL_PARTS_TABLE.get(),
+				.display(BlockRegistry.SMALL_PARTS_TABLE.get().asItem(),
 						createTitle("small_parts_table"),
 						createDescription("small_parts_table"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(BlockRegistry.SMALL_PARTS_TABLE.get()))
-				.save(consumer, prefixString("small_parts_table"));
+				.save(output, prefixString("small_parts_table"));
 
 		Builder.advancement().parent(smallPartsTable)
 				.display(ItemRegistry.FLINTLOCK_PISTOL.get(),
 						createTitle("flintlock_pistol"),
 						createDescription("flintlock_pistol"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.FLINTLOCK_PISTOL.get()))
-				.save(consumer, prefixString("flintlock_pistol"));
+				.save(output, prefixString("flintlock_pistol"));
 
 		Builder.advancement().parent(smallPartsTable)
 				.display(ItemRegistry.BLUNDERBUSS.get(),
 						createTitle("blunderbuss"),
 						createDescription("blunderbuss"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.BLUNDERBUSS.get()))
-				.save(consumer, prefixString("blunderbuss"));
+				.save(output, prefixString("blunderbuss"));
 
 		Builder.advancement().parent(smallPartsTable)
 				.display(ItemRegistry.FLARE_GUN.get(),
 						createTitle("flare_gun"),
 						createDescription("flare_gun"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.FLARE_GUN.get()))
-				.save(consumer, prefixString("flare_gun"));
+				.save(output, prefixString("flare_gun"));
 
 		Builder.advancement().parent(smallPartsTable)
 				.display(ItemRegistry.MUSKET.get(),
 						createTitle("musket"),
 						createDescription("musket"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MUSKET.get()))
 				.requirements(Strategy.OR)
-				.save(consumer, prefixString("musket"));
+				.save(output, prefixString("musket"));
 
 		Builder.advancement().parent(smallPartsTable)
 				.display(ItemRegistry.HAND_CANNON.get(),
 						createTitle("hand_cannon"),
 						createDescription("hand_cannon"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.HAND_CANNON.get()))
-				.save(consumer, prefixString("hand_cannon"));
+				.save(output, prefixString("hand_cannon"));
 
 		Builder.advancement().parent(smallPartsTable)
 				.display(ItemRegistry.SMOKE_GRENADE.get(),
 						createTitle("smoke_grenade"),
 						createDescription("smoke_grenade"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(itemLookup, IWItemTagGroups.SMOKE_GRENADES)))
-				.save(consumer, prefixString("smoke_grenade"));
+				.save(output, prefixString("smoke_grenade"));
 
 		Builder.advancement().parent(smallPartsTable)
 				.display(ItemRegistry.FLASHBANG.get(),
 						createTitle("flashbang"),
 						createDescription("flashbang"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.FLASHBANG.get()))
-				.save(consumer, prefixString("flashbang"));
+				.save(output, prefixString("flashbang"));
 
 		AdvancementHolder craftAlcohol = Builder.advancement().parent(root)
 				.display(ItemRegistry.BOTTLE_OF_ALCOHOL.get(),
 						createTitle("bottle_of_alcohol"),
 						createDescription("bottle_of_alcohol"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.BOTTLE_OF_ALCOHOL.get()))
-				.save(consumer, prefixString("bottle_of_alcohol"));
+				.save(output, prefixString("bottle_of_alcohol"));
 		Builder.advancement().parent(craftAlcohol)
 				.display(ItemRegistry.MOLOTOV_COCKTAIL.get(),
 						createTitle("molotov_cocktail"),
 						createDescription("molotov_cocktail"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.MOLOTOV_COCKTAIL.get()))
-				.save(consumer, prefixString("molotov_cocktail"));
+				.save(output, prefixString("molotov_cocktail"));
 
 
 		AdvancementHolder craftBandage = Builder.advancement().parent(root)
 				.display(ItemRegistry.BANDAGE.get(),
 						createTitle("bandage"),
 						createDescription("bandage"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.BANDAGE.get()))
-				.save(consumer, prefixString("bandage"));
+				.save(output, prefixString("bandage"));
 		Builder.advancement().parent(craftBandage)
 				.display(ItemRegistry.FIRST_AID_KIT.get(),
 						createTitle("first_aid_kit"),
 						createDescription("first_aid_kit"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.FIRST_AID_KIT.get()))
-				.save(consumer, prefixString("first_aid_kit"));
+				.save(output, prefixString("first_aid_kit"));
 
 
 		Builder.advancement().parent(root)
 				.display(ItemRegistry.IRON_GAUNTLET.get(),
 						createTitle("gauntlet"),
 						createDescription("gauntlet"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(itemLookup, IWItemTagGroups.GAUNTLETS).build()))
 				.requirements(Strategy.OR)
-				.save(consumer, prefixString("gauntlet"));
+				.save(output, prefixString("gauntlet"));
 
 		Builder.advancement().parent(root)
 				.display(ItemRegistry.IRON_MAUL.get(),
 						createTitle("maul"),
 						createDescription("maul"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(itemLookup, IWItemTagGroups.MAULS).build()))
 				.requirements(Strategy.OR)
-				.save(consumer, prefixString("maul"));
+				.save(output, prefixString("maul"));
 
 		// General ingot advancements
 		AdvancementHolder ingots = Builder.advancement().parent(root)
 				.display(Items.IRON_INGOT,
 						createTitle("ingots"),
 						createDescription("ingots"),
-						null, AdvancementType.TASK, false, false, false)
+						AdvancementType.TASK, false, false, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(
 								ItemPredicate.Builder.item().of(itemLookup, Tags.Items.INGOTS).build())
 				)
-				.save(consumer, prefixString("ingots"));
+				.save(output, prefixString("ingots"));
 
 		Builder.advancement().parent(root)
 				.display(Items.GOLD_NUGGET,
 						createTitle("nuggets"),
 						createDescription("nuggets"),
-						null, AdvancementType.TASK, false, false, false)
+						AdvancementType.TASK, false, false, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(
 								ItemPredicate.Builder.item().of(itemLookup, Tags.Items.NUGGETS).build())
 				)
-				.save(consumer, prefixString("nuggets"));
+				.save(output, prefixString("nuggets"));
 
 		// Cobalt advancements
 		AdvancementHolder cobaltIngot = Builder.advancement().parent(ingots)
 				.display(ItemRegistry.COBALT_INGOT.get(),
 						createTitle("cobalt_ingot"),
 						createDescription("cobalt_ingot"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.COBALT_INGOT.get()))
-				.save(consumer, prefixString("cobalt_ingot"));
+				.save(output, prefixString("cobalt_ingot"));
 
 		Builder.advancement().parent(cobaltIngot)
 				.display(ItemRegistry.COBALT_SWORD.get(),
 						createTitle("cobalt_sword"),
 						createDescription("cobalt_sword"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.COBALT_SWORD.get()))
-				.save(consumer, prefixString("cobalt_sword"));
+				.save(output, prefixString("cobalt_sword"));
 
 		Builder.advancement().parent(cobaltIngot)
 				.display(ItemRegistry.COBALT_PICKAXE.get(),
 						createTitle("cobalt_pickaxe"),
 						createDescription("cobalt_pickaxe"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.COBALT_PICKAXE.get()))
-				.save(consumer, prefixString("cobalt_pickaxe"));
+				.save(output, prefixString("cobalt_pickaxe"));
 
 		Builder.advancement().parent(cobaltIngot)
 				.display(ItemRegistry.COBALT_AXE.get(),
 						createTitle("cobalt_axe"),
 						createDescription("cobalt_axe"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.COBALT_AXE.get()))
-				.save(consumer, prefixString("cobalt_axe"));
+				.save(output, prefixString("cobalt_axe"));
 
 		Builder.advancement().parent(cobaltIngot)
 				.display(ItemRegistry.COBALT_SHOVEL.get(),
 						createTitle("cobalt_shovel"),
 						createDescription("cobalt_shovel"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.COBALT_SHOVEL.get()))
-				.save(consumer, prefixString("cobalt_shovel"));
+				.save(output, prefixString("cobalt_shovel"));
 
 		Builder.advancement().parent(cobaltIngot)
 				.display(ItemRegistry.COBALT_HOE.get(),
 						createTitle("cobalt_hoe"),
 						createDescription("cobalt_hoe"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.COBALT_HOE.get()))
-				.save(consumer, prefixString("cobalt_hoe"));
+				.save(output, prefixString("cobalt_hoe"));
 
 		Builder.advancement().parent(cobaltIngot)
 				.display(BlockItemRegistry.COBALT_BLOCK_ITEM.get(),
 						createTitle("cobalt_tools"),
 						createDescription("cobalt_tools"),
-						null, AdvancementType.CHALLENGE, true, true, false)
+						AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("have_advancements",
 						PlayerTrigger.TriggerInstance.located(
 								EntityPredicate.Builder.entity().player(
@@ -1149,33 +1158,33 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 						)
 				)
 				.rewards(AdvancementRewards.Builder.experience(35))
-				.save(consumer, prefixString("cobalt_tools"));
+				.save(output, prefixString("cobalt_tools"));
 
 		// Other ingots, without families
 		Builder.advancement().parent(ingots)
 				.display(Items.GOLD_INGOT,
 						createTitle("gold_ingot"),
 						createDescription("gold_ingot"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(Items.GOLD_INGOT))
-				.save(consumer, prefixString("gold_ingot"));
+				.save(output, prefixString("gold_ingot"));
 
 		Builder.advancement().parent(ingots)
 				.display(Items.NETHERITE_INGOT,
 						createTitle("netherite_ingot"),
 						createDescription("netherite_ingot"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(Items.NETHERITE_INGOT))
-				.save(consumer, prefixString("netherite_ingot"));
+				.save(output, prefixString("netherite_ingot"));
 
 		// Entity discovery advancements
 		AdvancementHolder entityDiscovery = Builder.advancement().parent(root)
 				.display(Items.CREEPER_HEAD,
 						createTitle("entity_discovery"),
 						createDescription("entity_discovery"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("discover_minuteman", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.MINUTEMAN_ENTITY.get()))
 				.addCriterion("discover_field_medic", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.FIELD_MEDIC_ENTITY.get()))
 				.addCriterion("discover_dying_soldier", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.DYING_SOLDIER_ENTITY.get()))
@@ -1195,228 +1204,228 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 				.addCriterion("discover_skygazer", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.SKYGAZER_ENTITY.get()))
 				.addCriterion("discover_skeleton_merchant", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.SKELETON_MERCHANT_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(150))
-				.save(consumer, prefixString("entity_discovery"));
+				.save(output, prefixString("entity_discovery"));
 
 		Builder.advancement().parent(entityDiscovery)
 				.display(BlockItemRegistry.MINUTEMAN_HEAD_ITEM.get(),
 						createTitle("discover_minuteman"),
 						createDescription("discover_minuteman"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.MINUTEMAN_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
-				.save(consumer, prefixString("discover_minuteman"));
+				.save(output, prefixString("discover_minuteman"));
 
 		Builder.advancement().parent(entityDiscovery)
 				.display(BlockItemRegistry.FIELD_MEDIC_HEAD_ITEM.get(),
 						createTitle("discover_field_medic"),
 						createDescription("discover_field_medic"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.FIELD_MEDIC_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
-				.save(consumer, prefixString("discover_field_medic"));
+				.save(output, prefixString("discover_field_medic"));
 
 		Builder.advancement().parent(entityDiscovery)
 				.display(BlockItemRegistry.DYING_SOLDIER_HEAD_ITEM.get(),
 						createTitle("discover_dying_soldier"),
 						createDescription("discover_dying_soldier"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.DYING_SOLDIER_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
-				.save(consumer, prefixString("discover_dying_soldier"));
+				.save(output, prefixString("discover_dying_soldier"));
 
 		AdvancementHolder theCommanderDiscovery = Builder.advancement().parent(entityDiscovery)
 				.display(BlockItemRegistry.THE_COMMANDER_HEAD_ITEM.get(),
 						createTitle("discover_the_commander"),
 						createDescription("discover_the_commander"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.THE_COMMANDER_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
-				.save(consumer, prefixString("discover_the_commander"));
+				.save(output, prefixString("discover_the_commander"));
 
 		Builder.advancement().parent(entityDiscovery)
 				.display(BlockItemRegistry.WANDERING_WARRIOR_HEAD_ITEM.get(),
 						createTitle("discover_wandering_warrior"),
 						createDescription("discover_wandering_warrior"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.WANDERING_WARRIOR_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
-				.save(consumer, prefixString("discover_wandering_warrior"));
+				.save(output, prefixString("discover_wandering_warrior"));
 
 		Builder.advancement().parent(entityDiscovery)
 				.display(BlockItemRegistry.HANS_HEAD_ITEM.get(),
 						createTitle("discover_hans"),
 						createDescription("discover_hans"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.HANS_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
-				.save(consumer, prefixString("discover_hans"));
+				.save(output, prefixString("discover_hans"));
 
 		AdvancementHolder superHansDiscovery = Builder.advancement().parent(entityDiscovery)
 				.display(BlockItemRegistry.HANS_HEAD_ITEM.get(),
 						createTitle("discover_super_hans"),
 						createDescription("discover_super_hans"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.SUPER_HANS_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
-				.save(consumer, prefixString("discover_super_hans"));
+				.save(output, prefixString("discover_super_hans"));
 
 		Builder.advancement().parent(entityDiscovery)
 				.display(ItemRegistry.SULFUR_DUST.get(),
 						createTitle("discover_lava_revenant"),
 						createDescription("discover_lava_revenant"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.LAVA_REVENANT_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
-				.save(consumer, prefixString("discover_lava_revenant"));
+				.save(output, prefixString("discover_lava_revenant"));
 
 		Builder.advancement().parent(entityDiscovery)
 				.display(Items.SPIDER_EYE,
 						createTitle("discover_rock_spider"),
 						createDescription("discover_rock_spider"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.ROCK_SPIDER_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
-				.save(consumer, prefixString("discover_rock_spider"));
+				.save(output, prefixString("discover_rock_spider"));
 
 		Builder.advancement().parent(entityDiscovery)
-				.display(BlockRegistry.STARSTORM_CRYSTAL.get(),
+				.display(BlockRegistry.STARSTORM_CRYSTAL.get().asItem(),
 						createTitle("discover_starmite"),
 						createDescription("discover_starmite"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.STARMITE_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
-				.save(consumer, prefixString("discover_starmite"));
+				.save(output, prefixString("discover_starmite"));
 
 		Builder.advancement().parent(entityDiscovery)
 				.display(BlockItemRegistry.STORM_CREEPER_HEAD_ITEM.get(),
 						createTitle("discover_storm_creeper"),
 						createDescription("discover_storm_creeper"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.STORM_CREEPER_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
-				.save(consumer, prefixString("discover_storm_creeper"));
+				.save(output, prefixString("discover_storm_creeper"));
 
 		Builder.advancement().parent(entityDiscovery)
 				.display(ItemRegistry.BROKEN_LENS.get(),
 						createTitle("discover_evil_eye"),
 						createDescription("discover_evil_eye"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.EVIL_EYE_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
-				.save(consumer, prefixString("discover_evil_eye"));
+				.save(output, prefixString("discover_evil_eye"));
 
 		Builder.advancement().parent(entityDiscovery)
 				.display(Items.BONE,
 						createTitle("discover_star_wolf"),
 						createDescription("discover_star_wolf"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.STAR_WOLF_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
-				.save(consumer, prefixString("discover_star_wolf"));
+				.save(output, prefixString("discover_star_wolf"));
 
 		Builder.advancement().parent(entityDiscovery)
 				.display(BlockItemRegistry.MOONGLOW_ITEM.get(),
 						createTitle("discover_mooglow"),
 						createDescription("discover_mooglow"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.MOOGLOW_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
-				.save(consumer, prefixString("discover_mooglow"));
+				.save(output, prefixString("discover_mooglow"));
 
 		Builder.advancement().parent(entityDiscovery)
 				.display(ItemRegistry.WISP_IN_A_BOTTLE_BLUE.get(),
 						createTitle("discover_wisp"),
 						createDescription("discover_wisp"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.WISP_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
-				.save(consumer, prefixString("discover_wisp"));
+				.save(output, prefixString("discover_wisp"));
 
 		Builder.advancement().parent(entityDiscovery)
 				.display(Items.BOOK,
 						createTitle("discover_skygazer"),
 						createDescription("discover_skygazer"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.SKYGAZER_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
-				.save(consumer, prefixString("discover_skygazer"));
+				.save(output, prefixString("discover_skygazer"));
 
 		Builder.advancement().parent(entityDiscovery)
 				.display(BlockItemRegistry.SKELETON_MERCHANT_HEAD_ITEM.get(),
 						createTitle("discover_skeleton_merchant"),
 						createDescription("discover_skeleton_merchant"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.SKELETON_MERCHANT_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
-				.save(consumer, prefixString("discover_skeleton_merchant"));
+				.save(output, prefixString("discover_skeleton_merchant"));
 
 
 		AdvancementHolder celestialTowerDiscovery = Builder.advancement().parent(entityDiscovery)
 				.display(ItemRegistry.CELESTIAL_FRAGMENT.get(),
 						createTitle("discover_celestial_tower"),
 						createDescription("discover_celestial_tower"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("discover", EntityDiscoveredTrigger.TriggerInstance.discoveredEntity(entityTypeLookup, EntityRegistry.CELESTIAL_TOWER_ENTITY.get()))
 				.rewards(AdvancementRewards.Builder.experience(20))
-				.save(consumer, prefixString("discover_celestial_tower"));
+				.save(output, prefixString("discover_celestial_tower"));
 
 		Builder.advancement().parent(celestialTowerDiscovery)
 				.display(BlockItemRegistry.CELESTIAL_LANTERN_ITEM.get(),
 						createTitle("celestial_lantern"),
 						createDescription("celestial_lantern"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(BlockItemRegistry.CELESTIAL_LANTERN_ITEM.get()))
 				.rewards(AdvancementRewards.Builder.experience(50))
-				.save(consumer, prefixString("celestial_lantern"));
+				.save(output, prefixString("celestial_lantern"));
 
 		Builder.advancement().parent(celestialTowerDiscovery)
 				.display(ItemRegistry.METEOR_STAFF.get(),
 						createTitle("meteor_staff"),
 						createDescription("meteor_staff"),
-						null, AdvancementType.CHALLENGE, true, true, false)
+						AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.METEOR_STAFF.get()))
 				.rewards(AdvancementRewards.Builder.experience(75))
-				.save(consumer, prefixString("meteor_staff"));
+				.save(output, prefixString("meteor_staff"));
 
 		Builder.advancement().parent(celestialTowerDiscovery)
 				.display(ItemRegistry.CURSED_SIGHT_STAFF.get(),
 						createTitle("cursed_sight_staff"),
 						createDescription("cursed_sight_staff"),
-						null, AdvancementType.CHALLENGE, true, true, false)
+						AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.CURSED_SIGHT_STAFF.get()))
 				.rewards(AdvancementRewards.Builder.experience(75))
-				.save(consumer, prefixString("cursed_sight_staff"));
+				.save(output, prefixString("cursed_sight_staff"));
 
 		// Accessory advancements
 		Builder.advancement().parent(root)
 				.display(ItemRegistry.SATCHEL.get(),
 						createTitle("accessories"),
 						createDescription("accessories"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(
 								ItemPredicate.Builder.item().of(itemLookup, IWItemTagGroups.ACCESSORIES).build()))
 				.rewards(AdvancementRewards.Builder.experience(15))
-				.save(consumer, prefixString("accessories"));
+				.save(output, prefixString("accessories"));
 		Builder.advancement().parent(root)
 				.display(ItemRegistry.BLOODY_SACRIFICE.get(),
 						createTitle("bloody_sacrifice"),
 						createDescription("bloody_sacrifice"),
-						null, AdvancementType.CHALLENGE, true, true, false)
+						AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.BLOODY_SACRIFICE.get()))
 				.rewards(AdvancementRewards.Builder.experience(15))
-				.save(consumer, prefixString("bloody_sacrifice"));
+				.save(output, prefixString("bloody_sacrifice"));
 
 		// Other advancements
 		Builder.advancement().parent(root)
 				.display(ItemRegistry.USED_SYRINGE.get(),
 						createTitle("used_syringe"),
 						createDescription("used_syringe"),
-						null, AdvancementType.CHALLENGE, true, true, true)
+						AdvancementType.CHALLENGE, true, true, true)
 				.addCriterion("hold",
 						KilledTrigger.TriggerInstance.entityKilledPlayer(EntityPredicate.Builder.entity(),
 								DamageSourcePredicate.Builder.damageType()
@@ -1425,47 +1434,47 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 														.mainhand(ItemPredicate.Builder.item()
 																.of(itemLookup, ItemRegistry.USED_SYRINGE.get()))
 														.build()))))
-				.save(consumer, prefixString("used_syringe"));
+				.save(output, prefixString("used_syringe"));
 
 		Builder.advancement().parent(root)
 				.display(ItemRegistry.KILL_COUNTER.get(),
 						createTitle("kill_counter"),
 						createDescription("kill_counter"),
-						null, AdvancementType.CHALLENGE, true, true, true)
+						AdvancementType.CHALLENGE, true, true, true)
 				.addCriterion("", CriteriaTriggers.IMPOSSIBLE.createCriterion(new ImpossibleTrigger.TriggerInstance()))
-				.save(consumer, prefixString("kill_counter"));
+				.save(output, prefixString("kill_counter"));
 
 		Builder.advancement().parent(root)
 				.display(ItemRegistry.STARSTORM_ARROW.get(),
 						createTitle("overkill"),
 						createDescription("overkill"),
-						null, AdvancementType.CHALLENGE, true, true, true)
+						AdvancementType.CHALLENGE, true, true, true)
 				.addCriterion("", CriteriaTriggers.IMPOSSIBLE.createCriterion(new ImpossibleTrigger.TriggerInstance()))
 				.rewards(AdvancementRewards.Builder.experience(100))
-				.save(consumer, prefixString("overkill"));
+				.save(output, prefixString("overkill"));
 
 		Builder.advancement().parent(root)
 				.display(ItemRegistry.ASTRAL_MUSKET_BALL.get(),
 						createTitle("firearm_long_range"),
 						createDescription("firearm_long_range"),
-						null, AdvancementType.CHALLENGE, true, true, true)
+						AdvancementType.CHALLENGE, true, true, true)
 				.addCriterion("", CriteriaTriggers.IMPOSSIBLE.createCriterion(new ImpossibleTrigger.TriggerInstance()))
 				.rewards(AdvancementRewards.Builder.experience(100))
-				.save(consumer, prefixString("firearm_long_range"));
+				.save(output, prefixString("firearm_long_range"));
 
 		Builder.advancement().parent(root)
 				.display(ItemRegistry.MUD_BALL.get(),
 						createTitle("mud_ball"),
 						createDescription("mud_ball"),
-						null, AdvancementType.GOAL, true, true, true)
+						AdvancementType.GOAL, true, true, true)
 				.addCriterion("", CriteriaTriggers.IMPOSSIBLE.createCriterion(new ImpossibleTrigger.TriggerInstance()))
-				.save(consumer, prefixString("mud_ball"));
+				.save(output, prefixString("mud_ball"));
 
 		Builder.advancement().parent(root)
-				.display(BlockRegistry.BEAR_TRAP.get(),
+				.display(BlockRegistry.BEAR_TRAP.get().asItem(),
 						createTitle("traps"),
 						createDescription("traps"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(BlockRegistry.BEAR_TRAP.get()))
 				.addCriterion("hold1",
@@ -1483,219 +1492,219 @@ public record AdvancementGenerator() implements AdvancementSubProvider {
 				.addCriterion("hold7",
 						InventoryChangeTrigger.TriggerInstance.hasItems(BlockRegistry.WOODEN_SPIKES.get()))
 				.requirements(Strategy.OR)
-				.save(consumer, prefixString("traps"));
+				.save(output, prefixString("traps"));
 
 		Builder.advancement().parent(root)
 				.display(Items.OAK_PLANKS,
 						createTitle("planks"),
 						createDescription("planks"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item()
 								.of(itemLookup, ItemTags.PLANKS).build()))
-				.save(consumer, prefixString("planks"));
+				.save(output, prefixString("planks"));
 
 		Builder.advancement().parent(root)
 				.display(BlockItemRegistry.MUD_ITEM.get(),
 						createTitle("mud"),
 						createDescription("mud"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item()
 								.of(itemLookup, BlockItemRegistry.MUD_ITEM.get()).build()))
-				.save(consumer, prefixString("mud"));
+				.save(output, prefixString("mud"));
 
 		Builder.advancement().parent(root)
 				.display(Items.BAMBOO,
 						createTitle("bamboo"),
 						createDescription("bamboo"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item()
 								.of(itemLookup, Items.BAMBOO).build()))
-				.save(consumer, prefixString("bamboo"));
+				.save(output, prefixString("bamboo"));
 
 		Builder.advancement().parent(root)
 				.display(BlockItemRegistry.CLOUD_MARBLE_ITEM.get(),
 						createTitle("cloud_marble"),
 						createDescription("cloud_marble"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item()
 								.of(itemLookup, BlockItemRegistry.CLOUD_MARBLE_ITEM.get()).build()))
-				.save(consumer, prefixString("cloud_marble"));
+				.save(output, prefixString("cloud_marble"));
 
 		Builder.advancement().parent(root)
 				.display(BlockItemRegistry.BIOHAZARD_BOX_ITEM.get(),
 						createTitle("biohazard_box"),
 						createDescription("biohazard_box"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item()
 								.of(itemLookup, BlockItemRegistry.BIOHAZARD_BOX_ITEM.get()).build()))
-				.save(consumer, prefixString("biohazard_box"));
+				.save(output, prefixString("biohazard_box"));
 
 		Builder.advancement().parent(root)
 				.display(BlockItemRegistry.CLOUD_ITEM.get(),
 						createTitle("cloud"),
 						createDescription("cloud"),
-						null, AdvancementType.CHALLENGE, true, true, false)
+						AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						PlayerTrigger.TriggerInstance.walkOnBlockWithEquipment(blockLookup, itemLookup, BlockRegistry.CLOUD.get(),
 								Items.AIR))
-				.save(consumer, prefixString("cloud"));
+				.save(output, prefixString("cloud"));
 
 		// Warden Advancements
 		AdvancementHolder wardenHeart = Builder.advancement().parent(root)
 				.display(ItemRegistry.WARDEN_HEART.get(),
 						createTitle("warden_heart"),
 						createDescription("warden_heart"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.WARDEN_HEART.get()))
 				.rewards(AdvancementRewards.Builder.experience(50))
-				.save(consumer, prefixString("warden_heart"));
+				.save(output, prefixString("warden_heart"));
 
 		Builder.advancement().parent(wardenHeart)
 				.display(ItemRegistry.SCULK_STAFF.get(),
 						createTitle("sculk_staff"),
 						createDescription("sculk_staff"),
-						null, AdvancementType.CHALLENGE, true, true, false)
+						AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.SCULK_STAFF.get()))
 				.rewards(AdvancementRewards.Builder.experience(75))
-				.save(consumer, prefixString("sculk_staff"));
+				.save(output, prefixString("sculk_staff"));
 
 		Builder.advancement().parent(wardenHeart)
 				.display(ItemRegistry.REINFORCED_DEPTH_CHARM.get(),
 						createTitle("reinforced_depth_charm"),
 						createDescription("reinforced_depth_charm"),
-						null, AdvancementType.CHALLENGE, true, true, false)
+						AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.REINFORCED_DEPTH_CHARM.get()))
 				.rewards(AdvancementRewards.Builder.experience(75))
-				.save(consumer, prefixString("reinforced_depth_charm"));
+				.save(output, prefixString("reinforced_depth_charm"));
 
 		// Super Hans advancements
 		AdvancementHolder hansiumIngot = Builder.advancement().parent(superHansDiscovery)
 				.display(ItemRegistry.HANSIUM_INGOT.get(),
 						createTitle("hansium_ingot"),
 						createDescription("hansium_ingot"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.HANSIUM_INGOT.get()))
 				.rewards(AdvancementRewards.Builder.experience(100))
-				.save(consumer, prefixString("hansium_ingot"));
+				.save(output, prefixString("hansium_ingot"));
 
 		Builder.advancement().parent(superHansDiscovery)
 				.display(Items.MACE,
 						createTitle("rapid_reflexes"),
 						createDescription("rapid_reflexes"),
-						null, AdvancementType.CHALLENGE, true, true, true)
+						AdvancementType.CHALLENGE, true, true, true)
 				.addCriterion("", CriteriaTriggers.IMPOSSIBLE.createCriterion(new ImpossibleTrigger.TriggerInstance()))
 				.rewards(AdvancementRewards.Builder.experience(200))
-				.save(consumer, prefixString("rapid_reflexes"));
+				.save(output, prefixString("rapid_reflexes"));
 
 		Builder.advancement().parent(hansiumIngot)
 				.display(ItemRegistry.THE_SWORD.get(),
 						createTitle("the_sword"),
 						createDescription("the_sword"),
-						null, AdvancementType.CHALLENGE, true, true, false)
+						AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.THE_SWORD.get()))
 				.rewards(AdvancementRewards.Builder.experience(250))
-				.save(consumer, prefixString("the_sword"));
+				.save(output, prefixString("the_sword"));
 
 		Builder.advancement().parent(hansiumIngot)
 				.display(ItemRegistry.RECOVERY_STAFF.get(),
 						createTitle("recovery_staff"),
 						createDescription("recovery_staff"),
-						null, AdvancementType.CHALLENGE, true, true, false)
+						AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.RECOVERY_STAFF.get()))
 				.rewards(AdvancementRewards.Builder.experience(75))
-				.save(consumer, prefixString("recovery_staff"));
+				.save(output, prefixString("recovery_staff"));
 
 		// Battlefield advancements
-		HolderGetter<Biome> holderGetter = provider.lookupOrThrow(Registries.BIOME);
+		HolderGetter<Biome> holderGetter = output.lookup(Registries.BIOME);
 		AdvancementHolder discoverBattlefield = Builder.advancement().parent(root)
-				.display(Blocks.SKELETON_SKULL,
+				.display(Blocks.SKELETON_SKULL.asItem(),
 						createTitle("battlefield"),
 						createDescription("battlefield"),
-						null, AdvancementType.TASK, true, true, false)
+						AdvancementType.TASK, true, true, false)
 				.addCriterion("visit",
 						PlayerTrigger.TriggerInstance.located(
 								LocationPredicate.Builder.inBiome(holderGetter.getOrThrow(IWBiomes.BATTLEFIELD))))
 				.rewards(AdvancementRewards.Builder.experience(50))
-				.save(consumer, prefixString("battlefield"));
+				.save(output, prefixString("battlefield"));
 
 		Builder.advancement().parent(discoverBattlefield)
 				.display(BlockItemRegistry.MINUTEMAN_STATUE_ITEM.get(),
 						createTitle("minuteman_statue"),
 						createDescription("minuteman_statue"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold", InventoryChangeTrigger.TriggerInstance.hasItems(
 						BlockItemRegistry.MINUTEMAN_STATUE_ITEM.get()))
-				.save(consumer, prefixString("minuteman_statue"));
+				.save(output, prefixString("minuteman_statue"));
 
 		Builder.advancement().parent(discoverBattlefield)
 				.display(BlockItemRegistry.MEDIC_STATUE_ITEM.get(),
 						createTitle("medic_statue"),
 						createDescription("medic_statue"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold", InventoryChangeTrigger.TriggerInstance.hasItems(
 						BlockItemRegistry.MEDIC_STATUE_ITEM.get()))
-				.save(consumer, prefixString("medic_statue"));
+				.save(output, prefixString("medic_statue"));
 
 		AdvancementHolder commanderPedestal = Builder.advancement().parent(theCommanderDiscovery)
 				.display(BlockItemRegistry.COMMANDER_PEDESTAL.get(),
 						createTitle("commander_pedestal"),
 						createDescription("commander_pedestal"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold", InventoryChangeTrigger.TriggerInstance.hasItems(
 						BlockItemRegistry.COMMANDER_PEDESTAL.get()))
 				.rewards(AdvancementRewards.Builder.experience(50))
-				.save(consumer, prefixString("commander_pedestal"));
+				.save(output, prefixString("commander_pedestal"));
 
 		Builder.advancement().parent(commanderPedestal)
 				.display(ItemRegistry.PEDESTAL_AUGMENT_SPEED.get(),
 						createTitle("pedestal_augment"),
 						createDescription("pedestal_augment"),
-						null, AdvancementType.CHALLENGE, true, true, false)
+						AdvancementType.CHALLENGE, true, true, false)
 				.addCriterion("hold", InventoryChangeTrigger.TriggerInstance.hasItems(
 						ItemPredicate.Builder.item().of(itemLookup, IWItemTagGroups.COMMANDER_PEDESTAL_AUGMENTS).build()))
 				.rewards(AdvancementRewards.Builder.experience(75))
-				.save(consumer, prefixString("pedestal_augment"));
+				.save(output, prefixString("pedestal_augment"));
 
 		// Tiltros advancements
 		AdvancementHolder tiltrosPortal = Builder.advancement().parent(root)
-				.display(BlockRegistry.TILTROS_PORTAL_FRAME.get(),
+				.display(BlockRegistry.TILTROS_PORTAL_FRAME.get().asItem(),
 						createTitle("tiltros_portal"),
 						createDescription("tiltros_portal"),
-						null, AdvancementType.TASK, true, true, true)
+						AdvancementType.TASK, true, true, true)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(BlockRegistry.TILTROS_PORTAL_FRAME.get()))
 				.requirements(Strategy.AND)
-				.save(consumer, prefixString("tiltros_portal"));
+				.save(output, prefixString("tiltros_portal"));
 
 		AdvancementHolder azulKeystone = Builder.advancement().parent(tiltrosPortal)
 				.display(ItemRegistry.AZUL_KEYSTONE_FRAGMENT.get(),
 						createTitle("azul_keystone"),
 						createDescription("azul_keystone"),
-						null, AdvancementType.TASK, true, true, true)
+						AdvancementType.TASK, true, true, true)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.AZUL_KEYSTONE.get()))
-				.save(consumer, prefixString("azul_keystone"));
+				.save(output, prefixString("azul_keystone"));
 
 		Builder.advancement().parent(azulKeystone)
 				.display(BlockItemRegistry.MOONGLOW_ITEM.get(),
 						createTitle("enter_tiltros"),
 						createDescription("enter_tiltros"),
-						null, AdvancementType.GOAL, true, true, false)
+						AdvancementType.GOAL, true, true, false)
 				.addCriterion("visit",
 						PlayerTrigger.TriggerInstance.located(
 								LocationPredicate.Builder.inDimension(DimensionGenerator.TILTROS_LEVEL)))
 				.rewards(AdvancementRewards.Builder.experience(150))
-				.save(consumer, prefixString("tiltros"));
+				.save(output, prefixString("tiltros"));
 	}
 }

@@ -198,7 +198,8 @@ public class StarForgeScreen extends AbstractContainerScreen<StarForgeMenu> {
 					mouseX,
 					mouseY,
 					DefaultTooltipPositioner.INSTANCE,
-					null
+					null,
+					false
 			);
 		}
 
@@ -213,7 +214,8 @@ public class StarForgeScreen extends AbstractContainerScreen<StarForgeMenu> {
 					mouseX,
 					mouseY,
 					DefaultTooltipPositioner.INSTANCE,
-					null
+					null,
+					false
 			);
 		}
 
@@ -228,7 +230,8 @@ public class StarForgeScreen extends AbstractContainerScreen<StarForgeMenu> {
 					mouseX,
 					mouseY,
 					DefaultTooltipPositioner.INSTANCE,
-					null
+					null,
+					false
 			);
 		}
 	}

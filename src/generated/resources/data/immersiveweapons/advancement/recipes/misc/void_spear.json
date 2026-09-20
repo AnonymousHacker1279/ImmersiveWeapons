@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:void_spear"
+        "recipes": "immersiveweapons:void_spear"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:wooden_arrow"
+        "recipes": "immersiveweapons:wooden_arrow"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
