@@ -35,6 +35,8 @@ public class BearTrapBlockEntity extends BlockEntity implements EntityBlock {
 		if (trappedEntityUUID != null && level instanceof ServerLevel serverLevel) {
 			if (serverLevel.getEntity(trappedEntityUUID) instanceof LivingEntity livingEntity) {
 				trappedEntity = livingEntity;
+				// Only restore the entity once. Otherwise, it would be trapped again after it escapes.
+				trappedEntityUUID = null;
 			}
 		}
 
@@ -54,6 +56,7 @@ public class BearTrapBlockEntity extends BlockEntity implements EntityBlock {
 
 	public void trapEntity(LivingEntity entity) {
 		trappedEntity = entity;
+		trappedEntityUUID = null;
 	}
 
 	@Nullable
@@ -71,8 +74,11 @@ public class BearTrapBlockEntity extends BlockEntity implements EntityBlock {
 	protected void saveAdditional(ValueOutput valueOutput) {
 		super.saveAdditional(valueOutput);
 
+		// Keep a not yet restored UUID, so the entity is not lost if the block saves before it loads
 		if (trappedEntity != null) {
 			valueOutput.store("UUID", UUIDUtil.CODEC, trappedEntity.getUUID());
+		} else if (trappedEntityUUID != null) {
+			valueOutput.store("UUID", UUIDUtil.CODEC, trappedEntityUUID);
 		}
 	}
 

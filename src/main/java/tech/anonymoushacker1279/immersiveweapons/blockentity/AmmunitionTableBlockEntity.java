@@ -115,7 +115,12 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 		String itemName = valueInput.getStringOr("excessStack", "");
 		if (!itemName.isEmpty()) {
 			excessStack = BuiltInRegistries.ITEM.getValue(Identifier.parse(itemName)).getDefaultInstance();
-			excessStack.set(DENSITY_MODIFIER, densityModifier);
+			if (excessStack.isEmpty()) {
+				// An empty stack is saved as air
+				excessStack = ItemStack.EMPTY;
+			} else if (densityModifier > 0) {
+				excessStack.set(DENSITY_MODIFIER, densityModifier);
+			}
 		}
 	}
 
@@ -279,7 +284,7 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 			RecipeHolder<AmmunitionTableRecipe> recipe = getValidRecipe(serverLevel);
 
 			if (recipe == null) {
-				if (excessStack != ItemStack.EMPTY && didCraft) {
+				if (!excessStack.isEmpty() && didCraft) {
 					handleExcess();
 				} else {
 					inventory.set(6, ItemStack.EMPTY);
@@ -336,7 +341,10 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 			while (excess > 0) {
 				int dropCount = Math.min(excess, maxStackSize);
 				ItemStack dropStack = excessStack.copyWithCount(dropCount);
-				dropStack.set(DENSITY_MODIFIER, densityModifier);
+				// Only add the component when needed, otherwise the drops won't stack with regular ammunition
+				if (densityModifier > 0) {
+					dropStack.set(DENSITY_MODIFIER, densityModifier);
+				}
 				excess -= dropCount;
 
 				// Drop the item in the world
@@ -356,13 +364,6 @@ public class AmmunitionTableBlockEntity extends BaseContainerBlockEntity impleme
 				}
 			}
 		}
-	}
-
-	/// Checks if there are no materials present (first six slots)
-	///
-	/// @return boolean
-	public boolean hasNoMaterials() {
-		return inventory.stream().limit(6).allMatch(ItemStack::isEmpty);
 	}
 
 	@Override

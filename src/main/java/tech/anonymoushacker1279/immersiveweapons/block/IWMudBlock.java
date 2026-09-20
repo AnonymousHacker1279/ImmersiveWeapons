@@ -10,7 +10,8 @@ import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
 
 public class IWMudBlock extends Block {
 
-	protected float changeStateChance = 0.10f;
+	// Block instances are shared, so the chance must never be stored in a field
+	protected static final float DEFAULT_CHANGE_STATE_CHANCE = 0.10f;
 
 	public IWMudBlock(Properties properties) {
 		super(properties);
@@ -18,9 +19,7 @@ public class IWMudBlock extends Block {
 
 	@Override
 	public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
-		if (pLevel.isRainingAt(pPos)) {
-			changeStateChance = 0.03f;
-		}
+		float changeStateChance = pLevel.isRainingAt(pPos) ? 0.03f : DEFAULT_CHANGE_STATE_CHANCE;
 		if (canDry(pLevel, pPos) && pRandom.nextFloat() <= changeStateChance) {
 			pLevel.setBlockAndUpdate(pPos, BlockRegistry.DRIED_MUD.get().defaultBlockState());
 		}

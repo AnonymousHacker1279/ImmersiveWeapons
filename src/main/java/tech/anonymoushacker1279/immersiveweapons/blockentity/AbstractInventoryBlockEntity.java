@@ -23,8 +23,6 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 public abstract class AbstractInventoryBlockEntity extends BlockEntity implements EntityBlock, Container {
 
 	private final NonNullList<ItemStack> inventory = NonNullList.withSize(getContainerSize(), ItemStack.EMPTY);
-	private int filledSlots = 0;
-
 	/// Constructor for AbstractInventoryBlockEntity.
 	public AbstractInventoryBlockEntity(BlockEntityType<?> type, BlockPos blockPos, BlockState blockState) {
 		super(type, blockPos, blockState);
@@ -46,17 +44,19 @@ public abstract class AbstractInventoryBlockEntity extends BlockEntity implement
 	}
 
 	public int getFilledSlots() {
+		int filledSlots = 0;
+		for (ItemStack stack : inventory) {
+			if (!stack.isEmpty()) {
+				filledSlots++;
+			}
+		}
+
 		return filledSlots;
 	}
 
 	@Override
 	public void setItem(int slot, ItemStack stack) {
 		inventory.set(slot, stack);
-		if (stack.isEmpty()) {
-			filledSlots--;
-		} else {
-			filledSlots++;
-		}
 		inventoryChanged();
 	}
 
@@ -74,7 +74,6 @@ public abstract class AbstractInventoryBlockEntity extends BlockEntity implement
 			ItemStack itemstack = inventory.get(i);
 			if (itemstack.isEmpty()) {
 				inventory.set(i, itemStack.split(1));
-				filledSlots++;
 				inventoryChanged();
 				return true;
 			}
@@ -85,9 +84,6 @@ public abstract class AbstractInventoryBlockEntity extends BlockEntity implement
 	@Override
 	public ItemStack removeItem(int slot, int amount) {
 		ItemStack stack = ContainerHelper.removeItem(inventory, slot, amount);
-		if (inventory.get(slot).isEmpty()) {
-			filledSlots--;
-		}
 		inventoryChanged();
 		return stack;
 	}
@@ -105,7 +101,6 @@ public abstract class AbstractInventoryBlockEntity extends BlockEntity implement
 					Containers.dropItemStack(level, getBlockPos().getX(), getBlockPos().getY(), getBlockPos().getZ(), inventory.get(i));
 				}
 				inventory.set(i, ItemStack.EMPTY);
-				filledSlots--;
 				inventoryChanged();
 				return;
 			}
@@ -132,12 +127,6 @@ public abstract class AbstractInventoryBlockEntity extends BlockEntity implement
 		super.loadAdditional(valueInput);
 		inventory.clear();
 		ContainerHelper.loadAllItems(valueInput, inventory);
-
-		for (ItemStack itemStack : inventory) {
-			if (!itemStack.isEmpty()) {
-				filledSlots++;
-			}
-		}
 	}
 
 	@Override
@@ -172,8 +161,4 @@ public abstract class AbstractInventoryBlockEntity extends BlockEntity implement
 		inventory.clear();
 	}
 
-	@Override
-	public void preRemoveSideEffects(BlockPos pos, BlockState state) {
-		super.preRemoveSideEffects(pos, state);
-	}
 }

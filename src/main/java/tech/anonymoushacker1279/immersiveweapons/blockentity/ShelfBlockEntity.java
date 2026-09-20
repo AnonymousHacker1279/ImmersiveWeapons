@@ -35,6 +35,8 @@ public class ShelfBlockEntity extends AbstractInventoryBlockEntity {
 
 	public void setLocked(boolean locked) {
 		isLocked = locked;
+		// Save the change and sync it to clients
+		inventoryChanged();
 	}
 
 	@Override

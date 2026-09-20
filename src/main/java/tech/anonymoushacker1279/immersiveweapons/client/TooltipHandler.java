@@ -310,7 +310,9 @@ public class TooltipHandler {
 
 					if (attributeOp.attribute().equals(Attributes.MAX_HEALTH)) {
 						// Convert to hearts
-						amount = (float) Math.round(attributeOp.modifier().amount() / 2f) + " hearts";
+						// Round to one decimal, as a single health point is half a heart
+						float hearts = (float) Math.round(attributeOp.modifier().amount() / 2f * 10f) / 10f;
+						amount = (hearts % 1 == 0 ? String.valueOf((int) hearts) : String.valueOf(hearts)) + " hearts";
 					} else {
 						amount = (float) Math.round(attributeOp.modifier().amount() * 1000f) / 10f + "%";
 					}

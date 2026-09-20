@@ -35,17 +35,18 @@ public abstract class CombatRulesMixin {
 
 			// Handle armor breach attribute
 			weapon.getAttributeModifiers().forEach(EquipmentSlot.MAINHAND, (attribute, attributeModifier) -> {
-				if (attribute == AttributeRegistry.ARMOR_BREACH) {
+				// Compare by key, as the holder may be a registry reference rather than the DeferredHolder
+				if (attribute.is(AttributeRegistry.ARMOR_BREACH.getKey())) {
 					damageModifier[0] -= (float) attributeModifier.amount();
 				}
 			});
+		}
 
-			// Handle Broken Armor effects
-			MobEffectInstance brokenArmorEffect = entity.getEffect(EffectRegistry.BROKEN_ARMOR_EFFECT);
-			if (brokenArmorEffect != null) {
-				int level = brokenArmorEffect.getAmplifier();
-				damageModifier[0] -= ((BrokenArmorEffect) brokenArmorEffect.getEffect().value()).calculateArmorBreach(level);
-			}
+		// Handle Broken Armor effects. This applies regardless of the damage source having a weapon.
+		MobEffectInstance brokenArmorEffect = entity.getEffect(EffectRegistry.BROKEN_ARMOR_EFFECT);
+		if (brokenArmorEffect != null) {
+			int level = brokenArmorEffect.getAmplifier();
+			damageModifier[0] -= ((BrokenArmorEffect) brokenArmorEffect.getEffect().value()).calculateArmorBreach(level);
 		}
 
 		// Ensure the modifier does not go below zero

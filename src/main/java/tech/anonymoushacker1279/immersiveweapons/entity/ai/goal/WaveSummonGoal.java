@@ -127,7 +127,7 @@ public abstract class WaveSummonGoal<T extends Mob & WaveSummoningBoss> extends 
 		AABB searchBox = new AABB(mob.getX() - 32,
 				mob.getY() - 16,
 				mob.getZ() - 32,
-				mob.getX() + 16,
+				mob.getX() + 32,
 				mob.getY() + 16,
 				mob.getZ() + 32);
 

@@ -2,6 +2,13 @@
   "feature": "immersiveweapons:deepslate_cobalt_ore",
   "placement": [
     {
+      "type": "minecraft:count",
+      "count": 12
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
       "type": "minecraft:height_range",
       "height": {
         "type": "minecraft:trapezoid",
@@ -15,13 +22,6 @@
     },
     {
       "type": "minecraft:biome"
-    },
-    {
-      "type": "minecraft:in_square"
-    },
-    {
-      "type": "minecraft:count",
-      "count": 12
     }
   ]
 }

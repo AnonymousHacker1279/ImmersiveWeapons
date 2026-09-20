@@ -140,8 +140,11 @@ public class StarForgeBlockEntity extends BaseContainerBlockEntity implements En
 				updateResult();
 
 				// Decrement the input slots
-				inventory.get(0).shrink(availableRecipes.get(menuSelectionIndex).value().primaryMaterialCount());
-				inventory.get(1).shrink(availableRecipes.get(menuSelectionIndex).value().secondaryMaterialCount());
+				StarForgeRecipe selectedRecipe = getSelectedRecipe();
+				if (selectedRecipe != null) {
+					inventory.get(0).shrink(selectedRecipe.primaryMaterialCount());
+					inventory.get(1).shrink(selectedRecipe.secondaryMaterialCount());
+				}
 
 				// Reset the menu selection index
 				menuSelectionIndex = 0;
@@ -300,9 +303,18 @@ public class StarForgeBlockEntity extends BaseContainerBlockEntity implements En
 		}
 	}
 
+	/// Get the currently selected recipe, if the selection index is valid for the available recipes.
+	@Nullable
+	private StarForgeRecipe getSelectedRecipe() {
+		if (menuSelectionIndex < 0 || menuSelectionIndex >= availableRecipes.size()) {
+			return null;
+		}
+		return availableRecipes.get(menuSelectionIndex).value();
+	}
+
 	public void updateResult() {
-		if (!availableRecipes.isEmpty() && containerData.get(1) == 1000 && containerData.get(2) == 0) {
-			StarForgeRecipe recipe = availableRecipes.get(containerData.get(3)).value();
+		StarForgeRecipe recipe = getSelectedRecipe();
+		if (recipe != null && containerData.get(1) == 1000 && containerData.get(2) == 0) {
 			// Check if the inputs are sufficient
 			if (recipe.primaryMaterialCount() <= inventory.get(0).getCount() && recipe.secondaryMaterialCount() <= inventory.get(1).getCount()) {
 				// Set the result slot

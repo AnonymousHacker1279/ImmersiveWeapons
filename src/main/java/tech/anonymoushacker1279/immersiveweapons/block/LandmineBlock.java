@@ -58,6 +58,12 @@ public class LandmineBlock extends Block implements SimpleWaterloggedBlock {
 
 	private static void explode(Level level, BlockPos pos, @Nullable LivingEntity livingEntity) {
 		if (!level.isClientSide()) {
+			// Remove the mine first. Otherwise, its own explosion destroys it and triggers `wasExploded`, which
+			// would cause a second explosion.
+			if (level.getBlockState(pos).getBlock() instanceof LandmineBlock) {
+				level.removeBlock(pos, false);
+			}
+
 			level.explode(livingEntity, IWDamageSources.landmine(level.registryAccess()), null, pos.getX(), pos.getY(), pos.getZ(), 2.0F, false, ExplosionInteraction.BLOCK);
 			level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.TNT_PRIMED, SoundSource.BLOCKS, 1.0F, 1.0F, false);
 		}

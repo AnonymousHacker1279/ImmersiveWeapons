@@ -34,9 +34,10 @@ public class PanicAlarmBlockEntity extends BlockEntity implements EntityBlock {
 					.distSqr(blockPos) <= Math.pow(IWConfigs.SERVER.panicAlarmRange.getAsInt(), 2))) {
 
 				serverPlayer.playSound(SoundEventRegistry.PANIC_ALARM_SOUND.get(), 1.0F, 1.0F);
-
-				level.gameEvent(GameEventRegistry.PANIC_ALARM_TRIGGER, blockPos, GameEvent.Context.of(getBlockState()));
 			}
+
+			// Emit the game event once per trigger, regardless of how many players are nearby
+			level.gameEvent(GameEventRegistry.PANIC_ALARM_TRIGGER, blockPos, GameEvent.Context.of(getBlockState()));
 
 			setCooldown(40);
 		}

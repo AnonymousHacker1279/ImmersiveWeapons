@@ -10,7 +10,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -22,6 +21,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityTypes;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -34,15 +34,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.entity.projectile.arrow.ThrownTrident;
 import net.minecraft.world.item.*;
-import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.portal.TeleportTransition;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -87,7 +86,6 @@ import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID)
 public class ForgeEventSubscriber {
@@ -192,12 +190,11 @@ public class ForgeEventSubscriber {
 			}
 		}
 
-		// Armor ticking
-		player.getInventory().forEach(stack -> {
-			if (stack.getItem() instanceof TickableArmor tickable) {
-				tickable.playerTick(player.level(), player);
-			}
-		});
+		// Armor ticking. Armor effects require the full set, so tick from the helmet only. Otherwise, each piece (or
+		// any spare armor in the inventory) would tick the same effect again.
+		if (player.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof TickableArmor tickable) {
+			tickable.playerTick(player.level(), player);
+		}
 	}
 
 	@SubscribeEvent
@@ -228,21 +225,11 @@ public class ForgeEventSubscriber {
 		// Handle accessory effects
 		if (damagedEntity instanceof ServerPlayer player) {
 			if (event.getSource().is(DamageTypes.FELL_OUT_OF_WORLD) && Accessory.isAccessoryActive(player, ItemRegistry.VOID_BLESSING.get())) {
-				// Warp back to spawn
-				if (player.getRespawnConfig() != null) {
-					ServerLevel targetLevel = player.level().getServer().getLevel(player.getRespawnConfig().respawnData().dimension());
-					if (targetLevel != null) {
-						player.resetFallDistance();
-						BlockPos respawnPos = player.getRespawnConfig().respawnData().pos();
-						player.teleportTo(targetLevel, respawnPos.getX(), respawnPos.getY(), respawnPos.getZ(), Set.of(), player.getYRot(), player.getXRot(), false);
-					}
-				} else {
-					BlockPos spawnPos = player.level().getRespawnData().pos();
-					ServerLevel targetLevel = player.level().getServer().getLevel(player.level().dimension());
-					if (targetLevel != null) {
-						player.teleportTo(targetLevel, spawnPos.getX(), spawnPos.getY(), spawnPos.getZ(), Set.of(), player.getYRot(), player.getXRot(), false);
-					}
-				}
+				// Warp back to spawn. This uses the same logic as respawning, so a safe position beside the bed or
+				// anchor is chosen, or the world spawn if there isn't one.
+				player.resetFallDistance();
+				player.teleport(player.findRespawnPositionAndUseSpawnBlock(false, TeleportTransition.DO_NOTHING));
+				event.setCanceled(true);
 			}
 
 			AccessoryEffects.holyMantleEffect(event, player);
@@ -411,7 +398,8 @@ public class ForgeEventSubscriber {
 		}
 
 		// Handle the Velocity enchantment on bows (guns are handled in the gun code)
-		if (event.getEntity() instanceof AbstractArrow arrow) {
+		// Skip arrows loaded from disk (e.g. chunk reloads), otherwise the boost would be applied again
+		if (event.getEntity() instanceof AbstractArrow arrow && !event.loadedFromDisk()) {
 			if (arrow.getOwner() instanceof Player player
 					&& (player.getItemInHand(player.getUsedItemHand()).getItem() instanceof BowItem
 					|| player.getItemInHand(player.getUsedItemHand()).getItem() instanceof CrossbowItem)) {
@@ -501,46 +489,39 @@ public class ForgeEventSubscriber {
 		if (event.getSource().getEntity() instanceof Player player) {
 			// 25% chance to drop items a second time with the Bloody Sacrifice curse
 			if (player.getPersistentData().getBooleanOr("used_curse_accessory_bloody_sacrifice", false)) {
-				if (player.getRandom().nextFloat() <= 0.25f) {
-					ResourceKey<LootTable> lootTable = event.getEntity().getLootTable().orElseThrow();
-					MinecraftServer server = event.getEntity().level().getServer();
+				if (player.getRandom().nextFloat() <= 0.25f && event.getEntity().level() instanceof ServerLevel level) {
+					// Not every entity has a loot table (e.g. players)
+					event.getEntity().getLootTable().ifPresent(lootTable -> {
+						LootTable table = level.getServer().reloadableRegistries().getLootTable(lootTable);
 
-					if (server != null) {
-						LootTable table = server.reloadableRegistries().getLootTable(lootTable);
-
-						table.getRandomItems(new LootParams.Builder((ServerLevel) event.getEntity().level())
+						// The entity parameter set only allows these parameters; anything else fails validation
+						table.getRandomItems(new LootParams.Builder(level)
 										.withParameter(LootContextParams.THIS_ENTITY, event.getEntity())
 										.withParameter(LootContextParams.ORIGIN, event.getEntity().position())
 										.withParameter(LootContextParams.DAMAGE_SOURCE, event.getSource())
 										.withParameter(LootContextParams.ATTACKING_ENTITY, player)
 										.withParameter(LootContextParams.LAST_DAMAGE_PLAYER, player)
 										.withParameter(LootContextParams.DIRECT_ATTACKING_ENTITY, player)
-										.withParameter(LootContextParams.BLOCK_STATE, Blocks.AIR.defaultBlockState())
-										.withParameter(LootContextParams.TOOL, ItemStack.EMPTY)
-										.withParameter(LootContextParams.EXPLOSION_RADIUS, 0.0f)
 										.create(LootContextParamSets.ENTITY))
 								.forEach(stack -> {
-									ItemEntity itemEntity = new ItemEntity(event.getEntity().level(), event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), stack);
+									ItemEntity itemEntity = new ItemEntity(level, event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), stack);
 									itemEntity.setPickUpDelay(10);
 									event.getDrops().add(itemEntity);
 								});
 
 						// Summon a cloud of particles around the entity
-						ServerLevel level = server.getLevel(event.getEntity().level().dimension());
-						if (level != null) {
-							level.sendParticles(
-									ParticleTypes.SOUL,
-									event.getEntity().getX(),
-									event.getEntity().getY() + event.getEntity().getBbHeight() / 2.0d,
-									event.getEntity().getZ(),
-									10,
-									0.5d,
-									0.5d,
-									0.5d,
-									0.0d
-							);
-						}
-					}
+						level.sendParticles(
+								ParticleTypes.SOUL,
+								event.getEntity().getX(),
+								event.getEntity().getY() + event.getEntity().getBbHeight() / 2.0d,
+								event.getEntity().getZ(),
+								10,
+								0.5d,
+								0.5d,
+								0.5d,
+								0.0d
+						);
+					});
 				}
 			}
 

@@ -33,7 +33,7 @@ public class CelestialTowerSummonMeteorGoal extends Goal {
 			AABB searchBox = new AABB(tower.getX() - 32,
 					tower.getY() - 16,
 					tower.getZ() - 32,
-					tower.getX() + 16,
+					tower.getX() + 32,
 					tower.getY() + 16,
 					tower.getZ() + 32);
 

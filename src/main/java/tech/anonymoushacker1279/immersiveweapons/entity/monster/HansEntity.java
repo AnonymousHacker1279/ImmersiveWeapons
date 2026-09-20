@@ -7,6 +7,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -76,9 +77,7 @@ public class HansEntity extends AbstractWanderingWarriorEntity {
 
 	@Override
 	public boolean hurtServer(ServerLevel serverLevel, DamageSource source, float amount) {
-		if (amount > 0 && source.getEntity() instanceof Player
-				|| source.getEntity() instanceof Mob
-				|| source.getEntity() instanceof PathfinderMob) {
+		if (amount > 0 && (source.getEntity() instanceof Player || source.getEntity() instanceof Mob)) {
 
 			if (source.isCreativePlayer()) {
 				super.hurtServer(serverLevel, source, amount);
@@ -99,7 +98,7 @@ public class HansEntity extends AbstractWanderingWarriorEntity {
 			return super.hurtServer(serverLevel, source, amount);
 		}
 
-		if (source == damageSources().genericKill()) {
+		if (source.is(DamageTypes.GENERIC_KILL)) {
 			super.hurtServer(serverLevel, source, amount);
 			return true;
 		}

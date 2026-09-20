@@ -133,7 +133,9 @@ public class AmmunitionTableMenu extends AbstractContainerMenu {
 		AbstractContainerMenu menu = player.containerMenu;
 
 		if (menu.containerId == containerId && menu instanceof AmmunitionTableMenu ammunitionTableMenu) {
-			ammunitionTableMenu.containerData.set(0, (int) (densityModifier * 100.0f));
+			// The value comes from the client, so clamp it to the valid range
+			float modifier = Mth.clamp(densityModifier, 0.0F, 1.0F);
+			ammunitionTableMenu.containerData.set(0, Math.round(modifier * 100.0F));
 			if (ammunitionTableMenu.container instanceof AmmunitionTableBlockEntity blockEntity) {
 				blockEntity.calculateOutput(false);
 			}

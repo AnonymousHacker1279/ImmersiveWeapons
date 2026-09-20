@@ -18,6 +18,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
+import org.jetbrains.annotations.Nullable;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import tech.anonymoushacker1279.immersiveweapons.block.core.BasicOrientableBlock;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
@@ -38,15 +39,19 @@ public class FlagBlock extends BasicOrientableBlock implements SimpleWaterlogged
 		builder.add(FACING, WATERLOGGED);
 	}
 
+	@Nullable
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
 		BlockState blockStateBelow = context.getLevel().getBlockState(context.getClickedPos().below());
 
-		if (blockStateBelow.getBlock() instanceof FlagPoleBlock || blockStateBelow.getBlock() instanceof FlagBlock) {
-			return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
-		} else {
-			return Blocks.AIR.defaultBlockState();
+		// Returning null cancels the placement, so the item isn't consumed
+		if (!(blockStateBelow.getBlock() instanceof FlagPoleBlock)) {
+			return null;
 		}
+
+		return defaultBlockState()
+				.setValue(FACING, context.getHorizontalDirection().getOpposite())
+				.setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
 	}
 
 	@Override

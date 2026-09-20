@@ -14,7 +14,7 @@ public class SyncAccessoryDataPayloadHandler {
 	}
 
 	public void handleData(final SyncAccessoryDataPayload data, final IPayloadContext context) {
-		context.enqueueWork(() -> data.accessories().forEach(accessory -> AccessoryLoader.ACCESSORIES.put(accessory.item().value(), accessory)))
+		context.enqueueWork(() -> AccessoryLoader.setAccessories(data.accessories()))
 				.exceptionally(e -> {
 					context.disconnect(Component.translatable("immersiveweapons.networking.failure.generic", e.getMessage()));
 					return null;

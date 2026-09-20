@@ -12,7 +12,6 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.EnchantmentTags;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -113,7 +112,7 @@ public class SimpleChestModifierHandler extends LootModifier {
 			if (maxEnchantLevels > 0) {
 				RegistryAccess access = context.getLevel().registryAccess();
 				Optional<Named<Enchantment>> tag = access.lookupOrThrow(Registries.ENCHANTMENT).get(EnchantmentTags.ON_RANDOM_LOOT);
-				EnchantmentHelper.enchantItem(RandomSource.create(), stack, maxEnchantLevels, access, tag);
+				EnchantmentHelper.enchantItem(context.getRandom(), stack, maxEnchantLevels, access, tag);
 			}
 
 			generatedLoot.add(stack);

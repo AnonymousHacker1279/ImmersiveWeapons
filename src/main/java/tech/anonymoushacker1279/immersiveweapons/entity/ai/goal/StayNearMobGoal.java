@@ -23,7 +23,8 @@ public class StayNearMobGoal extends Goal {
 
 	@Override
 	public boolean canUse() {
-		return mob.distanceTo(mobToStayNear) > maxDistance;
+		// Stop pulling the mob back once the one it follows is gone
+		return mobToStayNear.isAlive() && mob.distanceTo(mobToStayNear) > maxDistance;
 	}
 
 	@Override

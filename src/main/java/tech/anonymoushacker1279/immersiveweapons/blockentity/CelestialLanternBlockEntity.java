@@ -27,6 +27,16 @@ public class CelestialLanternBlockEntity extends BlockEntity implements EntityBl
 		return new CelestialLanternBlockEntity(blockPos, blockState);
 	}
 
+	/// Called when the block is removed by anything (players, explosions, pistons, etc.), unlike `Block#destroy`.
+	@Override
+	public void preRemoveSideEffects(BlockPos pos, BlockState state) {
+		super.preRemoveSideEffects(pos, state);
+
+		if (level instanceof ServerLevel serverLevel) {
+			CelestialLanternData.getData(serverLevel.getServer()).removeLantern(pos);
+		}
+	}
+
 	@Override
 	public void onLoad() {
 		super.onLoad();

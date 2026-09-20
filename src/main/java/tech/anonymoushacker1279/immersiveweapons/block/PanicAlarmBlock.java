@@ -107,8 +107,9 @@ public class PanicAlarmBlock extends BasicOrientableBlock implements SimpleWater
 	@Override
 	public boolean canSurvive(BlockState pState, LevelReader pLevel, BlockPos pPos) {
 		// Ensure it is being placed on the side of a block
-		BlockState blockState = pLevel.getBlockState(pPos.relative(pState.getValue(FACING), -1));
-		return blockState.isFaceSturdy(pLevel, pPos, pState.getValue(FACING));
+		BlockPos wallPos = pPos.relative(pState.getValue(FACING), -1);
+		BlockState blockState = pLevel.getBlockState(wallPos);
+		return blockState.isFaceSturdy(pLevel, wallPos, pState.getValue(FACING));
 	}
 
 	@Override

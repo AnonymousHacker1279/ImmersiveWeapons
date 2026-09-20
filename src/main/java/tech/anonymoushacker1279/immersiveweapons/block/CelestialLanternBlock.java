@@ -1,9 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.block;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.LanternBlock;
@@ -13,7 +11,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.CelestialLanternBlockEntity;
-import tech.anonymoushacker1279.immersiveweapons.world.level.saveddata.CelestialLanternData;
 
 public class CelestialLanternBlock extends LanternBlock implements EntityBlock {
 
@@ -28,14 +25,6 @@ public class CelestialLanternBlock extends LanternBlock implements EntityBlock {
 	@Override
 	public VoxelShape getShape(BlockState blockState, BlockGetter blockGetter, BlockPos blockPos, CollisionContext collisionContext) {
 		return AABB;
-	}
-
-	@Override
-	public void destroy(LevelAccessor pLevel, BlockPos pPos, BlockState pState) {
-		super.destroy(pLevel, pPos, pState);
-		if (pLevel instanceof ServerLevel serverLevel) {
-			CelestialLanternData.getData(serverLevel.getServer()).removeLantern(pPos);
-		}
 	}
 
 	@Override

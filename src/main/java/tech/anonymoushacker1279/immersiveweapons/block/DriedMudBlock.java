@@ -15,9 +15,7 @@ public class DriedMudBlock extends IWMudBlock {
 
 	@Override
 	public void randomTick(BlockState pState, ServerLevel pLevel, BlockPos pPos, RandomSource pRandom) {
-		if (pLevel.isRainingAt(pPos)) {
-			changeStateChance = 0.13f;
-		}
+		float changeStateChance = pLevel.isRainingAt(pPos) ? 0.13f : DEFAULT_CHANGE_STATE_CHANCE;
 		if (!canDry(pLevel, pPos) && pRandom.nextFloat() <= changeStateChance) {
 			pLevel.setBlockAndUpdate(pPos, BlockRegistry.MUD.get().defaultBlockState());
 		}

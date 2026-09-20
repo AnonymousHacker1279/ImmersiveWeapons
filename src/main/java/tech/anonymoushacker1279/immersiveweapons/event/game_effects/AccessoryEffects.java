@@ -1,6 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.event.game_effects;
 
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -21,6 +22,11 @@ import tech.anonymoushacker1279.immersiveweapons.util.GeneralUtilities;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
 
 public class AccessoryEffects {
+
+	/// Determine if a damage source counts as melee damage from a player's weapon.
+	private static boolean isMeleeDamage(DamageSource source) {
+		return source.is(DamageTypes.PLAYER_ATTACK) || source.is(DamageTypes.MACE_SMASH) || source.is(DamageTypes.SPEAR);
+	}
 
 	public static void damageResistanceEffects(LivingIncomingDamageEvent event, Player player) {
 		// Get the total damage resistance from all items
@@ -56,7 +62,7 @@ public class AccessoryEffects {
 		// Get the total melee damage from all items
 		double meleeDamage = AccessoryManager.collectEffects(AccessoryEffectTypeRegistry.MELEE_DAMAGE.get(), player);
 
-		if (event.getSource().is(DamageTypes.PLAYER_ATTACK) || event.getSource().is(DamageTypes.MACE_SMASH) || event.getSource().is(DamageTypes.SPEAR)) {
+		if (isMeleeDamage(event.getSource())) {
 			// Apply the melee damage
 			event.setAmount((float) (event.getAmount() * (1 + meleeDamage)));
 		}
@@ -85,7 +91,7 @@ public class AccessoryEffects {
 		double bleedChance = AccessoryManager.collectEffects(AccessoryEffectTypeRegistry.MELEE_BLEED_CHANCE.get(), player);
 
 		// Roll for bleeding
-		if (event.getSource().is(DamageTypes.PLAYER_ATTACK) && player.getRandom().nextFloat() <= bleedChance) {
+		if (isMeleeDamage(event.getSource()) && player.getRandom().nextFloat() <= bleedChance) {
 			// If bleeding already exists, increase the duration
 			if (damagedEntity.hasEffect(EffectRegistry.BLEEDING_EFFECT)) {
 				MobEffectInstance effect = damagedEntity.getEffect(EffectRegistry.BLEEDING_EFFECT);
@@ -103,7 +109,7 @@ public class AccessoryEffects {
 
 		LivingEntity entity = event.getEntity();
 
-		if (entity.getLastDamageSource() != null && entity.getLastDamageSource().is(DamageTypes.PLAYER_ATTACK)) {
+		if (entity.getLastDamageSource() != null && isMeleeDamage(entity.getLastDamageSource())) {
 			// Apply the melee knockback
 			event.setStrength((float) (event.getStrength() * (1 + meleeKnockback)));
 		}

@@ -39,17 +39,17 @@ public class BiodomeLifeSupportUnitBlock extends Block implements EntityBlock {
 	protected void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, @javax.annotation.Nullable Orientation orientation, boolean movedByPiston) {
 		if (!level.isClientSide()) {
 			boolean isPowered = level.hasNeighborSignal(pos);
-			if (isPowered) {
+
+			// Only react when the power state actually changes, as this runs on every neighbor update
+			if (isPowered != state.getValue(POWERED)) {
 				if (level.getBlockEntity(pos) instanceof BiodomeLifeSupportUnitBlockEntity blockEntity) {
-					blockEntity.setCooldown(0);
-					blockEntity.setPowered(true);
+					if (isPowered) {
+						blockEntity.setCooldown(0);
+					}
+					blockEntity.setPowered(isPowered);
 				}
-				level.scheduleTick(pos, this, 1);
-			} else {
-				if (level.getBlockEntity(pos) instanceof BiodomeLifeSupportUnitBlockEntity blockEntity) {
-					blockEntity.setPowered(false);
-				}
-				level.setBlock(pos, state.cycle(POWERED), 16);
+
+				level.setBlock(pos, state.setValue(POWERED, isPowered), 3);
 			}
 		}
 	}

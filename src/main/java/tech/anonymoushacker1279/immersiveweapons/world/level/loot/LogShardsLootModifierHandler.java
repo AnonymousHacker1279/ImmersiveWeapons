@@ -67,8 +67,9 @@ public class LogShardsLootModifierHandler extends LootModifier {
 		}
 
 		if (shardCount >= 1) {
+			// The original logs shouldn't drop, so remove them from the loot list
+			generatedLoot.removeIf(stack -> stack.is(tag));
 			generatedLoot.add(replacement.create().copyWithCount(shardCount));
-			generatedLoot.removeFirst(); // The original item shouldn't drop, so remove it from the loot list
 		}
 
 		return generatedLoot;

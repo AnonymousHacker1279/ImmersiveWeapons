@@ -12,6 +12,7 @@ import net.minecraft.world.BossEvent.BossBarColor;
 import net.minecraft.world.BossEvent.BossBarOverlay;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -145,7 +146,7 @@ public class CelestialTowerEntity extends Monster implements AttackerTracker, Gr
 
 	@Override
 	public boolean hurtServer(ServerLevel level, DamageSource damageSource, float amount) {
-		if (damageSource == damageSources().genericKill()) {
+		if (damageSource.is(DamageTypes.GENERIC_KILL)) {
 			return super.hurtServer(level, damageSource, amount);
 		}
 

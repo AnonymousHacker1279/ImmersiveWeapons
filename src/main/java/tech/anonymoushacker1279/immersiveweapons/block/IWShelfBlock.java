@@ -61,7 +61,8 @@ public class IWShelfBlock extends BasicOrientableBlock implements EntityBlock, S
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
 		return defaultBlockState()
-				.setValue(FACING, context.getHorizontalDirection().getOpposite());
+				.setValue(FACING, context.getHorizontalDirection().getOpposite())
+				.setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
 	}
 
 	@Override

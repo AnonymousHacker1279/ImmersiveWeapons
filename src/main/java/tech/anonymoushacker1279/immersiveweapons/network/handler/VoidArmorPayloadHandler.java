@@ -2,6 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.network.handler;
 
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.PowerParticleOption;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -14,11 +15,15 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
+import tech.anonymoushacker1279.immersiveweapons.item.armor.ArmorUtils;
+import tech.anonymoushacker1279.immersiveweapons.item.armor.VoidArmorItem;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.VoidArmorPayload;
 
 public class VoidArmorPayloadHandler {
 
 	private static final VoidArmorPayloadHandler INSTANCE = new VoidArmorPayloadHandler();
+	private static final String LAST_DRAGON_BREATH_KEY = "VoidArmorLastDragonBreath";
+	private static final int COOLDOWN_LATENCY_MARGIN = 10;
 
 	public static VoidArmorPayloadHandler getInstance() {
 		return INSTANCE;
@@ -28,7 +33,7 @@ public class VoidArmorPayloadHandler {
 		context.enqueueWork(() -> {
 					if (context.player() instanceof ServerPlayer serverPlayer) {
 						serverPlayer.getPersistentData().putBoolean("VoidArmorEffectEnabled", data.state());
-						if (data.summonDragonBreath()) {
+						if (data.summonDragonBreath() && canSummonDragonBreath(serverPlayer)) {
 							summonDragonBreath(serverPlayer.level(), serverPlayer);
 						}
 					}
@@ -37,6 +42,24 @@ public class VoidArmorPayloadHandler {
 					context.disconnect(Component.translatable("immersiveweapons.networking.failure.generic", e.getMessage()));
 					return null;
 				});
+	}
+
+	/// The client controls the dash, so the server must verify the request. The player must be wearing the full set,
+	/// and the dash cooldown must have elapsed (with a small margin for latency).
+	private boolean canSummonDragonBreath(ServerPlayer player) {
+		if (!ArmorUtils.isWearingVoidArmor(player)) {
+			return false;
+		}
+
+		CompoundTag persistentData = player.getPersistentData();
+		long gameTime = player.level().getGameTime();
+		long lastSummon = persistentData.getLongOr(LAST_DRAGON_BREATH_KEY, -VoidArmorItem.DASH_COOLDOWN);
+		if (gameTime - lastSummon < VoidArmorItem.DASH_COOLDOWN - COOLDOWN_LATENCY_MARGIN) {
+			return false;
+		}
+
+		persistentData.putLong(LAST_DRAGON_BREATH_KEY, gameTime);
+		return true;
 	}
 
 	private void summonDragonBreath(Level level, Player player) {

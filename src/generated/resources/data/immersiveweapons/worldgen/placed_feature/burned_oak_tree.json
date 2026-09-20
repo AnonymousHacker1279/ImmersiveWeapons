@@ -2,18 +2,18 @@
   "feature": "immersiveweapons:burned_oak_tree",
   "placement": [
     {
-      "type": "minecraft:heightmap",
-      "heightmap": "WORLD_SURFACE"
-    },
-    {
-      "type": "minecraft:biome"
+      "type": "minecraft:rarity_filter",
+      "chance": 16
     },
     {
       "type": "minecraft:in_square"
     },
     {
-      "type": "minecraft:rarity_filter",
-      "chance": 16
+      "type": "minecraft:heightmap",
+      "heightmap": "WORLD_SURFACE"
+    },
+    {
+      "type": "minecraft:biome"
     },
     {
       "type": "minecraft:block_predicate_filter",

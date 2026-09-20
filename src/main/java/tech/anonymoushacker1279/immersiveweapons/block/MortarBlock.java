@@ -7,6 +7,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -61,7 +62,7 @@ public class MortarBlock extends BasicOrientableBlock {
 			// If the mortar is loaded and the player is holding flint and steel, fire the shell
 			if (state.getValue(LOADED) && itemStack.getItem() == Items.FLINT_AND_STEEL) {
 				if (!player.isCreative()) {
-					itemStack.setDamageValue(itemStack.getDamageValue() - 1);
+					itemStack.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
 				}
 
 				fire(level, pos, state, player);
