@@ -576,10 +576,18 @@ public class IWBlockModelGenerator {
 	/// @param wallSign the wall sign block to generate the state and model for
 	/// @param base     the base block to use for the particle
 	private static void generateSign(BlockModelGenerators models, Block sign, Block wallSign, Block base) {
-		TextureMapping mapping = TextureMapping.particle(base);
-		MultiVariant particle = BlockModelGenerators.plainVariant(ModelTemplates.PARTICLE_ONLY.create(sign, mapping, models.modelOutput));
-		models.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(sign, particle));
-		models.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(wallSign, particle));
+		TextureMapping mapping = new TextureMapping()
+				.put(TextureSlot.ALL, TextureMapping.getBlockTexture(sign))
+				.put(TextureSlot.PARTICLE, TextureMapping.getBlockTexture(base));
+
+		MultiVariant rot0 = BlockModelGenerators.plainVariant(ModelTemplates.SIGN_ROT_0.create(ModelLocationUtils.getModelLocation(sign, "_rot_0"), mapping, models.modelOutput));
+		MultiVariant rot1 = BlockModelGenerators.plainVariant(ModelTemplates.SIGN_ROT_1.create(ModelLocationUtils.getModelLocation(sign, "_rot_1"), mapping, models.modelOutput));
+		MultiVariant rot2 = BlockModelGenerators.plainVariant(ModelTemplates.SIGN_ROT_2.create(ModelLocationUtils.getModelLocation(sign, "_rot_2"), mapping, models.modelOutput));
+		MultiVariant rot3 = BlockModelGenerators.plainVariant(ModelTemplates.SIGN_ROT_3.create(ModelLocationUtils.getModelLocation(sign, "_rot_3"), mapping, models.modelOutput));
+		models.blockStateOutput.accept(BlockModelGenerators.createSign(sign, rot0, rot1, rot2, rot3));
+
+		MultiVariant wall = BlockModelGenerators.plainVariant(ModelTemplates.WALL_SIGN.create(wallSign, mapping, models.modelOutput));
+		models.blockStateOutput.accept(MultiVariantGenerator.dispatch(wallSign, wall).with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING_ALT));
 		models.registerSimpleFlatItemModel(sign.asItem());
 	}
 
@@ -590,9 +598,22 @@ public class IWBlockModelGenerator {
 	/// @param wallSign the wall sign block to generate the state and model for
 	/// @param base     the base block to use for the particle
 	private static void generateHangingSign(BlockModelGenerators models, Block sign, Block wallSign, Block base) {
-		MultiVariant particle = models.createParticleOnlyBlockModel(sign, base);
-		models.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(sign, particle));
-		models.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(wallSign, particle));
+		TextureMapping mapping = new TextureMapping()
+				.put(TextureSlot.ALL, TextureMapping.getBlockTexture(sign))
+				.put(TextureSlot.PARTICLE, TextureMapping.getBlockTexture(base));
+
+		MultiVariant rot0 = BlockModelGenerators.plainVariant(ModelTemplates.HANGING_SIGN_ROT_0.create(ModelLocationUtils.getModelLocation(sign, "_rot_0"), mapping, models.modelOutput));
+		MultiVariant rot1 = BlockModelGenerators.plainVariant(ModelTemplates.HANGING_SIGN_ROT_1.create(ModelLocationUtils.getModelLocation(sign, "_rot_1"), mapping, models.modelOutput));
+		MultiVariant rot2 = BlockModelGenerators.plainVariant(ModelTemplates.HANGING_SIGN_ROT_2.create(ModelLocationUtils.getModelLocation(sign, "_rot_2"), mapping, models.modelOutput));
+		MultiVariant rot3 = BlockModelGenerators.plainVariant(ModelTemplates.HANGING_SIGN_ROT_3.create(ModelLocationUtils.getModelLocation(sign, "_rot_3"), mapping, models.modelOutput));
+		MultiVariant attachedRot0 = BlockModelGenerators.plainVariant(ModelTemplates.ATTACHED_HANGING_SIGN_ROT_0.create(ModelLocationUtils.getModelLocation(sign, "_attached_rot_0"), mapping, models.modelOutput));
+		MultiVariant attachedRot1 = BlockModelGenerators.plainVariant(ModelTemplates.ATTACHED_HANGING_SIGN_ROT_1.create(ModelLocationUtils.getModelLocation(sign, "_attached_rot_1"), mapping, models.modelOutput));
+		MultiVariant attachedRot2 = BlockModelGenerators.plainVariant(ModelTemplates.ATTACHED_HANGING_SIGN_ROT_2.create(ModelLocationUtils.getModelLocation(sign, "_attached_rot_2"), mapping, models.modelOutput));
+		MultiVariant attachedRot3 = BlockModelGenerators.plainVariant(ModelTemplates.ATTACHED_HANGING_SIGN_ROT_3.create(ModelLocationUtils.getModelLocation(sign, "_attached_rot_3"), mapping, models.modelOutput));
+		models.blockStateOutput.accept(BlockModelGenerators.createHangingSign(sign, rot0, rot1, rot2, rot3, attachedRot0, attachedRot1, attachedRot2, attachedRot3));
+
+		MultiVariant wall = BlockModelGenerators.plainVariant(ModelTemplates.WALL_HANGING_SIGN.create(wallSign, mapping, models.modelOutput));
+		models.blockStateOutput.accept(MultiVariantGenerator.dispatch(wallSign, wall).with(BlockModelGenerators.ROTATION_HORIZONTAL_FACING_ALT));
 		models.registerSimpleFlatItemModel(sign.asItem());
 	}
 

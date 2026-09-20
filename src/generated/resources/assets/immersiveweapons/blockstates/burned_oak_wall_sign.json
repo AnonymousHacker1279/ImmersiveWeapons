@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
-      "model": "immersiveweapons:block/burned_oak_sign"
+    "facing=east": {
+      "model": "immersiveweapons:block/burned_oak_wall_sign",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "immersiveweapons:block/burned_oak_wall_sign",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "immersiveweapons:block/burned_oak_wall_sign"
+    },
+    "facing=west": {
+      "model": "immersiveweapons:block/burned_oak_wall_sign",
+      "y": 90
     }
   }
 }

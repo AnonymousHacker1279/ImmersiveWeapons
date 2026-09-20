@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
-      "model": "immersiveweapons:block/stardust_hanging_sign"
+    "facing=east": {
+      "model": "immersiveweapons:block/stardust_wall_hanging_sign",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "immersiveweapons:block/stardust_wall_hanging_sign",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "immersiveweapons:block/stardust_wall_hanging_sign"
+    },
+    "facing=west": {
+      "model": "immersiveweapons:block/stardust_wall_hanging_sign",
+      "y": 90
     }
   }
 }
