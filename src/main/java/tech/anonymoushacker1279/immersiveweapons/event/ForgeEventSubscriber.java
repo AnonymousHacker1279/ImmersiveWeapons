@@ -48,6 +48,7 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.neoforged.bus.api.SubscribeEvent;
+import org.jspecify.annotations.Nullable;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.AddServerReloadListenersEvent;
 import net.neoforged.neoforge.event.AnvilUpdateEvent;
@@ -93,6 +94,8 @@ public class ForgeEventSubscriber {
 	public static final AttributeModifier JONNYS_CURSE_SPEED_MODIFIER = new AttributeModifier(
 			Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "jonnys_curse_speed_modifier"), -0.25d, Operation.ADD_MULTIPLIED_BASE);
 
+	@Nullable
+	private static ItemStack venstralJarStack;
 	private static final ResourceKey<Biome> DEADMANS_DESERT = ResourceKey.create(Registries.BIOME, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "deadmans_desert"));
 
 	@SubscribeEvent
@@ -175,19 +178,21 @@ public class ForgeEventSubscriber {
 		}
 
 		// Handle the cooldown on the Venstral Jar accessory
-		ItemStack venstralJar = ItemRegistry.VENSTRAL_JAR.get().getDefaultInstance();
-		ItemCooldowns cooldowns = player.getCooldowns();
-		if (cooldowns.isOnCooldown(venstralJar) && player.onGround()) {
-			cooldowns.removeCooldown(cooldowns.getCooldownGroup(venstralJar));
+		if (player.onGround()) {
+			if (venstralJarStack == null) {
+				venstralJarStack = ItemRegistry.VENSTRAL_JAR.get().getDefaultInstance();
+			}
+
+			ItemCooldowns cooldowns = player.getCooldowns();
+			if (cooldowns.isOnCooldown(venstralJarStack)) {
+				cooldowns.removeCooldown(cooldowns.getCooldownGroup(venstralJarStack));
+			}
 		}
 
 		// Handle the temporary fire resistance effect on the Super Blanket Cape accessory
-		if (Accessory.isAccessoryActive(player, ItemRegistry.SUPER_BLANKET_CAPE.get())) {
-			if (!player.isInLava() && !player.isOnFire()) {
-				if (!player.hasEffect(MobEffects.FIRE_RESISTANCE)) {
-					player.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 140, 0, true, true));
-				}
-			}
+		if (!player.isInLava() && !player.isOnFire() && !player.hasEffect(MobEffects.FIRE_RESISTANCE)
+				&& Accessory.isAccessoryActive(player, ItemRegistry.SUPER_BLANKET_CAPE.get())) {
+			player.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 140, 0, true, true));
 		}
 
 		// Armor ticking. Armor effects require the full set, so tick from the helmet only. Otherwise, each piece (or

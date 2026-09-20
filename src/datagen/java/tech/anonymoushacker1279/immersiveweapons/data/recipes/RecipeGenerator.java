@@ -138,7 +138,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		createFirstAidItems();
 		createFoodItems();
 		createWeapons();
-		createMudItems();
+		createMudBallRecipe();
 		createDecorations();
 		createAccessories();
 		createMiscellaneousItems();
@@ -314,49 +314,10 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.save(output);
 	}
 
-	private void createMudItems() {
-		Item MUD = BlockItemRegistry.MUD_ITEM.get();
-		Item DRIED_MUD = BlockItemRegistry.DRIED_MUD_ITEM.get();
-		Item HARDENED_MUD = BlockItemRegistry.HARDENED_MUD_ITEM.get();
-
-		createSmeltingRecipe(MUD, DRIED_MUD,
-				0.1f, 100, "mud");
-		createBlastingRecipe(MUD, DRIED_MUD,
-				0.1f, 50, "mud");
-		createSmeltingRecipe(DRIED_MUD, HARDENED_MUD,
-				0.1f, 100, "mud");
-		createBlastingRecipe(DRIED_MUD, HARDENED_MUD,
-				0.1f, 50, "mud");
-
-		// Slab from crafting table
-		slab(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.HARDENED_MUD_SLAB_ITEM.get(), HARDENED_MUD);
-		// Slab from stonecutter
-		stonecutterSlab(BlockRegistry.HARDENED_MUD_SLAB.get(), HARDENED_MUD, "hardened_mud", has(HARDENED_MUD));
-
-		// Stairs from crafting table
-		stairs(BlockRegistry.HARDENED_MUD_STAIRS.get(), HARDENED_MUD, "mud", "hardened_mud", has(HARDENED_MUD));
-		// Stairs from stonecutter
-		stonecutterStairs(BlockRegistry.HARDENED_MUD_STAIRS.get(), HARDENED_MUD, "hardened_mud", has(HARDENED_MUD));
-
-		// Hardened mud window
-		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.HARDENED_MUD_WINDOW_ITEM.get(), 8)
-				.define('a', HARDENED_MUD)
-				.pattern("aaa")
-				.pattern("a a")
-				.pattern("aaa")
-				.group("mud")
-				.unlockedBy("hardened_mud", has(HARDENED_MUD))
-				.save(output);
-		// Mud
-		ShapelessRecipeBuilder.shapeless(itemGetter, RecipeCategory.BUILDING_BLOCKS, MUD, 8)
-				.requires(Items.WATER_BUCKET)
-				.requires(Items.DIRT, 8)
-				.group("mud")
-				.unlockedBy("water_bucket", has(Items.WATER_BUCKET))
-				.save(output);
+	private void createMudBallRecipe() {
 		// Mud ball
 		ShapelessRecipeBuilder.shapeless(itemGetter, RecipeCategory.MISC, ItemRegistry.MUD_BALL.get(), 4)
-				.requires(BlockRegistry.MUD.get())
+				.requires(Items.MUD)
 				.group("mud")
 				.unlockedBy("water_bucket", has(Items.WATER_BUCKET))
 				.save(output);

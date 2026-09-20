@@ -164,11 +164,11 @@ public class ServerConfig {
 
 		flintlockPistolFireVelocity = builder
 				.comment("Set the base velocity of bullets")
-				.defineInRange("flintlockPistolFireVelocity", 2.5f, 0.0f, 10.0f);
+				.defineInRange("flintlockPistolFireVelocity", 2.5d, 0.0d, 10.0d);
 
 		flintlockPistolFireInaccuracy = builder
 				.comment("Set the inaccuracy modifier")
-				.defineInRange("flintlockPistolFireInaccuracy", 1.75f, 0.0f, 10.0f);
+				.defineInRange("flintlockPistolFireInaccuracy", 1.75d, 0.0d, 10.0d);
 
 		builder.pop();
 
@@ -177,11 +177,11 @@ public class ServerConfig {
 
 		blunderbussFireVelocity = builder
 				.comment("Set the base velocity of bullets")
-				.defineInRange("blunderbussFireVelocity", 1.7f, 0.0f, 10.0f);
+				.defineInRange("blunderbussFireVelocity", 1.7d, 0.0d, 10.0d);
 
 		blunderbussFireInaccuracy = builder
 				.comment("Set the inaccuracy modifier")
-				.defineInRange("blunderbussFireInaccuracy", 2.0f, 0.0f, 10.0f);
+				.defineInRange("blunderbussFireInaccuracy", 2.0d, 0.0d, 10.0d);
 
 		builder.pop();
 
@@ -190,11 +190,11 @@ public class ServerConfig {
 
 		flareGunFireVelocity = builder
 				.comment("Set the base velocity of bullets")
-				.defineInRange("flareGunFireVelocity", 2.5f, 0.0f, 10.0f);
+				.defineInRange("flareGunFireVelocity", 2.5d, 0.0d, 10.0d);
 
 		flareGunFireInaccuracy = builder
 				.comment("Set the inaccuracy modifier")
-				.defineInRange("flareGunFireInaccuracy", 1.75f, 0.0f, 10.0f);
+				.defineInRange("flareGunFireInaccuracy", 1.75d, 0.0d, 10.0d);
 
 		builder.pop();
 
@@ -203,11 +203,11 @@ public class ServerConfig {
 
 		musketFireVelocity = builder
 				.comment("Set the base velocity of bullets")
-				.defineInRange("musketFireVelocity", 4.0f, 0.0f, 10.0f);
+				.defineInRange("musketFireVelocity", 4.0d, 0.0d, 10.0d);
 
 		musketFireInaccuracy = builder
 				.comment("Set the inaccuracy modifier")
-				.defineInRange("musketFireInaccuracy", 0.15f, 0.0f, 10.0f);
+				.defineInRange("musketFireInaccuracy", 0.15d, 0.0d, 10.0d);
 
 		builder.pop();
 
@@ -216,11 +216,11 @@ public class ServerConfig {
 
 		handCannonFireVelocity = builder
 				.comment("Set the base velocity of bullets")
-				.defineInRange("handCannonFireVelocity", 2.55f, 0.0f, 10.0f);
+				.defineInRange("handCannonFireVelocity", 2.55d, 0.0d, 10.0d);
 
 		handCannonFireInaccuracy = builder
 				.comment("Set the inaccuracy modifier")
-				.defineInRange("handCannonFireInaccuracy", 1.85f, 0.0f, 10.0f);
+				.defineInRange("handCannonFireInaccuracy", 1.85d, 0.0d, 10.0d);
 
 		builder.pop();
 
@@ -229,11 +229,11 @@ public class ServerConfig {
 
 		dragonsBreathCannonFireVelocity = builder
 				.comment("Set the base velocity of bullets")
-				.defineInRange("dragonsBreathCannonFireVelocity", 2.65f, 0.0f, 10.0f);
+				.defineInRange("dragonsBreathCannonFireVelocity", 2.65d, 0.0d, 10.0d);
 
 		dragonsBreathCannonFireInaccuracy = builder
 				.comment("Set the inaccuracy modifier")
-				.defineInRange("dragonsBreathCannonFireInaccuracy", 1.8f, 0.0f, 10.0f);
+				.defineInRange("dragonsBreathCannonFireInaccuracy", 1.8d, 0.0d, 10.0d);
 
 		builder.pop();
 
@@ -255,7 +255,7 @@ public class ServerConfig {
 
 		meteorStaffExplosionRadius = builder
 				.comment("Set the radius of the explosion created")
-				.defineInRange("meteorStaffExplosionRadius", 3.0f, 0.0f, 10.0f);
+				.defineInRange("meteorStaffExplosionRadius", 3.0d, 0.0d, 10.0d);
 
 		meteorStaffExplosionBreakBlocks = builder
 				.comment("Allow explosions to break blocks")

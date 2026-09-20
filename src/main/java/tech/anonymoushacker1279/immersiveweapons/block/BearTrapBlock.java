@@ -20,6 +20,7 @@ import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EntityBlock;
+import tech.anonymoushacker1279.immersiveweapons.block.core.WaterloggingHelper;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -101,8 +102,12 @@ public class BearTrapBlock extends Block implements SimpleWaterloggedBlock, Enti
 
 	@Override
 	protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess scheduledTickAccess, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
-		return !state.canSurvive(level, pos) ? Blocks.AIR.defaultBlockState()
-				: super.updateShape(state, level, scheduledTickAccess, pos, direction, neighborPos, neighborState, random);
+		if (!state.canSurvive(level, pos)) {
+			return Blocks.AIR.defaultBlockState();
+		}
+
+		WaterloggingHelper.scheduleFluidTick(state, level, scheduledTickAccess, pos);
+		return super.updateShape(state, level, scheduledTickAccess, pos, direction, neighborPos, neighborState, random);
 	}
 
 	@Override

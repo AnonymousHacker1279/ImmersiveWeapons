@@ -133,12 +133,6 @@ public class IWBlockModelGenerator {
 		generateFlag(blockModels, BlockRegistry.BRITISH_FLAG.get());
 		generateFlag(blockModels, BlockRegistry.TROLL_FLAG.get());
 		generateFlag(blockModels, BlockRegistry.IMMERSIVE_WEAPONS_FLAG.get());
-		blockModels.createTrivialCube(BlockRegistry.MUD.get());
-		blockModels.createTrivialCube(BlockRegistry.DRIED_MUD.get());
-		blockModels.createTrivialCube(BlockRegistry.HARDENED_MUD.get());
-		generateStairs(blockModels, BlockRegistry.HARDENED_MUD_STAIRS.get(), BlockRegistry.HARDENED_MUD.get());
-		generateSlab(blockModels, BlockRegistry.HARDENED_MUD_SLAB.get(), BlockRegistry.HARDENED_MUD.get(), false);
-		generateHorizontalStateOnly(blockModels, BlockRegistry.HARDENED_MUD_WINDOW.get(), false);
 		blockModels.createTrivialCube(BlockRegistry.TILTROS_PORTAL_FRAME.get());
 		generateStateOnly(blockModels, BlockRegistry.CELESTIAL_LANTERN.get());
 		blockModels.createHead(BlockRegistry.MINUTEMAN_HEAD.get(), BlockRegistry.MINUTEMAN_WALL_HEAD.get(), CustomSkullTypes.MINUTEMAN, TEMPLATE_SKULL);

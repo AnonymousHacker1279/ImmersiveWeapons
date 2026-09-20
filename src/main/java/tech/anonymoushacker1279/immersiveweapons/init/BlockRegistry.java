@@ -193,12 +193,6 @@ public class BlockRegistry {
 	// Breakable via shovel
 	// Wood tier
 	public static final DeferredHolder<Block, SandbagBlock> SANDBAG = BLOCKS.registerBlock("sandbag", (properties) -> new SandbagBlock(properties.mapColor(MapColor.SAND).instrument(NoteBlockInstrument.SNARE).mapColor(MapColor.SAND).instrument(NoteBlockInstrument.SNARE).strength(4.0f, 5.0f).sound(SoundType.SAND).noOcclusion()));
-	public static final DeferredHolder<Block, Block> MUD = BLOCKS.registerBlock("mud", (properties) -> new IWMudBlock(properties.mapColor(MapColor.DIRT).mapColor(MapColor.DIRT).strength(0.8f, 0.3f).sound(SoundType.WET_GRASS).speedFactor(0.75f).randomTicks()));
-	public static final DeferredHolder<Block, Block> DRIED_MUD = BLOCKS.registerBlock("dried_mud", (properties) -> new DriedMudBlock(properties.mapColor(MapColor.DIRT).strength(1.0f, 0.7f).sound(SoundType.ROOTED_DIRT).randomTicks()));
-	public static final DeferredHolder<Block, Block> HARDENED_MUD = BLOCKS.registerBlock("hardened_mud", (properties) -> new Block(properties.mapColor(MapColor.DIRT).strength(2.0f, 1.0f).sound(SoundType.ROOTED_DIRT)));
-	public static final DeferredHolder<Block, StairBlock> HARDENED_MUD_STAIRS = BLOCKS.registerBlock("hardened_mud_stairs", (properties) -> new StairBlock(HARDENED_MUD.get().defaultBlockState(), properties), () -> BlockBehaviour.Properties.ofFullCopy(HARDENED_MUD.get()));
-	public static final DeferredHolder<Block, SlabBlock> HARDENED_MUD_SLAB = BLOCKS.registerBlock("hardened_mud_slab", (properties) -> new SlabBlock(properties.mapColor(MapColor.DIRT).strength(2.0f, 1.0f).sound(SoundType.ROOTED_DIRT)));
-	public static final DeferredHolder<Block, Block> HARDENED_MUD_WINDOW = BLOCKS.registerBlock("hardened_mud_window", (properties) -> new HardenedMudWindowBlock(properties.mapColor(MapColor.DIRT).strength(2.0f, 1.0f).sound(SoundType.ROOTED_DIRT).noOcclusion()));
 	public static final DeferredHolder<Block, SandBlock> BLOOD_SAND = BLOCKS.registerBlock("blood_sand", (properties) -> new SandBlock(new ColorRGBA(13201254), properties.mapColor(MapColor.SAND).instrument(NoteBlockInstrument.SNARE).strength(0.5f).sound(SoundType.SAND)));
 	// Stone tier
 	public static final DeferredHolder<Block, PunjiSticksBlock> PUNJI_STICKS = BLOCKS.registerBlock("punji_sticks", (properties) -> new PunjiSticksBlock(properties.mapColor(MapColor.WOOD).ignitedByLava().pushReaction(PushReaction.POPPED).strength(5.0f, 1.0f).sound(SoundType.METAL).requiresCorrectToolForDrops()));

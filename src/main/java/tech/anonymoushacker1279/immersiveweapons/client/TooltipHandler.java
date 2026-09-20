@@ -44,6 +44,7 @@ import java.util.function.Supplier;
 public class TooltipHandler {
 
 	static final Map<Item, Triplet<String[], ChatFormatting[], Class<? extends DynamicTooltip>>> TOOLTIP_MAP = new HashMap<>(150);
+	private static final Map<Class<? extends DynamicTooltip>, DynamicTooltip> DYNAMIC_TOOLTIPS = new HashMap<>(8);
 	static int jonnyCurseRandomizer = (int) (Math.random() * 11 + 1);
 
 	/// Compiles all item tooltips with a [TooltipMarker] annotation.
@@ -113,12 +114,15 @@ public class TooltipHandler {
 
 		TOOLTIP_MAP.computeIfPresent(stack.getItem(), (item, triplet) -> {
 			if (triplet.getC() != null) {
-				DynamicTooltip dynamicTooltip;
-				try {
-					dynamicTooltip = triplet.getC().getDeclaredConstructor().newInstance();
-				} catch (Exception e) {
-					ImmersiveWeapons.LOGGER.error("Failed to create instance of dynamic tooltip for item: {}", item);
-					return triplet;
+				DynamicTooltip dynamicTooltip = DYNAMIC_TOOLTIPS.get(triplet.getC());
+				if (dynamicTooltip == null) {
+					try {
+						dynamicTooltip = triplet.getC().getDeclaredConstructor().newInstance();
+						DYNAMIC_TOOLTIPS.put(triplet.getC(), dynamicTooltip);
+					} catch (Exception e) {
+						ImmersiveWeapons.LOGGER.error("Failed to create instance of dynamic tooltip for item: {}", item);
+						return triplet;
+					}
 				}
 
 				if (dynamicTooltip.shouldComputeSimpleTooltips(event)) {

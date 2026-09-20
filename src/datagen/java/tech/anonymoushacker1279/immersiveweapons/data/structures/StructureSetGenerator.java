@@ -136,7 +136,7 @@ public class StructureSetGenerator {
 				List.of(
 						StructureSet.entry(structureHolderGetter.getOrThrow(StructureGenerator.LANDMINE_TRAP), 1)
 				),
-				new RandomSpreadStructurePlacement(7, 4, RandomSpreadType.LINEAR, 959874384)
+				new RandomSpreadStructurePlacement(7, 4, RandomSpreadType.LINEAR, 738126405)
 		));
 
 		register(context, PITFALL_TRAP, new StructureSet(

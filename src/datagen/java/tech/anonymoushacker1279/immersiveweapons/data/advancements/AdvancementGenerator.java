@@ -1505,13 +1505,13 @@ public class AdvancementGenerator extends AdvancementSubProvider {
 				.save(output, prefixString("planks"));
 
 		Builder.advancement().parent(root)
-				.display(BlockItemRegistry.MUD_ITEM.get(),
+				.display(Items.MUD,
 						createTitle("mud"),
 						createDescription("mud"),
 						AdvancementType.GOAL, true, true, false)
 				.addCriterion("hold",
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item()
-								.of(itemLookup, BlockItemRegistry.MUD_ITEM.get()).build()))
+								.of(itemLookup, Items.MUD).build()))
 				.save(output, prefixString("mud"));
 
 		Builder.advancement().parent(root)

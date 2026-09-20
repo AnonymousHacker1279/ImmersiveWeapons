@@ -577,14 +577,12 @@ public class ItemTagsGenerator extends BlockTagCopyingItemTagProvider {
 				BlockItemRegistry.CLOUD_MARBLE_BRICK_SLAB_ITEM.getKey(),
 				BlockItemRegistry.BLOOD_SANDSTONE_SLAB_ITEM.getKey(),
 				BlockItemRegistry.CUT_BLOOD_SANDSTONE_SLAB_ITEM.getKey(),
-				BlockItemRegistry.SMOOTH_BLOOD_SANDSTONE_SLAB_ITEM.getKey(),
-				BlockItemRegistry.HARDENED_MUD_SLAB_ITEM.getKey());
+				BlockItemRegistry.SMOOTH_BLOOD_SANDSTONE_SLAB_ITEM.getKey());
 
 		tag(STAIRS).add(
 				BlockItemRegistry.CLOUD_MARBLE_BRICK_STAIRS_ITEM.getKey(),
 				BlockItemRegistry.BLOOD_SANDSTONE_STAIRS_ITEM.getKey(),
-				BlockItemRegistry.SMOOTH_BLOOD_SANDSTONE_STAIRS_ITEM.getKey(),
-				BlockItemRegistry.HARDENED_MUD_STAIRS_ITEM.getKey());
+				BlockItemRegistry.SMOOTH_BLOOD_SANDSTONE_STAIRS_ITEM.getKey());
 
 		copy(BlockTags.WOODEN_FENCES, ItemTags.WOODEN_FENCES);
 		copy(BlockTags.FENCE_GATES, ItemTags.FENCE_GATES);
