@@ -38,7 +38,6 @@ import tech.anonymoushacker1279.immersiveweapons.util.markers.TooltipMarker;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.*;
-import java.util.function.Supplier;
 
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, value = Dist.CLIENT)
 public class TooltipHandler {
@@ -57,7 +56,7 @@ public class TooltipHandler {
 		for (Class<?> clazz : classes) {
 			for (Field field : clazz.getDeclaredFields()) {
 				if (field.isAnnotationPresent(TooltipMarker.class)) {
-					if (Modifier.isStatic(field.getModifiers()) && field.getType() == Supplier.class) {
+					if (Modifier.isStatic(field.getModifiers()) && DeferredHolder.class.isAssignableFrom(field.getType())) {
 						try {
 							if (field.get(null) instanceof DeferredHolder<?, ?> holder) {
 								if (holder.get() instanceof Item item) {
