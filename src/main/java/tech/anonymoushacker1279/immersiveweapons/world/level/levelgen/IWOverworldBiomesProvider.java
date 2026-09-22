@@ -1,29 +1,32 @@
 package tech.anonymoushacker1279.immersiveweapons.world.level.levelgen;
 
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.HolderGetter;
+import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biomes;
+import net.minecraft.world.level.biome.Climate;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.material.MaterialRules;
 import net.minecraft.world.level.levelgen.material.rule.MaterialRule;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
-// TODO: waiting for update (TerraBlender) - re-add imports: com.mojang.datafixers.util.Pair, Registry, Biomes, Climate, Consumer, terrablender.api.Region/RegionType
+import terrablender.api.Region;
+import terrablender.api.RegionType;
 
-// TODO: waiting for update (TerraBlender) - restore `extends Region`, the constructor, and addBiomes
-public class IWOverworldBiomesProvider /* extends Region */ {
+import java.util.function.Consumer;
+
+public class IWOverworldBiomesProvider extends Region {
 
 	public static final ResourceKey<Biome> BATTLEFIELD = ResourceKey.create(Registries.BIOME, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "battlefield"));
 
-	/*
 	public IWOverworldBiomesProvider(Identifier name, RegionType type, int weight) {
 		super(name, type, weight);
 	}
-	*/
 
-	// TODO: waiting for update (TerraBlender) - hook this into TerraBlender's surface rule manager once it is updated
 	public static MaterialRule makeSurfaceRules(HolderGetter<Biome> getter) {
 		MaterialRule battlefield = SurfaceRuleBuilder.start(getter)
 				.biome(BATTLEFIELD)
@@ -41,10 +44,8 @@ public class IWOverworldBiomesProvider /* extends Region */ {
 		);
 	}
 
-	/*
 	@Override
 	public void addBiomes(Registry<Biome> registry, Consumer<Pair<Climate.ParameterPoint, ResourceKey<Biome>>> mapper) {
 		addModifiedVanillaOverworldBiomes(mapper, modifier -> modifier.replaceBiome(Biomes.PLAINS, BATTLEFIELD));
 	}
-	*/
 }

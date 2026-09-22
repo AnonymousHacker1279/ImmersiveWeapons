@@ -32,13 +32,12 @@ versionRange = "${minecraft_version_range}"
 ordering = "NONE"
 side = "BOTH"
 
-# TODO: waiting for update (TerraBlender)
-#[[dependencies.immersiveweapons]]
-#modId = "terrablender"
-#type = "required"
-#versionRange = "[26.2-26.2.0.0.2,)"
-#ordering = "NONE"
-#side = "BOTH"
+[[dependencies.immersiveweapons]]
+modId = "terrablender"
+type = "required"
+versionRange = "[26.3-26.3.0.0.5,)"
+ordering = "NONE"
+side = "BOTH"
 
 [[dependencies.immersiveweapons]]
 modId = "openportals"

@@ -145,7 +145,7 @@ dependencies {
 	// implementation "tech.anonymoushacker1279.iwcompatbridge:IWCompatibilityBridge:${iwcb_version}"
 
 	// Include TerraBlender
-	// implementation "com.github.glitchfiend:TerraBlender-neoforge:${terrablender_version}"
+	implementation "com.github.glitchfiend:TerraBlender-neoforge:${terrablender_version}"
 
 	// Include WTHIT and badpackets
 	// runtimeOnly "mcp.mobius.waila:wthit:neo-${wthit_version}"
