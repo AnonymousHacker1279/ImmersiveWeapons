@@ -2,8 +2,6 @@ package tech.anonymoushacker1279.immersiveweapons.entity.projectile;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
@@ -21,7 +19,6 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
-import tech.anonymoushacker1279.immersiveweapons.api.PluginHandler;
 import tech.anonymoushacker1279.immersiveweapons.entity.neutral.MinutemanEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
@@ -32,8 +29,6 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 
 	static final BlockState lightState = Blocks.LIGHT.defaultBlockState();
 	static final BlockState airState = Blocks.AIR.defaultBlockState();
-	private static final EntityDataAccessor<Boolean> USE_LEGACY_LIGHTING = SynchedEntityData.defineId(FlareEntity.class,
-			EntityDataSerializers.BOOLEAN);
 	private final List<BlockPos> lightPositions = new ArrayList<>(10);
 	private int explodeDelay = 45;
 	private int deathDelay = 600;
@@ -52,8 +47,6 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 	protected void doWhileTicking() {
 		if (!isOnFire()) {
 			igniteForSeconds(300);
-
-			entityData.set(USE_LEGACY_LIGHTING, !PluginHandler.isPluginActive("iwcompatbridge:ryoamiclights_plugin"));
 		}
 
 		double x = getX();
@@ -92,28 +85,24 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 			}
 		}
 
-		// The area lighting effect used here places light blocks at the entity's location. This is inefficient but the default behavior.
-		// If the Lucent plugin is available, it will handle dynamic lighting instead.
-		if (entityData.get(USE_LEGACY_LIGHTING)) {
-			if (tickCount % 2 == 0) {
-				BlockPos currentPosition = blockPosition();
-				if (!level().isClientSide() && currentPosition != previousLightPosition) {
-					if (!lightPositions.isEmpty()) {
-						for (BlockPos pos : lightPositions) {
-							if (level().getBlockState(pos) == lightState) {
-								level().removeBlock(pos, false);
-							}
+		if (tickCount % 2 == 0) {
+			BlockPos currentPosition = blockPosition();
+			if (!level().isClientSide() && currentPosition != previousLightPosition) {
+				if (!lightPositions.isEmpty()) {
+					for (BlockPos pos : lightPositions) {
+						if (level().getBlockState(pos) == lightState) {
+							level().removeBlock(pos, false);
 						}
-						lightPositions.clear();
 					}
-
-					if (!hasHitEntity && level().getBlockState(currentPosition) == airState) {
-						level().setBlock(currentPosition, lightState, 3);
-						lightPositions.add(currentPosition);
-					}
-
-					previousLightPosition = currentPosition;
+					lightPositions.clear();
 				}
+
+				if (!hasHitEntity && level().getBlockState(currentPosition) == airState) {
+					level().setBlock(currentPosition, lightState, 3);
+					lightPositions.add(currentPosition);
+				}
+
+				previousLightPosition = currentPosition;
 			}
 		}
 
@@ -187,7 +176,6 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 	@Override
 	protected void defineSynchedData(SynchedEntityData.Builder builder) {
 		super.defineSynchedData(builder);
-		builder.define(USE_LEGACY_LIGHTING, false);
 	}
 
 	@Override

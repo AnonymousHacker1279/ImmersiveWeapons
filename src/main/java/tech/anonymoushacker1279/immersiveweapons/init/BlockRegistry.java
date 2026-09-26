@@ -5,6 +5,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.ColorRGBA;
+import net.minecraft.util.random.WeightedList;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.effect.MobEffects;
@@ -14,7 +15,6 @@ import net.minecraft.world.level.block.grower.TreeGrower;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockBehaviour.OffsetType;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
-import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
@@ -23,7 +23,6 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.block.*;
 import tech.anonymoushacker1279.immersiveweapons.block.core.BasicOrientableBlock;
-import tech.anonymoushacker1279.immersiveweapons.block.core.StrippablePillarBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.core.WoodTypes;
 import tech.anonymoushacker1279.immersiveweapons.block.crafting.*;
 import tech.anonymoushacker1279.immersiveweapons.block.sign.CustomCeilingHangingSignBlock;
@@ -38,8 +37,6 @@ import tech.anonymoushacker1279.immersiveweapons.util.markers.DatagenExclusionMa
 import tech.anonymoushacker1279.immersiveweapons.util.markers.LanguageEntryOverride;
 import tech.anonymoushacker1279.immersiveweapons.util.markers.TextureMetadataMarker;
 import tech.anonymoushacker1279.immersiveweapons.world.level.CustomBlockSetTypes;
-
-import java.util.Optional;
 
 @SuppressWarnings("unused")
 public class BlockRegistry {
@@ -136,9 +133,9 @@ public class BlockRegistry {
 	public static final DeferredHolder<Block, SmallPartsTableBlock> SMALL_PARTS_TABLE = BLOCKS.registerBlock("small_parts_table", (properties) -> new SmallPartsTableBlock(properties.mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(2.5f).sound(SoundType.WOOD).requiresCorrectToolForDrops()));
 	public static final DeferredHolder<Block, AmmunitionTableBlock> AMMUNITION_TABLE = BLOCKS.registerBlock("ammunition_table", (properties) -> new AmmunitionTableBlock(properties.mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(2.5f).sound(SoundType.WOOD).requiresCorrectToolForDrops().noOcclusion()));
 	public static final DeferredHolder<Block, RotatedPillarBlock> STRIPPED_BURNED_OAK_WOOD = BLOCKS.registerBlock("stripped_burned_oak_wood", (properties) -> new RotatedPillarBlock(properties.mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(1.7f).sound(SoundType.WOOD)));
-	public static final DeferredHolder<Block, RotatedPillarBlock> BURNED_OAK_WOOD = BLOCKS.registerBlock("burned_oak_wood", (properties) -> new StrippablePillarBlock(properties.mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(1.7f).sound(SoundType.WOOD), STRIPPED_BURNED_OAK_WOOD.get().defaultBlockState()));
+	public static final DeferredHolder<Block, RotatedPillarBlock> BURNED_OAK_WOOD = BLOCKS.registerBlock("burned_oak_wood", (properties) -> new RotatedPillarBlock(properties.mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(1.7f).sound(SoundType.WOOD)));
 	public static final DeferredHolder<Block, RotatedPillarBlock> STRIPPED_BURNED_OAK_LOG = BLOCKS.registerBlock("stripped_burned_oak_log", (properties) -> new RotatedPillarBlock(properties.mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(1.7F).sound(SoundType.WOOD)));
-	public static final DeferredHolder<Block, RotatedPillarBlock> BURNED_OAK_LOG = BLOCKS.registerBlock("burned_oak_log", (properties) -> new StrippablePillarBlock(properties.mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(1.7f).sound(SoundType.WOOD), STRIPPED_BURNED_OAK_LOG.get().defaultBlockState()));
+	public static final DeferredHolder<Block, RotatedPillarBlock> BURNED_OAK_LOG = BLOCKS.registerBlock("burned_oak_log", (properties) -> new RotatedPillarBlock(properties.mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(1.7f).sound(SoundType.WOOD)));
 	public static final DeferredHolder<Block, Block> BURNED_OAK_PLANKS = BLOCKS.registerBlock("burned_oak_planks", (properties) -> new Block(properties.mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(1.7f, 2.7f).sound(SoundType.WOOD)));
 	public static final DeferredHolder<Block, StairBlock> BURNED_OAK_STAIRS = BLOCKS.registerBlock("burned_oak_stairs", (properties) -> new StairBlock(BURNED_OAK_PLANKS.get().defaultBlockState(), properties), () -> BlockBehaviour.Properties.ofFullCopy(BURNED_OAK_PLANKS.get()));
 	public static final DeferredHolder<Block, SlabBlock> BURNED_OAK_SLAB = BLOCKS.registerBlock("burned_oak_slab", SlabBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(BURNED_OAK_PLANKS.get()));
@@ -155,9 +152,9 @@ public class BlockRegistry {
 	public static final DeferredHolder<Block, CustomWallHangingSignBlock> BURNED_OAK_WALL_HANGING_SIGN = BLOCKS.registerBlock("burned_oak_wall_hanging_sign", (properties) -> new CustomWallHangingSignBlock(properties.mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).noCollision().strength(1.0F).sound(SoundType.WOOD), WoodTypes.BURNED_OAK));
 	public static final DeferredHolder<Block, ButtonBlock> BURNED_OAK_BUTTON = BLOCKS.registerBlock("burned_oak_button", (properties) -> new ButtonBlock(CustomBlockSetTypes.BURNED_OAK, 30, properties.mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).noCollision().strength(0.4f).sound(SoundType.WOOD)));
 	public static final DeferredHolder<Block, RotatedPillarBlock> STRIPPED_STARDUST_WOOD = BLOCKS.registerBlock("stripped_stardust_wood", (properties) -> new RotatedPillarBlock(properties.mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(2.3f).sound(SoundType.WOOD)));
-	public static final DeferredHolder<Block, RotatedPillarBlock> STARDUST_WOOD = BLOCKS.registerBlock("stardust_wood", (properties) -> new StrippablePillarBlock(properties.mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(2.3f).sound(SoundType.WOOD), STRIPPED_STARDUST_WOOD.get().defaultBlockState()));
+	public static final DeferredHolder<Block, RotatedPillarBlock> STARDUST_WOOD = BLOCKS.registerBlock("stardust_wood", (properties) -> new RotatedPillarBlock(properties.mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(2.3f).sound(SoundType.WOOD)));
 	public static final DeferredHolder<Block, RotatedPillarBlock> STRIPPED_STARDUST_LOG = BLOCKS.registerBlock("stripped_stardust_log", (properties) -> new RotatedPillarBlock(properties.mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(2.3f).sound(SoundType.WOOD)));
-	public static final DeferredHolder<Block, RotatedPillarBlock> STARDUST_LOG = BLOCKS.registerBlock("stardust_log", (properties) -> new StrippablePillarBlock(properties.mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(2.3f).sound(SoundType.WOOD), STRIPPED_STARDUST_LOG.get().defaultBlockState()));
+	public static final DeferredHolder<Block, RotatedPillarBlock> STARDUST_LOG = BLOCKS.registerBlock("stardust_log", (properties) -> new RotatedPillarBlock(properties.mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(2.3f).sound(SoundType.WOOD)));
 	public static final DeferredHolder<Block, Block> STARDUST_PLANKS = BLOCKS.registerBlock("stardust_planks", (properties) -> new Block(properties.mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(2.3f).sound(SoundType.WOOD)));
 	public static final DeferredHolder<Block, StairBlock> STARDUST_STAIRS = BLOCKS.registerBlock("stardust_stairs", (properties) -> new StairBlock(STARDUST_PLANKS.get().defaultBlockState(), properties), () -> BlockBehaviour.Properties.ofFullCopy(STARDUST_PLANKS.get()));
 	public static final DeferredHolder<Block, SlabBlock> STARDUST_SLAB = BLOCKS.registerBlock("stardust_slab", SlabBlock::new, () -> BlockBehaviour.Properties.ofFullCopy(STARDUST_PLANKS.get()));

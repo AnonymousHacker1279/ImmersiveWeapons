@@ -3,6 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.world.level.levelgen;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.Registry;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
@@ -27,7 +28,8 @@ public class IWOverworldBiomesProvider extends Region {
 		super(name, type, weight);
 	}
 
-	public static MaterialRule makeSurfaceRules(HolderGetter<Biome> getter) {
+	public static MaterialRule makeSurfaceRules(RegistryAccess registries) {
+		HolderGetter<Biome> getter = registries.lookupOrThrow(Registries.BIOME);
 		MaterialRule battlefield = SurfaceRuleBuilder.start(getter)
 				.biome(BATTLEFIELD)
 				.surface(Blocks.GRASS_BLOCK.defaultBlockState())
