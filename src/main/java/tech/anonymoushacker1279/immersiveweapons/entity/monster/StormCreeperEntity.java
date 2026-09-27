@@ -14,6 +14,7 @@ public class StormCreeperEntity extends Creeper implements GrantAdvancementOnDis
 
 	public StormCreeperEntity(EntityType<? extends StormCreeperEntity> entityType, Level level) {
 		super(entityType, level);
+		explosionRadius = 5;
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {

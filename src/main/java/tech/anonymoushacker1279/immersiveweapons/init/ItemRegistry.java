@@ -399,11 +399,14 @@ public class ItemRegistry {
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, dynamicTooltip = DynamicTooltips.ThrowableItemTooltip.class)
 	public static final DeferredHolder<Item, ThrowableItem> MOLOTOV_COCKTAIL = ITEMS.registerItem("molotov_cocktail", (properties) -> new ThrowableItem(properties.stacksTo(16), ThrowableType.MOLOTOV));
 	public static final DeferredHolder<Item, Item> SMOKE_POWDER = ITEMS.registerItem("smoke_powder", Item::new);
+	@LanguageEntryOverride("Mortar and Pestle")
 	public static final DeferredHolder<Item, CraftingToolItem> MORTAR_AND_PESTLE = ITEMS.registerItem("mortar_and_pestle", CraftingToolItem::new);
 	public static final DeferredHolder<Item, PliersItem> PLIERS = ITEMS.registerItem("pliers", (properties) -> new PliersItem(properties.stacksTo(1)));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC})
+	@LanguageEntryOverride("Bottle of Alcohol")
 	public static final DeferredHolder<Item, AlcoholItem> BOTTLE_OF_ALCOHOL = ITEMS.registerItem("bottle_of_alcohol", (properties) -> new AlcoholItem(properties.stacksTo(16)));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC})
+	@LanguageEntryOverride("Bottle of Wine")
 	public static final DeferredHolder<Item, WineItem> BOTTLE_OF_WINE = ITEMS.registerItem("bottle_of_wine", (properties) -> new WineItem(properties.stacksTo(16)));
 	public static final DeferredHolder<Item, ChocolateBarItem> CHOCOLATE_BAR = ITEMS.registerItem("chocolate_bar", (properties) -> new ChocolateBarItem(properties.food(FoodItemProperties.CHOCOLATE_BAR, FoodItemProperties.CHOCOLATE_BAR_CONSUMABLE).compostable(ContextIntProviders.COMPOSTABLE_LOW)));
 	@LanguageEntryOverride("Meal Ready-to-Eat (MRE)")
