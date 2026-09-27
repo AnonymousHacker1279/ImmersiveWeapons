@@ -40,3 +40,4 @@ This major update ports to MC 26.3, and fixes a large number of bugs found durin
     - This fixes a crash in the Star Forge caused by invalid selections
 - Reduced network traffic from projectiles by only syncing arrows with custom gravity
 - Minor fixes to Potent Sulfur, Punji Sticks, Log Shards, the Ammunition Table, Shelf locking, and accessory syncing
+- Fixed Morphine not converting to a Used Syringe after use

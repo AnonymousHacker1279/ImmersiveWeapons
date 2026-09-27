@@ -25,7 +25,7 @@ public class MorphineItem extends AbstractFortitudeItem {
 
 	@Override
 	public @Nullable ItemStack getContainerItem() {
-		return new ItemStack(ItemRegistry.MORPHINE.get());
+		return new ItemStack(ItemRegistry.USED_SYRINGE.get());
 	}
 
 	@Override
