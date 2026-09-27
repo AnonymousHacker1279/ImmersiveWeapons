@@ -366,10 +366,11 @@ public class EntityLootTables extends EntityLootSubProvider {
 		add(EntityRegistry.STARMITE_ENTITY.get(), LootTable.lootTable()
 				.withPool(LootPool.lootPool()
 						.name("starstorm_shard")
-						.setRolls(EntityKillersValue.create())
-						.add(LootItem.lootTableItem(ItemRegistry.STARSTORM_SHARD.get()))
-						.when(LootItemKilledByPlayerCondition.killedByPlayer())
-						.when(LootItemRandomChanceWithEnchantedBonusCondition.randomChanceAndLootingBoost(this.enchantments, 0.07F, 0.02F))));
+						.setRolls(ContextIntProviders.exactly(1))
+						.add(LootItem.lootTableItem(ItemRegistry.STARSTORM_SHARD.get())
+								.apply(SetItemCountFunction.setCount(ContextIntProviders.between(1, 2)))
+								.apply(EnchantedCountIncreaseFunction.lootingMultiplier(this.enchantments, ContextFloatProviders.between(0.0F, 0.25F))))
+						.when(LootItemKilledByPlayerCondition.killedByPlayer())));
 
 		add(EntityRegistry.MOOGLOW_ENTITY.get(), LootTable.lootTable()
 				.withPool(

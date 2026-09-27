@@ -3,33 +3,35 @@
   "pools": [
     {
       "condition": {
-        "type": "minecraft:all_of",
-        "terms": [
-          {
-            "type": "minecraft:killed_by_player"
-          },
-          {
-            "type": "minecraft:random_chance_with_enchanted_bonus",
-            "enchanted_chance": {
-              "type": "minecraft:linear",
-              "base": 0.09,
-              "per_level_above_first": 0.02
-            },
-            "enchantment": "minecraft:looting",
-            "unenchanted_chance": 0.07
-          }
-        ]
+        "type": "minecraft:killed_by_player"
       },
       "entries": [
         {
           "type": "minecraft:item",
+          "modifier": [
+            {
+              "type": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 2,
+                "min": 1
+              }
+            },
+            {
+              "type": "minecraft:enchanted_count_increase",
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 0.25,
+                "min": 0.0
+              },
+              "enchantment": "minecraft:looting"
+            }
+          ],
           "name": "immersiveweapons:starstorm_shard"
         }
       ],
       "name": "starstorm_shard",
-      "rolls": {
-        "type": "immersiveweapons:entity_killers"
-      }
+      "rolls": 1
     }
   ],
   "random_sequence": "immersiveweapons:entities/starmite"
