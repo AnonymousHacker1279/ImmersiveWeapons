@@ -174,7 +174,7 @@ public class IWBlockModelGenerator {
 				.put(TextureSlot.TOP, TextureMapping.getBlockTexture(BlockRegistry.BLOOD_SANDSTONE.get(), "_top"))
 				.put(TextureSlot.BOTTOM, TextureMapping.getBlockTexture(BlockRegistry.BLOOD_SANDSTONE.get(), "_top"))));
 		generateSlab(blockModels, BlockRegistry.CUT_BLOOD_SANDSTONE_SLAB.get(), BlockRegistry.CUT_BLOOD_SANDSTONE.get(),
-				TextureMapping.getBlockTexture(BlockRegistry.BLOOD_SANDSTONE.get()),
+				TextureMapping.getBlockTexture(BlockRegistry.CUT_BLOOD_SANDSTONE.get()),
 				TextureMapping.getBlockTexture(BlockRegistry.BLOOD_SANDSTONE.get(), "_top"),
 				TextureMapping.getBlockTexture(BlockRegistry.BLOOD_SANDSTONE.get(), "_top"));
 		blockModels.createTrivialBlock(BlockRegistry.SMOOTH_BLOOD_SANDSTONE.get(), TexturedModel.CUBE.updateTexture(mapping ->

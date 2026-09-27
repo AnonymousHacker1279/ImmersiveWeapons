@@ -307,7 +307,8 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 
 			if (block == BlockRegistry.BULLETPROOF_GLASS.getKey()
 					|| block == BlockRegistry.SMALL_PARTS_TABLE.getKey()
-					|| block == BlockRegistry.SANDBAG.getKey()) {
+					|| block == BlockRegistry.SANDBAG.getKey()
+					|| block == BlockRegistry.STARDUST_LEAVES.getKey()) {
 
 				tier = 0;
 			} else if (block == BlockRegistry.SPOTLIGHT.getKey()
@@ -336,11 +337,11 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 
 			if (tier != 0) {
 				switch (tier) {
+					case 1 -> tag(BlockTags.NEEDS_STONE_TOOL).add(block);
 					case 2 -> tag(BlockTags.NEEDS_IRON_TOOL).add(block);
 					case 3 -> tag(BlockTags.NEEDS_DIAMOND_TOOL).add(block);
 					case 4 -> tag(Blocks.NEEDS_NETHERITE_TOOL).add(block);
 					case 5 -> tag(IWBlockTagGroups.NEEDS_ASTRAL_STARSTORM_TOOL).add(block);
-					default -> tag(BlockTags.NEEDS_STONE_TOOL).add(block);
 				}
 			}
 		}
