@@ -26,7 +26,6 @@ public class StructureSetGenerator {
 	public static final ResourceKey<StructureSet> CLOUD_ISLAND = createKey("cloud_island");
 	public static final ResourceKey<StructureSet> COMMANDER_OUTPOST = createKey("commander_outpost");
 	public static final ResourceKey<StructureSet> DESTROYED_HOUSE = createKey("destroyed_house");
-	public static final ResourceKey<StructureSet> GRAVEYARD = createKey("graveyard");
 	public static final ResourceKey<StructureSet> HANS_HUT = createKey("hans_hut");
 	public static final ResourceKey<StructureSet> LANDMINE_TRAP = createKey("landmine_trap");
 	public static final ResourceKey<StructureSet> PITFALL_TRAP = createKey("pitfall_trap");
@@ -116,13 +115,6 @@ public class StructureSetGenerator {
 						StructureSet.entry(structureHolderGetter.getOrThrow(StructureGenerator.DESTROYED_HOUSE), 1)
 				),
 				new RandomSpreadStructurePlacement(10, 5, RandomSpreadType.LINEAR, 615794356)
-		));
-
-		register(context, GRAVEYARD, new StructureSet(
-				List.of(
-						StructureSet.entry(structureHolderGetter.getOrThrow(StructureGenerator.GRAVEYARD), 1)
-				),
-				new RandomSpreadStructurePlacement(20, 15, RandomSpreadType.LINEAR, 346751289)
 		));
 
 		register(context, HANS_HUT, new StructureSet(

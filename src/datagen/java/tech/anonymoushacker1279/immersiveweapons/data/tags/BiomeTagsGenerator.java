@@ -86,9 +86,6 @@ public class BiomeTagsGenerator extends BiomeTagsProvider {
 		tag(IWWorldGenTagGroups.HAS_BATTLEFIELD_CAMP)
 				.add(IWBiomes.BATTLEFIELD);
 
-		tag(IWWorldGenTagGroups.HAS_GRAVEYARD)
-				.add(IWBiomes.BATTLEFIELD);
-
 		tag(IWWorldGenTagGroups.HAS_BATTLEFIELD_TOWN)
 				.add(IWBiomes.BATTLEFIELD);
 

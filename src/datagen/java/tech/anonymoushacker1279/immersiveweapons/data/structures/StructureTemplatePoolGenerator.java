@@ -29,7 +29,6 @@ public class StructureTemplatePoolGenerator {
 	public static final ResourceKey<StructureTemplatePool> CLOUD_ISLAND = createKey("cloud_island");
 	public static final ResourceKey<StructureTemplatePool> COMMANDER_OUTPOST = createKey("commander_outpost");
 	public static final ResourceKey<StructureTemplatePool> DESTROYED_HOUSE = createKey("destroyed_house");
-	public static final ResourceKey<StructureTemplatePool> GRAVEYARD = createKey("graveyard");
 	public static final ResourceKey<StructureTemplatePool> HANS_HUT = createKey("hans_hut");
 	public static final ResourceKey<StructureTemplatePool> LANDMINE_TRAP = createKey("landmine_trap");
 	public static final ResourceKey<StructureTemplatePool> PITFALL_TRAP = createKey("pitfall_trap");
@@ -135,13 +134,6 @@ public class StructureTemplatePoolGenerator {
 				ImmutableList.of(
 						Pair.of(StructurePoolElement.single(ImmersiveWeapons.MOD_ID + ":destroyed_house/house_1"), 1),
 						Pair.of(StructurePoolElement.single(ImmersiveWeapons.MOD_ID + ":destroyed_house/house_2"), 1)
-				),
-				Projection.RIGID));
-
-		register(context, GRAVEYARD, new StructureTemplatePool(
-				templatePoolHolderGetter.getOrThrow(Pools.EMPTY),
-				ImmutableList.of(
-						Pair.of(StructurePoolElement.single(ImmersiveWeapons.MOD_ID + ":graveyard", processorListsHolderGetter.getOrThrow(StructureProcessorListGenerator.WEATHER_70_PERCENT)), 1)
 				),
 				Projection.RIGID));
 
