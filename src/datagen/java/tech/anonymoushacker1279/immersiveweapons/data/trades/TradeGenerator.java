@@ -13,9 +13,6 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
-import java.util.List;
-import java.util.Optional;
-
 public class TradeGenerator {
 
 	public static final ResourceKey<VillagerTrade> SKYGAZER_1_EMERALD_BANDAGE = create("skygazer/1/emerald_bandage");

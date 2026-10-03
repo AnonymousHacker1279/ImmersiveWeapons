@@ -60,7 +60,7 @@ public class BulletImpactParticle extends SingleQuadParticle {
 				.particleMaterial()
 				.sprite();
 
-		int pixelRGBA = textureAtlasSprite.getPixelRGBA(0, 0, 0);
+		int pixelRGBA = textureAtlasSprite.getPixelARGB(0, 0, 0);
 		float red = (float) (pixelRGBA >> 16 & 255) / 255.0F;
 		float green = (float) (pixelRGBA >> 8 & 255) / 255.0F;
 		float blue = (float) (pixelRGBA & 255) / 255.0F;

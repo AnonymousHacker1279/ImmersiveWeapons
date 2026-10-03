@@ -1,12 +1,12 @@
 package tech.anonymoushacker1279.immersiveweapons.data.recipes;
 
 import com.google.common.collect.ImmutableList;
+import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.predicates.ItemPredicate;
 import net.minecraft.advancements.triggers.Criterion;
 import net.minecraft.advancements.triggers.InventoryChangeTrigger;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
-import net.minecraft.advancements.Advancement;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponents;
@@ -14,7 +14,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.*;
 import net.minecraft.data.worldgen.BootstrapContext;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ArrowItem;
@@ -26,6 +25,7 @@ import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.CookingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
@@ -72,13 +72,9 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		return "has_" + getItemName(pItemLike);
 	}
 
-	/// A brewing mix: the potion in the input container, brewed with the reagent, becomes the output potion.
-	private record BrewingMix(Holder<Potion> input, Item reagent, Holder<Potion> output) {
-
-	}
-
-	/// Brewing is data-driven in 26.3, so mixes must be defined for each container (the old event registered them for all of
-	/// them), and the modded potions need their own container transformation recipes for splash and lingering variants.
+	/// Brewing is data-driven in 26.3, so mixes must be defined for each container (the old event registered them for
+	/// all of them), and the modded potions need their own container transformation recipes for splash and lingering
+	/// variants.
 	private void createBrewingRecipes() {
 		List<BrewingMix> mixes = List.of(
 				// Celestial Brew
@@ -2094,5 +2090,10 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.unlockedBy(triggerName, trigger)
 				.save(output, ImmersiveWeapons.MOD_ID + ":"
 						+ getConversionRecipeName(cut, material) + "_stonecutting");
+	}
+
+	/// A brewing mix: the potion in the input container, brewed with the reagent, becomes the output potion.
+	private record BrewingMix(Holder<Potion> input, Item reagent, Holder<Potion> output) {
+
 	}
 }

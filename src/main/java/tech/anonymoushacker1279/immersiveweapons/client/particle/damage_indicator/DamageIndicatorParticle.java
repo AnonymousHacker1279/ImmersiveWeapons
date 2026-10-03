@@ -15,7 +15,7 @@ public class DamageIndicatorParticle extends Particle {
 	public static final ParticleRenderType RENDER_TYPE = new ParticleRenderType("DAMAGE_INDICATOR", "DI");
 
 	final String damage;
-	int color;
+	final int color;
 
 	public DamageIndicatorParticle(ClientLevel level, double x, double y, double z,
 	                               double xSpeed, double ySpeed, double zSpeed, float damage) {

@@ -2,6 +2,8 @@ package tech.anonymoushacker1279.immersiveweapons.data.biomes;
 
 import net.minecraft.core.HolderGetter;
 import net.minecraft.data.worldgen.BiomeDefaultFeatures;
+import net.minecraft.util.ARGB;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.attribute.*;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.Biome;
@@ -13,8 +15,6 @@ import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.GenerationStep.Decoration;
 import net.minecraft.world.level.levelgen.carver.WorldCarver;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
-import net.minecraft.util.ARGB;
-import net.minecraft.util.valueproviders.UniformInt;
 import tech.anonymoushacker1279.immersiveweapons.data.features.IWConfiguredCarvers;
 import tech.anonymoushacker1279.immersiveweapons.data.features.IWPlacedFeatures;
 import tech.anonymoushacker1279.immersiveweapons.init.EntityRegistry;

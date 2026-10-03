@@ -35,7 +35,7 @@ side = "BOTH"
 [[dependencies.immersiveweapons]]
 modId = "terrablender"
 type = "required"
-versionRange = "[26.3-26.3.0.0.5,)"
+versionRange = "[26.3-26.3.0.0.9,)"
 ordering = "NONE"
 side = "BOTH"
 

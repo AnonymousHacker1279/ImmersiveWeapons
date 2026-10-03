@@ -12,11 +12,6 @@ public class IWConfigs {
 	public static final ServerConfig SERVER;
 	public static final ModConfigSpec SERVER_SPEC;
 
-	public static void init(ModContainer container) {
-		container.registerConfig(ModConfig.Type.CLIENT, CLIENT_SPEC);
-		container.registerConfig(ModConfig.Type.SERVER, SERVER_SPEC);
-	}
-
 	static {
 		final Pair<ClientConfig, ModConfigSpec> clientSpecPair = new ModConfigSpec.Builder().configure(ClientConfig::new);
 		final Pair<ServerConfig, ModConfigSpec> serverSpecPair = new ModConfigSpec.Builder().configure(ServerConfig::new);
@@ -25,5 +20,10 @@ public class IWConfigs {
 		CLIENT_SPEC = clientSpecPair.getRight();
 		SERVER = serverSpecPair.getLeft();
 		SERVER_SPEC = serverSpecPair.getRight();
+	}
+
+	public static void init(ModContainer container) {
+		container.registerConfig(ModConfig.Type.CLIENT, CLIENT_SPEC);
+		container.registerConfig(ModConfig.Type.SYNCED, SERVER_SPEC);
 	}
 }

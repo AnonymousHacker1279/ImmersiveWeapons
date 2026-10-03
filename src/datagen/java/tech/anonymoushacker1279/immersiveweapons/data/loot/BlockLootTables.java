@@ -179,7 +179,7 @@ public class BlockLootTables extends BlockLootSubProvider {
 								LootItem.lootTableItem(BlockItemRegistry.WOODEN_SPIKES_ITEM.get())
 										.when(ExplosionCondition.survivesExplosion())
 										.when(MatchBlock.blockMatches(this.blocks, block, StatePropertiesPredicate.Builder.properties()
-														.hasProperty(WoodenSpikesBlock.DAMAGE_STAGE, 0)))
+												.hasProperty(WoodenSpikesBlock.DAMAGE_STAGE, 0)))
 										.apply(SetItemCountFunction.setCount(ContextIntProviders.exactly(1)))))));
 		add(BlockRegistry.BARBED_WIRE.get(), (block) -> LootTable.lootTable()
 				.withPool(LootPool.lootPool()
@@ -189,7 +189,7 @@ public class BlockLootTables extends BlockLootSubProvider {
 								LootItem.lootTableItem(BlockItemRegistry.BARBED_WIRE_ITEM.get())
 										.when(ExplosionCondition.survivesExplosion())
 										.when(MatchBlock.blockMatches(this.blocks, block, StatePropertiesPredicate.Builder.properties()
-														.hasProperty(BarbedWireBlock.DAMAGE_STAGE, 0)))
+												.hasProperty(BarbedWireBlock.DAMAGE_STAGE, 0)))
 										.apply(SetItemCountFunction.setCount(ContextIntProviders.exactly(1)))))));
 		add(BlockRegistry.SANDBAG.get(), (block) -> LootTable.lootTable()
 				.withPool(LootPool.lootPool()
@@ -199,16 +199,16 @@ public class BlockLootTables extends BlockLootSubProvider {
 								LootItem.lootTableItem(BlockItemRegistry.SANDBAG_ITEM.get())
 										.apply(SetItemCountFunction.setCount(ContextIntProviders.exactly(1))
 												.when(MatchBlock.blockMatches(this.blocks, block, StatePropertiesPredicate.Builder.properties()
-																.hasProperty(SandbagBlock.BAGS, 0))))
+														.hasProperty(SandbagBlock.BAGS, 0))))
 										.apply(SetItemCountFunction.setCount(ContextIntProviders.exactly(2))
 												.when(MatchBlock.blockMatches(this.blocks, block, StatePropertiesPredicate.Builder.properties()
-																.hasProperty(SandbagBlock.BAGS, 1))))
+														.hasProperty(SandbagBlock.BAGS, 1))))
 										.apply(SetItemCountFunction.setCount(ContextIntProviders.exactly(3))
 												.when(MatchBlock.blockMatches(this.blocks, block, StatePropertiesPredicate.Builder.properties()
-																.hasProperty(SandbagBlock.BAGS, 2))))
+														.hasProperty(SandbagBlock.BAGS, 2))))
 										.apply(SetItemCountFunction.setCount(ContextIntProviders.exactly(4))
 												.when(MatchBlock.blockMatches(this.blocks, block, StatePropertiesPredicate.Builder.properties()
-																.hasProperty(SandbagBlock.BAGS, 3))))))));
+														.hasProperty(SandbagBlock.BAGS, 3))))))));
 		add(BlockRegistry.MINERAL_DEPOSIT.get(), (block) -> LootTable.lootTable()
 				.withPool(LootPool.lootPool()
 						.name("sulfur")

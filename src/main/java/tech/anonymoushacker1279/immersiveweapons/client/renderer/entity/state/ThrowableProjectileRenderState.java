@@ -5,6 +5,6 @@ import net.minecraft.client.renderer.item.ItemStackRenderState;
 
 public class ThrowableProjectileRenderState extends LivingEntityRenderState {
 
+	public final ItemStackRenderState stackRenderState = new ItemStackRenderState();
 	public float movementLengthSqr = 0.0f;
-	public ItemStackRenderState stackRenderState = new ItemStackRenderState();
 }
