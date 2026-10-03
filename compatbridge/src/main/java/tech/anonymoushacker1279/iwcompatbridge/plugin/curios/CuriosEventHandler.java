@@ -19,7 +19,7 @@ public class CuriosEventHandler {
 	///
 	/// @param event the `CurioCanEquipEvent` instance
 	public static void curioEquipEvent(CurioCanEquipEvent event) {
-		if (!IWCBConfigs.SERVER.accessoryStacking.getAsBoolean()) {
+		if (!IWCBConfigs.SERVER.accessoryStacking().getAsBoolean()) {
 			CuriosApi.getCuriosInventory(event.getEntity())
 					.ifPresent(iCuriosItemHandler -> iCuriosItemHandler.findCurios(event.getSlotContext().identifier())
 							.forEach(slotResult -> {

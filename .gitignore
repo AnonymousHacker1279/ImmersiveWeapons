@@ -28,6 +28,7 @@ gradlew.bat
 
 # Caches
 /src/generated/resources/.cache/
+/compatbridge/src/generated/resources/.cache/
 .optimizationCache
 
 # Run configurations
