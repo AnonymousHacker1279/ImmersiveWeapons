@@ -4,9 +4,8 @@ plugins {
 	id 'net.neoforged.moddev'
 	id "com.hypherionmc.modutils.modpublisher"
 	id 'idea'
+	id 'tech.anonymoushacker1279.optimization-utils'
 }
-
-apply from: rootProject.file('optimization_utils.gradle')
 
 version = mod_version
 group = mod_group_id
