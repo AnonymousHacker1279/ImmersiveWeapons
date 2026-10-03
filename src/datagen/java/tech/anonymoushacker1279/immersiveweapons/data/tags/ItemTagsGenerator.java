@@ -382,6 +382,14 @@ public class ItemTagsGenerator extends BlockTagCopyingItemTagProvider {
 				BlockItemRegistry.STARDUST_SIGN_ITEM.getKey());
 
 		// Arrow tags
+		tag(ItemTags.TRIM_MATERIALS).add(
+				ItemRegistry.COBALT_INGOT.getKey(),
+				ItemRegistry.MOLTEN_INGOT.getKey(),
+				ItemRegistry.VENTUS_SHARD.getKey(),
+				ItemRegistry.TESLA_INGOT.getKey(),
+				ItemRegistry.ASTRAL_INGOT.getKey(),
+				ItemRegistry.STARSTORM_INGOT.getKey(),
+				ItemRegistry.VOID_INGOT.getKey());
 		tag(ItemTags.ARROWS).add(
 				ItemRegistry.WOODEN_ARROW.getKey(),
 				ItemRegistry.STONE_ARROW.getKey(),

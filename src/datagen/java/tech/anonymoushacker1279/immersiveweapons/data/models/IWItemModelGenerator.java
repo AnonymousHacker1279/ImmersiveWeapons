@@ -10,6 +10,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.component.DyedItemColor;
 import net.neoforged.neoforge.client.model.item.TrimmedArmorModel;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.data.IWTrimMaterials;
 import tech.anonymoushacker1279.immersiveweapons.event.ClientModEventSubscriber;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.DataComponentTypeRegistry;
@@ -279,37 +280,37 @@ public class IWItemModelGenerator {
 				ItemRegistry.MOLTEN_CHESTPLATE.get(),
 				ItemRegistry.MOLTEN_LEGGINGS.get(),
 				ItemRegistry.MOLTEN_BOOTS.get(),
-				null);
+				new TrimmedArmorModel.PaletteTransform(IWTrimMaterials.palette(IWTrimMaterials.MOLTEN), IWTrimMaterials.darkerPalette(IWTrimMaterials.MOLTEN)));
 		generateTrimmableArmorSet(itemModels,
 				ItemRegistry.TESLA_HELMET.get(),
 				ItemRegistry.TESLA_CHESTPLATE.get(),
 				ItemRegistry.TESLA_LEGGINGS.get(),
 				ItemRegistry.TESLA_BOOTS.get(),
-				null);
+				new TrimmedArmorModel.PaletteTransform(IWTrimMaterials.palette(IWTrimMaterials.TESLA), IWTrimMaterials.darkerPalette(IWTrimMaterials.TESLA)));
 		generateTrimmableArmorSet(itemModels,
 				ItemRegistry.COBALT_HELMET.get(),
 				ItemRegistry.COBALT_CHESTPLATE.get(),
 				ItemRegistry.COBALT_LEGGINGS.get(),
 				ItemRegistry.COBALT_BOOTS.get(),
-				null);
+				new TrimmedArmorModel.PaletteTransform(IWTrimMaterials.palette(IWTrimMaterials.COBALT), IWTrimMaterials.darkerPalette(IWTrimMaterials.COBALT)));
 		generateTrimmableArmorSet(itemModels,
 				ItemRegistry.VENTUS_HELMET.get(),
 				ItemRegistry.VENTUS_CHESTPLATE.get(),
 				ItemRegistry.VENTUS_LEGGINGS.get(),
 				ItemRegistry.VENTUS_BOOTS.get(),
-				null);
+				new TrimmedArmorModel.PaletteTransform(IWTrimMaterials.palette(IWTrimMaterials.VENTUS), IWTrimMaterials.darkerPalette(IWTrimMaterials.VENTUS)));
 		generateTrimmableArmorSet(itemModels,
 				ItemRegistry.ASTRAL_HELMET.get(),
 				ItemRegistry.ASTRAL_CHESTPLATE.get(),
 				ItemRegistry.ASTRAL_LEGGINGS.get(),
 				ItemRegistry.ASTRAL_BOOTS.get(),
-				null);
+				new TrimmedArmorModel.PaletteTransform(IWTrimMaterials.palette(IWTrimMaterials.ASTRAL), IWTrimMaterials.darkerPalette(IWTrimMaterials.ASTRAL)));
 		generateTrimmableArmorSet(itemModels,
 				ItemRegistry.STARSTORM_HELMET.get(),
 				ItemRegistry.STARSTORM_CHESTPLATE.get(),
 				ItemRegistry.STARSTORM_LEGGINGS.get(),
 				ItemRegistry.STARSTORM_BOOTS.get(),
-				null);
+				new TrimmedArmorModel.PaletteTransform(IWTrimMaterials.palette(IWTrimMaterials.STARSTORM), IWTrimMaterials.darkerPalette(IWTrimMaterials.STARSTORM)));
 		generateLayeredTrimmableArmorSet(itemModels,
 				ItemRegistry.PADDED_LEATHER_HELMET.get(),
 				ItemRegistry.PADDED_LEATHER_CHESTPLATE.get(),
@@ -321,7 +322,7 @@ public class IWItemModelGenerator {
 				ItemRegistry.VOID_CHESTPLATE.get(),
 				ItemRegistry.VOID_LEGGINGS.get(),
 				ItemRegistry.VOID_BOOTS.get(),
-				null);
+				new TrimmedArmorModel.PaletteTransform(IWTrimMaterials.palette(IWTrimMaterials.VOID), IWTrimMaterials.darkerPalette(IWTrimMaterials.VOID)));
 		itemModels.generateFlatItem(ItemRegistry.DYING_SOLDIER_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.THE_COMMANDER_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.MINUTEMAN_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
@@ -446,8 +447,6 @@ public class IWItemModelGenerator {
 		);
 	}
 
-
-	// NeoForge's dynamic trim API only references the base model by location; it no longer generates it.
 	private static void generateTrimmableArmorSet(ItemModelGenerators models, Item helmet, Item chestplate, Item leggings, Item boots, TrimmedArmorModel.PaletteTransform transform) {
 		for (Item item : new Item[]{helmet, chestplate, leggings, boots}) {
 			models.createFlatItemModel(item, ModelTemplates.FLAT_ITEM);

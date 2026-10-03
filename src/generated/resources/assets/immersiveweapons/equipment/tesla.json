@@ -15,5 +15,13 @@
         "texture": "immersiveweapons:tesla"
       }
     ]
-  }
+  },
+  "trim_overrides": [
+    {
+      "palette": "immersiveweapons:trim/iw_tesla_darker",
+      "when": {
+        "material": "immersiveweapons:tesla"
+      }
+    }
+  ]
 }

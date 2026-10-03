@@ -5,6 +5,10 @@
       "type": "minecraft:model",
       "model": "immersiveweapons:item/tesla_helmet"
     },
-    "base_trim_texture": "minecraft:trims/items/helmet_trim"
+    "base_trim_texture": "minecraft:trims/items/helmet_trim",
+    "palette_replacement": {
+      "replacement": "immersiveweapons:trim/iw_tesla_darker",
+      "target": "immersiveweapons:trim/iw_tesla"
+    }
   }
 }

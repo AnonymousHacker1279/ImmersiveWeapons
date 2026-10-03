@@ -8,6 +8,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.equipment.EquipmentAsset;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.IWEquipmentAssets;
+import tech.anonymoushacker1279.immersiveweapons.data.IWTrimMaterials;
 
 import java.util.function.BiConsumer;
 
@@ -19,16 +20,16 @@ public class IWEquipmentAssetsGenerator extends EquipmentAssetProvider {
 
 	@Override
 	protected void registerModels(BiConsumer<ResourceKey<EquipmentAsset>, EquipmentClientInfo> output) {
-		output.accept(IWEquipmentAssets.MOLTEN, onlyHumanoid("immersiveweapons:molten").build());
-		output.accept(IWEquipmentAssets.TESLA, onlyHumanoid("immersiveweapons:tesla").build());
-		output.accept(IWEquipmentAssets.COBALT, onlyHumanoid("immersiveweapons:cobalt").build());
-		output.accept(IWEquipmentAssets.VENTUS, onlyHumanoid("immersiveweapons:ventus").build());
-		output.accept(IWEquipmentAssets.ASTRAL, onlyHumanoid("immersiveweapons:astral").build());
-		output.accept(IWEquipmentAssets.STARSTORM, onlyHumanoid("immersiveweapons:starstorm").build());
+		output.accept(IWEquipmentAssets.MOLTEN, onlyHumanoid("immersiveweapons:molten").replaceTrimPalette(IWTrimMaterials.MOLTEN, IWTrimMaterials.darkerPalette(IWTrimMaterials.MOLTEN)).build());
+		output.accept(IWEquipmentAssets.TESLA, onlyHumanoid("immersiveweapons:tesla").replaceTrimPalette(IWTrimMaterials.TESLA, IWTrimMaterials.darkerPalette(IWTrimMaterials.TESLA)).build());
+		output.accept(IWEquipmentAssets.COBALT, onlyHumanoid("immersiveweapons:cobalt").replaceTrimPalette(IWTrimMaterials.COBALT, IWTrimMaterials.darkerPalette(IWTrimMaterials.COBALT)).build());
+		output.accept(IWEquipmentAssets.VENTUS, onlyHumanoid("immersiveweapons:ventus").replaceTrimPalette(IWTrimMaterials.VENTUS, IWTrimMaterials.darkerPalette(IWTrimMaterials.VENTUS)).build());
+		output.accept(IWEquipmentAssets.ASTRAL, onlyHumanoid("immersiveweapons:astral").replaceTrimPalette(IWTrimMaterials.ASTRAL, IWTrimMaterials.darkerPalette(IWTrimMaterials.ASTRAL)).build());
+		output.accept(IWEquipmentAssets.STARSTORM, onlyHumanoid("immersiveweapons:starstorm").replaceTrimPalette(IWTrimMaterials.STARSTORM, IWTrimMaterials.darkerPalette(IWTrimMaterials.STARSTORM)).build());
 		output.accept(IWEquipmentAssets.PADDED_LEATHER, EquipmentClientInfo.builder()
 				.addHumanoidLayers(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "padded_leather"), true)
 				.addHumanoidLayers(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "padded_leather_overlay"), false)
 				.build());
-		output.accept(IWEquipmentAssets.VOID, onlyHumanoid("immersiveweapons:void").build());
+		output.accept(IWEquipmentAssets.VOID, onlyHumanoid("immersiveweapons:void").replaceTrimPalette(IWTrimMaterials.VOID, IWTrimMaterials.darkerPalette(IWTrimMaterials.VOID)).build());
 	}
 }

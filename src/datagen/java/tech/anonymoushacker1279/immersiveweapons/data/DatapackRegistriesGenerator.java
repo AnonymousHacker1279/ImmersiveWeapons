@@ -19,6 +19,7 @@ import tech.anonymoushacker1279.immersiveweapons.data.structures.StructureSetGen
 import tech.anonymoushacker1279.immersiveweapons.data.structures.StructureTemplatePoolGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.trades.TradeGenerator;
 import tech.anonymoushacker1279.immersiveweapons.data.trades.TradeSetGenerator;
+import tech.anonymoushacker1279.immersiveweapons.data.trim.TrimMaterialsGenerator;
 
 
 /// Holds the world-layer datapack registry entries to generate.
@@ -41,5 +42,6 @@ public class DatapackRegistriesGenerator {
 			.add(Registries.ENCHANTMENT, EnchantmentsGenerator::bootstrap)
 			.add(Registries.JUKEBOX_SONG, IWJukeboxSongs::bootstrap)
 			.add(Registries.TRADE_SET, TradeSetGenerator::bootstrap)
-			.add(Registries.VILLAGER_TRADE, TradeGenerator::bootstrap);
+			.add(Registries.VILLAGER_TRADE, TradeGenerator::bootstrap)
+			.add(Registries.TRIM_MATERIAL, TrimMaterialsGenerator::bootstrap);
 }

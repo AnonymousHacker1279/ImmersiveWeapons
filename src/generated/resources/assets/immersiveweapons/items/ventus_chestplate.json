@@ -5,6 +5,10 @@
       "type": "minecraft:model",
       "model": "immersiveweapons:item/ventus_chestplate"
     },
-    "base_trim_texture": "minecraft:trims/items/chestplate_trim"
+    "base_trim_texture": "minecraft:trims/items/chestplate_trim",
+    "palette_replacement": {
+      "replacement": "immersiveweapons:trim/iw_ventus_darker",
+      "target": "immersiveweapons:trim/iw_ventus"
+    }
   }
 }

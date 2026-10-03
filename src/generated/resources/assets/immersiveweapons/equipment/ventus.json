@@ -15,5 +15,13 @@
         "texture": "immersiveweapons:ventus"
       }
     ]
-  }
+  },
+  "trim_overrides": [
+    {
+      "palette": "immersiveweapons:trim/iw_ventus_darker",
+      "when": {
+        "material": "immersiveweapons:ventus"
+      }
+    }
+  ]
 }

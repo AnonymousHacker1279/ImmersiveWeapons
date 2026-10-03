@@ -11,6 +11,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.client.tooltip.DynamicTooltips;
 import tech.anonymoushacker1279.immersiveweapons.data.IWJukeboxSongs;
+import tech.anonymoushacker1279.immersiveweapons.data.IWTrimMaterials;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.common.CommonItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.item.*;
@@ -225,7 +226,7 @@ public class ItemRegistry {
 	// Items
 	public static final DeferredHolder<Item, Item> WOODEN_SHARD = ITEMS.registerItem("wooden_shard", Item::new);
 	public static final DeferredHolder<Item, Item> STONE_SHARD = ITEMS.registerItem("stone_shard", Item::new);
-	public static final DeferredHolder<Item, Item> VENTUS_SHARD = ITEMS.registerItem("ventus_shard", Item::new);
+	public static final DeferredHolder<Item, Item> VENTUS_SHARD = ITEMS.registerItem("ventus_shard", (properties) -> new Item(properties.trimMaterial(IWTrimMaterials.VENTUS)));
 	@TextureMetadataMarker(frameTime = 6)
 	public static final DeferredHolder<Item, Item> MOLTEN_SHARD = ITEMS.registerItem("molten_shard", (properties) -> new Item(properties.fireResistant()));
 	public static final DeferredHolder<Item, Item> STARSTORM_SHARD = ITEMS.registerItem("starstorm_shard", Item::new);
@@ -233,17 +234,17 @@ public class ItemRegistry {
 	public static final DeferredHolder<Item, Item> DIAMOND_SHARD = ITEMS.registerItem("diamond_shard", Item::new);
 	public static final DeferredHolder<Item, Item> OBSIDIAN_ROD = ITEMS.registerItem("obsidian_rod", Item::new);
 	public static final DeferredHolder<Item, Item> COBALT_NUGGET = ITEMS.registerItem("cobalt_nugget", Item::new);
-	public static final DeferredHolder<Item, Item> COBALT_INGOT = ITEMS.registerItem("cobalt_ingot", Item::new);
+	public static final DeferredHolder<Item, Item> COBALT_INGOT = ITEMS.registerItem("cobalt_ingot", (properties) -> new Item(properties.trimMaterial(IWTrimMaterials.COBALT)));
 	public static final DeferredHolder<Item, Item> RAW_COBALT = ITEMS.registerItem("raw_cobalt", Item::new);
 	@TextureMetadataMarker(frameTime = 4, frames = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0}, interpolate = true)
-	public static final DeferredHolder<Item, Item> STARSTORM_INGOT = ITEMS.registerItem("starstorm_ingot", Item::new);
-	public static final DeferredHolder<Item, Item> ASTRAL_INGOT = ITEMS.registerItem("astral_ingot", Item::new);
+	public static final DeferredHolder<Item, Item> STARSTORM_INGOT = ITEMS.registerItem("starstorm_ingot", (properties) -> new Item(properties.trimMaterial(IWTrimMaterials.STARSTORM)));
+	public static final DeferredHolder<Item, Item> ASTRAL_INGOT = ITEMS.registerItem("astral_ingot", (properties) -> new Item(properties.trimMaterial(IWTrimMaterials.ASTRAL)));
 	public static final DeferredHolder<Item, Item> ASTRAL_NUGGET = ITEMS.registerItem("astral_nugget", Item::new);
 	public static final DeferredHolder<Item, Item> RAW_ASTRAL = ITEMS.registerItem("raw_astral", Item::new);
 	@TextureMetadataMarker(frameTime = 2)
-	public static final DeferredHolder<Item, Item> TESLA_INGOT = ITEMS.registerItem("tesla_ingot", Item::new);
+	public static final DeferredHolder<Item, Item> TESLA_INGOT = ITEMS.registerItem("tesla_ingot", (properties) -> new Item(properties.trimMaterial(IWTrimMaterials.TESLA)));
 	public static final DeferredHolder<Item, Item> TESLA_NUGGET = ITEMS.registerItem("tesla_nugget", Item::new);
-	public static final DeferredHolder<Item, Item> MOLTEN_INGOT = ITEMS.registerItem("molten_ingot", (properties) -> new FuelItem(properties.fireResistant(), 24000));
+	public static final DeferredHolder<Item, Item> MOLTEN_INGOT = ITEMS.registerItem("molten_ingot", (properties) -> new FuelItem(properties.fireResistant().trimMaterial(IWTrimMaterials.MOLTEN), 24000));
 	public static final DeferredHolder<Item, Item> MOLTEN_SMITHING_TEMPLATE = ITEMS.registerItem("molten_smithing_template", (properties) -> new Item(properties.fireResistant()));
 	public static final DeferredHolder<Item, Item> VENTUS_SMITHING_TEMPLATE = ITEMS.registerItem("ventus_smithing_template", Item::new);
 	@TextureMetadataMarker(frameTime = 2)
@@ -251,7 +252,7 @@ public class ItemRegistry {
 	public static final DeferredHolder<Item, Item> CLOUD_KEY = ITEMS.registerItem("cloud_key", Item::new);
 	public static final DeferredHolder<Item, Item> ENDER_ESSENCE = ITEMS.registerItem("ender_essence", Item::new);
 	@TextureMetadataMarker(frameTime = 25, interpolate = true)
-	public static final DeferredHolder<Item, Item> VOID_INGOT = ITEMS.registerItem("void_ingot", Item::new);
+	public static final DeferredHolder<Item, Item> VOID_INGOT = ITEMS.registerItem("void_ingot", (properties) -> new Item(properties.trimMaterial(IWTrimMaterials.VOID)));
 	public static final DeferredHolder<Item, Item> HANSIUM_INGOT = ITEMS.registerItem("hansium_ingot", Item::new);
 	public static final DeferredHolder<Item, Item> BLACKPOWDER = ITEMS.registerItem("blackpowder", Item::new);
 	public static final DeferredHolder<Item, Item> SULFUR_DUST = ITEMS.registerItem("sulfur_dust", Item::new);

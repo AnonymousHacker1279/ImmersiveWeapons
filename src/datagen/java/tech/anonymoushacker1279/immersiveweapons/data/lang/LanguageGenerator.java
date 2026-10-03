@@ -107,6 +107,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addMessages();
 		addDeathMessages();
 		addBiomes();
+		addTrimMaterials();
 		addAdvancements();
 		addConfigDescriptions();
 		addEnchantments();
@@ -724,6 +725,12 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addDeathMessage("hellfire.player", "%1$s was doomed to melt in hellfire by %2$s");
 		addDeathMessage("supercharged", "%1$s learned they were conductive");
 		addDeathMessage("supercharged.player", "%1$s learned they were conductive at the hands of %2$s");
+	}
+
+	private void addTrimMaterials() {
+		for (String material : List.of("cobalt", "molten", "ventus", "tesla", "astral", "starstorm", "void")) {
+			add("trim_material.immersiveweapons." + material, capitalizeWords(material));
+		}
 	}
 
 	private void addBiomes() {

@@ -1564,5 +1564,12 @@
   "tooltip.immersiveweapons.wooden_arrow": "35% less powerful than normal arrows. Highly inaccurate. At this point it's just blunt-force trauma.",
   "tooltip.immersiveweapons.wooden_musket_ball": "Very inaccurate, and likely to cause a misfire. Why would anyone make wooden musket balls anyway?",
   "tooltip.immersiveweapons.wooden_spikes": "Poor man's barbed wire",
-  "tooltip.iwcompatbridge.accessory_note": "Equip this in a Curios slot to gain the effect."
+  "tooltip.iwcompatbridge.accessory_note": "Equip this in a Curios slot to gain the effect.",
+  "trim_material.immersiveweapons.astral": "Astral",
+  "trim_material.immersiveweapons.cobalt": "Cobalt",
+  "trim_material.immersiveweapons.molten": "Molten",
+  "trim_material.immersiveweapons.starstorm": "Starstorm",
+  "trim_material.immersiveweapons.tesla": "Tesla",
+  "trim_material.immersiveweapons.ventus": "Ventus",
+  "trim_material.immersiveweapons.void": "Void"
 }

@@ -15,5 +15,13 @@
         "texture": "immersiveweapons:void"
       }
     ]
-  }
+  },
+  "trim_overrides": [
+    {
+      "palette": "immersiveweapons:trim/iw_void_darker",
+      "when": {
+        "material": "immersiveweapons:void"
+      }
+    }
+  ]
 }

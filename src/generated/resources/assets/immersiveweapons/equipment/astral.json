@@ -15,5 +15,13 @@
         "texture": "immersiveweapons:astral"
       }
     ]
-  }
+  },
+  "trim_overrides": [
+    {
+      "palette": "immersiveweapons:trim/iw_astral_darker",
+      "when": {
+        "material": "immersiveweapons:astral"
+      }
+    }
+  ]
 }
