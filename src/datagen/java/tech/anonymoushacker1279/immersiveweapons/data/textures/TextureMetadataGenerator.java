@@ -75,7 +75,7 @@ public record TextureMetadataGenerator(PackOutput packOutput) implements DataPro
 
 				try {
 					if (field.get(null) instanceof DeferredHolder<?, ?> holder) {
-						String name = holder.getKey().identifier().getPath();
+						String name = holder.key().identifier().getPath();
 
 						ItemMetadataBuilder(name, marker.frameTime())
 								.setInterpolate(marker.interpolate())
@@ -102,7 +102,7 @@ public record TextureMetadataGenerator(PackOutput packOutput) implements DataPro
 
 				try {
 					if (field.get(null) instanceof DeferredHolder<?, ?> deferredHolder) {
-						String name = deferredHolder.getKey().identifier().getPath();
+						String name = deferredHolder.key().identifier().getPath();
 
 						BlockMetadataBuilder(name, marker.frameTime())
 								.setInterpolate(marker.interpolate())

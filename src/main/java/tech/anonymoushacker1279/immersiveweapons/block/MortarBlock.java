@@ -123,7 +123,7 @@ public class MortarBlock extends BasicOrientableBlock {
 			serverLevel.sendParticles(ParticleTypes.LARGE_SMOKE, pos.getX(), pos.getY(), pos.getZ(),
 					3, 0.0f, 0.2f, 0.0f, 0.0f);
 
-			PacketDistributor.sendToPlayersTrackingChunk(serverLevel, level.getChunkAt(pos).getPos(), new LocalSoundPayload(pos, SoundEventRegistry.MORTAR_FIRE.getKey(),
+			PacketDistributor.sendToPlayersTrackingChunk(serverLevel, level.getChunkAt(pos).getPos(), new LocalSoundPayload(pos, SoundEventRegistry.MORTAR_FIRE.key(),
 					SoundSource.BLOCKS, 1.0f, 1.0f, true));
 		}
 

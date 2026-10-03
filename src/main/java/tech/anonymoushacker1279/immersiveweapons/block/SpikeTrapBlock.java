@@ -16,7 +16,6 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import tech.anonymoushacker1279.immersiveweapons.block.core.WaterloggingHelper;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -29,6 +28,7 @@ import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.network.PacketDistributor;
+import tech.anonymoushacker1279.immersiveweapons.block.core.WaterloggingHelper;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.LocalSoundPayload;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
@@ -118,13 +118,13 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 			state = state.setValue(POWERED, hasNeighborSignal);
 			if (state.getValue(POWERED)) {
 				PacketDistributor.sendToPlayersTrackingChunk(serverLevel, serverLevel.getChunk(pos).getPos(),
-						new LocalSoundPayload(pos, SoundEventRegistry.SPIKE_TRAP_EXTEND.getKey(),
+						new LocalSoundPayload(pos, SoundEventRegistry.SPIKE_TRAP_EXTEND.key(),
 								SoundSource.BLOCKS, 1.0f, 1.0f, true));
 
 				level.gameEvent(GameEvent.BLOCK_ACTIVATE, pos, GameEvent.Context.of(state));
 			} else {
 				PacketDistributor.sendToPlayersTrackingChunk(serverLevel, serverLevel.getChunk(pos).getPos(),
-						new LocalSoundPayload(pos, SoundEventRegistry.SPIKE_TRAP_RETRACT.getKey(),
+						new LocalSoundPayload(pos, SoundEventRegistry.SPIKE_TRAP_RETRACT.key(),
 								SoundSource.BLOCKS, 1.0f, 1.0f, true));
 
 				level.gameEvent(GameEvent.BLOCK_DEACTIVATE, pos, GameEvent.Context.of(state));

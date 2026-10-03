@@ -31,7 +31,7 @@ public abstract class AccessoryDataProvider implements DataProvider {
 		List<CompletableFuture<?>> futures = new ArrayList<>(5);
 
 		accessories.forEach((type) -> {
-			Identifier id = Objects.requireNonNull(type.item().getKey()).identifier();
+			Identifier id = Objects.requireNonNull(type.item().key()).identifier();
 			Path filePath = path.resolve("data/" + id.getNamespace() + "/accessories/" + id.getPath() + ".json");
 
 			DataResult<JsonElement> accessoryResult = Accessory.CODEC.encodeStart(JsonOps.INSTANCE, type);

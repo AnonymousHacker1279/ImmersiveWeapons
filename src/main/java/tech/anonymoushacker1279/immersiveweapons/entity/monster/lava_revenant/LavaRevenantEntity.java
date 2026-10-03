@@ -686,10 +686,10 @@ public class LavaRevenantEntity extends Mob implements Enemy, GrantAdvancementOn
 		}
 	}
 
-	class LavaRevenantMoveControl extends MoveControl {
+	class LavaRevenantMoveControl extends MoveControl<LavaRevenantEntity> {
 		private float speed = 0.1F;
 
-		public LavaRevenantMoveControl(Mob mob) {
+		public LavaRevenantMoveControl(LavaRevenantEntity mob) {
 			super(mob);
 		}
 
@@ -788,7 +788,7 @@ public class LavaRevenantEntity extends Mob implements Enemy, GrantAdvancementOn
 						}
 						attackPhase = LavaRevenantEntity.AttackPhase.CIRCLE;
 						if (!isSilent()) {
-							PacketDistributor.sendToPlayersTrackingChunk((ServerLevel) level(), chunkPosition(), new LocalSoundPayload(blockPosition(), SoundEventRegistry.LAVA_REVENANT_BITE.getKey(),
+							PacketDistributor.sendToPlayersTrackingChunk((ServerLevel) level(), chunkPosition(), new LocalSoundPayload(blockPosition(), SoundEventRegistry.LAVA_REVENANT_BITE.key(),
 									SoundSource.HOSTILE, 0.3F, level().getRandom().nextFloat() * 0.1F + 0.9F, false));
 						}
 					} else if (inWall || hurtTime > 0) {

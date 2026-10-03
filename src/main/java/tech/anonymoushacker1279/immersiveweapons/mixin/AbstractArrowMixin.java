@@ -38,7 +38,7 @@ public abstract class AbstractArrowMixin implements ArrowAttributeAccessor {
 
 	/// Allows bullet entities to have custom damage sources and calculations.
 	@Redirect(method = "onHitEntity", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;hurtOrSimulate(Lnet/minecraft/world/damagesource/DamageSource;F)Z"))
-	private boolean hurtOrSimulate(Entity instance, DamageSource pSource, float pAmount) {
+	private boolean hurtOrSimulate(Entity instance, DamageSource source, float damage) {
 		AbstractArrow self = (AbstractArrow) (Object) this;
 		Entity owner = self.getOwner();
 		if (self instanceof BulletEntity bulletEntity) {
@@ -50,7 +50,7 @@ public abstract class AbstractArrowMixin implements ArrowAttributeAccessor {
 
 			return didHurt;
 		} else {
-			return instance.hurtOrSimulate(pSource, pAmount);
+			return instance.hurtOrSimulate(source, damage);
 		}
 	}
 

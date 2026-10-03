@@ -36,9 +36,9 @@ public class DataMapsGenerator extends DataMapProvider {
 				.add(Items.BLAZE_POWDER.builtInRegistryHolder(), new FlammablePowder(0.25f, 0.1f, 1, 0, true), false);
 
 		builder(NeoForgeDataMaps.TRANSFORMABLES)
-				.add(BlockRegistry.BURNED_OAK_LOG.getKey(), Transformable.stripping(BlockRegistry.BURNED_OAK_LOG.get(), BlockRegistry.STRIPPED_BURNED_OAK_LOG.get()), false)
-				.add(BlockRegistry.BURNED_OAK_WOOD.getKey(), Transformable.stripping(BlockRegistry.BURNED_OAK_WOOD.get(), BlockRegistry.STRIPPED_BURNED_OAK_WOOD.get()), false)
-				.add(BlockRegistry.STARDUST_LOG.getKey(), Transformable.stripping(BlockRegistry.STARDUST_LOG.get(), BlockRegistry.STRIPPED_STARDUST_LOG.get()), false)
-				.add(BlockRegistry.STARDUST_WOOD.getKey(), Transformable.stripping(BlockRegistry.STARDUST_WOOD.get(), BlockRegistry.STRIPPED_STARDUST_WOOD.get()), false);
+				.add(BlockRegistry.BURNED_OAK_LOG.key(), Transformable.stripping(BlockRegistry.BURNED_OAK_LOG.get(), BlockRegistry.STRIPPED_BURNED_OAK_LOG.get()), false)
+				.add(BlockRegistry.BURNED_OAK_WOOD.key(), Transformable.stripping(BlockRegistry.BURNED_OAK_WOOD.get(), BlockRegistry.STRIPPED_BURNED_OAK_WOOD.get()), false)
+				.add(BlockRegistry.STARDUST_LOG.key(), Transformable.stripping(BlockRegistry.STARDUST_LOG.get(), BlockRegistry.STRIPPED_STARDUST_LOG.get()), false)
+				.add(BlockRegistry.STARDUST_WOOD.key(), Transformable.stripping(BlockRegistry.STARDUST_WOOD.get(), BlockRegistry.STRIPPED_STARDUST_WOOD.get()), false);
 	}
 }

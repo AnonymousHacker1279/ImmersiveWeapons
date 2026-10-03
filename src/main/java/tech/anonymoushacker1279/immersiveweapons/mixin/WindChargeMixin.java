@@ -30,7 +30,7 @@ public abstract class WindChargeMixin {
 	);
 
 	@WrapMethod(method = "explode")
-	private void modifyExplode(Vec3 pos, Operation<Void> original) {
+	private void modifyExplode(Vec3 position, Operation<Void> original) {
 		Entity self = (Entity) (Object) this;
 
 		if (self instanceof WindCharge charge) {
@@ -41,9 +41,9 @@ public abstract class WindChargeMixin {
 									charge,
 									null,
 									VENTUS_EXPLOSION_DAMAGE_CALCULATOR,
-									pos.x(),
-									pos.y(),
-									pos.z(),
+									position.x(),
+									position.y(),
+									position.z(),
 									2.4F,
 									false,
 									Level.ExplosionInteraction.TRIGGER,
@@ -58,6 +58,6 @@ public abstract class WindChargeMixin {
 			}
 		}
 
-		original.call(pos);
+		original.call(position);
 	}
 }
