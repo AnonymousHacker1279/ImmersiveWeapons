@@ -1,16 +1,12 @@
 plugins {
 	id 'java-library'
 	id 'maven-publish'
-	id 'net.neoforged.moddev' version '2.0.144'
-	id "com.hypherionmc.modutils.modpublisher" version "2.2.2"
+	id 'net.neoforged.moddev'
+	id "com.hypherionmc.modutils.modpublisher"
 	id 'idea'
 }
 
-apply from: 'optimization_utils.gradle'
-
-tasks.named('wrapper', Wrapper).configure {
-	distributionType = Wrapper.DistributionType.BIN
-}
+apply from: rootProject.file('optimization_utils.gradle')
 
 version = mod_version
 group = mod_group_id
@@ -140,7 +136,7 @@ dependencies {
 	// Include TerraBlender
 	implementation "com.github.glitchfiend:TerraBlender-neoforge:${terrablender_version}"
 	// Include Immersive Weapons
-	implementation "tech.anonymoushacker1279.immersiveweapons:ImmersiveWeapons:${immersiveweapons_version}"
+	implementation project(':')
 
 	// Include WTHIT and badpackets
 	compileOnly "mcp.mobius.waila:wthit-api:neo-${wthit_version}"
@@ -213,7 +209,7 @@ if (file("RELEASE_NOTES.md").exists()) {
 		apiKeys {
 			// Load API keys from tokens.properties file
 			def tokens = new Properties()
-			file("tokens.properties").withInputStream {
+			rootProject.file("tokens.properties").withInputStream {
 				stream -> tokens.load(stream)
 			}
 
