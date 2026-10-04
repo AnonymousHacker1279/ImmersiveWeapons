@@ -110,13 +110,13 @@ public class IWPlacedFeatures {
 				orePlacement(2, HeightRangePlacement.triangle(VerticalAnchor.absolute(-64), VerticalAnchor.absolute(-28))));
 
 		register(context, DEEPSLATE_COBALT_ORE, configuredFeatures.getOrThrow(IWConfiguredFeatures.DEEPSLATE_COBALT_ORE_CONFIGURATION),
-				orePlacement(12, HeightRangePlacement.triangle(VerticalAnchor.absolute(-64), VerticalAnchor.absolute(0))));
+				orePlacement(8, HeightRangePlacement.triangle(VerticalAnchor.absolute(-64), VerticalAnchor.absolute(0))));
 
 		register(context, COBALT_ORE, configuredFeatures.getOrThrow(IWConfiguredFeatures.COBALT_ORE_CONFIGURATION),
-				orePlacement(4, HeightRangePlacement.triangle(VerticalAnchor.absolute(7), VerticalAnchor.absolute(196))));
+				orePlacement(4, HeightRangePlacement.triangle(VerticalAnchor.absolute(7), VerticalAnchor.absolute(96))));
 
 		register(context, VOID_ORE, configuredFeatures.getOrThrow(IWConfiguredFeatures.VOID_ORE_CONFIGURATION),
-				orePlacement(5, HeightRangePlacement.triangle(VerticalAnchor.absolute(16), VerticalAnchor.absolute(112))));
+				orePlacement(5, HeightRangePlacement.uniform(VerticalAnchor.absolute(8), VerticalAnchor.absolute(72))));
 	}
 
 	/// Ore placement in the same order as vanilla. The count must come first, so that each attempt gets its own

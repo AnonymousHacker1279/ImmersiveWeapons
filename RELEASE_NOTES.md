@@ -4,7 +4,7 @@ This major update ports to MC 26.3, and fixes a large number of bugs found durin
 
 - Brewing recipes for IW potions are now standard datapack recipes, so they can be changed or removed by datapacks
 - Gunpowder is now consumed at its listed chance again
-    - This had been inverted since 1.28, causing powder to be used up far more slowly than intended
+    - This had been inverted since v1.28.0, causing powder to be used up far more slowly than intended
 - Ore and vegetation generation now follows the vanilla placement order
     - Ore veins are now spread out as intended, which greatly increases the amount of Cobalt, Molten, Tesla, and Void
       ore
@@ -12,6 +12,7 @@ This major update ports to MC 26.3, and fixes a large number of bugs found durin
 - Removed Mud, Dried Mud, and Hardened Mud (and their stairs, slabs, and windows), as vanilla has its own mud blocks
     - Existing blocks and items will disappear from old worlds. Mud Balls are now crafted from vanilla mud
 - Landmine Traps now use their own structure seed, so they no longer share placement with Abandoned Factories
+- Added armor trim palettes for IW materials
 
 ### Bugfixes
 
@@ -43,3 +44,7 @@ This major update ports to MC 26.3, and fixes a large number of bugs found durin
 - Fixed Morphine not converting to a Used Syringe after use
 - Fixed the Storm Creeper explosion radius being smaller than expected
 - Fixed the Starmite loot table not dropping Starstorm Shards
+
+### Removals
+
+- The Graveyard structure has been removed

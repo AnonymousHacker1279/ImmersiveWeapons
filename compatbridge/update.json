@@ -1,6 +1,8 @@
 {
 	"homepage": "https://www.curseforge.com/minecraft/mc-mods/immersive-weapons-compatibility-bridge",
 	"promos": {
+		"26.3-latest": "26.3-1.17.0",
+		"26.3-recommended": "26.3-1.17.0",
 		"26.2-latest": "26.2-1.16.0",
 		"26.2-recommended": "26.2-1.16.0",
 		"26.1.2-latest": "26.1.2-1.15.0",
@@ -27,6 +29,9 @@
 		"1.19-recommended": "1.19-1.1.2",
 		"1.18.2-latest": "1.18.2-1.0.2",
 		"1.18.2-recommended": "1.18.2-1.0.2"
+	},
+	"26.3": {
+		"26.3-1.17.0": "Support IW v1.40.0, MC 26.3 - https://github.com/AnonymousHacker1279/IWCompatibilityBridge/releases/tag/v1.17.0"
 	},
 	"26.2": {
 		"26.2-1.16.0": "Support IW v1.39.0, MC 26.2 - https://github.com/AnonymousHacker1279/IWCompatibilityBridge/releases/tag/v1.16.0"

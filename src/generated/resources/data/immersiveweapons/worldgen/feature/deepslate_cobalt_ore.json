@@ -1,7 +1,7 @@
 {
   "type": "minecraft:ore",
   "discard_chance_on_air_exposure": 0.1,
-  "size": 12,
+  "size": 6,
   "targets": [
     {
       "state": "immersiveweapons:cobalt_ore",

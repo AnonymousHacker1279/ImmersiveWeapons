@@ -126,10 +126,10 @@ public class IWConfiguredFeatures {
 				new OreFeature(OreReplacementTargets.TESLA_ORE_TARGETS, 4, 0.8f));
 
 		context.register(DEEPSLATE_COBALT_ORE_CONFIGURATION,
-				new OreFeature(OreReplacementTargets.COBALT_ORE_TARGETS, 12, 0.1f));
+				new OreFeature(OreReplacementTargets.COBALT_ORE_TARGETS, 6, 0.1f));
 
 		context.register(COBALT_ORE_CONFIGURATION,
-				new OreFeature(OreReplacementTargets.COBALT_ORE_TARGETS, 12, 0.15f));
+				new OreFeature(OreReplacementTargets.COBALT_ORE_TARGETS, 4, 0.15f));
 
 		context.register(VOID_ORE_CONFIGURATION,
 				new OreFeature(OreReplacementTargets.VOID_ORE_TARGETS, 4, 1.0f));
