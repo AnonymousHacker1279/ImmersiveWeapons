@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:padded_leather_leggings"
+        "recipes": "immersiveweapons:padded_leather_leggings"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

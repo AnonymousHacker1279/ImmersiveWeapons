@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:cloud_marble_brick_stairs"
+        "recipes": "immersiveweapons:cloud_marble_brick_stairs"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:sandbag"
+        "recipes": "immersiveweapons:sandbag"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

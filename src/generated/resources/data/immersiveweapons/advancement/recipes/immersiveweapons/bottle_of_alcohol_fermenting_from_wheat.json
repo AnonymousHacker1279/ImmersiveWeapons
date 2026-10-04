@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:bottle_of_alcohol_fermenting_from_wheat"
+        "recipes": "immersiveweapons:bottle_of_alcohol_fermenting_from_wheat"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

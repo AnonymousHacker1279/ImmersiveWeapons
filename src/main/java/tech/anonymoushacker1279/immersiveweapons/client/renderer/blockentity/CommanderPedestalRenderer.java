@@ -50,7 +50,7 @@ public record CommanderPedestalRenderer(
 				stack.translate(0.5 + x, 1.35 + y, 0.5 + z);
 
 				// Rotate the item to face outwards
-				stack.mulPose(Axis.YP.rotationDegrees((float) Math.toDegrees(angle) - 90));
+				stack.rotate(Axis.YP.rotationDegrees((float) Math.toDegrees(angle) - 90));
 
 				// Scale the item
 				stack.scale(0.25F, 0.25F, 0.25F);

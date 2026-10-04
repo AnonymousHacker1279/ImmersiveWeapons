@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:stardust_wood"
+        "recipes": "immersiveweapons:stardust_wood"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

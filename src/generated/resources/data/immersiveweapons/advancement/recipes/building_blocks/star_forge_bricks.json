@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:star_forge_bricks"
+        "recipes": "immersiveweapons:star_forge_bricks"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

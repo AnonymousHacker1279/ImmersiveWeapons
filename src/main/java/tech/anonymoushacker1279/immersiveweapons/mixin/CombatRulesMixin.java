@@ -24,28 +24,29 @@ import tech.anonymoushacker1279.immersiveweapons.potion.BrokenArmorEffect;
 public abstract class CombatRulesMixin {
 
 	@Inject(method = "getDamageAfterAbsorb", at = @At("RETURN"), require = 0, cancellable = true)
-	private static void getDamageAfterAbsorb(LivingEntity entity, float damage, DamageSource damageSource, float armorValue, float armorToughness, CallbackInfoReturnable<Float> ci) {
+	private static void getDamageAfterAbsorb(LivingEntity victim, float damage, DamageSource source, float totalArmor, float armorToughness, CallbackInfoReturnable<Float> ci) {
 		float toughnessModifier = 2.0F + armorToughness / 4.0F;
-		float clampedArmorProtection = (float) Mth.clamp(armorValue - damage / toughnessModifier, armorValue * 0.2F, IWConfigs.SERVER.maxArmorProtection.getAsDouble());
+		float clampedArmorProtection = (float) Mth.clamp(totalArmor - damage / toughnessModifier, totalArmor * 0.2F, IWConfigs.SERVER.maxArmorProtection.getAsDouble());
 		final float[] damageModifier = {clampedArmorProtection / 25.0F};
 
-		ItemStack weapon = damageSource.getWeaponItem();
-		if (weapon != null && entity.level() instanceof ServerLevel serverlevel) {
-			damageModifier[0] = Mth.clamp(EnchantmentHelper.modifyArmorEffectiveness(serverlevel, weapon, entity, damageSource, damageModifier[0]), 0.0F, 1.0F);
+		ItemStack weapon = source.getWeaponItem();
+		if (weapon != null && victim.level() instanceof ServerLevel serverlevel) {
+			damageModifier[0] = Mth.clamp(EnchantmentHelper.modifyArmorEffectiveness(serverlevel, weapon, victim, source, damageModifier[0]), 0.0F, 1.0F);
 
 			// Handle armor breach attribute
 			weapon.getAttributeModifiers().forEach(EquipmentSlot.MAINHAND, (attribute, attributeModifier) -> {
-				if (attribute == AttributeRegistry.ARMOR_BREACH) {
+				// Compare by key, as the holder may be a registry reference rather than the DeferredHolder
+				if (attribute.is(AttributeRegistry.ARMOR_BREACH.key())) {
 					damageModifier[0] -= (float) attributeModifier.amount();
 				}
 			});
+		}
 
-			// Handle Broken Armor effects
-			MobEffectInstance brokenArmorEffect = entity.getEffect(EffectRegistry.BROKEN_ARMOR_EFFECT);
-			if (brokenArmorEffect != null) {
-				int level = brokenArmorEffect.getAmplifier();
-				damageModifier[0] -= ((BrokenArmorEffect) brokenArmorEffect.getEffect().value()).calculateArmorBreach(level);
-			}
+		// Handle Broken Armor effects. This applies regardless of the damage source having a weapon.
+		MobEffectInstance brokenArmorEffect = victim.getEffect(EffectRegistry.BROKEN_ARMOR_EFFECT);
+		if (brokenArmorEffect != null) {
+			int level = brokenArmorEffect.getAmplifier();
+			damageModifier[0] -= ((BrokenArmorEffect) brokenArmorEffect.getEffect().value()).calculateArmorBreach(level);
 		}
 
 		// Ensure the modifier does not go below zero

@@ -28,7 +28,7 @@ public class BarbedWireFenceBlock extends FenceBlock {
 			entity.makeStuckInBlock(state, new Vec3(0.45F, 0.40D, 0.45F));
 			if (level instanceof ServerLevel serverLevel) {
 				Vec3 movement = entity instanceof Player ? entity.getKnownMovement() : entity.position().subtract(entity.oldPosition());
-				if (movement.x >= 0.001F || movement.z >= 0.001F) {
+				if (Math.abs(movement.x) >= 0.001D || Math.abs(movement.z) >= 0.001D) {
 					if (entity instanceof Player player && player.isCreative()) {
 						return;
 					}

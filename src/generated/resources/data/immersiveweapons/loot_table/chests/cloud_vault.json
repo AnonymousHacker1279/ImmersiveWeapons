@@ -9,15 +9,13 @@
         }
       ],
       "name": "tier_1",
-      "rolls": 1.0
+      "rolls": 1
     },
     {
-      "conditions": [
-        {
-          "chance": 0.25,
-          "condition": "minecraft:random_chance"
-        }
-      ],
+      "condition": {
+        "type": "minecraft:random_chance",
+        "chance": 0.25
+      },
       "entries": [
         {
           "type": "minecraft:loot_table",
@@ -25,7 +23,7 @@
         }
       ],
       "name": "tier_2",
-      "rolls": 1.0
+      "rolls": 1
     }
   ],
   "random_sequence": "immersiveweapons:chests/cloud_vault"

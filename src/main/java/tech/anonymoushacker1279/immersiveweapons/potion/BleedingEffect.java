@@ -24,8 +24,8 @@ public class BleedingEffect extends MobEffect {
 
 			float amount = 1.0f + (amplifier * 0.25f);
 
-			if (entity.invulnerableTime > cooldownTicks) {
-				entity.invulnerableTime = cooldownTicks;
+			if (entity.getInvulnerableTime() > cooldownTicks) {
+				entity.setInvulnerableTime(cooldownTicks);
 			}
 
 			entity.hurtServer(serverLevel, IWDamageSources.bleeding(serverLevel.registryAccess()), amount);

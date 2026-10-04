@@ -36,7 +36,7 @@ public abstract class LightningRodBlockMixin {
 					.getValue(ABANDONED_FACTORY_KEY);
 
 			if (structure != null) {
-				StructureStart structureStart = serverLevel.structureManager().getStructureWithPieceAt(pos.below(), structure);
+				StructureStart structureStart = serverLevel.structureManager().getStructureWithPieceAt(pos.below(), holder -> holder.value() == structure);
 				if (structureStart.isValid()) {
 					// Check up to 15 blocks below for a Dormant Tesla Ore block, if so, replace it with an active one
 					for (int i = 0; i < 15; ++i) {

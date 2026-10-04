@@ -12,7 +12,7 @@ import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Heightmap.Types;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.placement.*;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
@@ -40,108 +40,92 @@ public class IWPlacedFeatures {
 	}
 
 	public static void bootstrap(BootstrapContext<PlacedFeature> context) {
-		HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
+		HolderGetter<Feature> configuredFeatures = context.lookup(Registries.FEATURE);
 
+		// Modifier order matters: the count/rarity comes first, then the horizontal spread, then the height, and
+		// the biome check last (the same as vanilla). Otherwise, every attempt lands at the same position, or the
+		// height is taken from a different column than the one the feature is placed in.
 		register(context, PATCH_WOODEN_SPIKES, configuredFeatures.getOrThrow(IWConfiguredFeatures.PATCH_WOODEN_SPIKES_CONFIGURATION),
 				List.of(
-						HeightmapPlacement.onHeightmap(Types.MOTION_BLOCKING),
-						BiomeFilter.biome(),
-						InSquarePlacement.spread(),
 						CountPlacement.of(UniformInt.of(4, 12)),
-						RarityFilter.onAverageOnceEvery(16)
+						RarityFilter.onAverageOnceEvery(16),
+						InSquarePlacement.spread(),
+						HeightmapPlacement.onHeightmap(Types.MOTION_BLOCKING),
+						BiomeFilter.biome()
 				));
 
 		register(context, BURNED_OAK_TREE, configuredFeatures.getOrThrow(IWConfiguredFeatures.BURNED_OAK_TREE_CONFIGURATION),
 				List.of(
+						RarityFilter.onAverageOnceEvery(16),
+						InSquarePlacement.spread(),
 						HeightmapPlacement.onHeightmap(Types.WORLD_SURFACE),
 						BiomeFilter.biome(),
-						InSquarePlacement.spread(),
-						RarityFilter.onAverageOnceEvery(16),
 						PlacementUtils.filteredByBlockSurvival(Blocks.OAK_SAPLING)
 				));
 
 		register(context, PATCH_MOONGLOW, configuredFeatures.getOrThrow(IWConfiguredFeatures.PATCH_MOONGLOW_CONFIGURATION),
 				List.of(
+						InSquarePlacement.spread(),
 						HeightmapPlacement.onHeightmap(Types.WORLD_SURFACE),
-						BiomeFilter.biome(),
-						InSquarePlacement.spread()
+						BiomeFilter.biome()
 				));
 
 		register(context, STARDUST_TREE, configuredFeatures.getOrThrow(IWConfiguredFeatures.STARDUST_TREE_CONFIGURATION),
 				List.of(
+						RarityFilter.onAverageOnceEvery(8),
+						InSquarePlacement.spread(),
 						HeightmapPlacement.onHeightmap(Types.WORLD_SURFACE),
 						BiomeFilter.biome(),
-						InSquarePlacement.spread(),
-						RarityFilter.onAverageOnceEvery(8),
 						PlacementUtils.filteredByBlockSurvival(BlockRegistry.STARDUST_SAPLING.get())
 				));
 
 		register(context, PATCH_DEATHWEED, configuredFeatures.getOrThrow(IWConfiguredFeatures.PATCH_DEATHWEED_CONFIGURATION),
 				List.of(
-						HeightmapPlacement.onHeightmap(Types.WORLD_SURFACE),
-						BiomeFilter.biome(),
+						RarityFilter.onAverageOnceEvery(3),
 						InSquarePlacement.spread(),
-						RarityFilter.onAverageOnceEvery(3)
+						HeightmapPlacement.onHeightmap(Types.WORLD_SURFACE),
+						BiomeFilter.biome()
 				));
 
 		register(context, ASTRAL_GEODE, configuredFeatures.getOrThrow(IWConfiguredFeatures.ASTRAL_GEODE_CONFIGURATION),
 				List.of(
-						HeightmapPlacement.onHeightmap(Types.WORLD_SURFACE),
-						BiomeFilter.biome(),
+						RarityFilter.onAverageOnceEvery(4),
 						InSquarePlacement.spread(),
-						RarityFilter.onAverageOnceEvery(4)
+						HeightmapPlacement.onHeightmap(Types.WORLD_SURFACE),
+						BiomeFilter.biome()
 				));
 
 		register(context, PATCH_FIREFLY_BUSH, configuredFeatures.getOrThrow(VegetationFeatures.FIREFLY_BUSH),
 				List.of(
-						PlacementUtils.HEIGHTMAP_NO_LEAVES,
 						CountPlacement.of(2),
-						BiomeFilter.biome(),
-						InSquarePlacement.spread()
+						InSquarePlacement.spread(),
+						PlacementUtils.HEIGHTMAP_NO_LEAVES,
+						BiomeFilter.biome()
 				));
 
 		register(context, MOLTEN_ORE, configuredFeatures.getOrThrow(IWConfiguredFeatures.MOLTEN_ORE_CONFIGURATION),
-				List.of(HeightRangePlacement.triangle(VerticalAnchor.absolute(0),
-								VerticalAnchor.absolute(48)),
-						BiomeFilter.biome(),
-						InSquarePlacement.spread(),
-						CountPlacement.of(6)
-				));
+				orePlacement(6, HeightRangePlacement.triangle(VerticalAnchor.absolute(0), VerticalAnchor.absolute(48))));
 
 		register(context, TESLA_ORE, configuredFeatures.getOrThrow(IWConfiguredFeatures.TESLA_ORE_CONFIGURATION),
-				List.of(HeightRangePlacement.triangle(VerticalAnchor.absolute(-64),
-								VerticalAnchor.absolute(-28)),
-						BiomeFilter.biome(),
-						InSquarePlacement.spread(),
-						CountPlacement.of(2)
-				));
+				orePlacement(2, HeightRangePlacement.triangle(VerticalAnchor.absolute(-64), VerticalAnchor.absolute(-28))));
 
 		register(context, DEEPSLATE_COBALT_ORE, configuredFeatures.getOrThrow(IWConfiguredFeatures.DEEPSLATE_COBALT_ORE_CONFIGURATION),
-				List.of(HeightRangePlacement.triangle(VerticalAnchor.absolute(-64),
-								VerticalAnchor.absolute(0)),
-						BiomeFilter.biome(),
-						InSquarePlacement.spread(),
-						CountPlacement.of(12)
-				));
+				orePlacement(8, HeightRangePlacement.triangle(VerticalAnchor.absolute(-64), VerticalAnchor.absolute(0))));
 
 		register(context, COBALT_ORE, configuredFeatures.getOrThrow(IWConfiguredFeatures.COBALT_ORE_CONFIGURATION),
-				List.of(HeightRangePlacement.triangle(VerticalAnchor.absolute(7),
-								VerticalAnchor.absolute(196)),
-						BiomeFilter.biome(),
-						InSquarePlacement.spread(),
-						CountPlacement.of(4)
-				));
+				orePlacement(4, HeightRangePlacement.triangle(VerticalAnchor.absolute(7), VerticalAnchor.absolute(96))));
 
 		register(context, VOID_ORE, configuredFeatures.getOrThrow(IWConfiguredFeatures.VOID_ORE_CONFIGURATION),
-				List.of(HeightRangePlacement.triangle(VerticalAnchor.absolute(16),
-								VerticalAnchor.absolute(112)),
-						BiomeFilter.biome(),
-						InSquarePlacement.spread(),
-						CountPlacement.of(5)
-				));
+				orePlacement(5, HeightRangePlacement.uniform(VerticalAnchor.absolute(8), VerticalAnchor.absolute(72))));
 	}
 
-	private static void register(BootstrapContext<PlacedFeature> context, ResourceKey<PlacedFeature> key, Holder<ConfiguredFeature<?, ?>> configuration, List<PlacementModifier> modifiers) {
+	/// Ore placement in the same order as vanilla. The count must come first, so that each attempt gets its own
+	/// horizontal position and height.
+	private static List<PlacementModifier> orePlacement(int count, PlacementModifier heightRange) {
+		return List.of(CountPlacement.of(count), InSquarePlacement.spread(), heightRange, BiomeFilter.biome());
+	}
+
+	private static void register(BootstrapContext<PlacedFeature> context, ResourceKey<PlacedFeature> key, Holder<Feature> configuration, List<PlacementModifier> modifiers) {
 		context.register(key, new PlacedFeature(configuration, List.copyOf(modifiers)));
 	}
 }

@@ -56,7 +56,7 @@ public class FlashbangEntity extends AdvancedThrowableItemProjectile {
 					.forEach(entity -> {
 						if (entity instanceof ServerPlayer player) {
 							if (canSee(player, this, false)) {
-								PacketDistributor.sendToPlayer(player, new PlayerSoundPayload(SoundEventRegistry.FLASHBANG_RINGING.getKey(),
+								PacketDistributor.sendToPlayer(player, new PlayerSoundPayload(SoundEventRegistry.FLASHBANG_RINGING.key(),
 										1.0f, level().getRandom().nextFloat() * 0.05f + 1.0f));
 
 								if (canSee(player, this, true)) {

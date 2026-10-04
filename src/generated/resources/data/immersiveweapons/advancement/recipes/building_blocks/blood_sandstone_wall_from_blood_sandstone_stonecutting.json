@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:blood_sandstone_wall_from_blood_sandstone_stonecutting"
+        "recipes": "immersiveweapons:blood_sandstone_wall_from_blood_sandstone_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

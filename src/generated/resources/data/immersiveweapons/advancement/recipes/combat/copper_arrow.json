@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:copper_arrow"
+        "recipes": "immersiveweapons:copper_arrow"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

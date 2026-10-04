@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:netherite_musket_ball_ammunition_table_crafting"
+        "recipes": "immersiveweapons:netherite_musket_ball_ammunition_table_crafting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

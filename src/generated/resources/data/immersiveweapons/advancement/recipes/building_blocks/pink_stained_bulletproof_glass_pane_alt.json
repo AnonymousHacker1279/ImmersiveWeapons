@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:pink_stained_bulletproof_glass_pane_alt"
+        "recipes": "immersiveweapons:pink_stained_bulletproof_glass_pane_alt"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

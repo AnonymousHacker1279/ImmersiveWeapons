@@ -376,7 +376,8 @@ public abstract class AbstractGunItem extends Item {
 		if (scorchShot.isPresent()) {
 			enchantmentLevel = gun.getEnchantmentLevel(scorchShot.get());
 			if (enchantmentLevel > 0) {
-				bullet.igniteForSeconds(enchantmentLevel * 100);
+				// 100 ticks (5 seconds) per level
+				bullet.igniteForSeconds(enchantmentLevel * 5);
 			}
 		}
 
@@ -472,7 +473,8 @@ public abstract class AbstractGunItem extends Item {
 
 			float consumeChance = powderType.data.consumeChance();
 			if (!player.level().isClientSide()) {
-				if (player.getRandom().nextFloat() <= consumeChance) {
+				// Roll to see if the powder is consumed. If not, skip consuming it.
+				if (player.getRandom().nextFloat() > consumeChance) {
 					player.getInventory().setChanged(); // Resync the inventory because the client may not roll the same number
 					return;
 				}

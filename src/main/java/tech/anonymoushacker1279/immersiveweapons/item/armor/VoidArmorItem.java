@@ -19,6 +19,9 @@ import tech.anonymoushacker1279.immersiveweapons.network.payload.VoidArmorPayloa
 
 public class VoidArmorItem extends Item implements TickableArmor {
 
+	/// The dash cooldown in ticks. The server uses this to validate dragon breath requests from the client.
+	public static final int DASH_COOLDOWN = 60;
+
 	private int dashCooldown = 0;
 
 	public VoidArmorItem(ArmorMaterial material, ArmorType armorType, Properties properties) {
@@ -30,7 +33,7 @@ public class VoidArmorItem extends Item implements TickableArmor {
 		if (ArmorUtils.isWearingVoidArmor(player)) {
 			boolean effectEnabled = player.getPersistentData().getBoolean("VoidArmorEffectEnabled").orElse(false);
 
-			if (level.isClientSide()) {
+			if (level.isClientSide() && player.isLocalPlayer()) {
 				if (IWKeyBinds.TOGGLE_ARMOR_EFFECT.consumeClick()) {
 					// Store the toggle variable in the player's NBT
 					player.getPersistentData().putBoolean("VoidArmorEffectEnabled", !effectEnabled);
@@ -67,7 +70,7 @@ public class VoidArmorItem extends Item implements TickableArmor {
 								ClientPacketDistributor.sendToServer(new VoidArmorPayload(true, true));
 							}
 
-							dashCooldown = 60;
+							dashCooldown = DASH_COOLDOWN;
 						}
 					}
 				}

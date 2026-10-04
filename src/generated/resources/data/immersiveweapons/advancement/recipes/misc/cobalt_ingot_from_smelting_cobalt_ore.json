@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:cobalt_ingot_from_smelting_cobalt_ore"
+        "recipes": "immersiveweapons:cobalt_ingot_from_smelting_cobalt_ore"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

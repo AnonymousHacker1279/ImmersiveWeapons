@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:barrel_tap"
+        "recipes": "immersiveweapons:barrel_tap"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

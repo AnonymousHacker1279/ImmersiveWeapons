@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:immersive_weapons_flag"
+        "recipes": "immersiveweapons:immersive_weapons_flag"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

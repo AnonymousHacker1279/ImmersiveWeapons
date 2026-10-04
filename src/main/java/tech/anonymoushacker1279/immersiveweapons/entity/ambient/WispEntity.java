@@ -60,7 +60,7 @@ public class WispEntity extends AmbientCreature implements GrantAdvancementOnDis
 				.add(Attributes.GRAVITY, 0.0D);
 	}
 
-	public static WispEntity create(Level level, BlockPos pos, int wispType) {
+	public static void create(Level level, BlockPos pos, int wispType) {
 		WispEntity wisp = new WispEntity(level, pos, wispType);
 
 		if (!level.isClientSide() && level instanceof ServerLevelAccessor accessor) {
@@ -69,7 +69,6 @@ public class WispEntity extends AmbientCreature implements GrantAdvancementOnDis
 
 		level.addFreshEntity(wisp);
 
-		return wisp;
 	}
 
 	public static boolean checkSpawnRules(EntityType<WispEntity> entityType, ServerLevelAccessor accessor, EntitySpawnReason reason, BlockPos blockPos, RandomSource random) {

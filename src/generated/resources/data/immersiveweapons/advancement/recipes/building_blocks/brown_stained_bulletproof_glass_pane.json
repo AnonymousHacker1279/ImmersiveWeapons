@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:brown_stained_bulletproof_glass_pane"
+        "recipes": "immersiveweapons:brown_stained_bulletproof_glass_pane"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

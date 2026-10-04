@@ -6,7 +6,7 @@ import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.levelgen.carver.ConfiguredWorldCarver;
+import net.minecraft.world.level.levelgen.carver.WorldCarver;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
@@ -23,7 +23,7 @@ public class IWBiomes {
 
 	public static void bootstrap(BootstrapContext<Biome> context) {
 		HolderGetter<PlacedFeature> placedFeatures = context.lookup(Registries.PLACED_FEATURE);
-		HolderGetter<ConfiguredWorldCarver<?>> vanillaConfiguredCarvers = context.lookup(Registries.CONFIGURED_CARVER);
+		HolderGetter<WorldCarver> vanillaConfiguredCarvers = context.lookup(Registries.CARVER);
 
 		context.register(BATTLEFIELD, BiomesGenerator.battlefieldBiome(placedFeatures, vanillaConfiguredCarvers));
 		context.register(TILTROS_WASTES, BiomesGenerator.tiltrosWastesBiome(placedFeatures, vanillaConfiguredCarvers));

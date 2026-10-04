@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:punji_sticks"
+        "recipes": "immersiveweapons:punji_sticks"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

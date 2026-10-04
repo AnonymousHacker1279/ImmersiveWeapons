@@ -13,6 +13,6 @@ public class StarstormCrystalBlock extends AmethystClusterBlock {
 
 	@Override
 	public @Nullable PushReaction getPistonPushReaction(BlockState state) {
-		return PushReaction.DESTROY;
+		return PushReaction.POPPED;
 	}
 }

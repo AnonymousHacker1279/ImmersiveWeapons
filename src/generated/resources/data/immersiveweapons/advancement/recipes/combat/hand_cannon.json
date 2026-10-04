@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:hand_cannon"
+        "recipes": "immersiveweapons:hand_cannon"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

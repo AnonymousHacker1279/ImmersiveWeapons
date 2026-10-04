@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:wooden_spikes"
+        "recipes": "immersiveweapons:wooden_spikes"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

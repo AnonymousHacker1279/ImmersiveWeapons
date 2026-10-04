@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:flag_pole"
+        "recipes": "immersiveweapons:flag_pole"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

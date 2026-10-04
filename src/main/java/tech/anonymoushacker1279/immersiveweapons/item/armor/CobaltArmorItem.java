@@ -27,7 +27,7 @@ public class CobaltArmorItem extends Item implements TickableArmor {
 			if (ArmorUtils.isWearingCobaltArmor(player)) {
 				boolean effectEnabled = player.getPersistentData().getBoolean("CobaltArmorEffectEnabled").orElse(false);
 
-				if (level.isClientSide()) {
+				if (level.isClientSide() && player.isLocalPlayer()) {
 					if (IWKeyBinds.TOGGLE_ARMOR_EFFECT.consumeClick()) {
 						// Store the toggle variable in the player's NBT
 						player.getPersistentData().putBoolean("CobaltArmorEffectEnabled", !effectEnabled);

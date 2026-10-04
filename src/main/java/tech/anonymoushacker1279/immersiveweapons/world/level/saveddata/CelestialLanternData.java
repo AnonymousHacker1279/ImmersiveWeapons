@@ -32,7 +32,12 @@ public class CelestialLanternData extends SavedData {
 	}
 
 	public CelestialLanternData(List<BlockPos> allLanterns) {
-		this.allLanterns.addAll(allLanterns);
+		// Older saves may contain duplicate entries
+		for (BlockPos pos : allLanterns) {
+			if (!this.allLanterns.contains(pos)) {
+				this.allLanterns.add(pos);
+			}
+		}
 	}
 
 	public static CelestialLanternData getData(MinecraftServer server) {
@@ -43,13 +48,17 @@ public class CelestialLanternData extends SavedData {
 		return allLanterns;
 	}
 
+	/// Register a lantern. This is called every time a lantern block entity loads, so it must be idempotent.
 	public void addLantern(BlockPos pos) {
-		allLanterns.add(pos);
-		setDirty();
+		if (!allLanterns.contains(pos)) {
+			allLanterns.add(pos);
+			setDirty();
+		}
 	}
 
 	public void removeLantern(BlockPos pos) {
-		allLanterns.remove(pos);
-		setDirty();
+		if (allLanterns.remove(pos)) {
+			setDirty();
+		}
 	}
 }

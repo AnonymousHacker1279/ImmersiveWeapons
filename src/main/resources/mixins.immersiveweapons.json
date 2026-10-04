@@ -17,8 +17,7 @@
 		"WindChargeMixin"
 	],
 	"client": [
-		"AbstractContainerScreenMixin",
-		"EnchantmentMixin"
+		"AbstractContainerScreenMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

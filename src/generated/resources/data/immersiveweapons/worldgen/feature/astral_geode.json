@@ -1,0 +1,43 @@
+{
+  "type": "minecraft:geode",
+  "blocks": {
+    "alternate_inner_layer_provider": {
+      "id": "immersiveweapons:astral_ore"
+    },
+    "cannot_replace": "#minecraft:features_cannot_replace",
+    "filling_provider": {
+      "id": "minecraft:air"
+    },
+    "inner_layer_provider": {
+      "id": "minecraft:smooth_quartz"
+    },
+    "inner_placements": [
+      "immersiveweapons:astral_crystal"
+    ],
+    "invalid_blocks": "#minecraft:geode_invalid_blocks",
+    "middle_layer_provider": {
+      "id": "minecraft:calcite"
+    },
+    "outer_layer_provider": {
+      "id": "minecraft:tuff"
+    }
+  },
+  "crack": {
+    "base_crack_size": 1.4,
+    "crack_point_offset": 1,
+    "generate_crack_chance": 0.6499999761581421
+  },
+  "invalid_blocks_threshold": 1,
+  "layers": {},
+  "max_gen_offset": -16,
+  "min_gen_offset": 16,
+  "noise_multiplier": 0.035,
+  "outer_wall_distance": {
+    "type": "minecraft:uniform",
+    "max_inclusive": 5,
+    "min_inclusive": 3
+  },
+  "placements_require_layer0_alternate": false,
+  "use_alternate_layer0_chance": 0.05,
+  "use_potential_placements_chance": 0.05
+}

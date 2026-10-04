@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:molten_ingot_from_molten_block"
+        "recipes": "immersiveweapons:molten_ingot_from_molten_block"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

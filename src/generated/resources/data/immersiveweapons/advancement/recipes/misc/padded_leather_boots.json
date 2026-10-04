@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:padded_leather_boots"
+        "recipes": "immersiveweapons:padded_leather_boots"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

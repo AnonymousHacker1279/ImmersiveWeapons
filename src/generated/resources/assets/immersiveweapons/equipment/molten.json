@@ -15,5 +15,13 @@
         "texture": "immersiveweapons:molten"
       }
     ]
-  }
+  },
+  "trim_overrides": [
+    {
+      "palette": "immersiveweapons:trim/iw_molten_darker",
+      "when": {
+        "material": "immersiveweapons:molten"
+      }
+    }
+  ]
 }

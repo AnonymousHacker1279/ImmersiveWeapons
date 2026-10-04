@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:padded_leather_helmet"
+        "recipes": "immersiveweapons:padded_leather_helmet"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

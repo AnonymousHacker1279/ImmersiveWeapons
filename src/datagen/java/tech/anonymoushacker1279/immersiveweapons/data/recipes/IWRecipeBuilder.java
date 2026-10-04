@@ -5,6 +5,7 @@ import net.minecraft.advancements.AdvancementRequirements.Strategy;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.triggers.Criterion;
 import net.minecraft.advancements.triggers.RecipeUnlockedTrigger;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceKey;
@@ -37,7 +38,7 @@ public abstract class IWRecipeBuilder implements RecipeBuilder {
 	@Override
 	public void save(RecipeOutput output, ResourceKey<Recipe<?>> resourceKey) {
 		Advancement.Builder advancementBuilder = output.advancement()
-				.addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(resourceKey))
+				.addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(output.lookup(Registries.RECIPE).getOrThrow(resourceKey)))
 				.rewards(AdvancementRewards.Builder.recipe(resourceKey))
 				.requirements(Strategy.OR);
 

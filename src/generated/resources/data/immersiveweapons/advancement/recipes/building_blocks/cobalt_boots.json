@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:cobalt_boots"
+        "recipes": "immersiveweapons:cobalt_boots"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

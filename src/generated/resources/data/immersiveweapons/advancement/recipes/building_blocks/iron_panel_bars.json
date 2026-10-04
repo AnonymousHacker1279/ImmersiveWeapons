@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:iron_panel_bars"
+        "recipes": "immersiveweapons:iron_panel_bars"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

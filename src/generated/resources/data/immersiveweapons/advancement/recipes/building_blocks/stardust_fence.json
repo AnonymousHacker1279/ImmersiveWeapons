@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:stardust_fence"
+        "recipes": "immersiveweapons:stardust_fence"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

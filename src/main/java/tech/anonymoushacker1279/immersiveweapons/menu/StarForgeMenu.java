@@ -206,10 +206,21 @@ public class StarForgeMenu extends AbstractContainerMenu {
 		AbstractContainerMenu menu = player.containerMenu;
 
 		if (menu.containerId == containerId && menu instanceof StarForgeMenu starForgeMenu) {
+			// The index comes from the client, and is later used to look up recipes on the server, so it must be valid
+			if (menuSelectionIndex < 0 || menuSelectionIndex >= starForgeMenu.availableRecipes.size()) {
+				return;
+			}
+
 			starForgeMenu.containerData.set(3, menuSelectionIndex);
-			if (beginCrafting && menuSelectionIndex >= 0 && menuSelectionIndex < starForgeMenu.availableRecipes.size()) {
+
+			// Only start smelting if the forge is ready (hot enough and idle) and has enough materials
+			StarForgeRecipe selectedRecipe = starForgeMenu.availableRecipes.get(menuSelectionIndex);
+			if (beginCrafting
+					&& starForgeMenu.containerData.get(1) == 1000
+					&& starForgeMenu.containerData.get(2) == 0
+					&& selectedRecipe.primaryMaterialCount() <= starForgeMenu.container.getItem(0).getCount()
+					&& selectedRecipe.secondaryMaterialCount() <= starForgeMenu.container.getItem(1).getCount()) {
 				// Start the smelting process
-				StarForgeRecipe selectedRecipe = starForgeMenu.availableRecipes.get(menuSelectionIndex);
 				starForgeMenu.containerData.set(2, selectedRecipe.smeltTime());
 			}
 			starForgeMenu.container.setChanged();

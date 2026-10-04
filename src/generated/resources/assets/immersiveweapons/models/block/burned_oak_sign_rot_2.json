@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_sign_rot_2",
+  "textures": {
+    "all": "immersiveweapons:block/burned_oak_sign",
+    "particle": "immersiveweapons:block/burned_oak_planks"
+  }
+}

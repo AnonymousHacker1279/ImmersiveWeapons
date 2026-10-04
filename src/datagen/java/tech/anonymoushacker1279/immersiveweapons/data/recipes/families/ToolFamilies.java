@@ -2,7 +2,9 @@ package tech.anonymoushacker1279.immersiveweapons.data.recipes.families;
 
 import com.google.common.collect.ImmutableList;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.ArrowItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.common.Tags;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.common.CommonItemTagGroups;
@@ -19,9 +21,9 @@ public record ToolFamilies(TagKey<Item> material,
                            TagKey<Item> handle,
                            Supplier<? extends Item> sword,
                            Supplier<? extends Item> pickaxe,
-                           Supplier<? extends AxeItem> axe,
-                           Supplier<? extends ShovelItem> shovel,
-                           Supplier<? extends HoeItem> hoe,
+                           Supplier<? extends Item> axe,
+                           Supplier<? extends Item> shovel,
+                           Supplier<? extends Item> hoe,
                            Supplier<? extends Item> spear,
                            Supplier<? extends GauntletItem> gauntlet,
                            Supplier<? extends MaulItem> maul,

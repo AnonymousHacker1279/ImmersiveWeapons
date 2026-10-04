@@ -15,6 +15,11 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
+import tech.anonymoushacker1279.immersiveweapons.block.core.WaterloggingHelper;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -51,6 +56,12 @@ public class PunjiSticksBlock extends Block implements SimpleWaterloggedBlock {
 	}
 
 	@Override
+	protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess scheduledTickAccess, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
+		WaterloggingHelper.scheduleFluidTick(state, level, scheduledTickAccess, pos);
+		return super.updateShape(state, level, scheduledTickAccess, pos, direction, neighborPos, neighborState, random);
+	}
+
+	@Override
 	public FluidState getFluidState(BlockState state) {
 		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
@@ -68,7 +79,7 @@ public class PunjiSticksBlock extends Block implements SimpleWaterloggedBlock {
 				float damage = (float) ((livingEntity.fallDistance + 10f) * (1.25f - (featherFallingLevel <= 4 ? featherFallingLevel * 0.25f : 1.0f)));
 				livingEntity.hurt(IWDamageSources.punjiSticksFall(level.registryAccess()), damage);
 			} else {
-				float damage = (float) (livingEntity.getDeltaMovement().dot(new Vec3(1, 1, 1)) / 1.5f) + 2.0f;
+				float damage = (float) (livingEntity.getDeltaMovement().length() / 1.5f) + 2.0f;
 				livingEntity.hurt(IWDamageSources.punjiSticks(level.registryAccess()), damage);
 			}
 

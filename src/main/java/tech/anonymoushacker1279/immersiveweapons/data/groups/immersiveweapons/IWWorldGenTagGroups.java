@@ -27,7 +27,6 @@ public class IWWorldGenTagGroups {
 	public static final TagKey<Biome> HAS_HANS_HUT = createStructureTag("hans_hut");
 	public static final TagKey<Biome> HAS_DESTROYED_HOUSE = createStructureTag("destroyed_house");
 	public static final TagKey<Biome> HAS_BATTLEFIELD_CAMP = createStructureTag("battlefield_camp");
-	public static final TagKey<Biome> HAS_GRAVEYARD = createStructureTag("graveyard");
 	public static final TagKey<Biome> HAS_BATTLEFIELD_TOWN = createStructureTag("battlefield_town");
 	public static final TagKey<Biome> HAS_CELESTIAL_ASTEROID = createStructureTag("celestial_asteroid");
 	public static final TagKey<Biome> HAS_BIODOME = createStructureTag("biodome");

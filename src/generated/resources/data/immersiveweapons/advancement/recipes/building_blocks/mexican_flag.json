@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:mexican_flag"
+        "recipes": "immersiveweapons:mexican_flag"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

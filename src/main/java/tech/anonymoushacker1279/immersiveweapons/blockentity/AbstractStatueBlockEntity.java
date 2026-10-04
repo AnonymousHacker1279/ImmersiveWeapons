@@ -17,7 +17,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -81,7 +80,7 @@ public abstract class AbstractStatueBlockEntity<T extends SoldierEntity> extends
 		T entity = createEntity(level);
 		List<? extends LivingEntity> entitiesInArea = getEntitiesInArea(entity);
 
-		if (entitiesInArea != null && entitiesInArea.size() <= (maxNearbyEntities + additionalEntities)) {
+		if (entitiesInArea != null && entitiesInArea.size() < (maxNearbyEntities + additionalEntities)) {
 			if (entity != null && level instanceof ServerLevel serverLevel) {
 				entity.finalizeSpawn(serverLevel, serverLevel.getCurrentDifficultyAt(getBlockPos()), EntitySpawnReason.SPAWNER, null);
 				if (entity.getRandom().nextFloat() <= armorSpawnChance) {
@@ -119,7 +118,8 @@ public abstract class AbstractStatueBlockEntity<T extends SoldierEntity> extends
 		int i;
 		for (i = 0; i < 5; i++) {
 			BlockPos randomPositionInArea = getRandomPositionInArea();
-			if (level != null && level.getBlockState(randomPositionInArea) == Blocks.AIR.defaultBlockState()) {
+			// Both blocks must be empty, so the entity doesn't spawn inside a wall
+			if (level != null && level.isEmptyBlock(randomPositionInArea) && level.isEmptyBlock(randomPositionInArea.above())) {
 				entity.snapTo(randomPositionInArea, 0.0F, 0.0F);
 				level.addFreshEntity(entity);
 				spawnParticles(entity.getRandom());

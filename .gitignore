@@ -28,10 +28,13 @@ gradlew.bat
 
 # Caches
 /src/generated/resources/.cache/
-.optimizationCache
+/compatbridge/src/generated/resources/.cache/
 
 # Run configurations
 /runs/
 
 # Token property file, used for publishing
 tokens.properties
+
+# Other
+CLAUDE.md

@@ -52,10 +52,10 @@ public record AmmunitionTableRenderer(
 
 				// Rotate by direction
 				switch (state.facing) {
-					case EAST -> stack.mulPose(Axis.YP.rotationDegrees(270f));
-					case SOUTH -> stack.mulPose(Axis.YP.rotationDegrees(180f));
-					case WEST -> stack.mulPose(Axis.YP.rotationDegrees(90f));
-					default -> stack.mulPose(Axis.YP.rotationDegrees(0f));
+					case EAST -> stack.rotate(Axis.YP.rotationDegrees(270f));
+					case SOUTH -> stack.rotate(Axis.YP.rotationDegrees(180f));
+					case WEST -> stack.rotate(Axis.YP.rotationDegrees(90f));
+					default -> stack.rotate(Axis.YP.rotationDegrees(0f));
 				}
 
 				// Render the material inventory
@@ -81,7 +81,7 @@ public record AmmunitionTableRenderer(
 
 				if (state.items[6] != itemStackRenderState) {
 					stack.scale(0.075f, 0.075f, 0.075f);
-					stack.mulPose(Axis.XP.rotationDegrees(-25f));
+					stack.rotate(Axis.XP.rotationDegrees(-25f));
 
 					// Render the item
 					itemStackRenderState.submit(stack, collector, state.lightCoords, OverlayTexture.NO_OVERLAY, 0);

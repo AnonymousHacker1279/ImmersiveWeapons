@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:cobalt_spear"
+        "recipes": "immersiveweapons:cobalt_spear"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -3,24 +3,22 @@
   "criteria": {
     "have_advancements": {
       "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:type_specific/player": {
-                "advancements": {
-                  "immersiveweapons:void_axe": true,
-                  "immersiveweapons:void_hoe": true,
-                  "immersiveweapons:void_pickaxe": true,
-                  "immersiveweapons:void_shovel": true,
-                  "immersiveweapons:void_spear": true,
-                  "immersiveweapons:void_sword": true
-                }
+        "player": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:type_specific/player": {
+              "advancements": {
+                "immersiveweapons:void_axe": true,
+                "immersiveweapons:void_hoe": true,
+                "immersiveweapons:void_pickaxe": true,
+                "immersiveweapons:void_shovel": true,
+                "immersiveweapons:void_spear": true,
+                "immersiveweapons:void_sword": true
               }
             }
           }
-        ]
+        }
       },
       "trigger": "minecraft:location"
     }

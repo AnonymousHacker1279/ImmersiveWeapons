@@ -1,8 +1,7 @@
 package tech.anonymoushacker1279.immersiveweapons.data.features;
 
 import net.minecraft.tags.BlockTags;
-import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration.TargetBlockState;
+import net.minecraft.world.level.levelgen.feature.BlockReplacement;
 import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 import net.neoforged.neoforge.common.Tags.Blocks;
@@ -20,22 +19,22 @@ public class OreReplacementData {
 	}
 
 	public static class OreReplacementTargets {
-		public static final List<TargetBlockState> MOLTEN_ORE_TARGETS = List.of(
-				OreConfiguration.target(ReplacementRules.NETHER_STONE,
+		public static final List<BlockReplacement> MOLTEN_ORE_TARGETS = List.of(
+				BlockReplacement.replace(ReplacementRules.NETHER_STONE,
 						BlockRegistry.MOLTEN_ORE.get().defaultBlockState())
 		);
-		public static final List<TargetBlockState> TESLA_ORE_TARGETS = List.of(
-				OreConfiguration.target(ReplacementRules.DEEPSLATE_STONE,
+		public static final List<BlockReplacement> TESLA_ORE_TARGETS = List.of(
+				BlockReplacement.replace(ReplacementRules.DEEPSLATE_STONE,
 						BlockRegistry.DORMANT_TESLA_ORE.get().defaultBlockState())
 		);
-		public static final List<TargetBlockState> COBALT_ORE_TARGETS = List.of(
-				OreConfiguration.target(ReplacementRules.REGULAR_STONE,
+		public static final List<BlockReplacement> COBALT_ORE_TARGETS = List.of(
+				BlockReplacement.replace(ReplacementRules.REGULAR_STONE,
 						BlockRegistry.COBALT_ORE.get().defaultBlockState()),
-				OreConfiguration.target(ReplacementRules.DEEPSLATE_STONE,
+				BlockReplacement.replace(ReplacementRules.DEEPSLATE_STONE,
 						BlockRegistry.DEEPSLATE_COBALT_ORE.get().defaultBlockState())
 		);
-		public static final List<TargetBlockState> VOID_ORE_TARGETS = List.of(
-				OreConfiguration.target(ReplacementRules.END_STONE,
+		public static final List<BlockReplacement> VOID_ORE_TARGETS = List.of(
+				BlockReplacement.replace(ReplacementRules.END_STONE,
 						BlockRegistry.VOID_ORE.get().defaultBlockState())
 		);
 	}

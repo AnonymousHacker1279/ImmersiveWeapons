@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "immersiveweapons:mud"
+            "items": "minecraft:mud"
           }
         ]
       },
@@ -18,7 +18,7 @@
     },
     "frame": "goal",
     "icon": {
-      "id": "immersiveweapons:mud"
+      "id": "minecraft:mud"
     },
     "title": {
       "translate": "advancements.immersiveweapons.mud.title"

@@ -2,11 +2,9 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "conditions": [
-        {
-          "condition": "minecraft:killed_by_player"
-        }
-      ],
+      "condition": {
+        "type": "minecraft:killed_by_player"
+      },
       "entries": [
         {
           "type": "minecraft:item",
@@ -19,11 +17,9 @@
       }
     },
     {
-      "conditions": [
-        {
-          "condition": "minecraft:killed_by_player"
-        }
-      ],
+      "condition": {
+        "type": "minecraft:killed_by_player"
+      },
       "entries": [
         {
           "type": "minecraft:item",
@@ -44,11 +40,9 @@
       }
     },
     {
-      "conditions": [
-        {
-          "condition": "minecraft:killed_by_player"
-        }
-      ],
+      "condition": {
+        "type": "minecraft:killed_by_player"
+      },
       "entries": [
         {
           "type": "minecraft:item",
@@ -77,21 +71,24 @@
       }
     },
     {
-      "conditions": [
-        {
-          "condition": "minecraft:killed_by_player"
-        },
-        {
-          "condition": "minecraft:random_chance_with_enchanted_bonus",
-          "enchanted_chance": {
-            "type": "minecraft:linear",
-            "base": 0.120000005,
-            "per_level_above_first": 0.02
+      "condition": {
+        "type": "minecraft:all_of",
+        "terms": [
+          {
+            "type": "minecraft:killed_by_player"
           },
-          "enchantment": "minecraft:looting",
-          "unenchanted_chance": 0.1
-        }
-      ],
+          {
+            "type": "minecraft:random_chance_with_enchanted_bonus",
+            "enchanted_chance": {
+              "type": "minecraft:linear",
+              "base": 0.120000005,
+              "per_level_above_first": 0.02
+            },
+            "enchantment": "minecraft:looting",
+            "unenchanted_chance": 0.1
+          }
+        ]
+      },
       "entries": [
         {
           "type": "minecraft:item",
@@ -104,34 +101,32 @@
       }
     },
     {
-      "conditions": [
-        {
-          "condition": "minecraft:killed_by_player"
-        }
-      ],
+      "condition": {
+        "type": "minecraft:killed_by_player"
+      },
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "modifier": [
             {
+              "type": "minecraft:set_count",
               "count": {
                 "type": "minecraft:uniform",
-                "max": 4.0,
-                "min": 2.0
-              },
-              "function": "minecraft:set_count"
+                "max": 4,
+                "min": 2
+              }
             },
             {
+              "type": "minecraft:enchanted_count_increase",
               "count": {
                 "type": "minecraft:uniform",
                 "max": 0.33,
                 "min": 0.0
               },
-              "enchantment": "minecraft:looting",
-              "function": "minecraft:enchanted_count_increase"
+              "enchantment": "minecraft:looting"
             },
             {
-              "function": "minecraft:set_name",
+              "type": "minecraft:set_name",
               "name": {
                 "color": "gold",
                 "translate": "loot.immersiveweapons.entity.super_hans.super_healing_potion"
@@ -139,7 +134,7 @@
               "target": "item_name"
             },
             {
-              "function": "minecraft:set_potion",
+              "type": "minecraft:set_potion",
               "id": "immersiveweapons:super_healing"
             }
           ],
@@ -148,26 +143,26 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "modifier": [
             {
+              "type": "minecraft:set_count",
               "count": {
                 "type": "minecraft:uniform",
-                "max": 2.0,
-                "min": 1.0
-              },
-              "function": "minecraft:set_count"
+                "max": 2,
+                "min": 1
+              }
             },
             {
+              "type": "minecraft:enchanted_count_increase",
               "count": {
                 "type": "minecraft:uniform",
                 "max": 0.33,
                 "min": 0.0
               },
-              "enchantment": "minecraft:looting",
-              "function": "minecraft:enchanted_count_increase"
+              "enchantment": "minecraft:looting"
             },
             {
-              "function": "minecraft:set_name",
+              "type": "minecraft:set_name",
               "name": {
                 "color": "gold",
                 "translate": "loot.immersiveweapons.entity.super_hans.super_regeneration_potion"
@@ -175,7 +170,7 @@
               "target": "item_name"
             },
             {
-              "function": "minecraft:set_potion",
+              "type": "minecraft:set_potion",
               "id": "immersiveweapons:super_regeneration"
             }
           ],
@@ -184,26 +179,26 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "modifier": [
             {
+              "type": "minecraft:set_count",
               "count": {
                 "type": "minecraft:uniform",
-                "max": 2.0,
-                "min": 1.0
-              },
-              "function": "minecraft:set_count"
+                "max": 2,
+                "min": 1
+              }
             },
             {
+              "type": "minecraft:enchanted_count_increase",
               "count": {
                 "type": "minecraft:uniform",
                 "max": 0.33,
                 "min": 0.0
               },
-              "enchantment": "minecraft:looting",
-              "function": "minecraft:enchanted_count_increase"
+              "enchantment": "minecraft:looting"
             },
             {
-              "function": "minecraft:set_name",
+              "type": "minecraft:set_name",
               "name": {
                 "color": "gold",
                 "translate": "loot.immersiveweapons.entity.super_hans.ultra_healing_potion"
@@ -211,7 +206,7 @@
               "target": "item_name"
             },
             {
-              "function": "minecraft:set_potion",
+              "type": "minecraft:set_potion",
               "id": "immersiveweapons:ultra_healing"
             }
           ],
@@ -220,22 +215,22 @@
         },
         {
           "type": "minecraft:item",
-          "functions": [
+          "modifier": [
             {
-              "count": 1.0,
-              "function": "minecraft:set_count"
+              "type": "minecraft:set_count",
+              "count": 1
             },
             {
+              "type": "minecraft:enchanted_count_increase",
               "count": {
                 "type": "minecraft:uniform",
                 "max": 0.33,
                 "min": 0.0
               },
-              "enchantment": "minecraft:looting",
-              "function": "minecraft:enchanted_count_increase"
+              "enchantment": "minecraft:looting"
             },
             {
-              "function": "minecraft:set_name",
+              "type": "minecraft:set_name",
               "name": {
                 "color": "gold",
                 "translate": "loot.immersiveweapons.entity.super_hans.ultra_regeneration_potion"
@@ -243,7 +238,7 @@
               "target": "item_name"
             },
             {
-              "function": "minecraft:set_potion",
+              "type": "minecraft:set_potion",
               "id": "immersiveweapons:ultra_regeneration"
             }
           ],
@@ -252,7 +247,7 @@
         }
       ],
       "name": "healing_equipment",
-      "rolls": 1.0
+      "rolls": 1
     }
   ],
   "random_sequence": "immersiveweapons:entities/super_hans"

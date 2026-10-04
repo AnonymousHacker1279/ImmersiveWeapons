@@ -1,14 +1,12 @@
 {
   "type": "immersiveweapons:log_shards",
   "blockTag": "minecraft:logs",
-  "conditions": [
-    {
-      "condition": "minecraft:match_tool",
-      "predicate": {
-        "items": "#minecraft:pickaxes"
-      }
+  "condition": {
+    "type": "minecraft:match_tool",
+    "predicate": {
+      "items": "#minecraft:pickaxes"
     }
-  ],
+  },
   "maxShards": 5,
   "minShards": 2,
   "replacement": {

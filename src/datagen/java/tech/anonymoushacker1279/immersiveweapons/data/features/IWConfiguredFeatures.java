@@ -1,22 +1,21 @@
 package tech.anonymoushacker1279.immersiveweapons.data.features;
 
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.BlockStateProviders;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.UniformInt;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.GeodeBlockSettings;
 import net.minecraft.world.level.levelgen.GeodeCrackSettings;
 import net.minecraft.world.level.levelgen.GeodeLayerSettings;
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
-import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.configurations.*;
+import net.minecraft.world.level.levelgen.feature.*;
 import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.BlobFoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.FancyFoliagePlacer;
@@ -32,37 +31,35 @@ import java.util.List;
 
 public class IWConfiguredFeatures {
 
-	public static final ResourceKey<ConfiguredFeature<?, ?>> PATCH_WOODEN_SPIKES_CONFIGURATION = createKey("patch_wooden_spikes");
-	public static final ResourceKey<ConfiguredFeature<?, ?>> BURNED_OAK_TREE_CONFIGURATION = createKey("burned_oak_tree");
-	public static final ResourceKey<ConfiguredFeature<?, ?>> PATCH_MOONGLOW_CONFIGURATION = createKey("patch_moonglow");
-	public static final ResourceKey<ConfiguredFeature<?, ?>> STARDUST_TREE_CONFIGURATION = createKey("stardust_tree");
-	public static final ResourceKey<ConfiguredFeature<?, ?>> PATCH_DEATHWEED_CONFIGURATION = createKey("patch_deathweed");
-	public static final ResourceKey<ConfiguredFeature<?, ?>> ASTRAL_GEODE_CONFIGURATION = createKey("astral_geode");
+	public static final ResourceKey<Feature> PATCH_WOODEN_SPIKES_CONFIGURATION = createKey("patch_wooden_spikes");
+	public static final ResourceKey<Feature> BURNED_OAK_TREE_CONFIGURATION = createKey("burned_oak_tree");
+	public static final ResourceKey<Feature> PATCH_MOONGLOW_CONFIGURATION = createKey("patch_moonglow");
+	public static final ResourceKey<Feature> STARDUST_TREE_CONFIGURATION = createKey("stardust_tree");
+	public static final ResourceKey<Feature> PATCH_DEATHWEED_CONFIGURATION = createKey("patch_deathweed");
+	public static final ResourceKey<Feature> ASTRAL_GEODE_CONFIGURATION = createKey("astral_geode");
 
-	public static final ResourceKey<ConfiguredFeature<?, ?>> MOLTEN_ORE_CONFIGURATION = createKey("molten_ore");
-	public static final ResourceKey<ConfiguredFeature<?, ?>> TESLA_ORE_CONFIGURATION = createKey("tesla_ore");
-	public static final ResourceKey<ConfiguredFeature<?, ?>> DEEPSLATE_COBALT_ORE_CONFIGURATION = createKey("deepslate_cobalt_ore");
-	public static final ResourceKey<ConfiguredFeature<?, ?>> COBALT_ORE_CONFIGURATION = createKey("cobalt_ore");
-	public static final ResourceKey<ConfiguredFeature<?, ?>> VOID_ORE_CONFIGURATION = createKey("void_ore");
+	public static final ResourceKey<Feature> MOLTEN_ORE_CONFIGURATION = createKey("molten_ore");
+	public static final ResourceKey<Feature> TESLA_ORE_CONFIGURATION = createKey("tesla_ore");
+	public static final ResourceKey<Feature> DEEPSLATE_COBALT_ORE_CONFIGURATION = createKey("deepslate_cobalt_ore");
+	public static final ResourceKey<Feature> COBALT_ORE_CONFIGURATION = createKey("cobalt_ore");
+	public static final ResourceKey<Feature> VOID_ORE_CONFIGURATION = createKey("void_ore");
 
-	private static ResourceKey<ConfiguredFeature<?, ?>> createKey(String name) {
-		return ResourceKey.create(Registries.CONFIGURED_FEATURE, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, name));
+	private static ResourceKey<Feature> createKey(String name) {
+		return ResourceKey.create(Registries.FEATURE, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, name));
 	}
 
-	public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
-		HolderGetter<Biome> biomeGetter = context.lookup(Registries.BIOME);
+	public static void bootstrap(BootstrapContext<Feature> context) {
 		HolderGetter<Block> blockGetter = context.lookup(Registries.BLOCK);
-		BlockStateProvider belowTrunkProvider = TreeConfiguration.defaultPlaceBelowTreeTrunkProvider(biomeGetter);
+		Holder<BlockStateProvider> belowTrunkProvider = context.lookup(Registries.BLOCK_STATE_PROVIDER).getOrThrow(BlockStateProviders.SOIL_BENEATH_TREE);
 
-		register(context, PATCH_WOODEN_SPIKES_CONFIGURATION, Feature.BLOCK_PILE,
-				new BlockPileConfiguration(BlockStateProvider.simple(BlockRegistry.WOODEN_SPIKES.get()))
-		);
+		context.register(PATCH_WOODEN_SPIKES_CONFIGURATION,
+				new BlockPileFeature(BlockStateProvider.holderOf(BlockRegistry.WOODEN_SPIKES.get())));
 
-		register(context, BURNED_OAK_TREE_CONFIGURATION, Feature.TREE,
-				new TreeConfiguration.TreeConfigurationBuilder(
-						BlockStateProvider.simple(BlockRegistry.BURNED_OAK_LOG.get()),
+		context.register(BURNED_OAK_TREE_CONFIGURATION,
+				new TreeFeature.Builder(
+						BlockStateProvider.of(BlockRegistry.BURNED_OAK_LOG.get()),
 						new StraightTrunkPlacer(7, 3, 3),
-						BlockStateProvider.simple(Blocks.AIR),
+						BlockStateProvider.of(Blocks.AIR),
 						new BlobFoliagePlacer(ConstantInt.ZERO, ConstantInt.ZERO, 0),
 						new TwoLayersFeatureSize(1, 0, 1),
 						belowTrunkProvider)
@@ -70,31 +67,31 @@ public class IWConfiguredFeatures {
 						.ignoreVines()
 						.build());
 
-		register(context, PATCH_MOONGLOW_CONFIGURATION, Feature.SIMPLE_BLOCK,
-				new SimpleBlockConfiguration(BlockStateProvider.simple(BlockRegistry.MOONGLOW.get())));
+		context.register(PATCH_MOONGLOW_CONFIGURATION,
+				new SimpleBlockFeature(BlockStateProvider.of(BlockRegistry.MOONGLOW.get())));
 
-		register(context, STARDUST_TREE_CONFIGURATION, Feature.TREE,
-				new TreeConfiguration.TreeConfigurationBuilder(
-						BlockStateProvider.simple(BlockRegistry.STARDUST_LOG.get()),
+		context.register(STARDUST_TREE_CONFIGURATION,
+				new TreeFeature.Builder(
+						BlockStateProvider.of(BlockRegistry.STARDUST_LOG.get()),
 						new FancyTrunkPlacer(5, 3, 3),
-						BlockStateProvider.simple(BlockRegistry.STARDUST_LEAVES.get()),
+						BlockStateProvider.of(BlockRegistry.STARDUST_LEAVES.get()),
 						new FancyFoliagePlacer(ConstantInt.of(2), ConstantInt.of(4), 4),
 						new TwoLayersFeatureSize(1, 0, 3),
 						belowTrunkProvider)
 						.ignoreVines()
 						.build());
 
-		register(context, PATCH_DEATHWEED_CONFIGURATION, Feature.SIMPLE_BLOCK,
-				new SimpleBlockConfiguration(BlockStateProvider.simple(BlockRegistry.DEATHWEED.get())));
+		context.register(PATCH_DEATHWEED_CONFIGURATION,
+				new SimpleBlockFeature(BlockStateProvider.of(BlockRegistry.DEATHWEED.get())));
 
-		register(context, ASTRAL_GEODE_CONFIGURATION, Feature.GEODE,
-				new GeodeConfiguration(
+		context.register(ASTRAL_GEODE_CONFIGURATION,
+				new GeodeFeature(
 						new GeodeBlockSettings(
-								BlockStateProvider.simple(Blocks.AIR.defaultBlockState()),
-								BlockStateProvider.simple(Blocks.SMOOTH_QUARTZ.defaultBlockState()),
-								BlockStateProvider.simple(BlockRegistry.ASTRAL_ORE.get().defaultBlockState()),
-								BlockStateProvider.simple(Blocks.CALCITE.defaultBlockState()),
-								BlockStateProvider.simple(Blocks.TUFF.defaultBlockState()),
+								BlockStateProvider.holderOf(Blocks.AIR.defaultBlockState()),
+								BlockStateProvider.holderOf(Blocks.SMOOTH_QUARTZ.defaultBlockState()),
+								BlockStateProvider.holderOf(BlockRegistry.ASTRAL_ORE.get().defaultBlockState()),
+								BlockStateProvider.holderOf(Blocks.CALCITE.defaultBlockState()),
+								BlockStateProvider.holderOf(Blocks.TUFF.defaultBlockState()),
 								List.of(BlockRegistry.ASTRAL_CRYSTAL.get().defaultBlockState()),
 								blockGetter.getOrThrow(BlockTags.FEATURES_CANNOT_REPLACE),
 								blockGetter.getOrThrow(BlockTags.GEODE_INVALID_BLOCKS)
@@ -122,26 +119,19 @@ public class IWConfiguredFeatures {
 						1
 				));
 
-		register(context, MOLTEN_ORE_CONFIGURATION, Feature.ORE,
-				new OreConfiguration(OreReplacementTargets.MOLTEN_ORE_TARGETS, 4, 1.0f));
+		context.register(MOLTEN_ORE_CONFIGURATION,
+				new OreFeature(OreReplacementTargets.MOLTEN_ORE_TARGETS, 4, 1.0f));
 
-		register(context, TESLA_ORE_CONFIGURATION, Feature.ORE,
-				new OreConfiguration(OreReplacementTargets.TESLA_ORE_TARGETS, 4, 0.8f));
+		context.register(TESLA_ORE_CONFIGURATION,
+				new OreFeature(OreReplacementTargets.TESLA_ORE_TARGETS, 4, 0.8f));
 
-		register(context, DEEPSLATE_COBALT_ORE_CONFIGURATION, Feature.ORE,
-				new OreConfiguration(OreReplacementTargets.COBALT_ORE_TARGETS, 12, 0.1f));
+		context.register(DEEPSLATE_COBALT_ORE_CONFIGURATION,
+				new OreFeature(OreReplacementTargets.COBALT_ORE_TARGETS, 6, 0.1f));
 
-		register(context, COBALT_ORE_CONFIGURATION, Feature.ORE,
-				new OreConfiguration(OreReplacementTargets.COBALT_ORE_TARGETS, 12, 0.15f));
+		context.register(COBALT_ORE_CONFIGURATION,
+				new OreFeature(OreReplacementTargets.COBALT_ORE_TARGETS, 4, 0.15f));
 
-		register(context, VOID_ORE_CONFIGURATION, Feature.ORE,
-				new OreConfiguration(OreReplacementTargets.VOID_ORE_TARGETS, 4, 1.0f));
-	}
-
-	private static <FC extends FeatureConfiguration, F extends Feature<FC>> void register(BootstrapContext<ConfiguredFeature<?, ?>> context,
-	                                                                                      ResourceKey<ConfiguredFeature<?, ?>> key,
-	                                                                                      F feature, FC configuration) {
-
-		context.register(key, new ConfiguredFeature<>(feature, configuration));
+		context.register(VOID_ORE_CONFIGURATION,
+				new OreFeature(OreReplacementTargets.VOID_ORE_TARGETS, 4, 1.0f));
 	}
 }

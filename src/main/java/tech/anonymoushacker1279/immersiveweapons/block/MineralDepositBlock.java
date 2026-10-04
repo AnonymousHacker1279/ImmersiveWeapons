@@ -4,11 +4,14 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -23,7 +26,7 @@ import org.jspecify.annotations.Nullable;
 
 public class MineralDepositBlock extends Block implements SimpleWaterloggedBlock {
 
-	private static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 	private static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 0.25D, 16.0D);
 
 	public MineralDepositBlock(Properties properties) {
@@ -40,6 +43,19 @@ public class MineralDepositBlock extends Block implements SimpleWaterloggedBlock
 	protected boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
 		BlockPos below = pos.below();
 		return level.getBlockState(below).isFaceSturdy(level, below, Direction.UP);
+	}
+
+	@Override
+	protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess scheduledTickAccess, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
+		if (!state.canSurvive(level, pos)) {
+			return Blocks.AIR.defaultBlockState();
+		}
+
+		if (state.getValue(WATERLOGGED)) {
+			scheduledTickAccess.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
+		}
+
+		return super.updateShape(state, level, scheduledTickAccess, pos, direction, neighborPos, neighborState, random);
 	}
 
 	@Override
@@ -67,6 +83,6 @@ public class MineralDepositBlock extends Block implements SimpleWaterloggedBlock
 
 	@Override
 	public @Nullable PushReaction getPistonPushReaction(BlockState state) {
-		return PushReaction.DESTROY;
+		return PushReaction.POPPED;
 	}
 }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:reinforced_depth_charm"
+        "recipes": "immersiveweapons:reinforced_depth_charm"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

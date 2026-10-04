@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.blockentity.AbstractInventoryBlockEntity;
 
 public class GenericInventoryRenderState extends BlockEntityRenderState {
-	public ItemStackRenderState[] items;
+	public final ItemStackRenderState[] items;
 	public float partialTick;
 
 	public GenericInventoryRenderState(int size) {

@@ -38,12 +38,12 @@ import tech.anonymoushacker1279.immersiveweapons.util.markers.TooltipMarker;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.*;
-import java.util.function.Supplier;
 
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, value = Dist.CLIENT)
 public class TooltipHandler {
 
 	static final Map<Item, Triplet<String[], ChatFormatting[], Class<? extends DynamicTooltip>>> TOOLTIP_MAP = new HashMap<>(150);
+	private static final Map<Class<? extends DynamicTooltip>, DynamicTooltip> DYNAMIC_TOOLTIPS = new HashMap<>(8);
 	static int jonnyCurseRandomizer = (int) (Math.random() * 11 + 1);
 
 	/// Compiles all item tooltips with a [TooltipMarker] annotation.
@@ -56,7 +56,7 @@ public class TooltipHandler {
 		for (Class<?> clazz : classes) {
 			for (Field field : clazz.getDeclaredFields()) {
 				if (field.isAnnotationPresent(TooltipMarker.class)) {
-					if (Modifier.isStatic(field.getModifiers()) && field.getType() == Supplier.class) {
+					if (Modifier.isStatic(field.getModifiers()) && DeferredHolder.class.isAssignableFrom(field.getType())) {
 						try {
 							if (field.get(null) instanceof DeferredHolder<?, ?> holder) {
 								if (holder.get() instanceof Item item) {
@@ -113,12 +113,15 @@ public class TooltipHandler {
 
 		TOOLTIP_MAP.computeIfPresent(stack.getItem(), (item, triplet) -> {
 			if (triplet.getC() != null) {
-				DynamicTooltip dynamicTooltip;
-				try {
-					dynamicTooltip = triplet.getC().getDeclaredConstructor().newInstance();
-				} catch (Exception e) {
-					ImmersiveWeapons.LOGGER.error("Failed to create instance of dynamic tooltip for item: {}", item);
-					return triplet;
+				DynamicTooltip dynamicTooltip = DYNAMIC_TOOLTIPS.get(triplet.getC());
+				if (dynamicTooltip == null) {
+					try {
+						dynamicTooltip = triplet.getC().getDeclaredConstructor().newInstance();
+						DYNAMIC_TOOLTIPS.put(triplet.getC(), dynamicTooltip);
+					} catch (Exception e) {
+						ImmersiveWeapons.LOGGER.error("Failed to create instance of dynamic tooltip for item: {}", item);
+						return triplet;
+					}
 				}
 
 				if (dynamicTooltip.shouldComputeSimpleTooltips(event)) {
@@ -310,7 +313,9 @@ public class TooltipHandler {
 
 					if (attributeOp.attribute().equals(Attributes.MAX_HEALTH)) {
 						// Convert to hearts
-						amount = (float) Math.round(attributeOp.modifier().amount() / 2f) + " hearts";
+						// Round to one decimal, as a single health point is half a heart
+						float hearts = (float) Math.round(attributeOp.modifier().amount() / 2f * 10f) / 10f;
+						amount = (hearts % 1 == 0 ? String.valueOf((int) hearts) : String.valueOf(hearts)) + " hearts";
 					} else {
 						amount = (float) Math.round(attributeOp.modifier().amount() * 1000f) / 10f + "%";
 					}

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_hanging_sign_rot_2",
+  "textures": {
+    "all": "immersiveweapons:block/stardust_hanging_sign",
+    "particle": "immersiveweapons:block/stardust_planks"
+  }
+}

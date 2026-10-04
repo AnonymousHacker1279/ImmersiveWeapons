@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:bloody_sacrifice"
+        "recipes": "immersiveweapons:bloody_sacrifice"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

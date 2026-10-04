@@ -1,0 +1,9 @@
+{
+	"immersiveweapons:waila_plugin": {
+		"entrypoints": {
+			"common": "tech.anonymoushacker1279.iwcompatbridge.plugin.wthit.WTHITCommonPluginHandler",
+			"client": "tech.anonymoushacker1279.iwcompatbridge.plugin.wthit.WTHITClientPluginHandler"
+		},
+		"side": "*"
+	}
+}

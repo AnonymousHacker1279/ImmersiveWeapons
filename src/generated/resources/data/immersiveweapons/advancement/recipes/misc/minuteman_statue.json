@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:minuteman_statue"
+        "recipes": "immersiveweapons:minuteman_statue"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

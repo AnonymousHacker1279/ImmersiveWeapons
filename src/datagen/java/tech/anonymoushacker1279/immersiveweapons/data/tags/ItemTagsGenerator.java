@@ -46,7 +46,7 @@ public class ItemTagsGenerator extends BlockTagCopyingItemTagProvider {
 	@SuppressWarnings("unchecked")
 	private void addCommonTags() {
 		// Ingot tags
-		tag(CommonItemTagGroups.COBALT_INGOTS).add(ItemRegistry.COBALT_INGOT.getKey());
+		tag(CommonItemTagGroups.COBALT_INGOTS).add(ItemRegistry.COBALT_INGOT.key());
 		tag(CommonItemTagGroups.METAL_INGOTS).addTags(
 				CommonItemTagGroups.COBALT_INGOTS,
 				Tags.Items.INGOTS_COPPER,
@@ -61,7 +61,7 @@ public class ItemTagsGenerator extends BlockTagCopyingItemTagProvider {
 		tag(Tags.Items.INGOTS).addTag(IWItemTagGroups.HANSIUM_INGOTS);
 
 		// Nugget tags
-		tag(CommonItemTagGroups.COBALT_NUGGETS).add(ItemRegistry.COBALT_NUGGET.getKey());
+		tag(CommonItemTagGroups.COBALT_NUGGETS).add(ItemRegistry.COBALT_NUGGET.key());
 		tag(CommonItemTagGroups.METAL_NUGGETS).addTags(
 				CommonItemTagGroups.COBALT_NUGGETS,
 				CommonItemTagGroups.COPPER_NUGGETS,
@@ -72,21 +72,21 @@ public class ItemTagsGenerator extends BlockTagCopyingItemTagProvider {
 		tag(Tags.Items.NUGGETS).addTag(IWItemTagGroups.ASTRAL_NUGGETS);
 
 		// Dust tags
-		tag(CommonItemTagGroups.SULFUR_DUSTS).add(ItemRegistry.SULFUR_DUST.getKey());
+		tag(CommonItemTagGroups.SULFUR_DUSTS).add(ItemRegistry.SULFUR_DUST.key());
 
 		tag(Tags.Items.TOOLS_BOW).add(
-				ItemRegistry.ICE_BOW.getKey(),
-				ItemRegistry.DRAGONS_BREATH_BOW.getKey(),
-				ItemRegistry.AURORA_BOW.getKey());
+				ItemRegistry.ICE_BOW.key(),
+				ItemRegistry.DRAGONS_BREATH_BOW.key(),
+				ItemRegistry.AURORA_BOW.key());
 
 		// Food tags
 		tag(Tags.Items.FOODS).add(
-				ItemRegistry.MRE.getKey(),
-				ItemRegistry.CHOCOLATE_BAR.getKey(),
-				ItemRegistry.MOLDY_BREAD.getKey());
-		tag(Tags.Items.FOODS_CANDY).add(ItemRegistry.CHOCOLATE_BAR.getKey());
-		tag(Tags.Items.FOODS_BREAD).add(ItemRegistry.MOLDY_BREAD.getKey());
-		tag(Tags.Items.FOODS_FOOD_POISONING).add(ItemRegistry.MOLDY_BREAD.getKey());
+				ItemRegistry.MRE.key(),
+				ItemRegistry.CHOCOLATE_BAR.key(),
+				ItemRegistry.MOLDY_BREAD.key());
+		tag(Tags.Items.FOODS_CANDY).add(ItemRegistry.CHOCOLATE_BAR.key());
+		tag(Tags.Items.FOODS_BREAD).add(ItemRegistry.MOLDY_BREAD.key());
+		tag(Tags.Items.FOODS_FOOD_POISONING).add(ItemRegistry.MOLDY_BREAD.key());
 
 		copy(CommonBlockTagGroups.COBALT_ORES, CommonItemTagGroups.COBALT_ORES);
 		copy(Tags.Blocks.ORES, Tags.Items.ORES);
@@ -99,42 +99,42 @@ public class ItemTagsGenerator extends BlockTagCopyingItemTagProvider {
 	@SuppressWarnings("unchecked")
 	private void addImmersiveWeaponsTags() {
 		// Projectile tags
-		tag(IWItemTagGroups.FLARES).add(ItemRegistry.FLARE.getKey());
+		tag(IWItemTagGroups.FLARES).add(ItemRegistry.FLARE.key());
 		tag(IWItemTagGroups.MUSKET_BALLS).add(
-				ItemRegistry.WOODEN_MUSKET_BALL.getKey(),
-				ItemRegistry.STONE_MUSKET_BALL.getKey(),
-				ItemRegistry.GOLDEN_MUSKET_BALL.getKey(),
-				ItemRegistry.COPPER_MUSKET_BALL.getKey(),
-				ItemRegistry.IRON_MUSKET_BALL.getKey(),
-				ItemRegistry.COBALT_MUSKET_BALL.getKey(),
-				ItemRegistry.DIAMOND_MUSKET_BALL.getKey(),
-				ItemRegistry.NETHERITE_MUSKET_BALL.getKey(),
-				ItemRegistry.MOLTEN_MUSKET_BALL.getKey(),
-				ItemRegistry.TESLA_MUSKET_BALL.getKey(),
-				ItemRegistry.VENTUS_MUSKET_BALL.getKey(),
-				ItemRegistry.ASTRAL_MUSKET_BALL.getKey(),
-				ItemRegistry.STARSTORM_MUSKET_BALL.getKey(),
-				ItemRegistry.VOID_MUSKET_BALL.getKey());
+				ItemRegistry.WOODEN_MUSKET_BALL.key(),
+				ItemRegistry.STONE_MUSKET_BALL.key(),
+				ItemRegistry.GOLDEN_MUSKET_BALL.key(),
+				ItemRegistry.COPPER_MUSKET_BALL.key(),
+				ItemRegistry.IRON_MUSKET_BALL.key(),
+				ItemRegistry.COBALT_MUSKET_BALL.key(),
+				ItemRegistry.DIAMOND_MUSKET_BALL.key(),
+				ItemRegistry.NETHERITE_MUSKET_BALL.key(),
+				ItemRegistry.MOLTEN_MUSKET_BALL.key(),
+				ItemRegistry.TESLA_MUSKET_BALL.key(),
+				ItemRegistry.VENTUS_MUSKET_BALL.key(),
+				ItemRegistry.ASTRAL_MUSKET_BALL.key(),
+				ItemRegistry.STARSTORM_MUSKET_BALL.key(),
+				ItemRegistry.VOID_MUSKET_BALL.key());
 		tag(IWItemTagGroups.CANNONBALLS).add(
-				ItemRegistry.CANNONBALL.getKey(),
-				ItemRegistry.EXPLOSIVE_CANNONBALL.getKey());
-		tag(IWItemTagGroups.DRAGON_FIREBALLS).add(ItemRegistry.DRAGON_FIREBALL.getKey());
+				ItemRegistry.CANNONBALL.key(),
+				ItemRegistry.EXPLOSIVE_CANNONBALL.key());
+		tag(IWItemTagGroups.DRAGON_FIREBALLS).add(ItemRegistry.DRAGON_FIREBALL.key());
 
 		// Ingot tags
-		tag(IWItemTagGroups.MOLTEN_INGOTS).add(ItemRegistry.MOLTEN_INGOT.getKey());
-		tag(IWItemTagGroups.TESLA_INGOTS).add(ItemRegistry.TESLA_INGOT.getKey());
-		tag(IWItemTagGroups.ASTRAL_INGOTS).add(ItemRegistry.ASTRAL_INGOT.getKey());
-		tag(IWItemTagGroups.STARSTORM_INGOTS).add(ItemRegistry.STARSTORM_INGOT.getKey());
-		tag(IWItemTagGroups.VOID_INGOTS).add(ItemRegistry.VOID_INGOT.getKey());
-		tag(IWItemTagGroups.HANSIUM_INGOTS).add(ItemRegistry.HANSIUM_INGOT.getKey());
+		tag(IWItemTagGroups.MOLTEN_INGOTS).add(ItemRegistry.MOLTEN_INGOT.key());
+		tag(IWItemTagGroups.TESLA_INGOTS).add(ItemRegistry.TESLA_INGOT.key());
+		tag(IWItemTagGroups.ASTRAL_INGOTS).add(ItemRegistry.ASTRAL_INGOT.key());
+		tag(IWItemTagGroups.STARSTORM_INGOTS).add(ItemRegistry.STARSTORM_INGOT.key());
+		tag(IWItemTagGroups.VOID_INGOTS).add(ItemRegistry.VOID_INGOT.key());
+		tag(IWItemTagGroups.HANSIUM_INGOTS).add(ItemRegistry.HANSIUM_INGOT.key());
 
 		// Shard tags
-		tag(IWItemTagGroups.MOLTEN_SHARDS).add(ItemRegistry.MOLTEN_SHARD.getKey());
-		tag(IWItemTagGroups.VENTUS_SHARDS).add(ItemRegistry.VENTUS_SHARD.getKey());
-		tag(IWItemTagGroups.DIAMOND_SHARDS).add(ItemRegistry.DIAMOND_SHARD.getKey());
-		tag(IWItemTagGroups.STONE_SHARDS).add(ItemRegistry.STONE_SHARD.getKey());
-		tag(IWItemTagGroups.WOODEN_SHARDS).add(ItemRegistry.WOODEN_SHARD.getKey());
-		tag(IWItemTagGroups.STARSTORM_SHARDS).add(ItemRegistry.STARSTORM_SHARD.getKey());
+		tag(IWItemTagGroups.MOLTEN_SHARDS).add(ItemRegistry.MOLTEN_SHARD.key());
+		tag(IWItemTagGroups.VENTUS_SHARDS).add(ItemRegistry.VENTUS_SHARD.key());
+		tag(IWItemTagGroups.DIAMOND_SHARDS).add(ItemRegistry.DIAMOND_SHARD.key());
+		tag(IWItemTagGroups.STONE_SHARDS).add(ItemRegistry.STONE_SHARD.key());
+		tag(IWItemTagGroups.WOODEN_SHARDS).add(ItemRegistry.WOODEN_SHARD.key());
+		tag(IWItemTagGroups.STARSTORM_SHARDS).add(ItemRegistry.STARSTORM_SHARD.key());
 		tag(IWItemTagGroups.SHARDS).addTags(
 				IWItemTagGroups.MOLTEN_SHARDS,
 				IWItemTagGroups.VENTUS_SHARDS,
@@ -144,158 +144,158 @@ public class ItemTagsGenerator extends BlockTagCopyingItemTagProvider {
 				IWItemTagGroups.STARSTORM_SHARDS);
 
 		// Nugget tags
-		tag(IWItemTagGroups.TESLA_NUGGETS).add(ItemRegistry.TESLA_NUGGET.getKey());
-		tag(IWItemTagGroups.ASTRAL_NUGGETS).add(ItemRegistry.ASTRAL_NUGGET.getKey());
+		tag(IWItemTagGroups.TESLA_NUGGETS).add(ItemRegistry.TESLA_NUGGET.key());
+		tag(IWItemTagGroups.ASTRAL_NUGGETS).add(ItemRegistry.ASTRAL_NUGGET.key());
 
 		// Rod tags
-		tag(IWItemTagGroups.OBSIDIAN_RODS).add(ItemRegistry.OBSIDIAN_ROD.getKey());
+		tag(IWItemTagGroups.OBSIDIAN_RODS).add(ItemRegistry.OBSIDIAN_ROD.key());
 
 		// Accessory tags
 		tag(IWItemTagGroups.ACCESSORIES).add(
-				ItemRegistry.SATCHEL.getKey(),
-				ItemRegistry.POWDER_HORN.getKey(),
-				ItemRegistry.BERSERKERS_AMULET.getKey(),
-				ItemRegistry.HANS_BLESSING.getKey(),
-				ItemRegistry.CELESTIAL_SPIRIT.getKey(),
-				ItemRegistry.BLADEMASTER_EMBLEM.getKey(),
-				ItemRegistry.DEADEYE_PENDANT.getKey(),
-				ItemRegistry.BLOATED_HEART.getKey(),
-				ItemRegistry.NETHERITE_SHIELD.getKey(),
-				ItemRegistry.MELEE_MASTERS_MOLTEN_GLOVE.getKey(),
-				ItemRegistry.IRON_FIST.getKey(),
-				ItemRegistry.GLOVE_OF_RAPID_SWINGING.getKey(),
-				ItemRegistry.HAND_OF_DOOM.getKey(),
-				ItemRegistry.COPPER_RING.getKey(),
-				ItemRegistry.IRON_RING.getKey(),
-				ItemRegistry.COBALT_RING.getKey(),
-				ItemRegistry.GOLDEN_RING.getKey(),
-				ItemRegistry.AMETHYST_RING.getKey(),
-				ItemRegistry.EMERALD_RING.getKey(),
-				ItemRegistry.DIAMOND_RING.getKey(),
-				ItemRegistry.NETHERITE_RING.getKey(),
-				ItemRegistry.DEATH_GEM_RING.getKey(),
-				ItemRegistry.MEDAL_OF_ADEQUACY.getKey(),
-				ItemRegistry.DEPTH_CHARM.getKey(),
-				ItemRegistry.REINFORCED_DEPTH_CHARM.getKey(),
-				ItemRegistry.INSOMNIA_AMULET.getKey(),
-				ItemRegistry.GOGGLES.getKey(),
-				ItemRegistry.LAVA_GOGGLES.getKey(),
-				ItemRegistry.NIGHT_VISION_GOGGLES.getKey(),
-				ItemRegistry.AGILITY_BRACELET.getKey(),
-				ItemRegistry.BLOODY_CLOTH.getKey(),
-				ItemRegistry.ANCIENT_SCROLL.getKey(),
-				ItemRegistry.HOLY_MANTLE.getKey(),
-				ItemRegistry.VENSTRAL_JAR.getKey(),
-				ItemRegistry.SUPER_BLANKET_CAPE.getKey(),
-				ItemRegistry.MEDAL_OF_HONOR.getKey(),
-				ItemRegistry.MEDAL_OF_DISHONOR.getKey());
+				ItemRegistry.SATCHEL.key(),
+				ItemRegistry.POWDER_HORN.key(),
+				ItemRegistry.BERSERKERS_AMULET.key(),
+				ItemRegistry.HANS_BLESSING.key(),
+				ItemRegistry.CELESTIAL_SPIRIT.key(),
+				ItemRegistry.BLADEMASTER_EMBLEM.key(),
+				ItemRegistry.DEADEYE_PENDANT.key(),
+				ItemRegistry.BLOATED_HEART.key(),
+				ItemRegistry.NETHERITE_SHIELD.key(),
+				ItemRegistry.MELEE_MASTERS_MOLTEN_GLOVE.key(),
+				ItemRegistry.IRON_FIST.key(),
+				ItemRegistry.GLOVE_OF_RAPID_SWINGING.key(),
+				ItemRegistry.HAND_OF_DOOM.key(),
+				ItemRegistry.COPPER_RING.key(),
+				ItemRegistry.IRON_RING.key(),
+				ItemRegistry.COBALT_RING.key(),
+				ItemRegistry.GOLDEN_RING.key(),
+				ItemRegistry.AMETHYST_RING.key(),
+				ItemRegistry.EMERALD_RING.key(),
+				ItemRegistry.DIAMOND_RING.key(),
+				ItemRegistry.NETHERITE_RING.key(),
+				ItemRegistry.DEATH_GEM_RING.key(),
+				ItemRegistry.MEDAL_OF_ADEQUACY.key(),
+				ItemRegistry.DEPTH_CHARM.key(),
+				ItemRegistry.REINFORCED_DEPTH_CHARM.key(),
+				ItemRegistry.INSOMNIA_AMULET.key(),
+				ItemRegistry.GOGGLES.key(),
+				ItemRegistry.LAVA_GOGGLES.key(),
+				ItemRegistry.NIGHT_VISION_GOGGLES.key(),
+				ItemRegistry.AGILITY_BRACELET.key(),
+				ItemRegistry.BLOODY_CLOTH.key(),
+				ItemRegistry.ANCIENT_SCROLL.key(),
+				ItemRegistry.HOLY_MANTLE.key(),
+				ItemRegistry.VENSTRAL_JAR.key(),
+				ItemRegistry.SUPER_BLANKET_CAPE.key(),
+				ItemRegistry.MEDAL_OF_HONOR.key(),
+				ItemRegistry.MEDAL_OF_DISHONOR.key());
 
 		// Smoke grenade tags
 		tag(IWItemTagGroups.SMOKE_GRENADES).add(
-				ItemRegistry.SMOKE_GRENADE.getKey(),
-				ItemRegistry.SMOKE_GRENADE_RED.getKey(),
-				ItemRegistry.SMOKE_GRENADE_GREEN.getKey(),
-				ItemRegistry.SMOKE_GRENADE_BLUE.getKey(),
-				ItemRegistry.SMOKE_GRENADE_PURPLE.getKey(),
-				ItemRegistry.SMOKE_GRENADE_YELLOW.getKey());
+				ItemRegistry.SMOKE_GRENADE.key(),
+				ItemRegistry.SMOKE_GRENADE_RED.key(),
+				ItemRegistry.SMOKE_GRENADE_GREEN.key(),
+				ItemRegistry.SMOKE_GRENADE_BLUE.key(),
+				ItemRegistry.SMOKE_GRENADE_PURPLE.key(),
+				ItemRegistry.SMOKE_GRENADE_YELLOW.key());
 
 		// Tool tags
 		tag(IWItemTagGroups.MOLTEN_TOOLS).add(
-				ItemRegistry.MOLTEN_SWORD.getKey(),
-				ItemRegistry.MOLTEN_PICKAXE.getKey(),
-				ItemRegistry.MOLTEN_AXE.getKey(),
-				ItemRegistry.MOLTEN_SHOVEL.getKey(),
-				ItemRegistry.MOLTEN_HOE.getKey(),
-				ItemRegistry.MOLTEN_SPEAR.getKey());
+				ItemRegistry.MOLTEN_SWORD.key(),
+				ItemRegistry.MOLTEN_PICKAXE.key(),
+				ItemRegistry.MOLTEN_AXE.key(),
+				ItemRegistry.MOLTEN_SHOVEL.key(),
+				ItemRegistry.MOLTEN_HOE.key(),
+				ItemRegistry.MOLTEN_SPEAR.key());
 
 		tag(IWItemTagGroups.TESLA_TOOLS).add(
-				ItemRegistry.TESLA_SWORD.getKey(),
-				ItemRegistry.TESLA_PICKAXE.getKey(),
-				ItemRegistry.TESLA_AXE.getKey(),
-				ItemRegistry.TESLA_SHOVEL.getKey(),
-				ItemRegistry.TESLA_HOE.getKey(),
-				ItemRegistry.TESLA_SPEAR.getKey());
+				ItemRegistry.TESLA_SWORD.key(),
+				ItemRegistry.TESLA_PICKAXE.key(),
+				ItemRegistry.TESLA_AXE.key(),
+				ItemRegistry.TESLA_SHOVEL.key(),
+				ItemRegistry.TESLA_HOE.key(),
+				ItemRegistry.TESLA_SPEAR.key());
 
 		tag(IWItemTagGroups.VENTUS_TOOLS).add(
-				ItemRegistry.VENTUS_SWORD.getKey(),
-				ItemRegistry.VENTUS_PICKAXE.getKey(),
-				ItemRegistry.VENTUS_AXE.getKey(),
-				ItemRegistry.VENTUS_SHOVEL.getKey(),
-				ItemRegistry.VENTUS_HOE.getKey(),
-				ItemRegistry.VENTUS_SPEAR.getKey());
+				ItemRegistry.VENTUS_SWORD.key(),
+				ItemRegistry.VENTUS_PICKAXE.key(),
+				ItemRegistry.VENTUS_AXE.key(),
+				ItemRegistry.VENTUS_SHOVEL.key(),
+				ItemRegistry.VENTUS_HOE.key(),
+				ItemRegistry.VENTUS_SPEAR.key());
 
 		tag(IWItemTagGroups.ASTRAL_TOOLS).add(
-				ItemRegistry.ASTRAL_SWORD.getKey(),
-				ItemRegistry.ASTRAL_PICKAXE.getKey(),
-				ItemRegistry.ASTRAL_AXE.getKey(),
-				ItemRegistry.ASTRAL_SHOVEL.getKey(),
-				ItemRegistry.ASTRAL_HOE.getKey(),
-				ItemRegistry.ASTRAL_SPEAR.getKey());
+				ItemRegistry.ASTRAL_SWORD.key(),
+				ItemRegistry.ASTRAL_PICKAXE.key(),
+				ItemRegistry.ASTRAL_AXE.key(),
+				ItemRegistry.ASTRAL_SHOVEL.key(),
+				ItemRegistry.ASTRAL_HOE.key(),
+				ItemRegistry.ASTRAL_SPEAR.key());
 
 		tag(IWItemTagGroups.STARSTORM_TOOLS).add(
-				ItemRegistry.STARSTORM_SWORD.getKey(),
-				ItemRegistry.STARSTORM_PICKAXE.getKey(),
-				ItemRegistry.STARSTORM_AXE.getKey(),
-				ItemRegistry.STARSTORM_SHOVEL.getKey(),
-				ItemRegistry.STARSTORM_HOE.getKey(),
-				ItemRegistry.STARSTORM_SPEAR.getKey());
+				ItemRegistry.STARSTORM_SWORD.key(),
+				ItemRegistry.STARSTORM_PICKAXE.key(),
+				ItemRegistry.STARSTORM_AXE.key(),
+				ItemRegistry.STARSTORM_SHOVEL.key(),
+				ItemRegistry.STARSTORM_HOE.key(),
+				ItemRegistry.STARSTORM_SPEAR.key());
 
 		tag(IWItemTagGroups.VOID_TOOLS).add(
-				ItemRegistry.VOID_SWORD.getKey(),
-				ItemRegistry.VOID_PICKAXE.getKey(),
-				ItemRegistry.VOID_AXE.getKey(),
-				ItemRegistry.VOID_SHOVEL.getKey(),
-				ItemRegistry.VOID_HOE.getKey(),
-				ItemRegistry.VOID_SPEAR.getKey());
+				ItemRegistry.VOID_SWORD.key(),
+				ItemRegistry.VOID_PICKAXE.key(),
+				ItemRegistry.VOID_AXE.key(),
+				ItemRegistry.VOID_SHOVEL.key(),
+				ItemRegistry.VOID_HOE.key(),
+				ItemRegistry.VOID_SPEAR.key());
 
 		// Gauntlet tags
 		tag(IWItemTagGroups.GAUNTLETS).add(
-				ItemRegistry.WOODEN_GAUNTLET.getKey(),
-				ItemRegistry.STONE_GAUNTLET.getKey(),
-				ItemRegistry.GOLDEN_GAUNTLET.getKey(),
-				ItemRegistry.COPPER_GAUNTLET.getKey(),
-				ItemRegistry.IRON_GAUNTLET.getKey(),
-				ItemRegistry.COBALT_GAUNTLET.getKey(),
-				ItemRegistry.DIAMOND_GAUNTLET.getKey(),
-				ItemRegistry.NETHERITE_GAUNTLET.getKey(),
-				ItemRegistry.MOLTEN_GAUNTLET.getKey(),
-				ItemRegistry.TESLA_GAUNTLET.getKey(),
-				ItemRegistry.VENTUS_GAUNTLET.getKey(),
-				ItemRegistry.ASTRAL_GAUNTLET.getKey(),
-				ItemRegistry.STARSTORM_GAUNTLET.getKey(),
-				ItemRegistry.VOID_GAUNTLET.getKey());
+				ItemRegistry.WOODEN_GAUNTLET.key(),
+				ItemRegistry.STONE_GAUNTLET.key(),
+				ItemRegistry.GOLDEN_GAUNTLET.key(),
+				ItemRegistry.COPPER_GAUNTLET.key(),
+				ItemRegistry.IRON_GAUNTLET.key(),
+				ItemRegistry.COBALT_GAUNTLET.key(),
+				ItemRegistry.DIAMOND_GAUNTLET.key(),
+				ItemRegistry.NETHERITE_GAUNTLET.key(),
+				ItemRegistry.MOLTEN_GAUNTLET.key(),
+				ItemRegistry.TESLA_GAUNTLET.key(),
+				ItemRegistry.VENTUS_GAUNTLET.key(),
+				ItemRegistry.ASTRAL_GAUNTLET.key(),
+				ItemRegistry.STARSTORM_GAUNTLET.key(),
+				ItemRegistry.VOID_GAUNTLET.key());
 
 		// Maul tags
 		tag(IWItemTagGroups.MAULS).add(
-				ItemRegistry.WOODEN_MAUL.getKey(),
-				ItemRegistry.STONE_MAUL.getKey(),
-				ItemRegistry.GOLDEN_MAUL.getKey(),
-				ItemRegistry.IRON_MAUL.getKey(),
-				ItemRegistry.COBALT_MAUL.getKey(),
-				ItemRegistry.DIAMOND_MAUL.getKey(),
-				ItemRegistry.NETHERITE_MAUL.getKey(),
-				ItemRegistry.MOLTEN_MAUL.getKey(),
-				ItemRegistry.TESLA_MAUL.getKey(),
-				ItemRegistry.VENTUS_MAUL.getKey(),
-				ItemRegistry.ASTRAL_MAUL.getKey(),
-				ItemRegistry.STARSTORM_MAUL.getKey(),
-				ItemRegistry.VOID_MAUL.getKey());
+				ItemRegistry.WOODEN_MAUL.key(),
+				ItemRegistry.STONE_MAUL.key(),
+				ItemRegistry.GOLDEN_MAUL.key(),
+				ItemRegistry.IRON_MAUL.key(),
+				ItemRegistry.COBALT_MAUL.key(),
+				ItemRegistry.DIAMOND_MAUL.key(),
+				ItemRegistry.NETHERITE_MAUL.key(),
+				ItemRegistry.MOLTEN_MAUL.key(),
+				ItemRegistry.TESLA_MAUL.key(),
+				ItemRegistry.VENTUS_MAUL.key(),
+				ItemRegistry.ASTRAL_MAUL.key(),
+				ItemRegistry.STARSTORM_MAUL.key(),
+				ItemRegistry.VOID_MAUL.key());
 
 		// Commander Pedestal Augment tags
 		tag(IWItemTagGroups.COMMANDER_PEDESTAL_AUGMENTS).add(
-				ItemRegistry.PEDESTAL_AUGMENT_SPEED.getKey(),
-				ItemRegistry.PEDESTAL_AUGMENT_ARMOR.getKey(),
-				ItemRegistry.PEDESTAL_AUGMENT_ENCHANTMENT.getKey(),
-				ItemRegistry.PEDESTAL_AUGMENT_CAPACITY.getKey());
+				ItemRegistry.PEDESTAL_AUGMENT_SPEED.key(),
+				ItemRegistry.PEDESTAL_AUGMENT_ARMOR.key(),
+				ItemRegistry.PEDESTAL_AUGMENT_ENCHANTMENT.key(),
+				ItemRegistry.PEDESTAL_AUGMENT_CAPACITY.key());
 
 		// Firearm tags
 		tag(IWItemTagGroups.FIREARMS).add(
-				ItemRegistry.FLINTLOCK_PISTOL.getKey(),
-				ItemRegistry.BLUNDERBUSS.getKey(),
-				ItemRegistry.MUSKET.getKey(),
-				ItemRegistry.FLARE_GUN.getKey(),
-				ItemRegistry.HAND_CANNON.getKey(),
-				ItemRegistry.DRAGONS_BREATH_CANNON.getKey());
+				ItemRegistry.FLINTLOCK_PISTOL.key(),
+				ItemRegistry.BLUNDERBUSS.key(),
+				ItemRegistry.MUSKET.key(),
+				ItemRegistry.FLARE_GUN.key(),
+				ItemRegistry.HAND_CANNON.key(),
+				ItemRegistry.DRAGONS_BREATH_CANNON.key());
 
 		// Ranged weapon tags
 		tag(IWItemTagGroups.RANGED_WEAPONS)
@@ -310,11 +310,11 @@ public class ItemTagsGenerator extends BlockTagCopyingItemTagProvider {
 				.addTag(IWItemTagGroups.RANGED_WEAPONS);
 
 		// Staff tags
-		tag(IWItemTagGroups.METEOR_STAFFS).add(ItemRegistry.METEOR_STAFF.getKey());
-		tag(IWItemTagGroups.CURSED_SIGHT_STAFFS).add(ItemRegistry.CURSED_SIGHT_STAFF.getKey());
-		tag(IWItemTagGroups.SCULK_STAFFS).add(ItemRegistry.SCULK_STAFF.getKey());
-		tag(IWItemTagGroups.RECOVERY_STAFFS).add(ItemRegistry.RECOVERY_STAFF.getKey());
-		tag(IWItemTagGroups.VENTUS_STAFFS).add(ItemRegistry.VENTUS_STAFF.getKey());
+		tag(IWItemTagGroups.METEOR_STAFFS).add(ItemRegistry.METEOR_STAFF.key());
+		tag(IWItemTagGroups.CURSED_SIGHT_STAFFS).add(ItemRegistry.CURSED_SIGHT_STAFF.key());
+		tag(IWItemTagGroups.SCULK_STAFFS).add(ItemRegistry.SCULK_STAFF.key());
+		tag(IWItemTagGroups.RECOVERY_STAFFS).add(ItemRegistry.RECOVERY_STAFF.key());
+		tag(IWItemTagGroups.VENTUS_STAFFS).add(ItemRegistry.VENTUS_STAFF.key());
 		tag(IWItemTagGroups.STAFFS)
 				.addTag(IWItemTagGroups.METEOR_STAFFS)
 				.addTag(IWItemTagGroups.CURSED_SIGHT_STAFFS)
@@ -324,46 +324,46 @@ public class ItemTagsGenerator extends BlockTagCopyingItemTagProvider {
 
 		// Armor tags
 		tag(IWItemTagGroups.MOLTEN_ARMOR).add(
-				ItemRegistry.MOLTEN_HELMET.getKey(),
-				ItemRegistry.MOLTEN_CHESTPLATE.getKey(),
-				ItemRegistry.MOLTEN_LEGGINGS.getKey(),
-				ItemRegistry.MOLTEN_BOOTS.getKey());
+				ItemRegistry.MOLTEN_HELMET.key(),
+				ItemRegistry.MOLTEN_CHESTPLATE.key(),
+				ItemRegistry.MOLTEN_LEGGINGS.key(),
+				ItemRegistry.MOLTEN_BOOTS.key());
 
 		tag(IWItemTagGroups.TESLA_ARMOR).add(
-				ItemRegistry.TESLA_HELMET.getKey(),
-				ItemRegistry.TESLA_CHESTPLATE.getKey(),
-				ItemRegistry.TESLA_LEGGINGS.getKey(),
-				ItemRegistry.TESLA_BOOTS.getKey());
+				ItemRegistry.TESLA_HELMET.key(),
+				ItemRegistry.TESLA_CHESTPLATE.key(),
+				ItemRegistry.TESLA_LEGGINGS.key(),
+				ItemRegistry.TESLA_BOOTS.key());
 
 		tag(IWItemTagGroups.VENTUS_ARMOR).add(
-				ItemRegistry.VENTUS_HELMET.getKey(),
-				ItemRegistry.VENTUS_CHESTPLATE.getKey(),
-				ItemRegistry.VENTUS_LEGGINGS.getKey(),
-				ItemRegistry.VENTUS_BOOTS.getKey());
+				ItemRegistry.VENTUS_HELMET.key(),
+				ItemRegistry.VENTUS_CHESTPLATE.key(),
+				ItemRegistry.VENTUS_LEGGINGS.key(),
+				ItemRegistry.VENTUS_BOOTS.key());
 
 		tag(IWItemTagGroups.ASTRAL_ARMOR).add(
-				ItemRegistry.ASTRAL_HELMET.getKey(),
-				ItemRegistry.ASTRAL_CHESTPLATE.getKey(),
-				ItemRegistry.ASTRAL_LEGGINGS.getKey(),
-				ItemRegistry.ASTRAL_BOOTS.getKey());
+				ItemRegistry.ASTRAL_HELMET.key(),
+				ItemRegistry.ASTRAL_CHESTPLATE.key(),
+				ItemRegistry.ASTRAL_LEGGINGS.key(),
+				ItemRegistry.ASTRAL_BOOTS.key());
 
 		tag(IWItemTagGroups.STARSTORM_ARMOR).add(
-				ItemRegistry.STARSTORM_HELMET.getKey(),
-				ItemRegistry.STARSTORM_CHESTPLATE.getKey(),
-				ItemRegistry.STARSTORM_LEGGINGS.getKey(),
-				ItemRegistry.STARSTORM_BOOTS.getKey());
+				ItemRegistry.STARSTORM_HELMET.key(),
+				ItemRegistry.STARSTORM_CHESTPLATE.key(),
+				ItemRegistry.STARSTORM_LEGGINGS.key(),
+				ItemRegistry.STARSTORM_BOOTS.key());
 
 		tag(IWItemTagGroups.PADDED_LEATHER).add(
-				ItemRegistry.PADDED_LEATHER_HELMET.getKey(),
-				ItemRegistry.PADDED_LEATHER_CHESTPLATE.getKey(),
-				ItemRegistry.PADDED_LEATHER_LEGGINGS.getKey(),
-				ItemRegistry.PADDED_LEATHER_BOOTS.getKey());
+				ItemRegistry.PADDED_LEATHER_HELMET.key(),
+				ItemRegistry.PADDED_LEATHER_CHESTPLATE.key(),
+				ItemRegistry.PADDED_LEATHER_LEGGINGS.key(),
+				ItemRegistry.PADDED_LEATHER_BOOTS.key());
 
 		tag(IWItemTagGroups.VOID_ARMOR).add(
-				ItemRegistry.VOID_HELMET.getKey(),
-				ItemRegistry.VOID_CHESTPLATE.getKey(),
-				ItemRegistry.VOID_LEGGINGS.getKey(),
-				ItemRegistry.VOID_BOOTS.getKey());
+				ItemRegistry.VOID_HELMET.key(),
+				ItemRegistry.VOID_CHESTPLATE.key(),
+				ItemRegistry.VOID_LEGGINGS.key(),
+				ItemRegistry.VOID_BOOTS.key());
 
 		copy(IWBlockTagGroups.BURNED_OAK_LOGS, IWItemTagGroups.BURNED_OAK_LOGS);
 		copy(IWBlockTagGroups.STARDUST_LOGS, IWItemTagGroups.STARDUST_LOGS);
@@ -378,36 +378,44 @@ public class ItemTagsGenerator extends BlockTagCopyingItemTagProvider {
 	@SuppressWarnings("unchecked")
 	private void addMinecraftTags() {
 		// Sign tags
-		tag(ItemTags.SIGNS).add(BlockItemRegistry.BURNED_OAK_SIGN_ITEM.getKey(),
-				BlockItemRegistry.STARDUST_SIGN_ITEM.getKey());
+		tag(ItemTags.SIGNS).add(BlockItemRegistry.BURNED_OAK_SIGN_ITEM.key(),
+				BlockItemRegistry.STARDUST_SIGN_ITEM.key());
 
 		// Arrow tags
+		tag(ItemTags.TRIM_MATERIALS).add(
+				ItemRegistry.COBALT_INGOT.key(),
+				ItemRegistry.MOLTEN_INGOT.key(),
+				ItemRegistry.VENTUS_SHARD.key(),
+				ItemRegistry.TESLA_INGOT.key(),
+				ItemRegistry.ASTRAL_INGOT.key(),
+				ItemRegistry.STARSTORM_INGOT.key(),
+				ItemRegistry.VOID_INGOT.key());
 		tag(ItemTags.ARROWS).add(
-				ItemRegistry.WOODEN_ARROW.getKey(),
-				ItemRegistry.STONE_ARROW.getKey(),
-				ItemRegistry.GOLDEN_ARROW.getKey(),
-				ItemRegistry.COPPER_ARROW.getKey(),
-				ItemRegistry.IRON_ARROW.getKey(),
-				ItemRegistry.COBALT_ARROW.getKey(),
-				ItemRegistry.DIAMOND_ARROW.getKey(),
-				ItemRegistry.NETHERITE_ARROW.getKey(),
-				ItemRegistry.MOLTEN_ARROW.getKey(),
-				ItemRegistry.TESLA_ARROW.getKey(),
-				ItemRegistry.VENTUS_ARROW.getKey(),
-				ItemRegistry.ASTRAL_ARROW.getKey(),
-				ItemRegistry.STARSTORM_ARROW.getKey(),
-				ItemRegistry.VOID_ARROW.getKey());
+				ItemRegistry.WOODEN_ARROW.key(),
+				ItemRegistry.STONE_ARROW.key(),
+				ItemRegistry.GOLDEN_ARROW.key(),
+				ItemRegistry.COPPER_ARROW.key(),
+				ItemRegistry.IRON_ARROW.key(),
+				ItemRegistry.COBALT_ARROW.key(),
+				ItemRegistry.DIAMOND_ARROW.key(),
+				ItemRegistry.NETHERITE_ARROW.key(),
+				ItemRegistry.MOLTEN_ARROW.key(),
+				ItemRegistry.TESLA_ARROW.key(),
+				ItemRegistry.VENTUS_ARROW.key(),
+				ItemRegistry.ASTRAL_ARROW.key(),
+				ItemRegistry.STARSTORM_ARROW.key(),
+				ItemRegistry.VOID_ARROW.key());
 
 		// Boat tags
-		tag(ItemTags.BOATS).add(ItemRegistry.BURNED_OAK_BOAT.getKey());
-		tag(ItemTags.BOATS).add(ItemRegistry.STARDUST_BOAT.getKey());
-		tag(ItemTags.CHEST_BOATS).add(ItemRegistry.BURNED_OAK_CHEST_BOAT.getKey());
-		tag(ItemTags.CHEST_BOATS).add(ItemRegistry.STARDUST_CHEST_BOAT.getKey());
+		tag(ItemTags.BOATS).add(ItemRegistry.BURNED_OAK_BOAT.key());
+		tag(ItemTags.BOATS).add(ItemRegistry.STARDUST_BOAT.key());
+		tag(ItemTags.CHEST_BOATS).add(ItemRegistry.BURNED_OAK_CHEST_BOAT.key());
+		tag(ItemTags.CHEST_BOATS).add(ItemRegistry.STARDUST_CHEST_BOAT.key());
 
 		// Non-flammable wood tag
 		tag(ItemTags.NON_FLAMMABLE_WOOD).add(
-				BlockItemRegistry.WARPED_TABLE_ITEM.getKey(),
-				BlockItemRegistry.CRIMSON_TABLE_ITEM.getKey());
+				BlockItemRegistry.WARPED_TABLE_ITEM.key(),
+				BlockItemRegistry.CRIMSON_TABLE_ITEM.key());
 
 		// Trimmable armor tag
 		tag(ItemTags.TRIMMABLE_ARMOR).addTags(
@@ -421,27 +429,27 @@ public class ItemTagsGenerator extends BlockTagCopyingItemTagProvider {
 
 		// Beacon payment tag
 		tag(ItemTags.BEACON_PAYMENT_ITEMS).add(
-				ItemRegistry.COBALT_INGOT.getKey(),
-				ItemRegistry.MOLTEN_INGOT.getKey(),
-				ItemRegistry.TESLA_INGOT.getKey(),
-				ItemRegistry.VENTUS_SHARD.getKey(),
-				ItemRegistry.ASTRAL_INGOT.getKey(),
-				ItemRegistry.STARSTORM_INGOT.getKey());
+				ItemRegistry.COBALT_INGOT.key(),
+				ItemRegistry.MOLTEN_INGOT.key(),
+				ItemRegistry.TESLA_INGOT.key(),
+				ItemRegistry.VENTUS_SHARD.key(),
+				ItemRegistry.ASTRAL_INGOT.key(),
+				ItemRegistry.STARSTORM_INGOT.key());
 
 		// Cauldron remove dye tag
 		tag(ItemTags.CAULDRON_CAN_REMOVE_DYE).add(
-				ItemRegistry.PADDED_LEATHER_HELMET.getKey(),
-				ItemRegistry.PADDED_LEATHER_CHESTPLATE.getKey(),
-				ItemRegistry.PADDED_LEATHER_LEGGINGS.getKey(),
-				ItemRegistry.PADDED_LEATHER_BOOTS.getKey()
+				ItemRegistry.PADDED_LEATHER_HELMET.key(),
+				ItemRegistry.PADDED_LEATHER_CHESTPLATE.key(),
+				ItemRegistry.PADDED_LEATHER_LEGGINGS.key(),
+				ItemRegistry.PADDED_LEATHER_BOOTS.key()
 		);
 
 		// Freeze immune tag
 		tag(ItemTags.FREEZE_IMMUNE_WEARABLES).add(
-				ItemRegistry.PADDED_LEATHER_HELMET.getKey(),
-				ItemRegistry.PADDED_LEATHER_CHESTPLATE.getKey(),
-				ItemRegistry.PADDED_LEATHER_LEGGINGS.getKey(),
-				ItemRegistry.PADDED_LEATHER_BOOTS.getKey()
+				ItemRegistry.PADDED_LEATHER_HELMET.key(),
+				ItemRegistry.PADDED_LEATHER_CHESTPLATE.key(),
+				ItemRegistry.PADDED_LEATHER_LEGGINGS.key(),
+				ItemRegistry.PADDED_LEATHER_BOOTS.key()
 		);
 
 		// Enchantable items tag
@@ -462,129 +470,127 @@ public class ItemTagsGenerator extends BlockTagCopyingItemTagProvider {
 
 		// Head tags
 		tag(ItemTags.SKULLS).add(
-				BlockItemRegistry.MINUTEMAN_HEAD_ITEM.getKey(),
-				BlockItemRegistry.FIELD_MEDIC_HEAD_ITEM.getKey(),
-				BlockItemRegistry.DYING_SOLDIER_HEAD_ITEM.getKey(),
-				BlockItemRegistry.WANDERING_WARRIOR_HEAD_ITEM.getKey(),
-				BlockItemRegistry.HANS_HEAD_ITEM.getKey(),
-				BlockItemRegistry.STORM_CREEPER_HEAD_ITEM.getKey());
+				BlockItemRegistry.MINUTEMAN_HEAD_ITEM.key(),
+				BlockItemRegistry.FIELD_MEDIC_HEAD_ITEM.key(),
+				BlockItemRegistry.DYING_SOLDIER_HEAD_ITEM.key(),
+				BlockItemRegistry.WANDERING_WARRIOR_HEAD_ITEM.key(),
+				BlockItemRegistry.HANS_HEAD_ITEM.key(),
+				BlockItemRegistry.STORM_CREEPER_HEAD_ITEM.key());
 
 		tag(ItemTags.SULFUR_CUBE_ARCHETYPE_SLOW_FLAT)
 				.addTag(CommonItemTagGroups.COBALT_ORES)
-				.add(BlockItemRegistry.COBALT_BLOCK_ITEM.getKey(),
-						BlockItemRegistry.RAW_COBALT_BLOCK_ITEM.getKey(),
-						BlockItemRegistry.RUSTED_IRON_BLOCK_ITEM.getKey());
+				.add(BlockItemRegistry.COBALT_BLOCK_ITEM.key(),
+						BlockItemRegistry.RAW_COBALT_BLOCK_ITEM.key(),
+						BlockItemRegistry.RUSTED_IRON_BLOCK_ITEM.key());
 
 		tag(ItemTags.SULFUR_CUBE_ARCHETYPE_FAST_FLAT)
 				.addTag(IWItemTagGroups.ASTRAL_ORES)
-				.add(BlockItemRegistry.ASTRAL_BLOCK_ITEM.getKey(),
-						BlockItemRegistry.STARSTORM_BLOCK_ITEM.getKey());
+				.add(BlockItemRegistry.ASTRAL_BLOCK_ITEM.key(),
+						BlockItemRegistry.STARSTORM_BLOCK_ITEM.key());
 
 		tag(ItemTags.SULFUR_CUBE_ARCHETYPE_HIGH_RESISTANCE)
 				.addTags(IWItemTagGroups.MOLTEN_ORES,
 						IWItemTagGroups.TESLA_ORES)
-				.add(BlockItemRegistry.MOLTEN_BLOCK_ITEM.getKey(),
-						BlockItemRegistry.TESLA_BLOCK_ITEM.getKey());
+				.add(BlockItemRegistry.MOLTEN_BLOCK_ITEM.key(),
+						BlockItemRegistry.TESLA_BLOCK_ITEM.key());
 
 		tag(ItemTags.SULFUR_CUBE_ARCHETYPE_LIGHT).add(
-				BlockItemRegistry.VENTUS_ORE_ITEM.getKey());
+				BlockItemRegistry.VENTUS_ORE_ITEM.key());
 
 		// Spear tags
 		tag(ItemTags.SPEARS).add(
-				ItemRegistry.COBALT_SPEAR.getKey(),
-				ItemRegistry.MOLTEN_SPEAR.getKey(),
-				ItemRegistry.TESLA_SPEAR.getKey(),
-				ItemRegistry.VENTUS_SPEAR.getKey(),
-				ItemRegistry.ASTRAL_SPEAR.getKey(),
-				ItemRegistry.STARSTORM_SPEAR.getKey(),
-				ItemRegistry.VOID_SPEAR.getKey());
+				ItemRegistry.COBALT_SPEAR.key(),
+				ItemRegistry.MOLTEN_SPEAR.key(),
+				ItemRegistry.TESLA_SPEAR.key(),
+				ItemRegistry.VENTUS_SPEAR.key(),
+				ItemRegistry.ASTRAL_SPEAR.key(),
+				ItemRegistry.STARSTORM_SPEAR.key(),
+				ItemRegistry.VOID_SPEAR.key());
 
 		tag(ItemTags.SWORDS).add(
-				ItemRegistry.COBALT_SWORD.getKey(),
-				ItemRegistry.MOLTEN_SWORD.getKey(),
-				ItemRegistry.TESLA_SWORD.getKey(),
-				ItemRegistry.VENTUS_SWORD.getKey(),
-				ItemRegistry.ASTRAL_SWORD.getKey(),
-				ItemRegistry.STARSTORM_SWORD.getKey(),
-				ItemRegistry.VOID_SWORD.getKey(),
-				ItemRegistry.THE_SWORD.getKey());
+				ItemRegistry.COBALT_SWORD.key(),
+				ItemRegistry.MOLTEN_SWORD.key(),
+				ItemRegistry.TESLA_SWORD.key(),
+				ItemRegistry.VENTUS_SWORD.key(),
+				ItemRegistry.ASTRAL_SWORD.key(),
+				ItemRegistry.STARSTORM_SWORD.key(),
+				ItemRegistry.VOID_SWORD.key(),
+				ItemRegistry.THE_SWORD.key());
 		tag(ItemTags.PICKAXES).add(
-				ItemRegistry.COBALT_PICKAXE.getKey(),
-				ItemRegistry.MOLTEN_PICKAXE.getKey(),
-				ItemRegistry.TESLA_PICKAXE.getKey(),
-				ItemRegistry.VENTUS_PICKAXE.getKey(),
-				ItemRegistry.ASTRAL_PICKAXE.getKey(),
-				ItemRegistry.STARSTORM_PICKAXE.getKey(),
-				ItemRegistry.VOID_PICKAXE.getKey());
+				ItemRegistry.COBALT_PICKAXE.key(),
+				ItemRegistry.MOLTEN_PICKAXE.key(),
+				ItemRegistry.TESLA_PICKAXE.key(),
+				ItemRegistry.VENTUS_PICKAXE.key(),
+				ItemRegistry.ASTRAL_PICKAXE.key(),
+				ItemRegistry.STARSTORM_PICKAXE.key(),
+				ItemRegistry.VOID_PICKAXE.key());
 		tag(ItemTags.AXES).add(
-				ItemRegistry.COBALT_AXE.getKey(),
-				ItemRegistry.MOLTEN_AXE.getKey(),
-				ItemRegistry.TESLA_AXE.getKey(),
-				ItemRegistry.VENTUS_AXE.getKey(),
-				ItemRegistry.ASTRAL_AXE.getKey(),
-				ItemRegistry.STARSTORM_AXE.getKey(),
-				ItemRegistry.VOID_AXE.getKey());
+				ItemRegistry.COBALT_AXE.key(),
+				ItemRegistry.MOLTEN_AXE.key(),
+				ItemRegistry.TESLA_AXE.key(),
+				ItemRegistry.VENTUS_AXE.key(),
+				ItemRegistry.ASTRAL_AXE.key(),
+				ItemRegistry.STARSTORM_AXE.key(),
+				ItemRegistry.VOID_AXE.key());
 		tag(ItemTags.SHOVELS).add(
-				ItemRegistry.COBALT_SHOVEL.getKey(),
-				ItemRegistry.MOLTEN_SHOVEL.getKey(),
-				ItemRegistry.TESLA_SHOVEL.getKey(),
-				ItemRegistry.VENTUS_SHOVEL.getKey(),
-				ItemRegistry.ASTRAL_SHOVEL.getKey(),
-				ItemRegistry.STARSTORM_SHOVEL.getKey(),
-				ItemRegistry.VOID_SHOVEL.getKey());
+				ItemRegistry.COBALT_SHOVEL.key(),
+				ItemRegistry.MOLTEN_SHOVEL.key(),
+				ItemRegistry.TESLA_SHOVEL.key(),
+				ItemRegistry.VENTUS_SHOVEL.key(),
+				ItemRegistry.ASTRAL_SHOVEL.key(),
+				ItemRegistry.STARSTORM_SHOVEL.key(),
+				ItemRegistry.VOID_SHOVEL.key());
 		tag(ItemTags.HOES).add(
-				ItemRegistry.COBALT_HOE.getKey(),
-				ItemRegistry.MOLTEN_HOE.getKey(),
-				ItemRegistry.TESLA_HOE.getKey(),
-				ItemRegistry.VENTUS_HOE.getKey(),
-				ItemRegistry.ASTRAL_HOE.getKey(),
-				ItemRegistry.STARSTORM_HOE.getKey(),
-				ItemRegistry.VOID_HOE.getKey());
+				ItemRegistry.COBALT_HOE.key(),
+				ItemRegistry.MOLTEN_HOE.key(),
+				ItemRegistry.TESLA_HOE.key(),
+				ItemRegistry.VENTUS_HOE.key(),
+				ItemRegistry.ASTRAL_HOE.key(),
+				ItemRegistry.STARSTORM_HOE.key(),
+				ItemRegistry.VOID_HOE.key());
 		tag(ItemTags.HEAD_ARMOR).add(
-				ItemRegistry.COBALT_HELMET.getKey(),
-				ItemRegistry.MOLTEN_HELMET.getKey(),
-				ItemRegistry.TESLA_HELMET.getKey(),
-				ItemRegistry.VENTUS_HELMET.getKey(),
-				ItemRegistry.ASTRAL_HELMET.getKey(),
-				ItemRegistry.STARSTORM_HELMET.getKey(),
-				ItemRegistry.VOID_HELMET.getKey());
+				ItemRegistry.COBALT_HELMET.key(),
+				ItemRegistry.MOLTEN_HELMET.key(),
+				ItemRegistry.TESLA_HELMET.key(),
+				ItemRegistry.VENTUS_HELMET.key(),
+				ItemRegistry.ASTRAL_HELMET.key(),
+				ItemRegistry.STARSTORM_HELMET.key(),
+				ItemRegistry.VOID_HELMET.key());
 		tag(ItemTags.CHEST_ARMOR).add(
-				ItemRegistry.COBALT_CHESTPLATE.getKey(),
-				ItemRegistry.MOLTEN_CHESTPLATE.getKey(),
-				ItemRegistry.TESLA_CHESTPLATE.getKey(),
-				ItemRegistry.VENTUS_CHESTPLATE.getKey(),
-				ItemRegistry.ASTRAL_CHESTPLATE.getKey(),
-				ItemRegistry.STARSTORM_CHESTPLATE.getKey(),
-				ItemRegistry.VOID_CHESTPLATE.getKey());
+				ItemRegistry.COBALT_CHESTPLATE.key(),
+				ItemRegistry.MOLTEN_CHESTPLATE.key(),
+				ItemRegistry.TESLA_CHESTPLATE.key(),
+				ItemRegistry.VENTUS_CHESTPLATE.key(),
+				ItemRegistry.ASTRAL_CHESTPLATE.key(),
+				ItemRegistry.STARSTORM_CHESTPLATE.key(),
+				ItemRegistry.VOID_CHESTPLATE.key());
 		tag(ItemTags.LEG_ARMOR).add(
-				ItemRegistry.COBALT_LEGGINGS.getKey(),
-				ItemRegistry.MOLTEN_LEGGINGS.getKey(),
-				ItemRegistry.TESLA_LEGGINGS.getKey(),
-				ItemRegistry.VENTUS_LEGGINGS.getKey(),
-				ItemRegistry.ASTRAL_LEGGINGS.getKey(),
-				ItemRegistry.STARSTORM_LEGGINGS.getKey(),
-				ItemRegistry.VOID_LEGGINGS.getKey());
+				ItemRegistry.COBALT_LEGGINGS.key(),
+				ItemRegistry.MOLTEN_LEGGINGS.key(),
+				ItemRegistry.TESLA_LEGGINGS.key(),
+				ItemRegistry.VENTUS_LEGGINGS.key(),
+				ItemRegistry.ASTRAL_LEGGINGS.key(),
+				ItemRegistry.STARSTORM_LEGGINGS.key(),
+				ItemRegistry.VOID_LEGGINGS.key());
 		tag(ItemTags.FOOT_ARMOR).add(
-				ItemRegistry.COBALT_BOOTS.getKey(),
-				ItemRegistry.MOLTEN_BOOTS.getKey(),
-				ItemRegistry.TESLA_BOOTS.getKey(),
-				ItemRegistry.VENTUS_BOOTS.getKey(),
-				ItemRegistry.ASTRAL_BOOTS.getKey(),
-				ItemRegistry.STARSTORM_BOOTS.getKey(),
-				ItemRegistry.VOID_BOOTS.getKey());
+				ItemRegistry.COBALT_BOOTS.key(),
+				ItemRegistry.MOLTEN_BOOTS.key(),
+				ItemRegistry.TESLA_BOOTS.key(),
+				ItemRegistry.VENTUS_BOOTS.key(),
+				ItemRegistry.ASTRAL_BOOTS.key(),
+				ItemRegistry.STARSTORM_BOOTS.key(),
+				ItemRegistry.VOID_BOOTS.key());
 
 		tag(SLABS).add(
-				BlockItemRegistry.CLOUD_MARBLE_BRICK_SLAB_ITEM.getKey(),
-				BlockItemRegistry.BLOOD_SANDSTONE_SLAB_ITEM.getKey(),
-				BlockItemRegistry.CUT_BLOOD_SANDSTONE_SLAB_ITEM.getKey(),
-				BlockItemRegistry.SMOOTH_BLOOD_SANDSTONE_SLAB_ITEM.getKey(),
-				BlockItemRegistry.HARDENED_MUD_SLAB_ITEM.getKey());
+				BlockItemRegistry.CLOUD_MARBLE_BRICK_SLAB_ITEM.key(),
+				BlockItemRegistry.BLOOD_SANDSTONE_SLAB_ITEM.key(),
+				BlockItemRegistry.CUT_BLOOD_SANDSTONE_SLAB_ITEM.key(),
+				BlockItemRegistry.SMOOTH_BLOOD_SANDSTONE_SLAB_ITEM.key());
 
 		tag(STAIRS).add(
-				BlockItemRegistry.CLOUD_MARBLE_BRICK_STAIRS_ITEM.getKey(),
-				BlockItemRegistry.BLOOD_SANDSTONE_STAIRS_ITEM.getKey(),
-				BlockItemRegistry.SMOOTH_BLOOD_SANDSTONE_STAIRS_ITEM.getKey(),
-				BlockItemRegistry.HARDENED_MUD_STAIRS_ITEM.getKey());
+				BlockItemRegistry.CLOUD_MARBLE_BRICK_STAIRS_ITEM.key(),
+				BlockItemRegistry.BLOOD_SANDSTONE_STAIRS_ITEM.key(),
+				BlockItemRegistry.SMOOTH_BLOOD_SANDSTONE_STAIRS_ITEM.key());
 
 		copy(BlockTags.WOODEN_FENCES, ItemTags.WOODEN_FENCES);
 		copy(BlockTags.FENCE_GATES, ItemTags.FENCE_GATES);

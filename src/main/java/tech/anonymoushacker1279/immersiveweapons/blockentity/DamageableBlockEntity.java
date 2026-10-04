@@ -115,7 +115,7 @@ public class DamageableBlockEntity extends BlockEntity {
 		if (repairStack.getItem() == repairItem) {
 			if (currentStage > 0 && currentStage <= stages) {
 				if (health < maxHealth) {
-					health += (int) (maxHealth / (double) (stages + 1));
+					health = Math.min(maxHealth, health + (int) (maxHealth / (double) (stages + 1)));
 
 					level.setBlockAndUpdate(pos, state.setValue(damageStage, currentStage - 1));
 

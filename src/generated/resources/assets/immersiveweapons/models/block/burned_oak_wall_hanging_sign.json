@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_wall_hanging_sign",
+  "textures": {
+    "all": "immersiveweapons:block/burned_oak_hanging_sign",
+    "particle": "immersiveweapons:block/burned_oak_planks"
+  }
+}

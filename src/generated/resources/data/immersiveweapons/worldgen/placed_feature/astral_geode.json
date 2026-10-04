@@ -2,18 +2,18 @@
   "feature": "immersiveweapons:astral_geode",
   "placement": [
     {
-      "type": "minecraft:heightmap",
-      "heightmap": "WORLD_SURFACE"
-    },
-    {
-      "type": "minecraft:biome"
+      "type": "minecraft:rarity_filter",
+      "chance": 4
     },
     {
       "type": "minecraft:in_square"
     },
     {
-      "type": "minecraft:rarity_filter",
-      "chance": 4
+      "type": "minecraft:heightmap",
+      "heightmap": "WORLD_SURFACE"
+    },
+    {
+      "type": "minecraft:biome"
     }
   ]
 }

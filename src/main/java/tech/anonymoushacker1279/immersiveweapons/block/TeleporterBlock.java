@@ -18,6 +18,11 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
+import tech.anonymoushacker1279.immersiveweapons.block.core.WaterloggingHelper;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -74,6 +79,14 @@ public class TeleporterBlock extends Block implements EntityBlock, SimpleWaterlo
 					getEntitiesOnPlatform(level, pos).forEach(entity -> {
 						if (teleporterExists) {
 							didTeleport.set(true);
+
+							// Mold the bread before teleporting. Across dimensions, the entity is recreated, so changes
+							// made afterward would apply to the old entity.
+							if (entity instanceof ItemEntity itemEntity && itemEntity.getItem().is(Items.BREAD)) {
+								didMoldBread.set(true);
+								itemEntity.setItem(new ItemStack(ItemRegistry.MOLDY_BREAD.get(), itemEntity.getItem().getCount()));
+							}
+
 							entity.teleportTo(serverLevel,
 									linkedPos.getX() + 0.5D,
 									linkedPos.getY() + 1.0D,
@@ -82,11 +95,6 @@ public class TeleporterBlock extends Block implements EntityBlock, SimpleWaterlo
 									entity.getYRot(),
 									entity.getXRot(),
 									false);
-
-							if (entity instanceof ItemEntity itemEntity && itemEntity.getItem().is(Items.BREAD)) {
-								didMoldBread.set(true);
-								itemEntity.setItem(new ItemStack(ItemRegistry.MOLDY_BREAD.get(), itemEntity.getItem().getCount()));
-							}
 						} else if (entity instanceof Player player) {
 							player.sendOverlayMessage(Component.translatable("immersiveweapons.block.teleporter.linked_teleporter_does_not_exist")
 									.withStyle(ChatFormatting.RED));
@@ -148,6 +156,12 @@ public class TeleporterBlock extends Block implements EntityBlock, SimpleWaterlo
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
 		return defaultBlockState().setValue(WATERLOGGED, context.getLevel()
 				.getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
+	}
+
+	@Override
+	protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess scheduledTickAccess, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
+		WaterloggingHelper.scheduleFluidTick(state, level, scheduledTickAccess, pos);
+		return super.updateShape(state, level, scheduledTickAccess, pos, direction, neighborPos, neighborState, random);
 	}
 
 	@Override

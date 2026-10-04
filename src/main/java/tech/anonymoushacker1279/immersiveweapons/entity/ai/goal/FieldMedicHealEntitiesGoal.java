@@ -50,6 +50,11 @@ public class FieldMedicHealEntitiesGoal extends Goal {
 			scanForHurtEntities();
 		}
 
+		// Drop the target if it died, was removed, or was already healed by something else
+		if (healTarget != null && (!healTarget.isAlive() || healTarget.getHealth() >= healTarget.getMaxHealth())) {
+			healTarget = null;
+		}
+
 		if (healTarget != null) {
 			goHealEntity(healTarget);
 		}
@@ -89,7 +94,7 @@ public class FieldMedicHealEntitiesGoal extends Goal {
 	private void goHealEntity(LivingEntity entity) {
 		medic.getNavigation().moveTo(entity, 1.0D);
 
-		if (medic.distanceTo(entity) <= 1.5D && entity.hasLineOfSight(entity)) {
+		if (medic.distanceTo(entity) <= 1.5D && medic.hasLineOfSight(entity)) {
 			// If below half health, use a first aid kit, otherwise a bandage
 			if (entity.getHealth() <= entity.getMaxHealth() / 2) {
 				medic.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ItemRegistry.FIRST_AID_KIT.get()));

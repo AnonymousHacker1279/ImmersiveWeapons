@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:crimson_table"
+        "recipes": "immersiveweapons:crimson_table"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

@@ -9,6 +9,7 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import tech.anonymoushacker1279.immersiveweapons.block.core.WaterloggingHelper;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -18,6 +19,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
+import org.jetbrains.annotations.Nullable;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import tech.anonymoushacker1279.immersiveweapons.block.core.BasicOrientableBlock;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
@@ -38,15 +40,19 @@ public class FlagBlock extends BasicOrientableBlock implements SimpleWaterlogged
 		builder.add(FACING, WATERLOGGED);
 	}
 
+	@Nullable
 	@Override
 	public BlockState getStateForPlacement(BlockPlaceContext context) {
 		BlockState blockStateBelow = context.getLevel().getBlockState(context.getClickedPos().below());
 
-		if (blockStateBelow.getBlock() instanceof FlagPoleBlock || blockStateBelow.getBlock() instanceof FlagBlock) {
-			return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
-		} else {
-			return Blocks.AIR.defaultBlockState();
+		// Returning null cancels the placement, so the item isn't consumed
+		if (!(blockStateBelow.getBlock() instanceof FlagPoleBlock)) {
+			return null;
 		}
+
+		return defaultBlockState()
+				.setValue(FACING, context.getHorizontalDirection().getOpposite())
+				.setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
 	}
 
 	@Override
@@ -71,6 +77,11 @@ public class FlagBlock extends BasicOrientableBlock implements SimpleWaterlogged
 
 	@Override
 	protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess scheduledTickAccess, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
-		return state.canSurvive(level, pos) ? super.updateShape(state, level, scheduledTickAccess, pos, direction, neighborPos, neighborState, random) : Blocks.AIR.defaultBlockState();
+		if (!state.canSurvive(level, pos)) {
+			return Blocks.AIR.defaultBlockState();
+		}
+
+		WaterloggingHelper.scheduleFluidTick(state, level, scheduledTickAccess, pos);
+		return super.updateShape(state, level, scheduledTickAccess, pos, direction, neighborPos, neighborState, random);
 	}
 }

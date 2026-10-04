@@ -68,7 +68,7 @@ public class CustomArmPoses {
 
 	public static final EnumProxy<ArmPose> HOLD_PIKE_POSE_PARAMS = new EnumProxy<>(ArmPose.class, true, false, (IArmPoseTransformer) (model, state, arm) -> {
 		// Hold the pike with both hands, like a spear
-		if (state.attackTime == 0) {
+		if (state.swingAnimation == 0) {
 			if (arm == HumanoidArm.RIGHT) {
 				model.rightArm.xRot = -0.35F;
 				model.rightArm.yRot = -0.4F;
@@ -90,10 +90,10 @@ public class CustomArmPoses {
 			}
 		} else {
 			// As this is a spear-like item, it needs to stab in a thrusting motion
-			float armRotation = Mth.lerp(state.attackTime * 2, 1.0F, 0.0F);
+			float armRotation = Mth.lerp(state.swingAnimation * 2, 1.0F, 0.0F);
 
 			// Disable the arm swinging animation
-			state.attackTime = 0.0F;
+			state.swingAnimation = 0.0F;
 
 			// Animate the arms moving forward in a thrust motion
 			if (arm == HumanoidArm.RIGHT) {

@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:smoke_grenade_blue"
+        "recipes": "immersiveweapons:smoke_grenade_blue"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

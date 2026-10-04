@@ -15,5 +15,13 @@
         "texture": "immersiveweapons:starstorm"
       }
     ]
-  }
+  },
+  "trim_overrides": [
+    {
+      "palette": "immersiveweapons:trim/iw_starstorm_darker",
+      "when": {
+        "material": "immersiveweapons:starstorm"
+      }
+    }
+  ]
 }

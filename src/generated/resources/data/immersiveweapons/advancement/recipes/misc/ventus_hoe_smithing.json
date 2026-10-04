@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:ventus_hoe_smithing"
+        "recipes": "immersiveweapons:ventus_hoe_smithing"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -12,9 +12,7 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": {
-            "Name": "immersiveweapons:rusted_iron_block"
-          }
+          "output_state": "immersiveweapons:rusted_iron_block"
         }
       ]
     },
@@ -30,9 +28,7 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": {
-            "Name": "minecraft:mossy_cobblestone"
-          }
+          "output_state": "minecraft:mossy_cobblestone"
         }
       ]
     },
@@ -48,9 +44,7 @@
           "location_predicate": {
             "predicate_type": "minecraft:always_true"
           },
-          "output_state": {
-            "Name": "minecraft:mossy_stone_bricks"
-          }
+          "output_state": "minecraft:mossy_stone_bricks"
         }
       ]
     }

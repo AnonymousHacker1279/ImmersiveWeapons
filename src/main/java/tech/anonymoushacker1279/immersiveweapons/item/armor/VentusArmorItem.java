@@ -25,6 +25,11 @@ import tech.anonymoushacker1279.immersiveweapons.network.payload.VentusArmorPayl
 
 public class VentusArmorItem extends Item implements TickableArmor {
 
+	/// The wind shield cooldown and duration in ticks. The server uses these to validate reflection requests from
+	/// the client.
+	public static final int WIND_SHIELD_COOLDOWN = 120;
+	public static final int WIND_SHIELD_DURATION = 60;
+
 	private int windShieldCooldown = 0;
 	private int windShieldDuration = 0;
 
@@ -88,7 +93,7 @@ public class VentusArmorItem extends Item implements TickableArmor {
 		if (ArmorUtils.isWearingVentusArmor(player)) {
 			boolean effectEnabled = player.getPersistentData().getBoolean("VentusArmorEffectEnabled").orElse(false);
 
-			if (level.isClientSide()) {
+			if (level.isClientSide() && player.isLocalPlayer()) {
 				if (IWKeyBinds.TOGGLE_ARMOR_EFFECT.consumeClick()) {
 					// Store the toggle variable in the player's NBT
 					player.getPersistentData().putBoolean("VentusArmorEffectEnabled", !effectEnabled);
@@ -116,8 +121,8 @@ public class VentusArmorItem extends Item implements TickableArmor {
 					}
 					if (IWKeyBinds.ARMOR_ACTION.consumeClick()) {
 						if (windShieldCooldown == 0) {
-							windShieldCooldown = 120;
-							windShieldDuration = 60;
+							windShieldCooldown = WIND_SHIELD_COOLDOWN;
+							windShieldDuration = WIND_SHIELD_DURATION;
 						}
 					}
 				}

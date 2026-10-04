@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:void_pickaxe"
+        "recipes": "immersiveweapons:void_pickaxe"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

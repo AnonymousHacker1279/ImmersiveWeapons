@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:tiltros_portal_frame"
+        "recipes": "immersiveweapons:tiltros_portal_frame"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

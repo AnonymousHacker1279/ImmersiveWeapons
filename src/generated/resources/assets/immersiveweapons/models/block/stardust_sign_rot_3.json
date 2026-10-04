@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_sign_rot_3",
+  "textures": {
+    "all": "immersiveweapons:block/stardust_sign",
+    "particle": "immersiveweapons:block/stardust_planks"
+  }
+}

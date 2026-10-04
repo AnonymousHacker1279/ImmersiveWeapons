@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:chiseled_blood_sandstone_from_blood_sandstone_stonecutting"
+        "recipes": "immersiveweapons:chiseled_blood_sandstone_from_blood_sandstone_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

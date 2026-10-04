@@ -7,6 +7,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -61,7 +62,7 @@ public class MortarBlock extends BasicOrientableBlock {
 			// If the mortar is loaded and the player is holding flint and steel, fire the shell
 			if (state.getValue(LOADED) && itemStack.getItem() == Items.FLINT_AND_STEEL) {
 				if (!player.isCreative()) {
-					itemStack.setDamageValue(itemStack.getDamageValue() - 1);
+					itemStack.hurtAndBreak(1, player, EquipmentSlot.MAINHAND);
 				}
 
 				fire(level, pos, state, player);
@@ -122,7 +123,7 @@ public class MortarBlock extends BasicOrientableBlock {
 			serverLevel.sendParticles(ParticleTypes.LARGE_SMOKE, pos.getX(), pos.getY(), pos.getZ(),
 					3, 0.0f, 0.2f, 0.0f, 0.0f);
 
-			PacketDistributor.sendToPlayersTrackingChunk(serverLevel, level.getChunkAt(pos).getPos(), new LocalSoundPayload(pos, SoundEventRegistry.MORTAR_FIRE.getKey(),
+			PacketDistributor.sendToPlayersTrackingChunk(serverLevel, level.getChunkAt(pos).getPos(), new LocalSoundPayload(pos, SoundEventRegistry.MORTAR_FIRE.key(),
 					SoundSource.BLOCKS, 1.0f, 1.0f, true));
 		}
 

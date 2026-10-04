@@ -1,12 +1,10 @@
 {
   "type": "immersiveweapons:simple_chest",
   "allow_treasure": false,
-  "conditions": [
-    {
-      "condition": "neoforge:loot_table_id",
-      "loot_table_id": "minecraft:chests/stronghold_library"
-    }
-  ],
+  "condition": {
+    "type": "neoforge:loot_table_id",
+    "loot_table_id": "minecraft:chests/stronghold_library"
+  },
   "item": {
     "id": "immersiveweapons:ancient_scroll"
   },

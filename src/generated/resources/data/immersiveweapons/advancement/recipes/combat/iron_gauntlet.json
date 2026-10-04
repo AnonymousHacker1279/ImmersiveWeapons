@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:iron_gauntlet"
+        "recipes": "immersiveweapons:iron_gauntlet"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

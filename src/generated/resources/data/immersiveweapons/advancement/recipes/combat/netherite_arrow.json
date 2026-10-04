@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:netherite_arrow"
+        "recipes": "immersiveweapons:netherite_arrow"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

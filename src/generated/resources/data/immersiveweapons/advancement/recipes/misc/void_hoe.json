@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:void_hoe"
+        "recipes": "immersiveweapons:void_hoe"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

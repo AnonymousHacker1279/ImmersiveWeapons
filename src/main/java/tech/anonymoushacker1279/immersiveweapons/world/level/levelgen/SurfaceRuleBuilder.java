@@ -6,7 +6,8 @@ import net.minecraft.core.HolderGetter;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.SurfaceRules;
+import net.minecraft.world.level.levelgen.material.MaterialRules;
+import net.minecraft.world.level.levelgen.material.rule.MaterialRule;
 import net.minecraft.world.level.levelgen.placement.CaveSurface;
 import org.jetbrains.annotations.Nullable;
 
@@ -17,7 +18,6 @@ import java.util.function.Supplier;
 
 public class SurfaceRuleBuilder {
 
-	public static final SurfaceRules.RuleSource[] RULE_SOURCES = new SurfaceRules.RuleSource[0];
 	private static final Map<String, SurfaceRuleEntry> RULES_CACHE = Maps.newHashMap();
 	private static final SurfaceRuleBuilder INSTANCE = new SurfaceRuleBuilder();
 	private final List<SurfaceRuleEntry> rules = Lists.newArrayList();
@@ -66,10 +66,10 @@ public class SurfaceRuleBuilder {
 	/// @return same [SurfaceRuleBuilder] instance.
 	public SurfaceRuleBuilder surface(BlockState state) {
 		entryInstance = getFromCache("surface_" + state, () -> {
-			SurfaceRules.RuleSource rule = SurfaceRules.state(state);
-			rule = SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, rule);
-			rule = SurfaceRules.ifTrue(SurfaceRules.waterBlockCheck(1, 0), rule);
-			rule = SurfaceRules.ifTrue(SurfaceRules.abovePreliminarySurface(), rule);
+			MaterialRule rule = MaterialRules.state(state);
+			rule = MaterialRules.ifTrue(MaterialRules.stoneDepthCheck(0, false, CaveSurface.FLOOR), rule);
+			rule = MaterialRules.ifTrue(MaterialRules.waterBlockCheck(1, 0), rule);
+			rule = MaterialRules.ifTrue(MaterialRules.abovePreliminarySurface(), rule);
 			return new SurfaceRuleEntry(2, rule);
 		});
 		rules.add(entryInstance);
@@ -83,10 +83,10 @@ public class SurfaceRuleBuilder {
 	/// @return same [SurfaceRuleBuilder] instance.
 	public SurfaceRuleBuilder subsurface(BlockState state, int depth) {
 		entryInstance = getFromCache("subsurface_" + depth + "_" + state, () -> {
-			SurfaceRules.RuleSource rule = SurfaceRules.state(state);
-			rule = SurfaceRules.ifTrue(SurfaceRules.stoneDepthCheck(depth, false, 0, CaveSurface.FLOOR), rule);
-			rule = SurfaceRules.ifTrue(SurfaceRules.waterBlockCheck(1, 0), rule);
-			rule = SurfaceRules.ifTrue(SurfaceRules.abovePreliminarySurface(), rule);
+			MaterialRule rule = MaterialRules.state(state);
+			rule = MaterialRules.ifTrue(MaterialRules.stoneDepthCheck(depth, false, 0, CaveSurface.FLOOR), rule);
+			rule = MaterialRules.ifTrue(MaterialRules.waterBlockCheck(1, 0), rule);
+			rule = MaterialRules.ifTrue(MaterialRules.abovePreliminarySurface(), rule);
 			return new SurfaceRuleEntry(3, rule);
 		});
 		rules.add(entryInstance);
@@ -99,21 +99,20 @@ public class SurfaceRuleBuilder {
 	/// @param state [BlockState] for filling.
 	/// @return same [SurfaceRuleBuilder] instance.
 	public SurfaceRuleBuilder filler(BlockState state) {
-		entryInstance = getFromCache("fill_" + state, () -> new SurfaceRuleEntry(10, SurfaceRules.state(state)));
+		entryInstance = getFromCache("fill_" + state, () -> new SurfaceRuleEntry(10, MaterialRules.state(state)));
 		rules.add(entryInstance);
 		return this;
 	}
 
 	/// Finalize rule building process.
 	///
-	/// @return [SurfaceRules.RuleSource].
-	public SurfaceRules.RuleSource build() {
+	/// @return [MaterialRule].
+	public MaterialRule build() {
 		Collections.sort(rules);
-		List<SurfaceRules.RuleSource> ruleList = rules.stream().map(SurfaceRuleEntry::rule).toList();
-		SurfaceRules.RuleSource[] ruleArray = ruleList.toArray(RULE_SOURCES);
-		SurfaceRules.RuleSource rule = SurfaceRules.sequence(ruleArray);
+		List<MaterialRule> ruleList = rules.stream().map(SurfaceRuleEntry::rule).toList();
+		MaterialRule rule = MaterialRules.sequence(ruleList);
 		if (biomeKey != null) {
-			rule = SurfaceRules.ifTrue(SurfaceRules.isBiome(biomeGetter, biomeKey), rule);
+			rule = MaterialRules.ifTrue(MaterialRules.isBiome(biomeGetter, biomeKey), rule);
 		}
 		return rule;
 	}
@@ -121,14 +120,14 @@ public class SurfaceRuleBuilder {
 	/// Allows adding a custom rule.
 	///
 	/// @param priority rule priority, lower values = higher priority (rule will be applied before others).
-	/// @param rule     custom [SurfaceRules.RuleSource].
+	/// @param rule     custom [MaterialRule].
 	/// @return same [SurfaceRuleBuilder] instance.
-	public SurfaceRuleBuilder rule(int priority, SurfaceRules.RuleSource rule) {
+	public SurfaceRuleBuilder rule(int priority, MaterialRule rule) {
 		rules.add(new SurfaceRuleEntry(priority, rule));
 		return this;
 	}
 
-	public record SurfaceRuleEntry(int priority, SurfaceRules.RuleSource rule) implements Comparable<SurfaceRuleEntry> {
+	public record SurfaceRuleEntry(int priority, MaterialRule rule) implements Comparable<SurfaceRuleEntry> {
 
 		@Override
 		public int compareTo(SurfaceRuleEntry entry) {

@@ -3,15 +3,13 @@
   "criteria": {
     "discover": {
       "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:entity_type": "immersiveweapons:field_medic"
-            }
+        "entity": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:entity_type": "immersiveweapons:field_medic"
           }
-        ]
+        }
       },
       "trigger": "immersiveweapons:entity_discovered"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:azul_locator"
+        "recipes": "immersiveweapons:azul_locator"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

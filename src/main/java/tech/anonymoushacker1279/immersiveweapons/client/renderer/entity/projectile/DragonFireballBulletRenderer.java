@@ -46,7 +46,7 @@ public class DragonFireballBulletRenderer extends EntityRenderer<DragonFireballB
 	public void submit(EntityRenderState state, PoseStack stack, SubmitNodeCollector collector, CameraRenderState cameraState) {
 		stack.pushPose();
 		stack.scale(2.0F, 2.0F, 2.0F);
-		stack.mulPose(cameraState.orientation);
+		stack.rotate(cameraState.orientation);
 		collector.submitCustomGeometry(stack, RENDER_TYPE, (stack2, consumer) -> {
 			vertex(consumer, stack2, state.lightCoords, 0.0F, 0, 0, 1);
 			vertex(consumer, stack2, state.lightCoords, 1.0F, 0, 1, 1);

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:amethyst_ring"
+        "recipes": "immersiveweapons:amethyst_ring"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

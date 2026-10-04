@@ -15,5 +15,13 @@
         "texture": "immersiveweapons:cobalt"
       }
     ]
-  }
+  },
+  "trim_overrides": [
+    {
+      "palette": "immersiveweapons:trim/iw_cobalt_darker",
+      "when": {
+        "material": "immersiveweapons:cobalt"
+      }
+    }
+  ]
 }

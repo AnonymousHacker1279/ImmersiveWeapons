@@ -1,5 +1,6 @@
 {
   "type": "minecraft:blasting",
+  "cookingtime": 100,
   "experience": 0.8,
   "group": "cobalt",
   "ingredient": "immersiveweapons:deepslate_cobalt_ore",

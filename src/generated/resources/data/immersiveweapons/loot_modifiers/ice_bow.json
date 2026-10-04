@@ -1,12 +1,10 @@
 {
   "type": "immersiveweapons:simple_chest",
   "allow_treasure": true,
-  "conditions": [
-    {
-      "condition": "neoforge:loot_table_id",
-      "loot_table_id": "minecraft:chests/igloo_chest"
-    }
-  ],
+  "condition": {
+    "type": "neoforge:loot_table_id",
+    "loot_table_id": "minecraft:chests/igloo_chest"
+  },
   "item": {
     "id": "immersiveweapons:ice_bow"
   },

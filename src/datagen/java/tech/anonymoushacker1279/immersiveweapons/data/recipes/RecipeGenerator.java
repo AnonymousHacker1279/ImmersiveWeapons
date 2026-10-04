@@ -1,27 +1,31 @@
 package tech.anonymoushacker1279.immersiveweapons.data.recipes;
 
 import com.google.common.collect.ImmutableList;
+import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.predicates.ItemPredicate;
 import net.minecraft.advancements.triggers.Criterion;
 import net.minecraft.advancements.triggers.InventoryChangeTrigger;
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.*;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.item.crafting.CookingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
@@ -46,10 +50,10 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 
 	protected final HolderGetter<Item> itemGetter;
 
-	public RecipeGenerator(HolderLookup.Provider registries, RecipeOutput output) {
-		super(registries, output);
+	public RecipeGenerator(BootstrapContext<Recipe<?>> recipeOutput, BootstrapContext<Advancement> advancementOutput) {
+		super(recipeOutput, advancementOutput);
 
-		itemGetter = registries.lookupOrThrow(Registries.ITEM);
+		itemGetter = output.lookup(Registries.ITEM);
 	}
 
 	protected static String getConversionRecipeName(ItemLike pResult, ItemLike pIngredient) {
@@ -68,8 +72,48 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		return "has_" + getItemName(pItemLike);
 	}
 
+	/// Brewing is data-driven in 26.3, so mixes must be defined for each container (the old event registered them for
+	/// all of them), and the modded potions need their own container transformation recipes for splash and lingering
+	/// variants.
+	private void createBrewingRecipes() {
+		List<BrewingMix> mixes = List.of(
+				// Celestial Brew
+				new BrewingMix(Potions.AWKWARD, BlockItemRegistry.MOONGLOW_ITEM.get(), PotionRegistry.CELESTIAL_BREW_POTION),
+				new BrewingMix(PotionRegistry.CELESTIAL_BREW_POTION, Items.REDSTONE, PotionRegistry.LONG_CELESTIAL_BREW_POTION),
+				// Death
+				new BrewingMix(Potions.AWKWARD, BlockItemRegistry.DEATHWEED_ITEM.get(), PotionRegistry.DEATH_POTION),
+				new BrewingMix(PotionRegistry.DEATH_POTION, Items.GLOWSTONE_DUST, PotionRegistry.STRONG_DEATH_POTION),
+				new BrewingMix(PotionRegistry.DEATH_POTION, Items.REDSTONE, PotionRegistry.LONG_DEATH_POTION),
+				new BrewingMix(Potions.STRENGTH, Items.FERMENTED_SPIDER_EYE, PotionRegistry.DEATH_POTION),
+				new BrewingMix(Potions.STRONG_STRENGTH, Items.FERMENTED_SPIDER_EYE, PotionRegistry.STRONG_DEATH_POTION),
+				new BrewingMix(Potions.LONG_STRENGTH, Items.FERMENTED_SPIDER_EYE, PotionRegistry.LONG_DEATH_POTION),
+				// Broken Armor
+				new BrewingMix(Potions.AWKWARD, Items.PRISMARINE_SHARD, PotionRegistry.BROKEN_ARMOR_POTION),
+				new BrewingMix(PotionRegistry.BROKEN_ARMOR_POTION, Items.GLOWSTONE_DUST, PotionRegistry.STRONG_BROKEN_ARMOR_POTION),
+				new BrewingMix(PotionRegistry.BROKEN_ARMOR_POTION, Items.REDSTONE, PotionRegistry.LONG_BROKEN_ARMOR_POTION),
+				// Supercharged Brew
+				new BrewingMix(Potions.AWKWARD, ItemRegistry.TESLA_NUGGET.get(), PotionRegistry.SUPERCHARGED_BREW),
+				new BrewingMix(PotionRegistry.SUPERCHARGED_BREW, Items.GLOWSTONE_DUST, PotionRegistry.STRONG_SUPERCHARGED_BREW),
+				new BrewingMix(PotionRegistry.SUPERCHARGED_BREW, Items.REDSTONE, PotionRegistry.LONG_SUPERCHARGED_BREW)
+		);
+
+		List<Item> containers = List.of(Items.POTION, Items.SPLASH_POTION, Items.LINGERING_POTION);
+		for (BrewingMix mix : mixes) {
+			for (Item container : containers) {
+				BrewingRecipeBuilder.brewingMix(container, mix.input(), mix.reagent(), mix.output()).save(output);
+			}
+		}
+
+		// Splash and lingering variants of the modded potions
+		for (Holder<Potion> potion : mixes.stream().map(BrewingMix::output).distinct().toList()) {
+			BrewingRecipeBuilder.brewingContainerTransform(Items.POTION, potion, Items.GUNPOWDER, Items.SPLASH_POTION).save(output);
+			BrewingRecipeBuilder.brewingContainerTransform(Items.SPLASH_POTION, potion, Items.DRAGON_BREATH, Items.LINGERING_POTION).save(output);
+		}
+	}
+
 	@Override
 	protected void buildRecipes() {
+		createBrewingRecipes();
 		createFlagItems();
 		createGlassItems();
 		createCobaltItems();
@@ -90,7 +134,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		createFirstAidItems();
 		createFoodItems();
 		createWeapons();
-		createMudItems();
+		createMudBallRecipe();
 		createDecorations();
 		createAccessories();
 		createMiscellaneousItems();
@@ -266,49 +310,10 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.save(output);
 	}
 
-	private void createMudItems() {
-		Item MUD = BlockItemRegistry.MUD_ITEM.get();
-		Item DRIED_MUD = BlockItemRegistry.DRIED_MUD_ITEM.get();
-		Item HARDENED_MUD = BlockItemRegistry.HARDENED_MUD_ITEM.get();
-
-		createSmeltingRecipe(MUD, DRIED_MUD,
-				0.1f, 100, "mud");
-		createBlastingRecipe(MUD, DRIED_MUD,
-				0.1f, 50, "mud");
-		createSmeltingRecipe(DRIED_MUD, HARDENED_MUD,
-				0.1f, 100, "mud");
-		createBlastingRecipe(DRIED_MUD, HARDENED_MUD,
-				0.1f, 50, "mud");
-
-		// Slab from crafting table
-		slab(RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.HARDENED_MUD_SLAB_ITEM.get(), HARDENED_MUD);
-		// Slab from stonecutter
-		stonecutterSlab(BlockRegistry.HARDENED_MUD_SLAB.get(), HARDENED_MUD, "hardened_mud", has(HARDENED_MUD));
-
-		// Stairs from crafting table
-		stairs(BlockRegistry.HARDENED_MUD_STAIRS.get(), HARDENED_MUD, "mud", "hardened_mud", has(HARDENED_MUD));
-		// Stairs from stonecutter
-		stonecutterStairs(BlockRegistry.HARDENED_MUD_STAIRS.get(), HARDENED_MUD, "hardened_mud", has(HARDENED_MUD));
-
-		// Hardened mud window
-		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.BUILDING_BLOCKS, BlockItemRegistry.HARDENED_MUD_WINDOW_ITEM.get(), 8)
-				.define('a', HARDENED_MUD)
-				.pattern("aaa")
-				.pattern("a a")
-				.pattern("aaa")
-				.group("mud")
-				.unlockedBy("hardened_mud", has(HARDENED_MUD))
-				.save(output);
-		// Mud
-		ShapelessRecipeBuilder.shapeless(itemGetter, RecipeCategory.BUILDING_BLOCKS, MUD, 8)
-				.requires(Items.WATER_BUCKET)
-				.requires(Items.DIRT, 8)
-				.group("mud")
-				.unlockedBy("water_bucket", has(Items.WATER_BUCKET))
-				.save(output);
+	private void createMudBallRecipe() {
 		// Mud ball
 		ShapelessRecipeBuilder.shapeless(itemGetter, RecipeCategory.MISC, ItemRegistry.MUD_BALL.get(), 4)
-				.requires(BlockRegistry.MUD.get())
+				.requires(Items.MUD)
 				.group("mud")
 				.unlockedBy("water_bucket", has(Items.WATER_BUCKET))
 				.save(output);
@@ -1922,7 +1927,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 	}
 
 	private void smallPartsTinkering(TagKey<Item> material, List<Item> craftables) {
-		HolderSet<Item> materialSet = registries.lookupOrThrow(Registries.ITEM).getOrThrow(material);
+		HolderSet<Item> materialSet = itemGetter.getOrThrow(material);
 		SmallPartsRecipeBuilder.tinker(Ingredient.of(materialSet), craftables, material.location())
 				.unlockedBy("copper_ingot", has(Tags.Items.INGOTS_COPPER))
 				.save(output, ImmersiveWeapons.MOD_ID + ":" + getTagName(material) + "_tinkering");
@@ -2085,5 +2090,10 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.unlockedBy(triggerName, trigger)
 				.save(output, ImmersiveWeapons.MOD_ID + ":"
 						+ getConversionRecipeName(cut, material) + "_stonecutting");
+	}
+
+	/// A brewing mix: the potion in the input container, brewed with the reagent, becomes the output potion.
+	private record BrewingMix(Holder<Potion> input, Item reagent, Holder<Potion> output) {
+
 	}
 }

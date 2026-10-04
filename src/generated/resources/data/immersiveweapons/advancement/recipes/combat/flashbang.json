@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:flashbang"
+        "recipes": "immersiveweapons:flashbang"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

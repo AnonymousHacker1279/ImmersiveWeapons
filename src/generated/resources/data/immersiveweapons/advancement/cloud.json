@@ -3,24 +3,22 @@
   "criteria": {
     "hold": {
       "conditions": {
-        "player": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "minecraft:equipment": {
-                "feet": {
-                  "items": "minecraft:air"
-                }
-              },
-              "minecraft:stepping_on": {
-                "block": {
-                  "blocks": "immersiveweapons:cloud"
-                }
+        "player": {
+          "type": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "minecraft:equipment": {
+              "feet": {
+                "items": "minecraft:air"
+              }
+            },
+            "minecraft:stepping_on": {
+              "block": {
+                "blocks": "immersiveweapons:cloud"
               }
             }
           }
-        ]
+        }
       },
       "trigger": "minecraft:location"
     }

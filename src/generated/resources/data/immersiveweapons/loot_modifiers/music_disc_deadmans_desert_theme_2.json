@@ -1,23 +1,21 @@
 {
   "type": "immersiveweapons:simple_chest",
   "allow_treasure": false,
-  "conditions": [
-    {
-      "condition": "minecraft:all_of",
-      "terms": [
-        {
-          "condition": "neoforge:loot_table_id",
-          "loot_table_id": "minecraft:chests/simple_dungeon"
-        },
-        {
-          "condition": "minecraft:location_check",
-          "predicate": {
-            "biomes": "immersiveweapons:deadmans_desert"
-          }
+  "condition": {
+    "type": "minecraft:all_of",
+    "terms": [
+      {
+        "type": "neoforge:loot_table_id",
+        "loot_table_id": "minecraft:chests/simple_dungeon"
+      },
+      {
+        "type": "minecraft:location_check",
+        "predicate": {
+          "biomes": "immersiveweapons:deadmans_desert"
         }
-      ]
-    }
-  ],
+      }
+    ]
+  },
   "item": {
     "id": "immersiveweapons:music_disc_deadmans_desert_theme_2"
   },

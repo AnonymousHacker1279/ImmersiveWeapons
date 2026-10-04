@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:smooth_blood_sandstone_stairs_from_smooth_blood_sandstone_stonecutting"
+        "recipes": "immersiveweapons:smooth_blood_sandstone_stairs_from_smooth_blood_sandstone_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

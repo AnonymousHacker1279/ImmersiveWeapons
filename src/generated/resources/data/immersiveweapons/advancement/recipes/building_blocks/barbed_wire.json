@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:barbed_wire"
+        "recipes": "immersiveweapons:barbed_wire"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

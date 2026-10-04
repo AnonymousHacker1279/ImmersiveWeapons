@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:goggles"
+        "recipes": "immersiveweapons:goggles"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

@@ -1,13 +1,10 @@
 package tech.anonymoushacker1279.immersiveweapons.data.loot;
 
 import net.minecraft.advancements.predicates.StatePropertiesPredicate;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.HolderLookup.Provider;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.BlockLootSubProvider;
+import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -16,9 +13,8 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.ExplosionCondition;
-import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
-import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.minecraft.world.level.storage.loot.predicates.MatchBlock;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 import tech.anonymoushacker1279.immersiveweapons.block.BarbedWireBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.SandbagBlock;
 import tech.anonymoushacker1279.immersiveweapons.block.WoodenSpikesBlock;
@@ -35,8 +31,8 @@ import java.util.function.Supplier;
 
 public class BlockLootTables extends BlockLootSubProvider {
 
-	protected BlockLootTables(Provider registries) {
-		super(Set.of(), FeatureFlags.REGISTRY.allFlags(), registries);
+	protected BlockLootTables(LootTableSubProvider.Context output) {
+		super(Set.of(), FeatureFlags.REGISTRY.allFlags(), output);
 	}
 
 	@Override
@@ -84,21 +80,15 @@ public class BlockLootTables extends BlockLootSubProvider {
 		dropSelf(BlockRegistry.COBALT_BLOCK.get());
 		dropSelf(BlockRegistry.IRON_PANEL.get());
 		dropSelf(BlockRegistry.IRON_PANEL_BARS.get());
-		dropSelf(BlockRegistry.DRIED_MUD.get());
 		dropSelf(BlockRegistry.DORMANT_TESLA_ORE.get());
 		dropSelf(BlockRegistry.FLAG_POLE.get());
 		dropSelf(BlockRegistry.GADSDEN_FLAG.get());
-		dropSelf(BlockRegistry.HARDENED_MUD.get());
-		dropSelf(BlockRegistry.HARDENED_MUD_SLAB.get());
-		dropSelf(BlockRegistry.HARDENED_MUD_STAIRS.get());
-		dropSelf(BlockRegistry.HARDENED_MUD_WINDOW.get());
 		dropSelf(BlockRegistry.IMMERSIVE_WEAPONS_FLAG.get());
 		dropSelf(BlockRegistry.MEDIC_STATUE.get());
 		dropSelf(BlockRegistry.MEXICAN_FLAG.get());
 		dropSelf(BlockRegistry.MINUTEMAN_STATUE.get());
 		dropSelf(BlockRegistry.MOLTEN_BLOCK.get());
 		dropSelf(BlockRegistry.MORTAR.get());
-		dropSelf(BlockRegistry.MUD.get());
 		dropSelf(BlockRegistry.PANIC_ALARM.get());
 		dropSelf(BlockRegistry.PUNJI_STICKS.get());
 		dropSelf(BlockRegistry.RAW_COBALT_BLOCK.get());
@@ -184,73 +174,65 @@ public class BlockLootTables extends BlockLootSubProvider {
 		add(BlockRegistry.WOODEN_SPIKES.get(), (block) -> LootTable.lootTable()
 				.withPool(LootPool.lootPool()
 						.name("main")
-						.setRolls(ConstantValue.exactly(1.0F))
+						.setRolls(ContextIntProviders.exactly(1))
 						.add(applyExplosionDecay(block,
 								LootItem.lootTableItem(BlockItemRegistry.WOODEN_SPIKES_ITEM.get())
 										.when(ExplosionCondition.survivesExplosion())
-										.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
-												.setProperties(StatePropertiesPredicate.Builder.properties()
-														.hasProperty(WoodenSpikesBlock.DAMAGE_STAGE, 0)))
-										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F)))))));
+										.when(MatchBlock.blockMatches(this.blocks, block, StatePropertiesPredicate.Builder.properties()
+												.hasProperty(WoodenSpikesBlock.DAMAGE_STAGE, 0)))
+										.apply(SetItemCountFunction.setCount(ContextIntProviders.exactly(1)))))));
 		add(BlockRegistry.BARBED_WIRE.get(), (block) -> LootTable.lootTable()
 				.withPool(LootPool.lootPool()
 						.name("main")
-						.setRolls(ConstantValue.exactly(1.0F))
+						.setRolls(ContextIntProviders.exactly(1))
 						.add(applyExplosionDecay(block,
 								LootItem.lootTableItem(BlockItemRegistry.BARBED_WIRE_ITEM.get())
 										.when(ExplosionCondition.survivesExplosion())
-										.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
-												.setProperties(StatePropertiesPredicate.Builder.properties()
-														.hasProperty(BarbedWireBlock.DAMAGE_STAGE, 0)))
-										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F)))))));
+										.when(MatchBlock.blockMatches(this.blocks, block, StatePropertiesPredicate.Builder.properties()
+												.hasProperty(BarbedWireBlock.DAMAGE_STAGE, 0)))
+										.apply(SetItemCountFunction.setCount(ContextIntProviders.exactly(1)))))));
 		add(BlockRegistry.SANDBAG.get(), (block) -> LootTable.lootTable()
 				.withPool(LootPool.lootPool()
 						.name("main")
-						.setRolls(ConstantValue.exactly(1.0F))
+						.setRolls(ContextIntProviders.exactly(1))
 						.add(applyExplosionDecay(block,
 								LootItem.lootTableItem(BlockItemRegistry.SANDBAG_ITEM.get())
-										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F))
-												.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
-														.setProperties(StatePropertiesPredicate.Builder.properties()
-																.hasProperty(SandbagBlock.BAGS, 0))))
-										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(2.0F))
-												.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
-														.setProperties(StatePropertiesPredicate.Builder.properties()
-																.hasProperty(SandbagBlock.BAGS, 1))))
-										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(3.0F))
-												.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
-														.setProperties(StatePropertiesPredicate.Builder.properties()
-																.hasProperty(SandbagBlock.BAGS, 2))))
-										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(4.0F))
-												.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
-														.setProperties(StatePropertiesPredicate.Builder.properties()
-																.hasProperty(SandbagBlock.BAGS, 3))))))));
+										.apply(SetItemCountFunction.setCount(ContextIntProviders.exactly(1))
+												.when(MatchBlock.blockMatches(this.blocks, block, StatePropertiesPredicate.Builder.properties()
+														.hasProperty(SandbagBlock.BAGS, 0))))
+										.apply(SetItemCountFunction.setCount(ContextIntProviders.exactly(2))
+												.when(MatchBlock.blockMatches(this.blocks, block, StatePropertiesPredicate.Builder.properties()
+														.hasProperty(SandbagBlock.BAGS, 1))))
+										.apply(SetItemCountFunction.setCount(ContextIntProviders.exactly(3))
+												.when(MatchBlock.blockMatches(this.blocks, block, StatePropertiesPredicate.Builder.properties()
+														.hasProperty(SandbagBlock.BAGS, 2))))
+										.apply(SetItemCountFunction.setCount(ContextIntProviders.exactly(4))
+												.when(MatchBlock.blockMatches(this.blocks, block, StatePropertiesPredicate.Builder.properties()
+														.hasProperty(SandbagBlock.BAGS, 3))))))));
 		add(BlockRegistry.MINERAL_DEPOSIT.get(), (block) -> LootTable.lootTable()
 				.withPool(LootPool.lootPool()
 						.name("sulfur")
-						.setRolls(ConstantValue.exactly(1.0F))
+						.setRolls(ContextIntProviders.exactly(1))
 						.add(applyExplosionDecay(
 								block, LootItem.lootTableItem(ItemRegistry.SULFUR_DUST.get())
-										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 3)))
-										.apply(ApplyBonusCount.addOreBonusCount(registries.getOrThrow(Enchantments.FORTUNE)))))
+										.apply(SetItemCountFunction.setCount(ContextIntProviders.between(1, 3)))
+										.apply(ApplyBonusCount.addOreBonusCount(enchantments.getOrThrow(Enchantments.FORTUNE)))))
 				).withPool(LootPool.lootPool()
 						.name("potassium_nitrate")
-						.setRolls(ConstantValue.exactly(1.0F))
+						.setRolls(ContextIntProviders.exactly(1))
 						.add(applyExplosionDecay(
 								block, LootItem.lootTableItem(ItemRegistry.POTASSIUM_NITRATE.get())
-										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 3)))
-										.apply(ApplyBonusCount.addOreBonusCount(registries.getOrThrow(Enchantments.FORTUNE)))))));
+										.apply(SetItemCountFunction.setCount(ContextIntProviders.between(1, 3)))
+										.apply(ApplyBonusCount.addOreBonusCount(enchantments.getOrThrow(Enchantments.FORTUNE)))))));
 	}
 
 	protected LootTable.Builder createOreDrop(Block block, Item item, int min, int max) {
-		HolderLookup.RegistryLookup<Enchantment> registrylookup = registries.lookupOrThrow(Registries.ENCHANTMENT);
-
 		return createSilkTouchDispatchTable(
 				block,
 				applyExplosionDecay(
 						block, LootItem.lootTableItem(item)
-								.apply(SetItemCountFunction.setCount(UniformGenerator.between(min, max)))
-								.apply(ApplyBonusCount.addOreBonusCount(registrylookup.getOrThrow(Enchantments.FORTUNE)))
+								.apply(SetItemCountFunction.setCount(ContextIntProviders.between(min, max)))
+								.apply(ApplyBonusCount.addOreBonusCount(enchantments.getOrThrow(Enchantments.FORTUNE)))
 				)
 		);
 	}

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:stone_arrow"
+        "recipes": "immersiveweapons:stone_arrow"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

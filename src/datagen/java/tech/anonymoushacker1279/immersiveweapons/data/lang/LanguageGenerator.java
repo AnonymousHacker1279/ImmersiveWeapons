@@ -107,6 +107,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addMessages();
 		addDeathMessages();
 		addBiomes();
+		addTrimMaterials();
 		addAdvancements();
 		addConfigDescriptions();
 		addEnchantments();
@@ -126,7 +127,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		// Turn underscores into spaces, and capitalize the first letter of each word
 
 		blocks.forEach(block -> {
-			String blockName = block.getKey().identifier().getPath();
+			String blockName = block.key().identifier().getPath();
 
 			blockName = blockName.replace("_", " ");
 			blockName = capitalizeWords(blockName);
@@ -151,7 +152,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		// Get a list of all items, and convert their registry names to proper names
 		// Turn underscores into spaces, and capitalize the first letter of each word
 		items.forEach(item -> {
-			String itemName = item.getKey().identifier().getPath();
+			String itemName = item.key().identifier().getPath();
 
 			itemName = itemName.replace("_", " ");
 			itemName = capitalizeWords(itemName);
@@ -176,7 +177,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		// Get a list of all entities, and convert their registry names to proper names
 		// Turn underscores into spaces, and capitalize the first letter of each word
 		entities.forEach(entity -> {
-			String entityName = entity.getKey().identifier().getPath();
+			String entityName = entity.key().identifier().getPath();
 
 			entityName = entityName.replace("_", " ");
 			entityName = capitalizeWords(entityName);
@@ -203,7 +204,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		// Turn underscores into spaces, and capitalize the first letter of each word
 		potions.forEach(potion -> {
 			for (String type : types) {
-				String effectName = potion.getKey().identifier().getPath();
+				String effectName = potion.key().identifier().getPath();
 
 				effectName = effectName.replace("long_", "");
 				effectName = effectName.replace("strong_", "");
@@ -225,7 +226,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 					case "tipped_arrow" -> effectName = "Arrow of " + effectName;
 				}
 
-				addPotion(potion.getKey().identifier().getPath(), type, effectName);
+				addPotion(potion.key().identifier().getPath(), type, effectName);
 			}
 		});
 
@@ -240,7 +241,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 					case "tipped_arrow" -> effectName = "Arrow of " + effectName;
 				}
 
-				addPotion(holder.getKey().identifier().getPath(), type, effectName);
+				addPotion(holder.key().identifier().getPath(), type, effectName);
 			}
 		}
 	}
@@ -255,7 +256,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		// Get a list of all items, and convert their registry names to proper names
 		// Turn underscores into spaces, and capitalize the first letter of each word
 		effects.forEach(effect -> {
-			String effectName = effect.getKey().identifier().getPath();
+			String effectName = effect.key().identifier().getPath();
 
 			effectName = effectName.replace("_", " ");
 			effectName = capitalizeWords(effectName);
@@ -724,6 +725,12 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addDeathMessage("hellfire.player", "%1$s was doomed to melt in hellfire by %2$s");
 		addDeathMessage("supercharged", "%1$s learned they were conductive");
 		addDeathMessage("supercharged.player", "%1$s learned they were conductive at the hands of %2$s");
+	}
+
+	private void addTrimMaterials() {
+		for (String material : List.of("cobalt", "molten", "ventus", "tesla", "astral", "starstorm", "void")) {
+			add("trim_material.immersiveweapons." + material, capitalizeWords(material));
+		}
 	}
 
 	private void addBiomes() {

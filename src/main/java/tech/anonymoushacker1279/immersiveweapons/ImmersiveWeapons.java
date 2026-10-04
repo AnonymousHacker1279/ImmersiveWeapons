@@ -20,9 +20,9 @@ import tech.anonymoushacker1279.immersiveweapons.init.DispenserBehaviorRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.PostSetupHandler;
 import tech.anonymoushacker1279.immersiveweapons.world.level.CustomBlockSetTypes;
 import tech.anonymoushacker1279.immersiveweapons.world.level.levelgen.IWOverworldBiomesProvider;
+import terrablender.api.MaterialRuleManager;
 import terrablender.api.RegionType;
 import terrablender.api.Regions;
-import terrablender.api.SurfaceRuleManager;
 
 @Mod(ImmersiveWeapons.MOD_ID)
 public class ImmersiveWeapons {
@@ -58,7 +58,7 @@ public class ImmersiveWeapons {
 			WoodTypes.init();
 
 			Regions.register(new IWOverworldBiomesProvider(Identifier.fromNamespaceAndPath(MOD_ID, "overworld_biome_provider"), RegionType.OVERWORLD, 1));
-			SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, MOD_ID, IWOverworldBiomesProvider::makeSurfaceRules);
+			MaterialRuleManager.addRules(MaterialRuleManager.RuleCategory.OVERWORLD, MOD_ID, IWOverworldBiomesProvider::makeSurfaceRules);
 		});
 		PostSetupHandler.init();
 

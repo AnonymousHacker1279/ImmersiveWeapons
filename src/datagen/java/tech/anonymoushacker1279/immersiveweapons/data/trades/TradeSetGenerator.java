@@ -6,8 +6,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.trading.TradeSet;
 import net.minecraft.world.item.trading.TradeSets;
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
-import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
 public class TradeSetGenerator {
@@ -24,11 +23,11 @@ public class TradeSetGenerator {
 	}
 
 	public static void bootstrap(BootstrapContext<TradeSet> context) {
-		TradeSets.register(context, SKYGAZER_LEVEL_1, TradeTags.SKYGAZER_LEVEL_1, ConstantValue.exactly(3.0f));
-		TradeSets.register(context, SKYGAZER_LEVEL_2, TradeTags.SKYGAZER_LEVEL_2, UniformGenerator.between(1.0f, 2.0f));
+		TradeSets.register(context, SKYGAZER_LEVEL_1, TradeTags.SKYGAZER_LEVEL_1, ContextIntProviders.exactly(3));
+		TradeSets.register(context, SKYGAZER_LEVEL_2, TradeTags.SKYGAZER_LEVEL_2, ContextIntProviders.between(1, 2));
 		TradeSets.register(context, SKYGAZER_LEVEL_3, TradeTags.SKYGAZER_LEVEL_3);
 
-		TradeSets.register(context, SKELETON_MERCHANT_LEVEL_1, TradeTags.SKELETON_MERCHANT_LEVEL_1, ConstantValue.exactly(3.0f));
-		TradeSets.register(context, SKELETON_MERCHANT_LEVEL_2, TradeTags.SKELETON_MERCHANT_LEVEL_2, UniformGenerator.between(1.0f, 2.0f));
+		TradeSets.register(context, SKELETON_MERCHANT_LEVEL_1, TradeTags.SKELETON_MERCHANT_LEVEL_1, ContextIntProviders.exactly(3));
+		TradeSets.register(context, SKELETON_MERCHANT_LEVEL_2, TradeTags.SKELETON_MERCHANT_LEVEL_2, ContextIntProviders.between(1, 2));
 	}
 }

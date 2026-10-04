@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:bottle_of_wine_fermenting_from_sweet_berries"
+        "recipes": "immersiveweapons:bottle_of_wine_fermenting_from_sweet_berries"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

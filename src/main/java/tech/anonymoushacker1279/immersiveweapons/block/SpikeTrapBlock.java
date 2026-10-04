@@ -28,6 +28,7 @@ import net.minecraft.world.level.redstone.Orientation;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.network.PacketDistributor;
+import tech.anonymoushacker1279.immersiveweapons.block.core.WaterloggingHelper;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.LocalSoundPayload;
 import tech.anonymoushacker1279.immersiveweapons.world.level.IWDamageSources;
@@ -56,9 +57,12 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 
 	@Override
 	protected BlockState updateShape(BlockState state, LevelReader level, ScheduledTickAccess scheduledTickAccess, BlockPos pos, Direction direction, BlockPos neighborPos, BlockState neighborState, RandomSource random) {
-		return direction == Direction.DOWN && !state.canSurvive(level, pos)
-				? Blocks.AIR.defaultBlockState()
-				: super.updateShape(state, level, scheduledTickAccess, pos, direction, neighborPos, neighborState, random);
+		if (direction == Direction.DOWN && !state.canSurvive(level, pos)) {
+			return Blocks.AIR.defaultBlockState();
+		}
+
+		WaterloggingHelper.scheduleFluidTick(state, level, scheduledTickAccess, pos);
+		return super.updateShape(state, level, scheduledTickAccess, pos, direction, neighborPos, neighborState, random);
 	}
 
 	@Override
@@ -114,13 +118,13 @@ public class SpikeTrapBlock extends Block implements SimpleWaterloggedBlock {
 			state = state.setValue(POWERED, hasNeighborSignal);
 			if (state.getValue(POWERED)) {
 				PacketDistributor.sendToPlayersTrackingChunk(serverLevel, serverLevel.getChunk(pos).getPos(),
-						new LocalSoundPayload(pos, SoundEventRegistry.SPIKE_TRAP_EXTEND.getKey(),
+						new LocalSoundPayload(pos, SoundEventRegistry.SPIKE_TRAP_EXTEND.key(),
 								SoundSource.BLOCKS, 1.0f, 1.0f, true));
 
 				level.gameEvent(GameEvent.BLOCK_ACTIVATE, pos, GameEvent.Context.of(state));
 			} else {
 				PacketDistributor.sendToPlayersTrackingChunk(serverLevel, serverLevel.getChunk(pos).getPos(),
-						new LocalSoundPayload(pos, SoundEventRegistry.SPIKE_TRAP_RETRACT.getKey(),
+						new LocalSoundPayload(pos, SoundEventRegistry.SPIKE_TRAP_RETRACT.key(),
 								SoundSource.BLOCKS, 1.0f, 1.0f, true));
 
 				level.gameEvent(GameEvent.BLOCK_DEACTIVATE, pos, GameEvent.Context.of(state));

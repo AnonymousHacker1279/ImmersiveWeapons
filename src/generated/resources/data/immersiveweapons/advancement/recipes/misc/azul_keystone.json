@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:azul_keystone"
+        "recipes": "immersiveweapons:azul_keystone"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

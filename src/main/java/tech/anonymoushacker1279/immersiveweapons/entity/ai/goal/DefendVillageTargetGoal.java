@@ -23,6 +23,9 @@ public class DefendVillageTargetGoal extends TargetGoal {
 
 	@Override
 	public boolean canUse() {
+		// Forget any previous target, otherwise a stale one is reused when no villager is upset anymore
+		targetMob = null;
+
 		if (mob.level() instanceof ServerLevel serverLevel) {
 			AABB aabb = mob.getBoundingBox().inflate(10.0D, 8.0D, 10.0D);
 			List<Villager> nearbyVillagers = serverLevel.getNearbyEntities(Villager.class, distancePredicate, mob, aabb);

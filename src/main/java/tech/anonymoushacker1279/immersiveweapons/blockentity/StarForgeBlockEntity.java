@@ -19,7 +19,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
-import net.minecraft.world.item.crafting.RecipeMap;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -97,10 +96,10 @@ public class StarForgeBlockEntity extends BaseContainerBlockEntity implements En
 	public void initializeRecipes(RecipeManager manager, ServerLevel serverLevel) {
 		ALL_RECIPES.clear();
 
-		RecipeMap.create(manager.getRecipes())
-				.getRecipesFor(RecipeTypeRegistry.STAR_FORGE_RECIPE_TYPE.get(),
-						new StarForgeRecipeInput(inventory.getFirst(), inventory.get(1)), serverLevel)
-				.forEach(recipeHolder -> ALL_RECIPES.add(new RecipeHolder<>(recipeHolder.id(), recipeHolder.value())));
+		StarForgeRecipeInput input = new StarForgeRecipeInput(inventory.getFirst(), inventory.get(1));
+		manager.getRecipes().stream()
+				.filter(recipeHolder -> recipeHolder.value() instanceof StarForgeRecipe recipe && recipe.matches(input, serverLevel))
+				.forEach(recipeHolder -> ALL_RECIPES.add(new RecipeHolder<>(recipeHolder.id(), (StarForgeRecipe) recipeHolder.value())));
 	}
 
 	@Nullable
@@ -141,8 +140,11 @@ public class StarForgeBlockEntity extends BaseContainerBlockEntity implements En
 				updateResult();
 
 				// Decrement the input slots
-				inventory.get(0).shrink(availableRecipes.get(menuSelectionIndex).value().primaryMaterialCount());
-				inventory.get(1).shrink(availableRecipes.get(menuSelectionIndex).value().secondaryMaterialCount());
+				StarForgeRecipe selectedRecipe = getSelectedRecipe();
+				if (selectedRecipe != null) {
+					inventory.get(0).shrink(selectedRecipe.primaryMaterialCount());
+					inventory.get(1).shrink(selectedRecipe.secondaryMaterialCount());
+				}
 
 				// Reset the menu selection index
 				menuSelectionIndex = 0;
@@ -301,9 +303,18 @@ public class StarForgeBlockEntity extends BaseContainerBlockEntity implements En
 		}
 	}
 
+	/// Get the currently selected recipe, if the selection index is valid for the available recipes.
+	@Nullable
+	private StarForgeRecipe getSelectedRecipe() {
+		if (menuSelectionIndex < 0 || menuSelectionIndex >= availableRecipes.size()) {
+			return null;
+		}
+		return availableRecipes.get(menuSelectionIndex).value();
+	}
+
 	public void updateResult() {
-		if (!availableRecipes.isEmpty() && containerData.get(1) == 1000 && containerData.get(2) == 0) {
-			StarForgeRecipe recipe = availableRecipes.get(containerData.get(3)).value();
+		StarForgeRecipe recipe = getSelectedRecipe();
+		if (recipe != null && containerData.get(1) == 1000 && containerData.get(2) == 0) {
 			// Check if the inputs are sufficient
 			if (recipe.primaryMaterialCount() <= inventory.get(0).getCount() && recipe.secondaryMaterialCount() <= inventory.get(1).getCount()) {
 				// Set the result slot

@@ -3,6 +3,7 @@ package tech.anonymoushacker1279.immersiveweapons.world.level.levelgen;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.Registry;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
@@ -10,8 +11,9 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.biome.Climate;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.levelgen.SurfaceRules;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
+import net.minecraft.world.level.levelgen.material.MaterialRules;
+import net.minecraft.world.level.levelgen.material.rule.MaterialRule;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import terrablender.api.Region;
 import terrablender.api.RegionType;
@@ -26,20 +28,21 @@ public class IWOverworldBiomesProvider extends Region {
 		super(name, type, weight);
 	}
 
-	public static SurfaceRules.RuleSource makeSurfaceRules(HolderGetter<Biome> getter) {
-		SurfaceRules.RuleSource battlefield = SurfaceRuleBuilder.start(getter)
+	public static MaterialRule makeSurfaceRules(RegistryAccess registries) {
+		HolderGetter<Biome> getter = registries.lookupOrThrow(Registries.BIOME);
+		MaterialRule battlefield = SurfaceRuleBuilder.start(getter)
 				.biome(BATTLEFIELD)
 				.surface(Blocks.GRASS_BLOCK.defaultBlockState())
 				.subsurface(Blocks.COARSE_DIRT.defaultBlockState(), 3)
 				.filler(Blocks.STONE.defaultBlockState())
-				.rule(3, SurfaceRules.ifTrue(SurfaceRules.verticalGradient("deepslate",
+				.rule(3, MaterialRules.ifTrue(MaterialRules.verticalGradient("deepslate",
 								VerticalAnchor.absolute(0),
 								VerticalAnchor.absolute(8)),
-						SurfaceRules.state(Blocks.DEEPSLATE.defaultBlockState())))
+						MaterialRules.state(Blocks.DEEPSLATE.defaultBlockState())))
 				.build();
 
-		return SurfaceRules.sequence(
-				SurfaceRules.ifTrue(SurfaceRules.isBiome(getter, BATTLEFIELD), battlefield)
+		return MaterialRules.sequence(
+				MaterialRules.ifTrue(MaterialRules.isBiome(getter, BATTLEFIELD), battlefield)
 		);
 	}
 

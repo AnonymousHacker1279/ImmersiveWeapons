@@ -6,7 +6,7 @@ import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.random.WeightedList;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.Biome;
@@ -40,7 +40,6 @@ public class StructureGenerator {
 	public static final ResourceKey<Structure> CLOUD_ISLAND = createKey("cloud_island");
 	public static final ResourceKey<Structure> COMMANDER_OUTPOST = createKey("commander_outpost");
 	public static final ResourceKey<Structure> DESTROYED_HOUSE = createKey("destroyed_house");
-	public static final ResourceKey<Structure> GRAVEYARD = createKey("graveyard");
 	public static final ResourceKey<Structure> HANS_HUT = createKey("hans_hut");
 	public static final ResourceKey<Structure> LANDMINE_TRAP = createKey("landmine_trap");
 	public static final ResourceKey<Structure> PITFALL_TRAP = createKey("pitfall_trap");
@@ -63,7 +62,7 @@ public class StructureGenerator {
 										MobCategory.MONSTER,
 										new StructureSpawnOverride(
 												BoundingBoxType.STRUCTURE,
-												WeightedList.of(new SpawnerData(EntityTypes.ZOMBIE, 1, 2))
+												WeightedList.of(new SpawnerData(EntityTypes.ZOMBIE, UniformInt.of(1, 2)))
 										)
 								)
 						)
@@ -83,7 +82,7 @@ public class StructureGenerator {
 										MobCategory.MONSTER,
 										new StructureSpawnOverride(
 												BoundingBoxType.STRUCTURE,
-												WeightedList.of(new SpawnerData(EntityRegistry.DYING_SOLDIER_ENTITY.get(), 2, 2))
+												WeightedList.of(new SpawnerData(EntityRegistry.DYING_SOLDIER_ENTITY.get(), UniformInt.of(2, 2)))
 										)
 								)
 						)
@@ -103,7 +102,7 @@ public class StructureGenerator {
 										MobCategory.CREATURE,
 										new StructureSpawnOverride(
 												BoundingBoxType.STRUCTURE,
-												WeightedList.of(new SpawnerData(EntityTypes.CAT, 1, 2))
+												WeightedList.of(new SpawnerData(EntityTypes.CAT, UniformInt.of(1, 2)))
 										)
 								)
 						)
@@ -145,7 +144,7 @@ public class StructureGenerator {
 										MobCategory.MISC,
 										new StructureSpawnOverride(
 												BoundingBoxType.STRUCTURE,
-												WeightedList.of(new SpawnerData(EntityRegistry.MINUTEMAN_ENTITY.get(), 1, 2))
+												WeightedList.of(new SpawnerData(EntityRegistry.MINUTEMAN_ENTITY.get(), UniformInt.of(1, 2)))
 										)
 								)
 						)
@@ -165,7 +164,7 @@ public class StructureGenerator {
 										MobCategory.MONSTER,
 										new StructureSpawnOverride(
 												BoundingBoxType.STRUCTURE,
-												WeightedList.of(new SpawnerData(EntityTypes.SKELETON, 1, 2))
+												WeightedList.of(new SpawnerData(EntityTypes.SKELETON, UniformInt.of(1, 2)))
 										)
 								)
 						)
@@ -208,7 +207,7 @@ public class StructureGenerator {
 										MobCategory.MONSTER,
 										new StructureSpawnOverride(
 												BoundingBoxType.STRUCTURE,
-												WeightedList.of(new SpawnerData(EntityRegistry.DYING_SOLDIER_ENTITY.get(), 1, 2))
+												WeightedList.of(new SpawnerData(EntityRegistry.DYING_SOLDIER_ENTITY.get(), UniformInt.of(1, 2)))
 										)
 								)
 						)
@@ -226,26 +225,6 @@ public class StructureGenerator {
 						.terrainAdapation(TerrainAdjustment.BEARD_THIN)
 						.build(),
 				templatePoolHolderGetter.getOrThrow(StructureTemplatePoolGenerator.DESTROYED_HOUSE),
-				1,
-				ConstantHeight.of(VerticalAnchor.absolute(0)),
-				false,
-				Types.WORLD_SURFACE_WG
-		));
-
-		register(context, GRAVEYARD, new JigsawStructure(
-				new Structure.StructureSettings.Builder(biomeHolderGetter.getOrThrow(IWWorldGenTagGroups.HAS_GRAVEYARD))
-						.spawnOverrides(
-								Map.of(
-										MobCategory.MONSTER,
-										new StructureSpawnOverride(
-												BoundingBoxType.STRUCTURE,
-												WeightedList.of(new SpawnerData(EntityTypes.ZOMBIE, 1, 2))
-										)
-								)
-						)
-						.terrainAdapation(TerrainAdjustment.BEARD_THIN)
-						.build(),
-				templatePoolHolderGetter.getOrThrow(StructureTemplatePoolGenerator.GRAVEYARD),
 				1,
 				ConstantHeight.of(VerticalAnchor.absolute(0)),
 				false,
@@ -303,7 +282,7 @@ public class StructureGenerator {
 										MobCategory.MONSTER,
 										new StructureSpawnOverride(
 												BoundingBoxType.STRUCTURE,
-												WeightedList.of(new SpawnerData(EntityRegistry.DYING_SOLDIER_ENTITY.get(), 1, 2))
+												WeightedList.of(new SpawnerData(EntityRegistry.DYING_SOLDIER_ENTITY.get(), UniformInt.of(1, 2)))
 										)
 								)
 						)

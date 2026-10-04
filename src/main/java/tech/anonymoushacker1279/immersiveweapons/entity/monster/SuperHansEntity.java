@@ -458,7 +458,7 @@ public class SuperHansEntity extends HansEntity implements AttackerTracker {
 
 						DamageSource source = hans.level().damageSources().mobAttack(hans);
 						entity.knockback(2.5f, knockbackX, knockbackZ, source, 0.0f);
-						entity.hurtMarked = true;
+						entity.syncVelocity = true;
 					}
 				}
 

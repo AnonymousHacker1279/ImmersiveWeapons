@@ -16,8 +16,8 @@ import tech.anonymoushacker1279.immersiveweapons.config.ServerConfig;
 public abstract class EnchantmentMixin {
 
 	@ModifyReturnValue(method = "getFullname", at = @At(value = "RETURN"))
-	private static Component recolorEnchantmentNames(Component component, @Local(argsOnly = true) Holder<Enchantment> holder, @Local(argsOnly = true) int level) {
-		ResourceKey<Enchantment> enchantmentLocation = holder.getKey();
+	private static Component recolorEnchantmentNames(Component component, @Local(argsOnly = true, name = "enchantment") Holder<Enchantment> enchantment, @Local(argsOnly = true, name = "level") int level) {
+		ResourceKey<Enchantment> enchantmentLocation = enchantment.key();
 
 		if (enchantmentLocation != null) {
 			int maxLevel = ServerConfig.getEnchantCap(enchantmentLocation.identifier().toString());

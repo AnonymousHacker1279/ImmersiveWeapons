@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:explosive_cannonball"
+        "recipes": "immersiveweapons:explosive_cannonball"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

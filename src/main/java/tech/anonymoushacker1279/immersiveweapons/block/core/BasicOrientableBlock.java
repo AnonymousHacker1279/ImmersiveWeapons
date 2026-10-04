@@ -1,6 +1,5 @@
 package tech.anonymoushacker1279.immersiveweapons.block.core;
 
-import com.mojang.serialization.MapCodec;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Block;
@@ -10,19 +9,12 @@ import net.minecraft.world.level.block.state.StateDefinition;
 
 public class BasicOrientableBlock extends HorizontalDirectionalBlock {
 
-	public static final MapCodec<BasicOrientableBlock> CODEC = simpleCodec(BasicOrientableBlock::new);
-
 	/// Constructor for BasicOrientableBlock. This class creates a block with a DirectionProperty.
 	///
 	/// @param properties the `Properties` of the block
 	public BasicOrientableBlock(Properties properties) {
 		super(properties);
 		registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
-	}
-
-	@Override
-	protected MapCodec<? extends HorizontalDirectionalBlock> codec() {
-		return CODEC;
 	}
 
 	/// Create the BlockState definition.

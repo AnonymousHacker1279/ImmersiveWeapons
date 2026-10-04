@@ -13,6 +13,7 @@ import net.minecraft.world.level.material.Fluids;
 import org.jspecify.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import tech.anonymoushacker1279.immersiveweapons.block.MineralDepositBlock;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockRegistry;
 
 @Mixin(PotentSulfurBlock.class)
@@ -39,19 +40,22 @@ public class PotentSulfurBlockMixin<T extends BlockEntity> {
 						? 0.01f + ((waterBlocks - 1) * 0.01f)
 						: 0.0001f + ((waterBlocks - 1) * 0.0001f));
 
-				for (int x = -radius; x < radius; x++) {
-					for (int y = -radius; y < radius + waterBlocks; y++) {
-						for (int z = -radius; z < radius; z++) {
+				for (int x = -radius; x <= radius; x++) {
+					for (int y = -radius; y <= radius + waterBlocks; y++) {
+						for (int z = -radius; z <= radius; z++) {
 							BlockPos checkPos = pos.offset(x, y, z);
 
 							if (x == 0 && y == 0 && z == 0) continue;    // ignore the block above the potent sulfur
 
 							BlockState aboveState = level.getBlockState(checkPos.above());
 							if ((aboveState.isAir() || aboveState.getFluidState().getType() == Fluids.WATER)
-									&& level.getBlockState(checkPos).isFaceSturdy(level, pos, Direction.UP)) {
+									&& level.getBlockState(checkPos).isFaceSturdy(level, checkPos, Direction.UP)) {
 
 								if (level.getRandom().nextFloat() < depositChance) {
-									level.setBlockAndUpdate(checkPos.above(), BlockRegistry.MINERAL_DEPOSIT.get().defaultBlockState());
+									// Keep the water when replacing it, otherwise an air pocket is left behind
+									BlockPos depositPos = checkPos.above();
+									level.setBlockAndUpdate(depositPos, BlockRegistry.MINERAL_DEPOSIT.get().defaultBlockState()
+											.setValue(MineralDepositBlock.WATERLOGGED, level.getFluidState(depositPos).getType() == Fluids.WATER));
 								}
 							}
 						}

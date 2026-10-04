@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "immersiveweapons:wooden_gauntlet"
+        "recipes": "immersiveweapons:wooden_gauntlet"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
