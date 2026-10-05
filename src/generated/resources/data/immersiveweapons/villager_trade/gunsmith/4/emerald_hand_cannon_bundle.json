@@ -1,0 +1,31 @@
+{
+  "gives": {
+    "components": {
+      "minecraft:bundle_contents": [
+        {
+          "id": "immersiveweapons:wooden_pistol_handle"
+        },
+        {
+          "id": "immersiveweapons:flintlock_assembly"
+        },
+        {
+          "id": "immersiveweapons:trigger_assembly"
+        },
+        {
+          "id": "immersiveweapons:short_iron_barrel"
+        },
+        {
+          "id": "minecraft:string"
+        }
+      ]
+    },
+    "id": "minecraft:bundle"
+  },
+  "max_uses": 2,
+  "reputation_discount": 0.05,
+  "wants": {
+    "count": 40,
+    "id": "minecraft:emerald"
+  },
+  "xp": 50
+}

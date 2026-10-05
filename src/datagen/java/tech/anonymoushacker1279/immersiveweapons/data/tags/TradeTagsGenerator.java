@@ -38,6 +38,20 @@ public class TradeTagsGenerator extends TagsProvider<VillagerTrade> {
 		tag(TradeTags.SKYGAZER_LEVEL_3)
 				.add(TradeGenerator.SKYGAZER_3_LECTERN_CELESTIAL_ALTAR);
 
+		tag(TradeTags.GUNSMITH_LEVEL_1)
+				.add(TradeGenerator.GUNSMITH_1_EMERALD_FLINTLOCK_PISTOL_BUNDLE)
+				.add(TradeGenerator.GUNSMITH_1_EMERALD_FLARE_GUN_BUNDLE);
+
+		tag(TradeTags.GUNSMITH_LEVEL_2)
+				.add(TradeGenerator.GUNSMITH_2_EMERALD_BLUNDERBUSS_BUNDLE);
+
+		tag(TradeTags.GUNSMITH_LEVEL_3)
+				.add(TradeGenerator.GUNSMITH_3_EMERALD_MUSKET_BUNDLE)
+				.add(TradeGenerator.GUNSMITH_3_EMERALD_SPYGLASS_SCOPE);
+
+		tag(TradeTags.GUNSMITH_LEVEL_4)
+				.add(TradeGenerator.GUNSMITH_4_EMERALD_HAND_CANNON_BUNDLE);
+
 		tag(TradeTags.SKELETON_MERCHANT_LEVEL_1)
 				.add(TradeGenerator.SKELETON_MERCHANT_1_EMERALD_IRON_RING)
 				.add(TradeGenerator.SKELETON_MERCHANT_1_EMERALD_SATCHEL)

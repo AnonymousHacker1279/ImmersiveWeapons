@@ -1,0 +1,28 @@
+{
+  "gives": {
+    "components": {
+      "minecraft:bundle_contents": [
+        {
+          "id": "immersiveweapons:heavy_wooden_stock"
+        },
+        {
+          "id": "immersiveweapons:flintlock_assembly"
+        },
+        {
+          "id": "immersiveweapons:trigger_assembly"
+        },
+        {
+          "id": "immersiveweapons:wide_golden_barrel"
+        }
+      ]
+    },
+    "id": "minecraft:bundle"
+  },
+  "max_uses": 2,
+  "reputation_discount": 0.05,
+  "wants": {
+    "count": 24,
+    "id": "minecraft:emerald"
+  },
+  "xp": 30
+}

@@ -67,6 +67,7 @@ public class CustomDataGenerator {
 		generator.addProvider(true, blockTagsGenerator);
 		generator.addProvider(true, new ItemTagsGenerator(output, lookupProvider, blockTagsGenerator.contentsGetter()));
 		generator.addProvider(true, new TradeTagsGenerator(output, lookupProvider));
+		generator.addProvider(true, new PoiTypeTagsGenerator(output, lookupProvider));
 		generator.addProvider(true, new EntityTypeTagsGenerator(output, lookupProvider));
 		generator.addProvider(true, new GameEventTagsGenerator(output, lookupProvider));
 		generator.addProvider(true, new EnchantmentTagsGenerator(output, lookupProvider));

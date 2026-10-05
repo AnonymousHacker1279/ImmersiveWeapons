@@ -604,7 +604,6 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 
 		GOLD_INGOT_CRAFTABLES.add(ItemRegistry.WIDE_GOLDEN_BARREL.get());
 		GOLD_INGOT_CRAFTABLES.add(ItemRegistry.TRIGGER_ASSEMBLY.get());
-		GOLD_INGOT_CRAFTABLES.add(ItemRegistry.SCOPE_MOUNT.get());
 
 		METAL_INGOT_CRAFTABLES.add(ItemRegistry.GRENADE_ASSEMBLY.get());
 		METAL_INGOT_CRAFTABLES.add(ItemRegistry.TOOL_JOINT.get());
@@ -633,14 +632,6 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.pattern("aa")
 				.group("small_parts")
 				.unlockedBy("iron_barrel", has(ItemRegistry.IRON_BARREL.get()))
-				.save(output);
-		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.MISC, ItemRegistry.SCOPE.get())
-				.define('a', Items.SPYGLASS)
-				.define('b', ItemRegistry.SCOPE_MOUNT.get())
-				.pattern("a")
-				.pattern("b")
-				.group("small_parts")
-				.unlockedBy("spyglass", has(Items.SPYGLASS))
 				.save(output);
 	}
 

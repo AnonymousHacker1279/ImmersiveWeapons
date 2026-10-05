@@ -368,7 +368,6 @@ public class ItemRegistry {
 	public static final DeferredHolder<Item, Item> EXTENDED_IRON_BARREL = ITEMS.registerItem("extended_iron_barrel", Item::new);
 	public static final DeferredHolder<Item, Item> SHORT_IRON_BARREL = ITEMS.registerItem("short_iron_barrel", Item::new);
 	public static final DeferredHolder<Item, Item> WIDE_GOLDEN_BARREL = ITEMS.registerItem("wide_golden_barrel", Item::new);
-	public static final DeferredHolder<Item, Item> SCOPE_MOUNT = ITEMS.registerItem("scope_mount", Item::new);
 	public static final DeferredHolder<Item, Item> SCOPE = ITEMS.registerItem("scope", Item::new);
 	@DatagenExclusionMarker(Type.MODEL_GENERATOR_ITEM)
 	@LanguageEntryOverride("Smoke Grenade")

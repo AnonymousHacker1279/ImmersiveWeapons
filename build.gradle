@@ -2,7 +2,7 @@ plugins {
 	id 'java-library'
 	id 'maven-publish'
 	id 'net.neoforged.moddev' version '2.0.148'
-	id "com.hypherionmc.modutils.modpublisher" version "2.2.2"
+	id "com.hypherionmc.modutils.modpublisher" version "2.2.3"
 	id 'idea'
 	id 'tech.anonymoushacker1279.optimization-utils' version '1.0.0'
 }

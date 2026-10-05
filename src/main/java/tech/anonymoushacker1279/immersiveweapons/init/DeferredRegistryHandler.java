@@ -84,5 +84,11 @@ public class DeferredRegistryHandler {
 
 		ImmersiveWeapons.LOGGER.info("Initializing deferred registry for accessory effect types");
 		AccessoryEffectTypeRegistry.ACCESSORY_EFFECT_TYPES.register(modEventBus);
+
+		ImmersiveWeapons.LOGGER.info("Initializing deferred registry for points of interest");
+		VillagerRegistry.POI_TYPES.register(modEventBus);
+
+		ImmersiveWeapons.LOGGER.info("Initializing deferred registry for villager professions");
+		VillagerRegistry.PROFESSIONS.register(modEventBus);
 	}
 }

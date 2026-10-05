@@ -189,6 +189,9 @@ public class LanguageGenerator extends IWLanguageProvider {
 		for (DeferredHolder<?, ?> holder : LANGUAGE_OVERRIDES.getOrDefault(LanguageCategory.ENTITIES, Collections.emptyMap()).keySet()) {
 			add((EntityType<?>) holder.get(), LANGUAGE_OVERRIDES.get(LanguageCategory.ENTITIES).get(holder));
 		}
+
+		// Villager professions
+		add("entity.immersiveweapons.villager.gunsmith", "Gunsmith");
 	}
 
 	private void addPotions() {
