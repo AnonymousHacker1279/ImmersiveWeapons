@@ -300,12 +300,6 @@
     ],
     "subtitle": "subtitles.immersiveweapons.block.panic_alarm.alarm"
   },
-  "small_parts_table_used": {
-    "sounds": [
-      "immersiveweapons:block/small_parts_table/used/used"
-    ],
-    "subtitle": "subtitles.immersiveweapons.block.small_parts_table.used"
-  },
   "smoke_grenade_hiss": {
     "sounds": [
       "immersiveweapons:item/smoke_grenade/hiss/hiss"

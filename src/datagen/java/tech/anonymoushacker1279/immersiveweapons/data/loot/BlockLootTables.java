@@ -92,8 +92,6 @@ public class BlockLootTables extends BlockLootSubProvider {
 		dropSelf(BlockRegistry.PANIC_ALARM.get());
 		dropSelf(BlockRegistry.PUNJI_STICKS.get());
 		dropSelf(BlockRegistry.RAW_COBALT_BLOCK.get());
-		dropSelf(BlockRegistry.SMALL_PARTS_TABLE.get());
-		dropSelf(BlockRegistry.AMMUNITION_TABLE.get());
 		dropSelf(BlockRegistry.AMMUNITION_FORGE.get());
 		dropSelf(BlockRegistry.SPIKE_TRAP.get());
 		dropSelf(BlockRegistry.SPOTLIGHT.get());

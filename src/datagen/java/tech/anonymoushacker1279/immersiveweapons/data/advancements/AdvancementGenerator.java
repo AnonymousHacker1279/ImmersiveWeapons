@@ -906,15 +906,6 @@ public class AdvancementGenerator extends AdvancementSubProvider {
 				.save(output, prefixString("musket_ball"));
 
 		Builder.advancement().parent(root)
-				.display(BlockRegistry.AMMUNITION_TABLE.get().asItem(),
-						createTitle("ammunition_table"),
-						createDescription("ammunition_table"),
-						AdvancementType.TASK, true, true, false)
-				.addCriterion("hold",
-						InventoryChangeTrigger.TriggerInstance.hasItems(BlockRegistry.AMMUNITION_TABLE.get()))
-				.save(output, prefixString("ammunition_table"));
-
-		Builder.advancement().parent(root)
 				.display(BlockRegistry.STAR_FORGE_CONTROLLER.get().asItem(),
 						createTitle("star_forge"),
 						createDescription("star_forge"),
@@ -928,16 +919,16 @@ public class AdvancementGenerator extends AdvancementSubProvider {
 						))
 				.save(output, prefixString("star_forge"));
 
-		AdvancementHolder smallPartsTable = Builder.advancement().parent(root)
-				.display(BlockRegistry.SMALL_PARTS_TABLE.get().asItem(),
-						createTitle("small_parts_table"),
-						createDescription("small_parts_table"),
+		AdvancementHolder ammunitionForge = Builder.advancement().parent(root)
+				.display(BlockRegistry.AMMUNITION_FORGE.get().asItem(),
+						createTitle("ammunition_forge"),
+						createDescription("ammunition_forge"),
 						AdvancementType.TASK, true, true, false)
 				.addCriterion("hold",
-						InventoryChangeTrigger.TriggerInstance.hasItems(BlockRegistry.SMALL_PARTS_TABLE.get()))
-				.save(output, prefixString("small_parts_table"));
+						InventoryChangeTrigger.TriggerInstance.hasItems(BlockRegistry.AMMUNITION_FORGE.get()))
+				.save(output, prefixString("ammunition_forge"));
 
-		Builder.advancement().parent(smallPartsTable)
+		Builder.advancement().parent(ammunitionForge)
 				.display(ItemRegistry.FLINTLOCK_PISTOL.get(),
 						createTitle("flintlock_pistol"),
 						createDescription("flintlock_pistol"),
@@ -946,7 +937,7 @@ public class AdvancementGenerator extends AdvancementSubProvider {
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.FLINTLOCK_PISTOL.get()))
 				.save(output, prefixString("flintlock_pistol"));
 
-		Builder.advancement().parent(smallPartsTable)
+		Builder.advancement().parent(ammunitionForge)
 				.display(ItemRegistry.BLUNDERBUSS.get(),
 						createTitle("blunderbuss"),
 						createDescription("blunderbuss"),
@@ -955,7 +946,7 @@ public class AdvancementGenerator extends AdvancementSubProvider {
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.BLUNDERBUSS.get()))
 				.save(output, prefixString("blunderbuss"));
 
-		Builder.advancement().parent(smallPartsTable)
+		Builder.advancement().parent(ammunitionForge)
 				.display(ItemRegistry.FLARE_GUN.get(),
 						createTitle("flare_gun"),
 						createDescription("flare_gun"),
@@ -964,7 +955,7 @@ public class AdvancementGenerator extends AdvancementSubProvider {
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.FLARE_GUN.get()))
 				.save(output, prefixString("flare_gun"));
 
-		Builder.advancement().parent(smallPartsTable)
+		Builder.advancement().parent(ammunitionForge)
 				.display(ItemRegistry.MUSKET.get(),
 						createTitle("musket"),
 						createDescription("musket"),
@@ -974,7 +965,7 @@ public class AdvancementGenerator extends AdvancementSubProvider {
 				.requirements(Strategy.OR)
 				.save(output, prefixString("musket"));
 
-		Builder.advancement().parent(smallPartsTable)
+		Builder.advancement().parent(ammunitionForge)
 				.display(ItemRegistry.HAND_CANNON.get(),
 						createTitle("hand_cannon"),
 						createDescription("hand_cannon"),
@@ -983,7 +974,7 @@ public class AdvancementGenerator extends AdvancementSubProvider {
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemRegistry.HAND_CANNON.get()))
 				.save(output, prefixString("hand_cannon"));
 
-		Builder.advancement().parent(smallPartsTable)
+		Builder.advancement().parent(ammunitionForge)
 				.display(ItemRegistry.SMOKE_GRENADE.get(),
 						createTitle("smoke_grenade"),
 						createDescription("smoke_grenade"),
@@ -992,7 +983,7 @@ public class AdvancementGenerator extends AdvancementSubProvider {
 						InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(itemLookup, IWItemTagGroups.SMOKE_GRENADES)))
 				.save(output, prefixString("smoke_grenade"));
 
-		Builder.advancement().parent(smallPartsTable)
+		Builder.advancement().parent(ammunitionForge)
 				.display(ItemRegistry.FLASHBANG.get(),
 						createTitle("flashbang"),
 						createDescription("flashbang"),

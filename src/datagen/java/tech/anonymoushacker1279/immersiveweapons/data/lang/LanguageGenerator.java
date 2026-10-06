@@ -274,9 +274,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 	}
 
 	private void addContainers() {
-		addContainer("small_parts_table", "Small Parts Crafting");
 		addContainer("tesla_synthesizer", "Tesla Synthesizing");
-		addContainer("ammunition_table", "Ammunition Crafting");
 		addContainer("ammunition_forge", "Ammunition Forge");
 		addContainer("star_forge", "Star Forging");
 		addContainer("celestial_altar", "Celestial Altar");
@@ -318,7 +316,6 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addSubtitle("item.generic_item_throw", "Item flies");
 
 		// Misc blocks
-		addSubtitle("block.small_parts_table.used", "Small parts table used");
 		addSubtitle("block.barbed_wire.rattle", "Barbed wire rattles");
 		addSubtitle("block.bear_trap.close", "Bear trap closes");
 		addSubtitle("block.spike_trap.extend", "Spike trap extends");
@@ -443,7 +440,6 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("bullet.meta.gravity_modifier", "Gravity Modifier: %s");
 		addTooltip("bullet.meta.base_knockback_level", "Base Knockback Level: %sx");
 		addTooltip("bullet.meta.piercing_level", "Piercing Level: %s target(s)");
-		addTooltip("bullet.meta.density_modifier", "Density Modifier: +%sx");
 		addTooltip("bullet.meta.misfire_chance", "Misfire Chance: %s%%");
 
 		// Pikes
@@ -1022,10 +1018,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("commander_pedestal.description", "Obtain a Commander Pedestal, which allows summoning statues to operate outside of battlefields");
 		addAdvancement("pedestal_augment.title", "Pedestal Augmentation");
 		addAdvancement("pedestal_augment.description", "Obtain a Pedestal Augment, allowing Commander Pedestals to be upgraded");
-		addAdvancement("small_parts_table.title", "The Engineer");
-		addAdvancement("small_parts_table.description", "Obtain a small parts table, a gateway for creating advanced weapons.");
-		addAdvancement("ammunition_table.title", "Ammo Manufacturer");
-		addAdvancement("ammunition_table.description", "Obtain an ammunition table, used to create musket balls.");
+		addAdvancement("ammunition_forge.title", "Ammo Manufacturer");
+		addAdvancement("ammunition_forge.description", "Obtain an ammunition forge, used to cast musket balls and the gateway to firearms.");
 		addAdvancement("star_forge.title", "Star Forge");
 		addAdvancement("star_forge.description", "Obtain parts for a Star Forge, used to create high-level tools and armor.");
 		addAdvancement("traps.title", "Advanced Warfare");

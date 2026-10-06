@@ -34,9 +34,7 @@ import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import tech.anonymoushacker1279.immersiveweapons.client.ModelLayerLocations;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.screen.AmmunitionForgeScreen;
-import tech.anonymoushacker1279.immersiveweapons.client.gui.screen.AmmunitionTableScreen;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.screen.CelestialAltarScreen;
-import tech.anonymoushacker1279.immersiveweapons.client.gui.screen.SmallPartsTableScreen;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.screen.StarForgeScreen;
 import tech.anonymoushacker1279.immersiveweapons.client.model.*;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.*;
@@ -45,7 +43,6 @@ import tech.anonymoushacker1279.immersiveweapons.client.particle.damage_indicato
 import tech.anonymoushacker1279.immersiveweapons.client.particle.damage_indicator.DamageIndicatorParticleGroup;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.smoke_grenade.SmokeGrenadeParticle;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.wisp.WispParticle;
-import tech.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.AmmunitionTableRenderer;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.AstralCrystalRenderer;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.CommanderPedestalRenderer;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.ShelfRenderer;
@@ -97,8 +94,6 @@ public class ClientModEventSubscriber {
 
 	@SubscribeEvent
 	public static void registerMenuScreensEvent(RegisterMenuScreensEvent event) {
-		event.register(MenuTypeRegistry.SMALL_PARTS_TABLE_MENU.get(), SmallPartsTableScreen::new);
-		event.register(MenuTypeRegistry.AMMUNITION_TABLE_MENU.get(), AmmunitionTableScreen::new);
 		event.register(MenuTypeRegistry.AMMUNITION_FORGE_MENU.get(), AmmunitionForgeScreen::new);
 		event.register(MenuTypeRegistry.STAR_FORGE_MENU.get(), StarForgeScreen::new);
 		event.register(MenuTypeRegistry.CELESTIAL_ALTAR_MENU.get(), CelestialAltarScreen::new);
@@ -295,7 +290,6 @@ public class ClientModEventSubscriber {
 		event.registerBlockEntityRenderer(BlockEntityRegistry.CUSTOM_HANGING_SIGN_ENTITY.get(), HangingSignRenderer::new);
 		event.registerBlockEntityRenderer(BlockEntityRegistry.CUSTOM_SKULL_BLOCK_ENTITY.get(), SkullBlockRenderer::new);
 		event.registerBlockEntityRenderer(BlockEntityRegistry.ASTRAL_CRYSTAL_BLOCK_ENTITY.get(), (context) -> new AstralCrystalRenderer(context.itemModelResolver()));
-		event.registerBlockEntityRenderer(BlockEntityRegistry.AMMUNITION_TABLE_BLOCK_ENTITY.get(), (context) -> new AmmunitionTableRenderer(context.itemModelResolver()));
 		event.registerBlockEntityRenderer(BlockEntityRegistry.COMMANDER_PEDESTAL_BLOCK_ENTITY.get(), (context) -> new CommanderPedestalRenderer(context.itemModelResolver()));
 	}
 

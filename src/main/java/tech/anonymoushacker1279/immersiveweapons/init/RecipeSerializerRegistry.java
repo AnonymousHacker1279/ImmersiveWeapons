@@ -14,11 +14,9 @@ public class RecipeSerializerRegistry {
 	public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZER = DeferredRegister.create(Registries.RECIPE_SERIALIZER, ImmersiveWeapons.MOD_ID);
 
 	// Recipes
-	public static final Supplier<RecipeSerializer<SmallPartsRecipe>> SMALL_PARTS_RECIPE_SERIALIZER = RECIPE_SERIALIZER.register("small_parts", () -> SmallPartsRecipe.SERIALIZER);
 	public static final Supplier<RecipeSerializer<BarrelTapRecipe>> BARREL_TAP_RECIPE_SERIALIZER = RECIPE_SERIALIZER.register("barrel_tap", () -> BarrelTapRecipe.SERIALIZER);
 	public static final Supplier<RecipeSerializer<AstralCrystalRecipe>> ASTRAL_CRYSTAL_RECIPE_SERIALIZER = RECIPE_SERIALIZER.register("astral_crystal", () -> AstralCrystalRecipe.SERIALIZER);
 	public static final Supplier<RecipeSerializer<PistonCrushingRecipe>> PISTON_CRUSHING_RECIPE_SERIALIZER = RECIPE_SERIALIZER.register("piston_crushing", () -> PistonCrushingRecipe.SERIALIZER);
-	public static final Supplier<RecipeSerializer<AmmunitionTableRecipe>> AMMUNITION_TABLE_RECIPE_SERIALIZER = RECIPE_SERIALIZER.register("ammunition_table", () -> AmmunitionTableRecipe.SERIALIZER);
 	public static final Supplier<RecipeSerializer<AmmunitionForgeRecipe>> AMMUNITION_FORGE_RECIPE_SERIALIZER = RECIPE_SERIALIZER.register("ammunition_forge", () -> AmmunitionForgeRecipe.SERIALIZER);
 	public static final Supplier<RecipeSerializer<StarForgeRecipe>> STAR_FORGE_RECIPE_SERIALIZER = RECIPE_SERIALIZER.register("star_forge", () -> StarForgeRecipe.SERIALIZER);
 }

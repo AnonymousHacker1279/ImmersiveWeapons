@@ -49,6 +49,11 @@ public class TradeGenerator {
 
 	public static final ResourceKey<VillagerTrade> GUNSMITH_2_EMERALD_BLUNDERBUSS_BUNDLE = create("gunsmith/2/emerald_blunderbuss_bundle");
 
+	// Added to vanilla smith trade pools through the tags
+	public static final ResourceKey<VillagerTrade> WEAPONSMITH_2_EMERALD_GRENADE_ASSEMBLY = create("weaponsmith/2/emerald_grenade_assembly");
+	public static final ResourceKey<VillagerTrade> WEAPONSMITH_3_EMERALD_GAUNTLET_SCAFFOLDING = create("weaponsmith/3/emerald_gauntlet_scaffolding");
+	public static final ResourceKey<VillagerTrade> TOOLSMITH_2_EMERALD_TOOL_JOINT = create("toolsmith/2/emerald_tool_joint");
+
 	public static final ResourceKey<VillagerTrade> GUNSMITH_2_EMERALD_WOODEN_MUSKET_BALLS = create("gunsmith/2/emerald_wooden_musket_balls");
 	public static final ResourceKey<VillagerTrade> GUNSMITH_2_EMERALD_STONE_MUSKET_BALLS = create("gunsmith/2/emerald_stone_musket_balls");
 
@@ -86,6 +91,19 @@ public class TradeGenerator {
 		generateSkygazerTrades(context);
 		generateSkeletonMerchantTrades(context);
 		generateGunsmithTrades(context);
+		generateSmithTrades(context);
+	}
+
+	private static void generateSmithTrades(BootstrapContext<VillagerTrade> context) {
+		VillagerTrades.register(context,
+				WEAPONSMITH_2_EMERALD_GRENADE_ASSEMBLY,
+				VillagerTrade.builder(new TradeCost(Items.EMERALD, 3), new ItemStackTemplate(ItemRegistry.GRENADE_ASSEMBLY.get()), 12, 5, 0.05f).build());
+		VillagerTrades.register(context,
+				WEAPONSMITH_3_EMERALD_GAUNTLET_SCAFFOLDING,
+				VillagerTrade.builder(new TradeCost(Items.EMERALD, 4), new ItemStackTemplate(ItemRegistry.GAUNTLET_SCAFFOLDING.get()), 12, 10, 0.05f).build());
+		VillagerTrades.register(context,
+				TOOLSMITH_2_EMERALD_TOOL_JOINT,
+				VillagerTrade.builder(new TradeCost(Items.EMERALD, 2), new ItemStackTemplate(ItemRegistry.TOOL_JOINT.get()), 12, 5, 0.05f).build());
 	}
 
 	/// Gunsmith XP is tuned so that one full restock of a level's trades reaches the next level threshold (10/70/150/250 total XP).

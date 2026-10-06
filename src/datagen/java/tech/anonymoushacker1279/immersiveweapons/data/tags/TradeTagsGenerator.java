@@ -4,6 +4,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.tags.VillagerTradeTags;
 import net.minecraft.world.item.trading.VillagerTrade;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.trades.TradeGenerator;
@@ -37,6 +38,10 @@ public class TradeTagsGenerator extends TagsProvider<VillagerTrade> {
 
 		tag(TradeTags.SKYGAZER_LEVEL_3)
 				.add(TradeGenerator.SKYGAZER_3_LECTERN_CELESTIAL_ALTAR);
+
+		tag(VillagerTradeTags.WEAPONSMITH_LEVEL_2).add(TradeGenerator.WEAPONSMITH_2_EMERALD_GRENADE_ASSEMBLY);
+		tag(VillagerTradeTags.WEAPONSMITH_LEVEL_3).add(TradeGenerator.WEAPONSMITH_3_EMERALD_GAUNTLET_SCAFFOLDING);
+		tag(VillagerTradeTags.TOOLSMITH_LEVEL_2).add(TradeGenerator.TOOLSMITH_2_EMERALD_TOOL_JOINT);
 
 		tag(TradeTags.GUNSMITH_LEVEL_1)
 				.add(TradeGenerator.GUNSMITH_1_EMERALD_FLINTLOCK_PISTOL_BUNDLE)

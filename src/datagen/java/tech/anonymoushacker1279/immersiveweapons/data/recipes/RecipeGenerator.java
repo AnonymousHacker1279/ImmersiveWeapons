@@ -36,7 +36,6 @@ import tech.anonymoushacker1279.immersiveweapons.data.DataGenUtils;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.common.CommonItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
-import tech.anonymoushacker1279.immersiveweapons.item.crafting.AmmunitionTableRecipe.MaterialGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -593,40 +592,6 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 	}
 
 	private void createSmallPartsItems() {
-		List<Item> IRON_INGOT_CRAFTABLES = new ArrayList<>(5);
-		List<Item> GOLD_INGOT_CRAFTABLES = new ArrayList<>(5);
-		List<Item> METAL_INGOT_CRAFTABLES = new ArrayList<>(5);
-		List<Item> PLANK_CRAFTABLES = new ArrayList<>(5);
-
-		IRON_INGOT_CRAFTABLES.add(ItemRegistry.FLINTLOCK_ASSEMBLY.get());
-		IRON_INGOT_CRAFTABLES.add(ItemRegistry.IRON_BARREL.get());
-		IRON_INGOT_CRAFTABLES.add(ItemRegistry.SHORT_IRON_BARREL.get());
-
-		GOLD_INGOT_CRAFTABLES.add(ItemRegistry.WIDE_GOLDEN_BARREL.get());
-		GOLD_INGOT_CRAFTABLES.add(ItemRegistry.TRIGGER_ASSEMBLY.get());
-
-		METAL_INGOT_CRAFTABLES.add(ItemRegistry.GRENADE_ASSEMBLY.get());
-		METAL_INGOT_CRAFTABLES.add(ItemRegistry.TOOL_JOINT.get());
-
-		PLANK_CRAFTABLES.add(ItemRegistry.GAUNTLET_SCAFFOLDING.get());
-		PLANK_CRAFTABLES.add(ItemRegistry.HEAVY_WOODEN_STOCK.get());
-		PLANK_CRAFTABLES.add(ItemRegistry.WOODEN_PISTOL_HANDLE.get());
-
-		smallPartsTinkering(Tags.Items.INGOTS_IRON, IRON_INGOT_CRAFTABLES);
-		smallPartsTinkering(Tags.Items.INGOTS_GOLD, GOLD_INGOT_CRAFTABLES);
-		smallPartsTinkering(CommonItemTagGroups.METAL_INGOTS, METAL_INGOT_CRAFTABLES);
-		smallPartsTinkering(ItemTags.PLANKS, PLANK_CRAFTABLES);
-
-		// Small parts table
-		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.BUILDING_BLOCKS, BlockRegistry.SMALL_PARTS_TABLE.get())
-				.define('a', Tags.Items.INGOTS_IRON)
-				.define('b', ItemTags.PLANKS)
-				.define('c', Tags.Items.INGOTS_COPPER)
-				.pattern("aca")
-				.pattern("aba")
-				.unlockedBy("copper_ingot", has(Tags.Items.INGOTS_COPPER))
-				.save(output);
-
 		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.MISC, ItemRegistry.EXTENDED_IRON_BARREL.get())
 				.define('a', ItemRegistry.IRON_BARREL.get())
 				.pattern("aa")
@@ -1103,99 +1068,6 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.pattern(" b ")
 				.group("molotov_cocktail")
 				.unlockedBy("bottle_of_alcohol", has(ItemRegistry.BOTTLE_OF_ALCOHOL.get()))
-				.save(output);
-
-		// Musket balls
-		List<MaterialGroup> musketBallMaterials = new ArrayList<>(20);
-
-		// Wood
-		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.WOODEN_SHARDS, 0.08f, 0.14f));
-		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.WOODEN_MUSKET_BALL.get());
-
-		// Stone
-		musketBallMaterials.clear();
-		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.STONE_SHARDS, 0.25f, 0.14f));
-		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.STONE_MUSKET_BALL.get());
-
-		// Gold
-		musketBallMaterials.clear();
-		musketBallMaterials.add(new MaterialGroup(Tags.Items.INGOTS_GOLD, 1.93f, 1.3f));
-		musketBallMaterials.add(new MaterialGroup(Tags.Items.NUGGETS_GOLD, 0.21f, 0.14f));
-		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.GOLDEN_MUSKET_BALL.get());
-
-		// Copper
-		musketBallMaterials.clear();
-		musketBallMaterials.add(new MaterialGroup(Tags.Items.INGOTS_COPPER, 0.89f, 1.3f));
-		musketBallMaterials.add(new MaterialGroup(CommonItemTagGroups.COPPER_NUGGETS, 0.1f, 0.14f));
-		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.COPPER_MUSKET_BALL.get());
-
-		// Iron
-		musketBallMaterials.clear();
-		musketBallMaterials.add(new MaterialGroup(Tags.Items.INGOTS_IRON, 0.79f, 1.3f));
-		musketBallMaterials.add(new MaterialGroup(Tags.Items.NUGGETS_IRON, 0.09f, 0.14f));
-		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.IRON_MUSKET_BALL.get());
-
-		// Cobalt
-		musketBallMaterials.clear();
-		musketBallMaterials.add(new MaterialGroup(CommonItemTagGroups.COBALT_INGOTS, 0.89f, 1.3f));
-		musketBallMaterials.add(new MaterialGroup(CommonItemTagGroups.COBALT_NUGGETS, 0.1f, 0.14f));
-		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.COBALT_MUSKET_BALL.get());
-
-		// Diamond
-		musketBallMaterials.clear();
-		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.DIAMOND_SHARDS, 0.09f, 0.14f));
-		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.DIAMOND_MUSKET_BALL.get());
-
-		// Netherite
-		musketBallMaterials.clear();
-		musketBallMaterials.add(new MaterialGroup(Tags.Items.INGOTS_NETHERITE, 2.5f, 1.3f));
-		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.NETHERITE_MUSKET_BALL.get());
-
-		// Molten
-		musketBallMaterials.clear();
-		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.MOLTEN_INGOTS, 0.35f, 1.3f));
-		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.MOLTEN_SHARDS, 0.04f, 0.14f));
-		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.MOLTEN_MUSKET_BALL.get());
-
-		// Tesla
-		musketBallMaterials.clear();
-		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.TESLA_INGOTS, 2.0f, 1.3f));
-		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.TESLA_NUGGETS, 0.22f, 0.14f));
-		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.TESLA_MUSKET_BALL.get());
-
-		// Ventus
-		musketBallMaterials.clear();
-		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.VENTUS_SHARDS, 0.05f, 1.3f));
-		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.VENTUS_MUSKET_BALL.get());
-
-		// Starstorm
-		musketBallMaterials.clear();
-		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.STARSTORM_INGOTS, 0.4f, 1.3f));
-		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.STARSTORM_SHARDS, 0.04f, 0.14f));
-		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.STARSTORM_MUSKET_BALL.get());
-
-		// Astral
-		musketBallMaterials.clear();
-		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.ASTRAL_INGOTS, 0.6f, 1.3f));
-		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.ASTRAL_NUGGETS, 0.06f, 0.14f));
-		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.ASTRAL_MUSKET_BALL.get());
-
-		// Void
-		musketBallMaterials.clear();
-		musketBallMaterials.add(new MaterialGroup(IWItemTagGroups.VOID_INGOTS, 0.03f, 1.3f));
-		ammunitionTableCrafting(musketBallMaterials, ItemRegistry.VOID_MUSKET_BALL.get());
-
-		// Ammunition Table
-		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.COMBAT, BlockItemRegistry.AMMUNITION_TABLE_ITEM.get())
-				.define('a', Tags.Items.INGOTS_IRON)
-				.define('b', ItemTags.PLANKS)
-				.define('c', ItemTags.STONE_CRAFTING_MATERIALS)
-				.define('d', Tags.Items.GUNPOWDERS)
-				.pattern("aaa")
-				.pattern("bdb")
-				.pattern("cbc")
-				.group("ammunition_table")
-				.unlockedBy("gunpowder", has(Tags.Items.GUNPOWDERS))
 				.save(output);
 
 		// Ammunition Forge
@@ -1944,13 +1816,6 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(pResultItem) + "_smithing");
 	}
 
-	private void smallPartsTinkering(TagKey<Item> material, List<Item> craftables) {
-		HolderSet<Item> materialSet = itemGetter.getOrThrow(material);
-		SmallPartsRecipeBuilder.tinker(Ingredient.of(materialSet), craftables, material.location())
-				.unlockedBy("copper_ingot", has(Tags.Items.INGOTS_COPPER))
-				.save(output, ImmersiveWeapons.MOD_ID + ":" + getTagName(material) + "_tinkering");
-	}
-
 	private void starForgeSmelting(TagKey<Item> ingot, int ingotCount, Item secondaryMaterial, int secondaryMaterialCount, Item result, int smeltTime) {
 		HolderSet<Item> ingotSet = BuiltInRegistries.ITEM.getOrThrow(ingot);
 		StarForgeRecipeBuilder.forge(Ingredient.of(ingotSet), ingotCount, Ingredient.of(secondaryMaterial), secondaryMaterialCount, new ItemStackTemplate(result), smeltTime)
@@ -1987,12 +1852,6 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		PistonCrushingRecipeBuilder.crushing(Ingredient.of(block), new ItemStackTemplate(result), minCount, maxCount)
 				.unlockedBy("piston", has(Items.PISTON))
 				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_piston_crushing");
-	}
-
-	private void ammunitionTableCrafting(List<MaterialGroup> materials, Item result) {
-		AmmunitionTableRecipeBuilder.crafting(materials, new ItemStackTemplate(result))
-				.unlockedBy("ammunition_table", has(BlockRegistry.AMMUNITION_TABLE.get()))
-				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_ammunition_table_crafting");
 	}
 
 	private void ammunitionForgeCasting(TagKey<Item> material, Item mold, Item result) {

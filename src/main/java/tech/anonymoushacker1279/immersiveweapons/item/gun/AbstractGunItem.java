@@ -2,7 +2,6 @@ package tech.anonymoushacker1279.immersiveweapons.item.gun;
 
 import net.minecraft.core.Holder.Reference;
 import net.minecraft.core.HolderGetter;
-import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
@@ -31,7 +30,6 @@ import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryMan
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem;
-import tech.anonymoushacker1279.immersiveweapons.util.ArrowAttributeAccessor;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -50,8 +48,6 @@ public abstract class AbstractGunItem extends Item {
 	protected static final Predicate<ItemStack> CANNONBALLS = (stack) -> stack.is(IWItemTagGroups.CANNONBALLS);
 	protected static final Predicate<ItemStack> DRAGON_FIREBALLS = (stack) -> stack.is(IWItemTagGroups.DRAGON_FIREBALLS);
 	protected static final Predicate<ItemStack> FLAMMABLE_POWDERS = (stack) -> stack.typeHolder().getData(POWDER_TYPE) != null;
-
-	final DataComponentType<Float> DENSITY_MODIFIER = DataComponentTypeRegistry.DENSITY_MODIFIER.get();
 
 	protected AbstractGunItem(Properties properties) {
 		super(properties);
@@ -378,18 +374,6 @@ public abstract class AbstractGunItem extends Item {
 			if (enchantmentLevel > 0) {
 				// 100 ticks (5 seconds) per level
 				bullet.igniteForSeconds(enchantmentLevel * 5);
-			}
-		}
-
-		// Handle bullet density modifiers
-		if (ammo != null) {
-			float densityModifier = ammo.getOrDefault(DENSITY_MODIFIER, 0f);
-			if (densityModifier > 0) {
-				// A full 100% value is +20% damage
-				bullet.setBaseDamage(bullet.baseDamage + (bullet.baseDamage * (densityModifier * 0.2f)));
-
-				// Higher density slightly increases the gravity modifier
-				((ArrowAttributeAccessor) bullet).immersiveWeapons$setGravity(bullet.getGravity() + (densityModifier * 0.015f));
 			}
 		}
 

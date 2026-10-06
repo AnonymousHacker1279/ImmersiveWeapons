@@ -30,7 +30,6 @@ import tech.anonymoushacker1279.immersiveweapons.item.CursedItem;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.ArmorUtils;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem;
-import tech.anonymoushacker1279.immersiveweapons.menu.SmallPartsMenu;
 import tech.anonymoushacker1279.immersiveweapons.menu.StarForgeMenu;
 
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, value = Dist.CLIENT)
@@ -200,7 +199,5 @@ public class ClientForgeEventSubscriber {
 		StarForgeMenu.ALL_RECIPES.clear();
 		StarForgeMenu.ALL_RECIPES.addAll(event.getRecipeMap().byType(RecipeTypeRegistry.STAR_FORGE_RECIPE_TYPE.get()));
 
-		SmallPartsMenu.ALL_CRAFTABLES.clear();
-		SmallPartsMenu.initializeRecipes(event.getRecipeMap().byType(RecipeTypeRegistry.SMALL_PARTS_RECIPE_TYPE.get()));
 	}
 }

@@ -593,6 +593,6 @@ public class ForgeEventSubscriber {
 	@SubscribeEvent
 	public static void onDatapackSyncEvent(OnDatapackSyncEvent event) {
 		ImmersiveWeapons.LOGGER.info("Syncing datapack objects");
-		event.sendRecipes(RecipeTypeRegistry.STAR_FORGE_RECIPE_TYPE.get(), RecipeTypeRegistry.SMALL_PARTS_RECIPE_TYPE.get());
+		event.sendRecipes(RecipeTypeRegistry.STAR_FORGE_RECIPE_TYPE.get());
 	}
 }

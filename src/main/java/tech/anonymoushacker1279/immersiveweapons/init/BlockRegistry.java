@@ -131,8 +131,6 @@ public class BlockRegistry {
 
 	// Breakable via axe
 	// Wood tier
-	public static final DeferredHolder<Block, SmallPartsTableBlock> SMALL_PARTS_TABLE = BLOCKS.registerBlock("small_parts_table", (properties) -> new SmallPartsTableBlock(properties.mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(2.5f).sound(SoundType.WOOD).requiresCorrectToolForDrops()));
-	public static final DeferredHolder<Block, AmmunitionTableBlock> AMMUNITION_TABLE = BLOCKS.registerBlock("ammunition_table", (properties) -> new AmmunitionTableBlock(properties.mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(2.5f).sound(SoundType.WOOD).requiresCorrectToolForDrops().noOcclusion()));
 	public static final DeferredHolder<Block, RotatedPillarBlock> STRIPPED_BURNED_OAK_WOOD = BLOCKS.registerBlock("stripped_burned_oak_wood", (properties) -> new RotatedPillarBlock(properties.mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(1.7f).sound(SoundType.WOOD)));
 	public static final DeferredHolder<Block, RotatedPillarBlock> BURNED_OAK_WOOD = BLOCKS.registerBlock("burned_oak_wood", (properties) -> new RotatedPillarBlock(properties.mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(1.7f).sound(SoundType.WOOD)));
 	public static final DeferredHolder<Block, RotatedPillarBlock> STRIPPED_BURNED_OAK_LOG = BLOCKS.registerBlock("stripped_burned_oak_log", (properties) -> new RotatedPillarBlock(properties.mapColor(MapColor.WOOD).ignitedByLava().instrument(NoteBlockInstrument.BASS).strength(1.7F).sound(SoundType.WOOD)));

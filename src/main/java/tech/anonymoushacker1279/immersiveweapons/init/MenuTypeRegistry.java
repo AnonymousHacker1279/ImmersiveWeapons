@@ -8,9 +8,7 @@ import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.menu.AmmunitionForgeMenu;
-import tech.anonymoushacker1279.immersiveweapons.menu.AmmunitionTableMenu;
 import tech.anonymoushacker1279.immersiveweapons.menu.CelestialAltarMenu;
-import tech.anonymoushacker1279.immersiveweapons.menu.SmallPartsMenu;
 import tech.anonymoushacker1279.immersiveweapons.menu.StarForgeMenu;
 
 import java.util.ArrayList;
@@ -23,8 +21,6 @@ public class MenuTypeRegistry {
 	public static final DeferredRegister<MenuType<?>> MENU_TYPES = DeferredRegister.create(Registries.MENU, ImmersiveWeapons.MOD_ID);
 
 	// Menus
-	public static final Supplier<MenuType<SmallPartsMenu>> SMALL_PARTS_TABLE_MENU = MENU_TYPES.register("small_parts_table", () -> IMenuTypeExtension.create((id, inv, data) -> new SmallPartsMenu(id, inv)));
-	public static final Supplier<MenuType<AmmunitionTableMenu>> AMMUNITION_TABLE_MENU = MENU_TYPES.register("ammunition_table", () -> IMenuTypeExtension.create((id, inv, data) -> new AmmunitionTableMenu(id, inv)));
 	public static final Supplier<MenuType<AmmunitionForgeMenu>> AMMUNITION_FORGE_MENU = MENU_TYPES.register("ammunition_forge", () -> IMenuTypeExtension.create((id, inv, data) -> new AmmunitionForgeMenu(id, inv)));
 	public static final Supplier<MenuType<StarForgeMenu>> STAR_FORGE_MENU = MENU_TYPES.register("star_forge", () -> IMenuTypeExtension.create((id, inv, data) -> {
 		List<ResourceKey<Recipe<?>>> availableRecipes = new ArrayList<>(25);
