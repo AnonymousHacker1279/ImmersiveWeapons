@@ -194,6 +194,9 @@ public class IWItemModelGenerator {
 		itemModels.generateFlatItem(ItemRegistry.SHORT_IRON_BARREL.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.WIDE_GOLDEN_BARREL.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.SCOPE.get(), ModelTemplates.FLAT_ITEM);
+		itemModels.generateFlatItem(ItemRegistry.MUSKET_BALL_MOLD_BASIC.get(), ModelTemplates.FLAT_ITEM);
+		itemModels.generateFlatItem(ItemRegistry.MUSKET_BALL_MOLD_ADVANCED.get(), ModelTemplates.FLAT_ITEM);
+		itemModels.generateFlatItem(ItemRegistry.MUSKET_BALL_MOLD_MASTER.get(), ModelTemplates.FLAT_ITEM);
 		generateStateOnly(itemModels, ItemRegistry.SMOKE_GRENADE.get());
 		generateStateOnly(itemModels, ItemRegistry.SMOKE_GRENADE_RED.get());
 		generateStateOnly(itemModels, ItemRegistry.SMOKE_GRENADE_GREEN.get());

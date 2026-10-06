@@ -277,6 +277,7 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addContainer("small_parts_table", "Small Parts Crafting");
 		addContainer("tesla_synthesizer", "Tesla Synthesizing");
 		addContainer("ammunition_table", "Ammunition Crafting");
+		addContainer("ammunition_forge", "Ammunition Forge");
 		addContainer("star_forge", "Star Forging");
 		addContainer("celestial_altar", "Celestial Altar");
 

@@ -369,6 +369,12 @@ public class ItemRegistry {
 	public static final DeferredHolder<Item, Item> SHORT_IRON_BARREL = ITEMS.registerItem("short_iron_barrel", Item::new);
 	public static final DeferredHolder<Item, Item> WIDE_GOLDEN_BARREL = ITEMS.registerItem("wide_golden_barrel", Item::new);
 	public static final DeferredHolder<Item, Item> SCOPE = ITEMS.registerItem("scope", Item::new);
+	@LanguageEntryOverride("Musket Ball Mold (Basic)")
+	public static final DeferredHolder<Item, Item> MUSKET_BALL_MOLD_BASIC = ITEMS.registerItem("musket_ball_mold_basic", (properties) -> new Item(properties.stacksTo(1)));
+	@LanguageEntryOverride("Musket Ball Mold (Advanced)")
+	public static final DeferredHolder<Item, Item> MUSKET_BALL_MOLD_ADVANCED = ITEMS.registerItem("musket_ball_mold_advanced", (properties) -> new Item(properties.stacksTo(1)));
+	@LanguageEntryOverride("Musket Ball Mold (Master)")
+	public static final DeferredHolder<Item, Item> MUSKET_BALL_MOLD_MASTER = ITEMS.registerItem("musket_ball_mold_master", (properties) -> new Item(properties.stacksTo(1)));
 	@DatagenExclusionMarker(Type.MODEL_GENERATOR_ITEM)
 	@LanguageEntryOverride("Smoke Grenade")
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC}, dynamicTooltip = DynamicTooltips.ThrowableItemTooltip.class)

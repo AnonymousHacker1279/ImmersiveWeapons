@@ -1,0 +1,10 @@
+{
+  "type": "immersiveweapons:ammunition_forge",
+  "group": "ammunition_forge",
+  "material": "#immersiveweapons:ingots/molten",
+  "mold": "immersiveweapons:musket_ball_mold_advanced",
+  "result": {
+    "count": 2,
+    "id": "immersiveweapons:molten_musket_ball"
+  }
+}

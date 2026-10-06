@@ -98,6 +98,11 @@ public class ItemTagsGenerator extends BlockTagCopyingItemTagProvider {
 	/// Add tags under the Immersive Weapons namespace
 	@SuppressWarnings("unchecked")
 	private void addImmersiveWeaponsTags() {
+		tag(IWItemTagGroups.AMMUNITION_MOLDS).add(
+				ItemRegistry.MUSKET_BALL_MOLD_BASIC.key(),
+				ItemRegistry.MUSKET_BALL_MOLD_ADVANCED.key(),
+				ItemRegistry.MUSKET_BALL_MOLD_MASTER.key());
+
 		// Projectile tags
 		tag(IWItemTagGroups.FLARES).add(ItemRegistry.FLARE.key());
 		tag(IWItemTagGroups.MUSKET_BALLS).add(

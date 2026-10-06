@@ -1,0 +1,15 @@
+{
+  "additional_wants": {
+    "count": 16,
+    "id": "minecraft:emerald"
+  },
+  "gives": {
+    "count": 8,
+    "id": "immersiveweapons:void_musket_ball"
+  },
+  "reputation_discount": 0.05,
+  "wants": {
+    "id": "immersiveweapons:void_ingot"
+  },
+  "xp": 10
+}

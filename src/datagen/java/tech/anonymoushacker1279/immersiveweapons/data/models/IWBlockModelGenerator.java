@@ -41,6 +41,11 @@ public class IWBlockModelGenerator {
 		blockModels.createTrivialCube(BlockRegistry.RUSTED_IRON_BLOCK.get());
 		blockModels.createHorizontallyRotatedBlock(BlockRegistry.SMALL_PARTS_TABLE.get(), TexturedModel.ORIENTABLE);
 		generateHorizontalStateOnly(blockModels, BlockRegistry.AMMUNITION_TABLE.get(), false);
+		blockModels.createFurnace(BlockRegistry.AMMUNITION_FORGE.get(), TexturedModel.ORIENTABLE_ONLY_TOP.updateTexture(mapping -> {
+			mapping.put(TextureSlot.FRONT, new Material(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/ammunition_forge_front")));
+			mapping.put(TextureSlot.SIDE, new Material(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/ammunition_forge_side")));
+			mapping.put(TextureSlot.TOP, new Material(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/ammunition_forge_top")));
+		}));
 		generateHorizontalStateOnly(blockModels, BlockRegistry.BARREL_TAP.get(), true);
 		blockModels.createFurnace(BlockRegistry.STAR_FORGE_CONTROLLER.get(), TexturedModel.ORIENTABLE_ONLY_TOP.updateTexture(mapping -> {
 			mapping.put(TextureSlot.SIDE, new Material(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "block/star_forge_bricks")));

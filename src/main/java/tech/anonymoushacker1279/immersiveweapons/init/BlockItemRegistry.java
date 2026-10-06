@@ -26,6 +26,7 @@ public class BlockItemRegistry {
 	public static final DeferredHolder<Item, BlockItem> RAW_COBALT_BLOCK_ITEM = ItemRegistry.ITEMS.registerItem("raw_cobalt_block", (properties) -> new BlockItem(BlockRegistry.RAW_COBALT_BLOCK.get(), properties.useBlockDescriptionPrefix()));
 	public static final DeferredHolder<Item, BlockItem> RUSTED_IRON_BLOCK_ITEM = ItemRegistry.ITEMS.registerItem("rusted_iron_block", (properties) -> new BlockItem(BlockRegistry.RUSTED_IRON_BLOCK.get(), properties.useBlockDescriptionPrefix()));
 	public static final DeferredHolder<Item, BlockItem> SMALL_PARTS_TABLE_ITEM = ItemRegistry.ITEMS.registerItem("small_parts_table", (properties) -> new BlockItem(BlockRegistry.SMALL_PARTS_TABLE.get(), properties.useBlockDescriptionPrefix()));
+	public static final DeferredHolder<Item, BlockItem> AMMUNITION_FORGE_ITEM = ItemRegistry.ITEMS.registerItem("ammunition_forge", (properties) -> new BlockItem(BlockRegistry.AMMUNITION_FORGE.get(), properties.useBlockDescriptionPrefix()));
 	public static final DeferredHolder<Item, BlockItem> AMMUNITION_TABLE_ITEM = ItemRegistry.ITEMS.registerItem("ammunition_table", (properties) -> new BlockItem(BlockRegistry.AMMUNITION_TABLE.get(), properties.useBlockDescriptionPrefix()));
 	@TooltipMarker(style = {ChatFormatting.DARK_GRAY, ChatFormatting.ITALIC})
 	public static final DeferredHolder<Item, BlockItem> BARREL_TAP_ITEM = ItemRegistry.ITEMS.registerItem("barrel_tap", (properties) -> new BlockItem(BlockRegistry.BARREL_TAP.get(), properties.useBlockDescriptionPrefix()));

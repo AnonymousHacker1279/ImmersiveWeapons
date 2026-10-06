@@ -1198,6 +1198,33 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.unlockedBy("gunpowder", has(Tags.Items.GUNPOWDERS))
 				.save(output);
 
+		// Ammunition Forge
+		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.COMBAT, BlockItemRegistry.AMMUNITION_FORGE_ITEM.get())
+				.define('a', Tags.Items.INGOTS_IRON)
+				.define('b', Items.FURNACE)
+				.define('c', ItemTags.STONE_CRAFTING_MATERIALS)
+				.pattern("aaa")
+				.pattern("aba")
+				.pattern("ccc")
+				.group("ammunition_forge")
+				.unlockedBy("furnace", has(Items.FURNACE))
+				.save(output);
+
+		// Ammunition Forge casting (2 balls per ingot). Wooden, stone, diamond, ventus, and void balls are Gunsmith trades.
+		Item basicMold = ItemRegistry.MUSKET_BALL_MOLD_BASIC.get();
+		Item advancedMold = ItemRegistry.MUSKET_BALL_MOLD_ADVANCED.get();
+		Item masterMold = ItemRegistry.MUSKET_BALL_MOLD_MASTER.get();
+
+		ammunitionForgeCasting(Tags.Items.INGOTS_GOLD, basicMold, ItemRegistry.GOLDEN_MUSKET_BALL.get());
+		ammunitionForgeCasting(Tags.Items.INGOTS_COPPER, basicMold, ItemRegistry.COPPER_MUSKET_BALL.get());
+		ammunitionForgeCasting(Tags.Items.INGOTS_IRON, basicMold, ItemRegistry.IRON_MUSKET_BALL.get());
+		ammunitionForgeCasting(CommonItemTagGroups.COBALT_INGOTS, basicMold, ItemRegistry.COBALT_MUSKET_BALL.get());
+		ammunitionForgeCasting(Tags.Items.INGOTS_NETHERITE, advancedMold, ItemRegistry.NETHERITE_MUSKET_BALL.get());
+		ammunitionForgeCasting(IWItemTagGroups.MOLTEN_INGOTS, advancedMold, ItemRegistry.MOLTEN_MUSKET_BALL.get());
+		ammunitionForgeCasting(IWItemTagGroups.ASTRAL_INGOTS, masterMold, ItemRegistry.ASTRAL_MUSKET_BALL.get());
+		ammunitionForgeCasting(IWItemTagGroups.STARSTORM_INGOTS, masterMold, ItemRegistry.STARSTORM_MUSKET_BALL.get());
+		ammunitionForgeCasting(IWItemTagGroups.TESLA_INGOTS, masterMold, ItemRegistry.TESLA_MUSKET_BALL.get());
+
 		// The Sword
 		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.COMBAT, ItemRegistry.THE_SWORD.get())
 				.define('a', ItemRegistry.MOLTEN_SWORD.get())
@@ -1966,6 +1993,12 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		AmmunitionTableRecipeBuilder.crafting(materials, new ItemStackTemplate(result))
 				.unlockedBy("ammunition_table", has(BlockRegistry.AMMUNITION_TABLE.get()))
 				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_ammunition_table_crafting");
+	}
+
+	private void ammunitionForgeCasting(TagKey<Item> material, Item mold, Item result) {
+		AmmunitionForgeRecipeBuilder.forging(Ingredient.of(itemGetter.getOrThrow(material)), Ingredient.of(mold), new ItemStackTemplate(result, 2), 100)
+				.unlockedBy("ammunition_forge", has(BlockRegistry.AMMUNITION_FORGE.get()))
+				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_ammunition_forge_casting");
 	}
 
 	public void bricks(Block bricks, ItemLike material) {
