@@ -95,6 +95,9 @@ public class ModEventSubscriber {
 		registrar.playToClient(SyncAccessoryDataPayload.TYPE, SyncAccessoryDataPayload.STREAM_CODEC, SyncAccessoryDataPayloadHandler.getInstance()::handleData);
 		registrar.playToClient(ArrowGravityPayload.TYPE, ArrowGravityPayload.STREAM_CODEC, ArrowGravityPayloadHandler.getInstance()::handleData);
 		registrar.playToClient(DamageIndicatorPayload.TYPE, DamageIndicatorPayload.STREAM_CODEC, DamageIndicatorPayloadHandler.getInstance()::handleData);
+		registrar.playToClient(GunAnimationPayload.TYPE, GunAnimationPayload.STREAM_CODEC, GunAnimationPayloadHandler.getInstance()::handleData);
+		registrar.playToServer(GunTriggerPayload.TYPE, GunTriggerPayload.STREAM_CODEC, GunTriggerPayloadHandler.getInstance()::handleData);
+		registrar.playToServer(GunAimPayload.TYPE, GunAimPayload.STREAM_CODEC, GunAimPayloadHandler.getInstance()::handleData);
 	}
 
 	@SubscribeEvent

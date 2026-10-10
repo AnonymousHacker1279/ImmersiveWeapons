@@ -1,6 +1,9 @@
 {
   "model": {
-    "type": "minecraft:model",
-    "model": "immersiveweapons:item/dragons_breath_cannon"
+    "type": "minecraft:special",
+    "base": "immersiveweapons:item/dragons_breath_cannon",
+    "model": {
+      "type": "geckolib:geckolib"
+    }
   }
 }

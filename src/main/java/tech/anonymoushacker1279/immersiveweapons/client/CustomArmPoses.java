@@ -9,6 +9,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.fml.common.asm.enumextension.EnumProxy;
 import net.neoforged.neoforge.client.IArmPoseTransformer;
+import tech.anonymoushacker1279.immersiveweapons.init.DataComponentTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.MusketItem;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.SimpleShotgunItem;
@@ -109,7 +110,11 @@ public class CustomArmPoses {
 
 	public static ArmPose getFirearmPose(LivingEntity entity, InteractionHand hand, ItemStack itemStack) {
 		if (!itemStack.isEmpty()) {
-			if (entity.getUsedItemHand() == hand && entity.getUseItemRemainingTicks() > 0) {
+			boolean isReloading = entity.getUsedItemHand() == hand && entity.getUseItemRemainingTicks() > 0;
+			boolean isLoaded = itemStack.has(DataComponentTypeRegistry.LOADED_AMMUNITION.get());
+
+			// Hold the gun up while reloading, and while it's loaded and ready to fire
+			if (isReloading || isLoaded) {
 				Item item = itemStack.getItem();
 				if (item instanceof MusketItem || item instanceof SimpleShotgunItem) {
 					return CustomArmPoses.AIM_MUSKET_POSE_PARAMS.getValue();

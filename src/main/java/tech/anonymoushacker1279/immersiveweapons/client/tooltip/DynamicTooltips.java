@@ -5,7 +5,9 @@ import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
+import tech.anonymoushacker1279.immersiveweapons.init.DataComponentTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
+import tech.anonymoushacker1279.immersiveweapons.item.gun.LoadedAmmunition;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.CustomArrowItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem;
@@ -25,6 +27,14 @@ public class DynamicTooltips {
 		public void computeTooltip(ItemTooltipEvent event) {
 			ItemStack stack = event.getItemStack();
 			if (stack.getItem() instanceof AbstractGunItem abstractGunItem && event.getEntity() != null) {
+				LoadedAmmunition loaded = stack.get(DataComponentTypeRegistry.LOADED_AMMUNITION.get());
+				if (loaded != null) {
+					event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.gun.loaded",
+							loaded.ammo().getCount(), loaded.ammo().getHoverName(), loaded.powder().getHoverName()).withStyle(ChatFormatting.GREEN));
+				} else {
+					event.getToolTip().add(Component.translatable("tooltip.immersiveweapons.gun.unloaded").withStyle(ChatFormatting.RED));
+				}
+
 				List<Component> shiftTooltipInfo = new ArrayList<>(10);
 				shiftTooltipInfo.add(CommonComponents.EMPTY);
 

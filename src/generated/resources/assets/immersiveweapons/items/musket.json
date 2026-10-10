@@ -1,16 +1,9 @@
 {
   "model": {
-    "type": "minecraft:condition",
-    "component": "immersiveweapons:scope",
-    "ignore_default": true,
-    "on_false": {
-      "type": "minecraft:model",
-      "model": "immersiveweapons:item/musket"
-    },
-    "on_true": {
-      "type": "minecraft:model",
-      "model": "immersiveweapons:item/musket_scope"
-    },
-    "property": "minecraft:has_component"
+    "type": "minecraft:special",
+    "base": "immersiveweapons:item/musket",
+    "model": {
+      "type": "geckolib:geckolib"
+    }
   }
 }

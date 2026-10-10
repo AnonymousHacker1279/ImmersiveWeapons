@@ -32,6 +32,19 @@ repositories {
 		name = "Jared's maven"
 		url = "https://maven.blamejared.com/"
 	}
+	maven {
+		name = "RedlanceMinecraft"
+		url = "https://repo.redlance.org/public"
+	}
+	exclusiveContent {
+		forRepository {
+			maven {
+				name = 'GeckoLib'
+				url = 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+			}
+		}
+		filter { includeGroupAndSubgroups('com.geckolib') }
+	}
 }
 
 base {
@@ -142,6 +155,17 @@ dependencies {
 
 	// Include TerraBlender
 	implementation "com.github.glitchfiend:TerraBlender-neoforge:${terrablender_version}"
+
+	// Include PlayerAnimationLib
+	implementation("com.zigythebird.playeranim:PlayerAnimationLibNeo:${pal_version}") {
+		// Versions of these are pinned by Minecraft/NeoForge; PAL's newer requirements conflict with them
+		exclude group: 'org.slf4j'
+		exclude group: 'it.unimi.dsi'
+		exclude group: 'io.netty'
+	}
+
+	// Include GeckoLib
+	implementation "com.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_version}"
 
 	// Include JEI
 	compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"

@@ -1,9 +1,10 @@
 package tech.anonymoushacker1279.immersiveweapons.data.models;
 
+import com.geckolib.animatable.GeoAnimatable;
+import com.geckolib.renderer.internal.GeckolibItemSpecialRenderer;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.model.*;
 import net.minecraft.client.renderer.item.ItemModel;
-import net.minecraft.client.renderer.item.properties.conditional.HasComponent;
 import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
@@ -13,7 +14,6 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.IWTrimMaterials;
 import tech.anonymoushacker1279.immersiveweapons.event.ClientModEventSubscriber;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
-import tech.anonymoushacker1279.immersiveweapons.init.DataComponentTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.properties.HasSpecificName;
 
@@ -66,12 +66,12 @@ public class IWItemModelGenerator {
 		itemModels.generateFlatItem(ItemRegistry.VOID_HOE.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 		itemModels.generateSpear(ItemRegistry.VOID_SPEAR.get());
 		itemModels.generateFlatItem(ItemRegistry.THE_SWORD.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
-		generateStateOnly(itemModels, ItemRegistry.FLINTLOCK_PISTOL.get());
-		generateStateOnly(itemModels, ItemRegistry.BLUNDERBUSS.get());
-		generateMusket(itemModels, ItemRegistry.MUSKET.get());
-		generateStateOnly(itemModels, ItemRegistry.FLARE_GUN.get());
-		generateStateOnly(itemModels, ItemRegistry.HAND_CANNON.get());
-		generateStateOnly(itemModels, ItemRegistry.DRAGONS_BREATH_CANNON.get());
+		generateGeckoLibItem(itemModels, ItemRegistry.FLINTLOCK_PISTOL.get());
+		generateGeckoLibItem(itemModels, ItemRegistry.BLUNDERBUSS.get());
+		generateGeckoLibItem(itemModels, ItemRegistry.MUSKET.get());
+		generateGeckoLibItem(itemModels, ItemRegistry.FLARE_GUN.get());
+		generateGeckoLibItem(itemModels, ItemRegistry.HAND_CANNON.get());
+		generateGeckoLibItem(itemModels, ItemRegistry.DRAGONS_BREATH_CANNON.get());
 		generateGauntletItem(itemModels, ItemRegistry.WOODEN_GAUNTLET.get());
 		generateGauntletItem(itemModels, ItemRegistry.STONE_GAUNTLET.get());
 		generateGauntletItem(itemModels, ItemRegistry.GOLDEN_GAUNTLET.get());
@@ -380,20 +380,6 @@ public class IWItemModelGenerator {
 		);
 	}
 
-	private static void generateMusket(ItemModelGenerators models, Item item) {
-		ItemModel.Unbaked model = ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/musket"));
-		ItemModel.Unbaked scopeModel = ItemModelUtils.plainModel(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "item/musket_scope"));
-
-		models.itemModelOutput.accept(
-				item,
-				ItemModelUtils.conditional(
-						new HasComponent(DataComponentTypeRegistry.SCOPE.get(), true),
-						scopeModel,
-						model
-				)
-		);
-	}
-
 	private static void generateBow(ItemModelGenerators models, Item item) {
 		models.createFlatItemModel(item, ModelTemplates.FLAT_HANDHELD_ITEM);
 		models.generateBow(item);
@@ -434,6 +420,18 @@ public class IWItemModelGenerator {
 				item,
 				ItemModelUtils.plainModel(
 						ModelLocationUtils.getModelLocation(item)
+				)
+		);
+	}
+
+	/// Generate an item definition rendered by GeckoLib. The base model at `models/item/<id>.json` is only used
+	/// for display transforms and the particle texture; the geometry comes from `geckolib/models/item/<id>.geo.json`.
+	private static <T extends Item & GeoAnimatable> void generateGeckoLibItem(ItemModelGenerators models, T item) {
+		models.itemModelOutput.accept(
+				item,
+				ItemModelUtils.specialModel(
+						ModelLocationUtils.getModelLocation(item),
+						new GeckolibItemSpecialRenderer.Unbaked<T>()
 				)
 		);
 	}

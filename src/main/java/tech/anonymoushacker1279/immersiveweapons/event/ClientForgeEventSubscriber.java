@@ -4,6 +4,8 @@ import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
@@ -21,6 +23,7 @@ import net.neoforged.neoforge.client.event.ViewportEvent.ComputeFogColor;
 import net.neoforged.neoforge.client.event.ViewportEvent.ComputeFov;
 import net.neoforged.neoforge.client.event.ViewportEvent.RenderFog;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.client.GunAimClient;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.init.DataComponentTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.EffectRegistry;
@@ -29,6 +32,7 @@ import tech.anonymoushacker1279.immersiveweapons.init.RecipeTypeRegistry;
 import tech.anonymoushacker1279.immersiveweapons.item.CursedItem;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.ArmorUtils;
+import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem;
 import tech.anonymoushacker1279.immersiveweapons.menu.StarForgeMenu;
 
@@ -132,8 +136,14 @@ public class ClientForgeEventSubscriber {
 		if (player != null) {
 			Item itemInHand = player.getItemInHand(player.getUsedItemHand()).getItem();
 
-			if (player.getUseItem().get(DataComponentTypeRegistry.SCOPE) != null && Minecraft.getInstance().options.getCameraType().isFirstPerson()) {
-				event.setFOV(15f);
+			// Zoom while aiming a firearm: a slight zoom for iron sights, a heavy one with a scope
+			InteractionHand gunHand = AbstractGunItem.getGunHand(player);
+			float aimProgress = GunAimClient.getProgress((float) event.getPartialTick());
+			if (gunHand != null && aimProgress > 0.0f && Minecraft.getInstance().options.getCameraType().isFirstPerson()) {
+				boolean scoped = player.getItemInHand(gunHand).get(DataComponentTypeRegistry.SCOPE) != null;
+				float targetFov = scoped ? 15f : (float) event.getFOV() * 0.8f;
+
+				event.setFOV(Mth.lerp(aimProgress, (float) event.getFOV(), targetFov));
 			}
 
 			if ((itemInHand == ItemRegistry.ICE_BOW.get()

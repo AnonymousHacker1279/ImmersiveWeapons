@@ -389,6 +389,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("dragons_breath_cannon", "An upgraded hand cannon designed to launch dragon fireballs");
 		// Gun metadata
 		addTooltip("gun.meta.scope", "Scope Equipped");
+		addTooltip("gun.loaded", "Loaded: %sx %s with %s");
+		addTooltip("gun.unloaded", "Unloaded");
 		addTooltip("gun.meta.base_velocity", "Base Velocity: %s");
 		addTooltip("gun.meta.base_reload_time", "Base Reload Time: %s seconds");
 		addTooltip("gun.meta.base_knockback", "Base Knockback Level: %sx");
@@ -640,6 +642,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 	private void addKeys() {
 		add("key.categories.immersiveweapons", "Immersive Weapons");
 
+		addKey("fire", "Fire / Reload Firearm");
+		addKey("aim", "Aim Firearm");
 		addKey("toggleArmorEffect", "Toggle Armor Effect");
 		addKey("armorAction", "Armor Action");
 		addKey("debugTracing", "Debug Tracing");

@@ -30,6 +30,8 @@ import tech.anonymoushacker1279.immersiveweapons.block.core.WoodTypes;
 import tech.anonymoushacker1279.immersiveweapons.block.skull.CustomSkullTypes;
 import tech.anonymoushacker1279.immersiveweapons.client.ClientExtensions;
 import tech.anonymoushacker1279.immersiveweapons.client.CustomArmPoses;
+import tech.anonymoushacker1279.immersiveweapons.client.GunAimOffsets;
+import tech.anonymoushacker1279.immersiveweapons.client.GunPlayerAnimations;
 import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import tech.anonymoushacker1279.immersiveweapons.client.ModelLayerLocations;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
@@ -68,6 +70,8 @@ public class ClientModEventSubscriber {
 		initializeCustomItemProperties();
 
 		event.enqueueWork(() -> {
+			GunPlayerAnimations.register();
+
 			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.MINUTEMAN, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 					"textures/entity/heads/minuteman.png"));
 			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.FIELD_MEDIC, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
@@ -366,6 +370,8 @@ public class ClientModEventSubscriber {
 	public static void registerKeyBinds(RegisterKeyMappingsEvent event) {
 		ImmersiveWeapons.LOGGER.info("Registering key bindings");
 
+		event.register(IWKeyBinds.FIRE);
+		event.register(IWKeyBinds.AIM);
 		event.register(IWKeyBinds.TOGGLE_ARMOR_EFFECT);
 		event.register(IWKeyBinds.ARMOR_ACTION);
 	}
@@ -378,6 +384,11 @@ public class ClientModEventSubscriber {
 				BlockRegistry.PITFALL.get(),
 				BlockRegistry.BEAR_TRAP.get(),
 				BlockRegistry.LANDMINE.get());
+	}
+
+	@SubscribeEvent
+	public static void addClientReloadListenersEvent(AddClientReloadListenersEvent event) {
+		event.addListener(GunAimOffsets.ID, new GunAimOffsets());
 	}
 
 	@SubscribeEvent
