@@ -12,6 +12,7 @@ public class LootTableLocations {
 	public static final ResourceKey<LootTable> CAMPSITE = register("chests/campsite");
 	public static final ResourceKey<LootTable> UNDERGROUND_BUNKER = register("chests/underground_bunker");
 	public static final ResourceKey<LootTable> BATTLEFIELD_VILLAGE_MEDIC_STATION = register("chests/village/battlefield/medic_station");
+	public static final ResourceKey<LootTable> VILLAGE_GUNSMITH = register("chests/village/gunsmith");
 
 	public static final ResourceKey<LootTable> HANS_HUT = register("chests/hans_hut");
 	public static final ResourceKey<LootTable> HANS_HUT_CASK = register("chests/hans_hut_cask");
