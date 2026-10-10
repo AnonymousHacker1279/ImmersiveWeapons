@@ -357,9 +357,6 @@ public class ItemRegistry {
 	public static final DeferredHolder<Item, DragonFireballItem> DRAGON_FIREBALL = ITEMS.registerItem("dragon_fireball", (properties) -> DragonFireballItem.createFromBulletBuilder(new BulletBuilder<>(properties, 12.0d, EntityRegistry.DRAGON_FIREBALL_ENTITY).gravityModifier(0.001d).isExplosive(true)));
 	@DatagenExclusionMarker(Type.MODEL_GENERATOR_ITEM)
 	public static final DeferredHolder<Item, Item> MORTAR_SHELL = ITEMS.registerItem("mortar_shell", Item::new);
-	public static final DeferredHolder<Item, Item> GRENADE_ASSEMBLY = ITEMS.registerItem("grenade_assembly", Item::new);
-	public static final DeferredHolder<Item, Item> TOOL_JOINT = ITEMS.registerItem("tool_joint", Item::new);
-	public static final DeferredHolder<Item, Item> GAUNTLET_SCAFFOLDING = ITEMS.registerItem("gauntlet_scaffolding", Item::new);
 	public static final DeferredHolder<Item, Item> SCOPE = ITEMS.registerItem("scope", Item::new);
 	@LanguageEntryOverride("Musket Ball Mold (Basic)")
 	public static final DeferredHolder<Item, Item> MUSKET_BALL_MOLD_BASIC = ITEMS.registerItem("musket_ball_mold_basic", (properties) -> new Item(properties.stacksTo(1)));

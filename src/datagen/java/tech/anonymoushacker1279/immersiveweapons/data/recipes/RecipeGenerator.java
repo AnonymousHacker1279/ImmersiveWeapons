@@ -639,7 +639,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 1, ItemRegistry.OBSIDIAN_ROD.get(), 2, ItemRegistry.ASTRAL_SHOVEL.get(), 300);
 		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 2, ItemRegistry.OBSIDIAN_ROD.get(), 2, ItemRegistry.ASTRAL_HOE.get(), 300);
 		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 1, ItemRegistry.OBSIDIAN_ROD.get(), 2, ItemRegistry.ASTRAL_SPEAR.get(), 300);
-		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 5, ItemRegistry.GAUNTLET_SCAFFOLDING.get(), 1, ItemRegistry.ASTRAL_GAUNTLET.get(), 300);
+		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 5, ItemRegistry.CLOTH_SCRAP.get(), 1, ItemRegistry.ASTRAL_GAUNTLET.get(), 300);
 		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 3, ItemRegistry.OBSIDIAN_ROD.get(), 2, ItemRegistry.ASTRAL_MAUL.get(), 300);
 		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 5, ItemRegistry.ASTRAL_HELMET.get(), 600);
 		starForgeSmelting(IWItemTagGroups.ASTRAL_INGOTS, 8, ItemRegistry.ASTRAL_CHESTPLATE.get(), 600);
@@ -652,7 +652,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		starForgeSmelting(IWItemTagGroups.STARSTORM_INGOTS, 1, ItemRegistry.OBSIDIAN_ROD.get(), 2, ItemRegistry.STARSTORM_SHOVEL.get(), 300);
 		starForgeSmelting(IWItemTagGroups.STARSTORM_INGOTS, 2, ItemRegistry.OBSIDIAN_ROD.get(), 2, ItemRegistry.STARSTORM_HOE.get(), 300);
 		starForgeSmelting(IWItemTagGroups.STARSTORM_INGOTS, 1, ItemRegistry.OBSIDIAN_ROD.get(), 2, ItemRegistry.STARSTORM_SPEAR.get(), 300);
-		starForgeSmelting(IWItemTagGroups.STARSTORM_INGOTS, 5, ItemRegistry.GAUNTLET_SCAFFOLDING.get(), 1, ItemRegistry.STARSTORM_GAUNTLET.get(), 300);
+		starForgeSmelting(IWItemTagGroups.STARSTORM_INGOTS, 5, ItemRegistry.CLOTH_SCRAP.get(), 1, ItemRegistry.STARSTORM_GAUNTLET.get(), 300);
 		starForgeSmelting(IWItemTagGroups.STARSTORM_INGOTS, 3, ItemRegistry.OBSIDIAN_ROD.get(), 2, ItemRegistry.STARSTORM_MAUL.get(), 300);
 		starForgeSmelting(IWItemTagGroups.STARSTORM_INGOTS, 5, ItemRegistry.STARSTORM_HELMET.get(), 600);
 		starForgeSmelting(IWItemTagGroups.STARSTORM_INGOTS, 8, ItemRegistry.STARSTORM_CHESTPLATE.get(), 600);
@@ -663,23 +663,6 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 	}
 
 	private void createGrenades() {
-		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.COMBAT, ItemRegistry.SMOKE_GRENADE.get(), 2)
-				.define('a', Items.BAMBOO)
-				.define('b', ItemRegistry.GRENADE_ASSEMBLY.get())
-				.define('c', ItemRegistry.SMOKE_POWDER.get())
-				.pattern(" cb")
-				.pattern(" a ")
-				.pattern(" a ")
-				.group("smoke_grenade")
-				.unlockedBy("smoke_powder", has(ItemRegistry.SMOKE_POWDER.get()))
-				.save(output);
-
-		createColoredSmokeGrenade(ItemRegistry.SMOKE_GRENADE_BLUE.get(), Tags.Items.DYES_BLUE);
-		createColoredSmokeGrenade(ItemRegistry.SMOKE_GRENADE_GREEN.get(), Tags.Items.DYES_GREEN);
-		createColoredSmokeGrenade(ItemRegistry.SMOKE_GRENADE_RED.get(), Tags.Items.DYES_RED);
-		createColoredSmokeGrenade(ItemRegistry.SMOKE_GRENADE_PURPLE.get(), Tags.Items.DYES_PURPLE);
-		createColoredSmokeGrenade(ItemRegistry.SMOKE_GRENADE_YELLOW.get(), Tags.Items.DYES_YELLOW);
-
 		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.COMBAT, ItemRegistry.SMOKE_GRENADE_ARROW.get(), 4)
 				.define('a', Items.ARROW)
 				.define('b', ItemRegistry.SMOKE_POWDER.get())
@@ -703,18 +686,6 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.requires(ItemTags.LEAVES)
 				.group("smoke_grenade")
 				.unlockedBy("mortar_and_pestle", has(ItemRegistry.MORTAR_AND_PESTLE.get()))
-				.save(output);
-
-		// Flashbang
-		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.COMBAT, ItemRegistry.FLASHBANG.get(), 2)
-				.define('a', Items.BAMBOO)
-				.define('b', ItemRegistry.GRENADE_ASSEMBLY.get())
-				.define('c', ItemRegistry.POTASSIUM_NITRATE.get())
-				.pattern(" cb")
-				.pattern(" a ")
-				.pattern(" a ")
-				.group("flashbang")
-				.unlockedBy("flashbang", has(ItemRegistry.POTASSIUM_NITRATE.get()))
 				.save(output);
 	}
 
@@ -1323,17 +1294,6 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.group("rods")
 				.unlockedBy("obsidian", has(Items.OBSIDIAN))
 				.save(output);
-		// Pliers
-		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.TOOLS, ItemRegistry.PLIERS.get())
-				.define('a', Items.LEATHER)
-				.define('b', ItemRegistry.TOOL_JOINT.get())
-				.define('c', CommonItemTagGroups.METAL_INGOTS)
-				.pattern(" c ")
-				.pattern(" b ")
-				.pattern("a a")
-				.group("pliers")
-				.unlockedBy("small_parts_metal_tool", has(ItemRegistry.TOOL_JOINT.get()))
-				.save(output);
 
 		// Black Powder
 		ShapelessRecipeBuilder.shapeless(itemGetter, RecipeCategory.MISC, ItemRegistry.BLACKPOWDER.get(), 8)
@@ -1539,7 +1499,7 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.pattern("aaa")
 				.pattern("aba")
 				.define('a', material)
-				.define('b', ItemRegistry.GAUNTLET_SCAFFOLDING.get())
+				.define('b', ItemRegistry.CLOTH_SCRAP.get())
 				.unlockedBy("has_material", has(material))
 				.save(output);
 	}
@@ -1643,20 +1603,6 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 
 	private void createNuggetFromIngot(ShapelessRecipeBuilder builder, TagKey<Item> tagKey) {
 		builder.requires(tagKey)
-				.save(output);
-	}
-
-	private void createColoredSmokeGrenade(ItemLike smokeGrenadeItem, TagKey<Item> colorTag) {
-		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.COMBAT, smokeGrenadeItem, 2)
-				.define('a', Items.BAMBOO)
-				.define('b', ItemRegistry.GRENADE_ASSEMBLY.get())
-				.define('c', ItemRegistry.SMOKE_POWDER.get())
-				.define('d', colorTag)
-				.pattern("dcb")
-				.pattern(" a ")
-				.pattern(" a ")
-				.group("smoke_grenade")
-				.unlockedBy("smoke_powder", has(ItemRegistry.SMOKE_POWDER.get()))
 				.save(output);
 	}
 

@@ -1,12 +1,12 @@
 {
   "gives": {
-    "id": "immersiveweapons:gauntlet_scaffolding"
+    "id": "immersiveweapons:pliers"
   },
   "max_uses": 12,
   "reputation_discount": 0.05,
   "wants": {
-    "count": 4,
+    "count": 2,
     "id": "minecraft:emerald"
   },
-  "xp": 10
+  "xp": 5
 }

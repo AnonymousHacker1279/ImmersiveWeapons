@@ -1,11 +1,12 @@
 {
   "gives": {
-    "id": "immersiveweapons:grenade_assembly"
+    "count": 2,
+    "id": "immersiveweapons:flashbang"
   },
   "max_uses": 12,
   "reputation_discount": 0.05,
   "wants": {
-    "count": 3,
+    "count": 4,
     "id": "minecraft:emerald"
   },
   "xp": 5

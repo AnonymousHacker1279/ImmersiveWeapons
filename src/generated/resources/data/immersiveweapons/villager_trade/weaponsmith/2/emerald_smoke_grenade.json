@@ -1,0 +1,55 @@
+{
+  "given_item_modifier": [
+    {
+      "type": "minecraft:set_item",
+      "condition": {
+        "type": "minecraft:random_chance",
+        "chance": 0.5
+      },
+      "item": "immersiveweapons:smoke_grenade_red"
+    },
+    {
+      "type": "minecraft:set_item",
+      "condition": {
+        "type": "minecraft:random_chance",
+        "chance": 0.33333334
+      },
+      "item": "immersiveweapons:smoke_grenade_green"
+    },
+    {
+      "type": "minecraft:set_item",
+      "condition": {
+        "type": "minecraft:random_chance",
+        "chance": 0.25
+      },
+      "item": "immersiveweapons:smoke_grenade_blue"
+    },
+    {
+      "type": "minecraft:set_item",
+      "condition": {
+        "type": "minecraft:random_chance",
+        "chance": 0.2
+      },
+      "item": "immersiveweapons:smoke_grenade_purple"
+    },
+    {
+      "type": "minecraft:set_item",
+      "condition": {
+        "type": "minecraft:random_chance",
+        "chance": 0.16666667
+      },
+      "item": "immersiveweapons:smoke_grenade_yellow"
+    }
+  ],
+  "gives": {
+    "count": 2,
+    "id": "immersiveweapons:smoke_grenade"
+  },
+  "max_uses": 12,
+  "reputation_discount": 0.05,
+  "wants": {
+    "count": 3,
+    "id": "minecraft:emerald"
+  },
+  "xp": 5
+}

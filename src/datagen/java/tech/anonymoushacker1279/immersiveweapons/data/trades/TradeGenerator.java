@@ -7,12 +7,16 @@ import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.entity.npc.villager.VillagerType;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.trading.TradeCost;
 import net.minecraft.world.item.trading.VillagerTrade;
 import net.minecraft.world.item.trading.VillagerTrades;
+import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
+import net.minecraft.world.level.storage.loot.functions.SetItemFunction;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
@@ -45,9 +49,9 @@ public class TradeGenerator {
 	public static final ResourceKey<VillagerTrade> GUNSMITH_2_EMERALD_BLUNDERBUSS = create("gunsmith/2/emerald_blunderbuss");
 
 	// Added to vanilla smith trade pools through the tags
-	public static final ResourceKey<VillagerTrade> WEAPONSMITH_2_EMERALD_GRENADE_ASSEMBLY = create("weaponsmith/2/emerald_grenade_assembly");
-	public static final ResourceKey<VillagerTrade> WEAPONSMITH_3_EMERALD_GAUNTLET_SCAFFOLDING = create("weaponsmith/3/emerald_gauntlet_scaffolding");
-	public static final ResourceKey<VillagerTrade> TOOLSMITH_2_EMERALD_TOOL_JOINT = create("toolsmith/2/emerald_tool_joint");
+	public static final ResourceKey<VillagerTrade> WEAPONSMITH_2_EMERALD_SMOKE_GRENADE = create("weaponsmith/2/emerald_smoke_grenade");
+	public static final ResourceKey<VillagerTrade> WEAPONSMITH_2_EMERALD_FLASHBANG = create("weaponsmith/2/emerald_flashbang");
+	public static final ResourceKey<VillagerTrade> TOOLSMITH_2_EMERALD_PLIERS = create("toolsmith/2/emerald_pliers");
 
 	public static final ResourceKey<VillagerTrade> GUNSMITH_2_EMERALD_WOODEN_MUSKET_BALLS = create("gunsmith/2/emerald_wooden_musket_balls");
 	public static final ResourceKey<VillagerTrade> GUNSMITH_2_EMERALD_STONE_MUSKET_BALLS = create("gunsmith/2/emerald_stone_musket_balls");
@@ -90,15 +94,32 @@ public class TradeGenerator {
 	}
 
 	private static void generateSmithTrades(BootstrapContext<VillagerTrade> context) {
+		// Starts as a plain smoke grenade, then each color replaces it with chance 1/n, which makes all six equally likely
+		Item[] smokeGrenades = {
+				ItemRegistry.SMOKE_GRENADE.get(),
+				ItemRegistry.SMOKE_GRENADE_RED.get(),
+				ItemRegistry.SMOKE_GRENADE_GREEN.get(),
+				ItemRegistry.SMOKE_GRENADE_BLUE.get(),
+				ItemRegistry.SMOKE_GRENADE_PURPLE.get(),
+				ItemRegistry.SMOKE_GRENADE_YELLOW.get()
+		};
+
+		VillagerTrade.Builder smokeGrenadeTrade = VillagerTrade.builder(new TradeCost(Items.EMERALD, 3),
+				new ItemStackTemplate(smokeGrenades[0], 2), 12, 5, 0.05f);
+		for (int i = 1; i < smokeGrenades.length; i++) {
+			Item grenade = smokeGrenades[i];
+			smokeGrenadeTrade.addModifier(LootItemConditionalFunction.simpleBuilder(
+							condition -> new SetItemFunction(condition, grenade.builtInRegistryHolder()))
+					.when(LootItemRandomChanceCondition.randomChance(1.0F / (i + 1))));
+		}
+
+		VillagerTrades.register(context, WEAPONSMITH_2_EMERALD_SMOKE_GRENADE, smokeGrenadeTrade.build());
 		VillagerTrades.register(context,
-				WEAPONSMITH_2_EMERALD_GRENADE_ASSEMBLY,
-				VillagerTrade.builder(new TradeCost(Items.EMERALD, 3), new ItemStackTemplate(ItemRegistry.GRENADE_ASSEMBLY.get()), 12, 5, 0.05f).build());
+				WEAPONSMITH_2_EMERALD_FLASHBANG,
+				VillagerTrade.builder(new TradeCost(Items.EMERALD, 4), new ItemStackTemplate(ItemRegistry.FLASHBANG.get(), 2), 12, 5, 0.05f).build());
 		VillagerTrades.register(context,
-				WEAPONSMITH_3_EMERALD_GAUNTLET_SCAFFOLDING,
-				VillagerTrade.builder(new TradeCost(Items.EMERALD, 4), new ItemStackTemplate(ItemRegistry.GAUNTLET_SCAFFOLDING.get()), 12, 10, 0.05f).build());
-		VillagerTrades.register(context,
-				TOOLSMITH_2_EMERALD_TOOL_JOINT,
-				VillagerTrade.builder(new TradeCost(Items.EMERALD, 2), new ItemStackTemplate(ItemRegistry.TOOL_JOINT.get()), 12, 5, 0.05f).build());
+				TOOLSMITH_2_EMERALD_PLIERS,
+				VillagerTrade.builder(new TradeCost(Items.EMERALD, 2), new ItemStackTemplate(ItemRegistry.PLIERS.get()), 12, 5, 0.05f).build());
 	}
 
 	/// Gunsmith XP is tuned so that one full restock of a level's trades reaches the next level threshold

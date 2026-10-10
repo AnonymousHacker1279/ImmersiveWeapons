@@ -3,7 +3,7 @@
   "category": "equipment",
   "key": {
     "a": "#c:ingots/copper",
-    "b": "immersiveweapons:gauntlet_scaffolding"
+    "b": "immersiveweapons:cloth_scrap"
   },
   "pattern": [
     "aaa",

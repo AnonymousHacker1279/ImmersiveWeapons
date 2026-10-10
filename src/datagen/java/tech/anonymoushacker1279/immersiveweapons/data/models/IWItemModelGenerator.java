@@ -182,9 +182,6 @@ public class IWItemModelGenerator {
 		generateStateOnly(itemModels, ItemRegistry.EXPLOSIVE_CANNONBALL.get());
 		itemModels.generateFlatItem(ItemRegistry.DRAGON_FIREBALL.get(), ModelTemplates.FLAT_ITEM);
 		generateStateOnly(itemModels, ItemRegistry.MORTAR_SHELL.get());
-		itemModels.generateFlatItem(ItemRegistry.GRENADE_ASSEMBLY.get(), ModelTemplates.FLAT_ITEM);
-		itemModels.generateFlatItem(ItemRegistry.TOOL_JOINT.get(), ModelTemplates.FLAT_ITEM);
-		itemModels.generateFlatItem(ItemRegistry.GAUNTLET_SCAFFOLDING.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.SCOPE.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.MUSKET_BALL_MOLD_BASIC.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.MUSKET_BALL_MOLD_ADVANCED.get(), ModelTemplates.FLAT_ITEM);

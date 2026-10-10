@@ -6,7 +6,7 @@
   "result": {
     "id": "immersiveweapons:astral_gauntlet"
   },
-  "secondary_material": "immersiveweapons:gauntlet_scaffolding",
+  "secondary_material": "immersiveweapons:cloth_scrap",
   "secondary_material_count": 1,
   "smelt_time": 300
 }
