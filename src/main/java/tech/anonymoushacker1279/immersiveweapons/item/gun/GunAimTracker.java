@@ -11,32 +11,27 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.init.AttachmentTypeRegistry;
 
-import java.util.Set;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-
-/// Tracks which players are aiming a firearm (server-side). Aiming reduces shot spread and movement speed.
+/// Tracks which players are aiming a firearm. The server owns the state, which is synced to everyone tracking the player
+/// through an attachment. Aiming reduces shot spread and movement speed.
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID)
 public class GunAimTracker {
 
-	private static final Set<UUID> AIMING = ConcurrentHashMap.newKeySet();
 	private static final Identifier SPEED_MODIFIER_ID = Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "gun_aiming");
 	private static final double SPEED_PENALTY = -0.35d;
 
 	public static boolean isAiming(Player player) {
-		return AIMING.contains(player.getUUID());
+		return player.getData(AttachmentTypeRegistry.GUN_AIMING);
 	}
 
 	public static void setAiming(ServerPlayer player, boolean aiming) {
-		if (aiming && (AbstractGunItem.getGunHand(player) == null || isReloading(player))) {
+		if (aiming && (AbstractGunItem.getGunHand(player) == null || isReloading(player) || player.isSprinting())) {
 			aiming = false;
 		}
 
-		if (aiming) {
-			AIMING.add(player.getUUID());
-		} else {
-			AIMING.remove(player.getUUID());
+		if (isAiming(player) != aiming) {
+			player.setData(AttachmentTypeRegistry.GUN_AIMING, aiming);
 		}
 
 		AttributeInstance speed = player.getAttribute(Attributes.MOVEMENT_SPEED);
@@ -53,11 +48,19 @@ public class GunAimTracker {
 		return player.isUsingItem() && player.getUseItem().getItem() instanceof AbstractGunItem;
 	}
 
-	/// Stop aiming if the player is no longer holding a firearm, or starts reloading.
+	/// Stop aiming if the player is no longer holding a firearm, starts reloading, or sprints. Sprinting also cancels
+	/// a reload in progress.
 	@SubscribeEvent
 	public static void onPlayerTick(PlayerTickEvent.Post event) {
-		if (event.getEntity() instanceof ServerPlayer player && isAiming(player)
-				&& (AbstractGunItem.getGunHand(player) == null || isReloading(player))) {
+		if (!(event.getEntity() instanceof ServerPlayer player)) {
+			return;
+		}
+
+		if (player.isSprinting() && isReloading(player)) {
+			player.stopUsingItem();
+		}
+
+		if (isAiming(player) && (AbstractGunItem.getGunHand(player) == null || isReloading(player) || player.isSprinting())) {
 			setAiming(player, false);
 		}
 	}

@@ -9,6 +9,7 @@ public class ClientConfig {
 	public final ModConfigSpec.BooleanValue fancySmokeGrenadeParticles;
 	public final ModConfigSpec.IntValue gunShotBloodParticles;
 	public final ModConfigSpec.BooleanValue darkModeFlashbangs;
+	public final ModConfigSpec.BooleanValue gunSuppressInteractionWhenCrouching;
 	public final ModConfigSpec.BooleanValue enableDamageIndicatorParticles;
 	public final ModConfigSpec.ConfigValue<String> damageIndicatorLowDamageColor;
 	public final ModConfigSpec.ConfigValue<String> damageIndicatorMediumDamageColor;
@@ -36,6 +37,10 @@ public class ClientConfig {
 		darkModeFlashbangs = builder
 				.comment("Make the flash effect black instead of white")
 				.define("darkModeFlashbangs", false);
+
+		gunSuppressInteractionWhenCrouching = builder
+				.comment("While holding a firearm, aiming normally gives way to interacting when looking at something interactable (doors, chests, villagers, etc.). If enabled, crouching always aims instead.")
+				.define("gunSuppressInteractionWhenCrouching", true);
 
 		builder.comment("Damage Indicators")
 				.push("damageIndicators");

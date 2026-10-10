@@ -26,6 +26,8 @@ public class GunInputHandler {
 	private static boolean previousFireDown;
 	private static boolean aimSent;
 	private static boolean overridingUseKey;
+	private static boolean previousSprintDown;
+	private static boolean interacting;
 
 	@SubscribeEvent
 	public static void onClientTick(ClientTickEvent.Pre event) {
@@ -36,7 +38,10 @@ public class GunInputHandler {
 		boolean active = hand != null && minecraft.gui.screen() == null && minecraft.mouseHandler.isMouseGrabbed();
 
 		boolean fireDown = active && IWKeyBinds.FIRE.isDown();
-		boolean aimKeyDown = active && IWKeyBinds.AIM.isDown();
+
+		// Looking at something interactable lets the use key interact with it instead of aiming, unless already aiming
+		interacting = active && !aimSent && GunInteraction.shouldInteract(minecraft);
+		boolean aimKeyDown = active && IWKeyBinds.AIM.isDown() && !interacting;
 
 		if (active) {
 			ItemStack gun = player.getItemInHand(hand);
@@ -63,8 +68,16 @@ public class GunInputHandler {
 
 		previousFireDown = fireDown;
 
-		// Can't aim while reloading
-		boolean aimDown = aimKeyDown && !isReloading(player);
+		// Pressing sprint cancels a reload in progress. Vanilla won't start a sprint while using an item, so this has to
+		// look at the key rather than the sprinting state.
+		boolean sprintDown = player != null && minecraft.options.keySprint.isDown();
+		if (active && sprintDown && !previousSprintDown && isReloading(player)) {
+			player.stopUsingItem();
+		}
+		previousSprintDown = sprintDown;
+
+		// Can't aim while reloading or sprinting
+		boolean aimDown = aimKeyDown && !isReloading(player) && !player.isSprinting();
 		if (aimDown != aimSent) {
 			aimSent = aimDown;
 			GunAimClient.setAiming(aimDown);
@@ -78,13 +91,19 @@ public class GunInputHandler {
 		return player.isUsingItem() && player.getUseItem().getItem() instanceof AbstractGunItem;
 	}
 
-	/// Cancel vanilla attack and use interactions while a firearm is in the interacting hand.
+	/// Cancel vanilla attack and use interactions while a firearm is in the interacting hand. The use key is let through
+	/// when it should interact with the target instead of aim.
 	@SubscribeEvent
 	public static void onInteraction(InputEvent.InteractionKeyMappingTriggered event) {
 		Player player = Minecraft.getInstance().player;
 
 		if (player != null && (event.isAttack() || event.isUseItem())
 				&& player.getItemInHand(event.getHand()).getItem() instanceof AbstractGunItem) {
+			// Let the use key through when it's interacting with something instead of aiming
+			if (event.isUseItem() && interacting) {
+				return;
+			}
+
 			event.setCanceled(true);
 			event.setSwingHand(false);
 		}

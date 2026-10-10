@@ -650,6 +650,9 @@ public class LanguageGenerator extends IWLanguageProvider {
 	}
 
 	private void addMessages() {
+		addMessage("item.gun.no_ammunition", "No ammunition");
+		addMessage("item.gun.no_powder", "No gunpowder");
+		addMessage("item.gun.no_ammunition_or_powder", "No ammunition or gunpowder");
 		addMessage("item.first_aid_kit.player", "You must be at or below half health to use this");
 		addMessage("item.first_aid_kit.entity", "The target must be at or below half health to use this");
 		addMessage("item.azul_locator.teleporting", "Teleporting to spawn point in %s seconds...");

@@ -8,6 +8,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.resources.model.cuboid.ItemTransform;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
+import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimplePreparableReloadListener;
 import net.minecraft.util.Mth;
@@ -22,14 +23,18 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 /// Computes where each firearm sits in first person when fully aimed.
 ///
-/// Every model has its own `firstperson_*hand` display transform, which is tuned for the hip position. To aim, that
-/// transform is cancelled and replaced by a universal one: the model's sight point (the horizontal center and the top
-/// of its bounds) is placed at a fixed point in front of the camera, with the display scale kept so the gun stays the
+/// Every model has its own `firstperson_*hand` display transform (in `models/item/<gun>.json`), which is tuned for the
+/// hip position. To aim, that transform is cancelled and replaced by a universal one: the model's sight point (the
+/// horizontal center and the top of the GeckoLib geometry's bounds) is placed at a fixed point in front of the camera, with the display scale kept so the gun stays the
 /// same size. This works the same for both hands. The sight point's position can be tuned per gun in
 /// `gun_aim_offsets.json`, and applied with a resource reload (F3+T).
 public class GunAimOffsets extends SimplePreparableReloadListener<Map<String, GunAimOffsets.Source>> {
@@ -74,34 +79,77 @@ public class GunAimOffsets extends SimplePreparableReloadListener<Map<String, Gu
 			}
 
 			Identifier itemId = BuiltInRegistries.ITEM.getKey(item);
-			Identifier modelFile = Identifier.fromNamespaceAndPath(itemId.getNamespace(), "models/item/" + itemId.getPath() + ".json");
+			String path = itemId.getPath();
+			Identifier displayFile = Identifier.fromNamespaceAndPath(itemId.getNamespace(), "models/item/" + path + ".json");
+			Identifier geometryFile = Identifier.fromNamespaceAndPath(itemId.getNamespace(), "geckolib/models/item/" + path + ".geo.json");
 
-			resourceManager.getResource(modelFile).ifPresent(resource -> {
-				try (BufferedReader reader = resource.openAsReader()) {
-					sources.put(itemId.getPath(), readModel(JsonParser.parseReader(reader).getAsJsonObject()));
-				} catch (Exception e) {
-					ImmersiveWeapons.LOGGER.error("Failed to read firearm model {} for aiming", modelFile, e);
+			try {
+				JsonObject display = readJson(resourceManager, displayFile);
+				JsonObject geometry = readJson(resourceManager, geometryFile);
+
+				if (display != null && geometry != null) {
+					sources.put(path, readModel(display, geometry));
 				}
-			});
+			} catch (Exception e) {
+				ImmersiveWeapons.LOGGER.error("Failed to read firearm model {} for aiming", path, e);
+			}
 		}
 
 		return sources;
 	}
 
-	private static Source readModel(JsonObject model) {
+	private static JsonObject readJson(ResourceManager resourceManager, Identifier file) throws IOException {
+		Optional<Resource> resource = resourceManager.getResource(file);
+		if (resource.isEmpty()) {
+			return null;
+		}
+
+		try (BufferedReader reader = resource.get().openAsReader()) {
+			return JsonParser.parseReader(reader).getAsJsonObject();
+		}
+	}
+
+	/// Bones that only exist when an attachment is fitted. They don't count towards the sight point, which is always
+	/// measured on the bare firearm.
+	private static final Set<String> ATTACHMENT_BONES = Set.of("scope", "rings");
+
+	/// Read the bounds from the GeckoLib geometry, and the display transforms from the base model.
+	///
+	/// The bounds are converted to vanilla model space (0 to 16 on each axis) to match the display transforms: GeckoLib
+	/// geometry is centered on the origin with X mirrored, as Blockbench exports it.
+	private static Source readModel(JsonObject displayModel, JsonObject geometryFile) {
 		Vector3f min = new Vector3f(Float.MAX_VALUE);
 		Vector3f max = new Vector3f(-Float.MAX_VALUE);
 
-		for (JsonElement element : model.getAsJsonArray("elements")) {
-			JsonObject cube = element.getAsJsonObject();
-			Vector3f from = readVector(cube.getAsJsonArray("from"), 0);
-			Vector3f to = readVector(cube.getAsJsonArray("to"), 0);
+		JsonArray bones = geometryFile.getAsJsonArray("minecraft:geometry").get(0).getAsJsonObject().getAsJsonArray("bones");
+		Set<String> skipped = new HashSet<>(ATTACHMENT_BONES);
 
-			min.min(from).min(to);
-			max.max(from).max(to);
+		// Bones are listed with parents first, so children of skipped bones can be found in a single pass
+		for (JsonElement boneElement : bones) {
+			JsonObject bone = boneElement.getAsJsonObject();
+			String parent = bone.has("parent") ? bone.get("parent").getAsString() : null;
+			if (parent != null && skipped.contains(parent)) {
+				skipped.add(bone.get("name").getAsString());
+			}
 		}
 
-		JsonObject display = model.has("display") ? model.getAsJsonObject("display") : new JsonObject();
+		for (JsonElement boneElement : bones) {
+			JsonObject bone = boneElement.getAsJsonObject();
+			if (skipped.contains(bone.get("name").getAsString()) || !bone.has("cubes")) {
+				continue;
+			}
+
+			for (JsonElement cubeElement : bone.getAsJsonArray("cubes")) {
+				JsonObject cube = cubeElement.getAsJsonObject();
+				Vector3f origin = readVector(cube.getAsJsonArray("origin"), 0);
+				Vector3f size = readVector(cube.getAsJsonArray("size"), 0);
+
+				min.min(new Vector3f(8.0f - (origin.x + size.x), origin.y + 8.0f, origin.z + 8.0f));
+				max.max(new Vector3f(8.0f - origin.x, origin.y + size.y + 8.0f, origin.z + size.z + 8.0f));
+			}
+		}
+
+		JsonObject display = displayModel.has("display") ? displayModel.getAsJsonObject("display") : new JsonObject();
 		return new Source(min, max,
 				readTransform(display, "firstperson_righthand"),
 				readTransform(display, "firstperson_lefthand"));

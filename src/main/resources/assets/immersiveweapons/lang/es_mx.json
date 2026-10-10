@@ -635,5 +635,12 @@
 	"biome.immersiveweapons.battlefield": "Campo de batalla",
 	"biome.immersiveweapons.tiltros": "Tiltros",
 	"loot.immersiveweapons.chest.village.battlefield.medic_station.iron_axe": "El Amputador",
-	"immersiveweapons.boss.celestial_tower.waves": "Porcentajes de onda de %s"
+	"immersiveweapons.boss.celestial_tower.waves": "Porcentajes de onda de %s",
+	"immersiveweapons.item.gun.no_ammunition": "Sin munición",
+	"immersiveweapons.item.gun.no_ammunition_or_powder": "Sin munición ni pólvora",
+	"immersiveweapons.item.gun.no_powder": "Sin pólvora",
+	"key.immersiveweapons.aim": "Apuntar arma de fuego",
+	"key.immersiveweapons.fire": "Disparar / recargar arma de fuego",
+	"tooltip.immersiveweapons.gun.loaded": "Cargada: %sx %s con %s",
+	"tooltip.immersiveweapons.gun.unloaded": "Descargada"
 }

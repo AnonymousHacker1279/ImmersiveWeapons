@@ -19,7 +19,9 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -243,6 +245,25 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
 		return true;
 	}
 
+	/// Cue when the reload has been held long enough, so the player knows they can release to finish loading.
+	@Override
+	public void onUseTick(Level level, LivingEntity entity, ItemStack gun, int remainingUseDuration) {
+		if (!level.isClientSide() && entity instanceof Player player && !isLoaded(gun)) {
+			int heldTicks = getUseDuration(gun, player) - remainingUseDuration;
+			if (heldTicks == getReloadTicks(gun, player)) {
+				level.playSound(null, player.getX(), player.getY(), player.getZ(),
+						getReloadReadySound(), SoundSource.PLAYERS, 0.8f, 1.0f);
+			}
+		}
+	}
+
+	/// Get the sound played when a reload has been held for long enough to complete.
+	///
+	/// @return SoundEvent
+	SoundEvent getReloadReadySound() {
+		return SoundEvents.CROSSBOW_LOADING_END.value();
+	}
+
 	/// Stopping use for any reason (switching items, releasing, etc.) without a loaded firearm cancels the reload.
 	@Override
 	public void onStopUsing(ItemStack stack, LivingEntity entity, int count) {
@@ -419,10 +440,12 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
 		return null;
 	}
 
-	/// Fallback if the item is used through vanilla means. Normally the fire key calls `triggerPressed` instead.
+	/// The fire key calls `triggerPressed` directly. Vanilla's use key does not fire, since it is used to interact with
+	/// doors, villagers and so on, and a use that falls through to the item (such as on a block that does nothing) would
+	/// otherwise fire or start a reload by accident.
 	@Override
 	public InteractionResult use(Level level, Player player, InteractionHand hand) {
-		return triggerPressed(level, player, hand);
+		return InteractionResult.PASS;
 	}
 
 	/// The hand holding the firearm the player is operating, if any. The main hand takes priority; the offhand only
@@ -449,8 +472,18 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
 			return InteractionResult.CONSUME;
 		}
 
-		boolean canReload = player.isCreative() || (!findAmmo(gun, player).isEmpty() && findPowder(gun, player) != null);
-		if (!canReload) {
+		boolean hasAmmo = !findAmmo(gun, player).isEmpty();
+		boolean hasPowder = findPowder(gun, player) != null;
+		if (!player.isCreative() && !(hasAmmo && hasPowder)) {
+			// Only the server gives feedback, so it isn't doubled up with the client's prediction
+			if (!level.isClientSide()) {
+				level.playSound(null, player.getX(), player.getY(), player.getZ(),
+						SoundEvents.DISPENSER_FAIL, SoundSource.PLAYERS, 0.6f, 1.6f);
+
+				String reason = hasAmmo ? "no_powder" : (hasPowder ? "no_ammunition" : "no_ammunition_or_powder");
+				player.sendOverlayMessage(Component.translatable("immersiveweapons.item.gun." + reason));
+			}
+
 			return InteractionResult.FAIL;
 		}
 
@@ -600,7 +633,9 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
 		bullet.flameTrail = powderType.data.hasFlameTrail();
 
 		int weaponDamage = powderType.data.weaponDamageAmount();
-		gun.hurtAndBreak(weaponDamage, shooter, EquipmentSlot.MAINHAND);
+		// Damage whichever hand the gun is actually in
+		EquipmentSlot slot = shooter.getOffhandItem() == gun ? EquipmentSlot.OFFHAND : EquipmentSlot.MAINHAND;
+		gun.hurtAndBreak(weaponDamage, shooter, slot);
 
 		prepareBulletForFire(gun, bullet, shooter, powderVelocityModifier);
 		handleMuzzleFlash(shooter.level(), shooter, powderType);

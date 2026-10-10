@@ -14,7 +14,13 @@ public class IWKeyBinds {
 
 	private static final KeyMapping.Category CATEGORY = new KeyMapping.Category(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "main"));
 
-	/// Only active while a firearm is held, and doesn't conflict with the vanilla keys it shares a default with.
+	/// Only active while a firearm is held.
+	///
+	/// This has to count as conflicting with `IN_GAME`. NeoForge deactivates a binding with no key modifier while any
+	/// modifier key is held (so Shift+key doesn't also trigger plain-key bindings), except for contexts that conflict with
+	/// `IN_GAME`, which are exempt. Without that, firing and aiming stop working while crouching, or with Ctrl or Alt
+	/// held. The cost is that the controls screen lists these as conflicting with the vanilla attack and use keys they
+	/// share a default with, which is accurate.
 	private static final IKeyConflictContext FIREARM_HELD = new IKeyConflictContext() {
 		@Override
 		public boolean isActive() {
@@ -26,7 +32,7 @@ public class IWKeyBinds {
 
 		@Override
 		public boolean conflicts(IKeyConflictContext other) {
-			return this == other;
+			return this == other || other == KeyConflictContext.IN_GAME;
 		}
 	};
 
