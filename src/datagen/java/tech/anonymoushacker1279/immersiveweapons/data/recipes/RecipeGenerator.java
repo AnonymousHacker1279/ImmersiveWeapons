@@ -37,7 +37,6 @@ import tech.anonymoushacker1279.immersiveweapons.data.groups.common.CommonItemTa
 import tech.anonymoushacker1279.immersiveweapons.data.groups.immersiveweapons.IWItemTagGroups;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -123,7 +122,6 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		createStarstormItems();
 		createVoidItems();
 		createSmithingItems();
-		createSmallPartsItems();
 		createBarrelTapItems();
 		createAstralCrystalSorceryItems();
 		createGrenades();
@@ -591,15 +589,6 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		netheriteSmithing(ItemRegistry.DIAMOND_MAUL.get(), ItemRegistry.NETHERITE_MAUL.get());
 	}
 
-	private void createSmallPartsItems() {
-		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.MISC, ItemRegistry.EXTENDED_IRON_BARREL.get())
-				.define('a', ItemRegistry.IRON_BARREL.get())
-				.pattern("aa")
-				.group("small_parts")
-				.unlockedBy("iron_barrel", has(ItemRegistry.IRON_BARREL.get()))
-				.save(output);
-	}
-
 	private void createBarrelTapItems() {
 		barrelTapFermenting(Items.WHEAT, 12, ItemRegistry.BOTTLE_OF_ALCOHOL.get());
 		barrelTapFermenting(Items.SWEET_BERRIES, 12, ItemRegistry.BOTTLE_OF_WINE.get());
@@ -981,46 +970,6 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 	}
 
 	private void createWeapons() {
-		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.COMBAT, ItemRegistry.FLINTLOCK_PISTOL.get())
-				.define('a', ItemRegistry.WOODEN_PISTOL_HANDLE.get())
-				.define('b', ItemRegistry.FLINTLOCK_ASSEMBLY.get())
-				.define('c', ItemRegistry.TRIGGER_ASSEMBLY.get())
-				.define('d', ItemRegistry.IRON_BARREL.get())
-				.pattern("abd")
-				.pattern(" c ")
-				.group("firearm")
-				.unlockedBy("flintlock_assembly", has(ItemRegistry.FLINTLOCK_ASSEMBLY.get()))
-				.save(output);
-		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.COMBAT, ItemRegistry.BLUNDERBUSS.get())
-				.define('a', ItemRegistry.HEAVY_WOODEN_STOCK.get())
-				.define('b', ItemRegistry.FLINTLOCK_ASSEMBLY.get())
-				.define('c', ItemRegistry.TRIGGER_ASSEMBLY.get())
-				.define('d', ItemRegistry.WIDE_GOLDEN_BARREL.get())
-				.pattern("abd")
-				.pattern(" c ")
-				.group("firearm")
-				.unlockedBy("flintlock_assembly", has(ItemRegistry.FLINTLOCK_ASSEMBLY.get()))
-				.save(output);
-		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.COMBAT, ItemRegistry.MUSKET.get())
-				.define('a', ItemRegistry.HEAVY_WOODEN_STOCK.get())
-				.define('b', ItemRegistry.FLINTLOCK_ASSEMBLY.get())
-				.define('c', ItemRegistry.TRIGGER_ASSEMBLY.get())
-				.define('d', ItemRegistry.EXTENDED_IRON_BARREL.get())
-				.pattern("abd")
-				.pattern(" c ")
-				.group("firearm")
-				.unlockedBy("flintlock_assembly", has(ItemRegistry.FLINTLOCK_ASSEMBLY.get()))
-				.save(output);
-		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.COMBAT, ItemRegistry.FLARE_GUN.get())
-				.define('a', ItemRegistry.WOODEN_PISTOL_HANDLE.get())
-				.define('b', ItemRegistry.FLINTLOCK_ASSEMBLY.get())
-				.define('c', ItemRegistry.TRIGGER_ASSEMBLY.get())
-				.define('d', ItemRegistry.SHORT_IRON_BARREL.get())
-				.pattern("abd")
-				.pattern(" c ")
-				.group("firearm")
-				.unlockedBy("flintlock_assembly", has(ItemRegistry.FLINTLOCK_ASSEMBLY.get()))
-				.save(output);
 		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.COMBAT, ItemRegistry.FLARE.get(), 3)
 				.define('a', CommonItemTagGroups.COPPER_NUGGETS)
 				.define('b', Items.PAPER)
@@ -1030,18 +979,6 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 				.pattern(" c ")
 				.group("firearm")
 				.unlockedBy("smoke_powder", has(ItemRegistry.SMOKE_POWDER.get()))
-				.save(output);
-		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.COMBAT, ItemRegistry.HAND_CANNON.get())
-				.define('a', ItemRegistry.WOODEN_PISTOL_HANDLE.get())
-				.define('b', ItemRegistry.FLINTLOCK_ASSEMBLY.get())
-				.define('c', ItemRegistry.TRIGGER_ASSEMBLY.get())
-				.define('d', ItemRegistry.SHORT_IRON_BARREL.get())
-				.define('e', Items.STRING)
-				.pattern(" e ")
-				.pattern("abd")
-				.pattern(" c ")
-				.group("firearm")
-				.unlockedBy("flintlock_assembly", has(ItemRegistry.FLINTLOCK_ASSEMBLY.get()))
 				.save(output);
 		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.COMBAT, ItemRegistry.CANNONBALL.get(), 4)
 				.define('a', Tags.Items.INGOTS_IRON)

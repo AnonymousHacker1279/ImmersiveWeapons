@@ -42,9 +42,8 @@ public class EntityLootTables extends EntityLootSubProvider {
 
 	private final HolderGetter<EntityType<?>> entityTypeGetter;
 
-	protected EntityLootTables(LootTableSubProvider.Context output) {
+	public EntityLootTables(LootTableSubProvider.Context output) {
 		super(FeatureFlags.REGISTRY.allFlags(), output);
-
 		entityTypeGetter = entityTypes;
 	}
 

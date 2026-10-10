@@ -1,0 +1,12 @@
+{
+  "gives": {
+    "id": "immersiveweapons:hand_cannon"
+  },
+  "max_uses": 2,
+  "reputation_discount": 0.05,
+  "wants": {
+    "count": 40,
+    "id": "minecraft:emerald"
+  },
+  "xp": 50
+}

@@ -31,7 +31,7 @@ import java.util.function.Supplier;
 
 public class BlockLootTables extends BlockLootSubProvider {
 
-	protected BlockLootTables(LootTableSubProvider.Context output) {
+	public BlockLootTables(LootTableSubProvider.Context output) {
 		super(Set.of(), FeatureFlags.REGISTRY.allFlags(), output);
 	}
 

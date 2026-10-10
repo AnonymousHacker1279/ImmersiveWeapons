@@ -44,23 +44,23 @@ public class TradeTagsGenerator extends TagsProvider<VillagerTrade> {
 		tag(VillagerTradeTags.TOOLSMITH_LEVEL_2).add(TradeGenerator.TOOLSMITH_2_EMERALD_TOOL_JOINT);
 
 		tag(TradeTags.GUNSMITH_LEVEL_1)
-				.add(TradeGenerator.GUNSMITH_1_EMERALD_FLINTLOCK_PISTOL_BUNDLE)
-				.add(TradeGenerator.GUNSMITH_1_EMERALD_FLARE_GUN_BUNDLE)
+				.add(TradeGenerator.GUNSMITH_1_EMERALD_FLINTLOCK_PISTOL)
+				.add(TradeGenerator.GUNSMITH_1_EMERALD_FLARE_GUN)
 				.add(TradeGenerator.GUNSMITH_1_EMERALD_MUSKET_BALL_MOLD_BASIC);
 
 		tag(TradeTags.GUNSMITH_LEVEL_2)
-				.add(TradeGenerator.GUNSMITH_2_EMERALD_BLUNDERBUSS_BUNDLE)
+				.add(TradeGenerator.GUNSMITH_2_EMERALD_BLUNDERBUSS)
 				.add(TradeGenerator.GUNSMITH_2_EMERALD_WOODEN_MUSKET_BALLS)
 				.add(TradeGenerator.GUNSMITH_2_EMERALD_STONE_MUSKET_BALLS);
 
 		tag(TradeTags.GUNSMITH_LEVEL_3)
-				.add(TradeGenerator.GUNSMITH_3_EMERALD_MUSKET_BUNDLE)
+				.add(TradeGenerator.GUNSMITH_3_EMERALD_MUSKET)
 				.add(TradeGenerator.GUNSMITH_3_EMERALD_SPYGLASS_SCOPE)
 				.add(TradeGenerator.GUNSMITH_3_NETHERITE_INGOT_ADVANCED_MOLD)
 				.add(TradeGenerator.GUNSMITH_3_MOLTEN_INGOT_ADVANCED_MOLD);
 
 		tag(TradeTags.GUNSMITH_LEVEL_4)
-				.add(TradeGenerator.GUNSMITH_4_EMERALD_HAND_CANNON_BUNDLE)
+				.add(TradeGenerator.GUNSMITH_4_EMERALD_HAND_CANNON)
 				.add(TradeGenerator.GUNSMITH_4_DIAMOND_DIAMOND_MUSKET_BALLS);
 
 		tag(TradeTags.GUNSMITH_LEVEL_5)

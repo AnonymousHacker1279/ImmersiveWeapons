@@ -2,17 +2,13 @@ package tech.anonymoushacker1279.immersiveweapons.data.trades;
 
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
-import net.minecraft.core.component.DataComponentPatch;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.entity.npc.villager.VillagerType;
 import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.component.BundleContents;
-import net.minecraft.world.entity.npc.villager.VillagerType;
 import net.minecraft.world.item.trading.TradeCost;
 import net.minecraft.world.item.trading.VillagerTrade;
 import net.minecraft.world.item.trading.VillagerTrades;
@@ -21,7 +17,6 @@ import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.init.BlockItemRegistry;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class TradeGenerator {
@@ -42,12 +37,12 @@ public class TradeGenerator {
 
 	public static final ResourceKey<VillagerTrade> SKYGAZER_3_LECTERN_CELESTIAL_ALTAR = create("skygazer/3/lectern_celestial_altar");
 
-	public static final ResourceKey<VillagerTrade> GUNSMITH_1_EMERALD_FLINTLOCK_PISTOL_BUNDLE = create("gunsmith/1/emerald_flintlock_pistol_bundle");
-	public static final ResourceKey<VillagerTrade> GUNSMITH_1_EMERALD_FLARE_GUN_BUNDLE = create("gunsmith/1/emerald_flare_gun_bundle");
+	public static final ResourceKey<VillagerTrade> GUNSMITH_1_EMERALD_FLINTLOCK_PISTOL = create("gunsmith/1/emerald_flintlock_pistol");
+	public static final ResourceKey<VillagerTrade> GUNSMITH_1_EMERALD_FLARE_GUN = create("gunsmith/1/emerald_flare_gun");
 
 	public static final ResourceKey<VillagerTrade> GUNSMITH_1_EMERALD_MUSKET_BALL_MOLD_BASIC = create("gunsmith/1/emerald_musket_ball_mold_basic");
 
-	public static final ResourceKey<VillagerTrade> GUNSMITH_2_EMERALD_BLUNDERBUSS_BUNDLE = create("gunsmith/2/emerald_blunderbuss_bundle");
+	public static final ResourceKey<VillagerTrade> GUNSMITH_2_EMERALD_BLUNDERBUSS = create("gunsmith/2/emerald_blunderbuss");
 
 	// Added to vanilla smith trade pools through the tags
 	public static final ResourceKey<VillagerTrade> WEAPONSMITH_2_EMERALD_GRENADE_ASSEMBLY = create("weaponsmith/2/emerald_grenade_assembly");
@@ -57,13 +52,13 @@ public class TradeGenerator {
 	public static final ResourceKey<VillagerTrade> GUNSMITH_2_EMERALD_WOODEN_MUSKET_BALLS = create("gunsmith/2/emerald_wooden_musket_balls");
 	public static final ResourceKey<VillagerTrade> GUNSMITH_2_EMERALD_STONE_MUSKET_BALLS = create("gunsmith/2/emerald_stone_musket_balls");
 
-	public static final ResourceKey<VillagerTrade> GUNSMITH_3_EMERALD_MUSKET_BUNDLE = create("gunsmith/3/emerald_musket_bundle");
+	public static final ResourceKey<VillagerTrade> GUNSMITH_3_EMERALD_MUSKET = create("gunsmith/3/emerald_musket");
 	public static final ResourceKey<VillagerTrade> GUNSMITH_3_EMERALD_SPYGLASS_SCOPE = create("gunsmith/3/emerald_spyglass_scope");
 
 	public static final ResourceKey<VillagerTrade> GUNSMITH_3_NETHERITE_INGOT_ADVANCED_MOLD = create("gunsmith/3/netherite_ingot_advanced_mold");
 	public static final ResourceKey<VillagerTrade> GUNSMITH_3_MOLTEN_INGOT_ADVANCED_MOLD = create("gunsmith/3/molten_ingot_advanced_mold");
 
-	public static final ResourceKey<VillagerTrade> GUNSMITH_4_EMERALD_HAND_CANNON_BUNDLE = create("gunsmith/4/emerald_hand_cannon_bundle");
+	public static final ResourceKey<VillagerTrade> GUNSMITH_4_EMERALD_HAND_CANNON = create("gunsmith/4/emerald_hand_cannon");
 	public static final ResourceKey<VillagerTrade> GUNSMITH_4_DIAMOND_DIAMOND_MUSKET_BALLS = create("gunsmith/4/diamond_diamond_musket_balls");
 
 	public static final ResourceKey<VillagerTrade> GUNSMITH_5_ASTRAL_INGOT_MASTER_MOLD = create("gunsmith/5/astral_ingot_master_mold");
@@ -106,35 +101,32 @@ public class TradeGenerator {
 				VillagerTrade.builder(new TradeCost(Items.EMERALD, 2), new ItemStackTemplate(ItemRegistry.TOOL_JOINT.get()), 12, 5, 0.05f).build());
 	}
 
-	/// Gunsmith XP is tuned so that one full restock of a level's trades reaches the next level threshold (10/70/150/250 total XP).
+	/// Gunsmith XP is tuned so that one full restock of a level's trades reaches the next level threshold
+	/// (10/70/150/250 total XP).
 	private static void generateGunsmithTrades(BootstrapContext<VillagerTrade> context) {
 		// Level 1
 		VillagerTrades.register(context,
-				GUNSMITH_1_EMERALD_FLINTLOCK_PISTOL_BUNDLE,
-				VillagerTrade.builder(new TradeCost(Items.EMERALD, 16), createBundle(
-						ItemRegistry.WOODEN_PISTOL_HANDLE.get(),
-						ItemRegistry.FLINTLOCK_ASSEMBLY.get(),
-						ItemRegistry.TRIGGER_ASSEMBLY.get(),
-						ItemRegistry.IRON_BARREL.get()), 2, 5, 0.05f).build());
+				GUNSMITH_1_EMERALD_FLINTLOCK_PISTOL,
+				VillagerTrade.builder(new TradeCost(Items.EMERALD, 16),
+						new ItemStackTemplate(ItemRegistry.FLINTLOCK_PISTOL.get()),
+						2, 5, 0.05f).build());
 		VillagerTrades.register(context,
-				GUNSMITH_1_EMERALD_FLARE_GUN_BUNDLE,
-				VillagerTrade.builder(new TradeCost(Items.EMERALD, 12), createBundle(
-						ItemRegistry.WOODEN_PISTOL_HANDLE.get(),
-						ItemRegistry.FLINTLOCK_ASSEMBLY.get(),
-						ItemRegistry.TRIGGER_ASSEMBLY.get(),
-						ItemRegistry.SHORT_IRON_BARREL.get()), 2, 5, 0.05f).build());
+				GUNSMITH_1_EMERALD_FLARE_GUN,
+				VillagerTrade.builder(new TradeCost(Items.EMERALD, 12),
+						new ItemStackTemplate(ItemRegistry.FLARE_GUN.get()),
+						2, 5, 0.05f).build());
 		VillagerTrades.register(context,
 				GUNSMITH_1_EMERALD_MUSKET_BALL_MOLD_BASIC,
-				VillagerTrade.builder(new TradeCost(Items.EMERALD, 8), new ItemStackTemplate(ItemRegistry.MUSKET_BALL_MOLD_BASIC.get()), 2, 5, 0.05f).build());
+				VillagerTrade.builder(new TradeCost(Items.EMERALD, 8),
+						new ItemStackTemplate(ItemRegistry.MUSKET_BALL_MOLD_BASIC.get()),
+						2, 5, 0.05f).build());
 
 		// Level 2
 		VillagerTrades.register(context,
-				GUNSMITH_2_EMERALD_BLUNDERBUSS_BUNDLE,
-				VillagerTrade.builder(new TradeCost(Items.EMERALD, 24), createBundle(
-						ItemRegistry.HEAVY_WOODEN_STOCK.get(),
-						ItemRegistry.FLINTLOCK_ASSEMBLY.get(),
-						ItemRegistry.TRIGGER_ASSEMBLY.get(),
-						ItemRegistry.WIDE_GOLDEN_BARREL.get()), 2, 30, 0.05f).build());
+				GUNSMITH_2_EMERALD_BLUNDERBUSS,
+				VillagerTrade.builder(new TradeCost(Items.EMERALD, 24),
+						new ItemStackTemplate(ItemRegistry.BLUNDERBUSS.get()),
+						2, 30, 0.05f).build());
 
 		VillagerTrades.register(context,
 				GUNSMITH_2_EMERALD_WOODEN_MUSKET_BALLS,
@@ -145,12 +137,9 @@ public class TradeGenerator {
 
 		// Level 3
 		VillagerTrades.register(context,
-				GUNSMITH_3_EMERALD_MUSKET_BUNDLE,
-				VillagerTrade.builder(new TradeCost(Items.EMERALD, 32), createBundle(
-						ItemRegistry.HEAVY_WOODEN_STOCK.get(),
-						ItemRegistry.FLINTLOCK_ASSEMBLY.get(),
-						ItemRegistry.TRIGGER_ASSEMBLY.get(),
-						ItemRegistry.EXTENDED_IRON_BARREL.get()), 2, 30, 0.05f).build());
+				GUNSMITH_3_EMERALD_MUSKET,
+				VillagerTrade.builder(new TradeCost(Items.EMERALD, 32),
+						new ItemStackTemplate(ItemRegistry.MUSKET.get()), 2, 30, 0.05f).build());
 		VillagerTrades.register(context,
 				GUNSMITH_3_EMERALD_SPYGLASS_SCOPE,
 				VillagerTrade.builder(new TradeCost(Items.SPYGLASS, 1), new TradeCost(Items.EMERALD, 8), new ItemStackTemplate(ItemRegistry.SCOPE.get()), 2, 10, 0.05f).build());
@@ -181,13 +170,10 @@ public class TradeGenerator {
 
 		// Level 4
 		VillagerTrades.register(context,
-				GUNSMITH_4_EMERALD_HAND_CANNON_BUNDLE,
-				VillagerTrade.builder(new TradeCost(Items.EMERALD, 40), createBundle(
-						ItemRegistry.WOODEN_PISTOL_HANDLE.get(),
-						ItemRegistry.FLINTLOCK_ASSEMBLY.get(),
-						ItemRegistry.TRIGGER_ASSEMBLY.get(),
-						ItemRegistry.SHORT_IRON_BARREL.get(),
-						Items.STRING), 2, 50, 0.05f).build());
+				GUNSMITH_4_EMERALD_HAND_CANNON,
+				VillagerTrade.builder(new TradeCost(Items.EMERALD, 40),
+						new ItemStackTemplate(ItemRegistry.HAND_CANNON.get()),
+						2, 50, 0.05f).build());
 		VillagerTrades.register(context,
 				GUNSMITH_4_DIAMOND_DIAMOND_MUSKET_BALLS,
 				VillagerTrade.builder(new TradeCost(Items.DIAMOND, 1), new TradeCost(Items.EMERALD, 4), new ItemStackTemplate(ItemRegistry.DIAMOND_MUSKET_BALL.get(), 8), 4, 5, 0.05f).build());
@@ -204,15 +190,6 @@ public class TradeGenerator {
 	@SafeVarargs
 	private static Holder<LootItemCondition> villagerTypeRestriction(HolderGetter<VillagerType> villagerTypes, ResourceKey<VillagerType>... types) {
 		return VillagerTrades.villagerTypeRestriction(VillagerTrades.villagerTypeHolderSet(villagerTypes, List.of(types)));
-	}
-
-	/// Creates a vanilla bundle pre-filled with one of each of the given items.
-	private static ItemStackTemplate createBundle(Item... contents) {
-		List<ItemStackTemplate> templates = Arrays.stream(contents).map(ItemStackTemplate::new).toList();
-
-		return new ItemStackTemplate(Items.BUNDLE, DataComponentPatch.builder()
-				.set(DataComponents.BUNDLE_CONTENTS, new BundleContents(templates))
-				.build());
 	}
 
 	private static void generateSkygazerTrades(BootstrapContext<VillagerTrade> context) {

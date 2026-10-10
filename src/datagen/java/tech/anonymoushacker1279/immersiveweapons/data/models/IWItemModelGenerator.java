@@ -185,14 +185,6 @@ public class IWItemModelGenerator {
 		itemModels.generateFlatItem(ItemRegistry.GRENADE_ASSEMBLY.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.TOOL_JOINT.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.GAUNTLET_SCAFFOLDING.get(), ModelTemplates.FLAT_ITEM);
-		itemModels.generateFlatItem(ItemRegistry.FLINTLOCK_ASSEMBLY.get(), ModelTemplates.FLAT_ITEM);
-		itemModels.generateFlatItem(ItemRegistry.TRIGGER_ASSEMBLY.get(), ModelTemplates.FLAT_ITEM);
-		itemModels.generateFlatItem(ItemRegistry.HEAVY_WOODEN_STOCK.get(), ModelTemplates.FLAT_ITEM);
-		itemModels.generateFlatItem(ItemRegistry.WOODEN_PISTOL_HANDLE.get(), ModelTemplates.FLAT_ITEM);
-		itemModels.generateFlatItem(ItemRegistry.IRON_BARREL.get(), ModelTemplates.FLAT_ITEM);
-		itemModels.generateFlatItem(ItemRegistry.EXTENDED_IRON_BARREL.get(), ModelTemplates.FLAT_ITEM);
-		itemModels.generateFlatItem(ItemRegistry.SHORT_IRON_BARREL.get(), ModelTemplates.FLAT_ITEM);
-		itemModels.generateFlatItem(ItemRegistry.WIDE_GOLDEN_BARREL.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.SCOPE.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.MUSKET_BALL_MOLD_BASIC.get(), ModelTemplates.FLAT_ITEM);
 		itemModels.generateFlatItem(ItemRegistry.MUSKET_BALL_MOLD_ADVANCED.get(), ModelTemplates.FLAT_ITEM);

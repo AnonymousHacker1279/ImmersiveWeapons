@@ -13,26 +13,42 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProc
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
+import org.jspecify.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/// Appends mod structures to vanilla village template pools at runtime, so the vanilla pool JSON never has to be overridden
-/// (overriding would clobber other mods that touch the same pools).
+/// Appends mod structures to vanilla village template pools at runtime, so the vanilla pool JSON never has to be
+/// overridden (overriding would clobber other mods that touch the same pools).
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID)
 public class VillageHouseInjector {
-
-	private record Injection(ResourceKey<StructureTemplatePool> pool, Identifier structure,
-	                         ResourceKey<StructureProcessorList> processors, int weight) {
-	}
 
 	private static final List<Injection> INJECTIONS = List.of(
 			new Injection(
 					poolKey("village/plains/houses"),
 					Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "village/plains/houses/plains_gunsmith_house_1"),
 					ProcessorLists.MOSSIFY_10_PERCENT,
-					// Prototype weight, intentionally high so the house is easy to find while testing
+					5),
+			new Injection(
+					poolKey("village/desert/houses"),
+					Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "village/desert/houses/desert_gunsmith_house_1"),
+					null,
+					5),
+			new Injection(
+					poolKey("village/savanna/houses"),
+					Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "village/savanna/houses/savanna_gunsmith_house_1"),
+					null,
+					5),
+			new Injection(
+					poolKey("village/snowy/houses"),
+					Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "village/snowy/houses/snowy_gunsmith_house_1"),
+					null,
+					5),
+			new Injection(
+					poolKey("village/taiga/houses"),
+					Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "village/taiga/houses/taiga_gunsmith_house_1"),
+					ProcessorLists.MOSSIFY_10_PERCENT,
 					5)
 	);
 
@@ -44,8 +60,10 @@ public class VillageHouseInjector {
 
 		for (Injection injection : INJECTIONS) {
 			StructureTemplatePool pool = pools.getOrThrow(injection.pool()).value();
-			StructurePoolElement element = StructurePoolElement
-					.legacy(injection.structure().toString(), processors.getOrThrow(injection.processors()))
+			String location = injection.structure().toString();
+			StructurePoolElement element = (injection.processors() == null
+					? StructurePoolElement.legacy(location)
+					: StructurePoolElement.legacy(location, processors.getOrThrow(injection.processors())))
 					.apply(Projection.RIGID);
 
 			// The raw list is what other mods/serialization read, the shuffled list is what generation actually samples from.
@@ -62,5 +80,10 @@ public class VillageHouseInjector {
 
 	private static ResourceKey<StructureTemplatePool> poolKey(String path) {
 		return ResourceKey.create(Registries.TEMPLATE_POOL, Identifier.withDefaultNamespace(path));
+	}
+
+	/// @param processors the processor list to apply, or `null` for none
+	private record Injection(ResourceKey<StructureTemplatePool> pool, Identifier structure,
+	                         @Nullable ResourceKey<StructureProcessorList> processors, int weight) {
 	}
 }
