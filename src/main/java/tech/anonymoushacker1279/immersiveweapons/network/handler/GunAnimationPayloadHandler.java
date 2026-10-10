@@ -4,8 +4,10 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Avatar;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.Mob;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import tech.anonymoushacker1279.immersiveweapons.client.GunPlayerAnimations;
+import tech.anonymoushacker1279.immersiveweapons.client.MobGunAnimations;
 import tech.anonymoushacker1279.immersiveweapons.network.payload.GunAnimationPayload;
 
 public class GunAnimationPayloadHandler {
@@ -26,6 +28,12 @@ public class GunAnimationPayloadHandler {
 								GunPlayerAnimations.stop(avatar);
 							} else {
 								GunPlayerAnimations.play(avatar, data.animation(), data.speed(), data.mirrored());
+							}
+						} else if (entity instanceof Mob mob) {
+							if (data.stop()) {
+								MobGunAnimations.stop(mob);
+							} else {
+								MobGunAnimations.play(mob, data.animation(), data.speed(), data.mirrored());
 							}
 						}
 					}

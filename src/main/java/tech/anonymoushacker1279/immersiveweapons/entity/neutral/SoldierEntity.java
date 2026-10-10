@@ -168,7 +168,8 @@ public abstract class SoldierEntity extends PathfinderMob implements NeutralMob,
 
 	@Override
 	public void startPersistentAngerTimer() {
-		setPersistentAngerEndTime(ANGER_TICK_RANGE.sample(random));
+		// The end time is an absolute game time, so the duration has to be added to the current time
+		setTimeToRemainAngry(ANGER_TICK_RANGE.sample(random));
 	}
 
 	@Override

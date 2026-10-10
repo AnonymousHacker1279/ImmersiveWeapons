@@ -182,13 +182,13 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
 		int step = getReloadSpeedStep(neededSpeed);
 
 		triggerAnim(player, GeoItem.getOrAssignId(gun, level), ACTIONS_CONTROLLER + "_" + step, RELOAD_ANIMATION);
-		sendPlayerAnimation(player, hand, "_reload", (float) Math.clamp(neededSpeed, 0.1d, 4.0d), false);
+		sendArmAnimation(player, hand, "_reload", (float) Math.clamp(neededSpeed, 0.1d, 4.0d), false);
 	}
 
 	/// Play the fire (recoil) animation for everyone tracking the player. Server-side only.
 	protected void triggerFireAnimation(ServerLevel level, Player player, InteractionHand hand, ItemStack gun) {
 		triggerAnim(player, GeoItem.getOrAssignId(gun, level), ACTIONS_CONTROLLER + "_" + NORMAL_SPEED_STEP, FIRE_ANIMATION);
-		sendPlayerAnimation(player, hand, "_fire", 1.0f, false);
+		sendArmAnimation(player, hand, "_fire", 1.0f, false);
 	}
 
 	/// Stop a reload animation that did not complete (the item was switched or the reload released early).
@@ -197,11 +197,36 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
 		double neededSpeed = (double) getReloadAnimationTicks() / getReloadTicks(gun, player);
 		stopTriggeredAnim(player, id, ACTIONS_CONTROLLER + "_" + getReloadSpeedStep(neededSpeed), RELOAD_ANIMATION);
 
-		sendPlayerAnimation(player, player.getUsedItemHand(), "_reload", 1.0f, true);
+		sendArmAnimation(player, player.getUsedItemHand(), "_reload", 1.0f, true);
 	}
 
-	/// Send a PlayerAnimator animation (the arms) to everyone tracking the player, if this firearm has one.
-	private void sendPlayerAnimation(Player player, InteractionHand hand, String suffix, float speed, boolean stop) {
+	/// Play the reload animation on a firearm held by a mob, and the matching arm animation. Server-side only.
+	///
+	/// @param holdTicks how long the mob will spend reloading, which the animation is scaled to fit
+	public void triggerMobReloadAnimation(ServerLevel level, LivingEntity mob, InteractionHand hand, ItemStack gun, int holdTicks) {
+		double neededSpeed = (double) getReloadAnimationTicks() / Math.max(1, holdTicks);
+		triggerAnim(mob, GeoItem.getOrAssignId(gun, level), ACTIONS_CONTROLLER + "_" + getReloadSpeedStep(neededSpeed), RELOAD_ANIMATION);
+		sendArmAnimation(mob, hand, "_reload", (float) Math.clamp(neededSpeed, 0.1d, 4.0d), false);
+	}
+
+	/// Stop a mob's reload animation that did not complete. Server-side only.
+	public void cancelMobReloadAnimation(LivingEntity mob, InteractionHand hand, ItemStack gun) {
+		long id = GeoItem.getId(gun);
+		for (int i = 0; i < RELOAD_SPEED_STEPS.length; i++) {
+			stopTriggeredAnim(mob, id, ACTIONS_CONTROLLER + "_" + i, RELOAD_ANIMATION);
+		}
+
+		sendArmAnimation(mob, hand, "_reload", 1.0f, true);
+	}
+
+	/// Play the fire (recoil) animation on a firearm held by a mob, and the matching arm animation. Server-side only.
+	public void triggerMobFireAnimation(ServerLevel level, LivingEntity mob, InteractionHand hand, ItemStack gun) {
+		triggerAnim(mob, GeoItem.getOrAssignId(gun, level), ACTIONS_CONTROLLER + "_" + NORMAL_SPEED_STEP, FIRE_ANIMATION);
+		sendArmAnimation(mob, hand, "_fire", 1.0f, false);
+	}
+
+	/// Send a PlayerAnimator animation (the arms) to everyone tracking the entity, if this firearm has one.
+	private void sendArmAnimation(LivingEntity entity, InteractionHand hand, String suffix, float speed, boolean stop) {
 		Identifier itemId = BuiltInRegistries.ITEM.getKey(this);
 		if (!PLAYER_RELOAD_ANIMATIONS.contains(itemId.getPath())) {
 			return;
@@ -210,10 +235,15 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
 		Identifier animation = Identifier.fromNamespaceAndPath(itemId.getNamespace(), itemId.getPath() + suffix);
 
 		// Animations are authored for the gun in the left arm, so mirror them when it's in the right
-		HumanoidArm holdingArm = hand == InteractionHand.MAIN_HAND ? player.getMainArm() : player.getMainArm().getOpposite();
+		HumanoidArm holdingArm = hand == InteractionHand.MAIN_HAND ? entity.getMainArm() : entity.getMainArm().getOpposite();
 		boolean mirrored = holdingArm == HumanoidArm.RIGHT;
 
-		PacketDistributor.sendToPlayersTrackingEntityAndSelf(player, new GunAnimationPayload(player.getId(), animation, speed, mirrored, stop));
+		GunAnimationPayload payload = new GunAnimationPayload(entity.getId(), animation, speed, mirrored, stop);
+		if (entity instanceof Player) {
+			PacketDistributor.sendToPlayersTrackingEntityAndSelf(entity, payload);
+		} else {
+			PacketDistributor.sendToPlayersTrackingEntity(entity, payload);
+		}
 	}
 
 	protected static ItemStack getHeldPredicate(LivingEntity livingEntity, Predicate<ItemStack> predicate) {
@@ -321,41 +351,49 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
 			return;
 		}
 
+		if (level instanceof ServerLevel serverLevel) {
+			fireLoaded(serverLevel, player, hand, gun, loaded);
+		}
+	}
+
+	/// Fire what was loaded for any shooter, which may misfire. The loaded ammunition must already have been removed
+	/// from the firearm. Server-side only.
+	public void fireLoaded(ServerLevel level, LivingEntity shooter, InteractionHand hand, ItemStack gun, LoadedAmmunition loaded) {
 		ItemStack ammo = loaded.ammo().copy();
-		PowderType powder = loaded.powder().typeHolder().getData(POWDER_TYPE) != null
+		PowderType powder = isPowder(loaded.powder())
 				? new PowderType(loaded.powder().copy())
 				: new PowderType(new ItemStack(defaultPowder()));
 		int bulletsToFire = Math.max(1, ammo.getCount());
+		EquipmentSlot slot = hand == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND;
+		boolean creative = shooter instanceof Player player && player.isCreative();
 
 		// Roll for misfire
 		boolean misfire = false;
 		if (ammo.getItem() instanceof BulletItem<?> bullet) {
-			if (player.getRandom().nextFloat() <= bullet.misfireChance) {
+			if (shooter.getRandom().nextFloat() <= bullet.misfireChance) {
 				misfire = true;
 			}
 
 			// High misfire chance when underwater
-			if (player.isUnderWater() && player.getRandom().nextFloat() <= 0.9f) {
+			if (shooter.isUnderWater() && shooter.getRandom().nextFloat() <= 0.9f) {
 				misfire = true;
 			}
 		}
 
 		if (misfire) {
 			level.playSound(null,
-					player.getX(),
-					player.getY(),
-					player.getZ(),
+					shooter.getX(),
+					shooter.getY(),
+					shooter.getZ(),
 					getMisfireSound(),
-					SoundSource.PLAYERS,
+					shooter.getSoundSource(),
 					1.0F,
-					1.0F + (-0.6f + player.getRandom().nextFloat() * 0.2f));
+					1.0F + (-0.6f + shooter.getRandom().nextFloat() * 0.2f));
 
-			if (level instanceof ServerLevel serverLevel) {
-				spawnMisfireEffects(serverLevel, player);
-			}
+			spawnMisfireEffects(level, shooter);
 
-			if (!player.isCreative()) {
-				gun.hurtAndBreak(5, player, hand == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
+			if (!creative) {
+				gun.hurtAndBreak(5, shooter, slot);
 			}
 
 			return;
@@ -367,30 +405,57 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
 			BulletEntity bulletEntity;
 
 			if (MUSKET_BALLS.test(ammo)) {
-				bulletEntity = bulletItem.createBullet(level, player, gun);
+				bulletEntity = bulletItem.createBullet(level, shooter, gun);
 			} else if (FLARES.test(ammo)) {
-				bulletEntity = bulletItem.createFlare(level, player, gun);
+				bulletEntity = bulletItem.createFlare(level, shooter, gun);
 			} else if (CANNONBALLS.test(ammo)) {
-				bulletEntity = bulletItem.createCannonball(level, player, gun);
+				bulletEntity = bulletItem.createCannonball(level, shooter, gun);
 			} else {
-				bulletEntity = bulletItem.createDragonFireball(level, player, gun);
+				bulletEntity = bulletItem.createDragonFireball(level, shooter, gun);
 			}
 
-			setupFire(player, bulletEntity, gun, ammo, powder);
+			setupFire(shooter, bulletEntity, gun, ammo, powder);
 			level.addFreshEntity(bulletEntity);
 		}
 
 		level.playSound(null,
-				player.getX(),
-				player.getY(),
-				player.getZ(),
+				shooter.getX(),
+				shooter.getY(),
+				shooter.getZ(),
 				getFireSound(),
-				SoundSource.PLAYERS,
+				shooter.getSoundSource(),
 				1.0F,
-				1.0F + (-0.3f + player.getRandom().nextFloat() * 0.5f));
+				1.0F + (-0.3f + shooter.getRandom().nextFloat() * 0.5f));
 
-		if (level instanceof ServerLevel serverLevel) {
-			triggerFireAnimation(serverLevel, player, hand, gun);
+		if (shooter instanceof Player player) {
+			triggerFireAnimation(level, player, hand, gun);
+		} else {
+			triggerMobFireAnimation(level, shooter, hand, gun);
+		}
+	}
+
+	/// Whether a stack is ammunition this firearm can use.
+	public boolean isAmmunition(ItemStack stack) {
+		return getInventoryAmmoPredicate().test(stack);
+	}
+
+	/// Whether a stack is a powder that can be loaded into a firearm.
+	public static boolean isPowder(ItemStack stack) {
+		return FLAMMABLE_POWDERS.test(stack);
+	}
+
+	/// Load a firearm held by a mob. The mob does not use the player's inventory search, so it supplies the stacks.
+	///
+	/// @param consume true to take the ammunition and powder out of the given stacks
+	public void loadFromSupply(ItemStack gun, ItemStack ammo, ItemStack powder, boolean consume) {
+		int bulletsToLoad = Math.max(1, getBulletsToFire(ammo));
+
+		gun.set(DataComponentTypeRegistry.LOADED_AMMUNITION.get(),
+				new LoadedAmmunition(ammo.copyWithCount(bulletsToLoad), powder.copyWithCount(1)));
+
+		if (consume) {
+			ammo.shrink(bulletsToLoad);
+			powder.shrink(1);
 		}
 	}
 
