@@ -14,6 +14,7 @@ import net.minecraft.core.Holder.Reference;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.RandomSource;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
@@ -328,6 +329,10 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
 					1.0F,
 					1.0F + (-0.6f + player.getRandom().nextFloat() * 0.2f));
 
+			if (level instanceof ServerLevel serverLevel) {
+				spawnMisfireEffects(serverLevel, player);
+			}
+
 			if (!player.isCreative()) {
 				gun.hurtAndBreak(5, player, hand == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
 			}
@@ -608,20 +613,55 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
 				getInaccuracy() * (shooter instanceof Player player && GunAimTracker.isAiming(player) ? AIM_INACCURACY_SCALE : 1.0f));
 	}
 
+	/// The position of a point on the gun, in front of the shooter's eyes. The gun is centered when aiming, otherwise held
+	/// out to the side it is in.
+	///
+	/// @param forward how far along the barrel the point is
+	protected Vec3 getGunPosition(LivingEntity shooter, double forward) {
+		Vec3 lookVector = shooter.getLookAngle();
+		Vec3 rightVector = lookVector.cross(new Vec3(0, 1, 0)).normalize();
+		Vec3 upVector = rightVector.cross(lookVector).normalize();
+
+		boolean aiming = shooter instanceof Player player && GunAimTracker.isAiming(player);
+
+		// Which side of the view the gun is held on. Mobs are assumed to use their main hand.
+		InteractionHand hand = shooter instanceof Player player ? getGunHand(player) : InteractionHand.MAIN_HAND;
+		boolean rightSide = (hand == InteractionHand.MAIN_HAND) == (shooter.getMainArm() == HumanoidArm.RIGHT);
+
+		double side = aiming ? 0.0d : (rightSide ? 0.3d : -0.3d);
+		double down = aiming ? -0.12d : -0.25d;
+
+		return shooter.getEyePosition()
+				.add(lookVector.scale(forward))
+				.add(rightVector.scale(side))
+				.add(upVector.scale(down));
+	}
+
+	/// A misfire: a flash in the pan with a puff of smoke at the lock, and nothing out of the barrel.
+	protected void spawnMisfireEffects(ServerLevel level, LivingEntity shooter) {
+		Vec3 lockPosition = getGunPosition(shooter, 0.4d);
+		RandomSource random = level.getRandom();
+
+		if (shooter.isUnderWater()) {
+			level.sendParticles(ParticleTypes.BUBBLE, lockPosition.x, lockPosition.y, lockPosition.z,
+					8, 0.1d, 0.1d, 0.1d, 0.05d);
+			return;
+		}
+
+		// A few sparks that fizzle out
+		level.sendParticles(ParticleTypes.SMALL_FLAME, lockPosition.x, lockPosition.y, lockPosition.z,
+				4, 0.05d, 0.05d, 0.05d, 0.02d);
+		level.sendParticles(ParticleTypes.LAVA, lockPosition.x, lockPosition.y, lockPosition.z,
+				1 + random.nextInt(2), 0.0d, 0.0d, 0.0d, 0.0d);
+
+		// A weak, thin puff of smoke instead of the full discharge
+		level.sendParticles(ParticleTypesRegistry.GUN_SMOKE_PARTICLE.get(), lockPosition.x, lockPosition.y, lockPosition.z,
+				3, 0.05d, 0.03d, 0.05d, 0.01d);
+	}
+
 	protected void handleMuzzleFlash(Level level, LivingEntity shooter, PowderType powderType) {
 		if (level instanceof ServerLevel serverLevel) {
-			Vec3 particlePosition = shooter.getEyePosition();
-
-			// Shift to the side (taking into consideration which hand the gun is in)
-			Vec3 lookVector = shooter.getLookAngle();
-			Vec3 sideVector = lookVector.cross(new Vec3(0, 1, 0.2));
-			double sideOffset = shooter.getUsedItemHand() == InteractionHand.MAIN_HAND ? 0.5d : -0.5d;
-			particlePosition = particlePosition.add(sideVector.scale(sideOffset));
-
-			double fov = 70d;
-
-			double fovOffset = 1.75d - (fov / 150.0d);
-			particlePosition = particlePosition.add(lookVector.x * fovOffset * 0.5d, lookVector.y * fovOffset * 0.5d, lookVector.z * fovOffset * 0.5d);
+			Vec3 particlePosition = getGunPosition(shooter, 0.9d);
 
 			serverLevel.sendParticles(ParticleTypesRegistry.MUZZLE_FLASH_PARTICLE.get(),
 					particlePosition.x, particlePosition.y, particlePosition.z,
@@ -633,7 +673,7 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
 
 			int smokeParticles = 3 * powderType.data.dirtiness();
 			for (int j = 0; j < smokeParticles; ++j) {
-				serverLevel.sendParticles(ParticleTypes.SMOKE,
+				serverLevel.sendParticles(ParticleTypesRegistry.GUN_SMOKE_PARTICLE.get(),
 						particlePosition.x, particlePosition.y, particlePosition.z,
 						3,
 						serverLevel.getRandom().nextGaussian() * 0.05d,

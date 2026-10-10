@@ -334,6 +334,12 @@ public class ClientModEventSubscriber {
 	///
 	/// @param event the `ParticleFactoryRegisterEvent` instance
 	@SubscribeEvent
+	public static void registerRenderPipelines(RegisterRenderPipelinesEvent event) {
+		event.registerPipeline(GunSmokeParticle.PIPELINE);
+		event.registerOitPipelineSet(GunSmokeParticle.OIT_PIPELINES);
+	}
+
+	@SubscribeEvent
 	public static void registerParticleFactories(RegisterParticleProvidersEvent event) {
 		ImmersiveWeapons.LOGGER.info("Registering particle factories");
 
@@ -341,6 +347,7 @@ public class ClientModEventSubscriber {
 		event.registerSpriteSet(ParticleTypesRegistry.BLOOD_PARTICLE.get(), BloodParticle.Provider::new);
 		event.registerSpriteSet(ParticleTypesRegistry.BULLET_IMPACT_PARTICLE.get(), BulletImpactParticle.Provider::new);
 		event.registerSpriteSet(ParticleTypesRegistry.MUZZLE_FLASH_PARTICLE.get(), MuzzleFlashParticle.Provider::new);
+		event.registerSpriteSet(ParticleTypesRegistry.GUN_SMOKE_PARTICLE.get(), GunSmokeParticle.Provider::new);
 		event.registerSpriteSet(ParticleTypesRegistry.MOONGLOW_PARTICLE.get(), MoonglowParticle.Provider::new);
 		event.registerSpriteSet(ParticleTypesRegistry.STARDUST_LEAVES_PARTICLE.get(), StardustLeavesParticle.Provider::new);
 		event.registerSpriteSet(ParticleTypesRegistry.DEADMANS_DESERT_AMBIENT_PARTICLE.get(), DeadmansDesertAmbientParticle.Provider::new);
