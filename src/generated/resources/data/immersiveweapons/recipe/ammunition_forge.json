@@ -3,14 +3,15 @@
   "category": "equipment",
   "group": "ammunition_forge",
   "key": {
-    "a": "#c:ingots/iron",
-    "b": "minecraft:furnace",
-    "c": "#minecraft:stone_crafting_materials"
+    "a": "#c:ingots/copper",
+    "b": "#c:ingots/iron",
+    "c": "minecraft:furnace",
+    "d": "#minecraft:stone_crafting_materials"
   },
   "pattern": [
     "aaa",
-    "aba",
-    "ccc"
+    "bcb",
+    "ddd"
   ],
   "result": {
     "id": "immersiveweapons:ammunition_forge"

@@ -1,0 +1,14 @@
+{
+  "type": "immersiveweapons:star_forge",
+  "consume_secondary_material": false,
+  "group": "star_forge",
+  "primary_material": "#immersiveweapons:ingots/starstorm",
+  "primary_material_count": 1,
+  "result": {
+    "count": 2,
+    "id": "immersiveweapons:starstorm_musket_ball"
+  },
+  "secondary_material": "immersiveweapons:musket_ball_mold_master",
+  "secondary_material_count": 1,
+  "smelt_time": 100
+}

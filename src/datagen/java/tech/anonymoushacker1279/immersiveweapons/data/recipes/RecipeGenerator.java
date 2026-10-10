@@ -1009,12 +1009,13 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 
 		// Ammunition Forge
 		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.COMBAT, BlockItemRegistry.AMMUNITION_FORGE_ITEM.get())
-				.define('a', Tags.Items.INGOTS_IRON)
-				.define('b', Items.FURNACE)
-				.define('c', ItemTags.STONE_CRAFTING_MATERIALS)
+				.define('a', Tags.Items.INGOTS_COPPER)
+				.define('b', Tags.Items.INGOTS_IRON)
+				.define('c', Items.FURNACE)
+				.define('d', ItemTags.STONE_CRAFTING_MATERIALS)
 				.pattern("aaa")
-				.pattern("aba")
-				.pattern("ccc")
+				.pattern("bcb")
+				.pattern("ddd")
 				.group("ammunition_forge")
 				.unlockedBy("furnace", has(Items.FURNACE))
 				.save(output);
@@ -1030,9 +1031,11 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		ammunitionForgeCasting(CommonItemTagGroups.COBALT_INGOTS, basicMold, ItemRegistry.COBALT_MUSKET_BALL.get());
 		ammunitionForgeCasting(Tags.Items.INGOTS_NETHERITE, advancedMold, ItemRegistry.NETHERITE_MUSKET_BALL.get());
 		ammunitionForgeCasting(IWItemTagGroups.MOLTEN_INGOTS, advancedMold, ItemRegistry.MOLTEN_MUSKET_BALL.get());
-		ammunitionForgeCasting(IWItemTagGroups.ASTRAL_INGOTS, masterMold, ItemRegistry.ASTRAL_MUSKET_BALL.get());
-		ammunitionForgeCasting(IWItemTagGroups.STARSTORM_INGOTS, masterMold, ItemRegistry.STARSTORM_MUSKET_BALL.get());
 		ammunitionForgeCasting(IWItemTagGroups.TESLA_INGOTS, masterMold, ItemRegistry.TESLA_MUSKET_BALL.get());
+
+		// Astral and Starstorm balls are cast in the Star Forge, with the Master mold kept
+		starForgeMoldCasting(IWItemTagGroups.ASTRAL_INGOTS, masterMold, ItemRegistry.ASTRAL_MUSKET_BALL.get());
+		starForgeMoldCasting(IWItemTagGroups.STARSTORM_INGOTS, masterMold, ItemRegistry.STARSTORM_MUSKET_BALL.get());
 
 		// The Sword
 		ShapedRecipeBuilder.shaped(itemGetter, RecipeCategory.COMBAT, ItemRegistry.THE_SWORD.get())
@@ -1789,6 +1792,13 @@ public class RecipeGenerator extends RecipeProvider implements DataGenUtils {
 		PistonCrushingRecipeBuilder.crushing(Ingredient.of(block), new ItemStackTemplate(result), minCount, maxCount)
 				.unlockedBy("piston", has(Items.PISTON))
 				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_piston_crushing");
+	}
+
+	private void starForgeMoldCasting(TagKey<Item> ingot, Item mold, Item result) {
+		StarForgeRecipeBuilder.forge(Ingredient.of(itemGetter.getOrThrow(ingot)), 1, Ingredient.of(mold), 1, new ItemStackTemplate(result, 2), 100)
+				.keepSecondaryMaterial()
+				.unlockedBy("star_forge_controller", has(BlockRegistry.STAR_FORGE_CONTROLLER.get()))
+				.save(output, ImmersiveWeapons.MOD_ID + ":" + getItemName(result) + "_star_forge_smelting");
 	}
 
 	private void ammunitionForgeCasting(TagKey<Item> material, Item mold, Item result) {

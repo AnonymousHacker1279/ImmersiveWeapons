@@ -15,6 +15,7 @@ import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.crafting.*;
+import tech.anonymoushacker1279.immersiveweapons.menu.AmmunitionForgeMenu;
 import tech.anonymoushacker1279.immersiveweapons.menu.StarForgeMenu;
 import tech.anonymoushacker1279.iwcompatbridge.IWCompatBridge;
 import tech.anonymoushacker1279.iwcompatbridge.plugin.jei.category.*;
@@ -29,6 +30,8 @@ public class JEIPluginHandler implements IModPlugin {
 			IRecipeType.create(ImmersiveWeapons.MOD_ID, "barrel_tap", BarrelTapRecipe.class);
 	public static final IRecipeType<PistonCrushingRecipe> PISTON_CRUSHING =
 			IRecipeType.create(ImmersiveWeapons.MOD_ID, "piston_crushing", PistonCrushingRecipe.class);
+	public static final IRecipeType<AmmunitionForgeRecipe> AMMUNITION_FORGE =
+			IRecipeType.create(ImmersiveWeapons.MOD_ID, "ammunition_forge", AmmunitionForgeRecipe.class);
 	public static final IRecipeType<StarForgeRecipe> STAR_FORGE =
 			IRecipeType.create(ImmersiveWeapons.MOD_ID, "star_forge", StarForgeRecipe.class);
 
@@ -48,6 +51,7 @@ public class JEIPluginHandler implements IModPlugin {
 		registration.addCraftingStation(ASTRAL_CRYSTAL, new ItemStack(BlockRegistry.ASTRAL_CRYSTAL.get()));
 		registration.addCraftingStation(BARREL_TAP, new ItemStack(BlockRegistry.BARREL_TAP.get()));
 		registration.addCraftingStation(PISTON_CRUSHING, new ItemStack(Blocks.PISTON));
+		registration.addCraftingStation(AMMUNITION_FORGE, new ItemStack(BlockRegistry.AMMUNITION_FORGE.get()));
 		registration.addCraftingStation(STAR_FORGE, new ItemStack(BlockRegistry.STAR_FORGE_CONTROLLER.get()));
 	}
 
@@ -86,6 +90,14 @@ public class JEIPluginHandler implements IModPlugin {
 				.map(recipe -> (PistonCrushingRecipe) recipe)
 				.toList());
 
+		registration.addRecipes(AMMUNITION_FORGE, recipeManager
+				.getRecipes()
+				.stream()
+				.filter(holder -> holder.value().getType() == RecipeTypeRegistry.AMMUNITION_FORGE_RECIPE_TYPE.get())
+				.map(RecipeHolder::value)
+				.map(recipe -> (AmmunitionForgeRecipe) recipe)
+				.toList());
+
 		registration.addRecipes(STAR_FORGE, recipeManager
 				.getRecipes()
 				.stream()
@@ -97,6 +109,7 @@ public class JEIPluginHandler implements IModPlugin {
 		registration.addItemStackInfo(BlockRegistry.ASTRAL_CRYSTAL.get().asItem().getDefaultInstance(), Component.translatable("gui.jei.item.astral_crystal.info"));
 		registration.addItemStackInfo(BlockRegistry.BARREL_TAP.get().asItem().getDefaultInstance(), Component.translatable("gui.jei.item.barrel_tap.info"));
 		registration.addItemStackInfo(Blocks.PISTON.asItem().getDefaultInstance(), Component.translatable("gui.jei.item.piston_crushing.info"));
+		registration.addItemStackInfo(BlockRegistry.AMMUNITION_FORGE.get().asItem().getDefaultInstance(), Component.translatable("gui.jei.item.ammunition_forge.info"));
 		registration.addItemStackInfo(BlockRegistry.STAR_FORGE_CONTROLLER.get().asItem().getDefaultInstance(), Component.translatable("gui.jei.item.star_forge.info"));
 	}
 
@@ -108,8 +121,8 @@ public class JEIPluginHandler implements IModPlugin {
 		registration.addRecipeCategories(new AstralCrystalRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
 		registration.addRecipeCategories(new BarrelTapRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
 		registration.addRecipeCategories(new PistonCrushingRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
+		registration.addRecipeCategories(new AmmunitionForgeRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
 		registration.addRecipeCategories(new StarForgeRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
-
 	}
 
 	/// Register recipe transfer handlers.
@@ -117,6 +130,10 @@ public class JEIPluginHandler implements IModPlugin {
 	/// @param registration an `IRecipeTransferRegistration` instance
 	@Override
 	public void registerRecipeTransferHandlers(IRecipeTransferRegistration registration) {
+		registration.addRecipeTransferHandler(AmmunitionForgeMenu.class,
+				MenuTypeRegistry.AMMUNITION_FORGE_MENU.get(), AMMUNITION_FORGE,
+				0, 2, 4, 36);
+
 		registration.addRecipeTransferHandler(StarForgeMenu.class,
 				MenuTypeRegistry.STAR_FORGE_MENU.get(), STAR_FORGE,
 				0, 2, 3, 36);

@@ -20,6 +20,7 @@ public class StarForgeRecipeBuilder extends IWRecipeBuilder {
 	private final int secondaryMaterialCount;
 	private final ItemStackTemplate result;
 	private final int smeltTime;
+	private boolean consumeSecondaryMaterial = true;
 
 	public StarForgeRecipeBuilder(Ingredient ingot, int ingotCount, @Nullable Ingredient secondaryMaterial, int secondaryMaterialCount, ItemStackTemplate result, int smeltTime) {
 		this.ingot = ingot;
@@ -38,6 +39,12 @@ public class StarForgeRecipeBuilder extends IWRecipeBuilder {
 		return new StarForgeRecipeBuilder(ingot, ingotCount, null, 0, result, smeltTime);
 	}
 
+	/// Keep the secondary material after crafting, so it acts as a tool (e.g. a mold).
+	public StarForgeRecipeBuilder keepSecondaryMaterial() {
+		this.consumeSecondaryMaterial = false;
+		return this;
+	}
+
 	@Override
 	public ResourceKey<Recipe<?>> defaultId() {
 		return RecipeBuilder.getDefaultRecipeId(this.result);
@@ -45,6 +52,6 @@ public class StarForgeRecipeBuilder extends IWRecipeBuilder {
 
 	@Override
 	protected Recipe<?> getRecipe() {
-		return new StarForgeRecipe(Objects.requireNonNullElse(group, "star_forge"), ingot, ingotCount, Optional.ofNullable(secondaryMaterial), secondaryMaterialCount, smeltTime, result);
+		return new StarForgeRecipe(Objects.requireNonNullElse(group, "star_forge"), ingot, ingotCount, Optional.ofNullable(secondaryMaterial), secondaryMaterialCount, consumeSecondaryMaterial, smeltTime, result);
 	}
 }
