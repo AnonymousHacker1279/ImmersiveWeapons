@@ -16,6 +16,7 @@ public class EnchantmentTagsGenerator extends EnchantmentTagsProvider {
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	protected void addTags(Provider provider) {
 		tag(EnchantmentTags.NON_TREASURE).add(
 				IWEnchantments.FIREPOWER,
