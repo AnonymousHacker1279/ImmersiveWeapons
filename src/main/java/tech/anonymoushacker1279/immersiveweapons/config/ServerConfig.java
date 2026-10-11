@@ -49,6 +49,9 @@ public class ServerConfig {
 	public final ModConfigSpec.BooleanValue sculkStaffSonicBlastThroughBlocks;
 	public final ModConfigSpec.IntValue recoveryStaffMaxUseRange;
 	public final ModConfigSpec.DoubleValue smokeGrenadeEffectRange;
+	public final ModConfigSpec.IntValue smokeGrenadeDuration;
+	public final ModConfigSpec.IntValue smokeGrenadeFuse;
+	public final ModConfigSpec.IntValue flashbangFuse;
 	public final ModConfigSpec.DoubleValue flashbangEffectRange;
 	public final ModConfigSpec.IntValue flashbangDisorientTime;
 
@@ -306,6 +309,14 @@ public class ServerConfig {
 				.comment("Set the effect range of smoke grenades. This is specifically for the target-clearing effect on non-player entities.")
 				.defineInRange("smokeGrenadeEffectRange", 7.0d, 0.0d, 32.0d);
 
+		smokeGrenadeDuration = builder
+				.comment("Set how long, in ticks, smoke grenade smoke lasts. The target-clearing effect ends when the smoke has mostly faded, shortly before this.")
+				.defineInRange("smokeGrenadeDuration", 400, 20, 6000);
+
+		smokeGrenadeFuse = builder
+				.comment("Set how long, in ticks, a smoke grenade takes to go off after being thrown.")
+				.defineInRange("smokeGrenadeFuse", 60, 1, 600);
+
 		builder.pop();
 
 		builder.comment("Flashbang")
@@ -314,6 +325,10 @@ public class ServerConfig {
 		flashbangEffectRange = builder
 				.comment("Set the effect range of flashbangs")
 				.defineInRange("flashbangEffectRange", 10.0d, 0.0d, 32.0d);
+
+		flashbangFuse = builder
+				.comment("Set how long, in ticks, a flashbang takes to go off after being thrown.")
+				.defineInRange("flashbangFuse", 60, 1, 600);
 
 		flashbangDisorientTime = builder
 				.comment("Set the time in seconds that entities are disoriented by flashbangs")

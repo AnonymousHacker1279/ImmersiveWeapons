@@ -12,6 +12,7 @@ layout(location = 1) in float cylindricalVertexDistance;
 layout(location = 2) in vec2 texCoord0;
 layout(location = 3) in vec4 vertexColor;
 layout(location = 4) in vec2 localUv;
+layout(location = 5) flat in float puffSeed;
 
 #ifndef OIT_ALPHA_ONLY
 layout(location = 0) out vec4 fragColor;
@@ -61,7 +62,7 @@ void main() {
     vec2 p = localUv * 2.0 - 1.0;
     float radius = length(p);
 
-    float seed = hash(floor(texCoord0 * 4096.0)) * 20.0;
+    float seed = fract(puffSeed * 0.618) * 20.0;
 
     // Two layers of warped, low-frequency noise: one distorts the outline, the other is turned into thin ridges
     // (tendrils) that curl through and out of the body.

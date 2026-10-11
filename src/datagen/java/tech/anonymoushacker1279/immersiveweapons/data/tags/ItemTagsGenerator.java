@@ -409,7 +409,13 @@ public class ItemTagsGenerator extends BlockTagCopyingItemTagProvider {
 				ItemRegistry.VENTUS_ARROW.key(),
 				ItemRegistry.ASTRAL_ARROW.key(),
 				ItemRegistry.STARSTORM_ARROW.key(),
-				ItemRegistry.VOID_ARROW.key());
+				ItemRegistry.VOID_ARROW.key(),
+				ItemRegistry.SMOKE_GRENADE_ARROW.key(),
+				ItemRegistry.SMOKE_GRENADE_ARROW_RED.key(),
+				ItemRegistry.SMOKE_GRENADE_ARROW_GREEN.key(),
+				ItemRegistry.SMOKE_GRENADE_ARROW_BLUE.key(),
+				ItemRegistry.SMOKE_GRENADE_ARROW_PURPLE.key(),
+				ItemRegistry.SMOKE_GRENADE_ARROW_YELLOW.key());
 
 		// Boat tags
 		tag(ItemTags.BOATS).add(ItemRegistry.BURNED_OAK_BOAT.key());

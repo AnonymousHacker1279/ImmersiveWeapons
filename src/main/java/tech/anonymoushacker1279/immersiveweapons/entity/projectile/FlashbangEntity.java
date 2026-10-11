@@ -32,6 +32,12 @@ public class FlashbangEntity extends AdvancedThrowableItemProjectile {
 		super(EntityRegistry.FLASHBANG_ENTITY.get(), level, x, y, z, ItemRegistry.FLASHBANG.get().getDefaultInstance());
 	}
 
+	/// It goes off on a timer, wherever it has ended up.
+	@Override
+	protected int getFuseTicks() {
+		return IWConfigs.SERVER.flashbangFuse.getAsInt();
+	}
+
 	@Override
 	protected Item getDefaultItem() {
 		return ItemRegistry.FLASHBANG.get();
@@ -78,5 +84,7 @@ public class FlashbangEntity extends AdvancedThrowableItemProjectile {
 
 		level().playLocalSound(getX(), getY(), getZ(), SoundEventRegistry.FLASHBANG_EXPLODE.get(),
 				SoundSource.NEUTRAL, 1.0f, 1.0f, true);
+
+		discard();
 	}
 }

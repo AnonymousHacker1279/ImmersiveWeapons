@@ -2,6 +2,7 @@ package tech.anonymoushacker1279.immersiveweapons.entity.ai.goal;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeCloudVolume;
 import tech.anonymoushacker1279.immersiveweapons.entity.neutral.RangedSoldierEntity;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
 

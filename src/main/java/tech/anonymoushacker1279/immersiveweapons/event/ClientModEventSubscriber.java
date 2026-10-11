@@ -337,6 +337,8 @@ public class ClientModEventSubscriber {
 	public static void registerRenderPipelines(RegisterRenderPipelinesEvent event) {
 		event.registerPipeline(GunSmokeParticle.PIPELINE);
 		event.registerOitPipelineSet(GunSmokeParticle.OIT_PIPELINES);
+		event.registerPipeline(SmokeGrenadeParticle.PIPELINE);
+		event.registerOitPipelineSet(SmokeGrenadeParticle.OIT_PIPELINES);
 	}
 
 	@SubscribeEvent

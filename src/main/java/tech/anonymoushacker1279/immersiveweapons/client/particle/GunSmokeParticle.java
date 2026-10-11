@@ -80,9 +80,11 @@ public class GunSmokeParticle extends SingleQuadParticle {
 		oRoll = roll;
 
 		float gray = 0.55f + random.nextFloat() * 0.25f;
-		rCol = gray;
-		gCol = gray;
-		bCol = gray;
+		// The shader has no other per-puff data, so it gets a seed hidden in the low bits of the color channels
+		int seed = random.nextInt(ParticleSeedPacking.SEED_RANGE);
+		rCol = ParticleSeedPacking.pack(gray, seed, 0);
+		gCol = ParticleSeedPacking.pack(gray, seed, 1);
+		bCol = ParticleSeedPacking.pack(gray, seed, 2);
 		alpha = 1.0f;
 	}
 

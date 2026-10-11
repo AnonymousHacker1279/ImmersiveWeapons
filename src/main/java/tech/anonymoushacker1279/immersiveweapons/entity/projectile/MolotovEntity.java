@@ -34,6 +34,11 @@ public class MolotovEntity extends AdvancedThrowableItemProjectile {
 		super(EntityRegistry.MOLOTOV_COCKTAIL_ENTITY.get(), level, x, y, z, ItemRegistry.MOLOTOV_COCKTAIL.get().getDefaultInstance());
 	}
 
+	@Override
+	public float getModelCenterOffset() {
+		return -0.15625F;
+	}
+
 	/// ProjectileItemEntity::setItem uses this to save storage space. It only stores the itemStack if the itemStack is
 	/// not the default item.
 	///

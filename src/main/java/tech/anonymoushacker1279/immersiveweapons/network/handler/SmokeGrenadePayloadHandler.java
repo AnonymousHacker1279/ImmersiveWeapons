@@ -14,7 +14,8 @@ public class SmokeGrenadePayloadHandler {
 	}
 
 	public void handleData(final SmokeGrenadePayload data, final IPayloadContext context) {
-		context.enqueueWork(() -> SmokeGrenadeEntity.runOnClientImpact(data.x(), data.y(), data.z(), data.color(), context.player().level(), data.forcedParticleCount()))
+		context.enqueueWork(() -> SmokeGrenadeEntity.runOnClientImpact(data.x(), data.y(), data.z(), data.color(), context.player().level(), data.forcedParticleCount(), data.radius(), data.duration(),
+				data.particleFraction(), data.playSound()))
 				.exceptionally(e -> {
 					context.disconnect(Component.translatable("immersiveweapons.networking.failure.generic", e.getMessage()));
 					return null;

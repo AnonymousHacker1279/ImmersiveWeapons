@@ -7,7 +7,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -20,9 +19,11 @@ import net.neoforged.neoforge.client.event.InputEvent;
 import net.neoforged.neoforge.client.event.RecipesReceivedEvent;
 import net.neoforged.neoforge.client.event.ExtractBlockScreenEffectEvent;
 import net.neoforged.neoforge.client.event.ViewportEvent.ComputeFogColor;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.ViewportEvent.ComputeFov;
 import net.neoforged.neoforge.client.event.ViewportEvent.RenderFog;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.client.ChargeZoomClient;
 import tech.anonymoushacker1279.immersiveweapons.client.GunAimClient;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.init.DataComponentTypeRegistry;
@@ -33,7 +34,6 @@ import tech.anonymoushacker1279.immersiveweapons.item.CursedItem;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
 import tech.anonymoushacker1279.immersiveweapons.item.armor.ArmorUtils;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
-import tech.anonymoushacker1279.immersiveweapons.item.projectile.ThrowableItem;
 import tech.anonymoushacker1279.immersiveweapons.menu.StarForgeMenu;
 
 @EventBusSubscriber(modid = ImmersiveWeapons.MOD_ID, value = Dist.CLIENT)
@@ -134,7 +134,6 @@ public class ClientForgeEventSubscriber {
 
 		// Handle FOV changes with some items
 		if (player != null) {
-			Item itemInHand = player.getItemInHand(player.getUsedItemHand()).getItem();
 
 			// Zoom while aiming a firearm: a slight zoom for iron sights, a heavy one with a scope
 			InteractionHand gunHand = AbstractGunItem.getGunHand(player);
@@ -146,26 +145,17 @@ public class ClientForgeEventSubscriber {
 				event.setFOV(Mth.lerp(aimProgress, (float) event.getFOV(), targetFov));
 			}
 
-			if ((itemInHand == ItemRegistry.ICE_BOW.get()
-					|| itemInHand == ItemRegistry.DRAGONS_BREATH_BOW.get()
-					|| itemInHand == ItemRegistry.AURORA_BOW.get()
-					|| (itemInHand.asItem() instanceof ThrowableItem throwableItem && throwableItem.type.canCharge))
-					&& player.isUsingItem()) {
-
-				float fov = event.getFOV();
-				int useTicks = player.getTicksUsingItem();
-				float fovModifier = (float) useTicks / 20.0F;
-
-				if (fovModifier > 1.0F) {
-					fovModifier = 1.0F;
-				} else {
-					fovModifier *= fovModifier;
-				}
-
-				fov *= 1.0F - fovModifier * 0.15F;
-				event.setFOV(fov);
+			// Zoom while charging a bow or a grenade
+			float chargeProgress = ChargeZoomClient.getProgress((float) event.getPartialTick());
+			if (chargeProgress > 0.0f) {
+				event.setFOV(event.getFOV() * (1.0f - chargeProgress * 0.15f));
 			}
 		}
+	}
+
+	@SubscribeEvent
+	public static void clientTickEvent(ClientTickEvent.Post event) {
+		ChargeZoomClient.tick();
 	}
 
 	@SubscribeEvent
