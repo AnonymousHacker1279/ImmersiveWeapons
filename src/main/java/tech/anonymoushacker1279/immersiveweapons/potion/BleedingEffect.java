@@ -20,12 +20,12 @@ public class BleedingEffect extends MobEffect {
 	public boolean applyEffectTick(ServerLevel serverLevel, LivingEntity entity, int amplifier) {
 		RandomSource random = entity.getRandom();
 		if (cooldownTicks <= 0) {
-			cooldownTicks = 60 - (amplifier * 10);
+			cooldownTicks = 60 - (amplifier * 5);
 
 			float amount = 1.0f + (amplifier * 0.25f);
 
-			if (entity.getInvulnerableTime() > cooldownTicks) {
-				entity.setInvulnerableTime(cooldownTicks);
+			if (entity.damageCooldownTime > cooldownTicks) {
+				entity.damageCooldownTime = cooldownTicks;
 			}
 
 			entity.hurtServer(serverLevel, IWDamageSources.bleeding(serverLevel.registryAccess()), amount);

@@ -5,6 +5,7 @@ import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -45,8 +46,9 @@ public abstract class AbstractArrowMixin implements ArrowAttributeAccessor {
 			boolean didHurt = instance.hurtOrSimulate(bulletEntity.getDamageSource(owner), bulletEntity.calculateDamage());
 
 			// Bullets disable invulnerability. Otherwise, items like the blunderbuss would be useless.
-			instance.setInvulnerableTime(0);
-			instance.setPermanentlyInvulnerable(false);
+			if (instance instanceof LivingEntity livingEntity) {
+				livingEntity.damageCooldownTime = 0;
+			}
 
 			return didHurt;
 		} else {

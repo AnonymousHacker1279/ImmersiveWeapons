@@ -37,15 +37,20 @@ import java.util.function.Predicate;
 /// by picking items up off the ground. A soldier with no supply left flees from its target.
 public abstract class RangedSoldierEntity extends SoldierEntity implements RangedAttackMob, InventoryCarrier {
 
-	/// How many shots worth of ammunition and powder a soldier starts with, and the amount it stops looking for more at.
-	/// Ammunition is counted per shot, so a firearm that fires several balls at once gets proportionally more.
-	public static final int STARTING_SHOTS = 8;
+	/// How many shots worth of ammunition and powder a soldier starts with, and the amount it stops looking for more
+	/// at. Ammunition is counted per shot, so a firearm that fires several balls at once gets proportionally more.
+	public static final int STARTING_SHOTS = 16;
 
 	private final SimpleContainer supply = new SimpleContainer(6);
 	private final MeleeAttackGoal meleeAttackGoal = new MeleeAttackGoal(this, 1.1D, false);
 
 	protected RangedSoldierEntity(EntityType<? extends PathfinderMob> entityType, Level level, List<Class<? extends Entity>> ignoresDamageFrom) {
 		super(entityType, level, ignoresDamageFrom);
+	}
+
+	/// The ammunition for a full supply of shots: a shot uses as many as the firearm fires at once.
+	private static int getStartingAmmunition(AbstractGunItem gun) {
+		return STARTING_SHOTS * Math.max(1, gun.getMaxBulletsToFire());
 	}
 
 	@Override
@@ -188,11 +193,6 @@ public abstract class RangedSoldierEntity extends SoldierEntity implements Range
 		}
 
 		return getDefaultBulletItem();
-	}
-
-	/// The ammunition for a full supply of shots: a shot uses as many as the firearm fires at once.
-	private static int getStartingAmmunition(AbstractGunItem gun) {
-		return STARTING_SHOTS * Math.max(1, gun.getMaxBulletsToFire());
 	}
 
 	private void fillStartingSupply() {

@@ -34,8 +34,8 @@ public class HellfireEffect extends MobEffect {
 
 			float amount = (1.0f + (amplifier * 0.2f)) + (random.nextFloat() * (amplifier * 0.1f));
 
-			if (entity.getInvulnerableTime() > cooldownTicks) {
-				entity.setInvulnerableTime(cooldownTicks);
+			if (entity.damageCooldownTime > cooldownTicks) {
+				entity.damageCooldownTime = cooldownTicks;
 			}
 
 			entity.hurt(IWDamageSources.hellfire(serverLevel.registryAccess()), amount);
