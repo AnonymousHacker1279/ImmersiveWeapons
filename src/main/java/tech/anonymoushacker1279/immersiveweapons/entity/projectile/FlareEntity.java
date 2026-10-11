@@ -1,9 +1,9 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.projectile;
 
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -13,27 +13,18 @@ import net.minecraft.world.entity.projectile.ItemSupplier;
 import net.minecraft.world.entity.projectile.arrow.Arrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.entity.neutral.MinutemanEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.ItemRegistry;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class FlareEntity extends BulletEntity implements ItemSupplier {
 
-	static final BlockState lightState = Blocks.LIGHT.defaultBlockState();
-	static final BlockState airState = Blocks.AIR.defaultBlockState();
-	private final List<BlockPos> lightPositions = new ArrayList<>(10);
+	/// Ticks over which the light fades out at the end of the flare's life.
+	private static final int FADE_TICKS = 60;
+
 	private int explodeDelay = 45;
 	private int deathDelay = 600;
-	private BlockPos previousLightPosition = BlockPos.ZERO;
-	private boolean hasHitEntity = false;
 
 	public FlareEntity(EntityType<? extends Arrow> entityType, Level level) {
 		super(entityType, level);
@@ -71,38 +62,7 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 				}
 				deathDelay--;
 			} else {
-				// Remove all lights before dying
-				if (!lightPositions.isEmpty()) {
-					for (BlockPos pos : lightPositions) {
-						if (level().getBlockState(pos) == lightState) {
-							level().removeBlock(pos, false);
-						}
-					}
-					lightPositions.clear();
-				}
-
 				discard();
-			}
-		}
-
-		if (tickCount % 2 == 0) {
-			BlockPos currentPosition = blockPosition();
-			if (!level().isClientSide() && currentPosition != previousLightPosition) {
-				if (!lightPositions.isEmpty()) {
-					for (BlockPos pos : lightPositions) {
-						if (level().getBlockState(pos) == lightState) {
-							level().removeBlock(pos, false);
-						}
-					}
-					lightPositions.clear();
-				}
-
-				if (!hasHitEntity && level().getBlockState(currentPosition) == airState) {
-					level().setBlock(currentPosition, lightState, 3);
-					lightPositions.add(currentPosition);
-				}
-
-				previousLightPosition = currentPosition;
 			}
 		}
 
@@ -119,7 +79,6 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 	@Override
 	protected void doWhenHitEntity(Entity entity) {
 		super.doWhenHitEntity(entity);
-		hasHitEntity = true;
 		entity.igniteForSeconds(6);
 
 		if (entity.level() instanceof ServerLevel serverLevel) {
@@ -136,62 +95,20 @@ public class FlareEntity extends BulletEntity implements ItemSupplier {
 	}
 
 	@Override
-	public void addAdditionalSaveData(ValueOutput valueOutput) {
-		super.addAdditionalSaveData(valueOutput);
-
-		if (!lightPositions.isEmpty()) {
-			int[] xPositions = new int[lightPositions.size()];
-			int[] yPositions = new int[lightPositions.size()];
-			int[] zPositions = new int[lightPositions.size()];
-			for (BlockPos pos : lightPositions) {
-				xPositions[lightPositions.indexOf(pos)] = pos.getX();
-				yPositions[lightPositions.indexOf(pos)] = pos.getY();
-				zPositions[lightPositions.indexOf(pos)] = pos.getZ();
-			}
-
-			valueOutput.putIntArray("xPositions", xPositions);
-			valueOutput.putIntArray("yPositions", yPositions);
-			valueOutput.putIntArray("zPositions", zPositions);
-		}
-	}
-
-	@Override
-	public void readAdditionalSaveData(ValueInput valueInput) {
-		super.readAdditionalSaveData(valueInput);
-
-		int[] xPositions = valueInput.getIntArray("xPositions").orElse(null);
-		int[] yPositions = valueInput.getIntArray("yPositions").orElse(null);
-		int[] zPositions = valueInput.getIntArray("zPositions").orElse(null);
-
-		// Each item in xPositions should match an entry in y/zPositions, so build a list of BlockPos
-		// with each individual position
-		if (xPositions != null && yPositions != null && zPositions != null) {
-			for (int i = 0; i < xPositions.length; i++) {
-				BlockPos pos = new BlockPos(xPositions[i], yPositions[i], zPositions[i]);
-				lightPositions.add(pos);
-			}
-		}
-	}
-
-	@Override
 	protected void defineSynchedData(SynchedEntityData.Builder builder) {
 		super.defineSynchedData(builder);
 	}
 
-	@Override
-	public void remove(RemovalReason removalReason) {
-		super.remove(removalReason);
-
-		// Remove all lights before dying
-		if (!lightPositions.isEmpty()) {
-			for (BlockPos pos : lightPositions) {
-				if (level().getBlockState(pos) == lightState) {
-					level().removeBlock(pos, false);
-				}
-			}
-
-			lightPositions.clear();
+	/// How brightly the flare is lighting its surroundings, from 0 to 1. It runs at full strength, then fades over the
+	/// last few seconds of its life. The glow itself is drawn client-side by `FlareLightPass`.
+	///
+	/// @return the light intensity
+	public float getLightIntensity() {
+		if (explodeDelay >= 0) {
+			return 1.0F;
 		}
+
+		return Mth.clamp(deathDelay / (float) FADE_TICKS, 0.0F, 1.0F);
 	}
 
 	private void aggroNearbyMinutemen(ServerLevel serverLevel) {

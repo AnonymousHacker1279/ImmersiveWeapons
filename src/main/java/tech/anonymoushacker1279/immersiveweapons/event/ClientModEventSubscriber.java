@@ -40,6 +40,7 @@ import tech.anonymoushacker1279.immersiveweapons.client.gui.screen.CelestialAlta
 import tech.anonymoushacker1279.immersiveweapons.client.gui.screen.StarForgeScreen;
 import tech.anonymoushacker1279.immersiveweapons.client.model.*;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.*;
+import tech.anonymoushacker1279.immersiveweapons.client.renderer.FlareLightPass;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact.BulletImpactParticle;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.damage_indicator.DamageIndicatorParticle;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.damage_indicator.DamageIndicatorParticleGroup;
@@ -337,6 +338,8 @@ public class ClientModEventSubscriber {
 	public static void registerRenderPipelines(RegisterRenderPipelinesEvent event) {
 		event.registerPipeline(GunSmokeParticle.PIPELINE);
 		event.registerOitPipelineSet(GunSmokeParticle.OIT_PIPELINES);
+		event.registerPipeline(FlareLightPass.PIPELINE);
+		event.registerPipeline(FlareLightPass.FLAT_PIPELINE);
 		event.registerPipeline(SmokeGrenadeParticle.PIPELINE);
 		event.registerOitPipelineSet(SmokeGrenadeParticle.OIT_PIPELINES);
 	}

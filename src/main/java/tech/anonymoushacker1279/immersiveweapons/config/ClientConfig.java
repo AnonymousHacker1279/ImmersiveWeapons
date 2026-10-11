@@ -7,6 +7,7 @@ public class ClientConfig {
 	public final ModConfigSpec.BooleanValue teslaArmorEffectSound;
 	public final ModConfigSpec.IntValue smokeGrenadeParticles;
 	public final ModConfigSpec.BooleanValue fancySmokeGrenadeParticles;
+	public final ModConfigSpec.BooleanValue flareDynamicLighting;
 	public final ModConfigSpec.IntValue gunShotBloodParticles;
 	public final ModConfigSpec.BooleanValue darkModeFlashbangs;
 	public final ModConfigSpec.BooleanValue gunSuppressInteractionWhenCrouching;
@@ -29,6 +30,10 @@ public class ClientConfig {
 		fancySmokeGrenadeParticles = builder
 				.comment("Render smoke grenade particles at 66% of the regular size, spawn 3x more, and add translucency. This will negatively impact performance, but make smoke grenades appear more realistic.")
 				.define("fancySmokeGrenadeParticles", false);
+
+		flareDynamicLighting = builder
+				.comment("Light up the surroundings of flares with a smooth post-processing effect. This only affects visuals, not mob spawning.")
+				.define("flareDynamicLighting", true);
 
 		gunShotBloodParticles = builder
 				.comment("Set the number of blood particles created when entities are shot")
