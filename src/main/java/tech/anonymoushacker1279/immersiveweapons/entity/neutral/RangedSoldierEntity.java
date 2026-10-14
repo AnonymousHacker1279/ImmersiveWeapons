@@ -39,10 +39,15 @@ public abstract class RangedSoldierEntity extends SoldierEntity implements Range
 
 	/// How many shots worth of ammunition and powder a soldier starts with, and the amount it stops looking for more
 	/// at. Ammunition is counted per shot, so a firearm that fires several balls at once gets proportionally more.
-	public static final int STARTING_SHOTS = 16;
+	public static final int STARTING_SHOTS = 8;
+
+	/// How often a soldier regains ammunition and powder, and how many shots it gets back each time.
+	private static final int SUPPLY_REGEN_INTERVAL = 60 * 20;
+	private static final int SUPPLY_REGEN_SHOTS = 4;
 
 	private final SimpleContainer supply = new SimpleContainer(6);
 	private final MeleeAttackGoal meleeAttackGoal = new MeleeAttackGoal(this, 1.1D, false);
+	private int ticksUntilSupplyRegen = SUPPLY_REGEN_INTERVAL;
 
 	protected RangedSoldierEntity(EntityType<? extends PathfinderMob> entityType, Level level, List<Class<? extends Entity>> ignoresDamageFrom) {
 		super(entityType, level, ignoresDamageFrom);
@@ -202,6 +207,43 @@ public abstract class RangedSoldierEntity extends SoldierEntity implements Range
 
 		supply.addItem(new ItemStack(getSupplyAmmunition(getGunItem()), getStartingAmmunition(getGunItem())));
 		supply.addItem(getPowderType().powder().copyWithCount(STARTING_SHOTS));
+	}
+
+	@Override
+	public void aiStep() {
+		super.aiStep();
+
+		if (level() instanceof ServerLevel && usesSupply()) {
+			ticksUntilSupplyRegen--;
+			if (ticksUntilSupplyRegen <= 0) {
+				ticksUntilSupplyRegen = SUPPLY_REGEN_INTERVAL;
+				regenerateSupply();
+			}
+		}
+	}
+
+	/// Restore a few shots' worth of ammunition and powder, without going past a full supply.
+	private void regenerateSupply() {
+		if (!(getFirearm().getItem() instanceof AbstractGunItem gunItem)) {
+			return;
+		}
+
+		int ammoMissing = getStartingAmmunition(gunItem) - countSupply(gunItem::isAmmunition);
+		int ammoToAdd = Math.min(ammoMissing, SUPPLY_REGEN_SHOTS * Math.max(1, gunItem.getMaxBulletsToFire()));
+		if (ammoToAdd > 0) {
+			ItemStack ammo = new ItemStack(getSupplyAmmunition(gunItem), ammoToAdd);
+			if (supply.canAddItem(ammo)) {
+				supply.addItem(ammo);
+			}
+		}
+
+		int powderToAdd = Math.min(STARTING_SHOTS - countSupply(AbstractGunItem::isPowder), SUPPLY_REGEN_SHOTS);
+		if (powderToAdd > 0) {
+			ItemStack powder = getPowderType().powder().copyWithCount(powderToAdd);
+			if (supply.canAddItem(powder)) {
+				supply.addItem(powder);
+			}
+		}
 	}
 
 	@Override
