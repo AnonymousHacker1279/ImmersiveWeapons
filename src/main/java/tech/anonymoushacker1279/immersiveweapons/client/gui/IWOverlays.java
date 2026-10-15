@@ -3,10 +3,13 @@ package tech.anonymoushacker1279.immersiveweapons.client.gui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
 import net.neoforged.neoforge.client.gui.GuiLayer;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.client.GunAimClient;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.overlays.ScopeOverlay;
 import tech.anonymoushacker1279.immersiveweapons.init.DataComponentTypeRegistry;
+import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
 
 public class IWOverlays {
 
@@ -20,7 +23,12 @@ public class IWOverlays {
 			return;
 		}
 
-		if (MINECRAFT.player.getUseItem().get(DataComponentTypeRegistry.SCOPE) != null) {
+		InteractionHand gunHand = AbstractGunItem.getGunHand(MINECRAFT.player);
+		boolean scoped = gunHand != null
+				&& GunAimClient.isAiming()
+				&& MINECRAFT.player.getItemInHand(gunHand).get(DataComponentTypeRegistry.SCOPE) != null;
+
+		if (scoped) {
 			scopeScale = Mth.lerp(0.25f * deltaTracker.getGameTimeDeltaTicks(), scopeScale, 1.125f);
 		} else {
 			scopeScale = Mth.lerp(2.25f * deltaTracker.getGameTimeDeltaTicks(), scopeScale, 0.0f);

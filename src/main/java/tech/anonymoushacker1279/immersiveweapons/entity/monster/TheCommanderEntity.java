@@ -235,6 +235,12 @@ public class TheCommanderEntity extends DyingSoldierEntity implements AttackerTr
 		return ItemRegistry.HAND_CANNON.get();
 	}
 
+	/// The Commander never runs out of ammunition.
+	@Override
+	protected boolean usesSupply() {
+		return false;
+	}
+
 	@Override
 	protected PowderType getPowderType() {
 		return new PowderType(Items.GUNPOWDER.getDefaultInstance());

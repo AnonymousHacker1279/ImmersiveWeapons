@@ -1,15 +1,16 @@
 package tech.anonymoushacker1279.immersiveweapons.entity.ai.goal;
 
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.monster.RangedAttackMob;
-import net.minecraft.world.entity.projectile.ProjectileUtil;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeCloudVolume;
+import tech.anonymoushacker1279.immersiveweapons.entity.neutral.RangedSoldierEntity;
 import tech.anonymoushacker1279.immersiveweapons.item.gun.AbstractGunItem;
 
 import java.util.EnumSet;
 
-public class RangedGunAttackGoal<T extends Mob & RangedAttackMob> extends Goal {
+/// Keeps a soldier at range from its target and fires a loaded firearm at it. Reloading is handled separately by
+/// `ReloadFirearmGoal`, so the soldier keeps moving and aiming while it reloads.
+public class RangedGunAttackGoal<T extends RangedSoldierEntity> extends Goal {
 
 	private final T mob;
 	private final double speedModifier;
@@ -21,6 +22,7 @@ public class RangedGunAttackGoal<T extends Mob & RangedAttackMob> extends Goal {
 	private boolean strafingBackwards;
 	private int strafingTime = -1;
 
+	/// @param attackInterval ticks to wait after a shot before the next, on top of the reload
 	public RangedGunAttackGoal(T mob, double speedModifier, int attackInterval, float attackRadius) {
 		this.mob = mob;
 		this.speedModifier = speedModifier;
@@ -36,7 +38,7 @@ public class RangedGunAttackGoal<T extends Mob & RangedAttackMob> extends Goal {
 
 	@Override
 	public boolean canUse() {
-		return this.mob.getTarget() != null && this.isHoldingGun();
+		return this.mob.getTarget() != null && this.isHoldingGun() && this.mob.canFireOrReload();
 	}
 
 	protected boolean isHoldingGun() {
@@ -61,7 +63,6 @@ public class RangedGunAttackGoal<T extends Mob & RangedAttackMob> extends Goal {
 		mob.setAggressive(false);
 		seeTime = 0;
 		attackTime = -1;
-		mob.stopUsingItem();
 	}
 
 	@Override
@@ -120,19 +121,14 @@ public class RangedGunAttackGoal<T extends Mob & RangedAttackMob> extends Goal {
 				mob.getLookControl().setLookAt(target, 30.0F, 30.0F);
 			}
 
-			if (mob.isUsingItem()) {
-				if (!hasLineOfSight && seeTime < -60) {
-					mob.stopUsingItem();
-				} else if (hasLineOfSight) {
-					int i = mob.getTicksUsingItem();
-					if (i >= 20) {
-						mob.stopUsingItem();
-						mob.performRangedAttack(target, 1);
-						attackTime = attackIntervalMin;
-					}
-				}
-			} else if (--attackTime <= 0 && seeTime >= -60) {
-				mob.startUsingItem(ProjectileUtil.getWeaponHoldingHand(mob, AbstractGunItem.class::isInstance));
+			if (attackTime > 0) {
+				--attackTime;
+			}
+
+			// Fire as soon as the firearm is loaded and the target is in sight
+			if (attackTime <= 0 && hasLineOfSight && seeTime >= 5 && mob.isFirearmLoaded()) {
+				mob.performRangedAttack(target, 1);
+				attackTime = attackIntervalMin;
 			}
 		}
 	}

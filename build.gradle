@@ -2,7 +2,7 @@ plugins {
 	id 'java-library'
 	id 'maven-publish'
 	id 'net.neoforged.moddev' version '2.0.148'
-	id "com.hypherionmc.modutils.modpublisher" version "2.2.2"
+	id "com.hypherionmc.modutils.modpublisher" version "2.2.3"
 	id 'idea'
 	id 'tech.anonymoushacker1279.optimization-utils' version '1.0.0'
 }
@@ -31,6 +31,19 @@ repositories {
 	maven {
 		name = "Jared's maven"
 		url = "https://maven.blamejared.com/"
+	}
+	maven {
+		name = "RedlanceMinecraft"
+		url = "https://repo.redlance.org/public"
+	}
+	exclusiveContent {
+		forRepository {
+			maven {
+				name = 'GeckoLib'
+				url = 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+			}
+		}
+		filter { includeGroupAndSubgroups('com.geckolib') }
 	}
 }
 
@@ -143,6 +156,17 @@ dependencies {
 	// Include TerraBlender
 	implementation "com.github.glitchfiend:TerraBlender-neoforge:${terrablender_version}"
 
+	// Include PlayerAnimationLib
+	implementation("com.zigythebird.playeranim:PlayerAnimationLibNeo:${pal_version}") {
+		// Versions of these are pinned by Minecraft/NeoForge; PAL's newer requirements conflict with them
+		exclude group: 'org.slf4j'
+		exclude group: 'it.unimi.dsi'
+		exclude group: 'io.netty'
+	}
+
+	// Include GeckoLib
+	implementation "com.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_version}"
+
 	// Include JEI
 	compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
 	runtimeOnly "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
@@ -232,12 +256,12 @@ if (file("RELEASE_NOTES.md").exists()) {
 
 		curseDepends {
 			optional "immersive-weapons-compatibility-bridge"
-			required "terrablender-neoforge", "openportals"
+			required "terrablender-neoforge", "openportals", "player-animation-library", "geckolib"
 		}
 
 		modrinthDepends {
 			optional "immersive-weapons-compatibility-bridge"
-			required "terrablender", "openportals"
+			required "terrablender", "openportals", "player-animation-library", "geckolib"
 		}
 	}
 } else {

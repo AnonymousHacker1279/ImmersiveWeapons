@@ -31,7 +31,7 @@ import java.util.function.Supplier;
 
 public class BlockLootTables extends BlockLootSubProvider {
 
-	protected BlockLootTables(LootTableSubProvider.Context output) {
+	public BlockLootTables(LootTableSubProvider.Context output) {
 		super(Set.of(), FeatureFlags.REGISTRY.allFlags(), output);
 	}
 
@@ -92,8 +92,7 @@ public class BlockLootTables extends BlockLootSubProvider {
 		dropSelf(BlockRegistry.PANIC_ALARM.get());
 		dropSelf(BlockRegistry.PUNJI_STICKS.get());
 		dropSelf(BlockRegistry.RAW_COBALT_BLOCK.get());
-		dropSelf(BlockRegistry.SMALL_PARTS_TABLE.get());
-		dropSelf(BlockRegistry.AMMUNITION_TABLE.get());
+		dropSelf(BlockRegistry.AMMUNITION_FORGE.get());
 		dropSelf(BlockRegistry.SPIKE_TRAP.get());
 		dropSelf(BlockRegistry.SPOTLIGHT.get());
 		dropSelf(BlockRegistry.STRIPPED_BURNED_OAK_LOG.get());

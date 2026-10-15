@@ -295,7 +295,7 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 		int tagStage = 0;
 		int tier = 0;
 		for (ResourceKey<Block> block : blocks) {
-			if (block == BlockRegistry.SMALL_PARTS_TABLE.key()) {
+			if (block == BlockRegistry.STRIPPED_BURNED_OAK_WOOD.key()) {
 				tagStage = 1;
 			} else if (block == BlockRegistry.SANDBAG.key()) {
 				tagStage = 2;
@@ -306,7 +306,7 @@ public class BlockTagsGenerator extends BlockTagsProvider {
 			}
 
 			if (block == BlockRegistry.BULLETPROOF_GLASS.key()
-					|| block == BlockRegistry.SMALL_PARTS_TABLE.key()
+					|| block == BlockRegistry.STRIPPED_BURNED_OAK_WOOD.key()
 					|| block == BlockRegistry.SANDBAG.key()
 					|| block == BlockRegistry.STARDUST_LEAVES.key()) {
 

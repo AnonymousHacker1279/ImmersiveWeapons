@@ -47,7 +47,10 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.entity.Mob;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.entity.living.LivingChangeTargetEvent;
+import tech.anonymoushacker1279.immersiveweapons.entity.projectile.SmokeCloudVolume;
 import org.jspecify.annotations.Nullable;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.AddServerReloadListenersEvent;
@@ -199,6 +202,15 @@ public class ForgeEventSubscriber {
 		// any spare armor in the inventory) would tick the same effect again.
 		if (player.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof TickableArmor tickable) {
 			tickable.playerTick(player.level(), player);
+		}
+	}
+
+	/// Smoke hides things from mobs: nothing inside it can be picked as a target, and nothing inside it can pick one.
+	@SubscribeEvent
+	public static void livingChangeTargetEvent(LivingChangeTargetEvent event) {
+		if (event.getEntity() instanceof Mob mob && event.getNewAboutToBeSetTarget() != null
+				&& SmokeCloudVolume.isTargetHidden(mob, event.getNewAboutToBeSetTarget())) {
+			event.setNewAboutToBeSetTarget(null);
 		}
 	}
 
@@ -593,6 +605,6 @@ public class ForgeEventSubscriber {
 	@SubscribeEvent
 	public static void onDatapackSyncEvent(OnDatapackSyncEvent event) {
 		ImmersiveWeapons.LOGGER.info("Syncing datapack objects");
-		event.sendRecipes(RecipeTypeRegistry.STAR_FORGE_RECIPE_TYPE.get(), RecipeTypeRegistry.SMALL_PARTS_RECIPE_TYPE.get());
+		event.sendRecipes(RecipeTypeRegistry.STAR_FORGE_RECIPE_TYPE.get());
 	}
 }

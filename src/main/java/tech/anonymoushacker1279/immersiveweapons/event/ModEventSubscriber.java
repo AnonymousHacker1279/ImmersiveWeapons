@@ -87,7 +87,6 @@ public class ModEventSubscriber {
 		registrar.playToServer(VoidArmorPayload.TYPE, VoidArmorPayload.STREAM_CODEC, VoidArmorPayloadHandler.getInstance()::handleData);
 		registrar.playToClient(AstralCrystalPayload.TYPE, AstralCrystalPayload.STREAM_CODEC, AstralCrystalPayloadHandler.getInstance()::handleData);
 		registrar.playToClient(SyncPlayerDataPayload.TYPE, SyncPlayerDataPayload.STREAM_CODEC, SyncPlayerDataPayloadHandler.getInstance()::handleData);
-		registrar.playToServer(AmmunitionTablePayload.TYPE, AmmunitionTablePayload.STREAM_CODEC, AmmunitionTablePayloadHandler.getInstance()::handleData);
 		registrar.playToServer(StarForgeMenuPayload.TYPE, StarForgeMenuPayload.STREAM_CODEC, StarForgeMenuPayloadHandler.getInstance()::handleData);
 		registrar.playToClient(StarForgeUpdateRecipesPayload.TYPE, StarForgeUpdateRecipesPayload.STREAM_CODEC, StarForgeUpdateRecipesPayloadHandler.getInstance()::handleData);
 		registrar.playToClient(LocalSoundPayload.TYPE, LocalSoundPayload.STREAM_CODEC, LocalSoundPayloadHandler.getInstance()::handleData);
@@ -96,6 +95,9 @@ public class ModEventSubscriber {
 		registrar.playToClient(SyncAccessoryDataPayload.TYPE, SyncAccessoryDataPayload.STREAM_CODEC, SyncAccessoryDataPayloadHandler.getInstance()::handleData);
 		registrar.playToClient(ArrowGravityPayload.TYPE, ArrowGravityPayload.STREAM_CODEC, ArrowGravityPayloadHandler.getInstance()::handleData);
 		registrar.playToClient(DamageIndicatorPayload.TYPE, DamageIndicatorPayload.STREAM_CODEC, DamageIndicatorPayloadHandler.getInstance()::handleData);
+		registrar.playToClient(GunAnimationPayload.TYPE, GunAnimationPayload.STREAM_CODEC, GunAnimationPayloadHandler.getInstance()::handleData);
+		registrar.playToServer(GunTriggerPayload.TYPE, GunTriggerPayload.STREAM_CODEC, GunTriggerPayloadHandler.getInstance()::handleData);
+		registrar.playToServer(GunAimPayload.TYPE, GunAimPayload.STREAM_CODEC, GunAimPayloadHandler.getInstance()::handleData);
 	}
 
 	@SubscribeEvent

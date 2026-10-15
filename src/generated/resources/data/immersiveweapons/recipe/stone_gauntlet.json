@@ -3,7 +3,7 @@
   "category": "equipment",
   "key": {
     "a": "#minecraft:stone_tool_materials",
-    "b": "immersiveweapons:gauntlet_scaffolding"
+    "b": "immersiveweapons:cloth_scrap"
   },
   "pattern": [
     "aaa",

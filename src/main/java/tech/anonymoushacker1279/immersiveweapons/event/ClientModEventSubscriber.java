@@ -30,21 +30,22 @@ import tech.anonymoushacker1279.immersiveweapons.block.core.WoodTypes;
 import tech.anonymoushacker1279.immersiveweapons.block.skull.CustomSkullTypes;
 import tech.anonymoushacker1279.immersiveweapons.client.ClientExtensions;
 import tech.anonymoushacker1279.immersiveweapons.client.CustomArmPoses;
+import tech.anonymoushacker1279.immersiveweapons.client.GunAimOffsets;
+import tech.anonymoushacker1279.immersiveweapons.client.GunPlayerAnimations;
 import tech.anonymoushacker1279.immersiveweapons.client.IWKeyBinds;
 import tech.anonymoushacker1279.immersiveweapons.client.ModelLayerLocations;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.IWOverlays;
-import tech.anonymoushacker1279.immersiveweapons.client.gui.screen.AmmunitionTableScreen;
+import tech.anonymoushacker1279.immersiveweapons.client.gui.screen.AmmunitionForgeScreen;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.screen.CelestialAltarScreen;
-import tech.anonymoushacker1279.immersiveweapons.client.gui.screen.SmallPartsTableScreen;
 import tech.anonymoushacker1279.immersiveweapons.client.gui.screen.StarForgeScreen;
 import tech.anonymoushacker1279.immersiveweapons.client.model.*;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.*;
+import tech.anonymoushacker1279.immersiveweapons.client.renderer.FlareLightPass;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.bullet_impact.BulletImpactParticle;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.damage_indicator.DamageIndicatorParticle;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.damage_indicator.DamageIndicatorParticleGroup;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.smoke_grenade.SmokeGrenadeParticle;
 import tech.anonymoushacker1279.immersiveweapons.client.particle.wisp.WispParticle;
-import tech.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.AmmunitionTableRenderer;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.AstralCrystalRenderer;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.CommanderPedestalRenderer;
 import tech.anonymoushacker1279.immersiveweapons.client.renderer.blockentity.ShelfRenderer;
@@ -70,6 +71,8 @@ public class ClientModEventSubscriber {
 		initializeCustomItemProperties();
 
 		event.enqueueWork(() -> {
+			GunPlayerAnimations.register();
+
 			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.MINUTEMAN, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
 					"textures/entity/heads/minuteman.png"));
 			SkullBlockRenderer.SKIN_BY_TYPE.put(CustomSkullTypes.FIELD_MEDIC, Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
@@ -96,8 +99,7 @@ public class ClientModEventSubscriber {
 
 	@SubscribeEvent
 	public static void registerMenuScreensEvent(RegisterMenuScreensEvent event) {
-		event.register(MenuTypeRegistry.SMALL_PARTS_TABLE_MENU.get(), SmallPartsTableScreen::new);
-		event.register(MenuTypeRegistry.AMMUNITION_TABLE_MENU.get(), AmmunitionTableScreen::new);
+		event.register(MenuTypeRegistry.AMMUNITION_FORGE_MENU.get(), AmmunitionForgeScreen::new);
 		event.register(MenuTypeRegistry.STAR_FORGE_MENU.get(), StarForgeScreen::new);
 		event.register(MenuTypeRegistry.CELESTIAL_ALTAR_MENU.get(), CelestialAltarScreen::new);
 	}
@@ -293,7 +295,6 @@ public class ClientModEventSubscriber {
 		event.registerBlockEntityRenderer(BlockEntityRegistry.CUSTOM_HANGING_SIGN_ENTITY.get(), HangingSignRenderer::new);
 		event.registerBlockEntityRenderer(BlockEntityRegistry.CUSTOM_SKULL_BLOCK_ENTITY.get(), SkullBlockRenderer::new);
 		event.registerBlockEntityRenderer(BlockEntityRegistry.ASTRAL_CRYSTAL_BLOCK_ENTITY.get(), (context) -> new AstralCrystalRenderer(context.itemModelResolver()));
-		event.registerBlockEntityRenderer(BlockEntityRegistry.AMMUNITION_TABLE_BLOCK_ENTITY.get(), (context) -> new AmmunitionTableRenderer(context.itemModelResolver()));
 		event.registerBlockEntityRenderer(BlockEntityRegistry.COMMANDER_PEDESTAL_BLOCK_ENTITY.get(), (context) -> new CommanderPedestalRenderer(context.itemModelResolver()));
 	}
 
@@ -334,6 +335,16 @@ public class ClientModEventSubscriber {
 	///
 	/// @param event the `ParticleFactoryRegisterEvent` instance
 	@SubscribeEvent
+	public static void registerRenderPipelines(RegisterRenderPipelinesEvent event) {
+		event.registerPipeline(GunSmokeParticle.PIPELINE);
+		event.registerOitPipelineSet(GunSmokeParticle.OIT_PIPELINES);
+		event.registerPipeline(FlareLightPass.PIPELINE);
+		event.registerPipeline(FlareLightPass.FLAT_PIPELINE);
+		event.registerPipeline(SmokeGrenadeParticle.PIPELINE);
+		event.registerOitPipelineSet(SmokeGrenadeParticle.OIT_PIPELINES);
+	}
+
+	@SubscribeEvent
 	public static void registerParticleFactories(RegisterParticleProvidersEvent event) {
 		ImmersiveWeapons.LOGGER.info("Registering particle factories");
 
@@ -341,6 +352,7 @@ public class ClientModEventSubscriber {
 		event.registerSpriteSet(ParticleTypesRegistry.BLOOD_PARTICLE.get(), BloodParticle.Provider::new);
 		event.registerSpriteSet(ParticleTypesRegistry.BULLET_IMPACT_PARTICLE.get(), BulletImpactParticle.Provider::new);
 		event.registerSpriteSet(ParticleTypesRegistry.MUZZLE_FLASH_PARTICLE.get(), MuzzleFlashParticle.Provider::new);
+		event.registerSpriteSet(ParticleTypesRegistry.GUN_SMOKE_PARTICLE.get(), GunSmokeParticle.Provider::new);
 		event.registerSpriteSet(ParticleTypesRegistry.MOONGLOW_PARTICLE.get(), MoonglowParticle.Provider::new);
 		event.registerSpriteSet(ParticleTypesRegistry.STARDUST_LEAVES_PARTICLE.get(), StardustLeavesParticle.Provider::new);
 		event.registerSpriteSet(ParticleTypesRegistry.DEADMANS_DESERT_AMBIENT_PARTICLE.get(), DeadmansDesertAmbientParticle.Provider::new);
@@ -370,6 +382,8 @@ public class ClientModEventSubscriber {
 	public static void registerKeyBinds(RegisterKeyMappingsEvent event) {
 		ImmersiveWeapons.LOGGER.info("Registering key bindings");
 
+		event.register(IWKeyBinds.FIRE);
+		event.register(IWKeyBinds.AIM);
 		event.register(IWKeyBinds.TOGGLE_ARMOR_EFFECT);
 		event.register(IWKeyBinds.ARMOR_ACTION);
 	}
@@ -382,6 +396,11 @@ public class ClientModEventSubscriber {
 				BlockRegistry.PITFALL.get(),
 				BlockRegistry.BEAR_TRAP.get(),
 				BlockRegistry.LANDMINE.get());
+	}
+
+	@SubscribeEvent
+	public static void addClientReloadListenersEvent(AddClientReloadListenersEvent event) {
+		event.addListener(GunAimOffsets.ID, new GunAimOffsets());
 	}
 
 	@SubscribeEvent

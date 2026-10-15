@@ -26,7 +26,6 @@ public class SoundEventRegistry {
 	public static final DeferredHolder<SoundEvent, SoundEvent> FLINTLOCK_PISTOL_FIRE = register("flintlock_pistol_fire");
 	public static final DeferredHolder<SoundEvent, SoundEvent> BULLET_WHIZZ = register("bullet_whizz");
 	public static final DeferredHolder<SoundEvent, SoundEvent> FLINTLOCK_PISTOL_MISFIRE = register("flintlock_pistol_misfire");
-	public static final DeferredHolder<SoundEvent, SoundEvent> SMALL_PARTS_TABLE_USED = register("small_parts_table_used");
 	public static final DeferredHolder<SoundEvent, SoundEvent> SMOKE_GRENADE_HISS = register("smoke_grenade_hiss");
 	public static final DeferredHolder<SoundEvent, SoundEvent> FLASHBANG_EXPLODE = register("flashbang_explode");
 	public static final DeferredHolder<SoundEvent, SoundEvent> FLASHBANG_RINGING = register("flashbang_ringing");

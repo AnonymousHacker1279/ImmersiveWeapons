@@ -1,17 +1,32 @@
 package tech.anonymoushacker1279.immersiveweapons.item.gun;
 
+import com.geckolib.animatable.GeoItem;
+import com.geckolib.animatable.client.GeoRenderProvider;
+import com.geckolib.animatable.instance.AnimatableInstanceCache;
+import com.geckolib.animatable.manager.AnimatableManager;
+import com.geckolib.animation.AnimationController;
+import com.geckolib.animation.RawAnimation;
+import com.geckolib.animation.object.PlayState;
+import com.geckolib.renderer.GeoItemRenderer;
+import com.geckolib.util.GeckoLibUtil;
+import com.google.common.base.Suppliers;
 import net.minecraft.core.Holder.Reference;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.HolderGetter;
-import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.RandomSource;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -20,6 +35,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.registries.datamaps.DataMapType;
 import org.jetbrains.annotations.Nullable;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
@@ -31,13 +47,35 @@ import tech.anonymoushacker1279.immersiveweapons.event.game_effects.AccessoryMan
 import tech.anonymoushacker1279.immersiveweapons.init.*;
 import tech.anonymoushacker1279.immersiveweapons.item.accessory.Accessory;
 import tech.anonymoushacker1279.immersiveweapons.item.projectile.BulletItem;
-import tech.anonymoushacker1279.immersiveweapons.util.ArrowAttributeAccessor;
+import tech.anonymoushacker1279.immersiveweapons.network.payload.GunAnimationPayload;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
-public abstract class AbstractGunItem extends Item {
+public abstract class AbstractGunItem extends Item implements GeoItem {
+
+	/// Name of the controller (and triggerable animation) used for firing/reload animations.
+	public static final String ACTIONS_CONTROLLER = "actions";
+	/// Playback speeds available to the reload animation, in ascending order. See `registerControllers`.
+	/// Registry paths of firearms that have a player arm animation at `player_animations/<path>_reload`.
+	private static final Set<String> PLAYER_RELOAD_ANIMATIONS = Set.of("flintlock_pistol", "blunderbuss", "musket", "flare_gun", "hand_cannon", "dragons_breath_cannon");
+	private static final double[] RELOAD_SPEED_STEPS = {0.25, 0.35, 0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0, 2.5, 3.0, 4.0};
+	public static final String RELOAD_ANIMATION = "reload";
+	public static final String FIRE_ANIMATION = "fire";
+	/// Index in `RELOAD_SPEED_STEPS` of normal (1x) speed, used for the `fire` animation.
+	private static final int NORMAL_SPEED_STEP = 4;
+	/// Camera recoil is scaled down so it doesn't hide the firing animations.
+	private static final float CAMERA_RECOIL_SCALE = 0.35f;
+	/// Shot spread is multiplied by this while aiming.
+	private static final float AIM_INACCURACY_SCALE = 0.35f;
+	/// How long creative players must hold to reload, at most.
+	private static final int CREATIVE_RELOAD_TICKS = 10;
+
+	private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
 
 	public static final DataMapType<Item, FlammablePowder> POWDER_TYPE = DataMapType.builder(
 					Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID, "flammable_powder"),
@@ -51,10 +89,161 @@ public abstract class AbstractGunItem extends Item {
 	protected static final Predicate<ItemStack> DRAGON_FIREBALLS = (stack) -> stack.is(IWItemTagGroups.DRAGON_FIREBALLS);
 	protected static final Predicate<ItemStack> FLAMMABLE_POWDERS = (stack) -> stack.typeHolder().getData(POWDER_TYPE) != null;
 
-	final DataComponentType<Float> DENSITY_MODIFIER = DataComponentTypeRegistry.DENSITY_MODIFIER.get();
-
 	protected AbstractGunItem(Properties properties) {
 		super(properties);
+		// Required for triggered animations to be synced to clients
+		GeoItem.registerSyncedAnimatable(this);
+	}
+
+	@Override
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+		// Trigger-only controller; the item model decides whether it is ever rendered via GeckoLib.
+		// The animation name must match an entry in the item's `.animation.json` file.
+		// A triggered animation cannot carry a speed, and cooldown reductions (accessories, Rapid Fire) are only known
+		// to the shooter, so one controller per speed step is registered and the server picks the right one.
+		for (int i = 0; i < RELOAD_SPEED_STEPS.length; i++) {
+			controllers.add(new AnimationController<AbstractGunItem>(ACTIONS_CONTROLLER + "_" + i, state -> PlayState.STOP)
+					.setAnimationSpeed(RELOAD_SPEED_STEPS[i])
+					.triggerableAnim(RELOAD_ANIMATION, RawAnimation.begin().thenPlay(RELOAD_ANIMATION))
+					.triggerableAnim(FIRE_ANIMATION, RawAnimation.begin().thenPlay(FIRE_ANIMATION)));
+		}
+	}
+
+	/// Create the GeckoLib renderer for this item. Override to customize rendering (e.g., hiding optional bones).
+	protected GeoItemRenderer<?> createGeoItemRenderer() {
+		return new GeoItemRenderer<>(this);
+	}
+
+	/// The length of the `reload` animation in ticks, as authored in the item's `.animation.json` file. Animations
+	/// are authored to the cooldown, capped at 10 seconds; the playback speed is scaled to the actual cooldown.
+	public int getReloadAnimationTicks() {
+		return Math.min(getCooldown(), 200);
+	}
+
+	/// Get the cooldown in ticks after firing, with accessory and Rapid Fire reductions applied.
+	public int getEffectiveCooldown(ItemStack gun, Player player) {
+		HolderGetter<Enchantment> enchantmentGetter = player.registryAccess().lookup(Registries.ENCHANTMENT).orElseThrow();
+		Optional<Reference<Enchantment>> rapidFire = enchantmentGetter.get(IWEnchantments.RAPID_FIRE);
+
+		// Reduce cooldown in certain conditions
+		float reductionFactor = (float) AccessoryManager.collectEffects(AccessoryEffectTypeRegistry.FIREARM_RELOAD_SPEED.get(), player);
+
+		if (rapidFire.isPresent()) {
+			int rapidFireLevel = gun.getEnchantmentLevel(rapidFire.get());
+			reductionFactor += (0.05f * rapidFireLevel);
+		}
+
+		return (int) (getCooldown() * (1f - reductionFactor));
+	}
+
+	@Override
+	public AnimatableInstanceCache getAnimatableInstanceCache() {
+		return geoCache;
+	}
+
+	@Override
+	public void createGeoRenderer(Consumer<GeoRenderProvider> consumer) {
+		consumer.accept(new GeoRenderProvider() {
+			private final Supplier<GeoItemRenderer<?>> renderer =
+					Suppliers.memoize(AbstractGunItem.this::createGeoItemRenderer);
+
+			@Override
+			public GeoItemRenderer<?> getGeoItemRenderer() {
+				return renderer.get();
+			}
+		});
+	}
+
+	/// Whether the firearm has ammunition loaded into it.
+	public boolean isLoaded(ItemStack gun) {
+		return gun.has(DataComponentTypeRegistry.LOADED_AMMUNITION.get());
+	}
+
+	/// How long in ticks the player must hold to reload, with accessory and Rapid Fire reductions applied.
+	public int getReloadTicks(ItemStack gun, Player player) {
+		int ticks = Math.max(1, getEffectiveCooldown(gun, player));
+		return player.isCreative() ? Math.min(ticks, CREATIVE_RELOAD_TICKS) : ticks;
+	}
+
+	/// The index of the slowest speed step that still finishes the reload animation within the reload time.
+	private int getReloadSpeedStep(double neededSpeed) {
+		for (int i = 0; i < RELOAD_SPEED_STEPS.length; i++) {
+			if (RELOAD_SPEED_STEPS[i] >= neededSpeed) {
+				return i;
+			}
+		}
+
+		return RELOAD_SPEED_STEPS.length - 1;
+	}
+
+	/// Play the reload animation for everyone tracking the player. Server-side only.
+	protected void triggerReloadAnimation(ServerLevel level, Player player, InteractionHand hand, ItemStack gun) {
+		double neededSpeed = (double) getReloadAnimationTicks() / getReloadTicks(gun, player);
+		int step = getReloadSpeedStep(neededSpeed);
+
+		triggerAnim(player, GeoItem.getOrAssignId(gun, level), ACTIONS_CONTROLLER + "_" + step, RELOAD_ANIMATION);
+		sendArmAnimation(player, hand, "_reload", (float) Math.clamp(neededSpeed, 0.1d, 4.0d), false);
+	}
+
+	/// Play the fire (recoil) animation for everyone tracking the player. Server-side only.
+	protected void triggerFireAnimation(ServerLevel level, Player player, InteractionHand hand, ItemStack gun) {
+		triggerAnim(player, GeoItem.getOrAssignId(gun, level), ACTIONS_CONTROLLER + "_" + NORMAL_SPEED_STEP, FIRE_ANIMATION);
+		sendArmAnimation(player, hand, "_fire", 1.0f, false);
+	}
+
+	/// Stop a reload animation that did not complete (the item was switched or the reload released early).
+	protected void cancelReloadAnimation(ServerPlayer player, ItemStack gun) {
+		long id = GeoItem.getId(gun);
+		double neededSpeed = (double) getReloadAnimationTicks() / getReloadTicks(gun, player);
+		stopTriggeredAnim(player, id, ACTIONS_CONTROLLER + "_" + getReloadSpeedStep(neededSpeed), RELOAD_ANIMATION);
+
+		sendArmAnimation(player, player.getUsedItemHand(), "_reload", 1.0f, true);
+	}
+
+	/// Play the reload animation on a firearm held by a mob, and the matching arm animation. Server-side only.
+	///
+	/// @param holdTicks how long the mob will spend reloading, which the animation is scaled to fit
+	public void triggerMobReloadAnimation(ServerLevel level, LivingEntity mob, InteractionHand hand, ItemStack gun, int holdTicks) {
+		double neededSpeed = (double) getReloadAnimationTicks() / Math.max(1, holdTicks);
+		triggerAnim(mob, GeoItem.getOrAssignId(gun, level), ACTIONS_CONTROLLER + "_" + getReloadSpeedStep(neededSpeed), RELOAD_ANIMATION);
+		sendArmAnimation(mob, hand, "_reload", (float) Math.clamp(neededSpeed, 0.1d, 4.0d), false);
+	}
+
+	/// Stop a mob's reload animation that did not complete. Server-side only.
+	public void cancelMobReloadAnimation(LivingEntity mob, InteractionHand hand, ItemStack gun) {
+		long id = GeoItem.getId(gun);
+		for (int i = 0; i < RELOAD_SPEED_STEPS.length; i++) {
+			stopTriggeredAnim(mob, id, ACTIONS_CONTROLLER + "_" + i, RELOAD_ANIMATION);
+		}
+
+		sendArmAnimation(mob, hand, "_reload", 1.0f, true);
+	}
+
+	/// Play the fire (recoil) animation on a firearm held by a mob, and the matching arm animation. Server-side only.
+	public void triggerMobFireAnimation(ServerLevel level, LivingEntity mob, InteractionHand hand, ItemStack gun) {
+		triggerAnim(mob, GeoItem.getOrAssignId(gun, level), ACTIONS_CONTROLLER + "_" + NORMAL_SPEED_STEP, FIRE_ANIMATION);
+		sendArmAnimation(mob, hand, "_fire", 1.0f, false);
+	}
+
+	/// Send a PlayerAnimator animation (the arms) to everyone tracking the entity, if this firearm has one.
+	private void sendArmAnimation(LivingEntity entity, InteractionHand hand, String suffix, float speed, boolean stop) {
+		Identifier itemId = BuiltInRegistries.ITEM.getKey(this);
+		if (!PLAYER_RELOAD_ANIMATIONS.contains(itemId.getPath())) {
+			return;
+		}
+
+		Identifier animation = Identifier.fromNamespaceAndPath(itemId.getNamespace(), itemId.getPath() + suffix);
+
+		// Animations are authored for the gun in the left arm, so mirror them when it's in the right
+		HumanoidArm holdingArm = hand == InteractionHand.MAIN_HAND ? entity.getMainArm() : entity.getMainArm().getOpposite();
+		boolean mirrored = holdingArm == HumanoidArm.RIGHT;
+
+		GunAnimationPayload payload = new GunAnimationPayload(entity.getId(), animation, speed, mirrored, stop);
+		if (entity instanceof Player) {
+			PacketDistributor.sendToPlayersTrackingEntityAndSelf(entity, payload);
+		} else {
+			PacketDistributor.sendToPlayersTrackingEntity(entity, payload);
+		}
 	}
 
 	protected static ItemStack getHeldPredicate(LivingEntity livingEntity, Predicate<ItemStack> predicate) {
@@ -66,125 +255,208 @@ public abstract class AbstractGunItem extends Item {
 		}
 	}
 
+	/// Releasing a reload early cancels it (see `onStopUsing`). Releasing after the full reload time loads the firearm.
 	@Override
 	public boolean releaseUsing(ItemStack gun, Level level, LivingEntity livingEntity, int timeLeft) {
+		// Mobs handle their own firing
+		if (!(livingEntity instanceof Player player)) {
+			return true;
+		}
 
-		if (livingEntity instanceof Player player) {
-			boolean isCreative = player.isCreative();
-			boolean misfire = false;
-			ItemStack ammo = findAmmo(gun, livingEntity);
-			PowderType powder = findPowder(gun, livingEntity);
+		int heldTicks = getUseDuration(gun, player) - timeLeft;
+		if (heldTicks < getReloadTicks(gun, player)) {
+			return false;
+		}
 
-			// Determine the number of bullets to fire
-			int bulletsToFire = isCreative ? getMaxBulletsToFire() : getBulletsToFire(ammo);
-
-			// Roll for misfire
-			if (ammo.getItem() instanceof BulletItem<?> bullet) {
-				if (livingEntity.getRandom().nextFloat() <= bullet.misfireChance) {
-					misfire = true;
-				}
-
-				// High misfire chance when underwater
-				if (livingEntity.isUnderWater()) {
-					if (livingEntity.getRandom().nextFloat() <= 0.9f) {
-						misfire = true;
-					}
-				}
-
-				if (misfire) {
-					level.playSound(null,
-							player.getX(),
-							player.getY(),
-							player.getZ(),
-							getMisfireSound(),
-							SoundSource.PLAYERS,
-							1.0F,
-							1.0F + (-0.6f + player.getRandom().nextFloat() * 0.2f));
-
-					handleAmmoStack(gun, ammo, bulletsToFire, player);
-					handlePowderStack(powder, player);
-
-					if (!isCreative) {
-						gun.hurtAndBreak(5, player, EquipmentSlot.MAINHAND);
-					}
-				}
-			}
-
-			if (getUseDuration(gun, player) < 0) {
-				return false;
-			}
-
-			// Check if the gun can be fired
-			if (!misfire && ((!ammo.isEmpty() && powder != null) || isCreative)) {
-				// If the ammunition ingredient is empty, set it to the default.
-				// This happens when the player is in creative mode but has no ammunition.
-				if (ammo.isEmpty()) {
-					ammo = new ItemStack(defaultAmmo());
-				}
-
-				if (powder == null) {
-					powder = new PowderType(new ItemStack(defaultPowder()));
-				}
-
-				if (!level.isClientSide()) {
-					BulletItem<?> bulletItem = (BulletItem<?>) (ammo.getItem() instanceof BulletItem<?> ? ammo.getItem() : defaultAmmo());
-
-					for (int i = 0; i < bulletsToFire; ++i) {
-						BulletEntity bulletEntity;
-
-						if (MUSKET_BALLS.test(ammo)) {
-							bulletEntity = bulletItem.createBullet(level, player, gun);
-						} else if (FLARES.test(ammo)) {
-							bulletEntity = bulletItem.createFlare(level, player, gun);
-						} else if (CANNONBALLS.test(ammo)) {
-							bulletEntity = bulletItem.createCannonball(level, player, gun);
-						} else {
-							bulletEntity = bulletItem.createDragonFireball(level, player, gun);
-						}
-
-						setupFire(player, bulletEntity, gun, ammo, powder);
-						level.addFreshEntity(bulletEntity);
-					}
-				} else {
-					// Handle recoil
-					player.setYRot(player.getYRot() + (getMaxYRecoil() + level.getRandom().nextFloat() * 10f) * (level.getRandom().nextBoolean() ? 1 : -1));
-					player.setXRot(player.getXRot() + (getMaxXRecoil() + level.getRandom().nextFloat() * 0.5f));
-				}
-
-				level.playSound(null,
-						player.getX(),
-						player.getY(),
-						player.getZ(),
-						getFireSound(),
-						SoundSource.PLAYERS,
-						1.0F,
-						1.0F + (-0.3f + player.getRandom().nextFloat() * 0.5f));
-
-				handleAmmoStack(gun, ammo, bulletsToFire, player);
-				handlePowderStack(powder, player);
-
-				if (!player.isCreative()) {
-					HolderGetter<Enchantment> enchantmentGetter = player.registryAccess().lookup(Registries.ENCHANTMENT).orElseThrow();
-					Optional<Reference<Enchantment>> rapidFire = enchantmentGetter.get(IWEnchantments.RAPID_FIRE);
-
-					// Reduce cooldown in certain conditions
-					float reductionFactor = (float) AccessoryManager.collectEffects(AccessoryEffectTypeRegistry.FIREARM_RELOAD_SPEED.get(), player);
-
-					int rapidFireLevel;
-					if (rapidFire.isPresent()) {
-						rapidFireLevel = gun.getEnchantmentLevel(rapidFire.get());
-						reductionFactor += (0.05f * rapidFireLevel);
-					}
-
-					// Calculate the cooldown
-					int cooldown = (int) (getCooldown() * (1f - reductionFactor));
-
-					player.getCooldowns().addCooldown(gun, cooldown);
-				}
-			}
+		if (!level.isClientSide()) {
+			return completeReload(player, gun);
 		}
 
 		return true;
+	}
+
+	/// Cue when the reload has been held long enough, so the player knows they can release to finish loading.
+	@Override
+	public void onUseTick(Level level, LivingEntity entity, ItemStack gun, int remainingUseDuration) {
+		if (!level.isClientSide() && entity instanceof Player player && !isLoaded(gun)) {
+			int heldTicks = getUseDuration(gun, player) - remainingUseDuration;
+			if (heldTicks == getReloadTicks(gun, player)) {
+				level.playSound(null, player.getX(), player.getY(), player.getZ(),
+						getReloadReadySound(), SoundSource.PLAYERS, 0.8f, 1.0f);
+			}
+		}
+	}
+
+	/// Get the sound played when a reload has been held for long enough to complete.
+	///
+	/// @return SoundEvent
+	SoundEvent getReloadReadySound() {
+		return SoundEvents.CROSSBOW_LOADING_END.value();
+	}
+
+	/// Stopping use for any reason (switching items, releasing, etc.) without a loaded firearm cancels the reload.
+	@Override
+	public void onStopUsing(ItemStack stack, LivingEntity entity, int count) {
+		if (entity instanceof ServerPlayer player && !isLoaded(stack)) {
+			cancelReloadAnimation(player, stack);
+		}
+	}
+
+	/// Consume ammunition and powder from the player's inventory and load them into the firearm. Server-side only.
+	///
+	/// @return true if the firearm was loaded
+	protected boolean completeReload(Player player, ItemStack gun) {
+		boolean isCreative = player.isCreative();
+		ItemStack ammo = findAmmo(gun, player);
+		PowderType powder = findPowder(gun, player);
+
+		if (!isCreative && (ammo.isEmpty() || powder == null)) {
+			return false;
+		}
+
+		// If the ammunition is empty, set it to the default. This happens in creative mode with no ammunition.
+		if (ammo.isEmpty()) {
+			ammo = new ItemStack(defaultAmmo());
+		}
+
+		if (powder == null) {
+			powder = new PowderType(new ItemStack(defaultPowder()));
+		}
+
+		int bulletsToLoad = isCreative ? getMaxBulletsToFire() : getBulletsToFire(ammo);
+
+		// Copy before consuming, the inventory stack is shrunk below
+		gun.set(DataComponentTypeRegistry.LOADED_AMMUNITION.get(),
+				new LoadedAmmunition(ammo.copyWithCount(bulletsToLoad), powder.powder().copyWithCount(1)));
+
+		handleAmmoStack(gun, ammo, bulletsToLoad, player);
+		handlePowderStack(powder, player);
+
+		return true;
+	}
+
+	/// Fire the loaded ammunition.
+	public void fire(Level level, Player player, InteractionHand hand, ItemStack gun) {
+		LoadedAmmunition loaded = gun.get(DataComponentTypeRegistry.LOADED_AMMUNITION.get());
+		if (loaded == null) {
+			return;
+		}
+
+		gun.remove(DataComponentTypeRegistry.LOADED_AMMUNITION.get());
+
+		if (level.isClientSide()) {
+			// Handle recoil
+			player.setYRot(player.getYRot() + (getMaxYRecoil() + level.getRandom().nextFloat() * 10f) * (level.getRandom().nextBoolean() ? 1 : -1) * CAMERA_RECOIL_SCALE);
+			player.setXRot(player.getXRot() + (getMaxXRecoil() + level.getRandom().nextFloat() * 0.5f) * CAMERA_RECOIL_SCALE);
+			return;
+		}
+
+		if (level instanceof ServerLevel serverLevel) {
+			fireLoaded(serverLevel, player, hand, gun, loaded);
+		}
+	}
+
+	/// Fire what was loaded for any shooter, which may misfire. The loaded ammunition must already have been removed
+	/// from the firearm. Server-side only.
+	public void fireLoaded(ServerLevel level, LivingEntity shooter, InteractionHand hand, ItemStack gun, LoadedAmmunition loaded) {
+		ItemStack ammo = loaded.ammo().copy();
+		PowderType powder = isPowder(loaded.powder())
+				? new PowderType(loaded.powder().copy())
+				: new PowderType(new ItemStack(defaultPowder()));
+		int bulletsToFire = Math.max(1, ammo.getCount());
+		EquipmentSlot slot = hand == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND;
+		boolean creative = shooter instanceof Player player && player.isCreative();
+
+		// Roll for misfire
+		boolean misfire = false;
+		if (ammo.getItem() instanceof BulletItem<?> bullet) {
+			if (shooter.getRandom().nextFloat() <= bullet.misfireChance) {
+				misfire = true;
+			}
+
+			// High misfire chance when underwater
+			if (shooter.isUnderWater() && shooter.getRandom().nextFloat() <= 0.9f) {
+				misfire = true;
+			}
+		}
+
+		if (misfire) {
+			level.playSound(null,
+					shooter.getX(),
+					shooter.getY(),
+					shooter.getZ(),
+					getMisfireSound(),
+					shooter.getSoundSource(),
+					1.0F,
+					1.0F + (-0.6f + shooter.getRandom().nextFloat() * 0.2f));
+
+			spawnMisfireEffects(level, shooter);
+
+			if (!creative) {
+				gun.hurtAndBreak(5, shooter, slot);
+			}
+
+			return;
+		}
+
+		BulletItem<?> bulletItem = (BulletItem<?>) (ammo.getItem() instanceof BulletItem<?> ? ammo.getItem() : defaultAmmo());
+
+		for (int i = 0; i < bulletsToFire; ++i) {
+			BulletEntity bulletEntity;
+
+			if (MUSKET_BALLS.test(ammo)) {
+				bulletEntity = bulletItem.createBullet(level, shooter, gun);
+			} else if (FLARES.test(ammo)) {
+				bulletEntity = bulletItem.createFlare(level, shooter, gun);
+			} else if (CANNONBALLS.test(ammo)) {
+				bulletEntity = bulletItem.createCannonball(level, shooter, gun);
+			} else {
+				bulletEntity = bulletItem.createDragonFireball(level, shooter, gun);
+			}
+
+			setupFire(shooter, bulletEntity, gun, ammo, powder);
+			level.addFreshEntity(bulletEntity);
+		}
+
+		level.playSound(null,
+				shooter.getX(),
+				shooter.getY(),
+				shooter.getZ(),
+				getFireSound(),
+				shooter.getSoundSource(),
+				1.0F,
+				1.0F + (-0.3f + shooter.getRandom().nextFloat() * 0.5f));
+
+		if (shooter instanceof Player player) {
+			triggerFireAnimation(level, player, hand, gun);
+		} else {
+			triggerMobFireAnimation(level, shooter, hand, gun);
+		}
+	}
+
+	/// Whether a stack is ammunition this firearm can use.
+	public boolean isAmmunition(ItemStack stack) {
+		return getInventoryAmmoPredicate().test(stack);
+	}
+
+	/// Whether a stack is a powder that can be loaded into a firearm.
+	public static boolean isPowder(ItemStack stack) {
+		return FLAMMABLE_POWDERS.test(stack);
+	}
+
+	/// Load a firearm held by a mob. The mob does not use the player's inventory search, so it supplies the stacks.
+	///
+	/// @param consume true to take the ammunition and powder out of the given stacks
+	public void loadFromSupply(ItemStack gun, ItemStack ammo, ItemStack powder, boolean consume) {
+		int bulletsToLoad = Math.max(1, getBulletsToFire(ammo));
+
+		gun.set(DataComponentTypeRegistry.LOADED_AMMUNITION.get(),
+				new LoadedAmmunition(ammo.copyWithCount(bulletsToLoad), powder.copyWithCount(1)));
+
+		if (consume) {
+			ammo.shrink(bulletsToLoad);
+			powder.shrink(1);
+		}
 	}
 
 	public ItemStack findAmmo(ItemStack gun, LivingEntity livingEntity) {
@@ -233,18 +505,60 @@ public abstract class AbstractGunItem extends Item {
 		return null;
 	}
 
+	/// The fire key calls `triggerPressed` directly. Vanilla's use key does not fire, since it is used to interact with
+	/// doors, villagers and so on, and a use that falls through to the item (such as on a block that does nothing) would
+	/// otherwise fire or start a reload by accident.
 	@Override
 	public InteractionResult use(Level level, Player player, InteractionHand hand) {
+		return InteractionResult.PASS;
+	}
 
-		ItemStack itemInHand = player.getItemInHand(hand);
-		boolean hasAmmo = !findAmmo(itemInHand, player).isEmpty();
+	/// The hand holding the firearm the player is operating, if any. The main hand takes priority; the offhand only
+	/// counts when the main hand is empty.
+	@Nullable
+	public static InteractionHand getGunHand(Player player) {
+		if (player.getMainHandItem().getItem() instanceof AbstractGunItem) {
+			return InteractionHand.MAIN_HAND;
+		}
 
-		if (!player.isCreative() && !hasAmmo) {
-			return InteractionResult.FAIL;
-		} else {
-			player.startUsingItem(hand);
+		if (player.getMainHandItem().isEmpty() && player.getOffhandItem().getItem() instanceof AbstractGunItem) {
+			return InteractionHand.OFF_HAND;
+		}
+
+		return null;
+	}
+
+	/// Fires if loaded. Otherwise, starts a reload which must be held until it completes.
+	public InteractionResult triggerPressed(Level level, Player player, InteractionHand hand) {
+		ItemStack gun = player.getItemInHand(hand);
+
+		if (isLoaded(gun)) {
+			fire(level, player, hand, gun);
 			return InteractionResult.CONSUME;
 		}
+
+		boolean hasAmmo = !findAmmo(gun, player).isEmpty();
+		boolean hasPowder = findPowder(gun, player) != null;
+		if (!player.isCreative() && !(hasAmmo && hasPowder)) {
+			// Only the server gives feedback, so it isn't doubled up with the client's prediction
+			if (!level.isClientSide()) {
+				level.playSound(null, player.getX(), player.getY(), player.getZ(),
+						SoundEvents.DISPENSER_FAIL, SoundSource.PLAYERS, 0.6f, 1.6f);
+
+				String reason = hasAmmo ? "no_powder" : (hasPowder ? "no_ammunition" : "no_ammunition_or_powder");
+				player.sendOverlayMessage(Component.translatable("immersiveweapons.item.gun." + reason));
+			}
+
+			return InteractionResult.FAIL;
+		}
+
+		player.startUsingItem(hand);
+
+		if (level instanceof ServerLevel serverLevel) {
+			triggerReloadAnimation(serverLevel, player, hand, gun);
+		}
+
+		return InteractionResult.CONSUME;
 	}
 
 	/// Get the predicate to match ammunition when searching the player's inventory, not their main/offhand
@@ -381,22 +695,12 @@ public abstract class AbstractGunItem extends Item {
 			}
 		}
 
-		// Handle bullet density modifiers
-		if (ammo != null) {
-			float densityModifier = ammo.getOrDefault(DENSITY_MODIFIER, 0f);
-			if (densityModifier > 0) {
-				// A full 100% value is +20% damage
-				bullet.setBaseDamage(bullet.baseDamage + (bullet.baseDamage * (densityModifier * 0.2f)));
-
-				// Higher density slightly increases the gravity modifier
-				((ArrowAttributeAccessor) bullet).immersiveWeapons$setGravity(bullet.getGravity() + (densityModifier * 0.015f));
-			}
-		}
-
 		bullet.flameTrail = powderType.data.hasFlameTrail();
 
 		int weaponDamage = powderType.data.weaponDamageAmount();
-		gun.hurtAndBreak(weaponDamage, shooter, EquipmentSlot.MAINHAND);
+		// Damage whichever hand the gun is actually in
+		EquipmentSlot slot = shooter.getOffhandItem() == gun ? EquipmentSlot.OFFHAND : EquipmentSlot.MAINHAND;
+		gun.hurtAndBreak(weaponDamage, shooter, slot);
 
 		prepareBulletForFire(gun, bullet, shooter, powderVelocityModifier);
 		handleMuzzleFlash(shooter.level(), shooter, powderType);
@@ -406,23 +710,58 @@ public abstract class AbstractGunItem extends Item {
 		bulletEntity.shootFromRotation(shooter, shooter.getXRot(), shooter.getYRot(),
 				0.0F,
 				getFireVelocity(gun, powderModifier, shooter),
-				getInaccuracy());
+				getInaccuracy() * (shooter instanceof Player player && GunAimTracker.isAiming(player) ? AIM_INACCURACY_SCALE : 1.0f));
+	}
+
+	/// The position of a point on the gun, in front of the shooter's eyes. The gun is centered when aiming, otherwise held
+	/// out to the side it is in.
+	///
+	/// @param forward how far along the barrel the point is
+	protected Vec3 getGunPosition(LivingEntity shooter, double forward) {
+		Vec3 lookVector = shooter.getLookAngle();
+		Vec3 rightVector = lookVector.cross(new Vec3(0, 1, 0)).normalize();
+		Vec3 upVector = rightVector.cross(lookVector).normalize();
+
+		boolean aiming = shooter instanceof Player player && GunAimTracker.isAiming(player);
+
+		// Which side of the view the gun is held on. Mobs are assumed to use their main hand.
+		InteractionHand hand = shooter instanceof Player player ? getGunHand(player) : InteractionHand.MAIN_HAND;
+		boolean rightSide = (hand == InteractionHand.MAIN_HAND) == (shooter.getMainArm() == HumanoidArm.RIGHT);
+
+		double side = aiming ? 0.0d : (rightSide ? 0.3d : -0.3d);
+		double down = aiming ? -0.12d : -0.25d;
+
+		return shooter.getEyePosition()
+				.add(lookVector.scale(forward))
+				.add(rightVector.scale(side))
+				.add(upVector.scale(down));
+	}
+
+	/// A misfire: a flash in the pan with a puff of smoke at the lock, and nothing out of the barrel.
+	protected void spawnMisfireEffects(ServerLevel level, LivingEntity shooter) {
+		Vec3 lockPosition = getGunPosition(shooter, 0.4d);
+		RandomSource random = level.getRandom();
+
+		if (shooter.isUnderWater()) {
+			level.sendParticles(ParticleTypes.BUBBLE, lockPosition.x, lockPosition.y, lockPosition.z,
+					8, 0.1d, 0.1d, 0.1d, 0.05d);
+			return;
+		}
+
+		// A few sparks that fizzle out
+		level.sendParticles(ParticleTypes.SMALL_FLAME, lockPosition.x, lockPosition.y, lockPosition.z,
+				4, 0.05d, 0.05d, 0.05d, 0.02d);
+		level.sendParticles(ParticleTypes.LAVA, lockPosition.x, lockPosition.y, lockPosition.z,
+				1 + random.nextInt(2), 0.0d, 0.0d, 0.0d, 0.0d);
+
+		// A weak, thin puff of smoke instead of the full discharge
+		level.sendParticles(ParticleTypesRegistry.GUN_SMOKE_PARTICLE.get(), lockPosition.x, lockPosition.y, lockPosition.z,
+				3, 0.05d, 0.03d, 0.05d, 0.01d);
 	}
 
 	protected void handleMuzzleFlash(Level level, LivingEntity shooter, PowderType powderType) {
 		if (level instanceof ServerLevel serverLevel) {
-			Vec3 particlePosition = shooter.getEyePosition();
-
-			// Shift to the side (taking into consideration which hand the gun is in)
-			Vec3 lookVector = shooter.getLookAngle();
-			Vec3 sideVector = lookVector.cross(new Vec3(0, 1, 0.2));
-			double sideOffset = shooter.getUsedItemHand() == InteractionHand.MAIN_HAND ? 0.5d : -0.5d;
-			particlePosition = particlePosition.add(sideVector.scale(sideOffset));
-
-			double fov = 70d;
-
-			double fovOffset = 1.75d - (fov / 150.0d);
-			particlePosition = particlePosition.add(lookVector.x * fovOffset * 0.5d, lookVector.y * fovOffset * 0.5d, lookVector.z * fovOffset * 0.5d);
+			Vec3 particlePosition = getGunPosition(shooter, 0.9d);
 
 			serverLevel.sendParticles(ParticleTypesRegistry.MUZZLE_FLASH_PARTICLE.get(),
 					particlePosition.x, particlePosition.y, particlePosition.z,
@@ -434,7 +773,7 @@ public abstract class AbstractGunItem extends Item {
 
 			int smokeParticles = 3 * powderType.data.dirtiness();
 			for (int j = 0; j < smokeParticles; ++j) {
-				serverLevel.sendParticles(ParticleTypes.SMOKE,
+				serverLevel.sendParticles(ParticleTypesRegistry.GUN_SMOKE_PARTICLE.get(),
 						particlePosition.x, particlePosition.y, particlePosition.z,
 						3,
 						serverLevel.getRandom().nextGaussian() * 0.05d,

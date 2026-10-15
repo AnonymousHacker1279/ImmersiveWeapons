@@ -1,0 +1,27 @@
+{
+  "additional_wants": {
+    "id": "immersiveweapons:starstorm_ingot"
+  },
+  "gives": {
+    "id": "immersiveweapons:musket_ball_mold_master"
+  },
+  "max_uses": 1,
+  "merchant_predicate": {
+    "type": "minecraft:entity_properties",
+    "entity": "this",
+    "predicate": {
+      "minecraft:predicates": {
+        "minecraft:villager/variant": [
+          "minecraft:desert",
+          "minecraft:savanna",
+          "minecraft:jungle"
+        ]
+      }
+    }
+  },
+  "reputation_discount": 0.05,
+  "wants": {
+    "id": "immersiveweapons:musket_ball_mold_advanced"
+  },
+  "xp": 10
+}

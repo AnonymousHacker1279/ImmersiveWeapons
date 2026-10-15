@@ -26,6 +26,7 @@ public class StarForgeRecipe implements Recipe<StarForgeRecipeInput> {
 							Codec.INT.fieldOf("primary_material_count").forGetter(StarForgeRecipe::primaryMaterialCount),
 							Ingredient.CODEC.optionalFieldOf("secondary_material").forGetter(StarForgeRecipe::secondaryMaterial),
 							Codec.INT.fieldOf("secondary_material_count").forGetter(StarForgeRecipe::secondaryMaterialCount),
+							Codec.BOOL.optionalFieldOf("consume_secondary_material", true).forGetter(StarForgeRecipe::consumeSecondaryMaterial),
 							Codec.INT.fieldOf("smelt_time").forGetter(StarForgeRecipe::smeltTime),
 							ItemStackTemplate.CODEC.fieldOf("result").forGetter(StarForgeRecipe::result)
 					)
@@ -42,6 +43,8 @@ public class StarForgeRecipe implements Recipe<StarForgeRecipeInput> {
 			StarForgeRecipe::secondaryMaterial,
 			ByteBufCodecs.INT,
 			StarForgeRecipe::secondaryMaterialCount,
+			ByteBufCodecs.BOOL,
+			StarForgeRecipe::consumeSecondaryMaterial,
 			ByteBufCodecs.INT,
 			StarForgeRecipe::smeltTime,
 			ItemStackTemplate.STREAM_CODEC,
@@ -55,6 +58,7 @@ public class StarForgeRecipe implements Recipe<StarForgeRecipeInput> {
 	private final int primaryMaterialCount;
 	private final Optional<Ingredient> secondaryMaterial;
 	private final int secondaryMaterialCount;
+	private final boolean consumeSecondaryMaterial;
 	private final ItemStackTemplate result;
 	private final int smeltTime;
 
@@ -62,13 +66,14 @@ public class StarForgeRecipe implements Recipe<StarForgeRecipeInput> {
 	private PlacementInfo placementInfo;
 
 	public StarForgeRecipe(String group, Ingredient primaryMaterial, int primaryMaterialCount, Optional<Ingredient> secondaryMaterial,
-	                       int secondaryMaterialCount, int smeltTime, ItemStackTemplate result) {
+	                       int secondaryMaterialCount, boolean consumeSecondaryMaterial, int smeltTime, ItemStackTemplate result) {
 
 		this.group = group;
 		this.primaryMaterial = primaryMaterial;
 		this.primaryMaterialCount = primaryMaterialCount;
 		this.secondaryMaterial = secondaryMaterial;
 		this.secondaryMaterialCount = secondaryMaterialCount;
+		this.consumeSecondaryMaterial = consumeSecondaryMaterial;
 		this.result = result;
 		this.smeltTime = smeltTime;
 	}
@@ -95,6 +100,11 @@ public class StarForgeRecipe implements Recipe<StarForgeRecipeInput> {
 
 	public int secondaryMaterialCount() {
 		return secondaryMaterialCount;
+	}
+
+	/// Whether the secondary material is used up by the recipe. When false, it acts as a tool (e.g. a mold).
+	public boolean consumeSecondaryMaterial() {
+		return consumeSecondaryMaterial;
 	}
 
 	public int smeltTime() {

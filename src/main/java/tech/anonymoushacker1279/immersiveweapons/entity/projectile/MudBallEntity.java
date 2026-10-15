@@ -28,6 +28,12 @@ public class MudBallEntity extends AdvancedThrowableItemProjectile {
 		super(EntityRegistry.MUD_BALL_ENTITY.get(), level, x, y, z, ItemRegistry.MUD_BALL.get().getDefaultInstance());
 	}
 
+	/// The model is a flat item, centered on the origin.
+	@Override
+	public float getModelCenterOffset() {
+		return 0.0F;
+	}
+
 	@Override
 	protected Item getDefaultItem() {
 		return ItemRegistry.MUD_BALL.get();

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "ammunition_forge",
+  "key": {
+    "a": "#c:ingots/copper",
+    "b": "#c:ingots/iron",
+    "c": "minecraft:furnace",
+    "d": "#minecraft:stone_crafting_materials"
+  },
+  "pattern": [
+    "aaa",
+    "bcb",
+    "ddd"
+  ],
+  "result": {
+    "id": "immersiveweapons:ammunition_forge"
+  }
+}

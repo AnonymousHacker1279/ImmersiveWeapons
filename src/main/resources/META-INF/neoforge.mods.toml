@@ -46,5 +46,18 @@ versionRange = "[1.4.0,)"
 ordering = "NONE"
 side = "BOTH"
 
+[[dependencies.immersiveweapons]]
+modId = "geckolib"
+type = "required"
+versionRange = "[5.5.7,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.immersiveweapons]]
+modId = "player_animation_library"
+type = "required"
+ordering = "NONE"
+side = "CLIENT"
+
 [[mixins]]
 config = "mixins.immersiveweapons.json"

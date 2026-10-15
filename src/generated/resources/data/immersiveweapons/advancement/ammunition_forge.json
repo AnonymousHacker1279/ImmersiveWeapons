@@ -1,0 +1,32 @@
+{
+  "parent": "immersiveweapons:root",
+  "criteria": {
+    "hold": {
+      "conditions": {
+        "items": [
+          {
+            "items": "immersiveweapons:ammunition_forge"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.immersiveweapons.ammunition_forge.description"
+    },
+    "icon": {
+      "id": "immersiveweapons:ammunition_forge"
+    },
+    "title": {
+      "translate": "advancements.immersiveweapons.ammunition_forge.title"
+    }
+  },
+  "requirements": [
+    [
+      "hold"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

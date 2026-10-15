@@ -2,14 +2,21 @@ package tech.anonymoushacker1279.immersiveweapons.client.particle.smoke_grenade;
 
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
-import net.minecraft.util.Mth;
 import tech.anonymoushacker1279.immersiveweapons.init.ParticleTypesRegistry;
 
-public record SmokeGrenadeParticleOptions(int color, float scale) implements ParticleOptions {
+/// @param color   the tint color
+/// @param cloudId the [SmokeCloudField] this puff is clipped to, or 0 for none
+/// @param delay   ticks before the puff starts growing, used to make the cloud spread out from the grenade
+public record SmokeGrenadeParticleOptions(int color, int cloudId, int delay) implements ParticleOptions {
 
-	public SmokeGrenadeParticleOptions(int color, float scale) {
+	public SmokeGrenadeParticleOptions(int color, int cloudId, int delay) {
 		this.color = color;
-		this.scale = Mth.clamp(scale, 0.001F, 100.0F);
+		this.cloudId = cloudId;
+		this.delay = Math.max(delay, 0);
+	}
+
+	public SmokeGrenadeParticleOptions(int color) {
+		this(color, 0, 0);
 	}
 
 	/// Utility for getting particle colors from resources spawning smoke grenade particles.
@@ -30,13 +37,17 @@ public record SmokeGrenadeParticleOptions(int color, float scale) implements Par
 	/// @return SmokeGrenadeParticleOptions
 	public static SmokeGrenadeParticleOptions getParticleByColor(int colorID) {
 		return switch (colorID) {
-			case 1 -> new SmokeGrenadeParticleOptions(SmokeGrenadeColors.RED, 1.0F);
-			case 2 -> new SmokeGrenadeParticleOptions(SmokeGrenadeColors.GREEN, 1.0F);
-			case 3 -> new SmokeGrenadeParticleOptions(SmokeGrenadeColors.BLUE, 1.0F);
-			case 4 -> new SmokeGrenadeParticleOptions(SmokeGrenadeColors.PURPLE, 1.0F);
-			case 5 -> new SmokeGrenadeParticleOptions(SmokeGrenadeColors.YELLOW, 1.0F);
-			default -> new SmokeGrenadeParticleOptions(SmokeGrenadeColors.GRAY, 1.0F);
+			case 1 -> new SmokeGrenadeParticleOptions(SmokeGrenadeColors.RED);
+			case 2 -> new SmokeGrenadeParticleOptions(SmokeGrenadeColors.GREEN);
+			case 3 -> new SmokeGrenadeParticleOptions(SmokeGrenadeColors.BLUE);
+			case 4 -> new SmokeGrenadeParticleOptions(SmokeGrenadeColors.PURPLE);
+			case 5 -> new SmokeGrenadeParticleOptions(SmokeGrenadeColors.YELLOW);
+			default -> new SmokeGrenadeParticleOptions(SmokeGrenadeColors.GRAY);
 		};
+	}
+
+	public SmokeGrenadeParticleOptions with(int cloudId, int delay) {
+		return new SmokeGrenadeParticleOptions(color, cloudId, delay);
 	}
 
 	@Override

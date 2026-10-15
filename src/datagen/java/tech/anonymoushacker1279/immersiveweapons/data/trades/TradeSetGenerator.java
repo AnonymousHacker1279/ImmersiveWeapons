@@ -8,6 +8,7 @@ import net.minecraft.world.item.trading.TradeSet;
 import net.minecraft.world.item.trading.TradeSets;
 import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
+import tech.anonymoushacker1279.immersiveweapons.init.VillagerRegistry;
 
 public class TradeSetGenerator {
 
@@ -26,6 +27,12 @@ public class TradeSetGenerator {
 		TradeSets.register(context, SKYGAZER_LEVEL_1, TradeTags.SKYGAZER_LEVEL_1, ContextIntProviders.exactly(3));
 		TradeSets.register(context, SKYGAZER_LEVEL_2, TradeTags.SKYGAZER_LEVEL_2, ContextIntProviders.between(1, 2));
 		TradeSets.register(context, SKYGAZER_LEVEL_3, TradeTags.SKYGAZER_LEVEL_3);
+
+		TradeSets.register(context, VillagerRegistry.GUNSMITH_LEVEL_1, TradeTags.GUNSMITH_LEVEL_1, ContextIntProviders.exactly(3));
+		TradeSets.register(context, VillagerRegistry.GUNSMITH_LEVEL_2, TradeTags.GUNSMITH_LEVEL_2, ContextIntProviders.exactly(3));
+		TradeSets.register(context, VillagerRegistry.GUNSMITH_LEVEL_3, TradeTags.GUNSMITH_LEVEL_3, ContextIntProviders.exactly(3));
+		TradeSets.register(context, VillagerRegistry.GUNSMITH_LEVEL_4, TradeTags.GUNSMITH_LEVEL_4, ContextIntProviders.exactly(2));
+		TradeSets.register(context, VillagerRegistry.GUNSMITH_LEVEL_5, TradeTags.GUNSMITH_LEVEL_5, ContextIntProviders.exactly(3));
 
 		TradeSets.register(context, SKELETON_MERCHANT_LEVEL_1, TradeTags.SKELETON_MERCHANT_LEVEL_1, ContextIntProviders.exactly(3));
 		TradeSets.register(context, SKELETON_MERCHANT_LEVEL_2, TradeTags.SKELETON_MERCHANT_LEVEL_2, ContextIntProviders.between(1, 2));

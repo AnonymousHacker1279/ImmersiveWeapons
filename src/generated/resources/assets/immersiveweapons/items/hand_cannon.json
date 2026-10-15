@@ -1,6 +1,9 @@
 {
   "model": {
-    "type": "minecraft:model",
-    "model": "immersiveweapons:item/hand_cannon"
+    "type": "minecraft:special",
+    "base": "immersiveweapons:item/hand_cannon",
+    "model": {
+      "type": "geckolib:geckolib"
+    }
   }
 }

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "ammunition_forge": {
+      "conditions": {
+        "items": [
+          {
+            "items": "immersiveweapons:ammunition_forge"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipes": "immersiveweapons:cobalt_musket_ball_ammunition_forge_casting"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "ammunition_forge"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "immersiveweapons:cobalt_musket_ball_ammunition_forge_casting"
+    ]
+  }
+}

@@ -201,12 +201,6 @@ public class SoundGenerator extends SoundDefinitionsProvider {
 				.with(Sound.sound(Identifier.withDefaultNamespace("entity.snowball.throw"),
 						SoundType.EVENT)));
 
-		add(SoundEventRegistry.SMALL_PARTS_TABLE_USED, definition()
-				.subtitle("subtitles.immersiveweapons.block.small_parts_table.used")
-				.with(Sound.sound(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,
-								"block/small_parts_table/used/used"),
-						SoundType.SOUND)));
-
 		add(SoundEventRegistry.BARBED_WIRE_RATTLE, definition()
 				.subtitle("subtitles.immersiveweapons.block.barbed_wire.rattle")
 				.with(Sound.sound(Identifier.fromNamespaceAndPath(ImmersiveWeapons.MOD_ID,

@@ -1,0 +1,8 @@
+{
+	"_comment": "Where each firearm's sight point (top and horizontal center of its model, at its middle) appears when fully aimed, in blocks from the camera: x right, y up, z forward is negative. The model's display rotation/translation are cancelled automatically, so the barrel points straight ahead for both hands. Reload resources (F3+T) to apply changes. Keys are item registry paths.",
+	"default": {
+		"x": 0.04,
+		"y": -0.02,
+		"z": -0.5
+	}
+}

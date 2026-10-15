@@ -1,0 +1,10 @@
+{
+  "type": "immersiveweapons:ammunition_forge",
+  "group": "ammunition_forge",
+  "material": "#c:ingots/cobalt",
+  "mold": "immersiveweapons:musket_ball_mold_basic",
+  "result": {
+    "count": 2,
+    "id": "immersiveweapons:cobalt_musket_ball"
+  }
+}

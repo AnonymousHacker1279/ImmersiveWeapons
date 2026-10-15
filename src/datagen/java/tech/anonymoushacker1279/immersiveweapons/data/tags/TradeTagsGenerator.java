@@ -4,6 +4,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.tags.VillagerTradeTags;
 import net.minecraft.world.item.trading.VillagerTrade;
 import tech.anonymoushacker1279.immersiveweapons.ImmersiveWeapons;
 import tech.anonymoushacker1279.immersiveweapons.data.trades.TradeGenerator;
@@ -37,6 +38,38 @@ public class TradeTagsGenerator extends TagsProvider<VillagerTrade> {
 
 		tag(TradeTags.SKYGAZER_LEVEL_3)
 				.add(TradeGenerator.SKYGAZER_3_LECTERN_CELESTIAL_ALTAR);
+
+		tag(VillagerTradeTags.WEAPONSMITH_LEVEL_2)
+				.add(TradeGenerator.WEAPONSMITH_2_EMERALD_SMOKE_GRENADE)
+				.add(TradeGenerator.WEAPONSMITH_2_EMERALD_FLASHBANG);
+		tag(VillagerTradeTags.TOOLSMITH_LEVEL_2).add(TradeGenerator.TOOLSMITH_2_EMERALD_PLIERS);
+
+		tag(TradeTags.GUNSMITH_LEVEL_1)
+				.add(TradeGenerator.GUNSMITH_1_EMERALD_FLINTLOCK_PISTOL)
+				.add(TradeGenerator.GUNSMITH_1_EMERALD_FLARE_GUN)
+				.add(TradeGenerator.GUNSMITH_1_EMERALD_MUSKET_BALL_MOLD_BASIC);
+
+		tag(TradeTags.GUNSMITH_LEVEL_2)
+				.add(TradeGenerator.GUNSMITH_2_EMERALD_BLUNDERBUSS)
+				.add(TradeGenerator.GUNSMITH_2_EMERALD_WOODEN_MUSKET_BALLS)
+				.add(TradeGenerator.GUNSMITH_2_EMERALD_STONE_MUSKET_BALLS);
+
+		tag(TradeTags.GUNSMITH_LEVEL_3)
+				.add(TradeGenerator.GUNSMITH_3_EMERALD_MUSKET)
+				.add(TradeGenerator.GUNSMITH_3_EMERALD_SPYGLASS_SCOPE)
+				.add(TradeGenerator.GUNSMITH_3_NETHERITE_INGOT_ADVANCED_MOLD)
+				.add(TradeGenerator.GUNSMITH_3_MOLTEN_INGOT_ADVANCED_MOLD);
+
+		tag(TradeTags.GUNSMITH_LEVEL_4)
+				.add(TradeGenerator.GUNSMITH_4_EMERALD_HAND_CANNON)
+				.add(TradeGenerator.GUNSMITH_4_DIAMOND_DIAMOND_MUSKET_BALLS);
+
+		tag(TradeTags.GUNSMITH_LEVEL_5)
+				.add(TradeGenerator.GUNSMITH_5_ASTRAL_INGOT_MASTER_MOLD)
+				.add(TradeGenerator.GUNSMITH_5_STARSTORM_INGOT_MASTER_MOLD)
+				.add(TradeGenerator.GUNSMITH_5_TESLA_INGOT_MASTER_MOLD)
+				.add(TradeGenerator.GUNSMITH_5_VENTUS_SHARD_VENTUS_MUSKET_BALLS)
+				.add(TradeGenerator.GUNSMITH_5_VOID_INGOT_VOID_MUSKET_BALLS);
 
 		tag(TradeTags.SKELETON_MERCHANT_LEVEL_1)
 				.add(TradeGenerator.SKELETON_MERCHANT_1_EMERALD_IRON_RING)

@@ -20,12 +20,11 @@ public class IWCBLanguageGenerator extends IWCBLanguageProvider {
 	}
 
 	private void addJEICategories() {
-		addJEICategory("small_parts", "Small Parts Crafting");
 		addJEICategory("tesla_synthesizer", "Tesla Synthesizing", "*16x speed");
 		addJEICategory("astral_crystal", "Astral Crystal Sorcery");
 		addJEICategory("barrel_tap_fermenting", "Barrel Fermenting");
 		addJEICategory("piston_crushing", "Piston Crushing", "%s-%s drops");
-		addJEICategory("ammunition_table", "Ammunition Crafting");
+		addJEICategory("ammunition_forge", "Ammunition Forging", "%ss");
 		addJEICategory("star_forge", "Star Forge Smelting");
 	}
 
@@ -34,7 +33,7 @@ public class IWCBLanguageGenerator extends IWCBLanguageProvider {
 		addJEIItemInfo("astral_crystal", "Astral Crystals can be used in a sorcery process with the right setup to create Astral Ingots.\nA 3x3 base of Lapis Lazuli and Redstone blocks must be formed, with the crystal placed in the center. The Lapis must form an X shape, with the Redstone filling the gaps.\nIngredients may be inserted by right-clicking the crystal, and a catalyst is dropped onto it, completing the process.\nThe crystal will be consumed in the process.");
 		addJEIItemInfo("barrel_tap", "Barrels can be used to ferment certain items, such as wheat, into alcohol.\nPlace a sufficient amount of a fermentable item into a barrel, and right-click the barrel tap with an empty bottle to fill it.");
 		addJEIItemInfo("piston_crushing", "Pistons can be used to crush certain blocks into other items.\nPlace a piston facing down onto a block and activate it. The yield of each crushing process may vary.");
-		addJEIItemInfo("ammunition_table", "The Ammunition Table is used to craft musket balls. Place materials of the same type into the materials section, adjust the density slider as you wish, and collect your ammunition.\nHigher density values will consume more material, but provide some extra punch in your shots at the expense of higher drop over distance.");
+		addJEIItemInfo("ammunition_forge", "The Ammunition Forge casts ingots into musket balls. Place a material ingot and a musket ball mold in the forge, and fuel it like a furnace.\nThe mold is not consumed. Higher tier molds (Basic, Advanced, Master) are required for harder materials, and can be obtained from the Gunsmith.");
 		addJEIItemInfo("star_forge", "The Star Forge is a multiblock structure used for smelting endgame materials.\nTo build the structure, create a 3x3 floor of Star Forge Bricks. The next layer is a ring of bricks with a Star Forge Controller in the front, then another ring of bricks. Add Iron Bars on the corners, and another ring of bricks above. In the center of the topmost layer, place a Solar Lens.\nWhen the structure is complete, the controller will report that it is active.");
 	}
 

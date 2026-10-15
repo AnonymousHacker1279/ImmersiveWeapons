@@ -1,3 +1,6 @@
-This release ports to MC 26.3 and IW v1.40.0.
+This release updates to IW v1.41.0.
 
-WTHIT and Curios support is currently disabled until both projects are updated.
+- Added a JEI category for the Ammunition Forge
+- Removed the JEI category for the Ammunition Table
+- Curios support has been re-implemented
+- WTHIT support is currently disabled until it is updated

@@ -1,0 +1,12 @@
+{
+  "gives": {
+    "id": "immersiveweapons:blunderbuss"
+  },
+  "max_uses": 2,
+  "reputation_discount": 0.05,
+  "wants": {
+    "count": 24,
+    "id": "minecraft:emerald"
+  },
+  "xp": 30
+}

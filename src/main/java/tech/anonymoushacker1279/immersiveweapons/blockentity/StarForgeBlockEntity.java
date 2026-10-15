@@ -143,7 +143,9 @@ public class StarForgeBlockEntity extends BaseContainerBlockEntity implements En
 				StarForgeRecipe selectedRecipe = getSelectedRecipe();
 				if (selectedRecipe != null) {
 					inventory.get(0).shrink(selectedRecipe.primaryMaterialCount());
-					inventory.get(1).shrink(selectedRecipe.secondaryMaterialCount());
+					if (selectedRecipe.consumeSecondaryMaterial()) {
+						inventory.get(1).shrink(selectedRecipe.secondaryMaterialCount());
+					}
 				}
 
 				// Reset the menu selection index

@@ -32,58 +32,58 @@ public class CuriosTagsGenerator extends TagsProvider<Item> {
 	@SuppressWarnings("unchecked")
 	protected void addTags(Provider provider) {
 		tag(BELT).add(
-				ItemRegistry.SATCHEL.getKey(),
-				ItemRegistry.HOLY_MANTLE.getKey(),
-				ItemRegistry.VENSTRAL_JAR.getKey());
+				ItemRegistry.SATCHEL.key(),
+				ItemRegistry.HOLY_MANTLE.key(),
+				ItemRegistry.VENSTRAL_JAR.key());
 
 		tag(BODY).add(
-				ItemRegistry.POWDER_HORN.getKey(),
-				ItemRegistry.BLOATED_HEART.getKey(),
-				ItemRegistry.NETHERITE_SHIELD.getKey(),
-				ItemRegistry.SUPER_BLANKET_CAPE.getKey());
+				ItemRegistry.POWDER_HORN.key(),
+				ItemRegistry.BLOATED_HEART.key(),
+				ItemRegistry.NETHERITE_SHIELD.key(),
+				ItemRegistry.SUPER_BLANKET_CAPE.key());
 
-		tag(BRACELET).add(ItemRegistry.AGILITY_BRACELET.getKey());
+		tag(BRACELET).add(ItemRegistry.AGILITY_BRACELET.key());
 
 		tag(CHARM).add(
-				ItemRegistry.BERSERKERS_AMULET.getKey(),
-				ItemRegistry.BLADEMASTER_EMBLEM.getKey(),
-				ItemRegistry.DEPTH_CHARM.getKey(),
-				ItemRegistry.REINFORCED_DEPTH_CHARM.getKey(),
-				ItemRegistry.ANCIENT_SCROLL.getKey(),
-				ItemRegistry.MEDAL_OF_HONOR.getKey(),
-				ItemRegistry.MEDAL_OF_DISHONOR.getKey());
+				ItemRegistry.BERSERKERS_AMULET.key(),
+				ItemRegistry.BLADEMASTER_EMBLEM.key(),
+				ItemRegistry.DEPTH_CHARM.key(),
+				ItemRegistry.REINFORCED_DEPTH_CHARM.key(),
+				ItemRegistry.ANCIENT_SCROLL.key(),
+				ItemRegistry.MEDAL_OF_HONOR.key(),
+				ItemRegistry.MEDAL_OF_DISHONOR.key());
 
 		tag(HANDS).add(
-				ItemRegistry.MELEE_MASTERS_MOLTEN_GLOVE.getKey(),
-				ItemRegistry.IRON_FIST.getKey(),
-				ItemRegistry.GLOVE_OF_RAPID_SWINGING.getKey(),
-				ItemRegistry.HAND_OF_DOOM.getKey());
+				ItemRegistry.MELEE_MASTERS_MOLTEN_GLOVE.key(),
+				ItemRegistry.IRON_FIST.key(),
+				ItemRegistry.GLOVE_OF_RAPID_SWINGING.key(),
+				ItemRegistry.HAND_OF_DOOM.key());
 
 		tag(HEAD).add(
-				ItemRegistry.GOGGLES.getKey(),
-				ItemRegistry.LAVA_GOGGLES.getKey(),
-				ItemRegistry.NIGHT_VISION_GOGGLES.getKey(),
-				ItemRegistry.BLOODY_CLOTH.getKey());
+				ItemRegistry.GOGGLES.key(),
+				ItemRegistry.LAVA_GOGGLES.key(),
+				ItemRegistry.NIGHT_VISION_GOGGLES.key(),
+				ItemRegistry.BLOODY_CLOTH.key());
 
 		tag(NECKLACE).add(
-				ItemRegistry.DEADEYE_PENDANT.getKey(),
-				ItemRegistry.MEDAL_OF_ADEQUACY.getKey(),
-				ItemRegistry.INSOMNIA_AMULET.getKey());
+				ItemRegistry.DEADEYE_PENDANT.key(),
+				ItemRegistry.MEDAL_OF_ADEQUACY.key(),
+				ItemRegistry.INSOMNIA_AMULET.key());
 
 		tag(RING).add(
-				ItemRegistry.COPPER_RING.getKey(),
-				ItemRegistry.IRON_RING.getKey(),
-				ItemRegistry.COBALT_RING.getKey(),
-				ItemRegistry.GOLDEN_RING.getKey(),
-				ItemRegistry.AMETHYST_RING.getKey(),
-				ItemRegistry.EMERALD_RING.getKey(),
-				ItemRegistry.DIAMOND_RING.getKey(),
-				ItemRegistry.NETHERITE_RING.getKey(),
-				ItemRegistry.DEATH_GEM_RING.getKey());
+				ItemRegistry.COPPER_RING.key(),
+				ItemRegistry.IRON_RING.key(),
+				ItemRegistry.COBALT_RING.key(),
+				ItemRegistry.GOLDEN_RING.key(),
+				ItemRegistry.AMETHYST_RING.key(),
+				ItemRegistry.EMERALD_RING.key(),
+				ItemRegistry.DIAMOND_RING.key(),
+				ItemRegistry.NETHERITE_RING.key(),
+				ItemRegistry.DEATH_GEM_RING.key());
 
 		tag(SPIRIT).add(
-				ItemRegistry.HANS_BLESSING.getKey(),
-				ItemRegistry.CELESTIAL_SPIRIT.getKey(),
-				ItemRegistry.VOID_BLESSING.getKey());
+				ItemRegistry.HANS_BLESSING.key(),
+				ItemRegistry.CELESTIAL_SPIRIT.key(),
+				ItemRegistry.VOID_BLESSING.key());
 	}
 }

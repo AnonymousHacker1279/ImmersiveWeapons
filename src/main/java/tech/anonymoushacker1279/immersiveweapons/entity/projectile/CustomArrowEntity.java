@@ -37,6 +37,7 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 	public Item referenceItem = Items.AIR;
 	public InaccuracySettings inaccuracySettings = new InaccuracySettings(1.0d);
 	public HitEffect hitEffect = HitEffect.NONE;
+	private final SmokeCloudVolume smokeCloud = new SmokeCloudVolume();
 	public int color = -1;
 	public boolean isExplosive = false;
 	protected boolean shouldStopMoving = false;
@@ -88,18 +89,17 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 	public void tick() {
 		super.tick();
 
-		if (color != -1 && inGroundTime > 0) {
+		if (color != -1 && inGroundTime > 0
+				&& inGroundTime <= SmokeCloudVolume.getEffectTicks(IWConfigs.SERVER.smokeGrenadeDuration.getAsInt())) {
 			if (level() instanceof ServerLevel serverLevel && tickCount % 2 == 0) {
-				serverLevel.getEntities(this, getBoundingBox().inflate(IWConfigs.SERVER.smokeGrenadeEffectRange.getAsDouble()))
-						.stream()
-						.filter(entity -> !entity.isSpectator())
-						.forEach(entity -> {
-							if (entity instanceof Mob mob && !mob.is(EntityTypes.BOSSES)) {
-								if (AdvancedThrowableItemProjectile.canSee(mob, this, false)) {
-									mob.setTarget(null);
-								}
-							}
-						});
+				double range = IWConfigs.SERVER.smokeGrenadeEffectRange.getAsDouble();
+				smokeCloud.update(serverLevel, position(), range);
+
+				for (Mob mob : serverLevel.getEntitiesOfClass(Mob.class, getBoundingBox().inflate(range + SmokeCloudVolume.TARGETER_SEARCH_MARGIN))) {
+					if (!mob.is(EntityTypes.BOSSES) && smokeCloud.hidesTarget(mob)) {
+						mob.setTarget(null);
+					}
+				}
 			}
 		}
 
@@ -112,7 +112,9 @@ public class CustomArrowEntity extends Arrow implements HitEffectUtils {
 		super.onHit(result);
 
 		if (color != -1 && level() instanceof ServerLevel serverLevel) {
-			PacketDistributor.sendToPlayersTrackingChunk(serverLevel, chunkPosition(), new SmokeGrenadePayload(getX(), getY(), getZ(), color, IWConfigs.SERVER.forceSmokeGrenadeParticles.getAsInt()));
+			PacketDistributor.sendToPlayersTrackingChunk(serverLevel, chunkPosition(), new SmokeGrenadePayload(getX(), getY(), getZ(), color, IWConfigs.SERVER.forceSmokeGrenadeParticles.getAsInt(),
+					(float) IWConfigs.SERVER.smokeGrenadeEffectRange.getAsDouble(),
+					IWConfigs.SERVER.smokeGrenadeDuration.getAsInt(), 1.0F, true));
 		}
 
 		if (isExplosive && !hasExploded) {

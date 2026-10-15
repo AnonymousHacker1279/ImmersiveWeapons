@@ -1,0 +1,15 @@
+{
+  "additional_wants": {
+    "count": 8,
+    "id": "minecraft:emerald"
+  },
+  "gives": {
+    "id": "immersiveweapons:scope"
+  },
+  "max_uses": 2,
+  "reputation_discount": 0.05,
+  "wants": {
+    "id": "minecraft:spyglass"
+  },
+  "xp": 10
+}

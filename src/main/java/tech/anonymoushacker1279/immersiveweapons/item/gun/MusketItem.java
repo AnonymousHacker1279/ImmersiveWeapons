@@ -1,9 +1,11 @@
 package tech.anonymoushacker1279.immersiveweapons.item.gun;
 
+import com.geckolib.renderer.GeoItemRenderer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
+import tech.anonymoushacker1279.immersiveweapons.client.renderer.MusketGeoItemRenderer;
 import tech.anonymoushacker1279.immersiveweapons.config.IWConfigs;
 import tech.anonymoushacker1279.immersiveweapons.entity.projectile.BulletEntity;
 import tech.anonymoushacker1279.immersiveweapons.init.SoundEventRegistry;
@@ -13,6 +15,11 @@ public class MusketItem extends AbstractGunItem {
 
 	public MusketItem(Properties properties) {
 		super(properties);
+	}
+
+	@Override
+	protected GeoItemRenderer<?> createGeoItemRenderer() {
+		return new MusketGeoItemRenderer(this);
 	}
 
 	@Override

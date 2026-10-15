@@ -189,6 +189,9 @@ public class LanguageGenerator extends IWLanguageProvider {
 		for (DeferredHolder<?, ?> holder : LANGUAGE_OVERRIDES.getOrDefault(LanguageCategory.ENTITIES, Collections.emptyMap()).keySet()) {
 			add((EntityType<?>) holder.get(), LANGUAGE_OVERRIDES.get(LanguageCategory.ENTITIES).get(holder));
 		}
+
+		// Villager professions
+		add("entity.immersiveweapons.villager.gunsmith", "Gunsmith");
 	}
 
 	private void addPotions() {
@@ -271,9 +274,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 	}
 
 	private void addContainers() {
-		addContainer("small_parts_table", "Small Parts Crafting");
 		addContainer("tesla_synthesizer", "Tesla Synthesizing");
-		addContainer("ammunition_table", "Ammunition Crafting");
+		addContainer("ammunition_forge", "Ammunition Forge");
 		addContainer("star_forge", "Star Forging");
 		addContainer("celestial_altar", "Celestial Altar");
 
@@ -314,7 +316,6 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addSubtitle("item.generic_item_throw", "Item flies");
 
 		// Misc blocks
-		addSubtitle("block.small_parts_table.used", "Small parts table used");
 		addSubtitle("block.barbed_wire.rattle", "Barbed wire rattles");
 		addSubtitle("block.bear_trap.close", "Bear trap closes");
 		addSubtitle("block.spike_trap.extend", "Spike trap extends");
@@ -388,6 +389,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("dragons_breath_cannon", "An upgraded hand cannon designed to launch dragon fireballs");
 		// Gun metadata
 		addTooltip("gun.meta.scope", "Scope Equipped");
+		addTooltip("gun.loaded", "Loaded: %sx %s with %s");
+		addTooltip("gun.unloaded", "Unloaded");
 		addTooltip("gun.meta.base_velocity", "Base Velocity: %s");
 		addTooltip("gun.meta.base_reload_time", "Base Reload Time: %s seconds");
 		addTooltip("gun.meta.base_knockback", "Base Knockback Level: %sx");
@@ -439,7 +442,6 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addTooltip("bullet.meta.gravity_modifier", "Gravity Modifier: %s");
 		addTooltip("bullet.meta.base_knockback_level", "Base Knockback Level: %sx");
 		addTooltip("bullet.meta.piercing_level", "Piercing Level: %s target(s)");
-		addTooltip("bullet.meta.density_modifier", "Density Modifier: +%sx");
 		addTooltip("bullet.meta.misfire_chance", "Misfire Chance: %s%%");
 
 		// Pikes
@@ -640,12 +642,17 @@ public class LanguageGenerator extends IWLanguageProvider {
 	private void addKeys() {
 		add("key.categories.immersiveweapons", "Immersive Weapons");
 
+		addKey("fire", "Fire / Reload Firearm");
+		addKey("aim", "Aim Firearm");
 		addKey("toggleArmorEffect", "Toggle Armor Effect");
 		addKey("armorAction", "Armor Action");
 		addKey("debugTracing", "Debug Tracing");
 	}
 
 	private void addMessages() {
+		addMessage("item.gun.no_ammunition", "No ammunition");
+		addMessage("item.gun.no_powder", "No gunpowder");
+		addMessage("item.gun.no_ammunition_or_powder", "No ammunition or gunpowder");
 		addMessage("item.first_aid_kit.player", "You must be at or below half health to use this");
 		addMessage("item.first_aid_kit.entity", "The target must be at or below half health to use this");
 		addMessage("item.azul_locator.teleporting", "Teleporting to spawn point in %s seconds...");
@@ -1018,10 +1025,8 @@ public class LanguageGenerator extends IWLanguageProvider {
 		addAdvancement("commander_pedestal.description", "Obtain a Commander Pedestal, which allows summoning statues to operate outside of battlefields");
 		addAdvancement("pedestal_augment.title", "Pedestal Augmentation");
 		addAdvancement("pedestal_augment.description", "Obtain a Pedestal Augment, allowing Commander Pedestals to be upgraded");
-		addAdvancement("small_parts_table.title", "The Engineer");
-		addAdvancement("small_parts_table.description", "Obtain a small parts table, a gateway for creating advanced weapons.");
-		addAdvancement("ammunition_table.title", "Ammo Manufacturer");
-		addAdvancement("ammunition_table.description", "Obtain an ammunition table, used to create musket balls.");
+		addAdvancement("ammunition_forge.title", "Ammo Manufacturer");
+		addAdvancement("ammunition_forge.description", "Obtain an ammunition forge, used to cast musket balls and the gateway to firearms.");
 		addAdvancement("star_forge.title", "Star Forge");
 		addAdvancement("star_forge.description", "Obtain parts for a Star Forge, used to create high-level tools and armor.");
 		addAdvancement("traps.title", "Advanced Warfare");

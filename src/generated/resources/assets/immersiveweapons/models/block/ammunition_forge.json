@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "immersiveweapons:block/ammunition_forge_front",
+    "side": "immersiveweapons:block/ammunition_forge_side",
+    "top": "immersiveweapons:block/ammunition_forge_top"
+  }
+}
