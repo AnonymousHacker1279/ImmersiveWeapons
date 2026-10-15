@@ -256,12 +256,12 @@ if (file("RELEASE_NOTES.md").exists()) {
 
 		curseDepends {
 			optional "immersive-weapons-compatibility-bridge"
-			required "terrablender-neoforge", "openportals"
+			required "terrablender-neoforge", "openportals", "player-animation-library", "geckolib"
 		}
 
 		modrinthDepends {
 			optional "immersive-weapons-compatibility-bridge"
-			required "terrablender", "openportals"
+			required "terrablender", "openportals", "player-animation-library", "geckolib"
 		}
 	}
 } else {
